@@ -7,10 +7,6 @@ allowBuilds:
   esbuild: true
   lefthook: true
   utf-8-validate: true
-minimumReleaseAgeExclude:
-  - '@ai-sdk/gateway@4.0.70'
-  - '@ai-sdk/openai@4.0.53'
-  - ai@7.0.87
 shellEmulator: true
 
 trustPolicy: no-downgrade

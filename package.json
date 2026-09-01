@@ -19,9 +19,9 @@
     "typegen": "next typegen",
     "check:types": "tsc --noEmit --pretty",
     "check:oxlint": "oxlint .",
-    "check:format": "oxfmt --check src/app/api src/features/ai src/features/runtime src/features/billing/entitlements.ts src/features/billing/polar.ts src/features/billing/polar.test.ts src/features/billing/routes.test.ts",
+    "check:format": "oxfmt --check src/app/api src/features/runtime src/features/billing/entitlements.ts src/features/billing/polar.ts src/features/billing/polar.test.ts src/features/billing/routes.test.ts",
     "lint": "pnpm run check:oxlint",
-    "lint:fix": "oxlint . --fix && oxfmt src/app/api src/features/ai src/features/runtime src/features/billing/entitlements.ts src/features/billing/polar.ts src/features/billing/polar.test.ts src/features/billing/routes.test.ts",
+    "lint:fix": "oxlint . --fix && oxfmt src/app/api src/features/runtime src/features/billing/entitlements.ts src/features/billing/polar.ts src/features/billing/polar.test.ts src/features/billing/routes.test.ts",
     "lint:eslint": "eslint .",
     "lint:eslint:fix": "eslint . --fix",
     "check:deps": "knip",
@@ -39,7 +39,6 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^4.0.53",
     "@clerk/localizations": "^4.8.1",
     "@clerk/nextjs": "^7.5.2",
     "@clerk/shared": "^4.30.2",
@@ -94,7 +93,6 @@
     "@vitest/browser": "^4.1.9",
     "@vitest/browser-playwright": "^4.1.9",
     "@vitest/coverage-v8": "^4.1.9",
-    "ai": "^7.0.87",
     "babel-plugin-react-compiler": "^1.0.0",
     "checkly": "^8.8.0",
     "cross-env": "^10.1.0",

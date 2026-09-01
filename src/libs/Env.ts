@@ -3,10 +3,6 @@ import * as z from 'zod';
 
 export const Env = createEnv({
   server: {
-    AI_ENABLED: z.enum(['true', 'false']).default('false'),
-    OPENAI_API_KEY: z.string().min(1).optional(),
-    OPENAI_BASE_URL: z.string().url().optional(),
-    OPENAI_MODEL: z.string().min(1).optional(),
     CLERK_SECRET_KEY: z.string().min(1),
     DATABASE_URL: z.string().min(1),
     POLAR_ACCESS_TOKEN: z.string().min(1).optional(),
@@ -26,10 +22,6 @@ export const Env = createEnv({
   },
   // You need to destructure all the keys manually
   runtimeEnv: {
-    AI_ENABLED: process.env.AI_ENABLED,
-    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
-    OPENAI_BASE_URL: process.env.OPENAI_BASE_URL,
-    OPENAI_MODEL: process.env.OPENAI_MODEL,
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
     DATABASE_URL: process.env.DATABASE_URL,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,

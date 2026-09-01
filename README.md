@@ -152,7 +152,6 @@ Developer experience first, extremely flexible code structure and only keep what
 - 🗺️ Sitemap.xml and robots.txt
 - ⌘ Database exploration with Drizzle Studio and CLI migration tool with Drizzle Kit
 - ⚙️ [Bundler Analyzer](https://www.npmjs.com/package/@next/bundle-analyzer)
-- 🤖 Optional AI SDK route with an OpenAI-compatible provider
 - 💳 Optional Polar checkout, customer portal, signed webhooks, and entitlement boundary
 - ❤️ Health and readiness endpoints at `/api/health` and `/api/ready`
 - 🌈 Include a FREE minimalist theme
@@ -431,9 +430,7 @@ This command starts a local server using the production build. You can now open 
 
 ### Optional integrations
 
-AI and Polar are disabled by default. Enable each integration only when its runtime variables are configured.
-
-The AI example route uses the AI SDK with an OpenAI-compatible provider at `/api/ai/example`. Set `AI_ENABLED=true`, `OPENAI_API_KEY`, and `OPENAI_BASE_URL` when needed. You can also set `OPENAI_MODEL`.
+Polar is disabled by default. Enable it only when its runtime variables are configured.
 
 Polar checkout, customer portal, and webhook routes use `@polar-sh/nextjs` and `@polar-sh/sdk`. Set `POLAR_ACCESS_TOKEN`, `POLAR_WEBHOOK_SECRET`, `POLAR_SERVER`, and `POLAR_SUCCESS_URL` as needed. Use `POLAR_SERVER=sandbox` for sandbox isolation. Product IDs come from Polar configuration and are not stored in this starter.
 
