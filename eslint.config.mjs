@@ -72,4 +72,16 @@ export default antfu(
       'jsdoc/require-returns': 'off', // Return types are optional
     },
   },
+  {
+    files: [
+      'src/features/ai/config.ts',
+      'src/features/billing/polar.ts',
+    ],
+    rules: {
+      // These files use the Oxfmt layout used by the default quality path.
+      'style/arrow-parens': 'off',
+      'style/indent': 'off',
+      'style/operator-linebreak': 'off',
+    },
+  },
 );

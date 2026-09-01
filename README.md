@@ -131,8 +131,8 @@ Developer experience first, extremely flexible code structure and only keep what
 - ♻️ Type-safe environment variables with T3 Env
 - ⌨️ Form with [React Hook Form](https://react-hook-form.com)
 - 🔴 Validation library with [Zod](https://zod.dev)
-- 📏 Linter with [ESLint](https://eslint.org) (default NextJS, NextJS Core Web Vitals, Tailwind CSS and Antfu configuration)
-- 💖 Code Formatter with [Prettier](https://prettier.io)
+- 📏 Default linting with [Oxlint](https://oxc.rs/docs/guide/usage/linter) and optional [ESLint](https://eslint.org) compatibility
+- 💖 Code formatting with [Oxfmt](https://oxc.rs/docs/guide/usage/formatter)
 - 🦊 Lefthook for Git hooks
 - 🚓 Lint git commit with Commitlint
 - 📓 Write standard compliant commit messages with Commitizen
@@ -152,6 +152,9 @@ Developer experience first, extremely flexible code structure and only keep what
 - 🗺️ Sitemap.xml and robots.txt
 - ⌘ Database exploration with Drizzle Studio and CLI migration tool with Drizzle Kit
 - ⚙️ [Bundler Analyzer](https://www.npmjs.com/package/@next/bundle-analyzer)
+- 🤖 Optional AI SDK route with an OpenAI-compatible provider
+- 💳 Optional Polar checkout, customer portal, signed webhooks, and entitlement boundary
+- ❤️ Health and readiness endpoints at `/api/health` and `/api/ready`
 - 🌈 Include a FREE minimalist theme
 - 💯 Maximize lighthouse score
 
@@ -174,7 +177,7 @@ Built-in features from Next.js:
 
 ### Requirements
 
-- Node.js 24+ and npm
+- Node.js 24+ and pnpm 11+
 
 ### Getting started
 
@@ -183,7 +186,7 @@ Run the following command on your local environment:
 ```shell
 git clone --depth=1 https://github.com/ixartz/SaaS-Boilerplate.git my-project-name
 cd my-project-name
-npm install
+pnpm install
 ```
 
 For your information, all dependencies are updated every month.
@@ -191,10 +194,10 @@ For your information, all dependencies are updated every month.
 Then, you can run the project locally in development mode with live reload by executing:
 
 ```shell
-npm run dev
+pnpm run dev
 ```
 
-This command starts Next.js, a local PostgreSQL-compatible PGlite database, and Sentry Spotlight at the same time. Open http://localhost:3000 with your favorite browser to see your project.
+This command starts Next.js and a local PostgreSQL-compatible PGlite database. Run `pnpm run dev:spotlight` separately when you need Sentry Spotlight.
 
 Need advanced features? Next.js 16 & React 19, Multi-tenancy & Teams, Roles & Permissions, Shadcn UI, End-to-End Typesafety with oRPC, Stripe Payment, Light / Dark mode. Try [Next.js Boilerplate Pro](https://nextjs-boilerplate.com/pro-saas-starter-kit).
 
@@ -350,7 +353,7 @@ To modify the database schema in the project, you can update the schema file loc
 After making changes to the schema, generate a migration by running the following command:
 
 ```shell
-npm run db:generate
+pnpm run db:generate
 ```
 
 This will create a migration file that reflects your schema changes. The migration is automatically applied during the next database interaction, so there is no need to run it manually or restart the Next.js server.
@@ -360,7 +363,7 @@ This will create a migration file that reflects your schema changes. The migrati
 The project follows the [Conventional Commits](https://www.conventionalcommits.org/) specification, meaning all commit messages must be formatted accordingly. To help you write commit messages, the project uses [Commitizen](https://github.com/commitizen/cz-cli), an interactive CLI that guides you through the commit process. To use it, run the following command:
 
 ```shell
-npm run commit
+pnpm run commit
 ```
 
 One of the benefits of using Conventional Commits is the ability to automatically generate a `CHANGELOG` file. It also allows us to automatically determine the next version number based on the types of commits that are included in a release.
@@ -370,7 +373,7 @@ One of the benefits of using Conventional Commits is the ability to automaticall
 All unit tests are located alongside the source code in the same directory, making them easier to find. The project uses Vitest with browser mode for UI-oriented tests. You can run the tests with the following command:
 
 ```shell
-npm run test
+pnpm run test
 ```
 
 ### Integration & E2E Testing
@@ -378,8 +381,8 @@ npm run test
 The project uses Playwright for integration and end-to-end (E2E) testing. You can run the tests with the following commands:
 
 ```shell
-npx playwright install # Only for the first time in a new environment
-npm run test:e2e
+pnpm exec playwright install # Only for the first time in a new environment
+pnpm run test:e2e
 ```
 
 In GitHub Actions, visual regression testing runs with Chromatic.
@@ -401,7 +404,7 @@ await migrate(db, { migrationsFolder: './migrations' });
 After disabling it, you are required to run the migration manually with:
 
 ```shell
-npm run db:migrate
+pnpm run db:migrate
 ```
 
 You also require to run the command each time you want to update the database schema.
@@ -413,22 +416,34 @@ During the build process, database migrations are automatically executed, so the
 Then, you can generate a production build with:
 
 ```shell
-$ npm run build
+$ pnpm run build
 ```
 
 It generates an optimized production build of the boilerplate. To test the generated build, run:
 
 ```shell
-$ npm run start
+$ pnpm run start
 ```
 
 You also need to defined the environment variables `CLERK_SECRET_KEY` using your own key.
 
 This command starts a local server using the production build. You can now open http://localhost:3000 in your preferred browser to see the result.
 
+### Optional integrations
+
+AI and Polar are disabled by default. Enable each integration only when its runtime variables are configured.
+
+The AI example route uses the AI SDK with an OpenAI-compatible provider at `/api/ai/example`. Set `AI_ENABLED=true`, `OPENAI_API_KEY`, and `OPENAI_BASE_URL` when needed. You can also set `OPENAI_MODEL`.
+
+Polar checkout, customer portal, and webhook routes use `@polar-sh/nextjs` and `@polar-sh/sdk`. Set `POLAR_ACCESS_TOKEN`, `POLAR_WEBHOOK_SECRET`, `POLAR_SERVER`, and `POLAR_SUCCESS_URL` as needed. Use `POLAR_SERVER=sandbox` for sandbox isolation. Product IDs come from Polar configuration and are not stored in this starter.
+
+The health endpoint is `/api/health`. The readiness endpoint is `/api/ready`. Readiness returns HTTP 503 when `DATABASE_URL` is missing.
+
+Optional CI integrations use repository variables. Set `ENABLE_CODECOV`, `ENABLE_CHROMATIC`, `ENABLE_CHECKLY`, `ENABLE_CROWDIN`, `ENABLE_KNIP`, `ENABLE_SEMANTIC_RELEASE`, or `ENABLE_STORYBOOK` to `true` when the matching secrets and configuration exist.
+
 ### Error Monitoring
 
-The project uses [Sentry](https://sentry.io/for/nextjs/?utm_source=github&utm_medium=paid-community&utm_campaign=general-fy25q1-nextjs&utm_content=github-banner-nextjsboilerplate-logo) to monitor errors. In the development environment, no additional setup is needed: NextJS SaaS Boilerplate is pre-configured to use Sentry and Spotlight (Sentry for Development). All errors will automatically be sent to your local Spotlight instance, allowing you to experience Sentry locally.
+The project supports [Sentry](https://sentry.io/for/nextjs/?utm_source=github&utm_medium=paid-community&utm_campaign=general-fy25q1-nextjs&utm_content=github-banner-nextjsboilerplate-logo) for error monitoring. Set `SENTRY_ENABLED=true` to enable Sentry. Run `pnpm run dev:spotlight` separately for local Spotlight.
 
 For production environment, you'll need to create a Sentry account and a new project. Then, in `next.config.mjs`, you need to update the `org` and `project` attributes in `withSentryConfig` function. Additionally, add your Sentry DSN to `sentry.client.config.ts`, `sentry.edge.config.ts` and `sentry.server.config.ts`.
 
@@ -461,7 +476,7 @@ To complete the setup, update the `checkly.config.ts` file with your own email a
 Next.js SaaS Starter Kit includes a built-in bundle analyzer. It can be used to analyze the size of your JavaScript bundles. To begin, run the following command:
 
 ```shell
-npm run build-stats
+pnpm run build-stats
 ```
 
 By running the command, it'll automatically open a new browser window with the results.
@@ -471,7 +486,7 @@ By running the command, it'll automatically open a new browser window with the r
 The project is already configured with Drizzle Studio to explore the database. You can run the following command to open the database studio:
 
 ```shell
-npm run db:studio
+pnpm run db:studio
 ```
 
 Then, you can open https://local.drizzle.studio with your favorite browser to explore your database.

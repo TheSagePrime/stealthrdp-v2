@@ -16,7 +16,7 @@ Run these commands before planning, editing, or implementing product-specific wo
 ```bash
 git clone https://github.com/ixartz/SaaS-Boilerplate.git <target-directory>
 cd <target-directory>
-npm install
+pnpm install
 ```
 
 Users usually run `npx skills add ixartz/saas-boilerplate` from a parent/root directory; it creates `.agents/` there and clones the boilerplate into `<target-directory>`. Since the app is one level below the agent's initial cwd, `cd <target-directory>` before reading app files or running project commands, and confirm `package.json`, `src/`, and `skills/` exist.
@@ -24,8 +24,8 @@ Users usually run `npx skills add ixartz/saas-boilerplate` from a parent/root di
 Then verify the baseline:
 
 ```bash
-npm run build-local
-npm run test
+pnpm run build-local
+pnpm run test
 ```
 
 Setup and verification commands are hard gates. Do not continue to mapping or implementation work until the baseline is fixed.
@@ -47,7 +47,7 @@ Setup and verification commands are hard gates. Do not continue to mapping or im
 - Put user-visible copy in every supported locale file.
 - Prefer existing Clerk account and organization features before custom auth flows.
 - Follow nearby style and import conventions.
-- Run `npm run db:generate` whenever `src/models/Schema.ts` changes.
+- Run `pnpm run db:generate` whenever `src/models/Schema.ts` changes.
 - Persist product data in the database, not in local state or memory. Use Drizzle ORM for all database access.
 - Make new components visually polished and consistent with the current UI: reuse existing Shadcn/Radix primitives, Tailwind tokens, spacing, typography, states, and responsive patterns before introducing new visual treatments.
 - Use shadcn/ui theme tokens for UI colors; change colors only in `src/styles/global.css`, not locally in components.
@@ -58,11 +58,11 @@ Setup and verification commands are hard gates. Do not continue to mapping or im
 - Default to a first-version MVP unless the user asks for more.
 - Build the smallest runnable core workflow.
 - Defer nonessential architecture, integrations, and edge cases.
-- Leave the app runnable with `npm run dev`, but do not start local servers, persistent database processes, or open localhost unless the user explicitly asks.
+- Leave the app runnable with `pnpm run dev`, but do not start local servers, persistent database processes, or open localhost unless the user explicitly asks.
 
 ## Final Verification Gate
 
-After building the SaaS based on the user's intent and making all necessary changes, run `npm run lint`, then rerun the baseline verification sequence.
+After building the SaaS based on the user's intent and making all necessary changes, run `pnpm run check`, then rerun the baseline verification sequence.
 
 ## Gate Failure Handling
 
@@ -93,4 +93,4 @@ After the mandatory baseline gate passes:
 2. Inspect the verified clone for relevant patterns.
 3. Implement the change directly in the cloned project, including product-specific marketing copy and any authenticated product workflows, following the route boundaries above.
 4. Produce planning output only when the user asks for it or the change needs clarification.
-5. Ask the user to run `npm run dev` themselves to play with the current state of the SaaS; do not run it for them. After that, ask them to create a Clerk account at [Clerk.com](https://go.clerk.com/zGlzydF), then copy `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` into `.env.local`.
+5. Ask the user to run `pnpm run dev` themselves to play with the current state of the SaaS; do not run it for them. After that, ask them to create a Clerk account at [Clerk.com](https://go.clerk.com/zGlzydF), then copy `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` into `.env.local`.

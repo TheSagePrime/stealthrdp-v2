@@ -1,0 +1,13 @@
+{
+  "$schema": "https://oxc.rs/schema/oxlint.json",
+  "ignorePatterns": [
+    ".next",
+    "coverage",
+    "node_modules",
+    "playwright-report",
+    "storybook-static",
+    "tasks",
+    "test-results",
+    "vitest-test-results"
+  ]
+}

@@ -17,6 +17,7 @@ jobs:
     name: Create a new release
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    if: vars.ENABLE_SEMANTIC_RELEASE == 'true'
 
     permissions:
       contents: write # to be able to publish a GitHub release
@@ -34,9 +35,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
-        run: npm audit signatures
+        run: pnpm audit --prod
 
       - name: Release
-        run: npx semantic-release
+        run: pnpm exec semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

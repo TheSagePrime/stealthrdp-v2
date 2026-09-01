@@ -3,8 +3,16 @@ import * as z from 'zod';
 
 export const Env = createEnv({
   server: {
+    AI_ENABLED: z.enum(['true', 'false']).default('false'),
+    OPENAI_API_KEY: z.string().min(1).optional(),
+    OPENAI_BASE_URL: z.string().url().optional(),
+    OPENAI_MODEL: z.string().min(1).optional(),
     CLERK_SECRET_KEY: z.string().min(1),
     DATABASE_URL: z.string().min(1),
+    POLAR_ACCESS_TOKEN: z.string().min(1).optional(),
+    POLAR_SERVER: z.enum(['sandbox', 'production']).default('production'),
+    POLAR_SUCCESS_URL: z.string().url().optional(),
+    POLAR_WEBHOOK_SECRET: z.string().min(1).optional(),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().optional(),
@@ -18,6 +26,10 @@ export const Env = createEnv({
   },
   // You need to destructure all the keys manually
   runtimeEnv: {
+    AI_ENABLED: process.env.AI_ENABLED,
+    OPENAI_API_KEY: process.env.OPENAI_API_KEY,
+    OPENAI_BASE_URL: process.env.OPENAI_BASE_URL,
+    OPENAI_MODEL: process.env.OPENAI_MODEL,
     CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
     DATABASE_URL: process.env.DATABASE_URL,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
@@ -26,6 +38,10 @@ export const Env = createEnv({
     NEXT_PUBLIC_LOGGING_LEVEL: process.env.NEXT_PUBLIC_LOGGING_LEVEL,
     NEXT_PUBLIC_BETTER_STACK_SOURCE_TOKEN: process.env.NEXT_PUBLIC_BETTER_STACK_SOURCE_TOKEN,
     NEXT_PUBLIC_BETTER_STACK_INGESTING_HOST: process.env.NEXT_PUBLIC_BETTER_STACK_INGESTING_HOST,
+    POLAR_ACCESS_TOKEN: process.env.POLAR_ACCESS_TOKEN,
+    POLAR_SERVER: process.env.POLAR_SERVER,
+    POLAR_SUCCESS_URL: process.env.POLAR_SUCCESS_URL,
+    POLAR_WEBHOOK_SECRET: process.env.POLAR_WEBHOOK_SECRET,
     NODE_ENV: process.env.NODE_ENV,
   },
 });

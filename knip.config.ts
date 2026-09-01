@@ -15,7 +15,7 @@ const config: KnipConfig = {
   ignoreDependencies: [
     '@clerk/shared',
     '@logtape/logtape',
-    '@swc/helpers', // Avoid error in CI: "`npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync."
+    '@swc/helpers', // Keep the existing Next.js runtime helper explicit.
   ],
   // Include custom Playwright test file suffixes
   playwright: {
