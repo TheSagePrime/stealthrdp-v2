@@ -355,7 +355,7 @@ After making changes to the schema, generate a migration by running the followin
 pnpm run db:generate
 ```
 
-This will create a migration file that reflects your schema changes. The migration is automatically applied during the next database interaction, so there is no need to run it manually or restart the Next.js server.
+This creates a migration file that reflects your schema changes. Generation does not apply the migration. Run `pnpm run db:migrate` explicitly against the target database.
 
 ### Commit Message Format
 
@@ -408,11 +408,21 @@ pnpm run db:migrate
 
 You also require to run the command each time you want to update the database schema.
 
-### Deploy to production
+### Build and release
 
-During the build process, database migrations are automatically executed, so there's no need to run them manually. However, you must define `DATABASE_URL` in your environment variables.
+The image build runs only the Next.js build. It does not connect to the database or run migrations.
 
-Then, you can generate a production build with:
+Use this provider-neutral release sequence:
+
+1. Install the locked dependencies with `pnpm install --frozen-lockfile`.
+2. Run `pnpm run build` while the variables required by Next.js are available.
+3. Run `pnpm run db:migrate` as a separate release step against the target database.
+4. Start the application with `pnpm run start`.
+5. Probe `/api/health` and `/api/ready` before sending traffic.
+
+Define `DATABASE_URL` at runtime. Provide it during the build only when the Next.js configuration requires it.
+
+Generate a production build with:
 
 ```shell
 $ pnpm run build
@@ -424,7 +434,11 @@ It generates an optimized production build of the boilerplate. To test the gener
 $ pnpm run start
 ```
 
-You also need to defined the environment variables `CLERK_SECRET_KEY` using your own key.
+The local verification command keeps the PGlite database path:
+
+```shell
+pnpm run build-local
+```
 
 This command starts a local server using the production build. You can now open http://localhost:3000 in your preferred browser to see the result.
 
