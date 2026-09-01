@@ -1,9 +1,9 @@
 {
   "name": "saas-boilerplate",
-  "packageManager": "pnpm@11.25.0",
+  "packageManager": "pnpm@10.34.5",
   "author": "Ixartz (https://github.com/ixartz)",
   "engines": {
-    "node": ">=24"
+    "node": ">=22"
   },
   "scripts": {
     "dev:spotlight": "pnpm exec spotlight",
