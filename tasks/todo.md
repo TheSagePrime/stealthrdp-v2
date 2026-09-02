@@ -14,3 +14,7 @@
 - [x] Convert workflows, docs, and cache keys to pnpm.
 - [x] Run install, frozen install where possible, focused tests, default check, and build; the exact frozen offline run exposed a pre-existing semver trust-policy blocker.
 - [x] Review diff, commit the verified result locally, and push it to `main`.
+- [x] Replace the inherited marketing surface with the first-party Sage Prime frontend.
+- [x] Remove inherited demo, partner, and screenshot assets.
+- [x] Remove tracked environment files and add `.env.example`.
+- [x] Add Sage Prime ownership and third-party notices.

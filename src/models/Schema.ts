@@ -11,7 +11,7 @@ import { pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
 // Alternatively, if your database is running, you can run `pnpm run db:migrate` and there is no need to restart the server.
 
 // Need a database for production? Check out https://get.neon.com/BMFYNtx
-// Tested and compatible with SaaS Boilerplate
+// Product-owned database schema for the Sage Prime foundation.
 
 export const todoSchema = pgTable('todo', {
   id: serial('id').primaryKey(),

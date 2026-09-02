@@ -1,41 +1,27 @@
-# Sage Prime Starter Implementation Plan
+# Sage Prime starter plan
 
-Source: `../SaaS-Boilerplate` at upstream commit `e3952a7`.
-Derived repository: `/opt/data/research/starterpack-review/sage-prime-starter`.
+## Foundation
 
-## Guardrails
+- Maintain the canonical Sage Prime repository.
+- Keep Clerk as the authentication boundary.
+- Keep PostgreSQL and Drizzle data boundaries typed.
+- Keep workspace access protected.
+- Keep Polar billing behind product-owned helpers.
+- Keep English and French locale support.
+- Keep health, readiness, Docker, and CI checks.
 
-- Preserve all upstream files and SaaS features.
-- Do not modify the upstream checkout.
-- Preserve the MIT license and Ixartz attribution.
-- Do not use credentials or deploy.
-- Push only through the existing authenticated GitHub path when explicitly requested.
-- Keep optional integrations disabled unless their runtime variables enable them.
-- Use only the specified Polar runtime variable names.
-- Exclude the product AI layer; Sage and fleet agents handle AI orchestration externally.
+## Product handoff
 
-## Acceptance matrix
+- Replace the foundation homepage with product-specific work.
+- Preserve the reusable auth, workspace, billing, data, and deployment patterns.
+- Keep product data and commercial claims out of the starter.
 
-| Area | Acceptance criteria | Evidence |
-| --- | --- | --- |
-| Repository | Derived copy is independent and upstream remains clean | Git status and file comparison |
-| Package manager | `pnpm-lock.yaml` is real and active; `package-lock.json` is not active | Lockfile and scripts/docs/workflow audit |
-| Quality | Strict TypeScript, Oxlint, Oxfmt, tests, and build run in the default check | `pnpm check` output |
-| Compatibility | Existing ESLint remains available through optional scripts | `pnpm lint:eslint` metadata |
-| Product AI | Intentionally excluded from the reusable starter; Sage and fleet agents handle orchestration externally | Tracked-file search and diff review |
-| Polar | Optional checkout, portal, signed webhook boundary, and entitlement sync boundary exist | Focused tests without credentials |
-| Runtime | Health and readiness endpoints return deterministic status without secrets | Focused tests and route code |
-| Extras | i18n, Sentry, Storybook, PGlite, Checkly, Chromatic, Codecov, Crowdin, Better Stack, analyzer, Knip, Lefthook, Commitlint, semantic-release, and ESLint remain present and opt-in | File/package/workflow audit |
-| Verification | Install, frozen install where possible, focused tests, default check, and production build run | Captured command outputs |
-| Delivery | Local commit contains the verified result | Commit SHA and status |
+## Release requirements
 
-## Implementation sequence
-
-1. Convert package scripts and metadata to pnpm, preserving optional upstream scripts.
-2. Add Oxlint and Oxfmt configuration and wire the default check.
-3. Exclude product AI configuration, provider boundaries, example routes, and tests.
-4. Add safe optional Polar configuration, checkout/portal/webhook/entitlement boundaries, and tests.
-5. Add health and readiness routes and tests.
-6. Convert GitHub Actions, helper workflows, docs, cache keys, and local hooks to pnpm.
-7. Run install and all requested verification commands.
-8. Fix only real failures, review the complete diff, commit locally, and push the verified commit to `main`.
+- Run type generation and typecheck.
+- Run lint and format checks.
+- Run unit and integration tests.
+- Run the production build.
+- Review dependency notices.
+- Keep secrets outside Git.
+- Push through the GitHub and deployment pipeline.

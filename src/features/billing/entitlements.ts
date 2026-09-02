@@ -1,4 +1,4 @@
-export type PolarWebhookPayload = Record<string, unknown>;
+type PolarWebhookPayload = Record<string, unknown>;
 export type EntitlementSync = (payload: PolarWebhookPayload) => Promise<void> | void;
 
 const entitlementEventTypes = new Set([

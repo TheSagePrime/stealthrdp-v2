@@ -13,7 +13,6 @@ const config: KnipConfig = {
   ],
   // Dependencies to ignore during analysis
   ignoreDependencies: [
-    '@clerk/shared',
     '@logtape/logtape',
     '@swc/helpers', // Keep the existing Next.js runtime helper explicit.
   ],
@@ -22,9 +21,7 @@ const config: KnipConfig = {
     entry: ['tests/**/*.@(integ|e2e).ts'],
   },
   // Binaries to ignore during analysis
-  ignoreBinaries: [
-    'production', // False positive raised with dotenv-cli
-  ],
+  ignoreBinaries: [],
   compilers: {
     css: (text: string) => [...text.matchAll(/(?<=@)import[^;]+/g)].join('\n'),
   },
