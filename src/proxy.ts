@@ -41,7 +41,8 @@ function seoNormalizeRedirect(request: NextRequest): NextResponse | null {
     const target = current.clone();
     target.pathname = pathname;
 
-    const localAudit = process.env.SEO_AUDIT_LOCAL === 'true';
+    const syntheticAuditOrigin = site.hostname.endsWith('.invalid');
+    const localAudit = process.env.SEO_AUDIT_LOCAL === 'true' || syntheticAuditOrigin;
     if (isProductionDeployEnv(config.environment.deployEnv) && !localAudit) {
       target.protocol = site.protocol;
       target.hostname = site.hostname;
