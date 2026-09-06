@@ -2,6 +2,7 @@ import type { NextFetchEvent, NextRequest } from 'next/server';
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import createMiddleware from 'next-intl/middleware';
 import { NextResponse } from 'next/server';
+import { defaultSeoConfig } from './config/seo';
 import { routing } from './libs/I18nRouting';
 import { getSeoConfig } from './libs/seo/config';
 import { isProductionDeployEnv } from './libs/seo/env';
@@ -10,12 +11,11 @@ import { resolveSiteUrl } from './libs/seo/site-url';
 
 const handleI18nRouting = createMiddleware(routing);
 
-const isProtectedRoute = createRouteMatcher([
-  '/dashboard(.*)',
-  '/:locale/dashboard(.*)',
-  '/onboarding(.*)',
-  '/:locale/onboarding(.*)',
-]);
+const protectedPatterns = defaultSeoConfig.routes.privatePages.flatMap((route) => {
+  const suffix = route === '/' ? '(.*)' : `${route}(.*)`;
+  return [suffix, `/:locale${suffix}`];
+});
+const isProtectedRoute = createRouteMatcher(protectedPatterns);
 
 const isAuthPage = createRouteMatcher([
   '/sign-in(.*)',
@@ -55,6 +55,11 @@ function seoNormalizeRedirect(request: NextRequest): NextResponse | null {
   return null;
 }
 
+function localePrefix(pathname: string): string {
+  const first = pathname.split('/').filter(Boolean)[0];
+  return first && routing.locales.includes(first as (typeof routing.locales)[number]) ? `/${first}` : '';
+}
+
 export default async function proxy(
   request: NextRequest,
   event: NextFetchEvent,
@@ -64,21 +69,11 @@ export default async function proxy(
     return seoRedirect;
   }
 
-  // Clerk keyless mode doesn't work with i18n, this is why we need to run the middleware conditionally
-  if (
-    isAuthPage(request) || isProtectedRoute(request)
-  ) {
+  if (isAuthPage(request) || isProtectedRoute(request)) {
     return clerkMiddleware(async (auth, req) => {
-      // Check if the current route is protected and requires authentication
-      // If user is not authenticated, redirect them to the sign-in page with proper locale
       if (isProtectedRoute(req)) {
-        const locale = req.nextUrl.pathname.match(/(\/.*)\/dashboard/)?.at(1) ?? '';
-
-        const signInUrl = new URL(`${locale}/sign-in`, req.url);
-
-        await auth.protect({
-          unauthenticatedUrl: signInUrl.toString(),
-        });
+        const signInUrl = new URL(`${localePrefix(req.nextUrl.pathname)}/sign-in`, req.url);
+        await auth.protect({ unauthenticatedUrl: signInUrl.toString() });
       }
 
       return handleI18nRouting(req);
@@ -89,8 +84,5 @@ export default async function proxy(
 }
 
 export const config = {
-  // Match all pathnames except for
-  // - … if they start with `/_next`, `/_vercel` or `monitoring`
-  // - … the ones containing a dot (e.g. `favicon.ico`)
   matcher: '/((?!_next|_vercel|monitoring|api|.*\\..*).*)',
 };
