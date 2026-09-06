@@ -11,11 +11,15 @@ import { resolveSiteUrl } from './libs/seo/site-url';
 
 const handleI18nRouting = createMiddleware(routing);
 
-const protectedPatterns = defaultSeoConfig.routes.privatePages.flatMap((route) => {
+const protectedPagePatterns = defaultSeoConfig.routes.privatePages.flatMap((route) => {
   const suffix = route === '/' ? '(.*)' : `${route}(.*)`;
   return [suffix, `/:locale${suffix}`];
 });
-const isProtectedRoute = createRouteMatcher(protectedPatterns);
+const privateApiPatterns = defaultSeoConfig.routes.privateApis.map(route => `${route}(.*)`);
+const isProtectedPage = createRouteMatcher(protectedPagePatterns);
+const isPrivateApi = privateApiPatterns.length > 0
+  ? createRouteMatcher(privateApiPatterns)
+  : () => false;
 
 const isAuthPage = createRouteMatcher([
   '/sign-in(.*)',
@@ -69,9 +73,23 @@ export default async function proxy(
     return seoRedirect;
   }
 
-  if (isAuthPage(request) || isProtectedRoute(request)) {
+  if (isPrivateApi(request)) {
+    return clerkMiddleware(async (auth) => {
+      const session = await auth();
+      if (!session.userId) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      }
+      return NextResponse.next();
+    })(request, event);
+  }
+
+  if (request.nextUrl.pathname.startsWith('/api/')) {
+    return NextResponse.next();
+  }
+
+  if (isAuthPage(request) || isProtectedPage(request)) {
     return clerkMiddleware(async (auth, req) => {
-      if (isProtectedRoute(req)) {
+      if (isProtectedPage(req)) {
         const signInUrl = new URL(`${localePrefix(req.nextUrl.pathname)}/sign-in`, req.url);
         await auth.protect({ unauthenticatedUrl: signInUrl.toString() });
       }
@@ -84,5 +102,5 @@ export default async function proxy(
 }
 
 export const config = {
-  matcher: '/((?!_next|_vercel|monitoring|api|.*\\..*).*)',
+  matcher: '/((?!_next|_vercel|monitoring|.*\\..*).*)',
 };
