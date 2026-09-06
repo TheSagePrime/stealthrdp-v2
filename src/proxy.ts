@@ -28,6 +28,11 @@ const isAuthPage = createRouteMatcher([
   '/:locale/sign-up(.*)',
 ]);
 
+const auditPublicRoutes = new Set([
+  ...defaultSeoConfig.routes.publicMarketing,
+  ...defaultSeoConfig.routes.publicUtility,
+]);
+
 function seoNormalizeRedirect(request: NextRequest): NextResponse | null {
   if (request.method !== 'GET' && request.method !== 'HEAD') {
     return null;
@@ -66,19 +71,55 @@ function localePrefix(pathname: string): string {
   return first && routing.locales.includes(first as (typeof routing.locales)[number]) ? `/${first}` : '';
 }
 
-function isDirectSeoAuditRequest(request: NextRequest): boolean {
-  if (process.env.SEO_AUDIT_LOCAL !== 'true' || request.headers.get('x-seo-audit-direct') !== '1') {
-    return false;
+function directAuditLogicalPath(request: NextRequest): string | null {
+  if (process.env.SEO_AUDIT_LOCAL !== 'true') {
+    return null;
   }
 
   const prefix = `/${routing.defaultLocale}`;
-  if (request.nextUrl.pathname !== prefix && !request.nextUrl.pathname.startsWith(`${prefix}/`)) {
-    return false;
+  if (request.headers.get('x-seo-audit-direct') === '1') {
+    if (request.nextUrl.pathname === prefix) {
+      return '/';
+    }
+    if (request.nextUrl.pathname.startsWith(`${prefix}/`)) {
+      return request.nextUrl.pathname.slice(prefix.length) || '/';
+    }
+    return null;
   }
 
-  const logicalPath = request.nextUrl.pathname.slice(prefix.length) || '/';
-  return [...defaultSeoConfig.routes.publicMarketing, ...defaultSeoConfig.routes.publicUtility]
-    .some(route => route === logicalPath);
+  if (!/sage-prime-seo-audit/i.test(request.headers.get('user-agent') || '')) {
+    return null;
+  }
+
+  return auditPublicRoutes.has(request.nextUrl.pathname) ? request.nextUrl.pathname : null;
+}
+
+async function handleLocalSeoAudit(request: NextRequest): Promise<Response | null> {
+  const logicalPath = directAuditLogicalPath(request);
+  if (!logicalPath || !auditPublicRoutes.has(logicalPath)) {
+    return null;
+  }
+
+  if (request.headers.get('x-seo-audit-direct') === '1') {
+    return NextResponse.next();
+  }
+
+  const target = request.nextUrl.clone();
+  target.protocol = 'http:';
+  target.hostname = '127.0.0.1';
+  target.port = '3123';
+  target.pathname = `/${routing.defaultLocale}${logicalPath === '/' ? '' : logicalPath}`;
+
+  const headers = new Headers(request.headers);
+  headers.set('x-seo-audit-direct', '1');
+  headers.delete('x-forwarded-host');
+  headers.delete('x-forwarded-proto');
+
+  return fetch(target, {
+    method: request.method,
+    headers,
+    redirect: 'manual',
+  });
 }
 
 export default async function proxy(
@@ -90,8 +131,9 @@ export default async function proxy(
     return seoRedirect;
   }
 
-  if (isDirectSeoAuditRequest(request)) {
-    return NextResponse.next();
+  const localSeoAudit = await handleLocalSeoAudit(request);
+  if (localSeoAudit) {
+    return localSeoAudit;
   }
 
   if (isPrivateApi(request)) {
