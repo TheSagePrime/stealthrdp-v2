@@ -106,7 +106,12 @@ function leakCheck(route, label, value) {
 }
 
 async function fetchRaw(url, redirect = 'manual') {
-  const response = await fetch(url, { redirect, headers: { 'user-agent': 'sage-prime-seo-audit' } });
+  const headers = { 'user-agent': 'sage-prime-seo-audit' };
+  if (process.env.SEO_AUDIT_LOCAL === 'true') {
+    headers['x-forwarded-host'] = site.host;
+    headers['x-forwarded-proto'] = site.protocol.replace(':', '');
+  }
+  const response = await fetch(url, { redirect, headers });
   const text = await response.text();
   return { response, text, status: response.status, location: response.headers.get('location') || '' };
 }
