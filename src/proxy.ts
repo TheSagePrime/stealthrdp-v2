@@ -150,8 +150,11 @@ export default async function proxy(
     return NextResponse.next();
   }
 
+  // Clerk keyless mode doesn't work with i18n, this is why we need to run the middleware conditionally
   if (isAuthPage(request) || isProtectedPage(request)) {
     return clerkMiddleware(async (auth, req) => {
+      // Check if the current route is protected and requires authentication.
+      // If user is not authenticated, redirect them to the sign-in page with proper locale.
       if (isProtectedPage(req)) {
         const signInUrl = new URL(`${localePrefix(req.nextUrl.pathname)}/sign-in`, req.url);
         await auth.protect({ unauthenticatedUrl: signInUrl.toString() });
@@ -165,5 +168,8 @@ export default async function proxy(
 }
 
 export const config = {
+  // Match all pathnames except for
+  // - … if they start with `/_next`, `/_vercel` or `monitoring`
+  // - … the ones containing a dot (e.g. `favicon.ico`)
   matcher: '/((?!_next|_vercel|monitoring|.*\\..*).*)',
 };
