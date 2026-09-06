@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { spawn } from 'node:child_process';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
@@ -21,16 +21,26 @@ const site = resolveSiteUrl(process.env, deployEnv);
 config.siteUrl = site.origin;
 const crawlOrigin = 'http://127.0.0.1:3123';
 const privatePrefixes = [...config.routes.privatePages, ...config.routes.privateApis];
+const titleRoutes = new Map();
+
+function normalizedPath(pathname) {
+  return normalizePathname(pathname || '/', config.url.trailingSlash);
+}
 
 function isPrivatePath(pathname) {
-  const pathName = normalizePathname(pathname, config.url.trailingSlash);
-  return privatePrefixes.some(prefix => pathName === prefix || pathName.startsWith(`${prefix}/`));
+  const value = normalizedPath(pathname);
+  return privatePrefixes.some(prefix => value === prefix || (prefix !== '/' && value.startsWith(`${prefix}/`)));
+}
+
+function isUtilityPath(pathname) {
+  return classifyPath(pathname, config) === 'publicUtility';
 }
 
 function sameOriginPath(href, base) {
   try {
     const url = new URL(href, base);
-    if (url.origin !== new URL(base).origin && url.origin !== site.origin) {
+    const baseOrigin = new URL(base).origin;
+    if (url.origin !== baseOrigin && url.origin !== site.origin) {
       return null;
     }
     return `${url.pathname}${url.search}`;
@@ -58,14 +68,39 @@ function parseHtml(html) {
   };
 }
 
-function leakCheck(route, label, value) {
-  if (!value) {
-    return;
+function privateReference(value, base = site.origin) {
+  if (!value || typeof value !== 'string') {
+    return null;
   }
-  const text = typeof value === 'string' ? value : JSON.stringify(value);
-  for (const prefix of privatePrefixes) {
-    if (text.includes(prefix) && prefix !== '/') {
-      reporter.fail(route, 'private-leak', `${label} references private URL ${prefix}`, '', text.slice(0, 180));
+  try {
+    const url = new URL(value, base);
+    return isPrivatePath(url.pathname) ? url.pathname : null;
+  } catch {
+    return null;
+  }
+}
+
+function leakCheck(route, label, value) {
+  const values = [];
+  if (typeof value === 'string') {
+    values.push(value);
+  } else if (value) {
+    const visit = (item) => {
+      if (typeof item === 'string') {
+        values.push(item);
+      } else if (Array.isArray(item)) {
+        item.forEach(visit);
+      } else if (item && typeof item === 'object') {
+        Object.values(item).forEach(visit);
+      }
+    };
+    visit(value);
+  }
+
+  for (const candidate of values) {
+    const leaked = privateReference(candidate);
+    if (leaked) {
+      reporter.fail(route, 'private-leak', `${label} references private URL ${leaked}`, '', candidate);
     }
   }
 }
@@ -84,177 +119,379 @@ function looksSoft404(html, status) {
   return text.length < 40 || /not found|page doesn.?t exist/i.test(text);
 }
 
+function recordTitle(route, title, routeClass) {
+  if (!title || routeClass !== 'publicMarketing') {
+    return;
+  }
+  const key = title.trim().toLowerCase();
+  const routes = titleRoutes.get(key) ?? [];
+  routes.push(route);
+  titleRoutes.set(key, routes);
+}
+
+function validateRobotsMeta(route, routeClass, robots) {
+  const tokens = new Set(robots.split(',').map(token => token.trim()).filter(Boolean));
+  if (routeClass === 'publicMarketing') {
+    if (tokens.has('noindex') || tokens.has('nofollow')) {
+      reporter.fail(route, 'robots-meta', 'Indexable marketing route is noindex/nofollow', 'index, follow', robots);
+    }
+  } else if (routeClass === 'publicUtility') {
+    if (!tokens.has('noindex')) {
+      reporter.fail(route, 'robots-meta', 'Utility route must be noindex', 'noindex, follow', robots);
+    }
+    if (tokens.has('nofollow')) {
+      reporter.fail(route, 'robots-meta', 'Utility route must remain followable', 'noindex, follow', robots);
+    }
+  }
+}
+
 async function auditHtml(route, html, status) {
+  const pathname = route.split('?')[0] || '/';
   const parsed = parseHtml(html);
-  const routeClass = classifyPath(route, config);
-  const expectedCanonical = canonicalUrlForPath(route, site, config);
+  const routeClass = classifyPath(pathname, config);
+  const expectedCanonical = canonicalUrlForPath(pathname, site, config);
 
   if (status === 404) {
-    reporter.fail(route, 'http', 'Confirmed HTTP 404');
+    reporter.fail(pathname, 'http', 'Confirmed HTTP 404');
     return parsed;
   }
   if (status >= 500) {
-    reporter.fail(route, 'http', `HTTP ${status}`);
+    reporter.fail(pathname, 'http', `HTTP ${status}`);
+    return parsed;
+  }
+  if (status === 401 || status === 403) {
+    if (routeClass === 'privatePage' || routeClass === 'privateApi') {
+      reporter.pass(pathname, 'auth', `Protected response ${status}`);
+    } else {
+      reporter.fail(pathname, 'http', `Public route returned HTTP ${status}`);
+    }
+    return parsed;
+  }
+  if (status !== 200) {
+    reporter.fail(pathname, 'http', `Expected HTTP 200, got ${status}`, '200', String(status));
     return parsed;
   }
   if (looksSoft404(html, status)) {
-    reporter.warn(route, 'soft-404', 'Suspected soft-404');
+    reporter.warn(pathname, 'soft-404', 'Suspected soft-404');
   }
+
   if (!parsed.title) {
-    reporter.fail(route, 'title', 'Missing <title>');
-  } else if (parsed.title.length > 60) {
-    reporter.warn(route, 'title', 'Title longer than 60 characters', '<=60', String(parsed.title.length));
+    reporter.fail(pathname, 'title', 'Missing <title>');
+  } else {
+    recordTitle(pathname, parsed.title, routeClass);
+    if (parsed.title.length > 60) {
+      reporter.warn(pathname, 'title', 'Title longer than 60 characters', '<=60', String(parsed.title.length));
+    }
   }
+
   if (routeClass === 'publicMarketing' || routeClass === 'publicUtility') {
     if (!parsed.description) {
-      reporter.fail(route, 'description', 'Missing meta description');
+      reporter.fail(pathname, 'description', 'Missing meta description');
     } else if (parsed.description.length < 50) {
-      reporter.warn(route, 'description', 'Meta description shorter than 50 characters');
+      reporter.warn(pathname, 'description', 'Meta description shorter than 50 characters');
     } else if (parsed.description.length > 160) {
-      reporter.warn(route, 'description', 'Meta description longer than 160 characters');
+      reporter.warn(pathname, 'description', 'Meta description longer than 160 characters');
     }
+    validateRobotsMeta(pathname, routeClass, parsed.robots);
   }
+
   if (routeClass === 'publicMarketing') {
     if (!parsed.canonical) {
-      reporter.fail(route, 'canonical', 'Missing canonical');
+      reporter.fail(pathname, 'canonical', 'Missing canonical');
     } else if (!/^https?:\/\//i.test(parsed.canonical)) {
-      reporter.fail(route, 'canonical', 'Relative canonical', expectedCanonical, parsed.canonical);
+      reporter.fail(pathname, 'canonical', 'Relative canonical', expectedCanonical, parsed.canonical);
     } else {
       const canonicalUrl = new URL(parsed.canonical);
-      if (isProductionDeployEnv(deployEnv) && canonicalUrl.protocol !== 'https:') {
-        reporter.fail(route, 'canonical', 'HTTP canonical in production', expectedCanonical, parsed.canonical);
+      if (isProductionDeployEnv(deployEnv) && canonicalUrl.protocol !== 'https:' && canonicalUrl.hostname !== 'localhost' && canonicalUrl.hostname !== '127.0.0.1') {
+        reporter.fail(pathname, 'canonical', 'HTTP canonical in production', expectedCanonical, parsed.canonical);
       }
       if (canonicalUrl.hostname !== site.hostname) {
-        reporter.fail(route, 'canonical', 'Wrong canonical hostname', site.hostname, canonicalUrl.hostname);
+        reporter.fail(pathname, 'canonical', 'Wrong canonical hostname', site.hostname, canonicalUrl.hostname);
       }
-      if (canonicalUrl.origin + (canonicalUrl.pathname === '/' ? '' : canonicalUrl.pathname) !== expectedCanonical.replace(/\/$/, '') && parsed.canonical.replace(/\/$/, '') !== expectedCanonical.replace(/\/$/, '')) {
-        reporter.fail(route, 'canonical', 'Canonical does not match SITE_URL path', expectedCanonical, parsed.canonical);
+      if (parsed.canonical.replace(/\/$/, '') !== expectedCanonical.replace(/\/$/, '')) {
+        reporter.fail(pathname, 'canonical', 'Canonical does not match SITE_URL path', expectedCanonical, parsed.canonical);
       }
       if (isPrivatePath(canonicalUrl.pathname)) {
-        reporter.fail(route, 'canonical', 'Canonical points to a private route', expectedCanonical, parsed.canonical);
+        reporter.fail(pathname, 'canonical', 'Canonical points to a private route', expectedCanonical, parsed.canonical);
       }
     }
   }
-  leakCheck(route, 'canonical', parsed.canonical);
-  leakCheck(route, 'og:url', parsed.ogUrl);
-  leakCheck(route, 'html', html);
+
+  leakCheck(pathname, 'canonical', parsed.canonical);
+  leakCheck(pathname, 'og:url', parsed.ogUrl);
+  for (const href of parsed.hrefs) {
+    leakCheck(pathname, 'internal link', href);
+  }
   for (const block of parsed.jsonLd) {
     try {
       const parsedBlock = JSON.parse(block);
-      leakCheck(route, 'json-ld', parsedBlock);
+      leakCheck(pathname, 'json-ld', parsedBlock);
     } catch {
-      reporter.fail(route, 'json-ld', 'Unparseable JSON-LD');
+      reporter.fail(pathname, 'json-ld', 'Unparseable JSON-LD');
     }
   }
+
   if (parsed.ogImage) {
     try {
       const imageUrl = new URL(parsed.ogImage, site.origin);
-      const image = await fetchRaw(imageUrl.href, 'follow');
+      const target = imageUrl.origin === site.origin
+        ? `${crawlOrigin}${imageUrl.pathname}${imageUrl.search}`
+        : imageUrl.href;
+      const image = await fetchRaw(target, 'follow');
       if (image.status !== 200) {
-        reporter.fail(route, 'og-image', 'Configured OG image did not return 200', '200', String(image.status));
+        reporter.fail(pathname, 'og-image', 'Configured OG image did not return 200', '200', String(image.status));
       }
     } catch (error) {
-      reporter.fail(route, 'og-image', error instanceof Error ? error.message : String(error));
+      reporter.fail(pathname, 'og-image', error instanceof Error ? error.message : String(error));
     }
   } else if (routeClass === 'publicMarketing') {
-    reporter.warn(route, 'og-image', 'Missing optional fallback OG image');
+    reporter.warn(pathname, 'og-image', 'Missing optional fallback OG image');
   }
+
   return parsed;
 }
 
-async function auditSitemap(text) {
-  const locs = [...text.matchAll(/<loc>([^<]+)<\/loc>/gi)].map(match => match[1].trim());
-  const expected = [...config.routes.publicMarketing, ...(config.routes.dynamicPublic ?? [])]
-    .map(route => canonicalUrlForPath(route, site, config));
-  for (const url of expected) {
-    if (!locs.includes(url) && !locs.includes(`${url}/`)) {
-      reporter.fail('/sitemap.xml', 'sitemap-missing', `Indexable URL missing from sitemap`, url);
-    }
-  }
-  for (const loc of locs) {
-    leakCheck('/sitemap.xml', 'sitemap', loc);
-    for (const utility of config.routes.publicUtility) {
-      if (loc.includes(utility) && utility !== '/') {
-        reporter.fail('/sitemap.xml', 'sitemap-utility', 'Utility URL included in sitemap', '', loc);
+function checkDuplicateTitles() {
+  for (const routes of titleRoutes.values()) {
+    const unique = [...new Set(routes)];
+    if (unique.length > 1) {
+      for (const route of unique) {
+        reporter.fail(route, 'duplicate-title', `Duplicate title shared by: ${unique.join(', ')}`);
       }
-    }
-    if (!loc.startsWith(site.origin)) {
-      reporter.fail('/sitemap.xml', 'sitemap-canonical', 'Sitemap URL is not canonical', site.origin, loc);
     }
   }
 }
 
+function validateRobotsText(text) {
+  if (!isProductionDeployEnv(deployEnv)) {
+    if (!/disallow:\s*\/\s*$/im.test(text)) {
+      reporter.fail('/robots.txt', 'robots', 'Non-production robots.txt must disallow all crawling', 'Disallow: /', text);
+    }
+    return;
+  }
+  for (const privateRoute of privatePrefixes) {
+    if (!privateRoute || privateRoute === '/') {
+      continue;
+    }
+    if (!text.includes(`Disallow: ${privateRoute}`)) {
+      reporter.fail('/robots.txt', 'robots-private', `Missing private route exclusion ${privateRoute}`);
+    }
+  }
+  if (!text.includes(`${site.origin}/sitemap.xml`)) {
+    reporter.fail('/robots.txt', 'robots-sitemap', 'robots.txt must reference canonical sitemap URL');
+  }
+}
+
+async function auditSitemap(text, runtime = 'ssr') {
+  const locs = [...text.matchAll(/<loc>([^<]+)<\/loc>/gi)].map(match => match[1].trim());
+  const expected = [...config.routes.publicMarketing, ...(config.routes.dynamicPublic ?? [])]
+    .map(route => canonicalUrlForPath(route, site, config));
+
+  for (const url of expected) {
+    if (!locs.some(loc => loc.replace(/\/$/, '') === url.replace(/\/$/, ''))) {
+      reporter.fail('/sitemap.xml', 'sitemap-missing', 'Indexable URL missing from sitemap', url);
+    }
+  }
+
+  for (const loc of locs) {
+    leakCheck('/sitemap.xml', 'sitemap', loc);
+    let parsed;
+    try {
+      parsed = new URL(loc);
+    } catch {
+      reporter.fail('/sitemap.xml', 'sitemap-url', 'Malformed sitemap URL', '', loc);
+      continue;
+    }
+    if (parsed.origin !== site.origin) {
+      reporter.fail('/sitemap.xml', 'sitemap-canonical', 'Sitemap URL is not on SITE_URL origin', site.origin, parsed.origin);
+    }
+    if (isUtilityPath(parsed.pathname)) {
+      reporter.fail('/sitemap.xml', 'sitemap-utility', 'Utility URL included in sitemap', '', loc);
+    }
+    if (isPrivatePath(parsed.pathname)) {
+      reporter.fail('/sitemap.xml', 'sitemap-private', 'Private URL included in sitemap', '', loc);
+    }
+
+    if (runtime === 'ssr' && parsed.origin === site.origin) {
+      const result = await fetchRaw(`${crawlOrigin}${parsed.pathname}${parsed.search}`, 'manual');
+      if ([301, 302, 307, 308].includes(result.status)) {
+        reporter.fail('/sitemap.xml', 'sitemap-redirect', 'Sitemap URL redirects', '200', `${result.status} ${result.location}`);
+      } else if (result.status !== 200) {
+        reporter.fail('/sitemap.xml', 'sitemap-http', 'Sitemap URL must return 200', '200', String(result.status));
+      } else {
+        const html = parseHtml(result.text);
+        if (/noindex/i.test(html.robots)) {
+          reporter.fail('/sitemap.xml', 'sitemap-noindex', 'Sitemap URL is noindex', '', loc);
+        }
+        const expectedCanonical = canonicalUrlForPath(parsed.pathname, site, config);
+        if (!html.canonical || html.canonical.replace(/\/$/, '') !== expectedCanonical.replace(/\/$/, '')) {
+          reporter.fail('/sitemap.xml', 'sitemap-canonical', 'Sitemap URL is not self-canonical', expectedCanonical, html.canonical);
+        }
+      }
+    }
+  }
+}
+
+async function checkRedirect(route, result) {
+  if (!result.location) {
+    reporter.fail(route, 'redirect', 'Redirect without Location');
+    return;
+  }
+  const first = sameOriginPath(result.location, `${crawlOrigin}${route}`);
+  if (!first) {
+    return;
+  }
+  const second = await fetchRaw(`${crawlOrigin}${first}`, 'manual');
+  if ([301, 302, 307, 308].includes(second.status)) {
+    const next = sameOriginPath(second.location, `${crawlOrigin}${first}`);
+    if (next && normalizedPath(next.split('?')[0]) === normalizedPath(route.split('?')[0])) {
+      reporter.fail(route, 'redirect-loop', `Redirect loop detected via ${first}`);
+    } else {
+      reporter.fail(route, 'redirect-chain', `Redirect chain detected: ${route} → ${first} → ${next || second.location}`);
+    }
+  }
+}
+
+async function auditSsrRoute(route, fromLink = false) {
+  const pathname = route.split('?')[0] || '/';
+  const routeClass = classifyPath(pathname, config);
+  const result = await fetchRaw(`${crawlOrigin}${route}`, 'manual');
+
+  if ([301, 302, 307, 308].includes(result.status)) {
+    if (routeClass === 'privatePage' && /sign-in|login/i.test(result.location)) {
+      reporter.pass(pathname, 'auth', `Private page redirected to login with ${result.status}`);
+      return null;
+    }
+    await checkRedirect(route, result);
+    if (fromLink) {
+      reporter.fail(pathname, 'internal-redirect', 'Internal link points to a redirect instead of final URL', '', result.location);
+    } else if (routeClass === 'publicMarketing' || routeClass === 'publicUtility') {
+      reporter.fail(pathname, 'http', `Registered public route redirects with ${result.status}`, '200', result.location);
+    }
+    return null;
+  }
+
+  if (routeClass === 'privateApi') {
+    if (result.status === 401 || result.status === 403) {
+      reporter.pass(pathname, 'auth', `Private API rejected unauthenticated request with ${result.status}`);
+    } else {
+      reporter.fail(pathname, 'auth', 'Private API must reject unauthenticated requests with 401/403', '401/403', String(result.status));
+    }
+    return null;
+  }
+
+  return auditHtml(pathname, result.text, result.status);
+}
+
 async function crawlSsr() {
+  const reachable = new Set(['/']);
   const visited = new Set();
   const queue = ['/'];
-  const htmlByRoute = new Map();
-  while (queue.length && visited.size < 200) {
+
+  while (queue.length && visited.size < 500) {
     const route = queue.shift();
     if (!route || visited.has(route)) {
       continue;
     }
     visited.add(route);
-    const pathname = route.split('?')[0];
-    if (pathname.startsWith('/api/')) {
-      const api = await fetchRaw(`${crawlOrigin}${route}`, 'manual');
-      if (api.status === 404) {
-        reporter.fail(route, 'http', 'Confirmed HTTP 404');
-      } else if (api.status >= 500) {
-        reporter.fail(route, 'http', `HTTP ${api.status}`);
-      }
+    const parsed = await auditSsrRoute(route, route !== '/');
+    if (!parsed) {
       continue;
     }
-    const result = await fetchRaw(`${crawlOrigin}${route}`, 'manual');
-    if ([301, 302, 307, 308].includes(result.status)) {
-      if (isPrivatePath(pathname) && /sign-in|login/i.test(result.location)) {
-        reporter.pass(route, 'auth', `Private page redirected to login with ${result.status}`);
-        continue;
-      }
-      const location = result.location;
-      if (!location) {
-        reporter.fail(route, 'redirect', 'Redirect without Location');
-        continue;
-      }
-      const next = sameOriginPath(location, crawlOrigin);
-      if (next && !visited.has(next.split('?')[0])) {
-        reporter.fail(route, 'redirect', 'Internal link redirected instead of using the final URL', next, route);
-      }
-      continue;
-    }
-    if (result.status === 401 || result.status === 403) {
-      reporter.pass(route, 'auth', `Private or protected response ${result.status}`);
-      continue;
-    }
-    const parsed = await auditHtml(pathname, result.text, result.status);
-    htmlByRoute.set(pathname, parsed);
+
     for (const href of parsed.hrefs) {
-      const next = sameOriginPath(href, `${crawlOrigin}${pathname}`);
-      if (!next) {
+      const next = sameOriginPath(href, `${crawlOrigin}${route}`);
+      if (!next || next.startsWith('/_next')) {
         continue;
       }
-      const nextPath = next.split('?')[0];
-      if (!visited.has(nextPath) && !nextPath.startsWith('/_next')) {
-        queue.push(nextPath);
+      const nextPath = next.split('?')[0] || '/';
+      if (isPrivatePath(nextPath)) {
+        reporter.fail(route, 'private-leak', `Public page links to private route ${nextPath}`);
+        continue;
+      }
+      reachable.add(normalizedPath(nextPath));
+      if (!visited.has(next)) {
+        queue.push(next);
       }
     }
   }
 
-  const reachable = new Set(htmlByRoute.keys());
-  for (const route of config.routes.publicMarketing) {
-    if (!reachable.has(route) && route !== '/') {
-      reporter.warn(route, 'orphan', 'Indexable route was not reachable from internal links');
+  const registeredPublic = [...config.routes.publicMarketing, ...config.routes.publicUtility, ...(config.routes.dynamicPublic ?? [])];
+  for (const route of registeredPublic) {
+    if (!visited.has(route)) {
+      await auditSsrRoute(route, false);
     }
+  }
+  for (const route of config.routes.publicMarketing) {
+    if (route !== '/' && !reachable.has(normalizedPath(route))) {
+      reporter.warn(route, 'orphan', 'Indexable route was not reachable from / through public internal links');
+    }
+  }
+  for (const route of config.routes.privatePages) {
+    await auditSsrRoute(route, false);
+  }
+  for (const route of config.routes.privateApis) {
+    await auditSsrRoute(route, false);
   }
 }
 
+function walkHtml(dir, output = []) {
+  if (!existsSync(dir)) {
+    return output;
+  }
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      walkHtml(full, output);
+    } else if (entry.isFile() && entry.name.endsWith('.html')) {
+      output.push(full);
+    }
+  }
+  return output;
+}
+
+function staticRouteForFile(dir, file) {
+  let relative = path.relative(dir, file).replaceAll('\\', '/');
+  relative = relative.replace(/\/index\.html$/, '').replace(/\.html$/, '');
+  if (relative === 'index' || relative === '') {
+    return '/';
+  }
+  return normalizedPath(`/${relative}`);
+}
+
 async function crawlStatic(dir) {
-  const index = path.join(dir, 'index.html');
-  if (!existsSync(index)) {
-    reporter.fail('/', 'static-export', `Missing ${index}`);
+  const files = walkHtml(dir);
+  if (!files.length) {
+    reporter.fail('/', 'static-export', `No HTML files found in ${dir}`);
     return;
   }
-  const html = readFileSync(index, 'utf8');
-  await auditHtml('/', html, 200);
+
+  const seen = new Set();
+  for (const file of files) {
+    const route = staticRouteForFile(dir, file);
+    seen.add(route);
+    await auditHtml(route, readFileSync(file, 'utf8'), 200);
+  }
+
+  for (const route of [...config.routes.publicMarketing, ...config.routes.publicUtility]) {
+    if (!seen.has(normalizedPath(route))) {
+      reporter.fail(route, 'static-route', 'Registered public route missing from static output');
+    }
+  }
+
+  const robotsPath = path.join(dir, 'robots.txt');
+  if (existsSync(robotsPath)) {
+    validateRobotsText(readFileSync(robotsPath, 'utf8'));
+  } else {
+    reporter.fail('/robots.txt', 'static-export', 'robots.txt missing from static output');
+  }
+
+  const sitemapPath = path.join(dir, 'sitemap.xml');
+  if (existsSync(sitemapPath)) {
+    await auditSitemap(readFileSync(sitemapPath, 'utf8'), 'static');
+  } else {
+    reporter.fail('/sitemap.xml', 'static-export', 'sitemap.xml missing from static output');
+  }
 }
 
 function detectStaticDir() {
@@ -330,17 +567,22 @@ if (staticDir) {
     const robots = await fetchRaw(`${crawlOrigin}/robots.txt`, 'follow');
     if (robots.status !== 200) {
       reporter.fail('/robots.txt', 'http', `HTTP ${robots.status}`);
+    } else {
+      validateRobotsText(robots.text);
     }
+
     const sitemap = await fetchRaw(`${crawlOrigin}/sitemap.xml`, 'follow');
     if (sitemap.status !== 200) {
       reporter.fail('/sitemap.xml', 'http', `HTTP ${sitemap.status}`);
     } else {
-      await auditSitemap(sitemap.text);
+      await auditSitemap(sitemap.text, 'ssr');
     }
+
     await crawlSsr();
   });
 }
 
+checkDuplicateTitles();
 const report = reporter.write(root);
 if (report.failCount > 0) {
   console.error(`SEO post-build failed with ${report.failCount} issue(s). See reports/seo-audit.txt`);
