@@ -36,7 +36,14 @@ jobs:
           key: nextjs-${{ matrix.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('src/**') }}
 
       - name: Build and run SEO gates
-        run: pnpm run build-local
+        run: |
+          if ! pnpm run build-local; then
+            if [ -f reports/seo-audit.txt ]; then
+              echo "===== SEO AUDIT ====="
+              cat reports/seo-audit.txt
+            fi
+            exit 1
+          fi
         env:
           NEXT_PUBLIC_SENTRY_DISABLED: 'true'
           NEXT_PUBLIC_APP_URL: http://localhost:3008
