@@ -108,7 +108,6 @@ function leakCheck(route, label, value) {
 async function fetchRaw(url, redirect = 'manual') {
   const headers = { 'user-agent': 'sage-prime-seo-audit' };
   if (process.env.SEO_AUDIT_LOCAL === 'true') {
-    headers['x-forwarded-host'] = site.host;
     headers['x-forwarded-proto'] = site.protocol.replace(':', '');
   }
   const response = await fetch(url, { redirect, headers });
