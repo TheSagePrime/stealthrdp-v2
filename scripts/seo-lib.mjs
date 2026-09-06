@@ -30,7 +30,13 @@ export function createReporter() {
         `FAIL: ${fails.length}`,
         `WARN: ${warns.length}`,
         '',
-        ...findings.map(item => `[${item.severity}] ${item.route} · ${item.check} · ${item.reason}`),
+        ...findings.map((item) => {
+          const detail = [
+            item.expected ? `expected=${item.expected}` : '',
+            item.actual ? `actual=${item.actual}` : '',
+          ].filter(Boolean).join(' · ');
+          return `[${item.severity}] ${item.route} · ${item.check} · ${item.reason}${detail ? ` · ${detail}` : ''}`;
+        }),
       ];
       writeFileSync(path.join(dir, 'seo-audit.txt'), `${lines.join('\n')}\n`);
       return report;

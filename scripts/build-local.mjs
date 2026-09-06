@@ -8,7 +8,7 @@ function run(command, args) {
 }
 
 const database = run('pglite-server', ['-m', '100', '--run', 'pnpm run db:migrate']);
-const build = run('next', ['build']);
+const build = run('pnpm', ['run', 'build']);
 
 let databaseFailed = false;
 database.once('error', () => {

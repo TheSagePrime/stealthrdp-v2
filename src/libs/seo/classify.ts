@@ -1,4 +1,5 @@
 import type { SeoConfig } from '../../config/seo';
+import { stripLocalePrefix } from './locale';
 import { normalizePathname } from './normalize';
 
 export type RouteClass = 'publicMarketing' | 'publicUtility' | 'privatePage' | 'privateApi' | 'unknown';
@@ -14,7 +15,8 @@ function matchesPrefix(pathname: string, prefix: string): boolean {
 }
 
 export function classifyPath(pathname: string, config: SeoConfig): RouteClass {
-  const path = normalizePathname(pathname, config.url.trailingSlash);
+  const normalized = normalizePathname(pathname, config.url.trailingSlash);
+  const path = stripLocalePrefix(normalized, config).path;
 
   if (config.routes.privateApis.some(prefix => matchesPrefix(path, prefix))) {
     return 'privateApi';

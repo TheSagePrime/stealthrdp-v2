@@ -1,6 +1,6 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes, next/no-html-link-for-pages */
 import type { Metadata } from 'next';
-import { setRequestLocale } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
 import { getSeoConfig } from '@/libs/seo/config';
 import { createPageMetadata } from '@/libs/seo/metadata';
@@ -28,11 +28,17 @@ type IndexProps = {
   params: Promise<{ locale: string }>;
 };
 
-export const metadata: Metadata = createPageMetadata({
-  path: '/',
-  title: 'Sage Prime Product Foundation',
-  description: 'An internal foundation for Sage Prime products.',
-});
+export async function generateMetadata(props: IndexProps): Promise<Metadata> {
+  const { locale } = await props.params;
+  const t = await getTranslations({ locale, namespace: 'Index' });
+
+  return createPageMetadata({
+    path: '/',
+    title: t('meta_title'),
+    description: t('meta_description'),
+    locale,
+  });
+}
 
 export default async function HomePage(props: IndexProps) {
   const { locale } = await props.params;
