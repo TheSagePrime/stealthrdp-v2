@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 import type { SeoConfig } from '../../config/seo';
+import { AllLocales, I18nConfig } from '../../config/i18n';
 import { classifyPath, robotsForClass } from './classify';
 import { getSeoConfig } from './config';
+import { localizedPath } from './locale';
 import { canonicalUrlForPath } from './normalize';
 import { resolveSiteUrl } from './site-url';
 
@@ -20,15 +22,13 @@ function robotsMetadata(content: ReturnType<typeof robotsForClass>): Metadata['r
   return { index, follow };
 }
 
-/**
- * Builds Next.js metadata for a public or utility path.
- * Canonical URLs always use SITE_URL, never the request host.
- */
 export function createPageMetadata(input: PageMetadataInput): Metadata {
   const config = input.config ?? getSeoConfig();
   const site = resolveSiteUrl(process.env, config.environment.deployEnv);
   const routeClass = classifyPath(input.path, config);
-  const canonical = canonicalUrlForPath(input.path, site, config);
+  const locale = input.locale ?? I18nConfig.defaultLocale;
+  const localized = localizedPath(input.path, locale, config);
+  const canonical = canonicalUrlForPath(localized, site, config);
   const title = input.title ?? config.projectName;
   const description = input.description ?? config.description;
   const robots = robotsForClass(routeClass);
@@ -41,17 +41,26 @@ export function createPageMetadata(input: PageMetadataInput): Metadata {
     };
   }
 
+  const languages = Object.fromEntries(
+    AllLocales.map(item => [
+      item,
+      canonicalUrlForPath(localizedPath(input.path, item, config), site, config),
+    ]),
+  );
+
   const metadata: Metadata = {
     title,
     description,
     robots: robotsMetadata(robots),
     alternates: {
       canonical,
+      ...(AllLocales.length > 1 ? { languages } : {}),
     },
     openGraph: {
       title,
       description,
       url: canonical,
+      locale,
       ...(input.ogImage ? { images: [{ url: input.ogImage }] } : {}),
     },
     twitter: {
@@ -60,13 +69,10 @@ export function createPageMetadata(input: PageMetadataInput): Metadata {
       description,
       ...(input.ogImage ? { images: [input.ogImage] } : {}),
     },
+    other: {
+      'content-language': locale,
+    },
   };
-
-  if (input.locale) {
-    metadata.other = {
-      'content-language': input.locale,
-    };
-  }
 
   return metadata;
 }
