@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { SignUp } from '@clerk/nextjs';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { createPageMetadata } from '@/libs/seo/metadata';
 import { getI18nPath } from '@/utils/Helpers';
 
 type SignUpPageProps = {
@@ -14,10 +15,12 @@ export async function generateMetadata(props: SignUpPageProps): Promise<Metadata
     namespace: 'SignUp',
   });
 
-  return {
+  return createPageMetadata({
+    path: '/sign-up',
     title: t('meta_title'),
     description: t('meta_description'),
-  };
+    locale,
+  });
 }
 
 export default async function SignUpPage(props: SignUpPageProps) {

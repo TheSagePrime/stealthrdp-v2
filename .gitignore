@@ -70,3 +70,7 @@ build-archive.log
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+# SEO audit reports
+/reports/seo-audit.json
+/reports/seo-audit.txt

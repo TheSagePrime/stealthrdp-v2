@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { OrganizationList } from '@clerk/nextjs';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { createPageMetadata } from '@/libs/seo/metadata';
 
 type OrganizationSelectionProps = {
   params: Promise<{ locale: string }>;
@@ -13,10 +14,12 @@ export async function generateMetadata(props: OrganizationSelectionProps): Promi
     namespace: 'DashboardLayout',
   });
 
-  return {
+  return createPageMetadata({
+    path: '/onboarding',
     title: t('meta_title'),
     description: t('meta_description'),
-  };
+    locale,
+  });
 }
 
 export default async function OrganizationSelectionPage(props: OrganizationSelectionProps) {

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { DashboardHeader } from '@/features/dashboard/DashboardHeader';
+import { createPageMetadata } from '@/libs/seo/metadata';
 
 type DashboardLayoutProps = {
   params: Promise<{ locale: string }>;
@@ -14,10 +15,12 @@ export async function generateMetadata(props: DashboardLayoutProps): Promise<Met
     namespace: 'DashboardLayout',
   });
 
-  return {
+  return createPageMetadata({
+    path: '/dashboard',
     title: t('meta_title'),
     description: t('meta_description'),
-  };
+    locale,
+  });
 }
 
 export default async function DashboardLayout(props: DashboardLayoutProps) {

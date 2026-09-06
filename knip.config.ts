@@ -21,7 +21,7 @@ const config: KnipConfig = {
     entry: ['tests/**/*.@(integ|e2e).ts'],
   },
   // Binaries to ignore during analysis
-  ignoreBinaries: [],
+  ignoreBinaries: ['tsx'],
   compilers: {
     css: (text: string) => [...text.matchAll(/(?<=@)import[^;]+/g)].join('\n'),
   },

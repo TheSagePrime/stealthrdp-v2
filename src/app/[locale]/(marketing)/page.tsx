@@ -2,6 +2,9 @@
 import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
+import { getSeoConfig } from '@/libs/seo/config';
+import { createPageMetadata } from '@/libs/seo/metadata';
+import { buildPageJsonLd } from '@/libs/seo/schema';
 
 const modules = [
   {
@@ -25,16 +28,25 @@ type IndexProps = {
   params: Promise<{ locale: string }>;
 };
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
+  path: '/',
   title: 'Sage Prime Product Foundation',
   description: 'An internal foundation for Sage Prime products.',
-};
+});
 
 export default async function HomePage(props: IndexProps) {
   const { locale } = await props.params;
   setRequestLocale(locale);
+  const jsonLd = buildPageJsonLd(getSeoConfig());
   return (
     <main className="foundation-shell">
+      {jsonLd.map(block => (
+        <script
+          key={String(block['@type'])}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(block) }}
+        />
+      ))}
       <header className="topbar">
         <div className="brand">
           <span className="brand-mark">SP</span>

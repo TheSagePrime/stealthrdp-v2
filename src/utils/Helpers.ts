@@ -3,6 +3,7 @@ import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { Env } from '@/libs/Env';
 import { routing } from '@/libs/I18nRouting';
+import { resolveSiteUrl } from '@/libs/seo/site-url';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -13,11 +14,11 @@ export function cn(...inputs: ClassValue[]) {
  * @returns The configured public app URL or the local development URL.
  */
 export const getBaseUrl = () => {
-  if (Env.NEXT_PUBLIC_APP_URL) {
+  if (Env.NEXT_PUBLIC_APP_URL && !process.env.SITE_URL) {
     return Env.NEXT_PUBLIC_APP_URL;
   }
 
-  return 'http://localhost:3000';
+  return resolveSiteUrl().origin;
 };
 
 /**
