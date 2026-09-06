@@ -13,7 +13,7 @@
     "build-local": "node scripts/build-local.mjs",
     "build:app": "next build",
     "seo:pre-build": "node --experimental-loader ./scripts/seo-ts-loader.mjs scripts/seo-pre-build.mjs",
-    "seo:post-build": "node --experimental-loader ./scripts/seo-ts-loader.mjs scripts/seo-post-build-v2.mjs",
+    "seo:post-build": "node scripts/seo-post-build-runner.mjs",
     "build": "pnpm seo:pre-build && pnpm build:app && pnpm seo:post-build",
     "start": "next start",
     "build-stats": "cross-env ANALYZE=true pnpm run build",
