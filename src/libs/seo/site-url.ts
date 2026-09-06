@@ -10,19 +10,16 @@ export type ResolvedSiteUrl = {
 
 const DEV_FALLBACK = 'http://localhost:3000';
 
-function readRawSiteUrl(env: NodeJS.Dict<string>): string {
-  return (env.SITE_URL || env.NEXT_PUBLIC_APP_URL || '').trim();
-}
-
 /**
  * Resolves the canonical site origin from SITE_URL.
- * Development and test may fall back to http://localhost:3000.
+ * Development, test, and preview may fall back to localhost.
+ * Production requires an explicit SITE_URL.
  */
 export function resolveSiteUrl(
   env: NodeJS.Dict<string> = process.env,
   deployEnv: DeployEnv = resolveDeployEnv(env),
 ): ResolvedSiteUrl {
-  const raw = readRawSiteUrl(env);
+  const raw = (env.SITE_URL || '').trim();
   const production = isProductionDeployEnv(deployEnv);
 
   if (!raw) {
@@ -52,6 +49,10 @@ export function parseSiteUrl(
 
   if (parsed.search || parsed.hash) {
     throw new Error('SITE_URL must not include query parameters or fragments');
+  }
+
+  if (parsed.pathname !== '/' && parsed.pathname !== '') {
+    throw new Error('SITE_URL must be an origin without a path');
   }
 
   const protocol = parsed.protocol as ResolvedSiteUrl['protocol'];
