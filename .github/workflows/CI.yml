@@ -36,7 +36,7 @@ jobs:
         env:
           NEXT_PUBLIC_SENTRY_DISABLED: 'true'
           NEXT_PUBLIC_APP_URL: http://localhost:3008
-          SITE_URL: http://localhost:3008
+          SITE_URL: http://127.0.0.1:3123
 
       - if: matrix.node-version == '24.x' && success()
         name: Cache Next.js build output
