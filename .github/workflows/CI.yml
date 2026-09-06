@@ -15,6 +15,10 @@ jobs:
     name: Build with ${{ matrix.node-version }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      CLERK_SECRET_KEY: sk_test_replace-with-a-real-key
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/sage_prime_starter
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_replace-with-a-real-key
 
     steps:
       - uses: actions/checkout@v6
@@ -55,6 +59,10 @@ jobs:
     name: Run static checks
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      CLERK_SECRET_KEY: sk_test_replace-with-a-real-key
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/sage_prime_starter
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_replace-with-a-real-key
 
     steps:
       - uses: actions/checkout@v6
