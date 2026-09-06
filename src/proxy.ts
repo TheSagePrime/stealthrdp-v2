@@ -66,6 +66,21 @@ function localePrefix(pathname: string): string {
   return first && routing.locales.includes(first as (typeof routing.locales)[number]) ? `/${first}` : '';
 }
 
+function isDirectSeoAuditRequest(request: NextRequest): boolean {
+  if (process.env.SEO_AUDIT_LOCAL !== 'true' || request.headers.get('x-seo-audit-direct') !== '1') {
+    return false;
+  }
+
+  const prefix = `/${routing.defaultLocale}`;
+  if (request.nextUrl.pathname !== prefix && !request.nextUrl.pathname.startsWith(`${prefix}/`)) {
+    return false;
+  }
+
+  const logicalPath = request.nextUrl.pathname.slice(prefix.length) || '/';
+  return [...defaultSeoConfig.routes.publicMarketing, ...defaultSeoConfig.routes.publicUtility]
+    .some(route => route === logicalPath);
+}
+
 export default async function proxy(
   request: NextRequest,
   event: NextFetchEvent,
@@ -73,6 +88,10 @@ export default async function proxy(
   const seoRedirect = seoNormalizeRedirect(request);
   if (seoRedirect) {
     return seoRedirect;
+  }
+
+  if (isDirectSeoAuditRequest(request)) {
+    return NextResponse.next();
   }
 
   if (isPrivateApi(request)) {
