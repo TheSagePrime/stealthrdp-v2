@@ -168,6 +168,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: [build]
+    if: vars.ENABLE_E2E == 'true'
+    env:
+      CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/sage_prime_starter
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
 
     steps:
       - uses: actions/checkout@v6
@@ -180,10 +185,11 @@ jobs:
           node-version: ${{ matrix.node-version }}
           restore-nextjs-cache: true
 
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
       - name: Run E2E tests
         run: pnpm run test:e2e
-        env:
-          CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
 
       - name: Fix test results permission
         if: failure()
