@@ -64,7 +64,7 @@ function parseHtml(html) {
     ogUrl: extract(html, '<meta[^>]+property=["\']og:url["\'][^>]+content=["\']([^"\']+)["\']'),
     ogImage: extract(html, '<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)["\']'),
     jsonLd: [...html.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)].map(match => match[1]),
-    hrefs: [...html.matchAll(/\bhref=["']([^"']+)["']/gi)].map(match => match[1]),
+    hrefs: [...html.matchAll(/<a\b[^>]*\bhref=["']([^"']+)["'][^>]*>/gi)].map(match => match[1]),
   };
 }
 
@@ -411,6 +411,13 @@ async function crawlSsr() {
       const nextPath = next.split('?')[0] || '/';
       if (isPrivatePath(nextPath)) {
         reporter.fail(route, 'private-leak', `Public page links to private route ${nextPath}`);
+        continue;
+      }
+      if (nextPath.startsWith('/api/')) {
+        const apiResult = await fetchRaw(`${crawlOrigin}${next}`, 'manual');
+        if (apiResult.status === 404 || apiResult.status >= 500) {
+          reporter.fail(route, 'broken-link', `Linked API endpoint returned ${apiResult.status}`, '200-499', `${nextPath} → ${apiResult.status}`);
+        }
         continue;
       }
       reachable.add(normalizedPath(nextPath));
