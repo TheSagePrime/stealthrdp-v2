@@ -71,32 +71,63 @@ function localePrefix(pathname: string): string {
   return first && routing.locales.includes(first as (typeof routing.locales)[number]) ? `/${first}` : '';
 }
 
-function directAuditLogicalPath(request: NextRequest): string | null {
+type LocalSeoAuditRoute = {
+  logicalPath: string;
+  locale: string;
+};
+
+function directAuditRoute(request: NextRequest): LocalSeoAuditRoute | null {
   if (process.env.SEO_AUDIT_LOCAL !== 'true') {
     return null;
   }
 
-  const prefix = `/${routing.defaultLocale}`;
+  const pathname = request.nextUrl.pathname;
+  const prefix = localePrefix(pathname);
+
   if (request.headers.get('x-seo-audit-direct') === '1') {
-    if (request.nextUrl.pathname === prefix) {
-      return '/';
+    if (!prefix) {
+      return null;
     }
-    if (request.nextUrl.pathname.startsWith(`${prefix}/`)) {
-      return request.nextUrl.pathname.slice(prefix.length) || '/';
-    }
-    return null;
+
+    const logicalPath = pathname === prefix
+      ? '/'
+      : pathname.slice(prefix.length) || '/';
+
+    return auditPublicRoutes.has(logicalPath)
+      ? { logicalPath, locale: prefix.slice(1) }
+      : null;
   }
 
   if (!/sage-prime-seo-audit/i.test(request.headers.get('user-agent') || '')) {
     return null;
   }
 
-  return auditPublicRoutes.has(request.nextUrl.pathname) ? request.nextUrl.pathname : null;
+  // Keep the existing default-locale audit behavior. The auditor requests
+  // unprefixed public routes and we render them through an explicit locale path.
+  if (auditPublicRoutes.has(pathname)) {
+    return { logicalPath: pathname, locale: routing.defaultLocale };
+  }
+
+  // Localized auth routes must use the same direct audit path as the default
+  // locale. Otherwise they enter Clerk middleware during the build-time crawl,
+  // while /sign-in and /sign-up do not, which creates false HTTP 500 failures
+  // when external Clerk runtime credentials are unavailable to the audit server.
+  if (!prefix || !isAuthPage(request)) {
+    return null;
+  }
+
+  const logicalPath = pathname === prefix
+    ? '/'
+    : pathname.slice(prefix.length) || '/';
+
+  return auditPublicRoutes.has(logicalPath)
+    ? { logicalPath, locale: prefix.slice(1) }
+    : null;
 }
 
 async function handleLocalSeoAudit(request: NextRequest): Promise<Response | null> {
-  const logicalPath = directAuditLogicalPath(request);
-  if (!logicalPath || !auditPublicRoutes.has(logicalPath)) {
+  const auditRoute = directAuditRoute(request);
+  if (!auditRoute || !auditPublicRoutes.has(auditRoute.logicalPath)) {
     return null;
   }
 
@@ -108,7 +139,7 @@ async function handleLocalSeoAudit(request: NextRequest): Promise<Response | nul
   target.protocol = 'http:';
   target.hostname = '127.0.0.1';
   target.port = '3123';
-  target.pathname = `/${routing.defaultLocale}${logicalPath === '/' ? '' : logicalPath}`;
+  target.pathname = `/${auditRoute.locale}${auditRoute.logicalPath === '/' ? '' : auditRoute.logicalPath}`;
 
   const headers = new Headers(request.headers);
   headers.set('x-seo-audit-direct', '1');
