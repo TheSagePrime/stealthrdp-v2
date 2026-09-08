@@ -40,12 +40,12 @@ jobs:
           APP_ENV: production
           SEO_AUDIT_LOCAL: 'true'
           SITE_URL: https://seo-ci.invalid
-          NEXT_PUBLIC_APP_URL: http://127.0.0.1:3008
+          NEXT_PUBLIC_APP_URL: http://127.0.0.1:3123
         run: |
-          pnpm start -- -p 3008 -H 127.0.0.1 > /tmp/next-audit.log 2>&1 &
+          pnpm start -- -p 3123 -H 127.0.0.1 > /tmp/next-audit.log 2>&1 &
           echo $! > /tmp/next-audit.pid
           for i in {1..60}; do
-            if curl -fsS -A 'sage-prime-seo-audit' http://127.0.0.1:3008/ >/dev/null; then exit 0; fi
+            if curl --max-time 3 -fsS -A 'sage-prime-seo-audit' http://127.0.0.1:3123/ >/dev/null; then exit 0; fi
             sleep 1
           done
           cat /tmp/next-audit.log
@@ -55,13 +55,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          base=http://127.0.0.1:3008
+          base=http://127.0.0.1:3123
           audit_ua='sage-prime-seo-audit'
 
           expect_200() {
             route="$1"
             body=$(mktemp)
-            code=$(curl -sS -A "$audit_ua" -o "$body" -w '%{http_code}' "$base$route")
+            code=$(curl --max-time 10 -sS -A "$audit_ua" -o "$body" -w '%{http_code}' "$base$route")
             echo "AUDIT $route -> $code"
             test "$code" = '200'
             ! grep -qiE 'Internal Server Error|Application error' "$body"
@@ -73,7 +73,7 @@ jobs:
 
           redirect_check() {
             route="$1"; expected="$2"; headers=$(mktemp)
-            code=$(curl -sS -A "$audit_ua" -o /dev/null -D "$headers" -w '%{http_code}' "$base$route")
+            code=$(curl --max-time 10 -sS -A "$audit_ua" -o /dev/null -D "$headers" -w '%{http_code}' "$base$route")
             location=$(awk 'BEGIN{IGNORECASE=1} /^location:/{sub(/^[^:]*:[[:space:]]*/,""); gsub(/\r/,""); print; exit}' "$headers")
             echo "PROTECTED $route -> $code -> $location"
             case "$code" in 302|303|307|308) ;; *) exit 1;; esac
@@ -94,7 +94,7 @@ jobs:
             const browser = await chromium.launch({ headless: true });
             const page = await browser.newPage({ userAgent: 'sage-prime-seo-audit' });
             for (const route of ['/sign-in', '/sign-up', '/fr/sign-in', '/fr/sign-up']) {
-              const response = await page.goto(`http://127.0.0.1:3008${route}`, { waitUntil: 'domcontentloaded' });
+              const response = await page.goto(`http://127.0.0.1:3123${route}`, { waitUntil: 'domcontentloaded' });
               if (!response || response.status() !== 200) throw new Error(`${route}: ${response?.status()}`);
               const html = await page.content();
               if (/Internal Server Error|Application error/i.test(html)) throw new Error(`${route}: error body`);
@@ -120,7 +120,7 @@ jobs:
           pnpm start -- -p 3008 -H 127.0.0.1 > /tmp/next-normal.log 2>&1 &
           echo $! > /tmp/next-normal.pid
           for i in {1..60}; do
-            if curl -sS -o /dev/null http://127.0.0.1:3008/; then exit 0; fi
+            if curl --max-time 3 -sS -o /dev/null http://127.0.0.1:3008/; then exit 0; fi
             sleep 1
           done
           cat /tmp/next-normal.log
@@ -132,16 +132,16 @@ jobs:
           set -euo pipefail
           base=http://127.0.0.1:3008
           for route in /sign-in /sign-up /fr/sign-in /fr/sign-up; do
-            normal=$(curl -sS -A 'Mozilla/5.0 normal-user' -o /dev/null -w '%{http_code}' "$base$route")
-            direct=$(curl -sS -A 'Mozilla/5.0 normal-user' -H 'x-seo-audit-direct: 1' -o /dev/null -w '%{http_code}' "$base$route")
+            normal=$(curl --max-time 10 -sS -A 'Mozilla/5.0 normal-user' -o /dev/null -w '%{http_code}' "$base$route")
+            direct=$(curl --max-time 10 -sS -A 'Mozilla/5.0 normal-user' -H 'x-seo-audit-direct: 1' -o /dev/null -w '%{http_code}' "$base$route")
             echo "$route normal=$normal direct-header=$direct"
             test "$normal" = "$direct"
           done
 
-          en_signin=$(curl -sS -A 'Mozilla/5.0 normal-user' -o /dev/null -w '%{http_code}' "$base/sign-in")
-          fr_signin=$(curl -sS -A 'Mozilla/5.0 normal-user' -o /dev/null -w '%{http_code}' "$base/fr/sign-in")
-          en_signup=$(curl -sS -A 'Mozilla/5.0 normal-user' -o /dev/null -w '%{http_code}' "$base/sign-up")
-          fr_signup=$(curl -sS -A 'Mozilla/5.0 normal-user' -o /dev/null -w '%{http_code}' "$base/fr/sign-up")
+          en_signin=$(curl --max-time 10 -sS -A 'Mozilla/5.0 normal-user' -o /dev/null -w '%{http_code}' "$base/sign-in")
+          fr_signin=$(curl --max-time 10 -sS -A 'Mozilla/5.0 normal-user' -o /dev/null -w '%{http_code}' "$base/fr/sign-in")
+          en_signup=$(curl --max-time 10 -sS -A 'Mozilla/5.0 normal-user' -o /dev/null -w '%{http_code}' "$base/sign-up")
+          fr_signup=$(curl --max-time 10 -sS -A 'Mozilla/5.0 normal-user' -o /dev/null -w '%{http_code}' "$base/fr/sign-up")
           echo "normal middleware symmetry: sign-in $en_signin/$fr_signin; sign-up $en_signup/$fr_signup"
           test "$en_signin" = "$fr_signin"
           test "$en_signup" = "$fr_signup"
