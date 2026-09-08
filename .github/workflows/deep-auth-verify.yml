@@ -42,7 +42,7 @@ jobs:
           SITE_URL: https://seo-ci.invalid
           NEXT_PUBLIC_APP_URL: http://127.0.0.1:3123
         run: |
-          pnpm start -- -p 3123 -H 127.0.0.1 > /tmp/next-audit.log 2>&1 &
+          pnpm exec next start -p 3123 -H 127.0.0.1 > /tmp/next-audit.log 2>&1 &
           echo $! > /tmp/next-audit.pid
           for i in {1..60}; do
             if curl --max-time 3 -fsS -A 'sage-prime-seo-audit' http://127.0.0.1:3123/ >/dev/null; then exit 0; fi
@@ -117,7 +117,7 @@ jobs:
           SITE_URL: http://127.0.0.1:3008
           NEXT_PUBLIC_APP_URL: http://127.0.0.1:3008
         run: |
-          pnpm start -- -p 3008 -H 127.0.0.1 > /tmp/next-normal.log 2>&1 &
+          pnpm exec next start -p 3008 -H 127.0.0.1 > /tmp/next-normal.log 2>&1 &
           echo $! > /tmp/next-normal.pid
           for i in {1..60}; do
             if curl --max-time 3 -sS -o /dev/null http://127.0.0.1:3008/; then exit 0; fi
