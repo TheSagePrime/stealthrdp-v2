@@ -1,6 +1,17 @@
 import type { KnipConfig } from 'knip';
 
 const config: KnipConfig = {
+  // Files invoked by package scripts or intentionally exported for child projects
+  entry: [
+    'scripts/seo-post-build-v2.mjs',
+    'scripts/seo-post-build.mjs',
+    'src/components/seo/Article.tsx',
+    'src/libs/seo/articles.ts',
+    'src/libs/seo/locale.ts',
+    'src/libs/seo/project.ts',
+    'src/libs/seo/research-artifacts.ts',
+    'src/utils/Helpers.ts',
+  ],
   // Files to exclude from Knip analysis
   ignore: [
     'checkly.config.ts',
@@ -21,7 +32,7 @@ const config: KnipConfig = {
     entry: ['tests/**/*.@(integ|e2e).ts'],
   },
   // Binaries to ignore during analysis
-  ignoreBinaries: ['tsx'],
+  ignoreBinaries: [],
   compilers: {
     css: (text: string) => [...text.matchAll(/(?<=@)import[^;]+/g)].join('\n'),
   },

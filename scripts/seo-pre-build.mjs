@@ -10,6 +10,7 @@ const { defaultSeoConfig } = await import(src('src/config/seo.ts'));
 const { resolveDeployEnv, isProductionDeployEnv } = await import(src('src/libs/seo/env.ts'));
 const { resolveSiteUrl } = await import(src('src/libs/seo/site-url.ts'));
 const { normalizePathname } = await import(src('src/libs/seo/normalize.ts'));
+const { articlePathFor, validateArticlePublication } = await import(src('src/libs/seo/articles.ts'));
 
 const reporter = createReporter();
 const deployEnv = resolveDeployEnv(process.env);
@@ -64,7 +65,11 @@ for (const marketing of config.routes.publicMarketing) {
 }
 
 const privatePrefixes = [...config.routes.privatePages, ...config.routes.privateApis];
-for (const publicRoute of [...config.routes.publicMarketing, ...config.routes.publicUtility, ...(config.routes.dynamicPublic ?? [])]) {
+for (const publicRoute of [
+  ...config.routes.publicMarketing,
+  ...config.routes.publicUtility,
+  ...(config.routes.dynamicPublic ?? []),
+]) {
   for (const prefix of privatePrefixes) {
     if (publicRoute === prefix || (prefix !== '/' && publicRoute.startsWith(`${prefix}/`))) {
       reporter.fail(publicRoute, 'private-overlap', `Public route overlaps private prefix ${prefix}`);
@@ -86,6 +91,65 @@ const files = [
   ...walkFiles(pagesDir, name => /\.(?:tsx|ts|jsx|js|mdx)$/.test(name)),
 ];
 const discovered = files.map(file => fileToAppRoute(path.relative(root, file)));
+const frameworkPatterns = files.map((file) => {
+  let value = path.relative(root, file).replaceAll('\\', '/');
+  value = value.replace(/^src\/app\//, '').replace(/^app\//, '');
+  value = value.replace(/\/page\.(tsx|ts|jsx|js)$/, '');
+  value = value.replace(/\/route\.(ts|js)$/, '');
+  value = value.replace(/\/\([^/]+\)/g, '').replace(/\/{2,}/g, '/');
+  value = value.replace(/^\/+|\/+$/g, '');
+  return value ? `/${value}` : '/';
+});
+
+function frameworkRouteMatches(pathname, routePattern) {
+  const pathSegments = pathname.split('/').filter(Boolean);
+  const patternSegments = routePattern.split('/').filter(Boolean);
+  let pathIndex = 0;
+
+  for (const segment of patternSegments) {
+    if (segment.startsWith('[[...') && segment.endsWith(']]')) {
+      return true;
+    }
+    if (segment.startsWith('[...') && segment.endsWith(']')) {
+      return pathIndex < pathSegments.length;
+    }
+    if (pathIndex >= pathSegments.length) {
+      return false;
+    }
+    if (!segment.startsWith('[') && segment !== pathSegments[pathIndex]) {
+      return false;
+    }
+    pathIndex += 1;
+  }
+
+  return pathIndex === pathSegments.length;
+}
+
+function routePatternExists(pathname, routes) {
+  return routeExists(pathname, routes) || routes.some(route => frameworkRouteMatches(pathname, route));
+}
+
+const articlePaths = new Set();
+for (const article of config.articles.publications) {
+  for (const issue of validateArticlePublication(article, config)) {
+    reporter.fail(article.slug, `article-${issue.code}`, issue.message);
+  }
+  const articlePath = articlePathFor(article, config);
+  if (articlePaths.has(articlePath)) {
+    reporter.fail(articlePath, 'article-duplicate', 'Article path is registered more than once');
+  }
+  articlePaths.add(articlePath);
+  if (!routePatternExists(articlePath, [...discovered, ...frameworkPatterns])) {
+    reporter.fail(articlePath, 'article-route-existence', 'Article registry entry has no matching framework route');
+  }
+}
+if (!routeExists(config.articles.feedPath, discovered)) {
+  reporter.fail(
+    config.articles.feedPath,
+    'rss-route-existence',
+    'Configured article feed has no matching framework route',
+  );
+}
 
 for (const group of ['publicMarketing', 'publicUtility', 'privatePages', 'privateApis']) {
   for (const route of config.routes[group]) {
@@ -95,7 +159,7 @@ for (const group of ['publicMarketing', 'publicUtility', 'privatePages', 'privat
   }
 }
 
-if (isProductionDeployEnv(deployEnv) && config.siteUrl.startsWith('http://')) {
+if (isProductionDeployEnv(deployEnv) && config.siteUrl.startsWith('http://') && !/^http:\/\/(?:localhost|127\.0\.0\.1)(?::\d+)?$/i.test(config.siteUrl)) {
   reporter.fail('/', 'site-url', 'Production SITE_URL must use HTTPS', 'https://', config.siteUrl);
 }
 

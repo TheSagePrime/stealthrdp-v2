@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 import type { SeoConfig } from '../../config/seo';
 import { AllLocales, I18nConfig } from '../../config/i18n';
+import { resolveSeoSite } from '../../config/seo';
 import { classifyPath, robotsForClass } from './classify';
 import { getSeoConfig } from './config';
 import { localizedPath } from './locale';
 import { canonicalUrlForPath } from './normalize';
-import { resolveSiteUrl } from './site-url';
 
 export type PageMetadataInput = {
   path: string;
@@ -24,7 +24,7 @@ function robotsMetadata(content: ReturnType<typeof robotsForClass>): Metadata['r
 
 export function createPageMetadata(input: PageMetadataInput): Metadata {
   const config = input.config ?? getSeoConfig();
-  const site = resolveSiteUrl(process.env, config.environment.deployEnv);
+  const site = resolveSeoSite(config);
   const routeClass = classifyPath(input.path, config);
   const locale = input.locale ?? I18nConfig.defaultLocale;
   const localized = localizedPath(input.path, locale, config);
@@ -42,10 +42,7 @@ export function createPageMetadata(input: PageMetadataInput): Metadata {
   }
 
   const languages = Object.fromEntries(
-    AllLocales.map(item => [
-      item,
-      canonicalUrlForPath(localizedPath(input.path, item, config), site, config),
-    ]),
+    AllLocales.map(item => [item, canonicalUrlForPath(localizedPath(input.path, item, config), site, config)]),
   );
 
   const metadata: Metadata = {

@@ -38,14 +38,7 @@ jobs:
           key: nextjs-${{ matrix.node-version }}-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('src/**') }}
 
       - name: Build and run SEO gates
-        run: |
-          if ! pnpm run build-local; then
-            if [ -f reports/seo-audit.txt ]; then
-              echo "===== SEO AUDIT ====="
-              cat reports/seo-audit.txt
-            fi
-            exit 1
-          fi
+        run: pnpm run build
         env:
           APP_ENV: production
           SEO_AUDIT_LOCAL: 'true'
