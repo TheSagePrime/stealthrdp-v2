@@ -1,0 +1,141 @@
+name: Deep Auth Verification
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  deep-auth:
+    name: Production auth and SEO smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      APP_ENV: production
+      SEO_AUDIT_LOCAL: 'true'
+      SITE_URL: https://seo-ci.invalid
+      NEXT_PUBLIC_APP_URL: http://127.0.0.1:3008
+      NEXT_PUBLIC_SENTRY_DISABLED: 'true'
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/sage_prime_starter
+      CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Confirm live Clerk test credentials exist
+        shell: bash
+        run: |
+          if [ -z "$CLERK_SECRET_KEY" ] || [ -z "$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY" ]; then
+            echo "::error::Repository Clerk secrets are not configured; live middleware verification cannot run."
+            exit 1
+          fi
+          echo "Repository Clerk secrets are configured. Values are not printed."
+
+      - name: Set up Node.js environment
+        uses: ./.github/actions/setup-project
+        with:
+          node-version: 24.x
+
+      - name: Production build with strict SEO gates
+        run: pnpm build
+
+      - name: Install Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Start production server
+        shell: bash
+        run: |
+          pnpm start -- -p 3008 -H 127.0.0.1 > /tmp/next-production.log 2>&1 &
+          echo $! > /tmp/next-production.pid
+          for i in {1..60}; do
+            if curl -fsS -A 'Mozilla/5.0 deep-auth-verification' http://127.0.0.1:3008/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/next-production.log
+          exit 1
+
+      - name: Verify auth, protected, SEO, and runtime routes
+        shell: bash
+        run: |
+          set -euo pipefail
+          base=http://127.0.0.1:3008
+          ua='Mozilla/5.0 deep-auth-verification'
+
+          expect_200() {
+            route="$1"
+            body="/tmp/body-$(echo "$route" | tr '/?' '__')"
+            code=$(curl -sS -A "$ua" -o "$body" -w '%{http_code}' "$base$route")
+            echo "$route -> $code"
+            test "$code" = '200'
+            if grep -qiE 'Internal Server Error|Application error' "$body"; then
+              echo "::error::$route returned an application error body"
+              exit 1
+            fi
+          }
+
+          expect_redirect_to_signin() {
+            route="$1"
+            expected="$2"
+            headers=$(mktemp)
+            code=$(curl -sS -A "$ua" -o /dev/null -D "$headers" -w '%{http_code}' "$base$route")
+            location=$(awk 'BEGIN{IGNORECASE=1} /^location:/{sub(/^[^:]*:[[:space:]]*/,""); gsub(/\r/,""); print; exit}' "$headers")
+            echo "$route -> $code -> $location"
+            case "$code" in 302|303|307|308) ;; *) echo "::error::$route did not redirect"; exit 1;; esac
+            echo "$location" | grep -F "$expected" >/dev/null
+          }
+
+          expect_200 /
+          expect_200 /fr
+          expect_200 /sign-in
+          expect_200 /sign-up
+          expect_200 /fr/sign-in
+          expect_200 /fr/sign-up
+          expect_200 /robots.txt
+          expect_200 /sitemap.xml
+          expect_200 /rss.xml
+          expect_200 /api/health
+
+          expect_redirect_to_signin /dashboard /sign-in
+          expect_redirect_to_signin /fr/dashboard /fr/sign-in
+          expect_redirect_to_signin /onboarding/organization-selection /sign-in
+          expect_redirect_to_signin /fr/onboarding/organization-selection /fr/sign-in
+
+      - name: Browser-render all auth routes through normal Clerk middleware
+        shell: bash
+        run: |
+          node <<'NODE'
+          const { chromium } = require('@playwright/test');
+          (async () => {
+            const browser = await chromium.launch({ headless: true });
+            const page = await browser.newPage({ userAgent: 'Mozilla/5.0 deep-auth-browser-verification' });
+            const routes = ['/sign-in', '/sign-up', '/fr/sign-in', '/fr/sign-up'];
+            for (const route of routes) {
+              const response = await page.goto(`http://127.0.0.1:3008${route}`, { waitUntil: 'domcontentloaded' });
+              if (!response || response.status() !== 200) throw new Error(`${route}: expected HTTP 200, got ${response?.status()}`);
+              await page.waitForTimeout(1000);
+              const html = await page.content();
+              if (/Internal Server Error|Application error/i.test(html)) throw new Error(`${route}: application error rendered`);
+              const title = await page.title();
+              if (!title.trim()) throw new Error(`${route}: missing document title`);
+              console.log(`${route}: 200, browser render OK, title=${JSON.stringify(title)}`);
+            }
+            await browser.close();
+          })().catch(err => { console.error(err); process.exit(1); });
+          NODE
+
+      - name: Stop production smoke server
+        if: always()
+        shell: bash
+        run: |
+          if [ -f /tmp/next-production.pid ]; then
+            kill "$(cat /tmp/next-production.pid)" 2>/dev/null || true
+          fi
+
+      - name: Run existing Playwright E2E suite with live Clerk test credentials
+        run: pnpm test:e2e -- --project=chromium
+
+      - name: Show production server log on failure
+        if: failure()
+        run: cat /tmp/next-production.log || true
