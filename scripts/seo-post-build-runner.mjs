@@ -71,12 +71,23 @@ function rewriteSyntheticClerkFailures() {
   return true;
 }
 
+function printFailureReport() {
+  if (!existsSync(reportTextPath)) return;
+  console.error('\n--- SEO audit findings ---');
+  console.error(readFileSync(reportTextPath, 'utf8').trim());
+  console.error('--- end SEO audit findings ---\n');
+}
+
 const child = spawn(
   process.execPath,
   ['--experimental-loader', './scripts/seo-ts-loader.mjs', 'scripts/seo-post-build-v2.mjs'],
   {
     cwd: root,
-    env: process.env,
+    // Post-build always audits the freshly built app on 127.0.0.1.
+    // Keep canonical generation based on SITE_URL, but never redirect the local
+    // audit crawl to the external production hostname. This makes GitHub CI,
+    // Coolify, and local production-equivalent builds use the same crawl path.
+    env: { ...process.env, SEO_AUDIT_LOCAL: 'true' },
     stdio: 'inherit',
   },
 );
@@ -94,4 +105,5 @@ if (isSyntheticCiAudit() && rewriteSyntheticClerkFailures()) {
   process.exit(0);
 }
 
+printFailureReport();
 process.exit(exitCode);
