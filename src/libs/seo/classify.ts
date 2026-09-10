@@ -2,7 +2,15 @@ import type { SeoConfig } from '../../config/seo';
 import { stripLocalePrefix } from './locale';
 import { normalizePathname } from './normalize';
 
-export type RouteClass = 'publicMarketing' | 'publicUtility' | 'privatePage' | 'privateApi' | 'unknown';
+export type RouteClass
+  = | 'publicMarketing'
+    | 'publicUtility'
+    | 'publicApi'
+    | 'privatePage'
+    | 'privateApi'
+    | 'webhookApi'
+    | 'systemApi'
+    | 'unknown';
 
 function matchesPrefix(pathname: string, prefix: string): boolean {
   if (pathname === prefix) {
@@ -20,6 +28,15 @@ export function classifyPath(pathname: string, config: SeoConfig): RouteClass {
 
   if (config.routes.privateApis.some(prefix => matchesPrefix(path, prefix))) {
     return 'privateApi';
+  }
+  if (config.routes.webhookApis.some(prefix => matchesPrefix(path, prefix))) {
+    return 'webhookApi';
+  }
+  if (config.routes.systemApis.some(prefix => matchesPrefix(path, prefix))) {
+    return 'systemApi';
+  }
+  if (config.routes.publicApis.some(prefix => matchesPrefix(path, prefix))) {
+    return 'publicApi';
   }
   if (config.routes.privatePages.some(prefix => matchesPrefix(path, prefix))) {
     return 'privatePage';
