@@ -36,7 +36,7 @@ jobs:
           pnpm exec next start -p 3008 -H 127.0.0.1 > /tmp/next-proxy-origin.log 2>&1 &
           echo $! > /tmp/next-proxy-origin.pid
           for i in {1..60}; do
-            if curl --max-time 3 -sS -o /dev/null -H 'Host: internal:3008' -H 'X-Forwarded-Host: next.antah.de' -H 'X-Forwarded-Proto: https' http://127.0.0.1:3008/api/health; then
+            if curl --max-time 3 -sS -o /dev/null -H 'Host: next.antah.de' -H 'X-Forwarded-Host: next.antah.de' -H 'X-Forwarded-Proto: https' http://127.0.0.1:3008/api/health; then
               exit 0
             fi
             sleep 1
@@ -57,7 +57,7 @@ jobs:
           }
 
           canonical_health=$(status \
-            -H 'Host: internal:3008' \
+            -H 'Host: next.antah.de' \
             -H 'X-Forwarded-Host: next.antah.de' \
             -H 'X-Forwarded-Proto: https' \
             "$base/api/health")
@@ -65,16 +65,24 @@ jobs:
           test "$canonical_health" = '200'
 
           canonical_home=$(status \
-            -H 'Host: internal:3008' \
+            -H 'Host: next.antah.de' \
             -H 'X-Forwarded-Host: next.antah.de' \
             -H 'X-Forwarded-Proto: https' \
             "$base/")
           echo "canonical forwarded / -> $canonical_home"
-          test "$canonical_home" != '308'
+          test "$canonical_home" = '200'
+
+          internal_host_health=$(status \
+            -H 'Host: internal:3008' \
+            -H 'X-Forwarded-Host: next.antah.de' \
+            -H 'X-Forwarded-Proto: https' \
+            "$base/api/health")
+          echo "internal Host + canonical forwarded host /api/health -> $internal_host_health"
+          test "$internal_host_health" = '200'
 
           wrong_host_headers=$(mktemp)
           wrong_host_code=$(curl --max-time 10 -sS -o /dev/null -D "$wrong_host_headers" -w '%{http_code}' \
-            -H 'Host: internal:3008' \
+            -H 'Host: next.antah.de' \
             -H 'X-Forwarded-Host: wrong.example' \
             -H 'X-Forwarded-Proto: https' \
             "$base/api/health")
@@ -85,7 +93,7 @@ jobs:
 
           wrong_proto_headers=$(mktemp)
           wrong_proto_code=$(curl --max-time 10 -sS -o /dev/null -D "$wrong_proto_headers" -w '%{http_code}' \
-            -H 'Host: internal:3008' \
+            -H 'Host: next.antah.de' \
             -H 'X-Forwarded-Host: next.antah.de' \
             -H 'X-Forwarded-Proto: http' \
             "$base/api/health?probe=1")
