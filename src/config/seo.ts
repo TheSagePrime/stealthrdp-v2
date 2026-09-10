@@ -37,8 +37,11 @@ export type SeoConfig = {
   routes: {
     publicMarketing: string[];
     publicUtility: string[];
+    publicApis: string[];
     privatePages: string[];
     privateApis: string[];
+    webhookApis: string[];
+    systemApis: string[];
     dynamicPublic?: string[];
   };
 };
@@ -72,8 +75,11 @@ export const defaultSeoConfig: SeoConfig = {
   routes: {
     publicMarketing: ['/'],
     publicUtility: ['/sign-in', '/sign-up'],
+    publicApis: ['/api/polar/checkout'],
     privatePages: ['/dashboard', '/onboarding'],
-    privateApis: [],
+    privateApis: ['/api/polar/portal'],
+    webhookApis: ['/api/polar/webhook'],
+    systemApis: ['/api/health', '/api/ready'],
     dynamicPublic: [],
   },
 };
