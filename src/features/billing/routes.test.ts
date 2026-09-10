@@ -12,8 +12,9 @@ vi.mock('@clerk/nextjs/server', () => ({
 
 vi.mock('@polar-sh/nextjs', () => ({
   Checkout: () => async () => Response.json({ error: 'POLAR_ADAPTER_CALLED' }),
-  CustomerPortal: ({ getCustomerId }: { getCustomerId: (request: NextRequest) => Promise<string> }) =>
-    async (request: NextRequest) => Response.json({ customerId: await getCustomerId(request) }),
+  CustomerPortal: (
+    { getCustomerId }: { getCustomerId: (request: NextRequest) => Promise<string> },
+  ) => async (request: NextRequest) => Response.json({ customerId: await getCustomerId(request) }),
   Webhooks: () => async () => Response.json({ error: 'POLAR_ADAPTER_CALLED' }),
 }));
 
@@ -65,9 +66,9 @@ describe('Polar routes', () => {
       privateMetadata: { polarCustomerId: 'customer_owned_by_session' },
     } as never);
 
-    const response = await portal(new NextRequest(
-      'http://localhost/api/polar/portal?customerId=customer_supplied_by_browser',
-    ));
+    const response = await portal(
+      new NextRequest('http://localhost/api/polar/portal?customerId=customer_supplied_by_browser'),
+    );
 
     expect(response.status).toBe(200);
     await expect(response.json()).resolves.toEqual({ customerId: 'customer_owned_by_session' });
