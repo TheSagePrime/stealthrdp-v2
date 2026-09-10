@@ -32,8 +32,9 @@ jobs:
         shell: bash
         env:
           SEO_AUDIT_LOCAL: 'false'
+          PORT: '3008'
         run: |
-          pnpm exec next start -p 3008 -H 127.0.0.1 > /tmp/next-proxy-origin.log 2>&1 &
+          pnpm start > /tmp/next-proxy-origin.log 2>&1 &
           echo $! > /tmp/next-proxy-origin.pid
           for i in {1..60}; do
             if curl --max-time 3 -sS -o /dev/null -H 'Host: next.antah.de' -H 'X-Forwarded-Host: next.antah.de' -H 'X-Forwarded-Proto: https' http://127.0.0.1:3008/api/health; then
