@@ -16,8 +16,7 @@ vi.mock('@clerk/nextjs/server', () => ({
 
 vi.mock('@polar-sh/nextjs', () => ({
   Checkout: () => async () => Response.json({ error: 'POLAR_ADAPTER_CALLED' }),
-  CustomerPortal: (options: PortalOptions) => async () =>
-    Response.json({ customerId: await options.getCustomerId() }),
+  CustomerPortal: (options: PortalOptions) => async () => Response.json({ customerId: await options.getCustomerId() }),
   Webhooks: () => async () => Response.json({ error: 'POLAR_ADAPTER_CALLED' }),
 }));
 
@@ -70,9 +69,7 @@ describe('Polar routes', () => {
       privateMetadata: { polarCustomerId: 'customer_owned_by_session' },
     } as never);
 
-    const request = new NextRequest(
-      'http://localhost/api/polar/portal?customerId=customer_supplied_by_browser',
-    );
+    const request = new NextRequest('http://localhost/api/polar/portal?customerId=customer_supplied_by_browser');
     const response = await portal(request);
 
     expect(response.status).toBe(200);
