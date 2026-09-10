@@ -1,0 +1,106 @@
+name: Proxy Origin Verification
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  proxy-origin:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      APP_ENV: production
+      SITE_URL: https://next.antah.de
+      NEXT_PUBLIC_APP_URL: https://next.antah.de
+      NEXT_PUBLIC_SENTRY_DISABLED: 'true'
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/sage_prime_starter
+      CLERK_SECRET_KEY: sk_test_c2VvLWNpLmludmFsaWQk
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_c2VvLWNpLmludmFsaWQk
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Node.js environment
+        uses: ./.github/actions/setup-project
+        with:
+          node-version: 24.x
+
+      - name: Production build with strict SEO gates
+        run: pnpm build
+
+      - name: Start production server
+        shell: bash
+        env:
+          SEO_AUDIT_LOCAL: 'false'
+        run: |
+          pnpm exec next start -p 3008 -H 127.0.0.1 > /tmp/next-proxy-origin.log 2>&1 &
+          echo $! > /tmp/next-proxy-origin.pid
+          for i in {1..60}; do
+            if curl --max-time 3 -sS -o /dev/null -H 'Host: internal:3008' -H 'X-Forwarded-Host: next.antah.de' -H 'X-Forwarded-Proto: https' http://127.0.0.1:3008/api/health; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/next-proxy-origin.log
+          exit 1
+
+      - name: Verify proxy-aware canonical behavior
+        shell: bash
+        env:
+          SEO_AUDIT_LOCAL: 'false'
+        run: |
+          set -euo pipefail
+          base=http://127.0.0.1:3008
+
+          status() {
+            curl --max-time 10 -sS -o /dev/null -w '%{http_code}' "$@"
+          }
+
+          canonical_health=$(status \
+            -H 'Host: internal:3008' \
+            -H 'X-Forwarded-Host: next.antah.de' \
+            -H 'X-Forwarded-Proto: https' \
+            "$base/api/health")
+          echo "canonical forwarded /api/health -> $canonical_health"
+          test "$canonical_health" = '200'
+
+          canonical_home=$(status \
+            -H 'Host: internal:3008' \
+            -H 'X-Forwarded-Host: next.antah.de' \
+            -H 'X-Forwarded-Proto: https' \
+            "$base/")
+          echo "canonical forwarded / -> $canonical_home"
+          test "$canonical_home" != '308'
+
+          wrong_host_headers=$(mktemp)
+          wrong_host_code=$(curl --max-time 10 -sS -o /dev/null -D "$wrong_host_headers" -w '%{http_code}' \
+            -H 'Host: internal:3008' \
+            -H 'X-Forwarded-Host: wrong.example' \
+            -H 'X-Forwarded-Proto: https' \
+            "$base/api/health")
+          wrong_host_location=$(awk 'BEGIN{IGNORECASE=1} /^location:/{sub(/^[^:]*:[[:space:]]*/,""); gsub(/\r/,""); print; exit}' "$wrong_host_headers")
+          echo "wrong forwarded host -> $wrong_host_code -> $wrong_host_location"
+          test "$wrong_host_code" = '308'
+          test "$wrong_host_location" = 'https://next.antah.de/api/health'
+
+          wrong_proto_headers=$(mktemp)
+          wrong_proto_code=$(curl --max-time 10 -sS -o /dev/null -D "$wrong_proto_headers" -w '%{http_code}' \
+            -H 'Host: internal:3008' \
+            -H 'X-Forwarded-Host: next.antah.de' \
+            -H 'X-Forwarded-Proto: http' \
+            "$base/api/health?probe=1")
+          wrong_proto_location=$(awk 'BEGIN{IGNORECASE=1} /^location:/{sub(/^[^:]*:[[:space:]]*/,""); gsub(/\r/,""); print; exit}' "$wrong_proto_headers")
+          echo "wrong forwarded proto -> $wrong_proto_code -> $wrong_proto_location"
+          test "$wrong_proto_code" = '308'
+          test "$wrong_proto_location" = 'https://next.antah.de/api/health?probe=1'
+
+      - name: Stop production server
+        if: always()
+        run: |
+          if [ -f /tmp/next-proxy-origin.pid ]; then
+            kill "$(cat /tmp/next-proxy-origin.pid)" 2>/dev/null || true
+          fi
+
+      - name: Show server log on failure
+        if: failure()
+        run: cat /tmp/next-proxy-origin.log || true
