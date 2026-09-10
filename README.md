@@ -95,6 +95,36 @@ reports/seo-audit.json
 
 Blocking post-build findings are also printed to the build log.
 
+## Route ownership
+
+Every application page and API route must be classified in `src/config/seo.ts`.
+An unclassified framework route is a build failure.
+
+Use the route groups for their intended purpose:
+
+- `publicMarketing`: indexable public pages.
+- `publicUtility`: public pages such as sign-in that must stay `noindex, follow`.
+- `publicApis`: intentionally public application APIs.
+- `privatePages`: Clerk-protected application pages.
+- `privateApis`: Clerk-protected APIs.
+- `webhookApis`: provider callbacks authenticated by provider signatures.
+- `systemApis`: health, readiness, and similar infrastructure endpoints.
+- `dynamicPublic`: public dynamic page prefixes.
+
+Do not solve a build failure by moving a route to the wrong group. Classify it by its real access and indexing behavior.
+
+## Polar customer portal
+
+`/api/polar/portal` is a private API. It never accepts a browser-supplied Polar customer ID as authority.
+
+The authenticated Clerk user must have its Polar customer ID stored server-side as:
+
+```text
+privateMetadata.polarCustomerId
+```
+
+Provision or synchronize this value when the application creates or links the Polar customer. Never expose Clerk private metadata to the client.
+
 ## Database
 
 Generate and apply migrations explicitly:
@@ -112,7 +142,7 @@ Create a new product from this repository.
 Replace the foundation homepage with the product-approved surface.
 Keep authentication, workspace, billing, health, deployment, and SEO boundaries intact.
 
-Update `src/config/seo.ts` when the product adds or removes public marketing, utility, private, dynamic, or article routes.
+Update `src/config/seo.ts` when the product adds or removes public marketing, utility, private, dynamic, article, or API routes.
 Do not copy fictional metrics into production.
 Do not commit secrets or provider credentials.
 
