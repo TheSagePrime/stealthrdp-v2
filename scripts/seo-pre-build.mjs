@@ -10,6 +10,7 @@ const { defaultSeoConfig } = await import(src('src/config/seo.ts'));
 const { resolveDeployEnv, isProductionDeployEnv } = await import(src('src/libs/seo/env.ts'));
 const { resolveSiteUrl } = await import(src('src/libs/seo/site-url.ts'));
 const { normalizePathname } = await import(src('src/libs/seo/normalize.ts'));
+const { classifyPath } = await import(src('src/libs/seo/classify.ts'));
 const { articlePathFor, validateArticlePublication } = await import(src('src/libs/seo/articles.ts'));
 
 const reporter = createReporter();
@@ -27,7 +28,18 @@ try {
   reporter.fail('/', 'site-url', error instanceof Error ? error.message : String(error));
 }
 
-const groups = ['publicMarketing', 'publicUtility', 'privatePages', 'privateApis', 'dynamicPublic'];
+const groups = [
+  'publicMarketing',
+  'publicUtility',
+  'publicApis',
+  'privatePages',
+  'privateApis',
+  'webhookApis',
+  'systemApis',
+  'dynamicPublic',
+];
+const apiGroups = ['publicApis', 'privateApis', 'webhookApis', 'systemApis'];
+const apiClasses = new Set(['publicApi', 'privateApi', 'webhookApi', 'systemApi']);
 const seen = new Map();
 
 function validateRoute(route, group) {
@@ -53,6 +65,30 @@ function validateRoute(route, group) {
 for (const group of groups) {
   for (const route of config.routes[group] ?? []) {
     validateRoute(route, group);
+  }
+}
+
+function prefixesOverlap(left, right) {
+  if (left === right) return true;
+  if (left === '/' || right === '/') return false;
+  return left.startsWith(`${right}/`) || right.startsWith(`${left}/`);
+}
+
+for (let leftIndex = 0; leftIndex < apiGroups.length; leftIndex += 1) {
+  const leftGroup = apiGroups[leftIndex];
+  for (let rightIndex = leftIndex + 1; rightIndex < apiGroups.length; rightIndex += 1) {
+    const rightGroup = apiGroups[rightIndex];
+    for (const leftRoute of config.routes[leftGroup] ?? []) {
+      for (const rightRoute of config.routes[rightGroup] ?? []) {
+        if (prefixesOverlap(leftRoute, rightRoute)) {
+          reporter.fail(
+            leftRoute,
+            'api-route-conflict',
+            `API route overlaps ${rightGroup}: ${rightRoute}`,
+          );
+        }
+      }
+    }
   }
 }
 
@@ -129,6 +165,46 @@ function routePatternExists(pathname, routes) {
   return routeExists(pathname, routes) || routes.some(route => frameworkRouteMatches(pathname, route));
 }
 
+const seoInfrastructureRoutes = new Set([
+  normalizePathname(config.articles.feedPath, config.url.trailingSlash),
+]);
+
+for (const route of discovered) {
+  const normalizedRoute = normalizePathname(route, config.url.trailingSlash);
+  if (seoInfrastructureRoutes.has(normalizedRoute)) {
+    continue;
+  }
+
+  const representativePath = normalizedRoute.replaceAll('*', '__dynamic__');
+  const routeClass = classifyPath(representativePath, config);
+  const isApiRoute = representativePath.startsWith('/api/');
+  const isApiClass = apiClasses.has(routeClass);
+
+  if (routeClass === 'unknown') {
+    reporter.fail(
+      normalizedRoute,
+      'route-classification',
+      'Framework route is not registered in src/config/seo.ts',
+    );
+    continue;
+  }
+
+  if (isApiRoute && !isApiClass) {
+    reporter.fail(
+      normalizedRoute,
+      'api-route-classification',
+      `API route is classified as ${routeClass} instead of an API class`,
+    );
+  }
+  if (!isApiRoute && isApiClass) {
+    reporter.fail(
+      normalizedRoute,
+      'route-classification',
+      `Non-API route is classified as ${routeClass}`,
+    );
+  }
+}
+
 const articlePaths = new Set();
 for (const article of config.articles.publications) {
   for (const issue of validateArticlePublication(article, config)) {
@@ -151,7 +227,15 @@ if (!routeExists(config.articles.feedPath, discovered)) {
   );
 }
 
-for (const group of ['publicMarketing', 'publicUtility', 'privatePages', 'privateApis']) {
+for (const group of [
+  'publicMarketing',
+  'publicUtility',
+  'publicApis',
+  'privatePages',
+  'privateApis',
+  'webhookApis',
+  'systemApis',
+]) {
   for (const route of config.routes[group]) {
     if (!route.includes('*') && !routeExists(route, discovered)) {
       reporter.fail(route, 'route-existence', `Configured ${group} route does not match a framework route`);

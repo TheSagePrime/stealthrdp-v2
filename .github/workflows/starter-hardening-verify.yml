@@ -1,0 +1,72 @@
+name: Starter Hardening Verification
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      CLERK_SECRET_KEY: sk_test_c2VvLWNpLmludmFsaWQk
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_c2VvLWNpLmludmFsaWQk
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/sage_prime_starter
+      APP_ENV: production
+      SITE_URL: https://seo-ci.invalid
+      SEO_AUDIT_LOCAL: 'true'
+      NEXT_PUBLIC_SENTRY_DISABLED: 'true'
+      NEXT_PUBLIC_APP_URL: http://localhost:3008
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: ./.github/actions/setup-project
+        with:
+          node-version: 24.x
+
+      - name: Type, lint, and format checks
+        run: |
+          pnpm exec next typegen
+          pnpm run check:types
+          pnpm run check:oxlint
+          pnpm run check:format
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Unit tests
+        run: pnpm run test -- --coverage
+
+      - name: Strict production build with SEO gates
+        run: pnpm run build
+
+      - name: Prove unclassified page is rejected
+        shell: bash
+        run: |
+          mkdir -p 'src/app/[locale]/(marketing)/unclassified-probe'
+          printf 'export default function Page() { return null; }\n' > 'src/app/[locale]/(marketing)/unclassified-probe/page.tsx'
+          if pnpm run seo:pre-build > /tmp/unclassified-page.log 2>&1; then
+            cat /tmp/unclassified-page.log
+            echo 'Expected unclassified page to fail SEO pre-build.' >&2
+            exit 1
+          fi
+          grep -q 'route-classification' reports/seo-audit.txt
+          rm -rf 'src/app/[locale]/(marketing)/unclassified-probe'
+
+      - name: Prove unclassified API is rejected
+        shell: bash
+        run: |
+          mkdir -p 'src/app/api/unclassified-probe'
+          printf "export function GET() { return Response.json({ ok: true }); }\n" > 'src/app/api/unclassified-probe/route.ts'
+          if pnpm run seo:pre-build > /tmp/unclassified-api.log 2>&1; then
+            cat /tmp/unclassified-api.log
+            echo 'Expected unclassified API to fail SEO pre-build.' >&2
+            exit 1
+          fi
+          grep -q 'route-classification' reports/seo-audit.txt
+          rm -rf 'src/app/api/unclassified-probe'
+
+      - name: Confirm clean tree passes pre-build again
+        run: pnpm run seo:pre-build
