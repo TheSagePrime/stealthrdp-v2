@@ -26,11 +26,15 @@ jobs:
         with:
           node-version: 24.x
 
-      - name: Type and lint checks
+      - name: Type, lint, and format checks
         run: |
           pnpm exec next typegen
           pnpm run check:types
           pnpm run check:oxlint
+          pnpm run check:format
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
 
       - name: Unit tests
         run: pnpm run test -- --coverage
