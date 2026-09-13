@@ -1,0 +1,38 @@
+name: Live OpenSEO Research Verification
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  live-research:
+    if: github.head_ref == 'suho/generic-seo-live-research'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      OPEN_SEO_MCP_URL: https://seo.antah.de/mcp
+      OPEN_SEO_PROJECT_ID: 6ddaa19c-a5a6-410a-a845-3d6dfe4869dc
+      OPEN_SEO_LOCATION_CODE: '2840'
+      OPEN_SEO_LANGUAGE_CODE: en
+      SEO_RESEARCH_PROJECT: StealthRDP
+      SEO_RESEARCH_CANONICAL_DOMAIN: https://www.stealthrdp.com
+      SEO_RESEARCH_COUNTRY: US
+      SEO_RESEARCH_LOCALE: en-US
+      SEO_RESEARCH_KEYWORDS: rdp hosting
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Node.js environment
+        uses: ./.github/actions/setup-project
+        with:
+          node-version: 24.x
+
+      - name: Verify adapter unit tests
+        run: pnpm exec vitest run src/libs/seo/open-seo-live-research.test.ts
+
+      - name: Run one real DataForSEO-backed OpenSEO research call
+        run: node --experimental-loader ./scripts/seo-ts-loader.mjs scripts/seo-live-research.mjs > live-search-demand-map.json
+
+      - name: Verify live artifact has provider evidence
+        run: node -e "const fs=require('fs');const x=JSON.parse(fs.readFileSync('live-search-demand-map.json','utf8'));if(x.artifact_type!=='search_demand_map'||!x.research_sources?.length||!x.opportunities?.length)process.exit(1);console.log(JSON.stringify({decision:x.decision,source:x.research_sources[0],opportunity:x.opportunities[0]},null,2));"
