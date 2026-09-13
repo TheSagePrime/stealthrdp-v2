@@ -174,7 +174,7 @@ export function buildSearchDemandMapFromMetrics(
         applies: true,
       },
     ],
-    opportunities: input.metrics.map((metric, index) => ({
+    opportunities: input.metrics.map((metric) => ({
       target_query: metric.keyword,
       intent: metric.main_intent ?? 'unknown',
       page_type:
@@ -182,7 +182,7 @@ export function buildSearchDemandMapFromMetrics(
           ? 'commercial-landing-page'
           : 'content-page',
       commercial_value: metric.cpc ?? 0,
-      serp_evidence: [evidence[index]],
+      serp_evidence: [evidenceForMetric(input.identity, metric, retrievedAt)],
       content_gap: 'Provider-backed demand is verified; run SERP research before drafting.',
       proposed_unique_value:
         'Use verified demand, difficulty, intent, and CPC to prioritize the page before implementation.',
