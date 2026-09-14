@@ -5,19 +5,19 @@ import {
 } from './open-seo-live-research';
 
 const identity = {
-  project: 'StealthRDP',
-  canonical_domain: 'https://www.stealthrdp.com',
+  project: 'Example SaaS',
+  canonical_domain: 'https://example.com',
   country: 'US',
   locale: 'en-US',
   open_seo: {
-    project_id: '6ddaa19c-a5a6-410a-a845-3d6dfe4869dc',
+    project_id: 'project-example',
     location_code: 2840,
     language_code: 'en',
   },
 } as const;
 
 describe('getOpenSeoKeywordMetrics', () => {
-  it('calls the real OpenSEO MCP tool contract and parses structured metrics', async () => {
+  it('calls the OpenSEO MCP tool contract and parses structured metrics', async () => {
     const fetchImpl = vi.fn(async (_url: string | URL | Request, init?: RequestInit) => {
       const request = JSON.parse(String(init?.body));
       expect(request.method).toBe('tools/call');
@@ -25,7 +25,7 @@ describe('getOpenSeoKeywordMetrics', () => {
         name: 'get_keyword_metrics',
         arguments: {
           projectId: identity.open_seo.project_id,
-          keywords: ['rdp hosting'],
+          keywords: ['example keyword'],
           locationCode: 2840,
           languageCode: 'en',
           includeMonthlyTrends: true,
@@ -43,7 +43,7 @@ describe('getOpenSeoKeywordMetrics', () => {
             structuredContent: {
               keywords: [
                 {
-                  keyword: 'rdp hosting',
+                  keyword: 'example keyword',
                   search_volume: 1000,
                   keyword_difficulty: 42,
                   main_intent: 'commercial',
@@ -61,13 +61,13 @@ describe('getOpenSeoKeywordMetrics', () => {
     });
 
     const rows = await getOpenSeoKeywordMetrics(
-      { mcpUrl: 'https://seo.antah.de/mcp', fetchImpl: fetchImpl as typeof fetch },
-      { open_seo: identity.open_seo, keywords: ['rdp hosting'] },
+      { mcpUrl: 'https://seo.example.com/mcp', fetchImpl: fetchImpl as typeof fetch },
+      { open_seo: identity.open_seo, keywords: ['example keyword'] },
     );
 
     expect(rows).toHaveLength(1);
     expect(rows[0]).toMatchObject({
-      keyword: 'rdp hosting',
+      keyword: 'example keyword',
       search_volume: 1000,
       keyword_difficulty: 42,
       main_intent: 'commercial',
@@ -89,10 +89,23 @@ describe('getOpenSeoKeywordMetrics', () => {
 
     await expect(
       getOpenSeoKeywordMetrics(
-        { mcpUrl: 'https://seo.antah.de/mcp', fetchImpl: fetchImpl as typeof fetch },
-        { open_seo: identity.open_seo, keywords: ['rdp hosting'] },
+        { mcpUrl: 'https://seo.example.com/mcp', fetchImpl: fetchImpl as typeof fetch },
+        { open_seo: identity.open_seo, keywords: ['example keyword'] },
       ),
     ).rejects.toThrow('provider failed');
+  });
+
+  it('rejects invalid keyword input before a provider call', async () => {
+    const fetchImpl = vi.fn();
+
+    await expect(
+      getOpenSeoKeywordMetrics(
+        { mcpUrl: 'https://seo.example.com/mcp', fetchImpl: fetchImpl as typeof fetch },
+        { open_seo: identity.open_seo, keywords: [] },
+      ),
+    ).rejects.toThrow();
+
+    expect(fetchImpl).not.toHaveBeenCalled();
   });
 });
 
@@ -103,7 +116,7 @@ describe('buildSearchDemandMapFromMetrics', () => {
       retrievedAt: '2026-09-14T00:00:00.000Z',
       metrics: [
         {
-          keyword: 'rdp hosting',
+          keyword: 'example keyword',
           search_volume: 1000,
           keyword_difficulty: 42,
           main_intent: 'commercial',
@@ -118,7 +131,7 @@ describe('buildSearchDemandMapFromMetrics', () => {
     expect(map.decision).toBe('produce');
     expect(map.identity).toEqual(identity);
     expect(map.opportunities[0]?.serp_evidence[0]?.reference).toContain(
-      'get_keyword_metrics/rdp%20hosting',
+      'get_keyword_metrics/example%20keyword',
     );
     expect(map.research_sources[0]?.note).toContain('volume=1000');
   });
