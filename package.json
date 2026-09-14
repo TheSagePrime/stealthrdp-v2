@@ -77,7 +77,7 @@
     "@electric-sql/pglite": "^0.5.3",
     "@electric-sql/pglite-socket": "^0.2.4",
     "@eslint-react/eslint-plugin": "^5.9.0",
-    "@lingual/i18n-check": "^9.0.5",
+    "@lingual/i18n-check": "^0.9.5",
     "@next/bundle-analyzer": "^16.2.9",
     "@next/eslint-plugin-next": "^16.2.9",
     "@playwright/test": "^1.61.0",
