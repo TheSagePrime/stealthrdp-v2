@@ -37,7 +37,7 @@
     "db-server:memory": "pglite-server -m 100 --run 'pnpm run db:migrate'",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "dotenv -c -- drizzle-kit migrate",
-    "db:studio": "dotenv -c -- drizzle-kit studio",
+    "db:studio": "drizzle-kit studio",
     "storybook": "storybook dev -p 6006",
     "storybook:test": "vitest run --config .storybook/vitest.config.ts",
     "build-storybook": "storybook build"
