@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import {
+  marketIdentitySchema,
   searchDemandMapSchema,
   type MarketIdentity,
   type OpenSeoEvidenceRef,
@@ -30,15 +31,23 @@ const keywordMetricSchema = z
   })
   .passthrough();
 
+const keywordListSchema = z
+  .array(z.string().trim().min(1).max(80))
+  .min(1)
+  .max(700)
+  .transform((keywords) => [...new Set(keywords)]);
+
+const structuredKeywordMetricsSchema = z
+  .object({
+    keywords: z.array(keywordMetricSchema),
+  })
+  .passthrough();
+
 const toolCallResultSchema = z
   .object({
     isError: z.boolean().optional(),
     content: z.array(z.unknown()).optional(),
-    structuredContent: z
-      .object({
-        keywords: z.array(keywordMetricSchema),
-      })
-      .passthrough(),
+    structuredContent: structuredKeywordMetricsSchema.optional(),
   })
   .passthrough();
 
@@ -74,6 +83,7 @@ export async function getOpenSeoKeywordMetrics(
   input: Pick<MarketIdentity, 'open_seo'> & { keywords: string[] },
 ): Promise<OpenSeoKeywordMetric[]> {
   const mcpUrl = new URL(options.mcpUrl).toString();
+  const keywords = keywordListSchema.parse(input.keywords);
   const headers: Record<string, string> = {
     Accept: 'application/json, text/event-stream',
     'Content-Type': 'application/json',
@@ -91,7 +101,7 @@ export async function getOpenSeoKeywordMetrics(
         name: 'get_keyword_metrics',
         arguments: {
           projectId: input.open_seo.project_id,
-          keywords: input.keywords,
+          keywords,
           locationCode: input.open_seo.location_code,
           languageCode: input.open_seo.language_code,
           includeMonthlyTrends: true,
@@ -122,6 +132,9 @@ export async function getOpenSeoKeywordMetrics(
   }
   if (!parsed.result || parsed.result.isError) {
     throw new Error('OpenSEO get_keyword_metrics returned an error result');
+  }
+  if (!parsed.result.structuredContent) {
+    throw new Error('OpenSEO get_keyword_metrics returned no structured content');
   }
 
   return parsed.result.structuredContent.keywords;
@@ -156,15 +169,16 @@ export function buildSearchDemandMapFromMetrics(
     throw new Error('OpenSEO returned no keyword metrics');
   }
 
+  const identity = marketIdentitySchema.parse(input.identity);
   const retrievedAt = input.retrievedAt ?? new Date().toISOString();
   const evidence = input.metrics.map((metric) =>
-    evidenceForMetric(input.identity, metric, retrievedAt),
+    evidenceForMetric(identity, metric, retrievedAt),
   );
 
   return searchDemandMapSchema.parse({
     artifact_type: 'search_demand_map',
     version: 1,
-    identity: input.identity,
+    identity,
     research_period: retrievedAt.slice(0, 10),
     research_sources: evidence,
     clusters: [
@@ -182,11 +196,11 @@ export function buildSearchDemandMapFromMetrics(
           ? 'commercial-landing-page'
           : 'content-page',
       commercial_value: metric.cpc ?? 0,
-      serp_evidence: [evidenceForMetric(input.identity, metric, retrievedAt)],
+      serp_evidence: [evidenceForMetric(identity, metric, retrievedAt)],
       content_gap: 'Provider-backed demand is verified; run SERP research before drafting.',
       proposed_unique_value:
         'Use verified demand, difficulty, intent, and CPC to prioritize the page before implementation.',
-      funnel_destination: input.identity.canonical_domain,
+      funnel_destination: identity.canonical_domain,
       cannibalization: 'Not assessed by this metrics-only validation; check existing routes before production.',
     })),
     decision: input.metrics.some((metric) => (metric.search_volume ?? 0) > 0) ? 'produce' : 'hold',
@@ -197,12 +211,14 @@ export async function runLiveOpenSeoResearch(
   options: OpenSeoClientOptions,
   input: LiveResearchInput,
 ): Promise<SearchDemandMap> {
+  const identity = marketIdentitySchema.parse(input.identity);
+  const keywords = keywordListSchema.parse(input.keywords);
   const metrics = await getOpenSeoKeywordMetrics(options, {
-    open_seo: input.identity.open_seo,
-    keywords: input.keywords,
+    open_seo: identity.open_seo,
+    keywords,
   });
   return buildSearchDemandMapFromMetrics({
-    identity: input.identity,
+    identity,
     metrics,
     retrievedAt: input.retrievedAt,
   });
