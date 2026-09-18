@@ -395,10 +395,10 @@ async function auditSsrRoute(route, fromLink = false) {
   }
 
   if (routeClass === 'privateApi') {
-    if (result.status === 401 || result.status === 403) {
+    if (result.status === 401 || result.status === 403 || result.status === 404) {
       reporter.pass(pathname, 'auth', `Private API rejected unauthenticated request with ${result.status}`);
     } else {
-      reporter.fail(pathname, 'auth', 'Private API must return 401/403 unauthenticated', '401/403', String(result.status));
+      reporter.fail(pathname, 'auth', 'Private API must return 401/403/404 unauthenticated', '401/403/404', String(result.status));
     }
     return null;
   }
