@@ -9,6 +9,8 @@ if (!base || !head) {
 const protectedExact = new Set([
   'stack.contract.json',
   'design.contract.json',
+  'security.contract.json',
+  'SECURITY.md',
   'ARCHITECTURE.md',
   'DESIGN_SYSTEM.md',
   'components.json',
@@ -22,6 +24,8 @@ const protectedExact = new Set([
   'scripts/check-stack-contract.mjs',
   'scripts/check-design-contract.mjs',
   'scripts/check-seo-contract.mjs',
+  'scripts/check-security-contract.mjs',
+  'scripts/test-security-guards.mjs',
   'src/components/ui/VisualContract.visual.test.tsx',
   'skills/saas-builder/SKILL.md',
   'src/styles/global.css',
@@ -33,6 +37,8 @@ const protectedPrefixes = [
   'src/libs/seo/',
   'scripts/seo-',
   'src/features/billing/',
+  'src/features/security/',
+  'src/features/data/',
   'src/app/robots.',
   'src/app/sitemap.'
 ];
