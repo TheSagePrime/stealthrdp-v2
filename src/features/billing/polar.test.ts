@@ -14,9 +14,12 @@ describe('Polar integration boundary', () => {
   });
 
   it('parses and deduplicates the product allowlist', () => {
-    expect(readPolarConfig({
-      POLAR_PRODUCT_IDS: '00000000-0000-4000-8000-000000000001,00000000-0000-4000-8000-000000000001',
-    }).allowedProductIds).toEqual(['00000000-0000-4000-8000-000000000001']);
+    expect(
+      readPolarConfig({
+        POLAR_PRODUCT_IDS:
+          '00000000-0000-4000-8000-000000000001,00000000-0000-4000-8000-000000000001',
+      }).allowedProductIds,
+    ).toEqual(['00000000-0000-4000-8000-000000000001']);
   });
 
   it('does not verify webhooks without a secret', () => {
@@ -31,13 +34,17 @@ describe('Polar integration boundary', () => {
     const payload = { type: 'subscription.active', data: { id: 'replay-test-unique-1' } };
     let calls = 0;
 
-    await expect(withPolarWebhookReplayGuard(payload, async () => {
-      calls += 1;
-    })).resolves.toBe(true);
+    await expect(
+      withPolarWebhookReplayGuard(payload, async () => {
+        calls += 1;
+      }),
+    ).resolves.toBe(true);
 
-    await expect(withPolarWebhookReplayGuard(payload, async () => {
-      calls += 1;
-    })).resolves.toBe(false);
+    await expect(
+      withPolarWebhookReplayGuard(payload, async () => {
+        calls += 1;
+      }),
+    ).resolves.toBe(false);
 
     expect(calls).toBe(1);
   });
