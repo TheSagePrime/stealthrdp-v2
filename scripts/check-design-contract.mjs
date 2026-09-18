@@ -1,11 +1,20 @@
 import fs from 'node:fs';
-import { execFileSync } from 'node:child_process';
 
 const readJson = path => JSON.parse(fs.readFileSync(path, 'utf8'));
 const contract = readJson('design.contract.json');
 const components = readJson(contract.componentSystem.configFile);
 const globalCss = fs.readFileSync(contract.tokens.source, 'utf8');
 const errors = [];
+
+function listSourceFiles(dir) {
+  const files = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const fullPath = `${dir}/${entry.name}`;
+    if (entry.isDirectory()) files.push(...listSourceFiles(fullPath));
+    else if (/\.(?:ts|tsx|js|jsx)$/.test(entry.name)) files.push(fullPath);
+  }
+  return files;
+}
 
 if (components.style !== contract.componentSystem.style) {
   errors.push(`shadcn style must remain ${contract.componentSystem.style}`);
@@ -25,27 +34,28 @@ for (const className of contract.protectedSeoStyles) {
   if (!globalCss.includes(`.${className}`)) errors.push(`protected SEO style missing: .${className}`);
 }
 
-const tracked = execFileSync('git', ['ls-files', 'src'], { encoding: 'utf8' })
-  .split('\n')
-  .filter(Boolean)
-  .filter(path => /\.(?:ts|tsx|js|jsx)$/.test(path));
+const sourceFiles = contract.sourceRoots
+  .filter(root => fs.existsSync(root))
+  .flatMap(root => listSourceFiles(root));
 
 const forbidden = new Set(contract.forbiddenUiPackages);
 const importPattern = /(?:from\s+|import\s*\()\s*['"]([^'"]+)['"]/g;
 const hexPattern = /#[0-9a-fA-F]{3,8}\b/g;
 const arbitraryHexPattern = /(?:bg|text|border|from|via|to|ring|fill|stroke)-\[#[0-9a-fA-F]{3,8}\]/g;
 const inlineColorPattern = /(?:color|backgroundColor|borderColor)\s*:\s*['"](?:#|rgb\(|rgba\(|hsl\(|hsla\()/g;
+const visualInlineStylePattern = /style=\{\{[^}]*\b(?:color|backgroundColor|borderColor|boxShadow|borderRadius|fontSize|fontFamily)\b[^}]*\}\}/g;
+const rawInteractivePattern = /<(?:button|input|select|textarea)\b/g;
 
 const reservedPrimitiveFiles = new Set(contract.componentSystem.reservedPrimitiveFiles ?? []);
 const primitiveRoot = contract.componentSystem.primitiveRoot ?? 'src/components/ui';
-for (const path of execFileSync('git', ['ls-files', 'src/components'], { encoding: 'utf8' }).split('\\n').filter(Boolean)) {
-  const basename = path.split('/').at(-1);
+for (const path of fs.existsSync('src/components') ? listSourceFiles('src/components') : []) {
+  const basename = path.split('/').pop();
   if (reservedPrimitiveFiles.has(basename) && !path.startsWith(`${primitiveRoot}/`)) {
     errors.push(`${path}: duplicates reserved UI primitive ${basename}; extend the canonical primitive instead`);
   }
 }
 
-for (const path of tracked) {
+for (const path of sourceFiles) {
   const source = fs.readFileSync(path, 'utf8');
 
   for (const match of source.matchAll(importPattern)) {
@@ -60,9 +70,14 @@ for (const path of tracked) {
 
   if (contract.rules.forbidHardcodedColorsOutsideTokenFiles) {
     const allowed = contract.tokens.hardcodedColorAllowedPaths.includes(path);
-    if (!allowed && hexPattern.test(source)) errors.push(`${path}: hardcoded hex color detected; use design tokens`);
+    if (!allowed && hexPattern.test(source)) {
+      errors.push(`${path}: hardcoded hex color detected; use design tokens`);
+    }
     hexPattern.lastIndex = 0;
-    if (!allowed && inlineColorPattern.test(source)) errors.push(`${path}: inline hardcoded color detected; use design tokens`);
+
+    if (!allowed && inlineColorPattern.test(source)) {
+      errors.push(`${path}: inline hardcoded color detected; use design tokens`);
+    }
     inlineColorPattern.lastIndex = 0;
   }
 
@@ -90,7 +105,7 @@ for (const path of tracked) {
 }
 
 if (errors.length) {
-  for (const error of errors) console.error(`[design-contract] ${error}`);
+  for (const error of [...new Set(errors)]) console.error(`[design-contract] ${error}`);
   process.exitCode = 1;
 } else {
   console.log('[design-contract] OK');
