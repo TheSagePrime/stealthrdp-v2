@@ -56,8 +56,12 @@ const webhookRoute = 'src/app/api/polar/webhook/route.ts';
 if (!fs.existsSync(contract.billing.webhookReplayGuard)) {
   errors.push(`missing webhook replay guard: ${contract.billing.webhookReplayGuard}`);
 }
-if (!fs.readFileSync(webhookRoute, 'utf8').includes('withPolarWebhookReplayGuard')) {
+const webhookSource = fs.readFileSync(webhookRoute, 'utf8');
+if (!webhookSource.includes('withPolarWebhookReplayGuard')) {
   errors.push(`${webhookRoute}: verified webhooks must pass through replay suppression before entitlement sync`);
+}
+if (!webhookSource.includes(`MAX_WEBHOOK_BYTES = ${Number(contract.billing.maxWebhookBytes).toLocaleString('en-US').replaceAll(',', '_')}`)) {
+  errors.push(`${webhookRoute}: webhook payload size limit must remain ${contract.billing.maxWebhookBytes} bytes`);
 }
 
 for (const route of contract.billing.sensitiveRoutes) {
@@ -158,6 +162,23 @@ for (const file of sourceFiles) {
   if (source.includes("from '@/utils/DBConnection'") && file !== 'src/libs/DB.ts') {
     errors.push(`${file}: DBConnection must only be consumed by the canonical DB module`);
   }
+}
+
+const dbSource = fs.readFileSync('src/utils/DBConnection.ts', 'utf8');
+if (contract.database.productionTlsRequired && !dbSource.includes('sslmode=require or stronger')) {
+  errors.push('src/utils/DBConnection.ts: production database transport must enforce TLS');
+}
+for (const marker of [
+  `max: ${contract.database.pool.max}`,
+  `connectionTimeoutMillis: ${contract.database.pool.connectionTimeoutMs.toLocaleString('en-US').replaceAll(',', '_')}`,
+  `query_timeout: ${contract.database.pool.queryTimeoutMs.toLocaleString('en-US').replaceAll(',', '_')}`,
+]) {
+  if (!dbSource.includes(marker)) errors.push(`src/utils/DBConnection.ts: missing bounded pool marker ${marker}`);
+}
+
+const readinessSource = fs.readFileSync('src/features/runtime/readiness.ts', 'utf8');
+if (!readinessSource.includes(`expiresAt: now + ${Number(contract.http.readinessCacheMs).toLocaleString('en-US').replaceAll(',', '_')}`)) {
+  errors.push('readiness DB probe must remain short-lived cached to bound public DB load');
 }
 
 const proxy = fs.readFileSync('src/proxy.ts', 'utf8');
