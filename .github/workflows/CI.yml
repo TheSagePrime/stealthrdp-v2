@@ -88,6 +88,9 @@ jobs:
       - name: Enforce architecture, design, and SEO contracts
         run: pnpm run check:architecture
 
+      - name: Prove contract rejection behavior
+        run: pnpm run test:contracts
+
       - if: github.event_name == 'pull_request'
         name: Require approval for protected architecture changes
         run: node scripts/check-governance.mjs "$BASE_SHA" "$HEAD_SHA"
