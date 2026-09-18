@@ -236,6 +236,9 @@ if (proxy.includes('createRouteMatcher')) {
 if (proxy.includes('routes.privatePages')) {
   errors.push('src/proxy.ts: SEO privatePages must not control authentication or authorization');
 }
+if (!proxy.includes("'/api(.*)'") ) {
+  errors.push('src/proxy.ts: all API paths must always receive Clerk middleware context');
+}
 if (contract.seo.forbidProductionLocalAuditProxy
   && (!proxy.includes('isProductionDeployEnv(config.environment.deployEnv)')
     || !proxy.includes("process.env.SEO_AUDIT_LOCAL !== 'true'")
