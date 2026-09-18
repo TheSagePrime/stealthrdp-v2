@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "name": "Sage Prime frontend design contract",
+  "componentSystem": {
+    "name": "shadcn/ui",
+    "configFile": "components.json",
+    "style": "new-york",
+    "uiAlias": "@/components/ui",
+    "iconLibrary": "lucide"
+  },
+  "tokens": {
+    "source": "src/styles/global.css",
+    "required": [
+      "--background",
+      "--foreground",
+      "--primary",
+      "--primary-foreground",
+      "--secondary",
+      "--secondary-foreground",
+      "--muted",
+      "--muted-foreground",
+      "--accent",
+      "--accent-foreground",
+      "--destructive",
+      "--border",
+      "--input",
+      "--ring"
+    ],
+    "hardcodedColorAllowedPaths": [
+      "src/styles/global.css"
+    ]
+  },
+  "allowedIconPackages": [
+    "lucide-react"
+  ],
+  "forbiddenUiPackages": [
+    "@fortawesome/fontawesome-svg-core",
+    "@fortawesome/free-solid-svg-icons",
+    "@fortawesome/react-fontawesome",
+    "@heroicons/react",
+    "@mui/material",
+    "@chakra-ui/react",
+    "antd",
+    "bootstrap",
+    "react-icons"
+  ],
+  "sourceRoots": [
+    "src"
+  ],
+  "rules": {
+    "forbidHardcodedColorsOutsideTokenFiles": true,
+    "forbidArbitraryTailwindHexColors": true,
+    "preferExistingComponentsBeforeCreatingNewOnes": true,
+    "requireResponsiveDesignForProductSurfaces": true,
+    "requireAccessibleInteractivePrimitives": true,
+    "requireVisualReviewForMaterialUiChanges": true
+  },
+  "protectedSeoStyles": [
+    "seo-article-publication-meta",
+    "seo-article-citation",
+    "seo-article-sources",
+    "seo-article-table-wrap",
+    "seo-article-index"
+  ]
+}
