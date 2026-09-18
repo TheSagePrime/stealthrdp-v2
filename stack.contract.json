@@ -82,7 +82,8 @@
     "src/utils/DBConnection.ts",
     "skills/saas-builder/SKILL.md",
     "security.contract.json",
-    "scripts/check-security-contract.mjs"
+    "scripts/check-security-contract.mjs",
+    "SECURITY.md"
   ],
   "seo": {
     "buildScript": "pnpm seo:pre-build && pnpm build:app && pnpm seo:post-build",
