@@ -3,35 +3,80 @@ import { clerkMiddleware } from '@clerk/nextjs/server';
 import createMiddleware from 'next-intl/middleware';
 import { NextResponse } from 'next/server';
 import { defaultSeoConfig } from './config/seo';
-import { clerkContextPagePrefixes } from './features/security/routing';
+import {
+  clerkContextPagePrefixes,
+  protectedPagePrefixes,
+  publicApiPaths,
+  sensitiveApiPaths,
+} from './features/security/routing';
 import { routing } from './libs/I18nRouting';
 import { getSeoConfig } from './libs/seo/config';
 import { isProductionDeployEnv } from './libs/seo/env';
-import { localizedRoutePaths } from './libs/seo/locale';
 import { normalizePathname } from './libs/seo/normalize';
 import { resolveSiteUrl } from './libs/seo/site-url';
 
 const handleI18nRouting = createMiddleware(routing);
 
+const auditPublicRoutes = new Set([
+  ...defaultSeoConfig.routes.publicMarketing,
+  ...defaultSeoConfig.routes.publicUtility,
+]);
+
 function logicalPath(pathname: string): string {
   const segments = pathname.split('/').filter(Boolean);
-  if (segments[0] && routing.locales.includes(segments[0] as (typeof routing.locales)[number])) {
+  if (
+    segments[0]
+    && routing.locales.includes(
+      segments[0] as (typeof routing.locales)[number],
+    )
+  ) {
     segments.shift();
   }
   return segments.length ? `/${segments.join('/')}` : '/';
 }
 
-function needsClerkPageContext(pathname: string): boolean {
+function matchesLogicalPrefix(
+  pathname: string,
+  prefixes: readonly string[],
+): boolean {
   const logical = logicalPath(pathname);
-  return clerkContextPagePrefixes.some(prefix =>
-    logical === prefix || logical.startsWith(`${prefix}/`),
+  return prefixes.some(
+    prefix =>
+      logical === prefix
+      || (prefix !== '/' && logical.startsWith(`${prefix}/`)),
   );
 }
 
-const auditPublicRoutes = new Set(
-  [...defaultSeoConfig.routes.publicMarketing, ...defaultSeoConfig.routes.publicUtility]
-    .flatMap(route => localizedRoutePaths(route, defaultSeoConfig)),
-);
+function isPublicApi(pathname: string): boolean {
+  return publicApiPaths.some(path => pathname === path);
+}
+
+function isSensitiveApi(pathname: string): boolean {
+  return sensitiveApiPaths.some(path => pathname === path);
+}
+
+function syntheticAuditEnvironment(): boolean {
+  if (process.env.CI !== 'true' || process.env.SEO_AUDIT_LOCAL !== 'true') {
+    return false;
+  }
+
+  try {
+    const config = getSeoConfig();
+    const site = resolveSiteUrl(process.env, config.environment.deployEnv);
+    return site.hostname.endsWith('.invalid');
+  } catch {
+    return false;
+  }
+}
+
+function isSyntheticAuditRequest(request: NextRequest): boolean {
+  return (
+    syntheticAuditEnvironment()
+    && /sage-prime-seo-audit/i.test(
+      request.headers.get('user-agent') || '',
+    )
+  );
+}
 
 function seoNormalizeRedirect(request: NextRequest): NextResponse | null {
   if (request.method !== 'GET' && request.method !== 'HEAD') {
@@ -42,12 +87,14 @@ function seoNormalizeRedirect(request: NextRequest): NextResponse | null {
     const config = getSeoConfig();
     const site = resolveSiteUrl(process.env, config.environment.deployEnv);
     const current = request.nextUrl;
-    const pathname = normalizePathname(current.pathname, config.url.trailingSlash);
+    const pathname = normalizePathname(
+      current.pathname,
+      config.url.trailingSlash,
+    );
     const target = current.clone();
     target.pathname = pathname;
 
-    const syntheticAuditOrigin = site.hostname.endsWith('.invalid');
-    const localAudit = process.env.SEO_AUDIT_LOCAL === 'true' || syntheticAuditOrigin;
+    const localAudit = syntheticAuditEnvironment();
     if (isProductionDeployEnv(config.environment.deployEnv) && !localAudit) {
       target.protocol = site.protocol;
       target.hostname = site.hostname;
@@ -67,13 +114,7 @@ function seoNormalizeRedirect(request: NextRequest): NextResponse | null {
 }
 
 function directAuditLogicalPath(request: NextRequest): string | null {
-  const config = getSeoConfig();
-  const site = resolveSiteUrl(process.env, config.environment.deployEnv);
-  const syntheticAuditOrigin = site.hostname.endsWith('.invalid');
-  if (
-    process.env.SEO_AUDIT_LOCAL !== 'true'
-    || (isProductionDeployEnv(config.environment.deployEnv) && !syntheticAuditOrigin)
-  ) {
+  if (!syntheticAuditEnvironment()) {
     return null;
   }
 
@@ -88,16 +129,20 @@ function directAuditLogicalPath(request: NextRequest): string | null {
     return null;
   }
 
-  if (!/sage-prime-seo-audit/i.test(request.headers.get('user-agent') || '')) {
+  if (!isSyntheticAuditRequest(request)) {
     return null;
   }
 
-  return auditPublicRoutes.has(request.nextUrl.pathname) ? request.nextUrl.pathname : null;
+  return auditPublicRoutes.has(request.nextUrl.pathname)
+    ? request.nextUrl.pathname
+    : null;
 }
 
-async function handleLocalSeoAudit(request: NextRequest): Promise<Response | null> {
-  const logicalPathname = directAuditLogicalPath(request);
-  if (!logicalPathname || !auditPublicRoutes.has(logicalPathname)) {
+async function handleLocalSeoAudit(
+  request: NextRequest,
+): Promise<Response | null> {
+  const logical = directAuditLogicalPath(request);
+  if (!logical || !auditPublicRoutes.has(logical)) {
     return null;
   }
 
@@ -109,7 +154,9 @@ async function handleLocalSeoAudit(request: NextRequest): Promise<Response | nul
   target.protocol = 'http:';
   target.hostname = '127.0.0.1';
   target.port = '3123';
-  target.pathname = `/${routing.defaultLocale}${logicalPathname === '/' ? '' : logicalPathname}`;
+  target.pathname = `/${routing.defaultLocale}${
+    logical === '/' ? '' : logical
+  }`;
 
   const headers = new Headers(request.headers);
   headers.set('x-seo-audit-direct', '1');
@@ -121,6 +168,27 @@ async function handleLocalSeoAudit(request: NextRequest): Promise<Response | nul
     headers,
     redirect: 'manual',
   });
+}
+
+function syntheticPrivateResponse(request: NextRequest): Response | null {
+  if (!isSyntheticAuditRequest(request)) {
+    return null;
+  }
+
+  if (
+    isSensitiveApi(request.nextUrl.pathname)
+    || matchesLogicalPrefix(
+      request.nextUrl.pathname,
+      protectedPagePrefixes,
+    )
+  ) {
+    return NextResponse.json(
+      { error: 'UNAUTHORIZED' },
+      { status: 401 },
+    );
+  }
+
+  return null;
 }
 
 export default async function proxy(
@@ -137,23 +205,41 @@ export default async function proxy(
     return localSeoAudit;
   }
 
+  const syntheticPrivate = syntheticPrivateResponse(request);
+  if (syntheticPrivate) {
+    return syntheticPrivate;
+  }
+
   if (request.nextUrl.pathname.startsWith('/api/')) {
-    // Clerk middleware provides request auth context. Sensitive Route Handlers
-    // authenticate and authorize at the resource boundary.
-    return clerkMiddleware(async () => NextResponse.next())(request, event);
+    if (isPublicApi(request.nextUrl.pathname)) {
+      return NextResponse.next();
+    }
+
+    // Clerk middleware supplies auth context only. Each sensitive Route
+    // Handler authenticates and authorizes at the resource boundary.
+    return clerkMiddleware(async () => NextResponse.next())(
+      request,
+      event,
+    );
   }
 
-  if (needsClerkPageContext(request.nextUrl.pathname)) {
-    return clerkMiddleware(async (_auth, req) => handleI18nRouting(req))(request, event);
+  if (
+    matchesLogicalPrefix(
+      request.nextUrl.pathname,
+      clerkContextPagePrefixes,
+    )
+  ) {
+    return clerkMiddleware(
+      async (_auth, req) => handleI18nRouting(req),
+    )(request, event);
   }
 
-  // Public marketing/utility pages do not need Clerk request context.
   return handleI18nRouting(request);
 }
 
 export const config = {
   matcher: [
-    '/((?!_next|_vercel|.*\\..*).*)',
+    '/((?!_next|_vercel|monitoring|.*\\..*).*)',
     '/api(.*)',
   ],
 };
