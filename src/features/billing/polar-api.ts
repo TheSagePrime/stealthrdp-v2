@@ -1,3 +1,4 @@
+import 'server-only';
 import { z } from 'zod';
 import type { AuthenticatedPrincipal } from '@/features/security/principal';
 import { readPolarConfig } from './polar';
