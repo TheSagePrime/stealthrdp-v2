@@ -41,6 +41,17 @@ for (const route of sourceFiles.filter(file => /^src\/app\/api\/.+\/route\.ts$/.
   }
 }
 
+for (const page of contract.authentication.protectedPageFiles ?? []) {
+  if (!fs.existsSync(page)) {
+    errors.push(`${page}: protected page missing`);
+    continue;
+  }
+  const source = fs.readFileSync(page, 'utf8');
+  if (!source.includes('await auth.protect()')) {
+    errors.push(`${page}: protected page must enforce Clerk auth at the resource boundary`);
+  }
+}
+
 const webhookRoute = 'src/app/api/polar/webhook/route.ts';
 if (!fs.existsSync(contract.billing.webhookReplayGuard)) {
   errors.push(`missing webhook replay guard: ${contract.billing.webhookReplayGuard}`);
