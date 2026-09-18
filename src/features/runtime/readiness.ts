@@ -10,35 +10,52 @@ export type ReadinessResponse = {
 
 const defaultProbe = () => db.execute(sql`select 1`);
 let cached: { response: ReadinessResponse; expiresAt: number } | undefined;
+let inFlight: Promise<ReadinessResponse> | undefined;
 
-export async function getReadinessResponse(probe: () => Promise<unknown> = defaultProbe): Promise<ReadinessResponse> {
-  const now = Date.now();
-  if (probe === defaultProbe && cached && cached.expiresAt > now) {
-    return cached.response;
-  }
-
-  let response: ReadinessResponse;
-
+async function executeProbe(probe: () => Promise<unknown>): Promise<ReadinessResponse> {
   try {
     await Promise.race([
       probe(),
       new Promise((_, reject) => setTimeout(() => reject(new Error('readiness timeout')), 2_000)),
     ]);
 
-    response = {
+    return {
       status: 'ready',
       checks: { database: 'ready' },
     };
   } catch {
-    response = {
+    return {
       status: 'not_ready',
       checks: { database: 'unavailable' },
     };
   }
+}
 
-  if (probe === defaultProbe) {
-    cached = { response, expiresAt: now + 5_000 };
+export async function getReadinessResponse(
+  probe: () => Promise<unknown> = defaultProbe,
+): Promise<ReadinessResponse> {
+  const now = Date.now();
+
+  if (probe !== defaultProbe) {
+    return executeProbe(probe);
   }
 
-  return response;
+  if (cached && cached.expiresAt > now) {
+    return cached.response;
+  }
+
+  if (inFlight) {
+    return inFlight;
+  }
+
+  inFlight = executeProbe(defaultProbe)
+    .then((response) => {
+      cached = { response, expiresAt: Date.now() + 5_000 };
+      return response;
+    })
+    .finally(() => {
+      inFlight = undefined;
+    });
+
+  return inFlight;
 }
