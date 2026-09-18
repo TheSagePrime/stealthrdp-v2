@@ -136,9 +136,17 @@ for (const [name, minimum] of Object.entries(contract.supplyChain.minimumDepende
   }
 }
 
+const playwrightConfig = fs.readFileSync('playwright.config.ts', 'utf8');
+if (!playwrightConfig.includes(`trace: '${contract.privacy.e2eTracePolicy}'`)) {
+  errors.push('playwright.config.ts: authenticated traces must be retained only on failure');
+}
+
 const ci = fs.readFileSync('.github/workflows/CI.yml', 'utf8');
 if (!/^permissions:\s*\n\s+contents:\s+read/m.test(ci)) {
   errors.push('.github/workflows/CI.yml: default GitHub token permissions must be contents: read');
+}
+if (!ci.includes(`retention-days: ${contract.privacy.maxDiagnosticArtifactRetentionDays}`)) {
+  errors.push('.github/workflows/CI.yml: diagnostic artifact retention exceeds privacy contract');
 }
 if (!ci.includes('pnpm audit --prod --audit-level high')) {
   errors.push('.github/workflows/CI.yml: production dependency audit must run in CI');
