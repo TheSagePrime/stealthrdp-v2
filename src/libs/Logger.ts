@@ -1,3 +1,4 @@
+import 'server-only';
 import type { AsyncSink, LogRecord } from '@logtape/logtape';
 import { configure, fromAsyncSink, getConsoleSink, getJsonLinesFormatter, getLogger } from '@logtape/logtape';
 import { Env } from './Env';
