@@ -23,9 +23,11 @@ describe('runtime endpoints', () => {
       checks: { database: 'ready' },
     });
 
-    await expect(getReadinessResponse(async () => {
-      throw new Error('database unavailable');
-    })).resolves.toEqual({
+    await expect(
+      getReadinessResponse(async () => {
+        throw new Error('database unavailable');
+      }),
+    ).resolves.toEqual({
       status: 'not_ready',
       checks: { database: 'unavailable' },
     });
