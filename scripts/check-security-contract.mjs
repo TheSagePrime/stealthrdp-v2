@@ -91,7 +91,7 @@ for (const route of contract.billing.sensitiveRoutes) {
   if (!source.includes(`export async function ${contract.billing.sensitiveRouteMethod}`)) {
     errors.push(`${route}: billing session creation must use ${contract.billing.sensitiveRouteMethod}`);
   }
-  if (contract.billing.sameOriginRequired && !source.includes('isSameOriginMutation')) {
+  if (contract.billing.sameOriginRequired && !source.includes('isSameOriginMutation(request)')) {
     errors.push(`${route}: billing session creation must enforce same-origin requests`);
   }
   for (const selector of contract.billing.forbiddenClientSelectors) {
