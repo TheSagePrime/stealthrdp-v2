@@ -34,7 +34,9 @@
       "external_customer_id"
     ],
     "webhookReplayGuard": "src/features/billing/webhook-replay.ts",
-    "maxWebhookBytes": 1048576
+    "maxWebhookBytes": 1048576,
+    "sensitiveRouteMethod": "POST",
+    "sameOriginRequired": true
   },
   "privacy": {
     "sentryDefaultPii": false,
@@ -103,6 +105,7 @@
     "src/utils/DBConnection.ts",
     "src/libs/DB.ts",
     "src/features/security/principal.ts",
-    "src/features/billing/polar-api.ts"
+    "src/features/billing/polar-api.ts",
+    "src/features/security/origin.ts"
   ]
 }
