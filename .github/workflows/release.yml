@@ -17,7 +17,7 @@ jobs:
     name: Create a new release
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: vars.ENABLE_SEMANTIC_RELEASE == 'true'
+    if: vars.ENABLE_SEMANTIC_RELEASE == 'true' && github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main'
 
     permissions:
       contents: write # to be able to publish a GitHub release
@@ -25,9 +25,13 @@ jobs:
       pull-requests: write # to be able to comment on released pull requests
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
+          ref: ${{ github.event.workflow_run.head_sha }}
           fetch-depth: 0
+
+      - name: Recreate trusted main branch at tested SHA
+        run: git checkout -B main "${{ github.event.workflow_run.head_sha }}"
 
       - name: Set up Node.js environment
         uses: ./.github/actions/setup-project
@@ -35,7 +39,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Verify the integrity of provenance attestations and registry signatures for installed dependencies
-        run: pnpm audit --prod
+        run: pnpm audit --prod --audit-level high
 
       - name: Release
         run: pnpm exec semantic-release
