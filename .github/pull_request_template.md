@@ -16,6 +16,8 @@ Describe what changed and why.
 - [ ] Mobile and desktop behavior were reviewed where relevant
 - [ ] Accessibility/keyboard/focus behavior was preserved
 - [ ] Material UI changes include visual evidence where relevant
+- [ ] Storybook accessibility/component tests pass
+- [ ] Visual regression references were not changed unless the visual change was intentional
 
 ## SEO
 
@@ -41,6 +43,8 @@ Describe what changed and why.
 - [ ] `pnpm check:oxlint`
 - [ ] `pnpm check:format`
 - [ ] `pnpm test`
+- [ ] `pnpm storybook:test`
+- [ ] `pnpm test:visual`
 - [ ] `pnpm build`
 
 ## Architecture / SEO changes requiring owner approval
