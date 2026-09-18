@@ -11,29 +11,6 @@ import { resolveSiteUrl } from './libs/seo/site-url';
 
 const handleI18nRouting = createMiddleware(routing);
 
-function logicalPath(pathname: string): string {
-  const segments = pathname.split('/').filter(Boolean);
-  if (segments[0] && routing.locales.includes(segments[0] as (typeof routing.locales)[number])) {
-    segments.shift();
-  }
-  return segments.length ? `/${segments.join('/')}` : '/';
-}
-
-function matchesPrefix(pathname: string, prefixes: readonly string[]): boolean {
-  const logical = logicalPath(pathname);
-  return prefixes.some(prefix =>
-    logical === prefix || (prefix !== '/' && logical.startsWith(`${prefix}/`)),
-  );
-}
-
-function isProtectedPage(request: NextRequest): boolean {
-  return matchesPrefix(request.nextUrl.pathname, defaultSeoConfig.routes.privatePages);
-}
-
-function isAuthPage(request: NextRequest): boolean {
-  return matchesPrefix(request.nextUrl.pathname, ['/sign-in', '/sign-up']);
-}
-
 const auditPublicRoutes = new Set([
   ...defaultSeoConfig.routes.publicMarketing,
   ...defaultSeoConfig.routes.publicUtility,
@@ -149,26 +126,14 @@ export default async function proxy(
   }
 
   if (request.nextUrl.pathname.startsWith('/api/')) {
-    // API routes receive Clerk auth context, but sensitive Route Handlers
-    // must enforce authentication and authorization themselves.
+    // Clerk middleware provides request auth context. Sensitive Route Handlers
+    // authenticate and authorize at the resource boundary.
     return clerkMiddleware(async () => NextResponse.next())(request, event);
   }
 
-  // Clerk keyless mode doesn't work with i18n, this is why we need to run the middleware conditionally
-  if (isAuthPage(request) || isProtectedPage(request)) {
-    return clerkMiddleware(async (auth, req) => {
-      // Check if the current route is protected and requires authentication.
-      // If user is not authenticated, redirect them to the sign-in page with proper locale.
-      if (isProtectedPage(req)) {
-        const signInUrl = new URL(`${localePrefix(req.nextUrl.pathname)}/sign-in`, req.url);
-        await auth.protect({ unauthenticatedUrl: signInUrl.toString() });
-      }
-
-      return handleI18nRouting(req);
-    })(request, event);
-  }
-
-  return handleI18nRouting(request);
+  // Pages receive Clerk request context, but authorization lives in the
+  // relevant page/layout resource rather than in SEO route classification.
+  return clerkMiddleware(async (_auth, req) => handleI18nRouting(req))(request, event);
 }
 
 export const config = {
