@@ -73,7 +73,8 @@ export const defaultSeoConfig: SeoConfig = {
     publicMarketing: ['/'],
     publicUtility: ['/sign-in', '/sign-up'],
     privatePages: ['/dashboard', '/onboarding'],
-    privateApis: [],
+    // Classification for robots/noindex/auditing only. Authorization lives in each Route Handler.
+    privateApis: ['/api/polar/checkout', '/api/polar/portal'],
     dynamicPublic: [],
   },
 };
