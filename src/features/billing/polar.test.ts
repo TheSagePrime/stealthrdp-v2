@@ -16,8 +16,7 @@ describe('Polar integration boundary', () => {
   it('parses and deduplicates the product allowlist', () => {
     expect(
       readPolarConfig({
-        POLAR_PRODUCT_IDS:
-          '00000000-0000-4000-8000-000000000001,00000000-0000-4000-8000-000000000001',
+        POLAR_PRODUCT_IDS: '00000000-0000-4000-8000-000000000001,00000000-0000-4000-8000-000000000001',
       }).allowedProductIds,
     ).toEqual(['00000000-0000-4000-8000-000000000001']);
   });
