@@ -33,7 +33,7 @@ function parseProductIds(value: string | undefined): string[] {
 
   const ids = value
     .split(',')
-    .map(item => item.trim())
+    .map((item) => item.trim())
     .filter(Boolean);
 
   const schema = z.array(z.string().uuid());
@@ -46,15 +46,11 @@ function parseProductIds(value: string | undefined): string[] {
   return [...new Set(result.data)];
 }
 
-export function readPolarConfig(
-  environment: Record<string, string | undefined> = process.env,
-): PolarConfig {
+export function readPolarConfig(environment: Record<string, string | undefined> = process.env): PolarConfig {
   const result = polarEnvironmentSchema.safeParse(environment);
 
   if (!result.success) {
-    throw new Error(
-      `Invalid Polar configuration: ${result.error.issues.map(issue => issue.message).join('; ')}`,
-    );
+    throw new Error(`Invalid Polar configuration: ${result.error.issues.map((issue) => issue.message).join('; ')}`);
   }
 
   const server = result.data.POLAR_SERVER;
