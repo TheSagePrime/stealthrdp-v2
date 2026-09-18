@@ -62,7 +62,10 @@
     "replayOptInEnv": "NEXT_PUBLIC_SENTRY_REPLAY_ENABLED",
     "e2eTracePolicy": "retain-on-failure",
     "maxDiagnosticArtifactRetentionDays": 1,
-    "disableFrameworkTelemetryInCi": true
+    "disableFrameworkTelemetryInCi": true,
+    "sourceMapUploadOptInEnv": "SENTRY_SOURCE_MAP_UPLOAD_ENABLED",
+    "sentryTunnelDefault": false,
+    "componentAnnotationDefault": false
   },
   "http": {
     "requiredHeaders": [
