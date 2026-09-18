@@ -81,6 +81,20 @@ Do not print secrets in logs, errors, CI output, screenshots, artifacts, or tele
 - secret-bearing jobs run only from trusted repository code
 - releases run only after successful CI and use the exact tested SHA
 
+## Coolify production posture
+
+The repository cannot enforce host/container policy without a deployment manifest, so Coolify must enforce these controls at runtime:
+
+- terminate HTTPS and redirect plain HTTP before application traffic reaches the service
+- keep Clerk, Polar, Sentry build credentials, Better Stack credentials, and `DATABASE_URL` in runtime secret storage rather than Git or image build arguments
+- expose only the application HTTP port; never expose Neon/PostgreSQL or local PGlite storage as a public service
+- use `/api/health` for liveness and `/api/ready` for readiness
+- configure CPU/memory limits and restart policy so abuse or memory growth cannot exhaust the host
+- run the application as an unprivileged user when the selected Coolify build/runtime supports it
+- perform reviewed database migrations as an explicit deployment/release step rather than an uncontrolled request-time action
+- preserve trusted reverse-proxy host/protocol handling so origin checks and HTTPS canonicalization see the real public application origin
+- do not enable multiple application replicas until rate limiting and webhook idempotency that require cross-instance consistency have a shared/durable store
+
 ## Verification
 
 Run:
