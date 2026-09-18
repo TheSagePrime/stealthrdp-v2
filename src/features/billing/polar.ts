@@ -1,3 +1,4 @@
+import 'server-only';
 import { validateEvent } from '@polar-sh/sdk/webhooks';
 import { z } from 'zod';
 
