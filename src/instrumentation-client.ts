@@ -2,7 +2,7 @@ import * as Sentry from '@sentry/nextjs';
 
 const replayEnabled = process.env.NEXT_PUBLIC_SENTRY_REPLAY_ENABLED === 'true';
 
-if (process.env.SENTRY_ENABLED === 'true' && !process.env.NEXT_PUBLIC_SENTRY_DISABLED) {
+if (process.env.NEXT_PUBLIC_SENTRY_ENABLED === 'true' && !process.env.NEXT_PUBLIC_SENTRY_DISABLED) {
   Sentry.init({
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
     integrations: [
