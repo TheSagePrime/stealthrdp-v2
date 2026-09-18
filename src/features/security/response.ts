@@ -2,13 +2,10 @@ import 'server-only';
 
 const sensitiveHeaders = {
   'Cache-Control': 'no-store, private',
-  'Pragma': 'no-cache',
+  Pragma: 'no-cache',
 } as const;
 
-export function sensitiveJson(
-  body: unknown,
-  init: { status: number; headers?: HeadersInit },
-): Response {
+export function sensitiveJson(body: unknown, init: { status: number; headers?: HeadersInit }): Response {
   const headers = new Headers(init.headers);
   for (const [key, value] of Object.entries(sensitiveHeaders)) {
     headers.set(key, value);
