@@ -1,7 +1,10 @@
+import { fileURLToPath } from 'node:url';
 import react from '@vitejs/plugin-react';
 import { playwright } from '@vitest/browser-playwright';
 import { loadEnv } from 'vite';
 import { defineConfig } from 'vitest/config';
+
+const serverOnlyMock = fileURLToPath(new URL('./tests/mocks/server-only.ts', import.meta.url));
 
 export default defineConfig({
   plugins: [react()],
@@ -16,6 +19,11 @@ export default defineConfig({
     projects: [
       {
         extends: true,
+        resolve: {
+          alias: {
+            'server-only': serverOnlyMock,
+          },
+        },
         test: {
           name: 'unit',
           include: ['src/**/*.test.{js,ts}'],
