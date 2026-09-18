@@ -98,8 +98,8 @@ for (const route of contract.billing.sensitiveRoutes) {
     errors.push(`${route}: billing session creation must enforce same-origin requests`);
   }
   if (contract.billing.sensitiveResponsesNoStore
-    && (!source.includes('sensitiveJson') || !source.includes('sensitiveRedirect'))) {
-    errors.push(`${route}: sensitive billing responses must use no-store response helpers`);
+    && (!source.includes('return sensitiveJson(') || !source.includes('return sensitiveRedirect('))) {
+    errors.push(`${route}: sensitive billing responses must return no-store response helpers`);
   }
   for (const selector of contract.billing.forbiddenClientSelectors) {
     if (source.includes(`searchParams.get('${selector}')`) || source.includes(`searchParams.get("${selector}")`)) {
