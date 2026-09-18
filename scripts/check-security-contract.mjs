@@ -197,8 +197,9 @@ if (!readinessSource.includes(`expiresAt: now + ${Number(contract.http.readiness
 const proxy = fs.readFileSync('src/proxy.ts', 'utf8');
 if (contract.seo.forbidProductionLocalAuditProxy
   && (!proxy.includes('isProductionDeployEnv(config.environment.deployEnv)')
-    || !proxy.includes("process.env.SEO_AUDIT_LOCAL !== 'true'"))) {
-  errors.push('src/proxy.ts: SEO local audit proxy must be disabled in production');
+    || !proxy.includes("process.env.SEO_AUDIT_LOCAL !== 'true'")
+    || !proxy.includes("site.hostname.endsWith('.invalid')"))) {
+  errors.push('src/proxy.ts: SEO local audit proxy must be blocked on real production origins while preserving synthetic .invalid CI');
 }
 
 if (contract.seo.escapeJsonLdScriptClosing) {
