@@ -177,7 +177,7 @@ jobs:
       matrix:
         node-version: [24.x]
 
-    name: Bootstrap visual regression baselines
+    name: Run visual regression
     runs-on: ubuntu-latest
     timeout-minutes: 10
     env:
@@ -196,15 +196,18 @@ jobs:
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Generate reviewed visual references
-        run: pnpm run test:visual:update
+      - name: Compare approved visual references
+        run: pnpm run test:visual
 
-      - name: Upload visual references
+      - name: Upload visual regression diffs
         uses: actions/upload-artifact@v7
+        if: failure()
         with:
-          name: visual-baselines
-          path: src/**/__screenshots__/**/*.png
-          if-no-files-found: error
+          name: visual-regression-diffs
+          path: |
+            .vitest-attachments/**
+            vitest-test-results/**
+          if-no-files-found: ignore
           retention-days: 7
 
   e2e:
