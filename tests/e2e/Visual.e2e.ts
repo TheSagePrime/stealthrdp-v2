@@ -1,21 +1,25 @@
 import { expect, takeSnapshot, test } from '@chromatic-com/playwright';
 
-test.describe('Visual testing', () => {
-  test.describe('Static pages', () => {
-    test('should take screenshot of the homepage', async ({ page }, testInfo) => {
-      await page.goto('/');
+test.describe('Foundation visual testing', () => {
+  test('captures the foundation homepage', async ({ page }, testInfo) => {
+    await page.goto('/');
 
-      await expect(page.getByText('The perfect SaaS template to build')).toBeVisible();
+    await expect(
+      page.getByRole('heading', {
+        level: 1,
+        name: 'Make the next product feel like it belongs to us.',
+      }),
+    ).toBeVisible();
 
-      await takeSnapshot(page, testInfo);
-    });
+    await takeSnapshot(page, testInfo);
+  });
 
-    test('should take screenshot of the French homepage', async ({ page }, testInfo) => {
-      await page.goto('/fr');
+  test('captures the localized foundation route', async ({ page }, testInfo) => {
+    await page.goto('/fr');
 
-      await expect(page.getByText('Le parfait SaaS template pour construire')).toBeVisible();
+    await expect(page.locator('html')).toHaveAttribute('lang', 'fr');
+    await expect(page.getByText('Foundation manifest')).toBeVisible();
 
-      await takeSnapshot(page, testInfo);
-    });
+    await takeSnapshot(page, testInfo);
   });
 });
