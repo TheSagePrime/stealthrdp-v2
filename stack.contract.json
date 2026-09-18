@@ -80,7 +80,9 @@
     "drizzle.config.ts",
     "src/styles/global.css",
     "src/utils/DBConnection.ts",
-    "skills/saas-builder/SKILL.md"
+    "skills/saas-builder/SKILL.md",
+    "security.contract.json",
+    "scripts/check-security-contract.mjs"
   ],
   "seo": {
     "buildScript": "pnpm seo:pre-build && pnpm build:app && pnpm seo:post-build",
