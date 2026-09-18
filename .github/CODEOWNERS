@@ -23,3 +23,11 @@
 /.storybook/ @bhuvi1620
 /src/components/ui/VisualContract.visual.test.tsx @bhuvi1620
 /src/components/ui/__screenshots__/ @bhuvi1620
+/security.contract.json @bhuvi1620
+/SECURITY.md @bhuvi1620
+/src/features/security/ @bhuvi1620
+/src/features/data/ @bhuvi1620
+/src/app/api/polar/ @bhuvi1620
+/src/instrumentation.ts @bhuvi1620
+/src/instrumentation-client.ts @bhuvi1620
+/src/libs/Logger.ts @bhuvi1620
