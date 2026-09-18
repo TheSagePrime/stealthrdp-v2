@@ -18,7 +18,7 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     # Only run when the deployment was successful
-    if: github.event.deployment_status.state == 'success' && vars.ENABLE_CHECKLY == 'true'
+    if: github.event.deployment_status.state == 'success' && github.event.deployment.ref == 'main' && vars.ENABLE_CHECKLY == 'true'
 
     name: Test E2E on Checkly
     runs-on: ubuntu-latest
@@ -35,10 +35,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Validate deployment URL
+      - name: Validate production deployment URL
         shell: bash
         run: |
-          node -e "const u=new URL(process.env.ENVIRONMENT_URL); if(u.protocol!=='https:') process.exit(1)"
+          node -e "const u=new URL(process.env.ENVIRONMENT_URL); if(u.protocol!=='https:' || !u.hostname || u.username || u.password) process.exit(1)"
         env:
           ENVIRONMENT_URL: ${{ github.event.deployment_status.environment_url }}
 
