@@ -24,7 +24,9 @@ export async function getReadinessResponse(
   try {
     await Promise.race([
       probe(),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('readiness timeout')), 2_000)),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('readiness timeout')), 2_000),
+      ),
     ]);
 
     response = {
