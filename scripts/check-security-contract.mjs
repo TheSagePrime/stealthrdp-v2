@@ -185,6 +185,10 @@ if (!ci.includes(`retention-days: ${contract.privacy.maxDiagnosticArtifactRetent
 if (!ci.includes('pnpm audit --prod --audit-level high')) {
   errors.push('.github/workflows/CI.yml: production dependency audit must run in CI');
 }
+if (contract.privacy.disableFrameworkTelemetryInCi
+  && !ci.includes("NEXT_TELEMETRY_DISABLED: '1'")) {
+  errors.push('.github/workflows/CI.yml: framework telemetry must be disabled in CI');
+}
 
 const release = fs.readFileSync('.github/workflows/release.yml', 'utf8');
 if (!release.includes("github.event.workflow_run.conclusion == 'success'")) {
