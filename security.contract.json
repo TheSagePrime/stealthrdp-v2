@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "name": "Sage Prime security and privacy contract",
+  "authentication": {
+    "provider": "clerk",
+    "routeLevelAuthRequiredForApiByDefault": true,
+    "publicApiAllowlist": [
+      "src/app/api/health/route.ts",
+      "src/app/api/ready/route.ts",
+      "src/app/api/polar/webhook/route.ts"
+    ]
+  },
+  "billing": {
+    "provider": "polar",
+    "customerIdentitySource": "server-derived-clerk-principal",
+    "productAllowlistEnv": "POLAR_PRODUCT_IDS",
+    "sensitiveRoutes": [
+      "src/app/api/polar/checkout/route.ts",
+      "src/app/api/polar/portal/route.ts"
+    ],
+    "forbiddenClientSelectors": [
+      "customerId",
+      "externalCustomerId",
+      "external_customer_id"
+    ]
+  },
+  "privacy": {
+    "sentryDefaultPii": false,
+    "sentryReplayDefault": false,
+    "browserLogsToTerminalDefault": false,
+    "serverOnlyLoggingEnv": [
+      "BETTER_STACK_INGESTING_URL",
+      "BETTER_STACK_SOURCE_TOKEN",
+      "LOGGING_LEVEL"
+    ],
+    "forbiddenPublicEnvPrefixes": [
+      "NEXT_PUBLIC_BETTER_STACK_"
+    ]
+  },
+  "http": {
+    "requiredHeaders": [
+      "Content-Security-Policy",
+      "Cross-Origin-Opener-Policy",
+      "Permissions-Policy",
+      "Referrer-Policy",
+      "X-Content-Type-Options",
+      "X-Frame-Options"
+    ],
+    "productionRequiredHeaders": [
+      "Strict-Transport-Security"
+    ]
+  },
+  "supplyChain": {
+    "packageManager": "pnpm",
+    "forbiddenLockfiles": [
+      "package-lock.json",
+      "yarn.lock"
+    ],
+    "minimumDependencies": {
+      "next": "16.3.3"
+    },
+    "requireFrozenLockfile": true,
+    "requireDependencyAuditInCi": true,
+    "pinGithubActionsToCommitSha": true
+  },
+  "database": {
+    "directDbImportAllowedPrefixes": [
+      "src/features/data/",
+      "src/features/billing/webhook-idempotency.ts"
+    ],
+    "tenantKey": "ownerId"
+  },
+  "seo": {
+    "forbidProductionLocalAuditProxy": true,
+    "escapeJsonLdScriptClosing": true
+  }
+}
