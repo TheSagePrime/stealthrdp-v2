@@ -1,4 +1,5 @@
 import { Webhooks } from '@polar-sh/nextjs';
+import { NextRequest } from 'next/server';
 import { syncPolarEntitlement } from '@/features/billing/entitlements';
 import { readPolarConfig } from '@/features/billing/polar';
 import { withPolarWebhookReplayGuard } from '@/features/billing/webhook-replay';
@@ -9,7 +10,7 @@ export const runtime = 'nodejs';
 const config = readPolarConfig();
 const MAX_WEBHOOK_BYTES = 1_048_576;
 
-function disabled(_request?: Request) {
+function disabled(_request?: NextRequest) {
   return Response.json({ error: 'POLAR_DISABLED' }, { status: 404 });
 }
 
@@ -28,7 +29,7 @@ function createWebhookHandler() {
   });
 }
 
-async function readBodyWithLimit(request: Request): Promise<Uint8Array | null> {
+async function readBodyWithLimit(request: NextRequest): Promise<Uint8Array | null> {
   if (!request.body) {
     return new Uint8Array();
   }
@@ -64,7 +65,7 @@ async function readBodyWithLimit(request: Request): Promise<Uint8Array | null> {
 
 const webhookHandler = createWebhookHandler();
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   const declaredLength = Number(request.headers.get('content-length') ?? '0');
   if (Number.isFinite(declaredLength) && declaredLength > MAX_WEBHOOK_BYTES) {
     return Response.json({ error: 'PAYLOAD_TOO_LARGE' }, { status: 413 });
@@ -75,10 +76,10 @@ export async function POST(request: Request) {
     return Response.json({ error: 'PAYLOAD_TOO_LARGE' }, { status: 413 });
   }
 
-  const verifiedRequest = new Request(request.url, {
+  const verifiedRequest = new NextRequest(request.url, {
     method: 'POST',
     headers: request.headers,
-    body: body.byteLength ? body : undefined,
+    body: body.byteLength ? Uint8Array.from(body).buffer : undefined,
   });
 
   return webhookHandler(verifiedRequest);
