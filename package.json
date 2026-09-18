@@ -42,7 +42,8 @@
     "build-storybook": "storybook build",
     "check:stack": "node scripts/check-stack-contract.mjs",
     "check:design": "node scripts/check-design-contract.mjs",
-    "check:architecture": "run-s check:stack check:design"
+    "check:architecture": "run-s check:stack check:design check:seo-contract",
+    "check:seo-contract": "node scripts/check-seo-contract.mjs"
   },
   "dependencies": {
     "@clerk/localizations": "^4.8.1",
