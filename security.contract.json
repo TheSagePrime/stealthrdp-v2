@@ -79,7 +79,9 @@
     "productionRequiredHeaders": [
       "Strict-Transport-Security"
     ],
-    "readinessCacheMs": 5000
+    "readinessCacheMs": 5000,
+    "noStoreHealthEndpoints": true,
+    "coalesceReadinessProbes": true
   },
   "supplyChain": {
     "packageManager": "pnpm",
