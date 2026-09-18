@@ -34,7 +34,7 @@ For UI work:
 8. Preserve keyboard behavior, semantics, focus states, and accessibility.
 9. Render and visually inspect meaningful UI changes before considering them finished.
 10. Run Storybook accessibility/component tests and the screenshot regression suite for frontend changes.
-11. Never update a visual fingerprint merely to make CI green. Review the rendered failure screenshot first; change the protected fingerprint in `design.contract.json` only when the visual change is intentional and architecture-approved.
+11. Never update a visual baseline merely to make CI green. Review the rendered diff first; run `pnpm test:visual:update` and commit new reference images only when the visual change is intentional.
 
 Avoid generic AI decoration: arbitrary gradients, glassmorphism, oversized radii, excessive cards, emoji-as-icons, random shadows, one-off color systems, and duplicated primitives.
 
