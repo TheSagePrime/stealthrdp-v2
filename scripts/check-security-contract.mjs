@@ -41,6 +41,14 @@ for (const route of sourceFiles.filter(file => /^src\/app\/api\/.+\/route\.ts$/.
   }
 }
 
+const webhookRoute = 'src/app/api/polar/webhook/route.ts';
+if (!fs.existsSync(contract.billing.webhookReplayGuard)) {
+  errors.push(`missing webhook replay guard: ${contract.billing.webhookReplayGuard}`);
+}
+if (!fs.readFileSync(webhookRoute, 'utf8').includes('withPolarWebhookReplayGuard')) {
+  errors.push(`${webhookRoute}: verified webhooks must pass through replay suppression before entitlement sync`);
+}
+
 for (const route of contract.billing.sensitiveRoutes) {
   if (!fs.existsSync(route)) {
     errors.push(`${route}: sensitive billing route missing`);
