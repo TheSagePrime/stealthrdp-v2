@@ -3,6 +3,7 @@ import { clerkMiddleware } from '@clerk/nextjs/server';
 import createMiddleware from 'next-intl/middleware';
 import { NextResponse } from 'next/server';
 import { defaultSeoConfig } from './config/seo';
+import { clerkContextPagePrefixes } from './features/security/routing';
 import { routing } from './libs/I18nRouting';
 import { getSeoConfig } from './libs/seo/config';
 import { isProductionDeployEnv } from './libs/seo/env';
@@ -10,6 +11,21 @@ import { normalizePathname } from './libs/seo/normalize';
 import { resolveSiteUrl } from './libs/seo/site-url';
 
 const handleI18nRouting = createMiddleware(routing);
+
+function logicalPath(pathname: string): string {
+  const segments = pathname.split('/').filter(Boolean);
+  if (segments[0] && routing.locales.includes(segments[0] as (typeof routing.locales)[number])) {
+    segments.shift();
+  }
+  return segments.length ? `/${segments.join('/')}` : '/';
+}
+
+function needsClerkPageContext(pathname: string): boolean {
+  const logical = logicalPath(pathname);
+  return clerkContextPagePrefixes.some(prefix =>
+    logical === prefix || logical.startsWith(`${prefix}/`),
+  );
+}
 
 const auditPublicRoutes = new Set([
   ...defaultSeoConfig.routes.publicMarketing,
@@ -79,8 +95,8 @@ function directAuditLogicalPath(request: NextRequest): string | null {
 }
 
 async function handleLocalSeoAudit(request: NextRequest): Promise<Response | null> {
-  const logicalPath = directAuditLogicalPath(request);
-  if (!logicalPath || !auditPublicRoutes.has(logicalPath)) {
+  const logicalPathname = directAuditLogicalPath(request);
+  if (!logicalPathname || !auditPublicRoutes.has(logicalPathname)) {
     return null;
   }
 
@@ -92,7 +108,7 @@ async function handleLocalSeoAudit(request: NextRequest): Promise<Response | nul
   target.protocol = 'http:';
   target.hostname = '127.0.0.1';
   target.port = '3123';
-  target.pathname = `/${routing.defaultLocale}${logicalPath === '/' ? '' : logicalPath}`;
+  target.pathname = `/${routing.defaultLocale}${logicalPathname === '/' ? '' : logicalPathname}`;
 
   const headers = new Headers(request.headers);
   headers.set('x-seo-audit-direct', '1');
@@ -126,15 +142,15 @@ export default async function proxy(
     return clerkMiddleware(async () => NextResponse.next())(request, event);
   }
 
-  // Pages receive Clerk request context, but authorization lives in the
-  // relevant page/layout resource rather than in SEO route classification.
-  return clerkMiddleware(async (_auth, req) => handleI18nRouting(req))(request, event);
+  if (needsClerkPageContext(request.nextUrl.pathname)) {
+    return clerkMiddleware(async (_auth, req) => handleI18nRouting(req))(request, event);
+  }
+
+  // Public marketing/utility pages do not need Clerk request context.
+  return handleI18nRouting(request);
 }
 
 export const config = {
-  // Match all pathnames except for
-  // - … if they start with `/_next`, `/_vercel` or `monitoring`
-  // - … the ones containing a dot (e.g. `favicon.ico`)
   matcher: [
     '/((?!_next|_vercel|monitoring|.*\\..*).*)',
     '/api(.*)',
