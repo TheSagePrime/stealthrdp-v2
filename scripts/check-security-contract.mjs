@@ -92,6 +92,13 @@ for (const prefix of contract.privacy.forbiddenPublicEnvPrefixes) {
   }
 }
 
+for (const file of contract.serverOnlyModules ?? []) {
+  const source = fs.readFileSync(file, 'utf8');
+  if (!source.startsWith("import 'server-only';")) {
+    errors.push(`${file}: privileged module must be marked server-only`);
+  }
+}
+
 const sentryServer = fs.readFileSync('src/instrumentation.ts', 'utf8');
 const sentryClient = fs.readFileSync('src/instrumentation-client.ts', 'utf8');
 for (const [file, source] of [
@@ -100,6 +107,12 @@ for (const [file, source] of [
 ]) {
   if (source.includes('sendDefaultPii: true')) errors.push(`${file}: Sentry PII collection must default off`);
   if (source.includes('enableLogs: true')) errors.push(`${file}: Sentry log forwarding must default off`);
+}
+if (!sentryClient.includes(`process.env.${contract.privacy.clientTelemetryOptInEnv} === 'true'`)) {
+  errors.push('client Sentry must be explicitly opt-in');
+}
+if (!sentryClient.includes(`process.env.${contract.privacy.replayOptInEnv} === 'true'`)) {
+  errors.push('Sentry Replay must have a separate explicit opt-in');
 }
 for (const unsafe of ['maskAllText: false', 'maskAllInputs: false', 'blockAllMedia: false']) {
   if (sentryClient.includes(unsafe)) errors.push(`src/instrumentation-client.ts: unsafe replay setting ${unsafe}`);
