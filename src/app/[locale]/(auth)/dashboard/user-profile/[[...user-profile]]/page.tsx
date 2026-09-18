@@ -5,9 +5,9 @@ import { getI18nPath } from '@/utils/Helpers';
 import { auth } from '@clerk/nextjs/server';
 
 export default async function UserProfilePage(props: {
-  await auth.protect();
   params: Promise<{ locale: string }>;
 }) {
+  await auth.protect();
   const { locale } = await props.params;
   setRequestLocale(locale);
   const t = await getTranslations({
