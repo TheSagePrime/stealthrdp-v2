@@ -3,6 +3,7 @@ import { readPolarConfig } from '@/features/billing/polar';
 import { getAuthenticatedPrincipal } from '@/features/security/principal';
 import { isSameOriginMutation } from '@/features/security/origin';
 import { consumeRateLimit } from '@/features/security/rate-limit';
+import { sensitiveJson, sensitiveRedirect } from '@/features/security/response';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
@@ -11,21 +12,21 @@ export async function POST(request: Request) {
   const config = readPolarConfig();
 
   if (!config.enabled || !config.accessToken) {
-    return Response.json({ error: 'POLAR_DISABLED' }, { status: 404 });
+    return sensitiveJson({ error: 'POLAR_DISABLED' }, { status: 404 });
   }
 
   const principal = await getAuthenticatedPrincipal();
   if (!principal) {
-    return Response.json({ error: 'UNAUTHORIZED' }, { status: 401 });
+    return sensitiveJson({ error: 'UNAUTHORIZED' }, { status: 401 });
   }
 
   if (!isSameOriginMutation(request)) {
-    return Response.json({ error: 'FORBIDDEN_ORIGIN' }, { status: 403 });
+    return sensitiveJson({ error: 'FORBIDDEN_ORIGIN' }, { status: 403 });
   }
 
   const rateLimit = consumeRateLimit(`polar:portal:${principal.billingExternalId}`, { limit: 6 });
   if (!rateLimit.allowed) {
-    return Response.json(
+    return sensitiveJson(
       { error: 'RATE_LIMITED' },
       {
         status: 429,
@@ -36,8 +37,8 @@ export async function POST(request: Request) {
 
   try {
     const portalUrl = await createPolarPortal(principal);
-    return Response.redirect(portalUrl, 303);
+    return sensitiveRedirect(portalUrl);
   } catch {
-    return Response.json({ error: 'POLAR_PORTAL_UNAVAILABLE' }, { status: 502 });
+    return sensitiveJson({ error: 'POLAR_PORTAL_UNAVAILABLE' }, { status: 502 });
   }
 }
