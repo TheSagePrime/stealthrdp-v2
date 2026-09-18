@@ -28,11 +28,37 @@ export default defineConfig({
         test: {
           name: 'ui',
           include: ['**/*.test.tsx', 'src/hooks/**/*.test.tsx'],
+          exclude: ['**/*.visual.test.tsx'],
           browser: {
             enabled: true,
             headless: true,
             provider: playwright(),
             screenshotDirectory: 'vitest-test-results',
+            instances: [
+              { browser: 'chromium' },
+            ],
+          },
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: 'visual',
+          include: ['**/*.visual.test.tsx'],
+          browser: {
+            enabled: true,
+            headless: true,
+            provider: playwright(),
+            viewport: { width: 1024, height: 900 },
+            expect: {
+              toMatchScreenshot: {
+                comparatorName: 'pixelmatch',
+                comparatorOptions: {
+                  threshold: 0.2,
+                  allowedMismatchedPixelRatio: 0.005,
+                },
+              },
+            },
             instances: [
               { browser: 'chromium' },
             ],
