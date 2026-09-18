@@ -85,8 +85,16 @@ jobs:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
 
-      - name: Enforce architecture and design contracts
+      - name: Enforce architecture, design, and SEO contracts
         run: pnpm run check:architecture
+
+      - if: github.event_name == 'pull_request'
+        name: Require approval for protected architecture changes
+        run: node scripts/check-governance.mjs "$BASE_SHA" "$HEAD_SHA"
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          ARCHITECTURE_APPROVED: ${{ contains(github.event.pull_request.labels.*.name, 'architecture-approved') }}
 
       - name: Linter
         run: pnpm exec next typegen && pnpm run check:oxlint && pnpm run check:format
