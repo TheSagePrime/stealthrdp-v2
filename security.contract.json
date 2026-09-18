@@ -61,7 +61,8 @@
     "clientTelemetryOptInEnv": "NEXT_PUBLIC_SENTRY_ENABLED",
     "replayOptInEnv": "NEXT_PUBLIC_SENTRY_REPLAY_ENABLED",
     "e2eTracePolicy": "retain-on-failure",
-    "maxDiagnosticArtifactRetentionDays": 1
+    "maxDiagnosticArtifactRetentionDays": 1,
+    "disableFrameworkTelemetryInCi": true
   },
   "http": {
     "requiredHeaders": [
