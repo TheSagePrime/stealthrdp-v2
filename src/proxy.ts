@@ -69,7 +69,12 @@ function localePrefix(pathname: string): string {
 
 function directAuditLogicalPath(request: NextRequest): string | null {
   const config = getSeoConfig();
-  if (isProductionDeployEnv(config.environment.deployEnv) || process.env.SEO_AUDIT_LOCAL !== 'true') {
+  const site = resolveSiteUrl(process.env, config.environment.deployEnv);
+  const syntheticAuditOrigin = site.hostname.endsWith('.invalid');
+  if (
+    process.env.SEO_AUDIT_LOCAL !== 'true'
+    || (isProductionDeployEnv(config.environment.deployEnv) && !syntheticAuditOrigin)
+  ) {
     return null;
   }
 
