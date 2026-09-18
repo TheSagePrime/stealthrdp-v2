@@ -153,7 +153,28 @@ jobs:
     name: Run Storybook
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    if: vars.ENABLE_STORYBOOK == 'true'
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up Node.js environment
+        uses: ./.github/actions/setup-project
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Run Storybook component and accessibility tests
+        run: pnpm run storybook:test
+
+  visual-quality:
+    strategy:
+      matrix:
+        node-version: [24.x]
+
+    name: Bootstrap visual regression baselines
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - uses: actions/checkout@v6
@@ -163,8 +184,19 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Run storybook tests
-        run: pnpm run storybook:test
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Generate reviewed visual references
+        run: pnpm run test:visual:update
+
+      - name: Upload visual references
+        uses: actions/upload-artifact@v7
+        with:
+          name: visual-baselines
+          path: src/**/__screenshots__/**/*.png
+          if-no-files-found: error
+          retention-days: 7
 
   e2e:
     strategy:
