@@ -2,12 +2,13 @@ import type { NextRequest } from 'next/server';
 import { createPolarCheckout, resolveAllowedPolarProduct } from '@/features/billing/polar-api';
 import { readPolarConfig } from '@/features/billing/polar';
 import { getAuthenticatedPrincipal } from '@/features/security/principal';
+import { isSameOriginMutation } from '@/features/security/origin';
 import { consumeRateLimit } from '@/features/security/rate-limit';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-export async function GET(request: NextRequest) {
+export async function POST(request: NextRequest) {
   const config = readPolarConfig();
 
   if (!config.enabled || !config.accessToken || !config.successUrl || config.allowedProductIds.length === 0) {
@@ -17,6 +18,10 @@ export async function GET(request: NextRequest) {
   const principal = await getAuthenticatedPrincipal();
   if (!principal) {
     return Response.json({ error: 'UNAUTHORIZED' }, { status: 401 });
+  }
+
+  if (!isSameOriginMutation(request)) {
+    return Response.json({ error: 'FORBIDDEN_ORIGIN' }, { status: 403 });
   }
 
   const rateLimit = consumeRateLimit(`polar:checkout:${principal.billingExternalId}`, { limit: 6 });
