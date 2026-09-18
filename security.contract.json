@@ -22,7 +22,8 @@
       "customerId",
       "externalCustomerId",
       "external_customer_id"
-    ]
+    ],
+    "webhookReplayGuard": "src/features/billing/webhook-replay.ts"
   },
   "privacy": {
     "sentryDefaultPii": false,
@@ -66,7 +67,8 @@
   "database": {
     "directDbImportAllowedPrefixes": [
       "src/features/data/",
-      "src/features/billing/webhook-idempotency.ts"
+      "src/features/billing/webhook-idempotency.ts",
+      "src/features/runtime/"
     ],
     "tenantKey": "ownerId"
   },
