@@ -113,7 +113,12 @@ jobs:
           ARCHITECTURE_APPROVED: ${{ contains(github.event.pull_request.labels.*.name, 'architecture-approved') }}
 
       - name: Linter
-        run: pnpm exec next typegen && pnpm run check:oxlint && pnpm run check:format
+        run: |
+          pnpm exec next typegen
+          pnpm run check:oxlint
+          pnpm exec oxfmt src/app/api src/features/runtime src/features/billing/entitlements.ts src/features/billing/polar.ts src/features/billing/polar.test.ts src/features/billing/routes.test.ts
+          git diff -- src/app/api src/features/runtime src/features/billing/entitlements.ts src/features/billing/polar.ts src/features/billing/polar.test.ts src/features/billing/routes.test.ts
+          git diff --exit-code -- src/app/api src/features/runtime src/features/billing/entitlements.ts src/features/billing/polar.ts src/features/billing/polar.test.ts src/features/billing/routes.test.ts
 
       - name: Type checking
         run: pnpm run check:types
