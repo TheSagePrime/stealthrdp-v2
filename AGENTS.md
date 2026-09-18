@@ -8,103 +8,64 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
-## Sage Prime architecture contracts
+## Sage Prime contracts
 
-Before changing application code, read `stack.contract.json`, `design.contract.json`, `ARCHITECTURE.md`, and `DESIGN_SYSTEM.md`.
+Before changing application code, read:
 
-Do not weaken contract checks to accommodate implementation drift. Architecture changes require explicit review. SEO is a protected subsystem and must not be refactored as collateral work.
+- `stack.contract.json`
+- `design.contract.json`
+- `security.contract.json`
+- `ARCHITECTURE.md`
+- `DESIGN_SYSTEM.md`
+- `SECURITY.md`
 
-## Sage Prime architecture contract
+The repository contracts are authoritative. Do not weaken a contract or checker to make a change pass.
 
-Before modifying product code, read `stack.contract.json`, `design.contract.json`,
-`ARCHITECTURE.md`, and `DESIGN_SYSTEM.md`.
+### Canonical architecture
 
-The canonical stack is Next.js + React + strict TypeScript + Tailwind + shadcn/ui +
-Radix + Lucide + Clerk + Neon PostgreSQL + Drizzle + Polar, with PGlite for local
-development, pnpm for packages, and Coolify-compatible deployment.
+Keep Next.js + React + strict TypeScript + Tailwind + shadcn/ui + Radix + Lucide + Clerk + Neon PostgreSQL + Drizzle + Polar, with PGlite for local development, pnpm for packages, and Coolify-compatible deployment.
 
-Do not introduce a competing ORM, auth provider, database provider, UI framework,
-icon library, billing provider, or deployment platform as an implementation shortcut.
-Do not weaken a contract or checker to make a change pass.
+Do not introduce a competing ORM, auth provider, database provider, UI framework, icon library, billing provider, or deployment platform as an implementation shortcut.
 
-For frontend work, reuse existing product and `src/components/ui` components before
-creating new primitives. Use the shared theme tokens rather than hardcoded colors,
-preserve accessibility and responsive states, and visually inspect material UI changes.
+### Security and privacy
 
-Run `pnpm check:architecture` before handoff. CI is authoritative even if local hooks
-are bypassed.
+- API resources are private by default unless explicitly allowlisted.
+- Authenticate and authorize inside the resource; middleware only supplies request context and routing.
+- Derive user, organization, tenant, and billing identity from Clerk server-side.
+- Never accept a tenant owner ID or Polar customer selector from client input.
+- Keep secrets server-only and out of logs, telemetry, screenshots, CI artifacts, and source control.
+- Preserve privacy-safe Sentry/logging defaults, CSP/security headers, rate limits, dependency audit, and pinned GitHub Actions.
+- Scope tenant-owned data through the canonical data boundary.
+- Durable webhook writes require durable idempotency in the same persistence boundary.
 
-## Sage Prime technical SEO
+### Frontend
 
-This starter ships reusable technical SEO infrastructure. It does not ship
-keywords, landing-page copy, or brand claims for a child product.
+Reuse existing product and `src/components/ui` components before creating new primitives. Use shared theme tokens rather than hardcoded colors. Preserve responsive states, keyboard behavior, accessibility, Storybook tests, and visual regression references.
 
-## New project initialization
+### SEO
 
-1. Clone this starter into a new product repository.
-2. Inspect the real framework routes.
-3. Classify public marketing routes in `src/config/seo.ts`.
-4. Classify public utility routes.
-5. Configure private pages and private APIs that actually exist.
-6. Define the child project configuration and verify its Project Truth Profile.
-7. Choose explicit country + locale markets and resolve matching OpenSEO project data.
-8. Set production `SITE_URL`.
-9. Add real brand information only when it exists.
-10. Register only real article routes and publications.
-11. Run `pnpm seo:pre-build`.
-12. Run `pnpm build`.
-13. Pass the post-build audit, including article checks when configured.
-14. Then begin project-specific SEO research and writing.
+SEO is a protected subsystem. Preserve route classification, metadata/canonical helpers, robots/sitemap, article publishing helpers, SEO styles, pre-build validation, and post-build audit.
 
-Do not start keyword or content work before the technical configuration passes.
+`robots.txt` is crawler guidance only; authentication is enforced by application resources.
 
-## Continuous SEO loop
+For child projects, configure only real routes, brand facts, markets, articles, and research data. Never add fictional product claims to the starter.
 
-```text
-OpenSEO Research
-→ Implement
-→ Pre-Build Validation
-→ Build
-→ Static/SSR Crawl
-→ SEO Audit
-→ Fix
-→ Repeat
+### Verification
+
+Before handoff run:
+
+```bash
+pnpm check:architecture
+pnpm test:contracts
+pnpm test:security
+pnpm typegen
+pnpm check:types
+pnpm check:oxlint
+pnpm check:format
+pnpm test
+pnpm storybook:test
+pnpm test:visual
+pnpm build
 ```
 
-## Roles
-
-- Senku / #Business owns project-specific research after initialization.
-- Suho / #Builder owns implementation: routes, metadata, schema, internal links.
-- Hermes / CI owns enforcement: pre-build, build, post-build crawl, reports.
-
-## Ownership
-
-Starter kit owns the SEO engine, route classes, robots/sitemap generators,
-canonical helpers, schema helpers, URL normalization, and CI gates.
-
-Child projects own `SITE_URL`, brand identity, real routes, keywords, content,
-and research.
-
-## Article publishing
-
-A child project must complete these steps when it enables articles:
-
-1. Add the child-owned `.sageprime/project-truth-profile.json` and validate it before research.
-2. Add the child-owned `articles` registry in `src/config/seo.ts`.
-3. Add a real article index route for the configured `articles.basePath`.
-4. Add a real dynamic article route for each registered publication path.
-5. Call `createArticleMetadata` from the article route's `generateMetadata`.
-6. Use `ArticlePublicationMeta`, `ArticleJsonLd`, `ArticleSources`, and `ArticleCitation` where the approved page needs them.
-7. Keep source selection, citation meaning, internal-link selection, and CTA judgment in the Senku handoff.
-8. Run `pnpm seo:pre-build` and `pnpm build`.
-
-The registry drives sitemap and `/rss.xml` inclusion through the existing routes.
-The starter does not add a forced `/blog` route or fake article content.
-Use one `datePublished` value per article.
-Do not duplicate dates across unrelated configuration files.
-
-Use `ProjectTruthProfile` from `src/libs/seo/project.ts` to validate the child-owned truth artifact.
-Do not add product facts to the starter.
-
-Authentication is the security boundary. `robots.txt` is crawler guidance only.
-
+CI remains authoritative even when local hooks are bypassed.
