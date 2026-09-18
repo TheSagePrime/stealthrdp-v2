@@ -23,7 +23,7 @@ The machine-readable source of truth is `stack.contract.json`.
 - Protected dashboard routes
 - Health and readiness routes
 - Vitest, Playwright, and Storybook
-- Docker and GitHub Actions checks
+- Docker/Coolify deployment boundaries and GitHub Actions checks
 
 Do not substitute canonical providers or frameworks without an explicit architecture change.
 The repository enforces this with `pnpm check:architecture`.
@@ -50,6 +50,12 @@ SEO pre-build validation
 
 The contract checker verifies the SEO scripts and required engine files. Do not
 remove, bypass, or reorder those gates as part of unrelated product work.
+
+## Canonical stack
+
+The enforced foundation is Next.js + React + strict TypeScript + Tailwind CSS + shadcn/ui + Radix UI + Lucide, Clerk authentication, Neon PostgreSQL + Drizzle ORM, Polar billing, PGlite for local development, pnpm, and Coolify deployment.
+
+The machine-readable sources of truth are `stack.contract.json` and `design.contract.json`. See `ARCHITECTURE.md` and `DESIGN_SYSTEM.md` for the human-readable rules.
 
 ## Local setup
 
