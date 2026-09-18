@@ -5,18 +5,51 @@ The canonical Sage Prime foundation for new product repositories.
 This repository provides reusable application infrastructure without imposing
 product-specific copy, pricing, data, or visual direction.
 
-## Included
+## Canonical stack
 
-- Next.js App Router and TypeScript
+The machine-readable source of truth is `stack.contract.json`.
+
+- Next.js App Router, React, and strict TypeScript
+- Tailwind CSS 4 with shadcn/ui and Radix primitives
+- Lucide icons
 - Clerk authentication and localized sign-in flows
-- Workspace and organization access
-- PostgreSQL and Drizzle database layer
+- Neon PostgreSQL for production
+- Drizzle ORM through the locked `pg` runtime boundary
+- PGlite for local development and deterministic local checks
 - Polar billing boundaries
+- pnpm
+- Coolify-compatible deployment
 - Internationalization with English and French locales
 - Protected dashboard routes
 - Health and readiness routes
-- Vitest and Playwright test structure
+- Vitest, Playwright, and Storybook
 - Docker and GitHub Actions checks
+
+Do not substitute canonical providers or frameworks without an explicit architecture change.
+The repository enforces this with `pnpm check:architecture`.
+
+## Frontend contract
+
+The canonical frontend is Next.js + TypeScript + Tailwind + shadcn/ui + Radix + Lucide.
+Design tokens live in `src/styles/global.css`; shadcn configuration lives in
+`components.json`; machine-readable design constraints live in
+`design.contract.json`.
+
+Read `DESIGN_SYSTEM.md` before making material UI changes.
+
+## SEO contract
+
+The technical SEO engine is a protected subsystem. Product work must preserve the
+existing build order:
+
+```text
+SEO pre-build validation
+→ Next.js production build
+→ SEO post-build audit
+```
+
+The contract checker verifies the SEO scripts and required engine files. Do not
+remove, bypass, or reorder those gates as part of unrelated product work.
 
 ## Local setup
 
@@ -51,12 +84,17 @@ NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 DATABASE_URL
 ```
 
+For production, `DATABASE_URL` must be the Neon PostgreSQL connection string.
+The local development scripts start PGlite and provide a local PostgreSQL-compatible
+endpoint automatically.
+
 Keep `.env` and `.env.production` outside Git.
 Use Coolify environment variables for deployed applications.
 
 ## Checks
 
 ```bash
+pnpm check:architecture
 pnpm typegen
 pnpm check:types
 pnpm check:oxlint
@@ -65,7 +103,14 @@ pnpm test
 pnpm build
 ```
 
+`pnpm build` includes both SEO gates and must remain the production build command.
+
 ## Database
+
+Production database provider: **Neon PostgreSQL**.
+ORM: **Drizzle**.
+Runtime connection boundary: **node-postgres (`pg`)**.
+Local development database: **PGlite**.
 
 Generate and apply migrations explicitly:
 
@@ -80,7 +125,11 @@ Production migrations require a reviewed release step.
 
 Create a new product from this repository.
 Replace the foundation homepage with the product-approved surface.
-Keep authentication, workspace, billing, health, and deployment boundaries intact.
+Keep authentication, workspace, billing, data, SEO, health, design-system, and
+deployment boundaries intact.
+
+Read `ARCHITECTURE.md`, `DESIGN_SYSTEM.md`, `AGENTS.md`, and
+`skills/saas-builder/SKILL.md` before autonomous implementation.
 
 Do not copy fictional metrics into production.
 Do not commit secrets or provider credentials.
