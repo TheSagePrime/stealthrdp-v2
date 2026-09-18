@@ -44,7 +44,12 @@ const sensitive = changed.filter(file =>
 if (sensitive.length) {
   console.log('[governance] protected architecture files changed:');
   for (const file of sensitive) console.log(`- ${file}`);
-  console.log('[governance] owner/architecture review is required for this PR.');
+  if (process.env.ARCHITECTURE_APPROVED !== 'true') {
+    console.error('[governance] add the architecture-approved label after owner review before merge.');
+    process.exitCode = 1;
+  } else {
+    console.log('[governance] architecture-approved label present.');
+  }
 } else {
   console.log('[governance] no protected architecture files changed');
 }
