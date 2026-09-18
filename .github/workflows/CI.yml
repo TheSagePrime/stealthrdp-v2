@@ -56,6 +56,17 @@ jobs:
           NEXT_PUBLIC_APP_URL: http://localhost:3008
           SITE_URL: https://seo-ci.invalid
 
+      - name: Upload SEO audit report
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: failure()
+        with:
+          name: seo-audit-report
+          path: |
+            reports/seo-audit.txt
+            reports/seo-audit.json
+          if-no-files-found: ignore
+          retention-days: 1
+
       - name: Show SEO audit on failure
         if: failure()
         run: cat reports/seo-audit.txt || true
