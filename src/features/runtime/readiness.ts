@@ -12,11 +12,15 @@ const defaultProbe = () => db.execute(sql`select 1`);
 let cached: { response: ReadinessResponse; expiresAt: number } | undefined;
 let inFlight: Promise<ReadinessResponse> | undefined;
 
-async function executeProbe(probe: () => Promise<unknown>): Promise<ReadinessResponse> {
+async function executeProbe(
+  probe: () => Promise<unknown>,
+): Promise<ReadinessResponse> {
   try {
     await Promise.race([
       probe(),
-      new Promise((_, reject) => setTimeout(() => reject(new Error('readiness timeout')), 2_000)),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('readiness timeout')), 2_000),
+      ),
     ]);
 
     return {
