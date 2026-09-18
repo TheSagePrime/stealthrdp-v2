@@ -34,7 +34,14 @@ A page should communicate hierarchy through typography, spacing, grouping, and c
 
 ## Visual QA
 
-Meaningful UI changes should be rendered and reviewed, not accepted from source code alone. Use Storybook for component states and Playwright/Chromatic where the product has stable visual coverage.
+Meaningful UI changes must be rendered and reviewed, not accepted from source code alone.
+
+The starter enforces three frontend QA layers:
+- Storybook component tests for canonical states
+- Storybook axe accessibility checks with violations treated as errors
+- Vitest browser screenshot regression at desktop/mobile and light/dark reference states
+
+Run `pnpm storybook:test` and `pnpm test:visual` before handing off frontend changes. Intentional visual changes require regenerating references with `pnpm test:visual:update`, reviewing the images, and committing the approved baselines. Chromatic remains an optional additional cross-browser cloud layer.
 
 ## SEO compatibility
 
