@@ -13,6 +13,8 @@ function expectFailure(script, label) {
 
 const packagePath = 'package.json';
 const uiProbePath = 'src/utils/Helpers.ts';
+const badSurfacePath = 'src/features/__contract-probe.tsx';
+const duplicatePrimitivePath = 'src/components/button.tsx';
 const packageOriginal = fs.readFileSync(packagePath, 'utf8');
 const uiOriginal = fs.readFileSync(uiProbePath, 'utf8');
 
@@ -23,10 +25,24 @@ try {
   expectFailure('scripts/check-stack-contract.mjs', 'forbidden UI dependency');
 
   fs.writeFileSync(packagePath, packageOriginal);
-  fs.writeFileSync(uiProbePath, uiOriginal + "\n// contract probe #ff00ff\n");
+  fs.writeFileSync(uiProbePath, uiOriginal + '\n// contract probe #ff00ff\n');
   expectFailure('scripts/check-design-contract.mjs', 'hardcoded product color');
 
   fs.writeFileSync(uiProbePath, uiOriginal);
+  fs.writeFileSync(
+    badSurfacePath,
+    'export const Probe = () => <button className="backdrop-blur-xl shadow-2xl">Bad</button>;\n',
+  );
+  expectFailure('scripts/check-design-contract.mjs', 'raw control and AI-slop decoration');
+
+  fs.rmSync(badSurfacePath, { force: true });
+  fs.writeFileSync(
+    duplicatePrimitivePath,
+    "export { Button } from './ui/button';\n",
+  );
+  expectFailure('scripts/check-design-contract.mjs', 'duplicate canonical primitive');
+
+  fs.rmSync(duplicatePrimitivePath, { force: true });
   const seoPkg = JSON.parse(packageOriginal);
   seoPkg.scripts.build = 'next build';
   fs.writeFileSync(packagePath, JSON.stringify(seoPkg, null, 2) + '\n');
@@ -34,6 +50,8 @@ try {
 } finally {
   fs.writeFileSync(packagePath, packageOriginal);
   fs.writeFileSync(uiProbePath, uiOriginal);
+  fs.rmSync(badSurfacePath, { force: true });
+  fs.rmSync(duplicatePrimitivePath, { force: true });
 }
 
 if (!process.exitCode) console.log('[contract-self-test] all rejection probes passed');
