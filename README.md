@@ -2,45 +2,68 @@
 
 The canonical Sage Prime foundation for new product repositories.
 
-This repository provides reusable application infrastructure without imposing
-product-specific copy, pricing, data, or visual direction.
+This repository provides reusable application infrastructure without imposing product-specific copy, pricing, data, or visual direction.
 
 ## Canonical stack
 
-The machine-readable source of truth is `stack.contract.json`.
+The machine-readable architecture source of truth is `stack.contract.json`.
 
 - Next.js App Router, React, and strict TypeScript
 - Tailwind CSS 4 with shadcn/ui and Radix primitives
 - Lucide icons
-- Clerk authentication and localized sign-in flows
-- Neon PostgreSQL for production
-- Drizzle ORM through the locked `pg` runtime boundary
-- PGlite for local development and deterministic local checks
-- Polar billing boundaries
+- Clerk authentication
+- Neon PostgreSQL + Drizzle ORM through the locked `pg` runtime boundary
+- PGlite for local development
+- Polar billing
 - pnpm
 - Coolify-compatible deployment
-- Internationalization with English and French locales
-- Protected dashboard routes
-- Health and readiness routes
+- next-intl
 - Vitest, Playwright, and Storybook
-- Docker/Coolify deployment boundaries and GitHub Actions checks
 
 Do not substitute canonical providers or frameworks without an explicit architecture change.
-The repository enforces this with `pnpm check:architecture`.
+
+## Contracts
+
+The starter is self-enforcing:
+
+- `stack.contract.json` — architecture and provider choices
+- `design.contract.json` — frontend/design-system rules
+- `security.contract.json` — authentication, privacy, CI, billing, DB, telemetry, and supply-chain rules
+- `ARCHITECTURE.md` — architecture boundaries
+- `DESIGN_SYSTEM.md` — frontend behavior and visual rules
+- `SECURITY.md` — security/privacy operating model
+
+Run `pnpm check:architecture` to validate all machine-readable contracts.
+
+## Security and privacy
+
+Security is enforced at application resources, not by SEO route classification.
+
+- API Route Handlers are private by default unless explicitly allowlisted.
+- Sensitive routes authenticate with Clerk inside the resource.
+- Billing identity is derived server-side from the active Clerk user/organization.
+- Polar products come from a server-side allowlist.
+- Sentry PII/log forwarding and Session Replay default off.
+- Better Stack credentials are server-only.
+- CSP, HSTS, frame denial, referrer policy, permissions policy, and nosniff headers are configured.
+- Production DB connections require TLS and use bounded pool/query timeouts.
+- GitHub Actions use read-only CI permissions and immutable action SHAs.
+- Releases run only from a successful CI run at the exact tested SHA.
+- Production dependencies are audited in PR CI.
+
+Read `SECURITY.md` before adding APIs, persisted tenant data, telemetry, billing, or third-party integrations.
 
 ## Frontend contract
 
 The canonical frontend is Next.js + TypeScript + Tailwind + shadcn/ui + Radix + Lucide.
-Design tokens live in `src/styles/global.css`; shadcn configuration lives in
-`components.json`; machine-readable design constraints live in
-`design.contract.json`.
 
-Read `DESIGN_SYSTEM.md` before making material UI changes.
+Design tokens live in `src/styles/global.css`; shadcn configuration lives in `components.json`. Material UI work must pass Storybook accessibility/component tests and browser screenshot regression.
+
+Read `DESIGN_SYSTEM.md` before material UI changes.
 
 ## SEO contract
 
-The technical SEO engine is a protected subsystem. Product work must preserve the
-existing build order:
+The technical SEO engine is a protected subsystem. Product work must preserve:
 
 ```text
 SEO pre-build validation
@@ -48,14 +71,7 @@ SEO pre-build validation
 → SEO post-build audit
 ```
 
-The contract checker verifies the SEO scripts and required engine files. Do not
-remove, bypass, or reorder those gates as part of unrelated product work.
-
-## Canonical stack
-
-The enforced foundation is Next.js + React + strict TypeScript + Tailwind CSS + shadcn/ui + Radix UI + Lucide, Clerk authentication, Neon PostgreSQL + Drizzle ORM, Polar billing, PGlite for local development, pnpm, and Coolify deployment.
-
-The machine-readable sources of truth are `stack.contract.json` and `design.contract.json`. See `ARCHITECTURE.md` and `DESIGN_SYSTEM.md` for the human-readable rules.
+Do not remove, bypass, or reorder those gates as collateral work.
 
 ## Local setup
 
@@ -64,21 +80,9 @@ Requirements:
 - Node.js `>=22`
 - pnpm `10.34.5`
 
-Install dependencies:
-
 ```bash
 pnpm install --frozen-lockfile
-```
-
-Copy the environment template:
-
-```bash
 cp .env.example .env
-```
-
-Start development:
-
-```bash
 pnpm dev
 ```
 
@@ -90,59 +94,52 @@ NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 DATABASE_URL
 ```
 
-For production, `DATABASE_URL` must be the Neon PostgreSQL connection string.
-The local development scripts start PGlite and provide a local PostgreSQL-compatible
-endpoint automatically.
+Production `DATABASE_URL` must use Neon PostgreSQL and enforce TLS. Local development uses PGlite.
 
-Keep `.env` and `.env.production` outside Git.
-Use Coolify environment variables for deployed applications.
+Keep runtime secrets outside Git and configure them through Coolify/runtime secret storage.
 
 ## Checks
 
 ```bash
 pnpm check:architecture
+pnpm test:contracts
+pnpm test:security
 pnpm typegen
 pnpm check:types
 pnpm check:oxlint
 pnpm check:format
 pnpm test
+pnpm storybook:test
+pnpm test:visual
 pnpm build
 ```
 
-`pnpm build` includes both SEO gates and must remain the production build command.
+`pnpm build` includes both SEO gates and remains the production build command.
 
 ## Database
 
-Production database provider: **Neon PostgreSQL**.
-ORM: **Drizzle**.
-Runtime connection boundary: **node-postgres (`pg`)**.
-Local development database: **PGlite**.
-
-Generate and apply migrations explicitly:
+Production: **Neon PostgreSQL**  
+ORM: **Drizzle**  
+Runtime driver: **node-postgres (`pg`)**  
+Local: **PGlite**
 
 ```bash
 pnpm db:generate
 pnpm db:migrate
 ```
 
-Production migrations require a reviewed release step.
+Production migrations require a reviewed release/deployment step. Tenant-owned child-product data must use the canonical tenant/data boundary and include cross-tenant isolation tests.
 
 ## Product usage
 
-Create a new product from this repository.
-Replace the foundation homepage with the product-approved surface.
-Keep authentication, workspace, billing, data, SEO, health, design-system, and
-deployment boundaries intact.
+Create a new product from this repository, replace the foundation homepage with the product-approved surface, and keep authentication, data, billing, security, SEO, frontend, health, and deployment boundaries intact.
 
-Read `ARCHITECTURE.md`, `DESIGN_SYSTEM.md`, `AGENTS.md`, and
-`skills/saas-builder/SKILL.md` before autonomous implementation.
+Read `ARCHITECTURE.md`, `DESIGN_SYSTEM.md`, `SECURITY.md`, `AGENTS.md`, and `skills/saas-builder/SKILL.md` before autonomous implementation.
 
-Do not copy fictional metrics into production.
-Do not commit secrets or provider credentials.
+Do not add fictional metrics, product claims, or live credentials.
 
 ## Ownership
 
-Sage Prime owns the original code and product configuration in this repository.
-See `LICENSE`, `OWNERSHIP.md`, and `THIRD_PARTY_NOTICES.md`.
+Sage Prime owns the original code and product configuration in this repository. See `LICENSE`, `OWNERSHIP.md`, and `THIRD_PARTY_NOTICES.md`.
 
 Third-party dependencies retain their own licenses and notices.
