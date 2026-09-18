@@ -18,7 +18,7 @@
     "start": "next start",
     "build-stats": "cross-env ANALYZE=true pnpm run build",
     "clean": "rimraf .next out coverage",
-    "check": "run-s typegen check:types check:oxlint check:format test build-local",
+    "check": "run-s check:architecture typegen check:types check:oxlint check:format test build-local",
     "typegen": "next typegen",
     "check:types": "tsc --noEmit --pretty",
     "check:oxlint": "oxlint .",
@@ -39,7 +39,10 @@
     "db:studio": "drizzle-kit studio",
     "storybook": "storybook dev -p 6006",
     "storybook:test": "vitest run --config .storybook/vitest.config.ts",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "check:stack": "node scripts/check-stack-contract.mjs",
+    "check:design": "node scripts/check-design-contract.mjs",
+    "check:architecture": "run-s check:stack check:design"
   },
   "dependencies": {
     "@clerk/localizations": "^4.8.1",
