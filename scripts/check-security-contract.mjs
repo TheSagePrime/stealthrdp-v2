@@ -206,6 +206,9 @@ const proxy = fs.readFileSync('src/proxy.ts', 'utf8');
 if (proxy.includes('createRouteMatcher')) {
   errors.push('src/proxy.ts: deprecated Clerk createRouteMatcher must not be an authorization boundary');
 }
+if (proxy.includes('routes.privatePages')) {
+  errors.push('src/proxy.ts: SEO privatePages must not control authentication or authorization');
+}
 if (contract.seo.forbidProductionLocalAuditProxy
   && (!proxy.includes('isProductionDeployEnv(config.environment.deployEnv)')
     || !proxy.includes("process.env.SEO_AUDIT_LOCAL !== 'true'")
