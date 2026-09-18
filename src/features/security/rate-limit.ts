@@ -1,3 +1,5 @@
+import 'server-only';
+
 type RateLimitEntry = {
   count: number;
   resetAt: number;
@@ -9,6 +11,7 @@ declare global {
 }
 
 const buckets = globalThis.sagePrimeRateLimits ?? new Map<string, RateLimitEntry>();
+const MAX_BUCKETS = 10_000;
 
 if (!globalThis.sagePrimeRateLimits) {
   globalThis.sagePrimeRateLimits = buckets;
@@ -19,6 +22,22 @@ export type RateLimitResult = {
   retryAfterSeconds: number;
 };
 
+function pruneBuckets(now: number): void {
+  for (const [key, entry] of buckets) {
+    if (entry.resetAt <= now) {
+      buckets.delete(key);
+    }
+  }
+
+  while (buckets.size >= MAX_BUCKETS) {
+    const oldest = buckets.keys().next().value;
+    if (typeof oldest !== 'string') {
+      break;
+    }
+    buckets.delete(oldest);
+  }
+}
+
 export function consumeRateLimit(
   key: string,
   options: { limit?: number; windowMs?: number } = {},
@@ -26,6 +45,7 @@ export function consumeRateLimit(
   const limit = options.limit ?? 8;
   const windowMs = options.windowMs ?? 60_000;
   const now = Date.now();
+  pruneBuckets(now);
   const current = buckets.get(key);
 
   if (!current || current.resetAt <= now) {
