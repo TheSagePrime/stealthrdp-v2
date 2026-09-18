@@ -6,8 +6,10 @@ import { readPolarConfig } from './polar';
 function isTrustedPolarUrl(value: string): boolean {
   try {
     const url = new URL(value);
-    return url.protocol === 'https:'
-      && (url.hostname === 'polar.sh' || url.hostname.endsWith('.polar.sh'));
+    return (
+      url.protocol === 'https:'
+      && (url.hostname === 'polar.sh' || url.hostname.endsWith('.polar.sh'))
+    );
   } catch {
     return false;
   }
@@ -29,14 +31,17 @@ function createPolarClient() {
   };
 }
 
-export function resolveAllowedPolarProduct(requestedProductId: string | null): string | null {
+export function resolveAllowedPolarProduct(
+  requestedProductId: string | null,
+): string | null {
   const { allowedProductIds } = readPolarConfig();
 
   if (allowedProductIds.length === 0) {
     return null;
   }
 
-  const candidate = requestedProductId ?? (allowedProductIds.length === 1 ? allowedProductIds[0] : null);
+  const candidate = requestedProductId
+    ?? (allowedProductIds.length === 1 ? allowedProductIds[0] : null);
   return candidate && allowedProductIds.includes(candidate) ? candidate : null;
 }
 
