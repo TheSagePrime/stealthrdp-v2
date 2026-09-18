@@ -1,3 +1,4 @@
+import 'server-only';
 import type { AuthenticatedPrincipal } from '@/features/security/principal';
 
 export type TenantScope = {
