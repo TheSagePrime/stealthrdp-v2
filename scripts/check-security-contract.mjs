@@ -195,6 +195,9 @@ if (!readinessSource.includes(`expiresAt: now + ${Number(contract.http.readiness
 }
 
 const proxy = fs.readFileSync('src/proxy.ts', 'utf8');
+if (proxy.includes('createRouteMatcher')) {
+  errors.push('src/proxy.ts: deprecated Clerk createRouteMatcher must not be an authorization boundary');
+}
 if (contract.seo.forbidProductionLocalAuditProxy
   && (!proxy.includes('isProductionDeployEnv(config.environment.deployEnv)')
     || !proxy.includes("process.env.SEO_AUDIT_LOCAL !== 'true'")
