@@ -9,7 +9,7 @@ Use this repository as the canonical foundation for Sage Prime products. The rep
 
 ## Before writing code
 
-1. Read `stack.contract.json`, `design.contract.json`, `ARCHITECTURE.md`, and `DESIGN_SYSTEM.md`.
+1. Read `stack.contract.json`, `design.contract.json`, `security.contract.json`, `ARCHITECTURE.md`, `DESIGN_SYSTEM.md`, and `SECURITY.md`.
 2. Inspect the existing product routes, components, data model, auth boundary, billing boundary, and SEO configuration.
 3. Read the relevant Next.js version documentation in the installed package before relying on remembered APIs.
 4. Reuse existing architecture and components before introducing new abstractions.
@@ -37,6 +37,19 @@ For UI work:
 11. Never update a visual baseline merely to make CI green. Review the rendered diff first; run `pnpm test:visual:update` and commit new reference images only when the visual change is intentional.
 
 Avoid generic AI decoration: arbitrary gradients, glassmorphism, oversized radii, excessive cards, emoji-as-icons, random shadows, one-off color systems, and duplicated primitives.
+
+## Security and privacy workflow
+
+- API Route Handlers are private by default; authenticate at the resource itself.
+- Derive user, organization, tenant, and billing identity from Clerk server-side.
+- Never accept a Polar customer ID or tenant owner ID from client input.
+- Use the canonical tenant scope and approved DB boundary for tenant-owned data.
+- Keep runtime secrets server-only and out of logs/telemetry.
+- Preserve privacy-safe Sentry and logging defaults.
+- Keep sensitive API rate limits and billing product allowlists.
+- Do not loosen CSP/security headers as a shortcut.
+- Do not weaken CI token permissions or unpin GitHub Actions.
+- When adding durable webhook-driven writes, make idempotency part of the database write boundary.
 
 ## Data and platform boundaries
 
@@ -71,6 +84,7 @@ Before handing work off:
 
 ```bash
 pnpm check:architecture
+pnpm test:security
 pnpm typegen
 pnpm check:types
 pnpm check:oxlint
