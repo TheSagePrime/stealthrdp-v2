@@ -52,6 +52,17 @@ for (const page of contract.authentication.protectedPageFiles ?? []) {
   }
 }
 
+for (const layout of contract.authentication.protectedLayoutFiles ?? []) {
+  if (!fs.existsSync(layout)) {
+    errors.push(`${layout}: protected layout missing`);
+    continue;
+  }
+  const source = fs.readFileSync(layout, 'utf8');
+  if (!source.includes('await auth.protect()')) {
+    errors.push(`${layout}: protected layout must enforce Clerk auth for descendant routes`);
+  }
+}
+
 const webhookRoute = 'src/app/api/polar/webhook/route.ts';
 if (!fs.existsSync(contract.billing.webhookReplayGuard)) {
   errors.push(`missing webhook replay guard: ${contract.billing.webhookReplayGuard}`);
