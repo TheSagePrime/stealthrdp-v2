@@ -43,7 +43,9 @@
     ],
     "forbiddenPublicEnvPrefixes": [
       "NEXT_PUBLIC_BETTER_STACK_"
-    ]
+    ],
+    "clientTelemetryOptInEnv": "NEXT_PUBLIC_SENTRY_ENABLED",
+    "replayOptInEnv": "NEXT_PUBLIC_SENTRY_REPLAY_ENABLED"
   },
   "http": {
     "requiredHeaders": [
@@ -89,5 +91,12 @@
   "seo": {
     "forbidProductionLocalAuditProxy": true,
     "escapeJsonLdScriptClosing": true
-  }
+  },
+  "serverOnlyModules": [
+    "src/libs/Logger.ts",
+    "src/utils/DBConnection.ts",
+    "src/libs/DB.ts",
+    "src/features/security/principal.ts",
+    "src/features/billing/polar-api.ts"
+  ]
 }
