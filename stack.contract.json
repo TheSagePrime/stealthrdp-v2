@@ -46,7 +46,8 @@
     "react",
     "react-dom",
     "tailwind-merge",
-    "zod"
+    "zod",
+    "server-only"
   ],
   "requiredDevDependencies": [
     "@electric-sql/pglite",
