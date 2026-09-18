@@ -221,7 +221,7 @@ jobs:
             .vitest-attachments/**
             vitest-test-results/**
           if-no-files-found: ignore
-          retention-days: 7
+          retention-days: 1
 
   e2e:
     strategy:
