@@ -16,7 +16,7 @@ const preview: Preview = {
       toc: true, // Enable table of contents
     },
     a11y: {
-      test: 'todo', // Make a11y tests optional
+      test: 'error', // Accessibility violations fail Storybook tests and CI
     },
   },
   tags: ['autodocs'],
