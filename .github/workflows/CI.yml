@@ -201,7 +201,9 @@ jobs:
         run: pnpm exec playwright install --with-deps chromium
 
       - name: Regenerate canonical Linux references
-        run: pnpm run test:visual:update
+        run: |
+          rm -rf src/components/ui/__screenshots__/VisualContract.visual.test.tsx
+          pnpm run test:visual:update
 
       - if: github.event_name == 'pull_request' && github.head_ref == 'feat/ai-enforced-starter-contracts'
         name: Commit exact visual reference bytes
