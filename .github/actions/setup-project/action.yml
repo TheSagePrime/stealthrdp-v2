@@ -14,17 +14,17 @@ runs:
   using: composite
   steps:
     - name: Set up pnpm
-      uses: pnpm/action-setup@v4
+      uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1
 
     - name: Use Node.js ${{ inputs.node-version }}
-      uses: actions/setup-node@v6
+      uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38
       with:
         node-version: ${{ inputs.node-version }}
         cache: pnpm
 
     - name: Restore or cache node_modules
       id: cache-node-modules
-      uses: actions/cache@v5
+      uses: actions/cache@caa296126883cff596d87d8935842f9db880ef25
       with:
         path: node_modules
         key: node-modules-${{ inputs.node-version }}-${{ hashFiles('pnpm-lock.yaml') }}
@@ -36,7 +36,7 @@ runs:
 
     - name: Restore Next.js build output
       if: inputs.restore-nextjs-cache == 'true'
-      uses: actions/cache/restore@v5
+      uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25
       with:
         path: |
           .next
