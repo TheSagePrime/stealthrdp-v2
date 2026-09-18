@@ -1,6 +1,6 @@
 # Sage Prime Architecture
 
-This repository is the canonical foundation for Sage Prime products. The architecture is enforced by `stack.contract.json`, `design.contract.json`, local hooks, and CI.
+This repository is the canonical foundation for Sage Prime products. The architecture is enforced by `stack.contract.json`, `design.contract.json`, `security.contract.json`, local hooks, and CI.
 
 ## Canonical stack
 
@@ -52,7 +52,7 @@ pnpm check
 pnpm build
 ```
 
-`check:architecture` rejects known stack drift, design-system drift, and protected SEO changes. CI repeats these checks for pull requests.
+`check:architecture` rejects known stack drift, design-system drift, protected SEO changes, and security/privacy regressions. CI repeats these checks for pull requests.
 
 
 ## Protected-change approval
