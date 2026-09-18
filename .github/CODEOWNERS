@@ -19,3 +19,7 @@
 /src/features/billing/ @bhuvi1620
 /src/app/robots.ts @bhuvi1620
 /src/app/sitemap.ts @bhuvi1620
+/vitest.config.ts @bhuvi1620
+/.storybook/ @bhuvi1620
+/src/components/ui/VisualContract.visual.test.tsx @bhuvi1620
+/src/components/ui/__screenshots__/ @bhuvi1620
