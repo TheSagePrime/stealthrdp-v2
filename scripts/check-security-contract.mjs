@@ -94,6 +94,10 @@ for (const route of contract.billing.sensitiveRoutes) {
   if (contract.billing.sameOriginRequired && !source.includes('isSameOriginMutation(request)')) {
     errors.push(`${route}: billing session creation must enforce same-origin requests`);
   }
+  if (contract.billing.sensitiveResponsesNoStore
+    && (!source.includes('sensitiveJson') || !source.includes('sensitiveRedirect'))) {
+    errors.push(`${route}: sensitive billing responses must use no-store response helpers`);
+  }
   for (const selector of contract.billing.forbiddenClientSelectors) {
     if (source.includes(`searchParams.get('${selector}')`) || source.includes(`searchParams.get("${selector}")`)) {
       errors.push(`${route}: client-controlled billing customer selector "${selector}" is forbidden`);
