@@ -29,6 +29,18 @@ try {
   );
 
   expectFailure(
+    'billing session exposed as GET',
+    () => fs.writeFileSync(portalPath, portalOriginal.replace('export async function POST', 'export async function GET')),
+    () => fs.writeFileSync(portalPath, portalOriginal),
+  );
+
+  expectFailure(
+    'billing session without same-origin guard',
+    () => fs.writeFileSync(portalPath, portalOriginal.replace('isSameOriginMutation(request)', 'true')),
+    () => fs.writeFileSync(portalPath, portalOriginal),
+  );
+
+  expectFailure(
     'unsafe Sentry PII collection',
     () => fs.writeFileSync(sentryPath, sentryOriginal.replace('sendDefaultPii: false', 'sendDefaultPii: true')),
     () => fs.writeFileSync(sentryPath, sentryOriginal),
