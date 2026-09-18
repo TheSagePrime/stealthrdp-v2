@@ -8,6 +8,12 @@
       "src/app/api/health/route.ts",
       "src/app/api/ready/route.ts",
       "src/app/api/polar/webhook/route.ts"
+    ],
+    "protectedPageFiles": [
+      "src/app/[locale]/(auth)/dashboard/page.tsx",
+      "src/app/[locale]/(auth)/dashboard/organization-profile/[[...organization-profile]]/page.tsx",
+      "src/app/[locale]/(auth)/dashboard/user-profile/[[...user-profile]]/page.tsx",
+      "src/app/[locale]/(auth)/onboarding/organization-selection/page.tsx"
     ]
   },
   "billing": {
