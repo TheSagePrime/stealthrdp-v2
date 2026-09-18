@@ -7,6 +7,10 @@ on:
     - cron: '0 5 * * *' # Run every day at 5am
   workflow_dispatch: # Run manually
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   synchronize-with-crowdin:
     name: Synchronize with Crowdin
@@ -15,10 +19,10 @@ jobs:
     if: vars.ENABLE_CROWDIN == 'true'
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
 
       - name: Crowdin action
-        uses: crowdin/github-action@v2
+        uses: crowdin/github-action@8f01d54f70f1713ee3f09d82c2bbb2daeac28689
         with:
           upload_sources: true
           upload_translations: true
