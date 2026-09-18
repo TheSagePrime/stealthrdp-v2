@@ -152,7 +152,7 @@ export default async function proxy(
 
 export const config = {
   matcher: [
-    '/((?!_next|_vercel|monitoring|.*\\..*).*)',
+    '/((?!_next|_vercel|.*\\..*).*)',
     '/api(.*)',
   ],
 };
