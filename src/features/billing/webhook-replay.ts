@@ -10,8 +10,11 @@ declare global {
   var sagePrimeWebhookReplayCache: Map<string, ReplayEntry> | undefined;
 }
 
-const replayCache = globalThis.sagePrimeWebhookReplayCache ?? new Map<string, ReplayEntry>();
+const replayCache
+  = globalThis.sagePrimeWebhookReplayCache
+    ?? new Map<string, ReplayEntry>();
 const MAX_REPLAY_ENTRIES = 10_000;
+
 if (!globalThis.sagePrimeWebhookReplayCache) {
   globalThis.sagePrimeWebhookReplayCache = replayCache;
 }
@@ -24,7 +27,10 @@ function canonicalize(value: unknown): string {
   if (value && typeof value === 'object') {
     const entries = Object.entries(value as Record<string, unknown>)
       .sort(([left], [right]) => left.localeCompare(right))
-      .map(([key, entryValue]) => `${JSON.stringify(key)}:${canonicalize(entryValue)}`);
+      .map(
+        ([key, entryValue]) =>
+          `${JSON.stringify(key)}:${canonicalize(entryValue)}`,
+      );
     return `{${entries.join(',')}}`;
   }
 
@@ -43,7 +49,9 @@ export async function withPolarWebhookReplayGuard(
   const key = fingerprint(payload);
 
   for (const [cachedKey, entry] of replayCache) {
-    if (entry.expiresAt <= now) replayCache.delete(cachedKey);
+    if (entry.expiresAt <= now) {
+      replayCache.delete(cachedKey);
+    }
   }
 
   if (replayCache.has(key)) {
