@@ -80,7 +80,10 @@
     },
     "requireFrozenLockfile": true,
     "requireDependencyAuditInCi": true,
-    "pinGithubActionsToCommitSha": true
+    "pinGithubActionsToCommitSha": true,
+    "forbiddenDependencies": [
+      "@clerk/ui"
+    ]
   },
   "database": {
     "directDbImportAllowedPrefixes": [
@@ -106,6 +109,13 @@
     "src/libs/DB.ts",
     "src/features/security/principal.ts",
     "src/features/billing/polar-api.ts",
-    "src/features/security/origin.ts"
-  ]
+    "src/features/security/origin.ts",
+    "src/features/security/rate-limit.ts",
+    "src/features/billing/webhook-replay.ts",
+    "src/features/billing/polar.ts",
+    "src/features/data/tenant.ts"
+  ],
+  "release": {
+    "requireCurrentMainSha": true
+  }
 }
