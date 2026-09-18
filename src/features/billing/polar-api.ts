@@ -72,9 +72,6 @@ export async function createPolarCheckout(
     external_customer_id: principal.billingExternalId,
     success_url: config.successUrl,
     allow_discount_codes: false,
-    metadata: {
-      clerk_principal_id: principal.billingExternalId,
-    },
   }));
 
   if (!isTrustedPolarUrl(parsed.url)) {
