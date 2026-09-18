@@ -36,6 +36,15 @@ const hexPattern = /#[0-9a-fA-F]{3,8}\b/g;
 const arbitraryHexPattern = /(?:bg|text|border|from|via|to|ring|fill|stroke)-\[#[0-9a-fA-F]{3,8}\]/g;
 const inlineColorPattern = /(?:color|backgroundColor|borderColor)\s*:\s*['"](?:#|rgb\(|rgba\(|hsl\(|hsla\()/g;
 
+const reservedPrimitiveFiles = new Set(contract.componentSystem.reservedPrimitiveFiles ?? []);
+const primitiveRoot = contract.componentSystem.primitiveRoot ?? 'src/components/ui';
+for (const path of execFileSync('git', ['ls-files', 'src/components'], { encoding: 'utf8' }).split('\\n').filter(Boolean)) {
+  const basename = path.split('/').at(-1);
+  if (reservedPrimitiveFiles.has(basename) && !path.startsWith(`${primitiveRoot}/`)) {
+    errors.push(`${path}: duplicates reserved UI primitive ${basename}; extend the canonical primitive instead`);
+  }
+}
+
 for (const path of tracked) {
   const source = fs.readFileSync(path, 'utf8');
 
@@ -61,6 +70,23 @@ for (const path of tracked) {
     errors.push(`${path}: arbitrary Tailwind hex color detected; use shadcn/theme tokens`);
   }
   arbitraryHexPattern.lastIndex = 0;
+
+  if (contract.rules.forbidVisualInlineStyles && visualInlineStylePattern.test(source)) {
+    errors.push(`${path}: visual inline style detected; use Tailwind and design tokens`);
+  }
+  visualInlineStylePattern.lastIndex = 0;
+
+  if ((contract.rules.forbidRawInteractiveElementsIn ?? []).some(root => path.startsWith(root))
+    && rawInteractivePattern.test(source)) {
+    errors.push(`${path}: raw interactive HTML control detected; use the canonical UI primitive`);
+  }
+  rawInteractivePattern.lastIndex = 0;
+
+  for (const utility of contract.rules.forbiddenDecorationUtilities ?? []) {
+    if (source.includes(utility)) {
+      errors.push(`${path}: forbidden decorative utility "${utility}" detected`);
+    }
+  }
 }
 
 if (errors.length) {
