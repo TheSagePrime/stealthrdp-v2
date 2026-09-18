@@ -153,6 +153,11 @@ jobs:
     name: Run Storybook
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      CLERK_SECRET_KEY: sk_test_c2VvLWNpLmludmFsaWQk
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/sage_prime_starter
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_c2VvLWNpLmludmFsaWQk
+
     steps:
       - uses: actions/checkout@v6
 
@@ -175,6 +180,10 @@ jobs:
     name: Bootstrap visual regression baselines
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    env:
+      CLERK_SECRET_KEY: sk_test_c2VvLWNpLmludmFsaWQk
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/sage_prime_starter
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_c2VvLWNpLmludmFsaWQk
 
     steps:
       - uses: actions/checkout@v6
