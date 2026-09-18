@@ -12,6 +12,7 @@ import {
   getArticlePublications,
   isIndexableArticle,
 } from '@/libs/seo/articles';
+import { serializeJsonLd } from '@/libs/seo/json-ld';
 import { canonicalUrlForPath } from '@/libs/seo/normalize';
 
 function formatPublicationDate(value: string, locale = 'en-US'): string {
@@ -81,7 +82,7 @@ export function ArticleJsonLd({ article, config }: { article: ArticlePublication
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(buildArticleJsonLd(article, config, site)) }}
+      dangerouslySetInnerHTML={{ __html: serializeJsonLd(buildArticleJsonLd(article, config, site)) }}
     />
   );
 }
@@ -125,7 +126,7 @@ export function ArticleIndex({
           </li>
         ))}
       </ol>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
     </section>
   );
 }
