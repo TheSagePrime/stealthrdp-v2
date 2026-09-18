@@ -18,6 +18,12 @@
     "protectedLayoutFiles": [
       "src/app/[locale]/(auth)/dashboard/layout.tsx",
       "src/app/[locale]/(auth)/onboarding/layout.tsx"
+    ],
+    "clerkContextPagePrefixes": [
+      "/sign-in",
+      "/sign-up",
+      "/dashboard",
+      "/onboarding"
     ]
   },
   "billing": {
