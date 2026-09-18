@@ -196,15 +196,17 @@ jobs:
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Compare approved visual fingerprints
+      - name: Compare approved visual references
         run: pnpm run test:visual
 
-      - name: Upload rendered screenshots on failure
+      - name: Upload visual regression diffs
         uses: actions/upload-artifact@v7
         if: failure()
         with:
-          name: visual-regression-screenshots
-          path: vitest-test-results/visual/**
+          name: visual-regression-diffs
+          path: |
+            .vitest-attachments/**
+            vitest-test-results/**
           if-no-files-found: ignore
           retention-days: 7
 
