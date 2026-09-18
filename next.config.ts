@@ -4,6 +4,21 @@ import { withSentryConfig } from '@sentry/nextjs';
 import createNextIntlPlugin from 'next-intl/plugin';
 import './src/libs/Env';
 
+const csp = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "frame-ancestors 'none'",
+  "form-action 'self' https://*.clerk.com https://*.clerk.accounts.dev https://*.polar.sh",
+  "img-src 'self' data: blob: https:",
+  "font-src 'self' data: https:",
+  "style-src 'self' 'unsafe-inline'",
+  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''} https://*.clerk.com https://*.clerk.accounts.dev https://challenges.cloudflare.com`,
+  "connect-src 'self' https://*.clerk.com https://*.clerk.accounts.dev https://api.clerk.com https://*.polar.sh https://*.sentry.io",
+  "frame-src https://*.clerk.com https://*.clerk.accounts.dev https://challenges.cloudflare.com https://*.polar.sh",
+  ...(process.env.NODE_ENV === 'production' ? ['upgrade-insecure-requests'] : []),
+].join('; ');
+
 // Define the base Next.js configuration
 const baseConfig: NextConfig = {
   devIndicators: {
@@ -13,7 +28,22 @@ const baseConfig: NextConfig = {
   reactStrictMode: true,
   reactCompiler: process.env.NODE_ENV === 'production', // Keep the development environment fast
   logging: {
-    browserToTerminal: process.env.BROWSER_TO_TERMINAL_DISABLED !== 'true',
+    browserToTerminal: process.env.BROWSER_TO_TERMINAL_ENABLED === 'true',
+  },
+  async headers() {
+    const headers = [
+      { key: 'Content-Security-Policy', value: csp },
+      { key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups' },
+      { key: 'Permissions-Policy', value: 'camera=(), geolocation=(), microphone=()' },
+      { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+      { key: 'X-Content-Type-Options', value: 'nosniff' },
+      { key: 'X-Frame-Options', value: 'DENY' },
+      ...(process.env.NODE_ENV === 'production'
+        ? [{ key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains; preload' }]
+        : []),
+    ];
+
+    return [{ source: '/:path*', headers }];
   },
   outputFileTracingIncludes: {
     '/': ['./migrations/**/*'],
