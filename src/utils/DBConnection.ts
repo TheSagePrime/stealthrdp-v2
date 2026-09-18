@@ -30,8 +30,8 @@ export const createDbConnection = () => {
     query_timeout: 5_000,
   });
 
-  pool.on('error', (error) => {
-    logger.error(`Database pool error: ${error.message}`);
+  pool.on('error', () => {
+    logger.error('Database pool error');
   });
 
   return drizzle({
