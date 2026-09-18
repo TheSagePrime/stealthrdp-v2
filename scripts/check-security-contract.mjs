@@ -236,8 +236,17 @@ if (proxy.includes('createRouteMatcher')) {
 if (proxy.includes('routes.privatePages')) {
   errors.push('src/proxy.ts: SEO privatePages must not control authentication or authorization');
 }
-if (!proxy.includes("'/api(.*)'") ) {
+if (!proxy.includes("'/api(.*)'")) {
   errors.push('src/proxy.ts: all API paths must always receive Clerk middleware context');
+}
+if (!proxy.includes('clerkContextPagePrefixes')) {
+  errors.push('src/proxy.ts: Clerk page context must come from the security routing boundary');
+}
+for (const prefix of contract.authentication.clerkContextPagePrefixes ?? []) {
+  const routingSource = fs.readFileSync('src/features/security/routing.ts', 'utf8');
+  if (!routingSource.includes(`'${prefix}'`)) {
+    errors.push(`src/features/security/routing.ts: missing Clerk context prefix ${prefix}`);
+  }
 }
 if (contract.seo.forbidProductionLocalAuditProxy
   && (!proxy.includes('isProductionDeployEnv(config.environment.deployEnv)')
