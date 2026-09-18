@@ -11,7 +11,7 @@ import {
 
 function DropdownPreview() {
   return (
-    <DropdownMenu defaultOpen>
+    <DropdownMenu defaultOpen modal={false}>
       <DropdownMenuTrigger asChild>
         <Button variant="outline">Open menu</Button>
       </DropdownMenuTrigger>
