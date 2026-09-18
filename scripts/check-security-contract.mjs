@@ -148,6 +148,18 @@ for (const unsafe of ['maskAllText: false', 'maskAllInputs: false', 'blockAllMed
 }
 
 const nextConfig = fs.readFileSync('next.config.ts', 'utf8');
+if (!nextConfig.includes(`process.env.${contract.privacy.sourceMapUploadOptInEnv} === 'true'`)) {
+  errors.push('next.config.ts: Sentry source-map upload must be a separate explicit opt-in');
+}
+if (contract.privacy.sentryTunnelDefault === false && nextConfig.includes('tunnelRoute:')) {
+  errors.push('next.config.ts: Sentry tunnel must not be enabled by default');
+}
+if (contract.privacy.componentAnnotationDefault === false && nextConfig.includes('enabled: true')) {
+  const annotationBlock = nextConfig.match(/reactComponentAnnotation:\s*\{[\s\S]*?\}/)?.[0] ?? '';
+  if (annotationBlock.includes('enabled: true')) {
+    errors.push('next.config.ts: Sentry component annotation must default off');
+  }
+}
 if (!nextConfig.includes("browserToTerminal: process.env.BROWSER_TO_TERMINAL_ENABLED === 'true'")) {
   errors.push('next.config.ts: browser-to-terminal logging must be opt-in');
 }
