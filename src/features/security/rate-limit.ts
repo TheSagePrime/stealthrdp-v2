@@ -10,7 +10,8 @@ declare global {
   var sagePrimeRateLimits: Map<string, RateLimitEntry> | undefined;
 }
 
-const buckets = globalThis.sagePrimeRateLimits ?? new Map<string, RateLimitEntry>();
+const buckets
+  = globalThis.sagePrimeRateLimits ?? new Map<string, RateLimitEntry>();
 const MAX_BUCKETS = 10_000;
 
 if (!globalThis.sagePrimeRateLimits) {
@@ -56,7 +57,10 @@ export function consumeRateLimit(
   if (current.count >= limit) {
     return {
       allowed: false,
-      retryAfterSeconds: Math.max(1, Math.ceil((current.resetAt - now) / 1000)),
+      retryAfterSeconds: Math.max(
+        1,
+        Math.ceil((current.resetAt - now) / 1000),
+      ),
     };
   }
 
