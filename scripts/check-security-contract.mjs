@@ -88,6 +88,9 @@ for (const route of contract.billing.sensitiveRoutes) {
   if (!source.includes('consumeRateLimit')) {
     errors.push(`${route}: billing route must rate-limit session creation`);
   }
+  if (!source.includes('principal.canManageBilling')) {
+    errors.push(`${route}: organization billing must require the approved billing role`);
+  }
   if (!source.includes(`export async function ${contract.billing.sensitiveRouteMethod}`)) {
     errors.push(`${route}: billing session creation must use ${contract.billing.sensitiveRouteMethod}`);
   }
@@ -103,6 +106,11 @@ for (const route of contract.billing.sensitiveRoutes) {
       errors.push(`${route}: client-controlled billing customer selector "${selector}" is forbidden`);
     }
   }
+}
+
+const principalSource = fs.readFileSync('src/features/security/principal.ts', 'utf8');
+if (!principalSource.includes(`has({ role: '${contract.billing.organizationBillingRole}' })`)) {
+  errors.push(`src/features/security/principal.ts: organization billing role must remain ${contract.billing.organizationBillingRole}`);
 }
 
 const envSource = fs.readFileSync('src/libs/Env.ts', 'utf8');
