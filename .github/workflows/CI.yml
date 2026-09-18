@@ -85,6 +85,9 @@ jobs:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
 
+      - name: Enforce architecture and design contracts
+        run: pnpm run check:architecture
+
       - name: Linter
         run: pnpm exec next typegen && pnpm run check:oxlint && pnpm run check:format
 
