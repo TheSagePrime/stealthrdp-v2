@@ -10,7 +10,6 @@ import { pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core';
 // It automatically run the command `db-server:file`, which apply the migration before Next.js starts in development mode,
 // Alternatively, if your database is running, you can run `pnpm run db:migrate` and there is no need to restart the server.
 
-// Need a database for production? Check out https://get.neon.com/BMFYNtx
 // Product-owned database schema for the Sage Prime foundation.
 
 export const todoSchema = pgTable('todo', {
