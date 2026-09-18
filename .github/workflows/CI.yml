@@ -56,6 +56,19 @@ jobs:
           NEXT_PUBLIC_APP_URL: http://localhost:3008
           SITE_URL: https://seo-ci.invalid
 
+      - name: Show SEO audit on failure
+        if: failure()
+        run: cat reports/seo-audit.txt || true
+
+      - name: Upload SEO audit on failure
+        if: failure()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: seo-audit-failure
+          path: reports/seo-audit.*
+          if-no-files-found: ignore
+          retention-days: 1
+
       - if: matrix.node-version == '24.x' && success()
         name: Cache Next.js build output
         uses: actions/cache/save@caa296126883cff596d87d8935842f9db880ef25
