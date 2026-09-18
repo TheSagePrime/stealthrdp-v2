@@ -6,10 +6,11 @@ export type AuthenticatedPrincipal = {
   orgId: string | null;
   tenantId: string;
   billingExternalId: string;
+  canManageBilling: boolean;
 };
 
 export async function getAuthenticatedPrincipal(): Promise<AuthenticatedPrincipal | null> {
-  const { isAuthenticated, orgId, userId } = await auth();
+  const { has, isAuthenticated, orgId, userId } = await auth();
 
   if (!isAuthenticated || !userId) {
     return null;
@@ -22,5 +23,6 @@ export async function getAuthenticatedPrincipal(): Promise<AuthenticatedPrincipa
     orgId: orgId ?? null,
     tenantId,
     billingExternalId: tenantId,
+    canManageBilling: orgId ? has({ role: 'org:admin' }) : true,
   };
 }
