@@ -2,12 +2,14 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
 import { PageMessage } from '@/features/dashboard/PageMessage';
 import { TitleBar } from '@/features/dashboard/TitleBar';
+import { auth } from '@clerk/nextjs/server';
 
 type DashboardIndexPageProps = {
   params: Promise<{ locale: string }>;
 };
 
 export default async function DashboardIndexPage(props: DashboardIndexPageProps) {
+  await auth.protect();
   const { locale } = await props.params;
   setRequestLocale(locale);
   const t = await getTranslations({
