@@ -19,6 +19,16 @@ Describe what changed and why.
 - [ ] Storybook accessibility/component tests pass
 - [ ] Visual baseline images were not changed unless the rendered diff was reviewed and the visual change was intentional
 
+## Security / Privacy
+
+- [ ] New API routes authenticate at the resource unless explicitly public
+- [ ] Tenant/user/customer identifiers are derived server-side where possible
+- [ ] No secrets or personal data were added to client-visible env, logs, or telemetry
+- [ ] Billing routes keep product allowlists, server-derived identity, and rate limits
+- [ ] Security headers/CSP were preserved
+- [ ] No GitHub Action was changed back to a mutable tag
+- [ ] `pnpm check:security` and `pnpm test:security` pass
+
 ## SEO
 
 - [ ] SEO infrastructure was not changed as collateral work
@@ -38,6 +48,7 @@ Describe what changed and why.
 
 - [ ] `pnpm check:architecture`
 - [ ] `pnpm test:contracts`
+- [ ] `pnpm test:security`
 - [ ] `pnpm typegen`
 - [ ] `pnpm check:types`
 - [ ] `pnpm check:oxlint`
