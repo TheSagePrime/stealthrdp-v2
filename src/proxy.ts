@@ -15,11 +15,7 @@ const protectedPagePatterns = defaultSeoConfig.routes.privatePages.flatMap((rout
   const suffix = route === '/' ? '(.*)' : `${route}(.*)`;
   return [suffix, `/:locale${suffix}`];
 });
-const privateApiPatterns = defaultSeoConfig.routes.privateApis.map(route => `${route}(.*)`);
 const isProtectedPage = createRouteMatcher(protectedPagePatterns);
-const isPrivateApi = privateApiPatterns.length > 0
-  ? createRouteMatcher(privateApiPatterns)
-  : () => false;
 
 const isAuthPage = createRouteMatcher([
   '/sign-in(.*)',
@@ -72,7 +68,8 @@ function localePrefix(pathname: string): string {
 }
 
 function directAuditLogicalPath(request: NextRequest): string | null {
-  if (process.env.SEO_AUDIT_LOCAL !== 'true') {
+  const config = getSeoConfig();
+  if (isProductionDeployEnv(config.environment.deployEnv) || process.env.SEO_AUDIT_LOCAL !== 'true') {
     return null;
   }
 
@@ -136,18 +133,10 @@ export default async function proxy(
     return localSeoAudit;
   }
 
-  if (isPrivateApi(request)) {
-    return clerkMiddleware(async (auth) => {
-      const session = await auth();
-      if (!session.userId) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-      }
-      return NextResponse.next();
-    })(request, event);
-  }
-
   if (request.nextUrl.pathname.startsWith('/api/')) {
-    return NextResponse.next();
+    // API routes receive Clerk auth context, but sensitive Route Handlers
+    // must enforce authentication and authorization themselves.
+    return clerkMiddleware(async () => NextResponse.next())(request, event);
   }
 
   // Clerk keyless mode doesn't work with i18n, this is why we need to run the middleware conditionally
