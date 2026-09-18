@@ -1,5 +1,5 @@
 import type { NextFetchEvent, NextRequest } from 'next/server';
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { clerkMiddleware } from '@clerk/nextjs/server';
 import createMiddleware from 'next-intl/middleware';
 import { NextResponse } from 'next/server';
 import { defaultSeoConfig } from './config/seo';
@@ -11,18 +11,28 @@ import { resolveSiteUrl } from './libs/seo/site-url';
 
 const handleI18nRouting = createMiddleware(routing);
 
-const protectedPagePatterns = defaultSeoConfig.routes.privatePages.flatMap((route) => {
-  const suffix = route === '/' ? '(.*)' : `${route}(.*)`;
-  return [suffix, `/:locale${suffix}`];
-});
-const isProtectedPage = createRouteMatcher(protectedPagePatterns);
+function logicalPath(pathname: string): string {
+  const segments = pathname.split('/').filter(Boolean);
+  if (segments[0] && routing.locales.includes(segments[0] as (typeof routing.locales)[number])) {
+    segments.shift();
+  }
+  return segments.length ? `/${segments.join('/')}` : '/';
+}
 
-const isAuthPage = createRouteMatcher([
-  '/sign-in(.*)',
-  '/:locale/sign-in(.*)',
-  '/sign-up(.*)',
-  '/:locale/sign-up(.*)',
-]);
+function matchesPrefix(pathname: string, prefixes: readonly string[]): boolean {
+  const logical = logicalPath(pathname);
+  return prefixes.some(prefix =>
+    logical === prefix || (prefix !== '/' && logical.startsWith(`${prefix}/`)),
+  );
+}
+
+function isProtectedPage(request: NextRequest): boolean {
+  return matchesPrefix(request.nextUrl.pathname, defaultSeoConfig.routes.privatePages);
+}
+
+function isAuthPage(request: NextRequest): boolean {
+  return matchesPrefix(request.nextUrl.pathname, ['/sign-in', '/sign-up']);
+}
 
 const auditPublicRoutes = new Set([
   ...defaultSeoConfig.routes.publicMarketing,
