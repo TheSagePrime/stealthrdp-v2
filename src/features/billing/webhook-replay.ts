@@ -1,3 +1,4 @@
+import 'server-only';
 import { createHash } from 'node:crypto';
 
 type ReplayEntry = {
@@ -10,6 +11,7 @@ declare global {
 }
 
 const replayCache = globalThis.sagePrimeWebhookReplayCache ?? new Map<string, ReplayEntry>();
+const MAX_REPLAY_ENTRIES = 10_000;
 if (!globalThis.sagePrimeWebhookReplayCache) {
   globalThis.sagePrimeWebhookReplayCache = replayCache;
 }
@@ -46,6 +48,14 @@ export async function withPolarWebhookReplayGuard(
 
   if (replayCache.has(key)) {
     return false;
+  }
+
+  while (replayCache.size >= MAX_REPLAY_ENTRIES) {
+    const oldest = replayCache.keys().next().value;
+    if (typeof oldest !== 'string') {
+      break;
+    }
+    replayCache.delete(oldest);
   }
 
   replayCache.set(key, { expiresAt: now + 24 * 60 * 60 * 1000 });
