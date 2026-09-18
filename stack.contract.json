@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "name": "Sage Prime canonical stack",
+  "packageManager": {
+    "name": "pnpm",
+    "version": "10.34.5"
+  },
+  "runtime": {
+    "node": ">=22",
+    "framework": "next",
+    "uiRuntime": "react",
+    "language": "typescript"
+  },
+  "frontend": {
+    "styling": "tailwindcss",
+    "componentSystem": "shadcn/ui",
+    "primitives": "radix-ui",
+    "icons": "lucide-react"
+  },
+  "authentication": {
+    "provider": "clerk"
+  },
+  "database": {
+    "engine": "postgresql",
+    "productionProvider": "neon",
+    "orm": "drizzle-orm",
+    "runtimeDriver": "pg",
+    "localProvider": "pglite"
+  },
+  "billing": {
+    "provider": "polar"
+  },
+  "deployment": {
+    "provider": "coolify"
+  },
+  "requiredDependencies": [
+    "@clerk/nextjs",
+    "@polar-sh/nextjs",
+    "@polar-sh/sdk",
+    "class-variance-authority",
+    "clsx",
+    "drizzle-orm",
+    "lucide-react",
+    "next",
+    "pg",
+    "react",
+    "react-dom",
+    "tailwind-merge",
+    "zod"
+  ],
+  "requiredDevDependencies": [
+    "@electric-sql/pglite",
+    "@tailwindcss/postcss",
+    "drizzle-kit",
+    "tailwindcss",
+    "typescript"
+  ],
+  "forbiddenDependencies": [
+    "@auth0/nextjs-auth0",
+    "@fortawesome/fontawesome-svg-core",
+    "@fortawesome/free-solid-svg-icons",
+    "@fortawesome/react-fontawesome",
+    "@heroicons/react",
+    "@mui/material",
+    "@neondatabase/serverless",
+    "@prisma/client",
+    "@supabase/supabase-js",
+    "antd",
+    "better-auth",
+    "bootstrap",
+    "firebase",
+    "next-auth",
+    "prisma",
+    "react-icons",
+    "sequelize",
+    "typeorm"
+  ],
+  "requiredFiles": [
+    "components.json",
+    "drizzle.config.ts",
+    "src/styles/global.css",
+    "src/utils/DBConnection.ts",
+    "skills/saas-builder/SKILL.md"
+  ],
+  "seo": {
+    "buildScript": "pnpm seo:pre-build && pnpm build:app && pnpm seo:post-build",
+    "preBuildScript": "node --experimental-loader ./scripts/seo-ts-loader.mjs scripts/seo-pre-build.mjs",
+    "postBuildScript": "node scripts/seo-post-build-runner.mjs",
+    "requiredFiles": [
+      "scripts/seo-lib.mjs",
+      "scripts/seo-pre-build.mjs",
+      "scripts/seo-post-build-runner.mjs",
+      "scripts/seo-post-build-v2.mjs",
+      "src/app/robots.ts",
+      "src/app/sitemap.ts",
+      "src/config/seo.ts",
+      "src/libs/seo/metadata.ts",
+      "src/libs/seo/project.ts",
+      "src/libs/seo/articles.ts"
+    ]
+  }
+}
