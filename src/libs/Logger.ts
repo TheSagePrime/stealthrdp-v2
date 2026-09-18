@@ -27,6 +27,9 @@ function sanitizeRecord(record: LogRecord): LogRecord {
   return redact(record) as LogRecord;
 }
 
+const consoleSink = getConsoleSink({ formatter: getJsonLinesFormatter() });
+const safeConsoleSink = (record: LogRecord) => consoleSink(sanitizeRecord(record));
+
 const betterStackSink: AsyncSink = async (record) => {
   if (!Env.BETTER_STACK_INGESTING_URL || !Env.BETTER_STACK_SOURCE_TOKEN) {
     return;
@@ -48,7 +51,7 @@ const canForwardToBetterStack = Boolean(Env.BETTER_STACK_SOURCE_TOKEN)
 
 await configure({
   sinks: {
-    console: getConsoleSink({ formatter: getJsonLinesFormatter() }),
+    console: safeConsoleSink,
     betterStack: fromAsyncSink(betterStackSink),
   },
   loggers: [
