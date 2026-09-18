@@ -45,7 +45,9 @@
       "NEXT_PUBLIC_BETTER_STACK_"
     ],
     "clientTelemetryOptInEnv": "NEXT_PUBLIC_SENTRY_ENABLED",
-    "replayOptInEnv": "NEXT_PUBLIC_SENTRY_REPLAY_ENABLED"
+    "replayOptInEnv": "NEXT_PUBLIC_SENTRY_REPLAY_ENABLED",
+    "e2eTracePolicy": "retain-on-failure",
+    "maxDiagnosticArtifactRetentionDays": 1
   },
   "http": {
     "requiredHeaders": [
