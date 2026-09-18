@@ -1,6 +1,7 @@
 import { expect, test } from 'vitest';
 import { page } from 'vitest/browser';
 import { render } from 'vitest-browser-react';
+import designContract from '../../../design.contract.json';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -57,27 +58,46 @@ async function renderBoard() {
   return screen.getByTestId('visual-contract');
 }
 
+async function screenshotSha256(
+  board: Awaited<ReturnType<typeof renderBoard>>,
+): Promise<string> {
+  const { base64 } = await board.screenshot({ base64: true });
+  const encoded = base64.includes(',') ? base64.slice(base64.indexOf(',') + 1) : base64;
+  const binary = atob(encoded);
+  const bytes = Uint8Array.from(binary, character => character.charCodeAt(0));
+  const digest = await crypto.subtle.digest('SHA-256', bytes);
+
+  return Array.from(new Uint8Array(digest))
+    .map(byte => byte.toString(16).padStart(2, '0'))
+    .join('');
+}
+
 test('desktop light visual contract', async () => {
-  await page.viewport(1024, 900);
+  const reference = designContract.visualRegression.references.desktopLight;
+  await page.viewport(reference.viewport[0], reference.viewport[1]);
   document.documentElement.classList.remove('dark');
+
   const board = await renderBoard();
-  await expect(board).toMatchScreenshot('desktop-light');
+  expect(await screenshotSha256(board)).toBe(reference.sha256);
 });
 
 test('mobile light visual contract', async () => {
-  await page.viewport(390, 844);
+  const reference = designContract.visualRegression.references.mobileLight;
+  await page.viewport(reference.viewport[0], reference.viewport[1]);
   document.documentElement.classList.remove('dark');
+
   const board = await renderBoard();
-  await expect(board).toMatchScreenshot('mobile-light');
+  expect(await screenshotSha256(board)).toBe(reference.sha256);
 });
 
 test('desktop dark visual contract', async () => {
-  await page.viewport(1024, 900);
+  const reference = designContract.visualRegression.references.desktopDark;
+  await page.viewport(reference.viewport[0], reference.viewport[1]);
   document.documentElement.classList.add('dark');
 
   try {
     const board = await renderBoard();
-    await expect(board).toMatchScreenshot('desktop-dark');
+    expect(await screenshotSha256(board)).toBe(reference.sha256);
   } finally {
     document.documentElement.classList.remove('dark');
   }
