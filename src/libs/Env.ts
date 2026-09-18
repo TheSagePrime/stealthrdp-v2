@@ -18,6 +18,8 @@ export const Env = createEnv({
   client: {
     NEXT_PUBLIC_APP_URL: z.string().optional(),
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
+    NEXT_PUBLIC_SENTRY_ENABLED: z.enum(['true', 'false']).default('false'),
+    NEXT_PUBLIC_SENTRY_REPLAY_ENABLED: z.enum(['true', 'false']).default('false'),
   },
   shared: {
     NODE_ENV: z.enum(['test', 'development', 'production']).optional(),
@@ -30,6 +32,8 @@ export const Env = createEnv({
     LOGGING_LEVEL: process.env.LOGGING_LEVEL,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+    NEXT_PUBLIC_SENTRY_ENABLED: process.env.NEXT_PUBLIC_SENTRY_ENABLED,
+    NEXT_PUBLIC_SENTRY_REPLAY_ENABLED: process.env.NEXT_PUBLIC_SENTRY_REPLAY_ENABLED,
     POLAR_ACCESS_TOKEN: process.env.POLAR_ACCESS_TOKEN,
     POLAR_PRODUCT_IDS: process.env.POLAR_PRODUCT_IDS,
     POLAR_SERVER: process.env.POLAR_SERVER,
