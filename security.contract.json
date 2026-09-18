@@ -29,7 +29,8 @@
       "externalCustomerId",
       "external_customer_id"
     ],
-    "webhookReplayGuard": "src/features/billing/webhook-replay.ts"
+    "webhookReplayGuard": "src/features/billing/webhook-replay.ts",
+    "maxWebhookBytes": 1048576
   },
   "privacy": {
     "sentryDefaultPii": false,
