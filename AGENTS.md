@@ -14,6 +14,26 @@ Before changing application code, read `stack.contract.json`, `design.contract.j
 
 Do not weaken contract checks to accommodate implementation drift. Architecture changes require explicit review. SEO is a protected subsystem and must not be refactored as collateral work.
 
+## Sage Prime architecture contract
+
+Before modifying product code, read `stack.contract.json`, `design.contract.json`,
+`ARCHITECTURE.md`, and `DESIGN_SYSTEM.md`.
+
+The canonical stack is Next.js + React + strict TypeScript + Tailwind + shadcn/ui +
+Radix + Lucide + Clerk + Neon PostgreSQL + Drizzle + Polar, with PGlite for local
+development, pnpm for packages, and Coolify-compatible deployment.
+
+Do not introduce a competing ORM, auth provider, database provider, UI framework,
+icon library, billing provider, or deployment platform as an implementation shortcut.
+Do not weaken a contract or checker to make a change pass.
+
+For frontend work, reuse existing product and `src/components/ui` components before
+creating new primitives. Use the shared theme tokens rather than hardcoded colors,
+preserve accessibility and responsive states, and visually inspect material UI changes.
+
+Run `pnpm check:architecture` before handoff. CI is authoritative even if local hooks
+are bypassed.
+
 ## Sage Prime technical SEO
 
 This starter ships reusable technical SEO infrastructure. It does not ship
