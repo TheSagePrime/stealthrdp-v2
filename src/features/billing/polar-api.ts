@@ -1,15 +1,7 @@
 import 'server-only';
-import { z } from 'zod';
+import { Polar } from '@polar-sh/sdk';
 import type { AuthenticatedPrincipal } from '@/features/security/principal';
 import { readPolarConfig } from './polar';
-
-const redirectSchema = z.object({
-  url: z.string().url(),
-});
-
-const portalSchema = z.object({
-  customer_portal_url: z.string().url(),
-});
 
 function isTrustedPolarUrl(value: string): boolean {
   try {
@@ -21,30 +13,20 @@ function isTrustedPolarUrl(value: string): boolean {
   }
 }
 
-async function polarRequest(path: string, body: Record<string, unknown>): Promise<unknown> {
+function createPolarClient() {
   const config = readPolarConfig();
 
   if (!config.enabled || !config.accessToken) {
     throw new Error('POLAR_DISABLED');
   }
 
-  const response = await fetch(`${config.apiBaseUrl}${path}`, {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Authorization': `Bearer ${config.accessToken}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-    cache: 'no-store',
-    signal: AbortSignal.timeout(8_000),
-  });
-
-  if (!response.ok) {
-    throw new Error(`POLAR_UPSTREAM_${response.status}`);
-  }
-
-  return response.json();
+  return {
+    client: new Polar({
+      accessToken: config.accessToken,
+      server: config.server,
+    }),
+    config,
+  };
 }
 
 export function resolveAllowedPolarProduct(requestedProductId: string | null): string | null {
@@ -62,39 +44,42 @@ export async function createPolarCheckout(
   principal: AuthenticatedPrincipal,
   productId: string,
 ): Promise<string> {
-  const config = readPolarConfig();
+  const { client, config } = createPolarClient();
 
   if (!config.successUrl) {
     throw new Error('POLAR_SUCCESS_URL_REQUIRED');
   }
 
-  const parsed = redirectSchema.parse(await polarRequest('/checkouts', {
+  const checkout = await client.checkouts.create({
     products: [productId],
-    external_customer_id: principal.billingExternalId,
-    success_url: config.successUrl,
-    allow_discount_codes: false,
-  }));
+    externalCustomerId: principal.billingExternalId,
+    successUrl: config.successUrl,
+    allowDiscountCodes: false,
+    metadata: {
+      clerk_principal_id: principal.billingExternalId,
+    },
+  });
 
-  if (!isTrustedPolarUrl(parsed.url)) {
+  if (!isTrustedPolarUrl(checkout.url)) {
     throw new Error('POLAR_UNTRUSTED_REDIRECT');
   }
 
-  return parsed.url;
+  return checkout.url;
 }
 
 export async function createPolarPortal(
   principal: AuthenticatedPrincipal,
 ): Promise<string> {
-  const config = readPolarConfig();
+  const { client, config } = createPolarClient();
 
-  const parsed = portalSchema.parse(await polarRequest('/customer-sessions', {
-    external_customer_id: principal.billingExternalId,
-    ...(config.portalReturnUrl ? { return_url: config.portalReturnUrl } : {}),
-  }));
+  const session = await client.customerSessions.create({
+    externalCustomerId: principal.billingExternalId,
+    ...(config.portalReturnUrl ? { returnUrl: config.portalReturnUrl } : {}),
+  });
 
-  if (!isTrustedPolarUrl(parsed.customer_portal_url)) {
+  if (!isTrustedPolarUrl(session.customerPortalUrl)) {
     throw new Error('POLAR_UNTRUSTED_REDIRECT');
   }
 
-  return parsed.customer_portal_url;
+  return session.customerPortalUrl;
 }
