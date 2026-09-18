@@ -50,7 +50,15 @@ export default defineConfig({
             headless: true,
             provider: playwright(),
             viewport: { width: 1024, height: 900 },
-            screenshotDirectory: 'vitest-test-results/visual',
+            expect: {
+              toMatchScreenshot: {
+                comparatorName: 'pixelmatch',
+                comparatorOptions: {
+                  threshold: 0.2,
+                  allowedMismatchedPixelRatio: 0.005,
+                },
+              },
+            },
             instances: [
               { browser: 'chromium' },
             ],
