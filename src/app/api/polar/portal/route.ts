@@ -1,12 +1,13 @@
 import { createPolarPortal } from '@/features/billing/polar-api';
 import { readPolarConfig } from '@/features/billing/polar';
 import { getAuthenticatedPrincipal } from '@/features/security/principal';
+import { isSameOriginMutation } from '@/features/security/origin';
 import { consumeRateLimit } from '@/features/security/rate-limit';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
 
-export async function GET() {
+export async function POST(request: Request) {
   const config = readPolarConfig();
 
   if (!config.enabled || !config.accessToken) {
@@ -16,6 +17,10 @@ export async function GET() {
   const principal = await getAuthenticatedPrincipal();
   if (!principal) {
     return Response.json({ error: 'UNAUTHORIZED' }, { status: 401 });
+  }
+
+  if (!isSameOriginMutation(request)) {
+    return Response.json({ error: 'FORBIDDEN_ORIGIN' }, { status: 403 });
   }
 
   const rateLimit = consumeRateLimit(`polar:portal:${principal.billingExternalId}`, { limit: 6 });
