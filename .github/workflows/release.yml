@@ -30,6 +30,11 @@ jobs:
           ref: ${{ github.event.workflow_run.head_sha }}
           fetch-depth: 0
 
+      - name: Verify tested SHA is still current main
+        run: |
+          git fetch origin main
+          test "$(git rev-parse origin/main)" = "${{ github.event.workflow_run.head_sha }}"
+
       - name: Recreate trusted main branch at tested SHA
         run: git checkout -B main "${{ github.event.workflow_run.head_sha }}"
 
