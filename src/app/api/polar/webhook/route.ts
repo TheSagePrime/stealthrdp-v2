@@ -1,8 +1,10 @@
 import { Webhooks } from '@polar-sh/nextjs';
 import { syncPolarEntitlement } from '@/features/billing/entitlements';
 import { readPolarConfig } from '@/features/billing/polar';
+import { withPolarWebhookReplayGuard } from '@/features/billing/webhook-replay';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
 const config = readPolarConfig();
 
@@ -18,7 +20,9 @@ function createWebhookHandler() {
   return Webhooks({
     webhookSecret: config.webhookSecret,
     onPayload: async (payload) => {
-      await syncPolarEntitlement(payload);
+      await withPolarWebhookReplayGuard(payload, async () => {
+        await syncPolarEntitlement(payload);
+      });
     },
   });
 }
