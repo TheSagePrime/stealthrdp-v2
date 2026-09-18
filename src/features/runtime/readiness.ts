@@ -11,9 +11,7 @@ export type ReadinessResponse = {
 const defaultProbe = () => db.execute(sql`select 1`);
 let cached: { response: ReadinessResponse; expiresAt: number } | undefined;
 
-export async function getReadinessResponse(
-  probe: () => Promise<unknown> = defaultProbe,
-): Promise<ReadinessResponse> {
+export async function getReadinessResponse(probe: () => Promise<unknown> = defaultProbe): Promise<ReadinessResponse> {
   const now = Date.now();
   if (probe === defaultProbe && cached && cached.expiresAt > now) {
     return cached.response;
@@ -24,9 +22,7 @@ export async function getReadinessResponse(
   try {
     await Promise.race([
       probe(),
-      new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('readiness timeout')), 2_000),
-      ),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('readiness timeout')), 2_000)),
     ]);
 
     response = {
