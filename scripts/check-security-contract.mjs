@@ -146,6 +146,11 @@ for (const header of [...contract.http.requiredHeaders, ...contract.http.product
 for (const lockfile of contract.supplyChain.forbiddenLockfiles) {
   if (fs.existsSync(lockfile)) errors.push(`forbidden non-pnpm lockfile tracked: ${lockfile}`);
 }
+for (const dependency of contract.supplyChain.forbiddenDependencies ?? []) {
+  if (pkg.dependencies?.[dependency] || pkg.devDependencies?.[dependency]) {
+    errors.push(`forbidden dependency detected by security contract: ${dependency}`);
+  }
+}
 for (const [name, minimum] of Object.entries(contract.supplyChain.minimumDependencies)) {
   const declared = pkg.dependencies?.[name] ?? pkg.devDependencies?.[name];
   if (!declared || !versionAtLeast(declared, minimum)) {
@@ -175,6 +180,11 @@ if (!release.includes("github.event.workflow_run.conclusion == 'success'")) {
 }
 if (!release.includes('ref: ${{ github.event.workflow_run.head_sha }}')) {
   errors.push('.github/workflows/release.yml: release must checkout the exact tested CI SHA');
+}
+if (contract.release?.requireCurrentMainSha
+  && !release.includes('git rev-parse origin/main')
+) {
+  errors.push('.github/workflows/release.yml: stale successful CI must not release after main advances');
 }
 
 if (contract.supplyChain.pinGithubActionsToCommitSha) {
