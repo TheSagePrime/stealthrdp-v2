@@ -2,6 +2,9 @@ name: Checkly
 
 on: [deployment_status]
 
+permissions:
+  contents: read
+
 env:
   CHECKLY_API_KEY: ${{ secrets.CHECKLY_API_KEY }}
   CHECKLY_ACCOUNT_ID: ${{ secrets.CHECKLY_ACCOUNT_ID }}
@@ -22,24 +25,27 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
-          ref: '${{ github.event.deployment_status.deployment.ref }}'
+          ref: main
           fetch-depth: 0
-
-      - name: Set branch name # workaround to detect branch name in "deployment_status" actions
-        run: echo "CHECKLY_TEST_REPO_BRANCH=$(git show -s --pretty=%D HEAD | tr -s ',' '\n' | sed 's/^ //' | grep -e 'origin/' | head -1 | sed 's/\origin\///g')" >> $GITHUB_ENV
 
       - name: Set up Node.js environment
         uses: ./.github/actions/setup-project
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Validate deployment URL
+        shell: bash
+        run: |
+          node -e "const u=new URL(process.env.ENVIRONMENT_URL); if(u.protocol!=='https:') process.exit(1)"
+        env:
+          ENVIRONMENT_URL: ${{ github.event.deployment_status.environment_url }}
+
       - name: Run checks # run the checks passing in the ENVIRONMENT_URL and recording a test session.
         id: run-checks
         run: pnpm exec dotenv -c production -- pnpm exec checkly test --reporter=github --record
         env:
-          VERCEL_BYPASS_TOKEN: ${{ secrets.VERCEL_BYPASS_TOKEN }}
           ENVIRONMENT_URL: ${{ github.event.deployment_status.environment_url }}
 
       - name: Create summary # export the markdown report to the job summary.
