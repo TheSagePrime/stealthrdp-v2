@@ -7,6 +7,7 @@ import { clerkContextPagePrefixes } from './features/security/routing';
 import { routing } from './libs/I18nRouting';
 import { getSeoConfig } from './libs/seo/config';
 import { isProductionDeployEnv } from './libs/seo/env';
+import { localizedRoutePaths } from './libs/seo/locale';
 import { normalizePathname } from './libs/seo/normalize';
 import { resolveSiteUrl } from './libs/seo/site-url';
 
@@ -27,10 +28,10 @@ function needsClerkPageContext(pathname: string): boolean {
   );
 }
 
-const auditPublicRoutes = new Set([
-  ...defaultSeoConfig.routes.publicMarketing,
-  ...defaultSeoConfig.routes.publicUtility,
-]);
+const auditPublicRoutes = new Set(
+  [...defaultSeoConfig.routes.publicMarketing, ...defaultSeoConfig.routes.publicUtility]
+    .flatMap(route => localizedRoutePaths(route, defaultSeoConfig)),
+);
 
 function seoNormalizeRedirect(request: NextRequest): NextResponse | null {
   if (request.method !== 'GET' && request.method !== 'HEAD') {
