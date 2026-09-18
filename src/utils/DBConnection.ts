@@ -4,8 +4,8 @@ import { Env } from '@/libs/Env';
 import { logger } from '@/libs/Logger';
 import * as schema from '@/models/Schema';
 
-// Need a database for production? Check out https://get.neon.com/BMFYNtx
-// Tested and compatible with Next.js Boilerplate
+// Canonical production provider: Neon PostgreSQL.
+// Keep the standard pg + Drizzle boundary for Node.js/Coolify portability.
 export const createDbConnection = () => {
   const pool = new Pool({
     connectionString: Env.DATABASE_URL,
