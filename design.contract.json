@@ -88,5 +88,33 @@
     "seo-article-sources",
     "seo-article-table-wrap",
     "seo-article-index"
-  ]
+  ],
+  "visualRegression": {
+    "engine": "vitest-browser-screenshot-sha256",
+    "browser": "chromium",
+    "platform": "linux",
+    "references": {
+      "desktopLight": {
+        "viewport": [
+          1024,
+          900
+        ],
+        "sha256": "5895fa0aa4638ecb30f5aba76e8442b461c48a411f930a37ce71577228cabd5d"
+      },
+      "mobileLight": {
+        "viewport": [
+          390,
+          844
+        ],
+        "sha256": "bcc2c382ef5ef86c340898709c66ed88bca95f511f118bf804e2ff63a953de69"
+      },
+      "desktopDark": {
+        "viewport": [
+          1024,
+          900
+        ],
+        "sha256": "e232e937a51c0413a4fcfb74876cac6145e05dd3f43bdf0c42771a7518227cbc"
+      }
+    }
+  }
 }
