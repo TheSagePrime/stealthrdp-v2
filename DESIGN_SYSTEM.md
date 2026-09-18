@@ -41,7 +41,7 @@ The starter enforces three frontend QA layers:
 - Storybook axe accessibility checks with violations treated as errors
 - Vitest browser screenshot regression at desktop/mobile and light/dark reference states
 
-Run `pnpm storybook:test` and `pnpm test:visual` before handing off frontend changes. Intentional visual changes require regenerating references with `pnpm test:visual:update`, reviewing the images, and committing the approved baselines. Chromatic remains an optional additional cross-browser cloud layer.
+Run `pnpm storybook:test` and `pnpm test:visual` before handing off frontend changes. The visual test renders real Chromium screenshots and compares their SHA-256 fingerprints with the reviewed references in `design.contract.json`. CI stores the rendered screenshots as artifacts when a fingerprint changes. Intentional visual changes require reviewing those rendered screenshots first, then updating only the corresponding protected fingerprint in `design.contract.json` with architecture approval. Chromatic remains an optional additional cross-browser cloud layer.
 
 ## SEO compatibility
 
