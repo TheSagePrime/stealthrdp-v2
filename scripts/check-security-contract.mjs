@@ -253,7 +253,17 @@ for (const marker of [
 }
 
 const readinessSource = fs.readFileSync('src/features/runtime/readiness.ts', 'utf8');
-if (!readinessSource.includes(`expiresAt: now + ${Number(contract.http.readinessCacheMs).toLocaleString('en-US').replaceAll(',', '_')}`)) {
+if (contract.http.coalesceReadinessProbes && !readinessSource.includes('if (inFlight)')) {
+  errors.push('readiness DB probes must coalesce concurrent requests');
+}
+if (contract.http.noStoreHealthEndpoints) {
+  for (const route of ['src/app/api/health/route.ts', 'src/app/api/ready/route.ts']) {
+    if (!fs.readFileSync(route, 'utf8').includes("'Cache-Control': 'no-store'")) {
+      errors.push(`${route}: health responses must not be intermediary-cached`);
+    }
+  }
+}
+if (!readinessSource.includes('expiresAt: Date.now() + 5_000')) {
   errors.push('readiness DB probe must remain short-lived cached to bound public DB load');
 }
 
