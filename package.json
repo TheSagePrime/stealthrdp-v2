@@ -30,7 +30,7 @@
     "check:deps": "knip",
     "check:i18n": "i18n-check -l src/locales -s en -f next-intl",
     "commit": "pnpm exec commit",
-    "test": "vitest run",
+    "test": "vitest run --project unit --project ui",
     "test:e2e": "playwright test",
     "db-server:file": "pglite-server -m 100 --db=local.db --run 'pnpm run db:migrate'",
     "db-server:memory": "pglite-server -m 100 --run 'pnpm run db:migrate'",
