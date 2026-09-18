@@ -49,11 +49,6 @@ function seoNormalizeRedirect(request: NextRequest): NextResponse | null {
   return null;
 }
 
-function localePrefix(pathname: string): string {
-  const first = pathname.split('/').filter(Boolean)[0];
-  return first && routing.locales.includes(first as (typeof routing.locales)[number]) ? `/${first}` : '';
-}
-
 function directAuditLogicalPath(request: NextRequest): string | null {
   const config = getSeoConfig();
   const site = resolveSiteUrl(process.env, config.environment.deployEnv);
