@@ -46,7 +46,6 @@
     "check:seo-contract": "node scripts/check-seo-contract.mjs",
     "test:contracts": "node scripts/test-contract-guards.mjs",
     "test:visual": "vitest run --project visual",
-    "test:visual:update": "vitest run --project visual --update",
     "check:frontend": "run-s check:design storybook:test test:visual"
   },
   "dependencies": {
