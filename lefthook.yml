@@ -10,6 +10,9 @@ pre-commit:
     - name: architecture-contract
       run: pnpm run check:architecture
       glob: '*'
+    - name: security-self-test
+      run: pnpm run test:security
+      glob: '*'
     - name: lint
       run: pnpm exec eslint --fix --no-warn-ignored {staged_files}
       glob: '*'
