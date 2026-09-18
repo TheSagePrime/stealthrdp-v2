@@ -17,7 +17,7 @@ Describe what changed and why.
 - [ ] Accessibility/keyboard/focus behavior was preserved
 - [ ] Material UI changes include visual evidence where relevant
 - [ ] Storybook accessibility/component tests pass
-- [ ] Visual fingerprints were not changed unless rendered screenshots were reviewed and the visual change was intentional
+- [ ] Visual baseline images were not changed unless the rendered diff was reviewed and the visual change was intentional
 
 ## SEO
 
