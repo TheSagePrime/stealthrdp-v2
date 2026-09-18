@@ -53,3 +53,11 @@ pnpm build
 ```
 
 `check:architecture` rejects known stack drift, design-system drift, and protected SEO changes. CI repeats these checks for pull requests.
+
+
+## Protected-change approval
+
+Pull requests that change protected architecture files or SEO engine boundaries must
+carry the `architecture-approved` label after owner review. CI fails protected changes
+without that explicit approval signal. This approval does not bypass stack, design,
+SEO, type, test, or build checks; all technical gates still have to pass.
