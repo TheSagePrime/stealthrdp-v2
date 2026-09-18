@@ -88,6 +88,12 @@ for (const route of contract.billing.sensitiveRoutes) {
   if (!source.includes('consumeRateLimit')) {
     errors.push(`${route}: billing route must rate-limit session creation`);
   }
+  if (!source.includes(`export async function ${contract.billing.sensitiveRouteMethod}`)) {
+    errors.push(`${route}: billing session creation must use ${contract.billing.sensitiveRouteMethod}`);
+  }
+  if (contract.billing.sameOriginRequired && !source.includes('isSameOriginMutation')) {
+    errors.push(`${route}: billing session creation must enforce same-origin requests`);
+  }
   for (const selector of contract.billing.forbiddenClientSelectors) {
     if (source.includes(`searchParams.get('${selector}')`) || source.includes(`searchParams.get("${selector}")`)) {
       errors.push(`${route}: client-controlled billing customer selector "${selector}" is forbidden`);
