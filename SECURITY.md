@@ -30,6 +30,7 @@ Polar checkout:
 - requires authentication
 - accepts only product IDs configured in `POLAR_PRODUCT_IDS`
 - derives `external_customer_id` from Clerk server-side
+- requires the active Organization's `org:admin` role for organization billing; personal billing remains available to the signed-in user
 - rate-limits checkout session creation
 - rejects untrusted redirect URLs
 
@@ -38,6 +39,7 @@ Polar customer portal:
 - requires authentication
 - never accepts a customer selector from request input
 - creates the customer session from the authenticated Clerk principal
+- requires the active Organization's `org:admin` role for organization billing
 - rate-limits session creation
 
 Polar webhooks must remain signature-verified. The starter suppresses duplicate retries within a running application process. When a child product adds durable entitlement writes, durable idempotency must live in the same database transaction/upsert boundary as those writes.
