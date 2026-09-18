@@ -1,25 +1,38 @@
-import type { NextRequest } from 'next/server';
-import { CustomerPortal } from '@polar-sh/nextjs';
+import { createPolarPortal } from '@/features/billing/polar-api';
 import { readPolarConfig } from '@/features/billing/polar';
+import { getAuthenticatedPrincipal } from '@/features/security/principal';
+import { consumeRateLimit } from '@/features/security/rate-limit';
 
 export const dynamic = 'force-dynamic';
+export const runtime = 'nodejs';
 
-const config = readPolarConfig();
+export async function GET() {
+  const config = readPolarConfig();
 
-function disabled() {
-  return Response.json({ error: 'POLAR_DISABLED' }, { status: 404 });
-}
-
-function createPortalHandler() {
   if (!config.enabled || !config.accessToken) {
-    return disabled;
+    return Response.json({ error: 'POLAR_DISABLED' }, { status: 404 });
   }
 
-  return CustomerPortal({
-    accessToken: config.accessToken,
-    getCustomerId: async (request: NextRequest) => request.nextUrl.searchParams.get('customerId') ?? '',
-    server: config.server,
-  });
-}
+  const principal = await getAuthenticatedPrincipal();
+  if (!principal) {
+    return Response.json({ error: 'UNAUTHORIZED' }, { status: 401 });
+  }
 
-export const GET = createPortalHandler();
+  const rateLimit = consumeRateLimit(`polar:portal:${principal.billingExternalId}`, { limit: 6 });
+  if (!rateLimit.allowed) {
+    return Response.json(
+      { error: 'RATE_LIMITED' },
+      {
+        status: 429,
+        headers: { 'Retry-After': String(rateLimit.retryAfterSeconds) },
+      },
+    );
+  }
+
+  try {
+    const portalUrl = await createPolarPortal(principal);
+    return Response.redirect(portalUrl, 303);
+  } catch {
+    return Response.json({ error: 'POLAR_PORTAL_UNAVAILABLE' }, { status: 502 });
+  }
+}
