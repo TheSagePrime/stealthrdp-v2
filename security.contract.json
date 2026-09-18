@@ -14,6 +14,10 @@
       "src/app/[locale]/(auth)/dashboard/organization-profile/[[...organization-profile]]/page.tsx",
       "src/app/[locale]/(auth)/dashboard/user-profile/[[...user-profile]]/page.tsx",
       "src/app/[locale]/(auth)/onboarding/organization-selection/page.tsx"
+    ],
+    "protectedLayoutFiles": [
+      "src/app/[locale]/(auth)/dashboard/layout.tsx",
+      "src/app/[locale]/(auth)/onboarding/layout.tsx"
     ]
   },
   "billing": {
