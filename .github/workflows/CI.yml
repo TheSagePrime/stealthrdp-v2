@@ -115,11 +115,6 @@ jobs:
           HEAD_SHA: ${{ github.event.pull_request.head.sha }}
           ARCHITECTURE_APPROVED: ${{ contains(github.event.pull_request.labels.*.name, 'architecture-approved') }}
 
-      - name: Print canonical formatter diff
-        run: |
-          pnpm exec oxfmt src/app/api src/features/runtime src/features/security src/features/data src/features/billing
-          git diff -- src/app/api src/features/runtime src/features/security src/features/data src/features/billing
-
       - name: Linter
         run: pnpm exec next typegen && pnpm run check:oxlint && pnpm run check:format
 
