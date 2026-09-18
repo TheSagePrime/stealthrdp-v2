@@ -1,41 +1,48 @@
-## What changed?
+## Summary
 
-Describe the product or infrastructure change and why it is needed.
+Describe what changed and why.
 
 ## Architecture
 
-- [ ] No canonical stack boundary changed.
-- [ ] No architecture contract changed.
-- [ ] If an architecture boundary changed, the migration is intentional and owner-approved.
-
-Architecture-sensitive areas include `stack.contract.json`, `design.contract.json`,
-`package.json`, `components.json`, database/auth/billing boundaries, global design
-tokens, Next.js configuration, deployment configuration, and the SEO engine.
+- [ ] No canonical stack changes
+- [ ] No protected architecture files changed
+- [ ] If protected architecture files changed, owner review is complete and the `architecture-approved` label may be applied
+- [ ] No new framework, ORM, auth, database, UI, icon, billing, or deployment substitute was introduced
 
 ## Frontend
 
-- [ ] Existing product/shadcn primitives were reused before creating new primitives.
-- [ ] Theme tokens are used instead of arbitrary colors.
-- [ ] Mobile/responsive behavior was considered.
-- [ ] Loading/empty/error/disabled states were handled where relevant.
-- [ ] Material UI changes were visually inspected.
+- [ ] Existing product/shadcn/Radix primitives were reused before creating new UI primitives
+- [ ] Theme tokens are used instead of arbitrary component colors
+- [ ] Mobile and desktop behavior were reviewed where relevant
+- [ ] Accessibility/keyboard/focus behavior was preserved
+- [ ] Material UI changes include visual evidence where relevant
 
 ## SEO
 
-- [ ] The existing SEO pre-build -> Next build -> post-build pipeline is intact.
-- [ ] Robots, sitemap, metadata, canonical, locale, and article infrastructure were not weakened.
-- [ ] Any SEO-engine change is intentional and separately explained.
+- [ ] SEO infrastructure was not changed as collateral work
+- [ ] The pre-build -> Next build -> post-build audit sequence remains intact
+- [ ] Robots, sitemap, canonical/metadata, article registry, and protected SEO styles remain intact
+- [ ] Any intentional SEO architecture change is explicitly described below
+
+## Data / Platform
+
+- [ ] Neon remains the production PostgreSQL provider
+- [ ] Drizzle remains the ORM
+- [ ] PGlite remains local-only
+- [ ] Clerk/Polar boundaries are preserved
+- [ ] No secret was added to source control
 
 ## Verification
 
 - [ ] `pnpm check:architecture`
+- [ ] `pnpm test:contracts`
+- [ ] `pnpm typegen`
 - [ ] `pnpm check:types`
 - [ ] `pnpm check:oxlint`
 - [ ] `pnpm check:format`
 - [ ] `pnpm test`
 - [ ] `pnpm build`
-- [ ] Storybook / E2E / visual checks run when relevant
 
-## Visual evidence
+## Architecture / SEO changes requiring owner approval
 
-For meaningful UI changes, include before/after screenshots or equivalent visual evidence.
+None.
