@@ -8,6 +8,12 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
+## Sage Prime architecture contracts
+
+Before changing application code, read `stack.contract.json`, `design.contract.json`, `ARCHITECTURE.md`, and `DESIGN_SYSTEM.md`.
+
+Do not weaken contract checks to accommodate implementation drift. Architecture changes require explicit review. SEO is a protected subsystem and must not be refactored as collateral work.
+
 ## Sage Prime technical SEO
 
 This starter ships reusable technical SEO infrastructure. It does not ship
