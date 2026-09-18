@@ -33,6 +33,8 @@ For UI work:
 7. Cover meaningful loading, empty, error, disabled, mobile, and desktop states.
 8. Preserve keyboard behavior, semantics, focus states, and accessibility.
 9. Render and visually inspect meaningful UI changes before considering them finished.
+10. Run Storybook accessibility/component tests and the screenshot regression suite for frontend changes.
+11. Never update a visual baseline merely to make CI green; regenerate and review it only when the visual change is intentional.
 
 Avoid generic AI decoration: arbitrary gradients, glassmorphism, oversized radii, excessive cards, emoji-as-icons, random shadows, one-off color systems, and duplicated primitives.
 
@@ -74,9 +76,11 @@ pnpm check:types
 pnpm check:oxlint
 pnpm check:format
 pnpm test
+pnpm storybook:test
+pnpm test:visual
 pnpm build
 ```
 
-Run Storybook/E2E/visual checks when the changed surface is covered by them.
+Storybook and visual regression are mandatory frontend quality gates in CI. Run E2E/Chromatic as additional coverage when those integrations are enabled.
 
 Do not weaken a contract or checker merely to make a failing change pass. If the architecture itself must change, treat it as an explicit architecture migration and request owner review.
