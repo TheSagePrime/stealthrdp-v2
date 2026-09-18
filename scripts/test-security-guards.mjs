@@ -41,6 +41,18 @@ try {
   );
 
   expectFailure(
+    'organization billing without role authorization',
+    () => fs.writeFileSync(portalPath, portalOriginal.replace('principal.canManageBilling', 'true')),
+    () => fs.writeFileSync(portalPath, portalOriginal),
+  );
+
+  expectFailure(
+    'sensitive billing redirect without no-store helper',
+    () => fs.writeFileSync(portalPath, portalOriginal.replace('sensitiveRedirect(portalUrl)', 'Response.redirect(portalUrl, 303)')),
+    () => fs.writeFileSync(portalPath, portalOriginal),
+  );
+
+  expectFailure(
     'unsafe Sentry PII collection',
     () => fs.writeFileSync(sentryPath, sentryOriginal.replace('sendDefaultPii: false', 'sendDefaultPii: true')),
     () => fs.writeFileSync(sentryPath, sentryOriginal),
