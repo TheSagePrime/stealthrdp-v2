@@ -43,7 +43,8 @@
     "maxWebhookBytes": 1048576,
     "sensitiveRouteMethod": "POST",
     "sameOriginRequired": true,
-    "sensitiveResponsesNoStore": true
+    "sensitiveResponsesNoStore": true,
+    "organizationBillingRole": "org:admin"
   },
   "privacy": {
     "sentryDefaultPii": false,
