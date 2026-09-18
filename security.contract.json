@@ -42,7 +42,8 @@
     "webhookReplayGuard": "src/features/billing/webhook-replay.ts",
     "maxWebhookBytes": 1048576,
     "sensitiveRouteMethod": "POST",
-    "sameOriginRequired": true
+    "sameOriginRequired": true,
+    "sensitiveResponsesNoStore": true
   },
   "privacy": {
     "sentryDefaultPii": false,
@@ -119,7 +120,8 @@
     "src/features/security/rate-limit.ts",
     "src/features/billing/webhook-replay.ts",
     "src/features/billing/polar.ts",
-    "src/features/data/tenant.ts"
+    "src/features/data/tenant.ts",
+    "src/features/security/response.ts"
   ],
   "release": {
     "requireCurrentMainSha": true
