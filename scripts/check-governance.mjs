@@ -16,16 +16,20 @@ const protectedExact = new Set([
   'pnpm-lock.yaml',
   'drizzle.config.ts',
   'next.config.ts',
+  'vitest.config.ts',
   'lefthook.yml',
   '.github/workflows/CI.yml',
   'scripts/check-stack-contract.mjs',
   'scripts/check-design-contract.mjs',
   'scripts/check-seo-contract.mjs',
+  'src/components/ui/VisualContract.visual.test.tsx',
   'skills/saas-builder/SKILL.md',
   'src/styles/global.css',
   'src/utils/DBConnection.ts'
 ]);
 const protectedPrefixes = [
+  '.storybook/',
+  'src/components/ui/__screenshots__/',
   'src/libs/seo/',
   'scripts/seo-',
   'src/features/billing/',
