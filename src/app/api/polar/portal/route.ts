@@ -20,6 +20,10 @@ export async function POST(request: Request) {
     return sensitiveJson({ error: 'UNAUTHORIZED' }, { status: 401 });
   }
 
+  if (!principal.canManageBilling) {
+    return sensitiveJson({ error: 'FORBIDDEN' }, { status: 403 });
+  }
+
   if (!isSameOriginMutation(request)) {
     return sensitiveJson({ error: 'FORBIDDEN_ORIGIN' }, { status: 403 });
   }
