@@ -6,7 +6,21 @@
     "configFile": "components.json",
     "style": "new-york",
     "uiAlias": "@/components/ui",
-    "iconLibrary": "lucide"
+    "iconLibrary": "lucide",
+    "primitiveRoot": "src/components/ui",
+    "reservedPrimitiveFiles": [
+      "button.tsx",
+      "badge.tsx",
+      "separator.tsx",
+      "dropdown-menu.tsx",
+      "input.tsx",
+      "textarea.tsx",
+      "select.tsx",
+      "dialog.tsx",
+      "card.tsx",
+      "tabs.tsx",
+      "tooltip.tsx"
+    ]
   },
   "tokens": {
     "source": "src/styles/global.css",
@@ -53,7 +67,20 @@
     "preferExistingComponentsBeforeCreatingNewOnes": true,
     "requireResponsiveDesignForProductSurfaces": true,
     "requireAccessibleInteractivePrimitives": true,
-    "requireVisualReviewForMaterialUiChanges": true
+    "requireVisualReviewForMaterialUiChanges": true,
+    "forbidVisualInlineStyles": true,
+    "forbidRawInteractiveElementsIn": [
+      "src/app/",
+      "src/features/"
+    ],
+    "forbiddenDecorationUtilities": [
+      "backdrop-blur",
+      "shadow-2xl",
+      "rounded-[",
+      "shadow-[",
+      "bg-gradient-to-",
+      "bg-linear-to-"
+    ]
   },
   "protectedSeoStyles": [
     "seo-article-publication-meta",
