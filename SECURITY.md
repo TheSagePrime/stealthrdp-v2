@@ -50,6 +50,7 @@ The safe default is minimum collection:
 
 - Sentry default PII collection is off
 - Sentry console/log forwarding is off
+- Sentry source-map upload is a separate explicit opt-in and the application does not proxy Sentry traffic by default
 - Session Replay is off unless explicitly enabled
 - if Replay is enabled, text and inputs remain masked and media remains blocked
 - Better Stack credentials are server-only
