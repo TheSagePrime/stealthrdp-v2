@@ -139,7 +139,13 @@ describe('market-scoped SEO artifacts', () => {
   });
 
   it('requires provenance on decision-critical evidence', () => {
-    const { project_id: _projectId, ...withoutProject } = snapshot;
+    const withoutProject = {
+      kind: snapshot.kind,
+      reference: snapshot.reference,
+      country: snapshot.country,
+      locale: snapshot.locale,
+      retrieved_at: snapshot.retrieved_at,
+    };
     expect(
       searchDemandMapSchema.safeParse({
         ...demandMap,
