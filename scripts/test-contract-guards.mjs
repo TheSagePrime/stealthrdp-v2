@@ -15,8 +15,10 @@ const packagePath = 'package.json';
 const uiProbePath = 'src/utils/Helpers.ts';
 const badSurfacePath = 'src/features/__contract-probe.tsx';
 const duplicatePrimitivePath = 'src/components/button.tsx';
+const seoRunnerPath = 'scripts/seo-post-build-runner.mjs';
 const packageOriginal = fs.readFileSync(packagePath, 'utf8');
 const uiOriginal = fs.readFileSync(uiProbePath, 'utf8');
+const seoRunnerOriginal = fs.readFileSync(seoRunnerPath, 'utf8');
 
 try {
   const pkg = JSON.parse(packageOriginal);
@@ -47,9 +49,17 @@ try {
   seoPkg.scripts.build = 'next build';
   fs.writeFileSync(packagePath, JSON.stringify(seoPkg, null, 2) + '\n');
   expectFailure('scripts/check-seo-contract.mjs', 'SEO pipeline bypass');
+
+  fs.writeFileSync(packagePath, packageOriginal);
+  fs.writeFileSync(seoRunnerPath, seoRunnerOriginal.replace(
+    'failures.every(isSyntheticClerkFailure)',
+    'failures.some(isSyntheticClerkFailure)',
+  ));
+  expectFailure('scripts/check-seo-contract.mjs', 'partial SEO failure suppression');
 } finally {
   fs.writeFileSync(packagePath, packageOriginal);
   fs.writeFileSync(uiProbePath, uiOriginal);
+  fs.writeFileSync(seoRunnerPath, seoRunnerOriginal);
   fs.rmSync(badSurfacePath, { force: true });
   fs.rmSync(duplicatePrimitivePath, { force: true });
 }

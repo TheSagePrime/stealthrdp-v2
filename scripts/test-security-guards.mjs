@@ -17,9 +17,13 @@ function expectFailure(label, mutate, restore) {
 
 const portalPath = 'src/app/api/polar/portal/route.ts';
 const sentryPath = 'src/instrumentation-client.ts';
+const securityRoutingPath = 'src/features/security/routing.ts';
+const proxyPath = 'src/proxy.ts';
 const apiProbePath = 'src/app/api/__security-probe/route.ts';
 const portalOriginal = fs.readFileSync(portalPath, 'utf8');
 const sentryOriginal = fs.readFileSync(sentryPath, 'utf8');
+const securityRoutingOriginal = fs.readFileSync(securityRoutingPath, 'utf8');
+const proxyOriginal = fs.readFileSync(proxyPath, 'utf8');
 
 try {
   expectFailure(
@@ -58,6 +62,21 @@ try {
     () => fs.writeFileSync(sentryPath, sentryOriginal),
   );
 
+  expectFailure(
+    'public API omitted from the explicit security routing boundary',
+    () => fs.writeFileSync(securityRoutingPath, securityRoutingOriginal.replace("'/api/health', ", '')),
+    () => fs.writeFileSync(securityRoutingPath, securityRoutingOriginal),
+  );
+
+  expectFailure(
+    'synthetic CI auth response enabled outside reserved .invalid origins',
+    () => fs.writeFileSync(proxyPath, proxyOriginal.replace(
+      "return site.hostname.endsWith('.invalid');",
+      'return true;',
+    )),
+    () => fs.writeFileSync(proxyPath, proxyOriginal),
+  );
+
   fs.mkdirSync('src/app/api/__security-probe', { recursive: true });
   expectFailure(
     'API route without resource-level authentication',
@@ -67,6 +86,8 @@ try {
 } finally {
   fs.writeFileSync(portalPath, portalOriginal);
   fs.writeFileSync(sentryPath, sentryOriginal);
+  fs.writeFileSync(securityRoutingPath, securityRoutingOriginal);
+  fs.writeFileSync(proxyPath, proxyOriginal);
   fs.rmSync('src/app/api/__security-probe', { recursive: true, force: true });
 }
 

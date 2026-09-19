@@ -31,6 +31,14 @@ function versionAtLeast(actual, minimum) {
 
 const sourceFiles = listFiles('src').filter(file => /\.(?:ts|tsx|js|jsx)$/.test(file));
 const publicApis = new Set(contract.authentication.publicApiAllowlist);
+const securityRoutingSource = fs.readFileSync('src/features/security/routing.ts', 'utf8');
+
+for (const route of publicApis) {
+  const pathname = `/${route.replace(/^src\/app\//, '').replace(/\/route\.ts$/, '')}`;
+  if (!securityRoutingSource.includes(`'${pathname}'`)) {
+    errors.push(`src/features/security/routing.ts: public API allowlist is missing ${pathname}`);
+  }
+}
 
 for (const route of sourceFiles.filter(file => /^src\/app\/api\/.+\/route\.ts$/.test(file))) {
   if (publicApis.has(route)) continue;
@@ -281,8 +289,7 @@ if (!proxy.includes('clerkContextPagePrefixes')) {
   errors.push('src/proxy.ts: Clerk page context must come from the security routing boundary');
 }
 for (const prefix of contract.authentication.clerkContextPagePrefixes ?? []) {
-  const routingSource = fs.readFileSync('src/features/security/routing.ts', 'utf8');
-  if (!routingSource.includes(`'${prefix}'`)) {
+  if (!securityRoutingSource.includes(`'${prefix}'`)) {
     errors.push(`src/features/security/routing.ts: missing Clerk context prefix ${prefix}`);
   }
 }
@@ -291,6 +298,33 @@ if (contract.seo.forbidProductionLocalAuditProxy
     || !proxy.includes("process.env.SEO_AUDIT_LOCAL !== 'true'")
     || !proxy.includes("site.hostname.endsWith('.invalid')"))) {
   errors.push('src/proxy.ts: SEO local audit proxy must be blocked on real production origins while preserving synthetic .invalid CI');
+}
+const syntheticAuditEnvironment = proxy.slice(
+  proxy.indexOf('function syntheticAuditEnvironment'),
+  proxy.indexOf('function isSyntheticAuditRequest'),
+);
+for (const marker of ["process.env.CI !== 'true'", "process.env.SEO_AUDIT_LOCAL !== 'true'", "hostname.endsWith('.invalid')"]) {
+  if (!syntheticAuditEnvironment.includes(marker)) {
+    errors.push(`src/proxy.ts: synthetic audit environment lacks required guard ${marker}`);
+  }
+}
+const syntheticAuditRequest = proxy.slice(
+  proxy.indexOf('function isSyntheticAuditRequest'),
+  proxy.indexOf('function seoNormalizeRedirect'),
+);
+for (const marker of ['syntheticAuditEnvironment()', 'sage-prime-seo-audit']) {
+  if (!syntheticAuditRequest.includes(marker)) {
+    errors.push(`src/proxy.ts: synthetic audit request lacks required guard ${marker}`);
+  }
+}
+const syntheticPrivateResponse = proxy.slice(
+  proxy.indexOf('function syntheticPrivateResponse'),
+  proxy.indexOf('export default async function proxy'),
+);
+for (const marker of ['isSyntheticAuditRequest(request)', 'isSensitiveApi(', 'protectedPagePrefixes', 'status: 401']) {
+  if (!syntheticPrivateResponse.includes(marker)) {
+    errors.push(`src/proxy.ts: synthetic private-route response lacks required boundary ${marker}`);
+  }
 }
 
 if (contract.seo.escapeJsonLdScriptClosing) {
