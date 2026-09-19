@@ -26,7 +26,7 @@ const profile = {
     destination: '/signup',
   },
   verified_facts: [{ fact: 'The product has a documented feature.', source: 'Product documentation' }],
-  pricing_source: 'Pricing page or authorized pricing record',
+  pricing_source: 'https://example.test/pricing',
   supported_markets: [{ country: 'DE', locale: 'de-DE' }],
   competitors: [{ name: 'Known competitor', domain: 'competitor.example', source: 'SERP capture' }],
   claims: { allowed: ['Documented feature'], prohibited_or_unverified: ['Unverified guarantee'] },
@@ -47,6 +47,30 @@ describe('Project Truth Profile', () => {
     });
 
     expect(result.success).toBe(false);
+  });
+
+  it('accepts public truth sync only with stable project identity', () => {
+    const syncProfile = {
+      ...profile,
+      project: {
+        ...profile.project,
+        project_id: 'example',
+        brand_id: 'example',
+      },
+      truth_sync: {
+        enabled: true,
+        manifest_path: '.sageprime/project-truth/manifest.json',
+        current_path: '.sageprime/project-truth/current.json',
+      },
+    };
+
+    expect(projectTruthProfileSchema.safeParse(syncProfile).success).toBe(true);
+    expect(
+      projectTruthProfileSchema.safeParse({
+        ...syncProfile,
+        project: { ...profile.project },
+      }).success,
+    ).toBe(false);
   });
 
   it('blocks a draft profile at the research boundary', () => {
