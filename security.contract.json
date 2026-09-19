@@ -132,5 +132,41 @@
   ],
   "release": {
     "requireCurrentMainSha": true
+  },
+  "publicExposure": {
+    "policy": "Public frontend and SEO surfaces must never receive raw private or sensitive backend records.",
+    "publicSourcePrefixes": [
+      "src/app/[locale]/(marketing)/",
+      "src/libs/seo/",
+      "src/config/seo.ts",
+      "src/app/robots.ts",
+      "src/app/sitemap.ts",
+      "src/app/rss.xml/"
+    ],
+    "forbiddenBackendImports": [
+      "@/libs/DB",
+      "@/utils/DBConnection",
+      "@/features/data/",
+      "@/features/billing/",
+      "@/features/security/principal",
+      "@/models/Schema"
+    ],
+    "forbiddenSensitiveIdentifiers": [
+      "userEmail",
+      "customerEmail",
+      "billingEmail",
+      "customerId",
+      "externalCustomerId",
+      "paymentMethodId",
+      "paymentIntent",
+      "cardNumber",
+      "billingAddress",
+      "accessToken",
+      "refreshToken",
+      "sessionToken"
+    ],
+    "rawSensitiveDataMayReachPublicFrontend": false,
+    "backendMutationFromSeo": false,
+    "requireAggregateOrDeidentifiedAnalyticsForPublishableSeoArtifacts": true
   }
 }
