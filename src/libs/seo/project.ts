@@ -11,7 +11,16 @@ export const projectMarketSchema = z
       .regex(/^[A-Z]{2}$/, 'Use an uppercase ISO 3166-1 alpha-2 country code'),
     locale: z.string().trim().regex(bcp47LocalePattern, 'Use a BCP 47 locale such as en-US or de-DE'),
   })
-  .strict();
+  .strict()
+  .superRefine((profile, ctx) => {
+    if (profile.truth_sync && (!profile.project.project_id || !profile.project.brand_id)) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['project'],
+        message: 'project_id and brand_id are required when truth_sync is enabled',
+      });
+    }
+  });
 
 const verifiedFactSchema = z
   .object({
@@ -53,6 +62,8 @@ export const projectTruthProfileSchema = z
     status: z.enum(['draft', 'verified', 'superseded']),
     project: z
       .object({
+        project_id: z.string().trim().regex(/^[a-z0-9][a-z0-9._-]*$/).optional(),
+        brand_id: z.string().trim().regex(/^[a-z0-9][a-z0-9._-]*$/).optional(),
         name: z.string().trim().min(1),
         canonical_domain: z.string().trim().regex(hostnamePattern, 'Use a public canonical hostname'),
         owner: z.string().trim().optional(),
@@ -76,6 +87,14 @@ export const projectTruthProfileSchema = z
       .strict(),
     verified_facts: z.array(verifiedFactSchema).min(1),
     pricing_source: z.string().trim().min(1),
+    truth_sync: z
+      .object({
+        enabled: z.literal(true),
+        manifest_path: z.string().trim().min(1),
+        current_path: z.string().trim().min(1),
+      })
+      .strict()
+      .optional(),
     claims: claimsSchema,
     supported_markets: z.array(projectMarketSchema).min(1),
     brand_entity: brandEntitySchema.optional(),
