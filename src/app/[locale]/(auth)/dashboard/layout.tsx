@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { auth } from '@clerk/nextjs/server';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { DashboardHeader } from '@/features/dashboard/DashboardHeader';
 import { createPageMetadata } from '@/libs/seo/metadata';
@@ -24,6 +25,7 @@ export async function generateMetadata(props: DashboardLayoutProps): Promise<Met
 }
 
 export default async function DashboardLayout(props: DashboardLayoutProps) {
+  await auth.protect();
   const { locale } = await props.params;
   setRequestLocale(locale);
 

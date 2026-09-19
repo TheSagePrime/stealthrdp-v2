@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "name": "Sage Prime security and privacy contract",
+  "authentication": {
+    "provider": "clerk",
+    "routeLevelAuthRequiredForApiByDefault": true,
+    "publicApiAllowlist": [
+      "src/app/api/health/route.ts",
+      "src/app/api/ready/route.ts",
+      "src/app/api/polar/webhook/route.ts"
+    ],
+    "protectedPageFiles": [
+      "src/app/[locale]/(auth)/dashboard/page.tsx",
+      "src/app/[locale]/(auth)/dashboard/organization-profile/[[...organization-profile]]/page.tsx",
+      "src/app/[locale]/(auth)/dashboard/user-profile/[[...user-profile]]/page.tsx",
+      "src/app/[locale]/(auth)/onboarding/organization-selection/page.tsx"
+    ],
+    "protectedLayoutFiles": [
+      "src/app/[locale]/(auth)/dashboard/layout.tsx",
+      "src/app/[locale]/(auth)/onboarding/layout.tsx"
+    ],
+    "clerkContextPagePrefixes": [
+      "/sign-in",
+      "/sign-up",
+      "/dashboard",
+      "/onboarding"
+    ]
+  },
+  "billing": {
+    "provider": "polar",
+    "customerIdentitySource": "server-derived-clerk-principal",
+    "productAllowlistEnv": "POLAR_PRODUCT_IDS",
+    "sensitiveRoutes": [
+      "src/app/api/polar/checkout/route.ts",
+      "src/app/api/polar/portal/route.ts"
+    ],
+    "forbiddenClientSelectors": [
+      "customerId",
+      "externalCustomerId",
+      "external_customer_id"
+    ],
+    "webhookReplayGuard": "src/features/billing/webhook-replay.ts",
+    "maxWebhookBytes": 1048576,
+    "sensitiveRouteMethod": "POST",
+    "sameOriginRequired": true,
+    "sensitiveResponsesNoStore": true,
+    "organizationBillingRole": "org:admin"
+  },
+  "privacy": {
+    "sentryDefaultPii": false,
+    "sentryReplayDefault": false,
+    "browserLogsToTerminalDefault": false,
+    "serverOnlyLoggingEnv": [
+      "BETTER_STACK_INGESTING_URL",
+      "BETTER_STACK_SOURCE_TOKEN",
+      "LOGGING_LEVEL"
+    ],
+    "forbiddenPublicEnvPrefixes": [
+      "NEXT_PUBLIC_BETTER_STACK_"
+    ],
+    "clientTelemetryOptInEnv": "NEXT_PUBLIC_SENTRY_ENABLED",
+    "replayOptInEnv": "NEXT_PUBLIC_SENTRY_REPLAY_ENABLED",
+    "e2eTracePolicy": "retain-on-failure",
+    "maxDiagnosticArtifactRetentionDays": 1,
+    "disableFrameworkTelemetryInCi": true,
+    "sourceMapUploadOptInEnv": "SENTRY_SOURCE_MAP_UPLOAD_ENABLED",
+    "sentryTunnelDefault": false,
+    "componentAnnotationDefault": false
+  },
+  "http": {
+    "requiredHeaders": [
+      "Content-Security-Policy",
+      "Cross-Origin-Opener-Policy",
+      "Permissions-Policy",
+      "Referrer-Policy",
+      "X-Content-Type-Options",
+      "X-Frame-Options"
+    ],
+    "productionRequiredHeaders": [
+      "Strict-Transport-Security"
+    ],
+    "readinessCacheMs": 5000,
+    "noStoreHealthEndpoints": true,
+    "coalesceReadinessProbes": true
+  },
+  "supplyChain": {
+    "packageManager": "pnpm",
+    "forbiddenLockfiles": [
+      "package-lock.json",
+      "yarn.lock"
+    ],
+    "minimumDependencies": {
+      "next": "16.3.3"
+    },
+    "requireFrozenLockfile": true,
+    "requireDependencyAuditInCi": true,
+    "pinGithubActionsToCommitSha": true,
+    "forbiddenDependencies": [
+      "@clerk/ui"
+    ]
+  },
+  "database": {
+    "directDbImportAllowedPrefixes": [
+      "src/features/data/",
+      "src/features/billing/webhook-idempotency.ts",
+      "src/features/runtime/"
+    ],
+    "tenantKey": "ownerId",
+    "productionTlsRequired": true,
+    "pool": {
+      "max": 10,
+      "connectionTimeoutMs": 5000,
+      "queryTimeoutMs": 5000
+    }
+  },
+  "seo": {
+    "forbidProductionLocalAuditProxy": true,
+    "escapeJsonLdScriptClosing": true
+  },
+  "serverOnlyModules": [
+    "src/libs/Logger.ts",
+    "src/utils/DBConnection.ts",
+    "src/libs/DB.ts",
+    "src/features/security/principal.ts",
+    "src/features/billing/polar-api.ts",
+    "src/features/security/origin.ts",
+    "src/features/security/rate-limit.ts",
+    "src/features/billing/webhook-replay.ts",
+    "src/features/billing/polar.ts",
+    "src/features/data/tenant.ts",
+    "src/features/security/response.ts"
+  ],
+  "release": {
+    "requireCurrentMainSha": true
+  }
+}

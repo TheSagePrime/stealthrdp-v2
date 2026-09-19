@@ -2,10 +2,12 @@ import { UserProfile } from '@clerk/nextjs';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { TitleBar } from '@/features/dashboard/TitleBar';
 import { getI18nPath } from '@/utils/Helpers';
+import { auth } from '@clerk/nextjs/server';
 
 export default async function UserProfilePage(props: {
   params: Promise<{ locale: string }>;
 }) {
+  await auth.protect();
   const { locale } = await props.params;
   setRequestLocale(locale);
   const t = await getTranslations({

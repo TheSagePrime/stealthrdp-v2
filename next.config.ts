@@ -4,6 +4,22 @@ import { withSentryConfig } from '@sentry/nextjs';
 import createNextIntlPlugin from 'next-intl/plugin';
 import './src/libs/Env';
 
+const csp = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "frame-ancestors 'none'",
+  "form-action 'self'",
+  "img-src 'self' data: blob: https://img.clerk.com https:",
+  "font-src 'self' data: https:",
+  "style-src 'self' 'unsafe-inline'",
+  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''} https://*.clerk.com https://*.clerk.accounts.dev https://*.protect.clerk.com https://challenges.cloudflare.com`,
+  "connect-src 'self' https://clerk-telemetry.com https://*.clerk-telemetry.com https://*.clerk.com https://*.clerk.accounts.dev https://api.clerk.com https://*.protect.clerk.com:* https://api.stripe.com https://*.polar.sh https://*.sentry.io",
+  "frame-src 'self' https://challenges.cloudflare.com https://*.protect.clerk.com https://js.stripe.com https://*.js.stripe.com https://hooks.stripe.com https://*.polar.sh",
+  "worker-src 'self' blob:",
+  ...(process.env.NODE_ENV === 'production' ? ['upgrade-insecure-requests'] : []),
+].join('; ');
+
 // Define the base Next.js configuration
 const baseConfig: NextConfig = {
   devIndicators: {
@@ -13,7 +29,22 @@ const baseConfig: NextConfig = {
   reactStrictMode: true,
   reactCompiler: process.env.NODE_ENV === 'production', // Keep the development environment fast
   logging: {
-    browserToTerminal: process.env.BROWSER_TO_TERMINAL_DISABLED !== 'true',
+    browserToTerminal: process.env.BROWSER_TO_TERMINAL_ENABLED === 'true',
+  },
+  async headers() {
+    const headers = [
+      { key: 'Content-Security-Policy', value: csp },
+      { key: 'Cross-Origin-Opener-Policy', value: 'same-origin-allow-popups' },
+      { key: 'Permissions-Policy', value: 'camera=(), geolocation=(), microphone=()' },
+      { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+      { key: 'X-Content-Type-Options', value: 'nosniff' },
+      { key: 'X-Frame-Options', value: 'DENY' },
+      ...(process.env.NODE_ENV === 'production'
+        ? [{ key: 'Strict-Transport-Security', value: 'max-age=31536000' }]
+        : []),
+    ];
+
+    return [{ source: '/:path*', headers }];
   },
   outputFileTracingIncludes: {
     '/': ['./migrations/**/*'],
@@ -29,7 +60,11 @@ if (process.env.ANALYZE === 'true') {
 }
 
 // Conditionally enable Sentry configuration
-if (process.env.SENTRY_ENABLED === 'true' && !process.env.NEXT_PUBLIC_SENTRY_DISABLED) {
+if (
+  process.env.SENTRY_ENABLED === 'true'
+  && process.env.SENTRY_SOURCE_MAP_UPLOAD_ENABLED === 'true'
+  && !process.env.NEXT_PUBLIC_SENTRY_DISABLED
+) {
   configWithPlugins = withSentryConfig(configWithPlugins, {
     // For all available options, see:
     // https://www.npmjs.com/package/@sentry/webpack-plugin#options
@@ -43,17 +78,11 @@ if (process.env.SENTRY_ENABLED === 'true' && !process.env.NEXT_PUBLIC_SENTRY_DIS
     // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
 
     // Upload a larger set of source maps for prettier stack traces (increases build time)
-    widenClientFileUpload: true,
-
-    // Route browser requests to Sentry through a Next.js rewrite to circumvent ad-blockers.
-    // This can increase your server load as well as your hosting bill.
-    // Note: Check that the configured route will not match with your Next.js middleware, otherwise reporting of client-
-    // side errors will fail.
-    tunnelRoute: '/monitoring',
+    widenClientFileUpload: false,
 
     webpack: {
       reactComponentAnnotation: {
-        enabled: true,
+        enabled: false,
       },
 
       // Tree-shake Sentry logger statements to reduce bundle size

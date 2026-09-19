@@ -1,8 +1,14 @@
 import type { NextFetchEvent, NextRequest } from 'next/server';
-import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { clerkMiddleware } from '@clerk/nextjs/server';
 import createMiddleware from 'next-intl/middleware';
 import { NextResponse } from 'next/server';
 import { defaultSeoConfig } from './config/seo';
+import {
+  clerkContextPagePrefixes,
+  protectedPagePrefixes,
+  publicApiPaths,
+  sensitiveApiPaths,
+} from './features/security/routing';
 import { routing } from './libs/I18nRouting';
 import { getSeoConfig } from './libs/seo/config';
 import { isProductionDeployEnv } from './libs/seo/env';
@@ -11,27 +17,66 @@ import { resolveSiteUrl } from './libs/seo/site-url';
 
 const handleI18nRouting = createMiddleware(routing);
 
-const protectedPagePatterns = defaultSeoConfig.routes.privatePages.flatMap((route) => {
-  const suffix = route === '/' ? '(.*)' : `${route}(.*)`;
-  return [suffix, `/:locale${suffix}`];
-});
-const privateApiPatterns = defaultSeoConfig.routes.privateApis.map(route => `${route}(.*)`);
-const isProtectedPage = createRouteMatcher(protectedPagePatterns);
-const isPrivateApi = privateApiPatterns.length > 0
-  ? createRouteMatcher(privateApiPatterns)
-  : () => false;
-
-const isAuthPage = createRouteMatcher([
-  '/sign-in(.*)',
-  '/:locale/sign-in(.*)',
-  '/sign-up(.*)',
-  '/:locale/sign-up(.*)',
-]);
-
 const auditPublicRoutes = new Set([
   ...defaultSeoConfig.routes.publicMarketing,
   ...defaultSeoConfig.routes.publicUtility,
 ]);
+
+function logicalPath(pathname: string): string {
+  const segments = pathname.split('/').filter(Boolean);
+  if (
+    segments[0]
+    && routing.locales.includes(
+      segments[0] as (typeof routing.locales)[number],
+    )
+  ) {
+    segments.shift();
+  }
+  return segments.length ? `/${segments.join('/')}` : '/';
+}
+
+function matchesLogicalPrefix(
+  pathname: string,
+  prefixes: readonly string[],
+): boolean {
+  const logical = logicalPath(pathname);
+  return prefixes.some(
+    prefix =>
+      logical === prefix
+      || (prefix !== '/' && logical.startsWith(`${prefix}/`)),
+  );
+}
+
+function isPublicApi(pathname: string): boolean {
+  return publicApiPaths.some(path => pathname === path);
+}
+
+function isSensitiveApi(pathname: string): boolean {
+  return sensitiveApiPaths.some(path => pathname === path);
+}
+
+function syntheticAuditEnvironment(): boolean {
+  if (process.env.CI !== 'true' || process.env.SEO_AUDIT_LOCAL !== 'true') {
+    return false;
+  }
+
+  try {
+    const config = getSeoConfig();
+    const site = resolveSiteUrl(process.env, config.environment.deployEnv);
+    return site.hostname.endsWith('.invalid');
+  } catch {
+    return false;
+  }
+}
+
+function isSyntheticAuditRequest(request: NextRequest): boolean {
+  return (
+    syntheticAuditEnvironment()
+    && /sage-prime-seo-audit/i.test(
+      request.headers.get('user-agent') || '',
+    )
+  );
+}
 
 function seoNormalizeRedirect(request: NextRequest): NextResponse | null {
   if (request.method !== 'GET' && request.method !== 'HEAD') {
@@ -42,12 +87,14 @@ function seoNormalizeRedirect(request: NextRequest): NextResponse | null {
     const config = getSeoConfig();
     const site = resolveSiteUrl(process.env, config.environment.deployEnv);
     const current = request.nextUrl;
-    const pathname = normalizePathname(current.pathname, config.url.trailingSlash);
+    const pathname = normalizePathname(
+      current.pathname,
+      config.url.trailingSlash,
+    );
     const target = current.clone();
     target.pathname = pathname;
 
-    const syntheticAuditOrigin = site.hostname.endsWith('.invalid');
-    const localAudit = process.env.SEO_AUDIT_LOCAL === 'true' || syntheticAuditOrigin;
+    const localAudit = syntheticAuditEnvironment();
     if (isProductionDeployEnv(config.environment.deployEnv) && !localAudit) {
       target.protocol = site.protocol;
       target.hostname = site.hostname;
@@ -66,13 +113,8 @@ function seoNormalizeRedirect(request: NextRequest): NextResponse | null {
   return null;
 }
 
-function localePrefix(pathname: string): string {
-  const first = pathname.split('/').filter(Boolean)[0];
-  return first && routing.locales.includes(first as (typeof routing.locales)[number]) ? `/${first}` : '';
-}
-
 function directAuditLogicalPath(request: NextRequest): string | null {
-  if (process.env.SEO_AUDIT_LOCAL !== 'true') {
+  if (!syntheticAuditEnvironment()) {
     return null;
   }
 
@@ -87,16 +129,20 @@ function directAuditLogicalPath(request: NextRequest): string | null {
     return null;
   }
 
-  if (!/sage-prime-seo-audit/i.test(request.headers.get('user-agent') || '')) {
+  if (!isSyntheticAuditRequest(request)) {
     return null;
   }
 
-  return auditPublicRoutes.has(request.nextUrl.pathname) ? request.nextUrl.pathname : null;
+  return auditPublicRoutes.has(request.nextUrl.pathname)
+    ? request.nextUrl.pathname
+    : null;
 }
 
-async function handleLocalSeoAudit(request: NextRequest): Promise<Response | null> {
-  const logicalPath = directAuditLogicalPath(request);
-  if (!logicalPath || !auditPublicRoutes.has(logicalPath)) {
+async function handleLocalSeoAudit(
+  request: NextRequest,
+): Promise<Response | null> {
+  const logical = directAuditLogicalPath(request);
+  if (!logical || !auditPublicRoutes.has(logical)) {
     return null;
   }
 
@@ -108,7 +154,9 @@ async function handleLocalSeoAudit(request: NextRequest): Promise<Response | nul
   target.protocol = 'http:';
   target.hostname = '127.0.0.1';
   target.port = '3123';
-  target.pathname = `/${routing.defaultLocale}${logicalPath === '/' ? '' : logicalPath}`;
+  target.pathname = `/${routing.defaultLocale}${
+    logical === '/' ? '' : logical
+  }`;
 
   const headers = new Headers(request.headers);
   headers.set('x-seo-audit-direct', '1');
@@ -120,6 +168,27 @@ async function handleLocalSeoAudit(request: NextRequest): Promise<Response | nul
     headers,
     redirect: 'manual',
   });
+}
+
+function syntheticPrivateResponse(request: NextRequest): Response | null {
+  if (!isSyntheticAuditRequest(request)) {
+    return null;
+  }
+
+  if (
+    isSensitiveApi(request.nextUrl.pathname)
+    || matchesLogicalPrefix(
+      request.nextUrl.pathname,
+      protectedPagePrefixes,
+    )
+  ) {
+    return NextResponse.json(
+      { error: 'UNAUTHORIZED' },
+      { status: 401 },
+    );
+  }
+
+  return null;
 }
 
 export default async function proxy(
@@ -136,40 +205,41 @@ export default async function proxy(
     return localSeoAudit;
   }
 
-  if (isPrivateApi(request)) {
-    return clerkMiddleware(async (auth) => {
-      const session = await auth();
-      if (!session.userId) {
-        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-      }
-      return NextResponse.next();
-    })(request, event);
+  const syntheticPrivate = syntheticPrivateResponse(request);
+  if (syntheticPrivate) {
+    return syntheticPrivate;
   }
 
   if (request.nextUrl.pathname.startsWith('/api/')) {
-    return NextResponse.next();
+    if (isPublicApi(request.nextUrl.pathname)) {
+      return NextResponse.next();
+    }
+
+    // Clerk middleware supplies auth context only. Each sensitive Route
+    // Handler authenticates and authorizes at the resource boundary.
+    return clerkMiddleware(async () => NextResponse.next())(
+      request,
+      event,
+    );
   }
 
-  // Clerk keyless mode doesn't work with i18n, this is why we need to run the middleware conditionally
-  if (isAuthPage(request) || isProtectedPage(request)) {
-    return clerkMiddleware(async (auth, req) => {
-      // Check if the current route is protected and requires authentication.
-      // If user is not authenticated, redirect them to the sign-in page with proper locale.
-      if (isProtectedPage(req)) {
-        const signInUrl = new URL(`${localePrefix(req.nextUrl.pathname)}/sign-in`, req.url);
-        await auth.protect({ unauthenticatedUrl: signInUrl.toString() });
-      }
-
-      return handleI18nRouting(req);
-    })(request, event);
+  if (
+    matchesLogicalPrefix(
+      request.nextUrl.pathname,
+      clerkContextPagePrefixes,
+    )
+  ) {
+    return clerkMiddleware(
+      async (_auth, req) => handleI18nRouting(req),
+    )(request, event);
   }
 
   return handleI18nRouting(request);
 }
 
 export const config = {
-  // Match all pathnames except for
-  // - … if they start with `/_next`, `/_vercel` or `monitoring`
-  // - … the ones containing a dot (e.g. `favicon.ico`)
-  matcher: '/((?!_next|_vercel|monitoring|.*\\..*).*)',
+  matcher: [
+    '/((?!_next|_vercel|monitoring|.*\\..*).*)',
+    '/api(.*)',
+  ],
 };

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { OrganizationList } from '@clerk/nextjs';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { createPageMetadata } from '@/libs/seo/metadata';
+import { auth } from '@clerk/nextjs/server';
 
 type OrganizationSelectionProps = {
   params: Promise<{ locale: string }>;
@@ -23,6 +24,7 @@ export async function generateMetadata(props: OrganizationSelectionProps): Promi
 }
 
 export default async function OrganizationSelectionPage(props: OrganizationSelectionProps) {
+  await auth.protect();
   const { locale } = await props.params;
   setRequestLocale(locale);
 

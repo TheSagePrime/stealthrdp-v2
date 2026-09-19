@@ -1,5 +1,4 @@
 import { ClerkProvider } from '@clerk/nextjs';
-import { shadcn } from '@clerk/ui/themes';
 import { setRequestLocale } from 'next-intl/server';
 import { ClerkLocalizations } from '@/utils/AppConfig';
 import { getI18nPath } from '@/utils/Helpers';
@@ -16,8 +15,23 @@ export default async function AuthLayout(props: {
   return (
     <ClerkProvider
       appearance={{
-        cssLayerName: 'clerk', // Ensure Clerk is compatible with Tailwind CSS v4
-        theme: shadcn,
+        cssLayerName: 'clerk',
+        variables: {
+          colorPrimary: 'var(--primary)',
+          colorPrimaryForeground: 'var(--primary-foreground)',
+          colorForeground: 'var(--foreground)',
+          colorMuted: 'var(--muted)',
+          colorMutedForeground: 'var(--muted-foreground)',
+          colorBackground: 'var(--card)',
+          colorInput: 'var(--background)',
+          colorInputForeground: 'var(--foreground)',
+          colorBorder: 'var(--border)',
+          colorRing: 'var(--ring)',
+          colorDanger: 'var(--destructive)',
+          borderRadius: 'var(--radius)',
+          fontFamily: 'inherit',
+          fontFamilyButtons: 'inherit',
+        },
       }}
       localization={clerkLocale}
       signInUrl={getI18nPath('/sign-in', locale)}

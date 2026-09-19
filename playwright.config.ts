@@ -38,7 +38,7 @@ export default defineConfig<ChromaticConfig>({
     reuseExistingServer: !process.env.CI,
     gracefulShutdown: { signal: 'SIGTERM', timeout: 2 * 1000 },
     env: {
-      BROWSER_TO_TERMINAL_DISABLED: 'true',
+      BROWSER_TO_TERMINAL_ENABLED: 'false',
       NEXT_PUBLIC_SENTRY_DISABLED: 'true',
       NEXT_PUBLIC_APP_URL: baseURL,
       PORT,
@@ -52,7 +52,7 @@ export default defineConfig<ChromaticConfig>({
     baseURL,
 
     // Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer
-    trace: process.env.CI ? 'on' : 'retain-on-failure',
+    trace: 'retain-on-failure',
 
     // Record videos when retrying the failed test.
     video: process.env.CI ? 'retain-on-failure' : undefined,

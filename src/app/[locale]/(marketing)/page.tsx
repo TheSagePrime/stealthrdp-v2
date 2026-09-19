@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
 import { getSeoConfig } from '@/libs/seo/config';
+import { serializeJsonLd } from '@/libs/seo/json-ld';
 import { createPageMetadata } from '@/libs/seo/metadata';
 import { buildPageJsonLd } from '@/libs/seo/schema';
 
@@ -50,7 +51,7 @@ export default async function HomePage(props: IndexProps) {
         <script
           key={String(block['@type'])}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(block) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(block) }}
         />
       ))}
       <header className="topbar">
