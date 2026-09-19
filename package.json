@@ -32,6 +32,7 @@
     "commit": "pnpm exec commit",
     "test": "vitest run --project unit --project ui",
     "test:e2e": "playwright test",
+    "test:e2e:keyless": "playwright test --config playwright.keyless.config.ts",
     "db-server:file": "pglite-server -m 100 --db=local.db --run 'pnpm run db:migrate'",
     "db-server:memory": "pglite-server -m 100 --run 'pnpm run db:migrate'",
     "db:generate": "drizzle-kit generate",
