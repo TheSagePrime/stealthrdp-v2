@@ -16,11 +16,13 @@ function expectFailure(label, mutate, restore) {
 }
 
 const portalPath = 'src/app/api/polar/portal/route.ts';
+const marketingPath = 'src/app/[locale]/(marketing)/page.tsx';
 const sentryPath = 'src/instrumentation-client.ts';
 const securityRoutingPath = 'src/features/security/routing.ts';
 const proxyPath = 'src/proxy.ts';
 const apiProbePath = 'src/app/api/__security-probe/route.ts';
 const portalOriginal = fs.readFileSync(portalPath, 'utf8');
+const marketingOriginal = fs.readFileSync(marketingPath, 'utf8');
 const sentryOriginal = fs.readFileSync(sentryPath, 'utf8');
 const securityRoutingOriginal = fs.readFileSync(securityRoutingPath, 'utf8');
 const proxyOriginal = fs.readFileSync(proxyPath, 'utf8');
@@ -57,6 +59,18 @@ try {
   );
 
   expectFailure(
+    'backend DB import from public marketing surface',
+    () => fs.writeFileSync(marketingPath, marketingOriginal + "\nimport { db } from '@/libs/DB';\n"),
+    () => fs.writeFileSync(marketingPath, marketingOriginal),
+  );
+
+  expectFailure(
+    'sensitive customer identifier on public marketing surface',
+    () => fs.writeFileSync(marketingPath, marketingOriginal + "\nconst customerEmail = 'probe@example.test';\n"),
+    () => fs.writeFileSync(marketingPath, marketingOriginal),
+  );
+
+  expectFailure(
     'unsafe Sentry PII collection',
     () => fs.writeFileSync(sentryPath, sentryOriginal.replace('sendDefaultPii: false', 'sendDefaultPii: true')),
     () => fs.writeFileSync(sentryPath, sentryOriginal),
@@ -85,6 +99,7 @@ try {
   );
 } finally {
   fs.writeFileSync(portalPath, portalOriginal);
+  fs.writeFileSync(marketingPath, marketingOriginal);
   fs.writeFileSync(sentryPath, sentryOriginal);
   fs.writeFileSync(securityRoutingPath, securityRoutingOriginal);
   fs.writeFileSync(proxyPath, proxyOriginal);
