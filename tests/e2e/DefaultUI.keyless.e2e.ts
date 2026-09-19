@@ -24,6 +24,11 @@ test.describe('Keyless default UI', () => {
       page.getByRole('link', { name: 'Check runtime' }),
     ).toBeVisible();
 
+    const horizontalOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+    );
+    expect(horizontalOverflow).toBeLessThanOrEqual(0);
+
     const health = await request.get('/api/health');
     expect(health.ok()).toBe(true);
     await expect(health.json()).resolves.toEqual({
