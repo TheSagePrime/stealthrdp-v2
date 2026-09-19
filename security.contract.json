@@ -167,6 +167,15 @@
     ],
     "rawSensitiveDataMayReachPublicFrontend": false,
     "backendMutationFromSeo": false,
-    "requireAggregateOrDeidentifiedAnalyticsForPublishableSeoArtifacts": true
+    "requireAggregateOrDeidentifiedAnalyticsForPublishableSeoArtifacts": true,
+    "publicRouteConvention": "All public App Router page/layout files outside the (auth) route group are treated as public surfaces.",
+    "forbiddenBackendImportFragments": [
+      "/billing/",
+      "/data/",
+      "/server/",
+      "DBConnection",
+      "/models/Schema",
+      "/security/principal"
+    ]
   }
 }
