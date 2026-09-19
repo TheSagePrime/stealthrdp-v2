@@ -250,15 +250,62 @@ jobs:
           if-no-files-found: ignore
           retention-days: 1
 
-  e2e:
+  keyless-e2e:
     strategy:
       matrix:
         node-version: [24.x]
 
-    name: Run E2E tests
+    name: Run keyless E2E tests
     runs-on: ubuntu-latest
     timeout-minutes: 10
     needs: [build]
+    env:
+      CLERK_SECRET_KEY: sk_test_c2VvLWNpLmludmFsaWQk
+      DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/sage_prime_starter
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: pk_test_c2VvLWNpLmludmFsaWQk
+
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+
+      - name: Set up Node.js environment
+        uses: ./.github/actions/setup-project
+        with:
+          node-version: ${{ matrix.node-version }}
+          restore-nextjs-cache: true
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Check the default UI without provider credentials
+        run: pnpm run test:e2e:keyless
+
+      - name: Upload default UI screenshots
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: keyless-e2e-default-ui
+          path: test-results/**/default-ui.png
+          if-no-files-found: warn
+          retention-days: 1
+
+      - name: Upload keyless E2E diagnostics
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: failure()
+        with:
+          name: keyless-e2e-diagnostics
+          path: test-results/
+          if-no-files-found: ignore
+          retention-days: 1
+
+  integration-e2e:
+    strategy:
+      matrix:
+        node-version: [24.x]
+
+    name: Run provider integration E2E tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: [build, keyless-e2e]
     if: vars.ENABLE_E2E == 'true' && github.event_name == 'push'
     env:
       CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
@@ -279,7 +326,7 @@ jobs:
       - name: Install Playwright Chromium
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Run E2E tests
+      - name: Run provider integration E2E tests
         run: pnpm run test:e2e
 
       - name: Fix test results permission
@@ -299,7 +346,6 @@ jobs:
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: failure()
         with:
-          name: test-results
+          name: provider-integration-e2e-results
           path: test-results/
           retention-days: 1
-
