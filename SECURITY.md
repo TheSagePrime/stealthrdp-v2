@@ -59,6 +59,21 @@ The safe default is minimum collection:
 
 A child product must make a deliberate privacy decision before enabling broader telemetry.
 
+## Public frontend data boundary
+
+Public marketing, SEO, sitemap, feed, metadata, and structured-data surfaces must never expose raw private records.
+
+The rule is provider-agnostic and applies to every child project, whether it uses Polar, Stripe, WHMCS, a custom database, or another backend.
+
+- backend and analytics systems may be read when a workflow has legitimate read access
+- SEO/public-frontend work must never mutate backend/application state
+- public marketing and SEO code must not directly import customer, billing, database, principal, entitlement, or private model layers
+- never serialize raw users, customers, account records, emails tied to users, addresses, payment details, orders, invoices, subscriptions, credentials, auth/session tokens, or provider objects into public HTML, metadata, JSON-LD, feeds, sitemaps, public API responses, or client props
+- use explicit public DTOs or aggregated/de-identified analytics when data must cross into a public surface
+- authenticated/private product pages may show the signed-in user's own authorized data, but they remain private/noindex and are outside the public SEO surface
+
+The security contract and rejection tests protect the generic Starter boundary. Child projects must extend the same contract when they add new backend providers or sensitive modules.
+
 ## HTTP/browser security
 
 The starter sets a CSP and baseline browser protections, including frame denial, referrer policy, permission restrictions, content-type sniffing protection, cross-origin opener isolation, and production HSTS.

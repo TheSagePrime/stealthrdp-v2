@@ -42,6 +42,8 @@ SEO pre-build validation
 
 Frontend or architecture cleanup must not remove or normalize away SEO-specific styles, routes, metadata behavior, or audit scripts.
 
+SEO/public-frontend code may consume approved read-only evidence, but it must never mutate backend systems or serialize raw sensitive backend records into public output. This rule is provider-agnostic and applies to every future child project.
+
 ## Enforcement
 
 Run:
