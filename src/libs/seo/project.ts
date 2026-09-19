@@ -11,16 +11,7 @@ export const projectMarketSchema = z
       .regex(/^[A-Z]{2}$/, 'Use an uppercase ISO 3166-1 alpha-2 country code'),
     locale: z.string().trim().regex(bcp47LocalePattern, 'Use a BCP 47 locale such as en-US or de-DE'),
   })
-  .strict()
-  .superRefine((profile, ctx) => {
-    if (profile.truth_sync && (!profile.project.project_id || !profile.project.brand_id)) {
-      ctx.addIssue({
-        code: 'custom',
-        path: ['project'],
-        message: 'project_id and brand_id are required when truth_sync is enabled',
-      });
-    }
-  });
+  .strict();
 
 const verifiedFactSchema = z
   .object({
@@ -100,7 +91,16 @@ export const projectTruthProfileSchema = z
     brand_entity: brandEntitySchema.optional(),
     competitors: z.array(competitorSchema).default([]),
   })
-  .strict();
+  .strict()
+  .superRefine((profile, ctx) => {
+    if (profile.truth_sync && (!profile.project.project_id || !profile.project.brand_id)) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['project'],
+        message: 'project_id and brand_id are required when truth_sync is enabled',
+      });
+    }
+  });
 
 export type ProjectMarket = z.infer<typeof projectMarketSchema>;
 export type ProjectTruthProfile = z.infer<typeof projectTruthProfileSchema>;
