@@ -1,0 +1,9 @@
+{
+  "repository": "TheSagePrime/workflows",
+  "commit": "9ffaeb371864c8375fa91dd61d03d5ff5a6fbfad",
+  "files": [
+    "seo/page-research-package.schema.json",
+    "seo/search-demand-map.schema.json"
+  ],
+  "note": "Generated mirror used only for deterministic Starter parity tests; Workflows remains the source of truth."
+}

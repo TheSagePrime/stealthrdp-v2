@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://workflows.sageprime.local/seo/search-demand-map.schema.json",
+  "title": "Search-demand map",
+  "description": "One project's search demand for one country and locale.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["artifact_type", "version", "identity", "research_period", "research_sources", "clusters", "opportunities", "decision"],
+  "properties": {
+    "artifact_type": { "const": "search_demand_map" },
+    "version": { "const": 1 },
+    "identity": { "$ref": "#/$defs/market_identity" },
+    "research_period": { "type": "string", "minLength": 1 },
+    "research_sources": { "type": "array", "items": { "$ref": "#/$defs/decision_evidence_ref" } },
+    "clusters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "queries"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1 },
+          "queries": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+          "applies": { "type": "boolean", "default": true }
+        }
+      }
+    },
+    "opportunities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["target_query", "intent", "page_type", "commercial_value", "serp_evidence", "content_gap", "proposed_unique_value", "funnel_destination", "cannibalization"],
+        "properties": {
+          "target_query": { "type": "string", "minLength": 1 },
+          "secondary_queries": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+          "intent": { "type": "string", "minLength": 1 },
+          "page_type": { "type": "string", "minLength": 1 },
+          "commercial_value": { "type": ["string", "number"] },
+          "product_relevance": { "type": ["string", "number"] },
+          "free_tool_potential": { "type": ["string", "boolean"] },
+          "serp_evidence": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/decision_evidence_ref" } },
+          "content_gap": { "type": "string", "minLength": 1 },
+          "proposed_unique_value": { "type": "string", "minLength": 1 },
+          "funnel_destination": { "type": "string", "minLength": 1 },
+          "cannibalization": { "type": "string", "minLength": 1 },
+          "internal_link_targets": { "type": "array", "items": { "type": "string", "minLength": 1 } },
+          "priority": { "type": ["string", "number"] },
+          "existing_url": { "type": ["string", "null"] },
+          "user_problem": { "type": "string", "minLength": 1 },
+          "tool_kind": { "type": "string", "minLength": 1 },
+          "usefulness_proof": { "type": "string", "minLength": 1 },
+          "paid_product_bridge": { "type": "string", "minLength": 1 }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "page_type": { "enum": ["free_tool", "calculator", "generator", "checker", "validator", "converter", "estimator"] }
+              },
+              "required": ["page_type"]
+            },
+            "then": {
+              "required": ["user_problem", "tool_kind", "usefulness_proof", "paid_product_bridge"]
+            }
+          }
+        ]
+      }
+    },
+    "decision": { "enum": ["produce", "refresh", "consolidate", "hold", "reject"] }
+  },
+  "$defs": {
+    "market_identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["project", "canonical_domain", "country", "locale", "open_seo"],
+      "properties": {
+        "project": { "type": "string", "minLength": 1 },
+        "canonical_domain": { "type": "string", "minLength": 1 },
+        "country": { "type": "string", "pattern": "^[A-Z]{2}$" },
+        "locale": { "type": "string", "pattern": "^[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$" },
+        "open_seo": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["project_id", "location_code", "language_code"],
+          "properties": {
+            "project_id": { "type": "string", "minLength": 1 },
+            "location_code": { "type": "integer", "minimum": 1 },
+            "language_code": { "type": "string", "minLength": 1 }
+          }
+        }
+      }
+    },
+    "evidence_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "reference"],
+      "properties": {
+        "kind": { "enum": ["snapshot", "metric", "serp", "research_log", "gsc", "ga4"] },
+        "reference": { "type": "string", "minLength": 1 },
+        "note": { "type": "string" },
+        "project_id": { "type": "string", "minLength": 1 },
+        "country": { "type": "string", "pattern": "^[A-Z]{2}$" },
+        "locale": { "type": "string", "pattern": "^[A-Za-z]{2,3}(?:-[A-Za-z0-9]{2,8})*$" },
+        "retrieved_at": { "type": "string", "minLength": 1 }
+      }
+    },
+    "decision_evidence_ref": {
+      "allOf": [
+        { "$ref": "#/$defs/evidence_ref" },
+        { "required": ["project_id", "country", "locale", "retrieved_at"] }
+      ]
+    }
+  }
+}
