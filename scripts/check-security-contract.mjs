@@ -340,14 +340,35 @@ if (contract.seo.escapeJsonLdScriptClosing) {
 const publicExposure = contract.publicExposure ?? {};
 const publicSourcePrefixes = publicExposure.publicSourcePrefixes ?? [];
 const forbiddenBackendImports = publicExposure.forbiddenBackendImports ?? [];
+const forbiddenBackendImportFragments = publicExposure.forbiddenBackendImportFragments ?? [];
 const forbiddenSensitiveIdentifiers = publicExposure.forbiddenSensitiveIdentifiers ?? [];
 
-for (const file of sourceFiles.filter(file => publicSourcePrefixes.some(prefix => file.startsWith(prefix)))) {
+function isPublicFrontendSource(file) {
+  const explicitPublicSource = publicSourcePrefixes.some(prefix => file.startsWith(prefix));
+  const publicAppSurface = /^src\/app\/.+\/(?:page|layout)\.tsx$/.test(file) && !file.includes('/(auth)/');
+  return explicitPublicSource || publicAppSurface;
+}
+
+function importedModuleSpecifiers(source) {
+  const values = [];
+  for (const match of source.matchAll(/(?:from\s+|import\s*\()\s*['"]([^'"]+)['"]/g)) values.push(match[1]);
+  for (const match of source.matchAll(/import\s+['"]([^'"]+)['"]/g)) values.push(match[1]);
+  return values;
+}
+
+for (const file of sourceFiles.filter(isPublicFrontendSource)) {
   const source = fs.readFileSync(file, 'utf8');
+  const imports = importedModuleSpecifiers(source);
 
   for (const target of forbiddenBackendImports) {
-    if (source.includes(target)) {
+    if (imports.some(specifier => specifier === target || specifier.startsWith(target))) {
       errors.push(`${file}: public/SEO surface must not import backend-sensitive module ${target}`);
+    }
+  }
+
+  for (const fragment of forbiddenBackendImportFragments) {
+    if (imports.some(specifier => specifier.includes(fragment))) {
+      errors.push(`${file}: public/SEO surface must not import backend-sensitive module fragment ${fragment}`);
     }
   }
 
