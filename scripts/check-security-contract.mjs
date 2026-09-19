@@ -336,6 +336,28 @@ if (contract.seo.escapeJsonLdScriptClosing) {
   }
 }
 
+
+const publicExposure = contract.publicExposure ?? {};
+const publicSourcePrefixes = publicExposure.publicSourcePrefixes ?? [];
+const forbiddenBackendImports = publicExposure.forbiddenBackendImports ?? [];
+const forbiddenSensitiveIdentifiers = publicExposure.forbiddenSensitiveIdentifiers ?? [];
+
+for (const file of sourceFiles.filter(file => publicSourcePrefixes.some(prefix => file.startsWith(prefix)))) {
+  const source = fs.readFileSync(file, 'utf8');
+
+  for (const target of forbiddenBackendImports) {
+    if (source.includes(target)) {
+      errors.push(`${file}: public/SEO surface must not import backend-sensitive module ${target}`);
+    }
+  }
+
+  for (const identifier of forbiddenSensitiveIdentifiers) {
+    if (source.includes(identifier)) {
+      errors.push(`${file}: sensitive identifier "${identifier}" is forbidden on public/SEO surfaces`);
+    }
+  }
+}
+
 const secretPatterns = [
   /\bghp_[A-Za-z0-9]{30,}\b/,
   /\bgithub_pat_[A-Za-z0-9_]{30,}\b/,
