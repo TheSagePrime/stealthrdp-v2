@@ -13,23 +13,41 @@ const csp = [
   "img-src 'self' data: blob: https:",
   "font-src 'self' data: https:",
   "style-src 'self' 'unsafe-inline'",
-  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''} https://*.clerk.com https://*.clerk.accounts.dev https://*.protect.clerk.com https://challenges.cloudflare.com`,
-  "connect-src 'self' https://clerk-telemetry.com https://*.clerk-telemetry.com https://*.clerk.com https://*.clerk.accounts.dev https://api.clerk.com https://*.protect.clerk.com:* https://api.stripe.com https://*.polar.sh https://*.sentry.io",
-  "frame-src 'self' https://challenges.cloudflare.com https://*.protect.clerk.com https://js.stripe.com https://*.js.stripe.com https://hooks.stripe.com https://*.polar.sh",
+  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''}`,
+  "connect-src 'self' https://*.sentry.io",
+  "frame-src 'self'",
   "worker-src 'self' blob:",
   ...(process.env.NODE_ENV === 'production' ? ['upgrade-insecure-requests'] : []),
 ].join('; ');
 
-// Define the base Next.js configuration
+const legacyRedirects = [
+  ['/plans.html', '/plans'],
+  ['/about.html', '/about'],
+  ['/faq.html', '/faq'],
+  ['/privacy.html', '/privacy'],
+  ['/status.html', '/status'],
+  ['/docs.html', '/docs'],
+  ['/blog.html', '/blog'],
+  ['/windows-vps/index.html', '/windows-vps'],
+  ['/linux-vps/index.html', '/linux-vps'],
+] as const;
+
 const baseConfig: NextConfig = {
   devIndicators: {
     position: 'bottom-right',
   },
   poweredByHeader: false,
   reactStrictMode: true,
-  reactCompiler: process.env.NODE_ENV === 'production', // Keep the development environment fast
+  reactCompiler: process.env.NODE_ENV === 'production',
   logging: {
     browserToTerminal: process.env.BROWSER_TO_TERMINAL_ENABLED === 'true',
+  },
+  async redirects() {
+    return legacyRedirects.map(([source, destination]) => ({
+      source,
+      destination,
+      permanent: true,
+    }));
   },
   async headers() {
     const headers = [
@@ -51,47 +69,29 @@ const baseConfig: NextConfig = {
   },
 };
 
-// Initialize the Next-Intl plugin
 let configWithPlugins = createNextIntlPlugin('./src/libs/I18n.ts')(baseConfig);
 
-// Conditionally enable bundle analysis
 if (process.env.ANALYZE === 'true') {
   configWithPlugins = withBundleAnalyzer()(configWithPlugins);
 }
 
-// Conditionally enable Sentry configuration
 if (
-  process.env.SENTRY_ENABLED === 'true'
+  process.env.NEXT_PUBLIC_SENTRY_ENABLED === 'true'
   && process.env.SENTRY_SOURCE_MAP_UPLOAD_ENABLED === 'true'
-  && !process.env.NEXT_PUBLIC_SENTRY_DISABLED
 ) {
   configWithPlugins = withSentryConfig(configWithPlugins, {
-    // For all available options, see:
-    // https://www.npmjs.com/package/@sentry/webpack-plugin#options
     org: process.env.SENTRY_ORGANIZATION,
     project: process.env.SENTRY_PROJECT,
-
-    // Only print logs for uploading source maps in CI
     silent: !process.env.CI,
-
-    // For all available options, see:
-    // https://docs.sentry.io/platforms/javascript/guides/nextjs/manual-setup/
-
-    // Upload a larger set of source maps for prettier stack traces (increases build time)
     widenClientFileUpload: false,
-
     webpack: {
       reactComponentAnnotation: {
         enabled: false,
       },
-
-      // Tree-shake Sentry logger statements to reduce bundle size
       treeshake: {
         removeDebugLogging: true,
       },
     },
-
-    // Disable Sentry telemetry
     telemetry: false,
   });
 }

@@ -14,7 +14,36 @@ body {
 a { color: inherit; text-decoration: none; }
 img { max-width: 100%; }
 
-.sr-site { min-height: 100vh; overflow-x: hidden; }
+.sr-site {
+  min-height: 100vh;
+  overflow-x: hidden;
+  --background: #07111f;
+  --foreground: #f7fafc;
+  --card: #0d1928;
+  --card-foreground: #f7fafc;
+  --popover: #0d1928;
+  --popover-foreground: #f7fafc;
+  --primary: #f5b93b;
+  --primary-foreground: #07111f;
+  --secondary: #132238;
+  --secondary-foreground: #f7fafc;
+  --muted: #101d2d;
+  --muted-foreground: #9bacc0;
+  --accent: #5b8cff;
+  --accent-foreground: #f7fafc;
+  --destructive: #ef5350;
+  --border: #26384d;
+  --input: #26384d;
+  --ring: #f5b93b;
+  --sr-surface: #0b1726;
+  --sr-surface-strong: #102035;
+  --sr-gold-soft: #ffe4a3;
+  --sr-success: #4ade80;
+  --sr-warning: #ffb45c;
+  --sr-danger: #ef5350;
+  background: var(--background);
+  color: var(--foreground);
+}
 .sr-container { width: min(1180px, calc(100% - 2.5rem)); margin-inline: auto; }
 .sr-section { padding: clamp(4rem, 8vw, 7rem) 0; }
 .sr-section-tight { padding: 3rem 0; }

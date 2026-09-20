@@ -7,22 +7,24 @@ import { createArticleMetadata } from '@/libs/seo/articles';
 import { blogArticles, findBlog } from '@/lib/stealth/content';
 
 export function generateStaticParams() {
-  return blogArticles.filter(article => article.slug !== 'vps-hosting-minecraft').map(article => ({ slug: article.slug }));
+  return blogArticles.filter(article => article.slug !== 'vps-hosting-minecraft').map(article => ({ slug: `${article.slug}.html` }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
+  const articleSlug = slug.replace(/\.html$/, '');
   const config = getSeoConfig();
-  const publication = config.articles.publications.find(item => item.slug === slug);
+  const publication = config.articles.publications.find(item => item.slug === articleSlug);
   return publication ? createArticleMetadata(publication, config) : {};
 }
 
 export default async function BlogArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const article = findBlog(slug);
+  const articleSlug = slug.replace(/\.html$/, '');
+  const article = findBlog(articleSlug);
   const config = getSeoConfig();
-  const publication = config.articles.publications.find(item => item.slug === slug);
-  if (!article || !publication || slug === 'vps-hosting-minecraft') notFound();
+  const publication = config.articles.publications.find(item => item.slug === articleSlug);
+  if (!slug.endsWith('.html') || !article || !publication || articleSlug === 'vps-hosting-minecraft') notFound();
 
   return (
     <article className="sr-article-shell">

@@ -17,7 +17,7 @@ type BlogSeed = {
 const publications: ArticleRegistryConfig['publications'] = (blogData as BlogSeed[]).map(article => ({
   slug: article.slug,
   status: 'published',
-  path: article.slug === 'vps-hosting-minecraft' ? '/vps-hosting-minecraft' : undefined,
+  path: article.slug === 'vps-hosting-minecraft' ? '/vps-hosting-minecraft' : `/blog/${article.slug}.html`,
   title: article.title,
   h1: article.title,
   description: article.excerpt,
@@ -65,6 +65,7 @@ export const defaultSeoConfig: SeoConfig = {
   url: {
     trailingSlash: 'strip',
     trackingParams: ['utm_*', 'fbclid', 'gclid'],
+    legacyInternalLinkPolicy: 'warn',
     legacyRedirects: [
       { from: '/plans.html', to: '/plans' },
       { from: '/about.html', to: '/about' },

@@ -122,7 +122,7 @@ export function findBlog(slug: string): BlogArticle | undefined {
 export function articlePath(article: BlogArticle): string {
   return article.slug === 'vps-hosting-minecraft'
     ? '/vps-hosting-minecraft'
-    : `/blog/${article.slug}`;
+    : `/blog/${article.slug}.html`;
 }
 
 export function checkoutUrl(plan: Plan, cycle: BillingCycle): string {
