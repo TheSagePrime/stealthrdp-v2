@@ -1,5 +1,16 @@
 import type { Metadata } from 'next';
-import { Activity, Globe2, HardDrive, ShieldCheck } from 'lucide-react';
+import {
+  Activity,
+  ArrowRight,
+  Cpu,
+  Gauge,
+  Globe2,
+  HardDrive,
+  MapPin,
+  Network,
+  ShieldCheck,
+  Zap,
+} from 'lucide-react';
 import { setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
@@ -18,12 +29,53 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     path: '/',
     locale,
     title: 'StealthRDP — Secure Remote Desktop & VPS Infrastructure',
-    description: 'Deploy a Windows or Linux VPS in 60 seconds. Enterprise-grade hardware, 99.9% uptime SLA and 24/7 support — from €9.50/month.',
+    description:
+      'Deploy a Windows or Linux VPS in 60 seconds. Enterprise-grade hardware, 99.9% uptime SLA and 24/7 support — from €9.50/month.',
     ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
   });
 }
 
-const systems = ['Debian', 'CentOS', 'Rocky Linux', 'Ubuntu', 'Fedora', 'FreeBSD', 'Alpine Linux', 'AlmaLinux', 'Windows'];
+const systems = [
+  'Debian',
+  'CentOS',
+  'Rocky Linux',
+  'Ubuntu',
+  'Fedora',
+  'FreeBSD',
+  'Alpine Linux',
+  'AlmaLinux',
+  'Windows',
+];
+
+const highlights = [
+  { value: '10,000+', label: 'orders delivered' },
+  { value: '99.9%', label: 'uptime SLA' },
+  { value: '60 sec', label: 'average deploy' },
+  { value: 'USA + EU', label: 'server regions' },
+];
+
+const infrastructure = [
+  {
+    icon: HardDrive,
+    title: 'NVMe-first storage',
+    text: 'Fast disk I/O for remote desktops, applications, databases, automation and active workloads.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Isolated virtual machines',
+    text: 'Dedicated VM boundaries with full administrative access and infrastructure-level protection.',
+  },
+  {
+    icon: Network,
+    title: 'High-speed networking',
+    text: 'Fast connectivity and unlimited bandwidth on current plans, built for sustained workloads.',
+  },
+  {
+    icon: Activity,
+    title: 'Visible service health',
+    text: 'Public status information and clear support paths when something needs attention.',
+  },
+];
 
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
@@ -33,96 +85,204 @@ export default async function HomePage({ params }: Props) {
   return (
     <>
       {jsonLd.map(block => (
-        <script key={String(block['@type'])} type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(block) }} />
+        <script
+          key={String(block['@type'])}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(block) }}
+        />
       ))}
 
       <section className="sr-hero">
+        <div className="sr-hero-aura" aria-hidden="true" />
         <div className="sr-container sr-hero-grid">
-          <div>
-            <p className="sr-kicker">Windows & Linux VPS · Instant setup</p>
+          <div className="sr-hero-copy">
+            <div className="sr-kicker-row">
+              <span className="sr-live-dot" aria-hidden="true" />
+              <p className="sr-kicker">Windows & Linux VPS · Instant setup</p>
+            </div>
+
             <h1 className="sr-title">
               Your server.
               <span>Live in 60 seconds.</span>
             </h1>
-            <p className="sr-lede">High-performance remote desktop infrastructure without the complexity. Enterprise hardware and a 99.9% uptime SLA — online the moment you pay.</p>
+
+            <p className="sr-lede">
+              Serious VPS infrastructure without the usual hosting friction.
+              Enterprise hardware, full admin access and a 99.9% uptime SLA —
+              ready when your work is.
+            </p>
+
             <div className="sr-actions">
-              <Button asChild size="lg"><a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">Deploy your server now</a></Button>
-              <Button asChild size="lg" variant="outline"><a href="https://dash.stealthrdp.com/submitticket.php">Ask a pre-sales question</a></Button>
+              <Button asChild size="lg">
+                <a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">
+                  Deploy a server
+                  <ArrowRight />
+                </a>
+              </Button>
+              <Button asChild size="lg" variant="outline">
+                <Link href="/plans">Explore plans</Link>
+              </Button>
             </div>
-            <p className="sr-micro">Starting at €9.50/month · No hidden fees · Cancel anytime · 7-day money-back</p>
-            <div className="sr-stats">
-              <div className="sr-stat">
-                <strong>10,000+</strong>
-                <span>Orders</span>
-              </div>
-              <div className="sr-stat">
-                <strong>60s</strong>
-                <span>Average deploy</span>
-              </div>
-              <div className="sr-stat">
-                <strong>99.9%</strong>
-                <span>Uptime SLA</span>
-              </div>
+
+            <p className="sr-micro">
+              From €9.50/month · No hidden fees · Cancel anytime · 7-day money-back
+            </p>
+
+            <div className="sr-hero-proof" aria-label="StealthRDP highlights">
+              {highlights.map(item => (
+                <div key={item.label}>
+                  <strong>{item.value}</strong>
+                  <span>{item.label}</span>
+                </div>
+              ))}
             </div>
           </div>
 
-          <div className="sr-console" aria-label="Server deployment example">
-            <div className="sr-console-head">
-              <span className="sr-dot" />
-              <span className="sr-dot" />
-              <span className="sr-dot sr-dot-live" />
-              <small>stealth deploy</small>
+          <div className="sr-hero-stage" aria-label="StealthRDP infrastructure preview">
+            <div className="sr-stage-ring sr-stage-ring-one" aria-hidden="true" />
+            <div className="sr-stage-ring sr-stage-ring-two" aria-hidden="true" />
+
+            <div className="sr-stage-node sr-stage-node-us">
+              <span>US</span>
+              <small>online</small>
             </div>
-            <div className="sr-console-body">
-              <div className="sr-console-command">$ stealth deploy --plan silver-usa --region us-east</div>
-              <div className="sr-console-dim">▸ reserving dedicated vCPU</div>
-              <div className="sr-console-dim">▸ provisioning NVMe storage</div>
-              <div className="sr-console-dim">▸ installing Windows Server 2022</div>
-              <div className="sr-console-dim">▸ provisioning an isolated VM</div>
-              <div className="sr-console-ok">✓ server ready for connection</div>
+            <div className="sr-stage-node sr-stage-node-eu">
+              <span>EU</span>
+              <small>online</small>
             </div>
-            <div className="sr-console-specs">
-              <span>
-                <b>2</b>
-                vCPU
-              </span>
-              <span>
-                <b>4 GB</b>
-                RAM
-              </span>
-              <span>
-                <b>60 GB</b>
-                NVMe
-              </span>
-              <span>
-                <b>1 Gbps</b>
-                Network
-              </span>
+
+            <div className="sr-server-card">
+              <div className="sr-server-card-head">
+                <div>
+                  <span className="sr-server-state">
+                    <span className="sr-live-dot" aria-hidden="true" />
+                    Running
+                  </span>
+                  <h2>Silver USA</h2>
+                </div>
+                <div className="sr-server-icon"><Cpu /></div>
+              </div>
+
+              <div className="sr-server-metrics">
+                <div><span>vCPU</span><strong>2 cores</strong></div>
+                <div><span>Memory</span><strong>8 GB</strong></div>
+                <div><span>Storage</span><strong>80 GB NVMe</strong></div>
+                <div><span>Traffic</span><strong>Unlimited</strong></div>
+              </div>
+
+              <div className="sr-server-activity">
+                <div className="sr-activity-head">
+                  <span>Deployment</span>
+                  <strong>Ready</strong>
+                </div>
+                <div className="sr-activity-track"><span /></div>
+                <div className="sr-activity-meta">
+                  <span>Windows / Linux</span>
+                  <span>USA region</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="sr-stage-float sr-stage-float-speed">
+              <Gauge />
+              <span><strong>Fast setup</strong><small>built to be ready in minutes</small></span>
+            </div>
+            <div className="sr-stage-float sr-stage-float-network">
+              <Globe2 />
+              <span><strong>USA + EU</strong><small>choose your region</small></span>
             </div>
           </div>
         </div>
       </section>
 
-      <div className="sr-os-strip">
+      <section className="sr-proof-rail" aria-label="Platform strengths">
+        <div className="sr-container sr-proof-rail-inner">
+          <span><Zap /> Instant deployment</span>
+          <span><ShieldCheck /> 99.9% uptime SLA</span>
+          <span><HardDrive /> NVMe storage</span>
+          <span><Globe2 /> USA + EU regions</span>
+          <span><Activity /> 24/7 monitoring</span>
+        </div>
+      </section>
+
+      <section className="sr-os-strip">
         <div className="sr-container sr-os-row">
-          <span className="sr-os-label">Works with your OS</span>
+          <span className="sr-os-label">Deploy your preferred OS</span>
           {systems.map(system => <span className="sr-os-pill" key={system}>{system}</span>)}
         </div>
-      </div>
+      </section>
 
-      <section className="sr-section">
+      <section className="sr-section sr-pricing-section">
         <div className="sr-container">
           <div className="sr-section-head">
             <div>
-              <p className="sr-kicker">Choose a workload</p>
-              <h2 className="sr-section-title">
-                Plans priced for the work
-              </h2>
+              <p className="sr-kicker">Pick your power</p>
+              <h2 className="sr-section-title">Performance comes standard.</h2>
             </div>
-            <p>Compare USA and EU resources, switch billing periods, and continue directly to the existing StealthRDP checkout.</p>
+            <p>
+              Choose a region and billing cycle, compare the resources that matter,
+              then continue directly to the existing StealthRDP checkout.
+            </p>
           </div>
+
           <PricingExplorer compact />
-          <div className="sr-actions"><Button asChild variant="outline"><Link href="/plans">View all plans</Link></Button></div>
+
+          <div className="sr-section-link">
+            <Link href="/plans">
+              Compare all 11 plans
+              <ArrowRight />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <section className="sr-section sr-section-border sr-infra-section">
+        <div className="sr-container sr-infra-layout">
+          <div className="sr-infra-stage">
+            <div className="sr-infra-stage-head">
+              <div>
+                <p className="sr-kicker">Core infrastructure</p>
+                <h2 className="sr-section-title">Built for the workload, not the brochure.</h2>
+              </div>
+              <span className="sr-infra-badge"><Activity /> Live monitoring</span>
+            </div>
+
+            <div className="sr-rack" aria-label="Infrastructure status visualization">
+              <div className="sr-rack-row">
+                <span className="sr-rack-light" />
+                <span>Compute node 01</span>
+                <strong>online</strong>
+              </div>
+              <div className="sr-rack-row">
+                <span className="sr-rack-light" />
+                <span>NVMe storage pool</span>
+                <strong>healthy</strong>
+              </div>
+              <div className="sr-rack-row">
+                <span className="sr-rack-light" />
+                <span>Network edge</span>
+                <strong>connected</strong>
+              </div>
+              <div className="sr-rack-footer">
+                <div><span>Virtualization</span><strong>Isolated VMs</strong></div>
+                <div><span>Regions</span><strong>USA + EU</strong></div>
+                <div><span>Access</span><strong>Full admin</strong></div>
+              </div>
+            </div>
+          </div>
+
+          <div className="sr-infra-list">
+            {infrastructure.map(({ icon: Icon, title, text }, index) => (
+              <article key={title}>
+                <div className="sr-feature-number">0{index + 1}</div>
+                <div className="sr-feature-icon"><Icon /></div>
+                <div>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -130,33 +290,33 @@ export default async function HomePage({ params }: Props) {
         <div className="sr-container">
           <div className="sr-section-head">
             <div>
-              <p className="sr-kicker">Core infrastructure</p>
-              <h2 className="sr-section-title">
-                Infrastructure that doesn’t flinch
-              </h2>
+              <p className="sr-kicker">Two regions. One standard.</p>
+              <h2 className="sr-section-title">Put the server closer to the work.</h2>
             </div>
-            <p>Fast storage, broad OS choice, visible service health, and support paths designed around operating real servers.</p>
+            <p>
+              Choose the geography that fits your latency, audience and operational
+              needs without changing the way you buy or manage the service.
+            </p>
           </div>
-          <div className="sr-feature-grid">
-            <article className="sr-feature">
-              <HardDrive />
-              <h3>NVMe SSD storage</h3>
-              <p>Fast disk I/O for applications, databases, automation, and remote desktops.</p>
+
+          <div className="sr-location-grid">
+            <article>
+              <div className="sr-location-mark"><MapPin /></div>
+              <div>
+                <span className="sr-location-code">USA</span>
+                <h3>United States</h3>
+                <p>Low-friction VPS deployment for North American workloads.</p>
+              </div>
+              <Link href="/plans">View USA plans <ArrowRight /></Link>
             </article>
-            <article className="sr-feature">
-              <ShieldCheck />
-              <h3>Isolated virtual machines</h3>
-              <p>Dedicated VM boundaries with infrastructure protections and full administrative access.</p>
-            </article>
-            <article className="sr-feature">
-              <Globe2 />
-              <h3>USA + EU locations</h3>
-              <p>Choose the region that best fits your latency, audience, or operational needs.</p>
-            </article>
-            <article className="sr-feature">
-              <Activity />
-              <h3>Service visibility</h3>
-              <p>Public status information and documented support paths when something needs attention.</p>
+            <article>
+              <div className="sr-location-mark"><MapPin /></div>
+              <div>
+                <span className="sr-location-code">EU</span>
+                <h3>Europe</h3>
+                <p>European VPS capacity for regional users and infrastructure.</p>
+              </div>
+              <Link href="/plans">View EU plans <ArrowRight /></Link>
             </article>
           </div>
         </div>
@@ -167,23 +327,28 @@ export default async function HomePage({ params }: Props) {
           <div className="sr-section-head">
             <div>
               <p className="sr-kicker">Customer feedback</p>
-              <h2 className="sr-section-title">
-                What customers say
-              </h2>
+              <h2 className="sr-section-title">The part that matters after checkout.</h2>
             </div>
-            <p>Selected feedback already published by StealthRDP, including third-party review sources where available.</p>
+            <p>
+              Selected feedback already published by StealthRDP, including
+              third-party review sources where available.
+            </p>
           </div>
-          <div className="sr-review-grid">
-            {testimonials.slice(0, 6).map((item, index) => (
+
+          <div className="sr-review-grid sr-review-grid-premium">
+            {testimonials.slice(0, 3).map((item, index) => (
               <article className="sr-review" key={item.id ?? item._id ?? index}>
-                <blockquote>
-                  “
-                  {item.quote}
-                  ”
-                </blockquote>
+                <div className="sr-review-mark">“</div>
+                <blockquote>{item.quote}</blockquote>
                 <footer>
-                  {item.authorName}
-                  {item.publishedOn ? ` · ${item.publishedOn}` : item.authorCompany ? ` · ${item.authorCompany}` : ''}
+                  <strong>{item.authorName}</strong>
+                  <span>
+                    {item.publishedOn
+                      ? item.publishedOn
+                      : item.authorCompany
+                        ? item.authorCompany
+                        : 'StealthRDP customer'}
+                  </span>
                 </footer>
               </article>
             ))}
@@ -192,14 +357,22 @@ export default async function HomePage({ params }: Props) {
       </section>
 
       <section className="sr-section">
-        <div className="sr-container sr-cta">
+        <div className="sr-container sr-cta sr-cta-premium">
           <div>
             <p className="sr-kicker">Ready when you are</p>
-            <h2>Deploy your VPS and get back to the actual work.</h2>
-            <p>Windows and Linux choices, USA and EU regions, and the same existing StealthRDP client area for billing and server access.</p>
+            <h2>Deploy the server. Get back to the actual work.</h2>
+            <p>
+              Windows and Linux choices, USA and EU regions, and the existing
+              StealthRDP client area for billing and server access.
+            </p>
           </div>
           <div className="sr-actions">
-            <Button asChild size="lg"><a href="https://dash.stealthrdp.com/index.php?rp=/store">Deploy server</a></Button>
+            <Button asChild size="lg">
+              <a href="https://dash.stealthrdp.com/index.php?rp=/store">
+                Deploy server
+                <ArrowRight />
+              </a>
+            </Button>
           </div>
         </div>
       </section>
