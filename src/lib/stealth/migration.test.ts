@@ -1,5 +1,17 @@
 import { describe, expect, it } from 'vitest';
-import { articlePath, blogArticles, checkoutUrl, indexableDocPublicPaths, plans } from './content';
+import featuresJson from '../../content/features.json';
+import {
+  articlePath,
+  blogArticles,
+  checkoutUrl,
+  docsArticles,
+  faqs,
+  indexableDocPublicPaths,
+  plans,
+  reviews,
+  testimonials,
+  uptime,
+} from './content';
 import { noindexDocPaths } from './routes';
 
 const coreIndexablePaths = [
@@ -24,7 +36,32 @@ const expectedNoindexDocs = [
   '/docs/how-to-reset-server-change-or-reset-client-area-password',
 ];
 
+const expectedPlans = [
+  'Bronze USA',
+  'Silver USA',
+  'Gold USA',
+  'Platinum USA',
+  'Diamond USA',
+  'Emerald USA',
+  'Bronze EU',
+  'Silver EU',
+  'GOLD EU',
+  'Platinum EU',
+  'Diamond EU',
+];
+
 describe('StealthRDP public-site migration contract', () => {
+  it('preserves the production content corpus', () => {
+    expect(plans.map(plan => plan.name)).toEqual(expectedPlans);
+    expect(faqs).toHaveLength(21);
+    expect(testimonials).toHaveLength(6);
+    expect(reviews).toHaveLength(48);
+    expect(blogArticles).toHaveLength(12);
+    expect(docsArticles).toHaveLength(23);
+    expect(uptime.monitors).toHaveLength(9);
+    expect(featuresJson).toHaveLength(16);
+  });
+
   it('preserves the 38 currently indexable public URLs', () => {
     const articlePaths = blogArticles
       .filter(article => article.slug !== 'vps-hosting-minecraft')
