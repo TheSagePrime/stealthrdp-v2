@@ -1,5 +1,13 @@
 node_modules
+.next
 .git
-data/*.tmp
+coverage
+reports
+playwright-report
+test-results
 *.log
+local.db*
+.env
+.env.*
+!.env.example
 .DS_Store

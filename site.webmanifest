@@ -1,8 +1,0 @@
-{
-  "name": "StealthRDP",
-  "short_name": "StealthRDP",
-  "start_url": "/",
-  "display": "browser",
-  "background_color": "#07111f",
-  "theme_color": "#07111f"
-}
