@@ -108,18 +108,21 @@ export function PricingExplorer({
         </div>
         <div className="sr-control-group">
           <span className="sr-control-label">Billing</span>
-          {cycleOrder.map(item => (
-            <Button
-              key={item}
-              type="button"
-              size="sm"
-              variant={cycle === item ? 'secondary' : 'ghost'}
-              onClick={() => setCycle(item)}
-            >
-              {billingCycles[item].label}
-              {billingCycles[item].discountLabel ? ` · ${billingCycles[item].discountLabel}` : ''}
-            </Button>
-          ))}
+          {cycleOrder.map((item) => {
+            const billing = billingCycles[item] as { label: string; discountLabel?: string };
+            return (
+              <Button
+                key={item}
+                type="button"
+                size="sm"
+                variant={cycle === item ? 'secondary' : 'ghost'}
+                onClick={() => setCycle(item)}
+              >
+                {billing.label}
+                {billing.discountLabel ? ` · ${billing.discountLabel}` : ''}
+              </Button>
+            );
+          })}
         </div>
       </div>
 
