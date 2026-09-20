@@ -75,7 +75,7 @@ export function PricingExplorer({
                   key={item.key}
                   type="button"
                   size="sm"
-                  variant={os === item.key ? 'secondary' : 'ghost'}
+                  variant={os === item.key ? 'default' : 'outline'}
                   onClick={() => setOs(item.key)}
                 >
                   {item.label}
@@ -120,7 +120,7 @@ export function PricingExplorer({
                 key={item}
                 type="button"
                 size="sm"
-                variant={cycle === item ? 'secondary' : 'ghost'}
+                variant={cycle === item ? 'default' : 'outline'}
                 onClick={() => setCycle(item)}
               >
                 {billing.label}
@@ -150,8 +150,8 @@ export function PricingExplorer({
                   <p className="sr-plan-desc">{plan.description}</p>
                 </div>
                 <div className="sr-plan-badges">
-                  {guided && recommended ? <Badge variant="secondary">Best fit</Badge> : null}
-                  {plan.popular ? <Badge>Popular</Badge> : null}
+                  {guided && recommended ? <Badge>Best fit</Badge> : null}
+                  {plan.popular && !(guided && recommended) ? <Badge variant="outline">Popular</Badge> : null}
                 </div>
               </div>
 
