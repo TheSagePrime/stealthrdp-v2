@@ -216,12 +216,12 @@ export default async function HomePage({ params }: Props) {
         <div className="sr-container">
           <div className="sr-section-head">
             <div>
-              <p className="sr-kicker">Pick your power</p>
-              <h2 className="sr-section-title">Performance comes standard.</h2>
+              <p className="sr-kicker">Choose a workload</p>
+              <h2 className="sr-section-title">Plans priced for the work</h2>
             </div>
             <p>
-              Choose a region and billing cycle, compare the resources that matter,
-              then continue directly to the existing StealthRDP checkout.
+              Pick a workload to highlight a practical starting tier, then choose your
+              region, operating system, billing cycle, and resources before checkout.
             </p>
           </div>
 
@@ -336,7 +336,7 @@ export default async function HomePage({ params }: Props) {
           </div>
 
           <div className="sr-review-grid sr-review-grid-premium">
-            {testimonials.slice(0, 3).map((item, index) => (
+            {testimonials.slice(0, 6).map((item, index) => (
               <article className="sr-review" key={item.id ?? item._id ?? index}>
                 <div className="sr-review-mark">“</div>
                 <blockquote>{item.quote}</blockquote>
@@ -371,6 +371,11 @@ export default async function HomePage({ params }: Props) {
               <a href="https://dash.stealthrdp.com/index.php?rp=/store">
                 Deploy server
                 <ArrowRight />
+              </a>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <a href="https://dash.stealthrdp.com/submitticket.php">
+                Ask a pre-sales question
               </a>
             </Button>
           </div>
