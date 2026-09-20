@@ -27,6 +27,12 @@ test.describe('StealthRDP v2 public UI', () => {
     });
   });
 
+  test('preserves a legacy .html blog article route through proxy routing', async ({ page }) => {
+    const response = await page.goto('/blog/top-6-vps-management-tools-for-small-businesses.html');
+    expect(response?.ok()).toBe(true);
+    await expect(page.getByRole('heading', { level: 1 })).toContainText('VPS');
+  });
+
   test('renders a core commercial route without provider credentials', async ({ page }) => {
     const response = await page.goto('/plans');
     expect(response?.ok()).toBe(true);

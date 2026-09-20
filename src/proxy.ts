@@ -13,6 +13,7 @@ const handleI18nRouting = createMiddleware(routing);
 const auditPublicRoutes = new Set([
   ...defaultSeoConfig.routes.publicMarketing,
   ...defaultSeoConfig.routes.publicUtility,
+  ...(defaultSeoConfig.routes.dynamicPublic ?? []),
 ]);
 
 function syntheticAuditEnvironment(): boolean {
@@ -139,7 +140,7 @@ export default async function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!_next|_vercel|monitoring|.*\\..*).*)',
+    '/((?!_next|_vercel|monitoring|.*\\.(?:png|jpg|jpeg|gif|svg|webp|avif|ico|css|js|map|woff|woff2|txt|xml|json|webmanifest)$).*)',
     '/api(.*)',
   ],
 };
