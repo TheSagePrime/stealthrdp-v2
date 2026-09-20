@@ -1,6 +1,18 @@
 import type { Metadata } from 'next';
-import { Monitor, ShieldCheck, Terminal, Zap } from 'lucide-react';
+import {
+  ArrowRight,
+  Cpu,
+  HardDrive,
+  KeyRound,
+  MapPin,
+  MemoryStick,
+  Monitor,
+  ShieldCheck,
+  Terminal,
+  Zap,
+} from 'lucide-react';
 import Link from 'next/link';
+import { PricingExplorer } from '@/components/site/PricingExplorer';
 import { Button } from '@/components/ui/button';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
@@ -11,16 +23,227 @@ export const metadata: Metadata = createPageMetadata({
   ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
+const windowsVersions = [
+  { name: 'Windows Server 2019', version: '2019', text: 'Use when the software or workflow asks for Windows Server 2019.' },
+  { name: 'Windows Server 2022', version: '2022', text: 'Use when the software or workflow asks for Windows Server 2022.' },
+  { name: 'Windows Server 2025', version: '2025', text: 'Use when the software or workflow asks for Windows Server 2025.' },
+];
+
+const resourceFit = [
+  { icon: Cpu, number: '01', title: 'Concurrent work', text: 'Match active processing and concurrent tasks.' },
+  { icon: MemoryStick, number: '02', title: 'Active services', text: 'Allow for Windows, applications, and users running at the same time.' },
+  { icon: HardDrive, number: '03', title: 'Files and data', text: 'Include the operating system, installed software, files, and future additions.' },
+];
+
+const questions = [
+  ['Can I use familiar Windows software?', 'A Windows VPS provides a Windows environment for compatible software. Check each application’s system requirements before ordering.'],
+  ['Do Windows VPS plans include Administrator access?', 'Yes. VPS plans include full Administrator access.'],
+  ['Which Windows versions are listed?', 'Windows Server 2019, 2022, and 2025.'],
+  ['Is a Microsoft Windows licence included?', 'No. Microsoft Windows licensing is not included or supplied by StealthRDP. Customers are responsible for licensing required for their intended use.'],
+  ['When will my Windows VPS be activated?', 'Standard installations are typically activated within 5 minutes. Most services are activated within 5–10 minutes after payment confirmation.'],
+  ['How will I receive my credentials?', 'StealthRDP sends service credentials by email after payment confirmation.'],
+  ['How do I choose CPU, RAM, and storage?', 'Use your software requirements, user count, processing needs, and data size, then compare the available plan configurations.'],
+  ['Where can I get support?', 'Use the client-area ticketing system or support email. The FAQ provides the current support details.'],
+  ['Can I run any workload?', 'No. Use must remain lawful and follow the published Use of Service terms.'],
+] as const;
+
 export default function WindowsVpsPage() {
   return (
     <>
-      <section className="sr-page-hero"><div className="sr-container"><p className="sr-kicker">Windows VPS hosting</p><h1 className="sr-title">A Windows server you can <span>actually control.</span></h1><p className="sr-lede">Deploy remote Windows infrastructure, connect over RDP, and manage the server through the existing StealthRDP client and server-control flow.</p><div className="sr-actions"><Button asChild size="lg"><a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">View Windows-capable plans</a></Button><Button asChild variant="outline" size="lg"><Link href="/docs/windows-licensing">Windows licensing</Link></Button></div></div></section>
-      <section className="sr-section"><div className="sr-container"><div className="sr-feature-grid">
-        <article className="sr-feature"><Monitor /><h3>Remote Desktop access</h3><p>Use standard RDP clients to connect to supported Windows Server installations.</p></article>
-        <article className="sr-feature"><Terminal /><h3>Administrator control</h3><p>Operate software and server settings with the access level defined by your service.</p></article>
-        <article className="sr-feature"><Zap /><h3>Fast provisioning path</h3><p>Choose a plan, complete checkout, and follow the normal provisioning workflow.</p></article>
-        <article className="sr-feature"><ShieldCheck /><h3>Licensing made explicit</h3><p>StealthRDP provides infrastructure; Microsoft licensing remains the customer’s responsibility.</p></article>
-      </div></div></section>
+      <section className="sr-page-hero sr-os-page-hero">
+        <div className="sr-container sr-os-hero-grid">
+          <div>
+            <p className="sr-kicker">Windows VPS hosting</p>
+            <h1 className="sr-title">Windows VPS hosting for work that <span>belongs on Windows.</span></h1>
+            <p className="sr-lede">
+              Use remote Windows access for familiar software, administration, and business workflows.
+              Choose your operating system, compare the resources, and order the configuration that fits the job.
+            </p>
+            <p className="sr-micro">
+              StealthRDP sells Windows VPS plans in USA and EU regions. Compare the current catalog, then continue to checkout.
+            </p>
+            <div className="sr-actions">
+              <Button asChild size="lg"><Link href="#windows-plans">Compare Windows VPS plans <ArrowRight /></Link></Button>
+              <Button asChild size="lg" variant="outline"><Link href="#windows-versions">Windows versions</Link></Button>
+            </div>
+          </div>
+          <div className="sr-os-terminal" aria-label="Windows VPS deployment summary">
+            <div className="sr-os-terminal-head"><Monitor /><span>Windows VPS</span></div>
+            <code>$ stealth deploy --os windows --region us</code>
+            <div><span>region</span><strong>USA / EU</strong></div>
+            <div><span>image</span><strong>Server 2019 / 2022 / 2025</strong></div>
+            <div><span>storage</span><strong>NVMe</strong></div>
+            <p><Zap /> Confirm the exact image during checkout.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="sr-section" id="windows-plans">
+        <div className="sr-container">
+          <div className="sr-section-head">
+            <div>
+              <p className="sr-kicker">Current VPS catalog</p>
+              <h2 className="sr-section-title">Choose your resource level</h2>
+            </div>
+            <p>Compare the current displayed price, CPU, RAM, NVMe storage, bandwidth, and region. Windows and Linux use this shared VPS catalog.</p>
+          </div>
+          <PricingExplorer guided={false} />
+          <div className="sr-cta-inline">
+            <div>
+              <span className="sr-location-code">Next step</span>
+              <h3>Choose the plan first. Select Windows or Linux in checkout.</h3>
+              <p>The existing checkout provides the operating-system selector before payment.</p>
+            </div>
+            <Button asChild><a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">Configure this VPS <ArrowRight /></a></Button>
+          </div>
+        </div>
+      </section>
+
+      <section className="sr-section sr-section-border">
+        <div className="sr-container sr-copy-grid">
+          <div>
+            <p className="sr-kicker">Windows VPS guide</p>
+            <h2 className="sr-section-title">Keep your Windows workflow in reach</h2>
+          </div>
+          <div className="sr-prose-block">
+            <p>A Windows VPS gives you a remote Windows environment for software, testing, administration, and business workflows. It can also suit users who need access to a Windows desktop or server without keeping the machine on site.</p>
+            <p>Start with the software and users. A plan that fits one application may not fit several concurrent sessions or a larger installation.</p>
+            <div className="sr-inline-links">
+              <Link href="/plans#windows-vps">Windows VPS catalog <ArrowRight /></Link>
+              <Link href="/plans#comparison">Plan comparison <ArrowRight /></Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="sr-section sr-section-border" id="windows-versions">
+        <div className="sr-container">
+          <div className="sr-section-head">
+            <div>
+              <p className="sr-kicker">Environment</p>
+              <h2 className="sr-section-title">Choose the Windows version your software needs</h2>
+            </div>
+            <p>
+              The current Services & Plans FAQ lists Windows Server 2019, 2022, and 2025.
+              Confirm the operating-system option during ordering.
+            </p>
+          </div>
+          <div className="sr-version-grid">
+            {windowsVersions.map(item => (
+              <article key={item.version}>
+                <span>{item.version}</span>
+                <h3>{item.name}</h3>
+                <p>{item.text}</p>
+              </article>
+            ))}
+          </div>
+          <div className="sr-disclosure">
+            <ShieldCheck />
+            <p>
+              <strong>Windows licensing:</strong> StealthRDP provides the infrastructure only.
+              Microsoft Windows licensing is not included and is not supplied by StealthRDP.
+              Customers are responsible for their own licensing compliance.
+              {' '}<Link href="/docs/windows-licensing">Read the Windows licensing page.</Link>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="sr-section sr-section-border">
+        <div className="sr-container sr-copy-grid">
+          <div>
+            <p className="sr-kicker">Control</p>
+            <h2 className="sr-section-title">Administrator access for hands-on control</h2>
+          </div>
+          <div className="sr-prose-block">
+            <p>VPS plans include full Windows Administrator access. That gives you control over the Windows environment and the software you install. You are responsible for regular backups of important data.</p>
+            <p>For the remote sign-in process, see <Link href="/docs/how-do-i-log-into-windows">How do I log into Windows?</Link> StealthRDP sends service credentials by email after payment confirmation.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="sr-section sr-section-border">
+        <div className="sr-container">
+          <div className="sr-section-head">
+            <div>
+              <p className="sr-kicker">Resource fit</p>
+              <h2 className="sr-section-title">Size the machine to the stack</h2>
+            </div>
+            <p>Count what runs at the same time: Windows, applications, users, files, and future additions.</p>
+          </div>
+          <div className="sr-resource-grid">
+            {resourceFit.map(({ icon: Icon, number, title, text }) => (
+              <article key={number}>
+                <span>{number}</span><Icon /><h3>{title}</h3><p>{text}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="sr-section sr-section-border">
+        <div className="sr-container">
+          <div className="sr-section-head">
+            <div><p className="sr-kicker">Regions</p><h2 className="sr-section-title">USA or EU</h2></div>
+            <p>Choose the region that fits your users, latency, and operating requirements.</p>
+          </div>
+          <div className="sr-location-grid">
+            <article><div className="sr-location-mark"><MapPin /></div><div><span className="sr-location-code">USA</span><h3>United States</h3><p>StealthRDP lists Windows VPS options for USA regions. Compare the region and resources in the catalog.</p></div><Link href="/plans">View plans <ArrowRight /></Link></article>
+            <article><div className="sr-location-mark"><MapPin /></div><div><span className="sr-location-code">EU</span><h3>Europe</h3><p>EU Windows VPS options also appear in the public catalog. Confirm the region and current configuration in checkout.</p></div><Link href="/plans">View plans <ArrowRight /></Link></article>
+          </div>
+        </div>
+      </section>
+
+      <section className="sr-section sr-section-border">
+        <div className="sr-container sr-order-grid">
+          <article>
+            <Zap />
+            <span className="sr-location-code">After payment</span>
+            <h3>Provisioning</h3>
+            <p>Standard Windows and Linux installations are typically activated within 5 minutes. Most services are activated within 5–10 minutes after payment confirmation.</p>
+          </article>
+          <article>
+            <KeyRound />
+            <span className="sr-location-code">Credentials</span>
+            <h3>Delivered by email</h3>
+            <p>StealthRDP sends your service credentials by email after payment confirmation.</p>
+          </article>
+          <article>
+            <Terminal />
+            <span className="sr-location-code">Support and limits</span>
+            <h3>Operate within the published terms</h3>
+            <p>Support is available through the client-area ticketing system and support email. Lawful use and the published Use of Service terms apply.</p>
+          </article>
+        </div>
+      </section>
+
+      <section className="sr-section sr-section-border">
+        <div className="sr-container">
+          <div className="sr-section-head">
+            <div><p className="sr-kicker">Common questions</p><h2 className="sr-section-title">Windows VPS questions</h2></div>
+            <p>Quick answers for software, access, activation, licensing, resources, and support.</p>
+          </div>
+          <div className="sr-qa-grid">
+            {questions.map(([question, answer]) => (
+              <article key={question}><h3>{question}</h3><p>{answer}</p></article>
+            ))}
+          </div>
+          <div className="sr-cta-inline">
+            <div><span className="sr-location-code">Choose another environment</span><h3>Need Linux instead?</h3><p>For websites, applications, databases, or development stacks, see Linux VPS hosting.</p></div>
+            <Button asChild variant="outline"><Link href="/linux-vps">Linux VPS hosting <ArrowRight /></Link></Button>
+          </div>
+        </div>
+      </section>
+
+      <section className="sr-section">
+        <div className="sr-container sr-cta sr-cta-premium">
+          <div><p className="sr-kicker">Windows VPS plans</p><h2>Compare Windows VPS plans</h2><p>Check the current plan, region, and displayed price, then confirm Windows and the exact image in checkout.</p></div>
+          <div className="sr-actions">
+            <Button asChild size="lg"><Link href="/plans#windows-vps">Compare plans <ArrowRight /></Link></Button>
+            <Button asChild size="lg" variant="outline"><a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">Continue to checkout</a></Button>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
