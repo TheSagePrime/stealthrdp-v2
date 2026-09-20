@@ -114,18 +114,32 @@ export function ArticleIndex({
 
   return (
     <section className="seo-article-index" aria-labelledby="seo-article-index-title">
-      <h1 id="seo-article-index-title">{heading}</h1>
-      <ol>
-        {publications.map(article => (
-          <li key={article.slug}>
+      <div className="sr-collection-head">
+        <div>
+          <p className="sr-kicker">Knowledge base</p>
+          <h2 id="seo-article-index-title">{heading}</h2>
+        </div>
+        <span>{publications.length} articles</span>
+      </div>
+
+      <ol className="sr-blog-grid">
+        {publications.map((article, index) => (
+          <li key={article.slug} className="sr-blog-card">
             <a href={canonicalUrlForPath(articlePathFor(article, config), site, config)}>
-              <h2>{article.title}</h2>
+              <div className="sr-blog-card-index">{String(index + 1).padStart(2, '0')}</div>
+              <div className="sr-blog-card-body">
+                <time dateTime={article.datePublished}>
+                  {formatPublicationDate(article.datePublished, article.locale)}
+                </time>
+                <h3>{article.title}</h3>
+                <p>{article.description}</p>
+                <span className="sr-blog-card-link">Read article →</span>
+              </div>
             </a>
-            <p>{article.description}</p>
-            <time dateTime={article.datePublished}>{formatPublicationDate(article.datePublished, article.locale)}</time>
           </li>
         ))}
       </ol>
+
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
     </section>
   );
