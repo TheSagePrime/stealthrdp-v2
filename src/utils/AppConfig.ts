@@ -1,10 +1,10 @@
 import { I18nConfig } from '@/config/i18n';
 
 export const AppConfig = {
-  name: 'Sage Prime Web Foundation',
+  name: 'StealthRDP',
   i18n: I18nConfig,
   email: {
-    support: 'support@thesageprime.com',
+    support: 'support@stealthrdp.com',
   },
 } as const;
 

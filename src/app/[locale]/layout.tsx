@@ -4,36 +4,20 @@ import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/libs/I18nRouting';
 import '@/styles/global.css';
-import '@/styles/foundation.css';
+import '@/styles/stealth.css';
 
 export const metadata: Metadata = {
-  icons: [
-    {
-      rel: 'apple-touch-icon',
-      url: '/apple-touch-icon.png',
-    },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '32x32',
-      url: '/favicon-32x32.png',
-    },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '16x16',
-      url: '/favicon-16x16.png',
-    },
-    {
-      rel: 'icon',
-      url: '/favicon.ico',
-    },
-  ],
+  metadataBase: new URL('https://www.stealthrdp.com'),
+  applicationName: 'StealthRDP',
+  authors: [{ name: 'StealthRDP' }],
+  icons: [{ rel: 'icon', type: 'image/svg+xml', url: '/favicon.svg' }],
 };
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
+  themeColor: '#07111f',
+  colorScheme: 'dark',
 };
 
 export function generateStaticParams() {
@@ -45,15 +29,10 @@ export default async function RootLayout(props: {
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await props.params;
-
-  if (!hasLocale(routing.locales, locale)) {
-    notFound();
-  }
-
+  if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
-
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} className="dark">
       <body>
         <NextIntlClientProvider>{props.children}</NextIntlClientProvider>
       </body>

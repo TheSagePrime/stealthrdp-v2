@@ -1,144 +1,134 @@
-/* eslint-disable better-tailwindcss/no-unknown-classes, next/no-html-link-for-pages */
 import type { Metadata } from 'next';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import { Activity, Gauge, Globe2, HardDrive, ShieldCheck, Zap } from 'lucide-react';
+import { setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
+import { PricingExplorer } from '@/components/site/PricingExplorer';
+import { Button } from '@/components/ui/button';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
 import { createPageMetadata } from '@/libs/seo/metadata';
 import { buildPageJsonLd } from '@/libs/seo/schema';
+import { testimonials } from '@/lib/stealth/content';
 
-const modules = [
-  {
-    name: 'Content',
-    detail: 'Articles, guides, internal links, metadata, sitemap, RSS, and structured data.',
-    route: '/rss.xml',
-  },
-  {
-    name: 'Tools',
-    detail: 'Public calculators, generators, checkers, converters, and other traffic-driving utilities.',
-    route: '/api/health',
-  },
-  {
-    name: 'Data',
-    detail: 'Neon PostgreSQL, Drizzle, and PGlite are available when a site or tool needs persistence.',
-    route: '/api/ready',
-  },
-];
+type Props = { params: Promise<{ locale: string }> };
 
-type IndexProps = {
-  params: Promise<{ locale: string }>;
-};
-
-export async function generateMetadata(props: IndexProps): Promise<Metadata> {
-  const { locale } = await props.params;
-  const t = await getTranslations({ locale, namespace: 'Index' });
-
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
   return createPageMetadata({
     path: '/',
-    title: t('meta_title'),
-    description: t('meta_description'),
     locale,
+    title: 'StealthRDP — Secure Remote Desktop & VPS Infrastructure',
+    description: 'Deploy a Windows or Linux VPS with USA and EU locations, NVMe storage, 99.9% uptime SLA, and direct WHMCS checkout.',
+    ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
   });
 }
 
-export default async function HomePage(props: IndexProps) {
-  const { locale } = await props.params;
+const systems = ['Debian','CentOS','Rocky Linux','Ubuntu','Fedora','FreeBSD','Alpine Linux','AlmaLinux','Windows'];
+
+export default async function HomePage({ params }: Props) {
+  const { locale } = await params;
   setRequestLocale(locale);
   const jsonLd = buildPageJsonLd(getSeoConfig());
 
   return (
-    <main className="foundation-shell">
+    <>
       {jsonLd.map(block => (
-        <script
-          key={String(block['@type'])}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: serializeJsonLd(block) }}
-        />
+        <script key={String(block['@type'])} type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(block) }} />
       ))}
-      <header className="topbar">
-        <div className="brand">
-          <span className="brand-mark">SP</span>
-          <span>
-            <strong>Sage Prime</strong>
-            <small>Public web foundation</small>
-          </span>
-        </div>
-        <Link className="health-link" href="/api/health">
-          Runtime health <span aria-hidden="true">↗</span>
-        </Link>
-      </header>
 
-      <section className="intro-grid" aria-labelledby="page-title">
-        <div className="hero">
-          <p className="eyebrow">Traffic-first public foundation</p>
-          <h1 id="page-title">Build useful websites people can discover.</h1>
-          <p className="lede">
-            A tested base for public content, free tools, organic search growth,
-            and optional promotion of commercial products without forcing SaaS
-            accounts, tenants, or billing into every site.
-          </p>
-          <div className="actions">
-            <Link className="button primary" href="/rss.xml">
-              Inspect content feed <span aria-hidden="true">→</span>
-            </Link>
-            <Link className="button secondary" href="/api/health">
-              Check runtime
-            </Link>
+      <section className="sr-hero">
+        <div className="sr-container sr-hero-grid">
+          <div>
+            <p className="sr-kicker">Windows & Linux VPS · Instant setup</p>
+            <h1 className="sr-title">Your server. <span>Live in 60 seconds.</span></h1>
+            <p className="sr-lede">High-performance remote desktop infrastructure without the complexity. Enterprise hardware and a 99.9% uptime SLA — online the moment you pay.</p>
+            <div className="sr-actions">
+              <Button asChild size="lg"><a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">Deploy your server now</a></Button>
+              <Button asChild size="lg" variant="outline"><a href="https://dash.stealthrdp.com/submitticket.php">Ask a pre-sales question</a></Button>
+            </div>
+            <p className="sr-micro">Starting at €9.50/month · No hidden fees · Cancel anytime · 7-day money-back</p>
+            <div className="sr-stats">
+              <div className="sr-stat"><strong>10,000+</strong><span>Orders</span></div>
+              <div className="sr-stat"><strong>60s</strong><span>Average deploy</span></div>
+              <div className="sr-stat"><strong>99.9%</strong><span>Uptime SLA</span></div>
+            </div>
+          </div>
+
+          <div className="sr-console" aria-label="Server deployment example">
+            <div className="sr-console-head"><span className="sr-dot" /><span className="sr-dot" /><span className="sr-dot sr-dot-live" /><small>stealth deploy</small></div>
+            <div className="sr-console-body">
+              <div className="sr-console-command">$ stealth deploy --plan silver-usa --region us-east</div>
+              <div className="sr-console-dim">▸ reserving dedicated vCPU</div>
+              <div className="sr-console-dim">▸ provisioning NVMe storage</div>
+              <div className="sr-console-dim">▸ installing Windows Server 2022</div>
+              <div className="sr-console-dim">▸ provisioning an isolated VM</div>
+              <div className="sr-console-ok">✓ server ready for connection</div>
+            </div>
+            <div className="sr-console-specs">
+              <span><b>2</b>vCPU</span><span><b>4 GB</b>RAM</span><span><b>60 GB</b>NVMe</span><span><b>1 Gbps</b>Network</span>
+            </div>
           </div>
         </div>
+      </section>
 
-        <aside className="manifest" aria-labelledby="manifest-title">
-          <div className="manifest-head">
-            <span id="manifest-title">Web foundation manifest</span>
-            <span>v0.1.0</span>
+      <div className="sr-os-strip">
+        <div className="sr-container sr-os-row">
+          <span className="sr-os-label">Works with your OS</span>
+          {systems.map(system => <span className="sr-os-pill" key={system}>{system}</span>)}
+        </div>
+      </div>
+
+      <section className="sr-section">
+        <div className="sr-container">
+          <div className="sr-section-head">
+            <div><p className="sr-kicker">Choose a workload</p><h2 className="sr-section-title">Plans priced for the work</h2></div>
+            <p>Compare USA and EU resources, switch billing periods, and continue directly to the existing StealthRDP checkout.</p>
           </div>
-          <ol className="module-list">
-            {modules.map((module, index) => (
-              <li key={module.name}>
-                <span className="module-index">0{index + 1}</span>
-                <span className="module-copy">
-                  <strong>{module.name}</strong>
-                  <span>{module.detail}</span>
-                </span>
-                <a aria-label={`Open ${module.name} check`} href={module.route}>↗</a>
-              </li>
+          <PricingExplorer compact />
+          <div className="sr-actions"><Button asChild variant="outline"><Link href="/plans">View all plans</Link></Button></div>
+        </div>
+      </section>
+
+      <section className="sr-section sr-section-border">
+        <div className="sr-container">
+          <div className="sr-section-head">
+            <div><p className="sr-kicker">Core infrastructure</p><h2 className="sr-section-title">Infrastructure that doesn’t flinch</h2></div>
+            <p>Fast storage, broad OS choice, visible service health, and support paths designed around operating real servers.</p>
+          </div>
+          <div className="sr-feature-grid">
+            <article className="sr-feature"><HardDrive /><h3>NVMe SSD storage</h3><p>Fast disk I/O for applications, databases, automation, and remote desktops.</p></article>
+            <article className="sr-feature"><ShieldCheck /><h3>Isolated virtual machines</h3><p>Dedicated VM boundaries with infrastructure protections and full administrative access.</p></article>
+            <article className="sr-feature"><Globe2 /><h3>USA + EU locations</h3><p>Choose the region that best fits your latency, audience, or operational needs.</p></article>
+            <article className="sr-feature"><Activity /><h3>Service visibility</h3><p>Public status information and documented support paths when something needs attention.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section className="sr-section sr-section-border">
+        <div className="sr-container">
+          <div className="sr-section-head">
+            <div><p className="sr-kicker">Customer feedback</p><h2 className="sr-section-title">What customers say</h2></div>
+            <p>Selected feedback already published by StealthRDP, including third-party review sources where available.</p>
+          </div>
+          <div className="sr-review-grid">
+            {testimonials.slice(0, 6).map((item, index) => (
+              <article className="sr-review" key={item.id ?? item._id ?? index}>
+                <blockquote>“{item.quote}”</blockquote>
+                <footer>{item.authorName}{item.publishedOn ? ` · ${item.publishedOn}` : item.authorCompany ? ` · ${item.authorCompany}` : ''}</footer>
+              </article>
             ))}
-          </ol>
-          <div className="manifest-foot">
-            <span className="status-dot" aria-hidden="true" />
-            Ready for a public site, content library, or free-tool property
           </div>
-        </aside>
-      </section>
-
-      <section className="principles" aria-labelledby="principles-title">
-        <div className="section-heading">
-          <p className="eyebrow">The working rule</p>
-          <h2 id="principles-title">Acquire attention before adding product complexity.</h2>
-        </div>
-        <div className="principle-list">
-          <article>
-            <span>01</span>
-            <h3>Publish for discovery.</h3>
-            <p>Content, metadata, internal linking, crawlability, and structured data are first-class.</p>
-          </article>
-          <article>
-            <span>02</span>
-            <h3>Give visitors something useful.</h3>
-            <p>Free tools should solve real problems and create repeatable search demand.</p>
-          </article>
-          <article>
-            <span>03</span>
-            <h3>Monetization stays optional.</h3>
-            <p>Promote a SaaS product, add another business model later, or keep the property purely traffic-focused.</p>
-          </article>
         </div>
       </section>
 
-      <footer className="footer">
-        <span>Sage Prime · Public web foundation</span>
-        <span>SEO, content, tools, data capability, security, and deployment guardrails</span>
-      </footer>
-    </main>
+      <section className="sr-section">
+        <div className="sr-container sr-cta">
+          <div><p className="sr-kicker">Ready when you are</p><h2>Deploy your VPS and get back to the actual work.</h2><p>Windows and Linux choices, USA and EU regions, and the same existing StealthRDP client area for billing and server access.</p></div>
+          <div className="sr-actions">
+            <Button asChild size="lg"><a href="https://dash.stealthrdp.com/index.php?rp=/store">Deploy server</a></Button>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
