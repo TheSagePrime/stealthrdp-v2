@@ -1,10 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
-import { ExternalLink, Instagram, MessageCircle, Send } from 'lucide-react';
+import { ExternalLink, MessageCircle, Send } from 'lucide-react';
 import Link from 'next/link';
+
+function InstagramIcon() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+      <rect x="3" y="3" width="18" height="18" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
 
 const socialLinks = [
   { label: 'X', href: 'https://x.com/stealthrdp', icon: ExternalLink },
-  { label: 'Instagram', href: 'https://www.instagram.com/stealth_rdp', icon: Instagram },
+  { label: 'Instagram', href: 'https://www.instagram.com/stealth_rdp', icon: InstagramIcon },
   { label: 'Discord', href: 'https://discord.gg/9JJFs4DDyF', icon: MessageCircle },
   { label: 'Telegram', href: 'https://t.me/StealthRDP', icon: Send },
 ] as const;
