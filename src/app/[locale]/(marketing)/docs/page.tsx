@@ -5,8 +5,9 @@ import { docPublicSlug, docsArticles } from '@/lib/stealth/content';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/docs',
-  title: 'StealthRDP Documentation',
-  description: 'StealthRDP documentation for Windows, Linux, server management, VPNs, web panels, account questions, and service policies.',
+  title: 'Documentation — StealthRDP',
+  description: 'Read verified StealthRDP guides for Windows, Linux, networking, panels, server management, and account questions. Search the native documentation index.',
+  ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
 export default function DocsPage() {

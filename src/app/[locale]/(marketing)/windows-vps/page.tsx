@@ -6,8 +6,9 @@ import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/windows-vps',
-  title: 'Windows VPS Hosting — StealthRDP',
-  description: 'Windows VPS infrastructure with administrative access, USA and EU regions, NVMe storage, and remote desktop connectivity.',
+  title: 'Windows VPS Hosting | Compare USA and EU Plans | StealthRDP',
+  description: 'Compare Windows VPS hosting plans with full Administrator access, multiple OS versions, and flexible resources. Choose USA or EU regions and deploy fast.',
+  ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
 export default function WindowsVpsPage() {

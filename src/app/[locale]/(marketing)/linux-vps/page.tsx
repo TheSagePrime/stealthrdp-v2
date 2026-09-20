@@ -5,8 +5,9 @@ import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/linux-vps',
-  title: 'Linux VPS Hosting — StealthRDP',
-  description: 'Linux VPS hosting with full root access, NVMe storage, multiple distributions, USA and EU locations, and direct checkout.',
+  title: 'Linux VPS Hosting | Ubuntu, Debian, CentOS | StealthRDP',
+  description: 'Compare cheap Linux VPS plans with Ubuntu, Debian, or CentOS, Root access, and USA or EU regions. Check live catalog prices, then continue to checkout.',
+  ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
 export default function LinuxVpsPage() {

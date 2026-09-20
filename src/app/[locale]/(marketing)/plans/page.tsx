@@ -4,8 +4,9 @@ import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/plans',
-  title: 'VPS Plans & Pricing — StealthRDP',
-  description: 'Compare StealthRDP USA and EU VPS plans, billing cycles, CPU, RAM, NVMe storage, and availability.',
+  title: 'Windows & Linux VPS Hosting | USA & EU | StealthRDP',
+  description: 'Compare Windows and Linux VPS hosting plans from StealthRDP with USA and EU locations, NVMe storage, flexible billing, and checkout.',
+  ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
 export default function PlansPage() {

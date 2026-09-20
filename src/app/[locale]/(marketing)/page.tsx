@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     path: '/',
     locale,
     title: 'StealthRDP — Secure Remote Desktop & VPS Infrastructure',
-    description: 'Deploy a Windows or Linux VPS with USA and EU locations, NVMe storage, 99.9% uptime SLA, and direct WHMCS checkout.',
+    description: 'Deploy a Windows or Linux VPS in 60 seconds. Enterprise-grade hardware, 99.9% uptime SLA and 24/7 support — from €9.50/month.',
     ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
   });
 }

@@ -4,8 +4,9 @@ import { faqs } from '@/lib/stealth/content';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/faq',
-  title: 'Frequently Asked Questions — StealthRDP',
-  description: 'Answers about StealthRDP VPS plans, locations, billing, provisioning, support, refunds, access, backups, and Windows licensing.',
+  title: 'FAQ — StealthRDP',
+  description: 'Frequently asked questions about StealthRDP VPS hosting: setup, operating systems, upgrades, refunds, and more.',
+  ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
 export default function FaqPage() {

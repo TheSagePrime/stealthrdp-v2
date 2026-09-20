@@ -4,8 +4,9 @@ import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/about',
-  title: 'About StealthRDP',
-  description: 'Learn how StealthRDP approaches Windows and Linux VPS infrastructure, provisioning, regions, support, and client operations.',
+  title: 'About Us — StealthRDP',
+  description: 'StealthRDP provides high-performance remote desktop and VPS infrastructure with 10,000+ orders worldwide.',
+  ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
 export default function AboutPage() {

@@ -5,8 +5,9 @@ import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/blog',
-  title: 'VPS & RDP Blog — StealthRDP',
-  description: 'StealthRDP articles about VPS management, remote desktop, server performance, backups, monitoring, and infrastructure operations.',
+  title: 'Blog — StealthRDP',
+  description: 'Expert insights, tutorials, and updates on remote desktop security, VPS management, and server infrastructure.',
+  ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
 export default function BlogPage() {
