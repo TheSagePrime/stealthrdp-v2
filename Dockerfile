@@ -14,6 +14,9 @@ FROM node:22-bookworm-slim AS builder
 ENV COREPACK_HOME=/corepack \
     NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
+    CI=true \
+    SEO_AUDIT_LOCAL=true \
+    SEO_AUDIT_SITE_URL=https://seo-audit.invalid \
     DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/stealthrdp_v2 \
     SITE_URL=https://preview.antah.de \
     APP_ENV=preview

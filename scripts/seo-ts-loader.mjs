@@ -17,6 +17,15 @@ export async function resolve(specifier, context, nextResolve) {
 }
 
 export async function load(url, context, nextLoad) {
+  if (url.endsWith('.json')) {
+    const source = await readFile(new URL(url), 'utf8');
+    return {
+      format: 'module',
+      source: `export default ${source};`,
+      shortCircuit: true,
+    };
+  }
+
   if (url.endsWith('.ts') || url.endsWith('.tsx')) {
     const source = await readFile(new URL(url), 'utf8');
     return {
