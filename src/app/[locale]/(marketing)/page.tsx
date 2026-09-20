@@ -119,7 +119,7 @@ export default async function HomePage({ params }: Props) {
                   <ArrowRight />
                 </a>
               </Button>
-              <Button asChild size="lg" variant="outline">
+              <Button asChild size="lg" variant="secondary">
                 <Link href="/plans">Explore plans</Link>
               </Button>
             </div>
@@ -212,7 +212,7 @@ export default async function HomePage({ params }: Props) {
         </div>
       </section>
 
-      <section className="sr-section sr-pricing-section">
+      <section className="sr-section sr-pricing-section sr-section-light">
         <div className="sr-container">
           <div className="sr-section-head">
             <div>
@@ -373,7 +373,7 @@ export default async function HomePage({ params }: Props) {
                 <ArrowRight />
               </a>
             </Button>
-            <Button asChild size="lg" variant="outline">
+            <Button asChild size="lg" variant="secondary">
               <a href="https://dash.stealthrdp.com/submitticket.php">
                 Ask a pre-sales question
               </a>
