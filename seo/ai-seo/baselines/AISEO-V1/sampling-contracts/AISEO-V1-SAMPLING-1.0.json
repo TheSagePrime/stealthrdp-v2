@@ -1,0 +1,9 @@
+{
+  "P0": "Target 5 independent samples per surface where practical.",
+  "P1": "Target 3 independent samples per surface.",
+  "P2": "Minimum 1 sample per surface. Expand to 3 when useful.",
+  "interpretation": "Treat mention and citation rates as sampled measurements, not permanent rankings.",
+  "minimum_samples_per_prompt_per_surface": 1,
+  "raw_capture": "Store the complete answer, timestamp, surface, model or mode, and every cited URL for each sample.",
+  "sampling_contract_version": "AISEO-V1-SAMPLING-1.0"
+}

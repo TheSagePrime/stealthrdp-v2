@@ -1,0 +1,1431 @@
+{
+  "core_baseline_version": "1.0",
+  "market": {
+    "label": "US English",
+    "language_code": "en",
+    "location_code": 2840
+  },
+  "new_questions_destination": "discovery_pool",
+  "priority_tiers": {
+    "P0": "Highest commercial/provider-selection.",
+    "P1": "Commercial, comparison, or decision.",
+    "P2": "Explanatory, troubleshooting, or supporting."
+  },
+  "project": "StealthRDP",
+  "prompt_count": 40,
+  "prompts": [
+    {
+      "claim_volatility": null,
+      "commercial_importance": 5,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-WINDOWS",
+        "SERP-WINDOWS",
+        "GSC-GAP",
+        "PRODUCT-WINDOWS",
+        "GAP-COST"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/"
+      ],
+      "gap_hypotheses": [
+        "missing_official_source",
+        "access_and_availability",
+        "windows_license_model",
+        "administrator_access",
+        "rdp_inclusion"
+      ],
+      "id": "CB1-W01",
+      "intent": "DIRECT",
+      "measurement_priority": "P0",
+      "prompt": "Which providers offer Windows VPS plans with full Administrator access in the United States and Europe?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "W01"
+      ],
+      "topic": "WINDOWS_VPS",
+      "topic_label": "Windows VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 5,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-WINDOWS",
+        "SERP-WINDOWS",
+        "GSC-GAP",
+        "PRODUCT-WINDOWS",
+        "GAP-COST"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/"
+      ],
+      "gap_hypotheses": [
+        "price_license_total_cost",
+        "resource_comparison",
+        "checkout_trust",
+        "windows_license_model",
+        "administrator_access",
+        "rdp_inclusion"
+      ],
+      "id": "CB1-W02",
+      "intent": "BUYING",
+      "measurement_priority": "P0",
+      "prompt": "What is a good affordable Windows VPS for remote desktop work?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "W02"
+      ],
+      "topic": "WINDOWS_VPS",
+      "topic_label": "Windows VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": "VOLATILE",
+      "commercial_importance": 5,
+      "current_evidence_required": true,
+      "evidence_refs": [
+        "KW-WINDOWS",
+        "SERP-WINDOWS",
+        "GSC-GAP",
+        "PRODUCT-WINDOWS",
+        "GAP-COST"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/"
+      ],
+      "gap_hypotheses": [
+        "price_license_total_cost",
+        "windows_license_model",
+        "offer_accuracy"
+      ],
+      "id": "CB1-W03",
+      "intent": "BUYING",
+      "measurement_priority": "P0",
+      "prompt": "Which Windows VPS providers include the Windows license in the advertised monthly price?",
+      "prompt_bias": "neutral",
+      "seed_ids": [],
+      "topic": "WINDOWS_VPS",
+      "topic_label": "Windows VPS",
+      "volatile_claims": [
+        "windows_licensing",
+        "windows_pricing"
+      ]
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-WINDOWS",
+        "SERP-WINDOWS",
+        "GSC-GAP",
+        "PRODUCT-WINDOWS",
+        "GAP-COST"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/"
+      ],
+      "gap_hypotheses": [
+        "comparison_criteria",
+        "fresh_verifiable_pricing",
+        "windows_license_model",
+        "administrator_access",
+        "rdp_inclusion"
+      ],
+      "id": "CB1-W04",
+      "intent": "COMPARISON",
+      "measurement_priority": "P1",
+      "prompt": "How should I compare Windows VPS providers on licensing, resources, performance, and support?",
+      "prompt_bias": "neutral",
+      "seed_ids": [],
+      "topic": "WINDOWS_VPS",
+      "topic_label": "Windows VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-WINDOWS",
+        "SERP-WINDOWS",
+        "GSC-GAP",
+        "PRODUCT-WINDOWS",
+        "GAP-COST"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/"
+      ],
+      "gap_hypotheses": [
+        "workload_sizing",
+        "software_compatibility",
+        "windows_license_model",
+        "administrator_access",
+        "rdp_inclusion"
+      ],
+      "id": "CB1-W05",
+      "intent": "USE_CASE",
+      "measurement_priority": "P1",
+      "prompt": "What Windows VPS configuration fits desktop software that must run remotely all day?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "W05"
+      ],
+      "topic": "WINDOWS_VPS",
+      "topic_label": "Windows VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 3,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-WINDOWS",
+        "SERP-WINDOWS",
+        "GSC-GAP",
+        "PRODUCT-WINDOWS",
+        "GAP-COST"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/"
+      ],
+      "gap_hypotheses": [
+        "diagnostic_guidance",
+        "support_boundaries",
+        "windows_license_model",
+        "administrator_access",
+        "rdp_inclusion"
+      ],
+      "id": "CB1-W06",
+      "intent": "TROUBLESHOOTING",
+      "measurement_priority": "P2",
+      "prompt": "Why does a Windows VPS feel slow over RDP, and what should I check first?",
+      "prompt_bias": "neutral",
+      "seed_ids": [],
+      "topic": "WINDOWS_VPS",
+      "topic_label": "Windows VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-WINDOWS",
+        "SERP-WINDOWS",
+        "GSC-GAP",
+        "PRODUCT-WINDOWS",
+        "GAP-COST"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/"
+      ],
+      "gap_hypotheses": [
+        "entity_recognition",
+        "official_citation",
+        "offer_accuracy",
+        "windows_license_model",
+        "administrator_access",
+        "rdp_inclusion"
+      ],
+      "id": "CB1-W07",
+      "intent": "BRAND",
+      "measurement_priority": "P1",
+      "prompt": "What does StealthRDP offer for Windows VPS, and what should I verify before ordering?",
+      "prompt_bias": "brand_anchored",
+      "seed_ids": [
+        "W06"
+      ],
+      "topic": "WINDOWS_VPS",
+      "topic_label": "Windows VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 5,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-LINUX",
+        "SERP-LINUX",
+        "GSC-GAP",
+        "PRODUCT-LINUX",
+        "GAP-ACCESS"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "gap_hypotheses": [
+        "missing_official_source",
+        "access_and_availability",
+        "root_access",
+        "distribution_support",
+        "management_boundary"
+      ],
+      "id": "CB1-L01",
+      "intent": "DIRECT",
+      "measurement_priority": "P0",
+      "prompt": "Which Linux VPS providers offer full root access in the United States and Europe?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "L01"
+      ],
+      "topic": "LINUX_VPS",
+      "topic_label": "Linux VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 5,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-LINUX",
+        "SERP-LINUX",
+        "GSC-GAP",
+        "PRODUCT-LINUX",
+        "GAP-ACCESS"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "gap_hypotheses": [
+        "price_license_total_cost",
+        "resource_comparison",
+        "checkout_trust",
+        "root_access",
+        "distribution_support",
+        "management_boundary"
+      ],
+      "id": "CB1-L02",
+      "intent": "BUYING",
+      "measurement_priority": "P0",
+      "prompt": "What is a good affordable Linux VPS with Ubuntu and NVMe storage?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "L02"
+      ],
+      "topic": "LINUX_VPS",
+      "topic_label": "Linux VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 5,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-LINUX",
+        "SERP-LINUX",
+        "GSC-GAP",
+        "PRODUCT-LINUX",
+        "GAP-ACCESS"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "gap_hypotheses": [
+        "workload_sizing",
+        "software_compatibility",
+        "root_access",
+        "distribution_support",
+        "management_boundary"
+      ],
+      "id": "CB1-L03",
+      "intent": "USE_CASE",
+      "measurement_priority": "P1",
+      "prompt": "Which Linux VPS is suitable for a small web application with Docker?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "L04"
+      ],
+      "topic": "LINUX_VPS",
+      "topic_label": "Linux VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-LINUX",
+        "SERP-LINUX",
+        "GSC-GAP",
+        "PRODUCT-LINUX",
+        "GAP-ACCESS"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "gap_hypotheses": [
+        "comparison_criteria",
+        "fresh_verifiable_pricing",
+        "root_access",
+        "distribution_support",
+        "management_boundary"
+      ],
+      "id": "CB1-L04",
+      "intent": "COMPARISON",
+      "measurement_priority": "P1",
+      "prompt": "How should I compare Linux VPS providers on price, root access, performance, and support?",
+      "prompt_bias": "neutral",
+      "seed_ids": [],
+      "topic": "LINUX_VPS",
+      "topic_label": "Linux VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-LINUX",
+        "SERP-LINUX",
+        "GSC-GAP",
+        "PRODUCT-LINUX",
+        "GAP-ACCESS"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "gap_hypotheses": [
+        "region_latency",
+        "location_evidence",
+        "root_access",
+        "distribution_support",
+        "management_boundary"
+      ],
+      "id": "CB1-L05",
+      "intent": "REGIONAL",
+      "measurement_priority": "P1",
+      "prompt": "Which Linux VPS providers have data centers in the Netherlands?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "L05"
+      ],
+      "topic": "LINUX_VPS",
+      "topic_label": "Linux VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 3,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-LINUX",
+        "SERP-LINUX",
+        "GSC-GAP",
+        "PRODUCT-LINUX",
+        "GAP-ACCESS"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "gap_hypotheses": [
+        "diagnostic_guidance",
+        "support_boundaries",
+        "root_access",
+        "distribution_support",
+        "management_boundary"
+      ],
+      "id": "CB1-L06",
+      "intent": "TROUBLESHOOTING",
+      "measurement_priority": "P2",
+      "prompt": "What should I check when a Linux VPS becomes slow or reaches high CPU usage?",
+      "prompt_bias": "neutral",
+      "seed_ids": [],
+      "topic": "LINUX_VPS",
+      "topic_label": "Linux VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-LINUX",
+        "SERP-LINUX",
+        "GSC-GAP",
+        "PRODUCT-LINUX",
+        "GAP-ACCESS"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "gap_hypotheses": [
+        "tradeoffs",
+        "resource_sizing",
+        "root_access",
+        "distribution_support",
+        "management_boundary"
+      ],
+      "id": "CB1-L07",
+      "intent": "DECISION",
+      "measurement_priority": "P1",
+      "prompt": "Should I choose a Linux VPS or Windows VPS for websites and server applications?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "L06"
+      ],
+      "topic": "LINUX_VPS",
+      "topic_label": "Linux VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 5,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-RDP",
+        "SERP-RDP",
+        "GSC-RDP",
+        "PRODUCT-RDP",
+        "FORUM-RDP",
+        "GAP-RDP"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/"
+      ],
+      "gap_hypotheses": [
+        "missing_official_source",
+        "access_and_availability",
+        "private_vs_shared",
+        "rdp_performance",
+        "windows_license_model"
+      ],
+      "id": "CB1-R01",
+      "intent": "DIRECT",
+      "measurement_priority": "P0",
+      "prompt": "Which providers offer RDP VPS hosting with full Administrator access?",
+      "prompt_bias": "neutral",
+      "seed_ids": [],
+      "topic": "RDP_VPS",
+      "topic_label": "RDP VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 5,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-RDP",
+        "SERP-RDP",
+        "GSC-RDP",
+        "PRODUCT-RDP",
+        "FORUM-RDP",
+        "GAP-RDP"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/"
+      ],
+      "gap_hypotheses": [
+        "price_license_total_cost",
+        "resource_comparison",
+        "checkout_trust",
+        "private_vs_shared",
+        "rdp_performance",
+        "windows_license_model"
+      ],
+      "id": "CB1-R02",
+      "intent": "BUYING",
+      "measurement_priority": "P0",
+      "prompt": "What is a good affordable RDP VPS with full Administrator access?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "R02"
+      ],
+      "topic": "RDP_VPS",
+      "topic_label": "RDP VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-RDP",
+        "SERP-RDP",
+        "GSC-RDP",
+        "PRODUCT-RDP",
+        "FORUM-RDP",
+        "GAP-RDP"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/"
+      ],
+      "gap_hypotheses": [
+        "comparison_criteria",
+        "fresh_verifiable_pricing",
+        "private_vs_shared",
+        "rdp_performance",
+        "windows_license_model"
+      ],
+      "id": "CB1-R03",
+      "intent": "COMPARISON",
+      "measurement_priority": "P1",
+      "prompt": "How should I compare RDP VPS providers for access, licensing, performance, and support?",
+      "prompt_bias": "neutral",
+      "seed_ids": [],
+      "topic": "RDP_VPS",
+      "topic_label": "RDP VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-RDP",
+        "SERP-RDP",
+        "GSC-RDP",
+        "PRODUCT-RDP",
+        "FORUM-RDP",
+        "GAP-RDP"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/"
+      ],
+      "gap_hypotheses": [
+        "provider_set",
+        "fit_by_workload",
+        "private_vs_shared",
+        "rdp_performance",
+        "windows_license_model"
+      ],
+      "id": "CB1-R04",
+      "intent": "ALTERNATIVE",
+      "measurement_priority": "P1",
+      "prompt": "What are good alternatives to a shared RDP service when I need a private Windows environment?",
+      "prompt_bias": "neutral",
+      "seed_ids": [],
+      "topic": "RDP_VPS",
+      "topic_label": "RDP VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-RDP",
+        "SERP-RDP",
+        "GSC-RDP",
+        "PRODUCT-RDP",
+        "FORUM-RDP",
+        "GAP-RDP"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/"
+      ],
+      "gap_hypotheses": [
+        "workload_sizing",
+        "software_compatibility",
+        "private_vs_shared",
+        "rdp_performance",
+        "windows_license_model"
+      ],
+      "id": "CB1-R05",
+      "intent": "USE_CASE",
+      "measurement_priority": "P1",
+      "prompt": "Which RDP VPS is suitable for keeping Windows applications running 24/7?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "R05"
+      ],
+      "topic": "RDP_VPS",
+      "topic_label": "RDP VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 3,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-RDP",
+        "SERP-RDP",
+        "GSC-RDP",
+        "PRODUCT-RDP",
+        "FORUM-RDP",
+        "GAP-RDP"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/"
+      ],
+      "gap_hypotheses": [
+        "diagnostic_guidance",
+        "support_boundaries",
+        "private_vs_shared",
+        "rdp_performance",
+        "windows_license_model"
+      ],
+      "id": "CB1-R06",
+      "intent": "TROUBLESHOOTING",
+      "measurement_priority": "P2",
+      "prompt": "How can I diagnose slow or unstable performance on a Windows RDP VPS?",
+      "prompt_bias": "neutral",
+      "seed_ids": [],
+      "topic": "RDP_VPS",
+      "topic_label": "RDP VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 5,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-RDP",
+        "SERP-RDP",
+        "GSC-RDP",
+        "PRODUCT-RDP",
+        "FORUM-RDP",
+        "GAP-RDP"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/"
+      ],
+      "gap_hypotheses": [
+        "tradeoffs",
+        "resource_sizing",
+        "private_vs_shared",
+        "rdp_performance",
+        "windows_license_model"
+      ],
+      "id": "CB1-R07",
+      "intent": "DECISION",
+      "measurement_priority": "P1",
+      "prompt": "What should I check before buying an RDP VPS to avoid poor remote desktop performance?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "R06"
+      ],
+      "topic": "RDP_VPS",
+      "topic_label": "RDP VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 5,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-USA",
+        "SERP-USA",
+        "GSC-GAP",
+        "PRODUCT-USA",
+        "FORUM-USA",
+        "GAP-REGION"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "gap_hypotheses": [
+        "missing_official_source",
+        "access_and_availability",
+        "usa_location",
+        "cross_region_latency",
+        "network_evidence"
+      ],
+      "id": "CB1-US01",
+      "intent": "DIRECT",
+      "measurement_priority": "P0",
+      "prompt": "Which VPS providers offer both Windows and Linux servers in the United States?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "US01"
+      ],
+      "topic": "USA_VPS",
+      "topic_label": "USA VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 5,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-USA",
+        "SERP-USA",
+        "GSC-GAP",
+        "PRODUCT-USA",
+        "FORUM-USA",
+        "GAP-REGION"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "gap_hypotheses": [
+        "price_license_total_cost",
+        "resource_comparison",
+        "checkout_trust",
+        "usa_location",
+        "cross_region_latency",
+        "network_evidence"
+      ],
+      "id": "CB1-US02",
+      "intent": "BUYING",
+      "measurement_priority": "P0",
+      "prompt": "What is a good affordable USA VPS with NVMe storage and fast networking?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "US02"
+      ],
+      "topic": "USA_VPS",
+      "topic_label": "USA VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-USA",
+        "SERP-USA",
+        "GSC-GAP",
+        "PRODUCT-USA",
+        "FORUM-USA",
+        "GAP-REGION"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "gap_hypotheses": [
+        "region_latency",
+        "location_evidence",
+        "usa_location",
+        "cross_region_latency",
+        "network_evidence"
+      ],
+      "id": "CB1-US03",
+      "intent": "REGIONAL",
+      "measurement_priority": "P1",
+      "prompt": "Which VPS location should I choose in the United States for low-latency remote desktop access?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "US03"
+      ],
+      "topic": "USA_VPS",
+      "topic_label": "USA VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-USA",
+        "SERP-USA",
+        "GSC-GAP",
+        "PRODUCT-USA",
+        "FORUM-USA",
+        "GAP-REGION"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "gap_hypotheses": [
+        "comparison_criteria",
+        "fresh_verifiable_pricing",
+        "usa_location",
+        "cross_region_latency",
+        "network_evidence"
+      ],
+      "id": "CB1-US04",
+      "intent": "COMPARISON",
+      "measurement_priority": "P1",
+      "prompt": "How do USA VPS providers compare on price, latency, storage, and administration?",
+      "prompt_bias": "neutral",
+      "seed_ids": [],
+      "topic": "USA_VPS",
+      "topic_label": "USA VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-USA",
+        "SERP-USA",
+        "GSC-GAP",
+        "PRODUCT-USA",
+        "FORUM-USA",
+        "GAP-REGION"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "gap_hypotheses": [
+        "workload_sizing",
+        "software_compatibility",
+        "usa_location",
+        "cross_region_latency",
+        "network_evidence"
+      ],
+      "id": "CB1-US05",
+      "intent": "USE_CASE",
+      "measurement_priority": "P1",
+      "prompt": "What USA VPS should I use for an always-on remote workstation?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "US05"
+      ],
+      "topic": "USA_VPS",
+      "topic_label": "USA VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-USA",
+        "SERP-USA",
+        "GSC-GAP",
+        "PRODUCT-USA",
+        "FORUM-USA",
+        "GAP-REGION"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "gap_hypotheses": [
+        "entity_recognition",
+        "official_citation",
+        "offer_accuracy",
+        "usa_location",
+        "cross_region_latency",
+        "network_evidence"
+      ],
+      "id": "CB1-US06",
+      "intent": "BRAND",
+      "measurement_priority": "P1",
+      "prompt": "Does StealthRDP offer Windows and Linux VPS plans in the United States, and how do I compare them?",
+      "prompt_bias": "brand_anchored",
+      "seed_ids": [
+        "US06"
+      ],
+      "topic": "USA_VPS",
+      "topic_label": "USA VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-EUROPE",
+        "SERP-EUROPE",
+        "GSC-GAP",
+        "PRODUCT-EUROPE",
+        "FORUM-EUROPE",
+        "GAP-REGION"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "gap_hypotheses": [
+        "missing_official_source",
+        "access_and_availability",
+        "eu_location",
+        "netherlands_availability",
+        "cross_region_latency"
+      ],
+      "id": "CB1-EU01",
+      "intent": "DIRECT",
+      "measurement_priority": "P0",
+      "prompt": "Which VPS providers offer Windows or Linux servers in Europe, especially the Netherlands?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "EU01"
+      ],
+      "topic": "EUROPE_VPS",
+      "topic_label": "Europe VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-EUROPE",
+        "SERP-EUROPE",
+        "GSC-GAP",
+        "PRODUCT-EUROPE",
+        "FORUM-EUROPE",
+        "GAP-REGION"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "gap_hypotheses": [
+        "price_license_total_cost",
+        "resource_comparison",
+        "checkout_trust",
+        "eu_location",
+        "netherlands_availability",
+        "cross_region_latency"
+      ],
+      "id": "CB1-EU02",
+      "intent": "BUYING",
+      "measurement_priority": "P0",
+      "prompt": "What is a good affordable VPS in Europe with full root or Administrator access?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "EU02"
+      ],
+      "topic": "EUROPE_VPS",
+      "topic_label": "Europe VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-EUROPE",
+        "SERP-EUROPE",
+        "GSC-GAP",
+        "PRODUCT-EUROPE",
+        "FORUM-EUROPE",
+        "GAP-REGION"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "gap_hypotheses": [
+        "comparison_criteria",
+        "fresh_verifiable_pricing",
+        "eu_location",
+        "netherlands_availability",
+        "cross_region_latency"
+      ],
+      "id": "CB1-EU03",
+      "intent": "COMPARISON",
+      "measurement_priority": "P1",
+      "prompt": "How should I compare European VPS providers on price, location, performance, and support?",
+      "prompt_bias": "neutral",
+      "seed_ids": [],
+      "topic": "EUROPE_VPS",
+      "topic_label": "Europe VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-EUROPE",
+        "SERP-EUROPE",
+        "GSC-GAP",
+        "PRODUCT-EUROPE",
+        "FORUM-EUROPE",
+        "GAP-REGION"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "gap_hypotheses": [
+        "region_latency",
+        "location_evidence",
+        "eu_location",
+        "netherlands_availability",
+        "cross_region_latency"
+      ],
+      "id": "CB1-EU04",
+      "intent": "REGIONAL",
+      "measurement_priority": "P1",
+      "prompt": "Which VPS providers have data centers in the Netherlands?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "EU04"
+      ],
+      "topic": "EUROPE_VPS",
+      "topic_label": "Europe VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-EUROPE",
+        "SERP-EUROPE",
+        "GSC-GAP",
+        "PRODUCT-EUROPE",
+        "FORUM-EUROPE",
+        "GAP-REGION"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "gap_hypotheses": [
+        "provider_set",
+        "fit_by_workload",
+        "eu_location",
+        "netherlands_availability",
+        "cross_region_latency"
+      ],
+      "id": "CB1-EU05",
+      "intent": "ALTERNATIVE",
+      "measurement_priority": "P1",
+      "prompt": "Which European VPS providers offer full root or Administrator access with flexible server resources?",
+      "prompt_bias": "neutral",
+      "seed_ids": [],
+      "topic": "EUROPE_VPS",
+      "topic_label": "Europe VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-EUROPE",
+        "SERP-EUROPE",
+        "GSC-GAP",
+        "PRODUCT-EUROPE",
+        "FORUM-EUROPE",
+        "GAP-REGION"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "gap_hypotheses": [
+        "entity_recognition",
+        "official_citation",
+        "offer_accuracy",
+        "eu_location",
+        "netherlands_availability",
+        "cross_region_latency"
+      ],
+      "id": "CB1-EU06",
+      "intent": "BRAND",
+      "measurement_priority": "P1",
+      "prompt": "Does StealthRDP offer European VPS hosting, and what locations and resources should I verify?",
+      "prompt_bias": "brand_anchored",
+      "seed_ids": [
+        "EU06"
+      ],
+      "topic": "EUROPE_VPS",
+      "topic_label": "Europe VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 3,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-MINECRAFT",
+        "PRODUCT-MINECRAFT",
+        "FORUM-MINECRAFT",
+        "GAP-MINECRAFT"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/",
+        "https://www.stealthrdp.com/vps-hosting-minecraft/"
+      ],
+      "gap_hypotheses": [
+        "definition",
+        "responsibility_boundaries",
+        "java_bedrock",
+        "player_sizing",
+        "single_thread_performance",
+        "backups_ports"
+      ],
+      "id": "CB1-MC01",
+      "intent": "EXPLANATORY",
+      "measurement_priority": "P2",
+      "prompt": "Can a general-purpose VPS host a small Minecraft server reliably?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "MC01"
+      ],
+      "topic": "MINECRAFT_VPS",
+      "topic_label": "Minecraft VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-MINECRAFT",
+        "PRODUCT-MINECRAFT",
+        "FORUM-MINECRAFT",
+        "GAP-MINECRAFT"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/",
+        "https://www.stealthrdp.com/vps-hosting-minecraft/"
+      ],
+      "gap_hypotheses": [
+        "price_license_total_cost",
+        "resource_comparison",
+        "checkout_trust",
+        "java_bedrock",
+        "player_sizing",
+        "single_thread_performance",
+        "backups_ports"
+      ],
+      "id": "CB1-MC02",
+      "intent": "BUYING",
+      "measurement_priority": "P0",
+      "prompt": "What should I look for when choosing a VPS for Minecraft hosting?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "MC02"
+      ],
+      "topic": "MINECRAFT_VPS",
+      "topic_label": "Minecraft VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-MINECRAFT",
+        "PRODUCT-MINECRAFT",
+        "FORUM-MINECRAFT",
+        "GAP-MINECRAFT"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/",
+        "https://www.stealthrdp.com/vps-hosting-minecraft/"
+      ],
+      "gap_hypotheses": [
+        "comparison_criteria",
+        "fresh_verifiable_pricing",
+        "java_bedrock",
+        "player_sizing",
+        "single_thread_performance",
+        "backups_ports"
+      ],
+      "id": "CB1-MC03",
+      "intent": "COMPARISON",
+      "measurement_priority": "P1",
+      "prompt": "Should I choose a general-purpose VPS or managed Minecraft hosting for a small server?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "MC03"
+      ],
+      "topic": "MINECRAFT_VPS",
+      "topic_label": "Minecraft VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-MINECRAFT",
+        "PRODUCT-MINECRAFT",
+        "FORUM-MINECRAFT",
+        "GAP-MINECRAFT"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/",
+        "https://www.stealthrdp.com/vps-hosting-minecraft/"
+      ],
+      "gap_hypotheses": [
+        "workload_sizing",
+        "software_compatibility",
+        "java_bedrock",
+        "player_sizing",
+        "single_thread_performance",
+        "backups_ports"
+      ],
+      "id": "CB1-MC04",
+      "intent": "USE_CASE",
+      "measurement_priority": "P1",
+      "prompt": "How much CPU and RAM does a small Minecraft Java server need on a VPS?",
+      "prompt_bias": "neutral",
+      "seed_ids": [
+        "MC04"
+      ],
+      "topic": "MINECRAFT_VPS",
+      "topic_label": "Minecraft VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-MINECRAFT",
+        "PRODUCT-MINECRAFT",
+        "FORUM-MINECRAFT",
+        "GAP-MINECRAFT"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/",
+        "https://www.stealthrdp.com/vps-hosting-minecraft/"
+      ],
+      "gap_hypotheses": [
+        "missing_official_source",
+        "access_and_availability",
+        "java_bedrock",
+        "player_sizing",
+        "single_thread_performance",
+        "backups_ports"
+      ],
+      "id": "CB1-MC05",
+      "intent": "DIRECT",
+      "measurement_priority": "P0",
+      "prompt": "Which VPS providers are suitable for hosting a small Minecraft server?",
+      "prompt_bias": "neutral",
+      "seed_ids": [],
+      "topic": "MINECRAFT_VPS",
+      "topic_label": "Minecraft VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 3,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-MINECRAFT",
+        "PRODUCT-MINECRAFT",
+        "FORUM-MINECRAFT",
+        "GAP-MINECRAFT"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/",
+        "https://www.stealthrdp.com/vps-hosting-minecraft/"
+      ],
+      "gap_hypotheses": [
+        "diagnostic_guidance",
+        "support_boundaries",
+        "java_bedrock",
+        "player_sizing",
+        "single_thread_performance",
+        "backups_ports"
+      ],
+      "id": "CB1-MC06",
+      "intent": "TROUBLESHOOTING",
+      "measurement_priority": "P2",
+      "prompt": "Why can a Minecraft server lag on a VPS, and what should I check first?",
+      "prompt_bias": "neutral",
+      "seed_ids": [],
+      "topic": "MINECRAFT_VPS",
+      "topic_label": "Minecraft VPS",
+      "volatile_claims": []
+    },
+    {
+      "claim_volatility": null,
+      "commercial_importance": 4,
+      "current_evidence_required": false,
+      "evidence_refs": [
+        "KW-MINECRAFT",
+        "PRODUCT-MINECRAFT",
+        "FORUM-MINECRAFT",
+        "GAP-MINECRAFT"
+      ],
+      "expected_official_urls": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/",
+        "https://www.stealthrdp.com/vps-hosting-minecraft/"
+      ],
+      "gap_hypotheses": [
+        "entity_recognition",
+        "official_citation",
+        "offer_accuracy",
+        "java_bedrock",
+        "player_sizing",
+        "single_thread_performance",
+        "backups_ports"
+      ],
+      "id": "CB1-MC07",
+      "intent": "BRAND",
+      "measurement_priority": "P1",
+      "prompt": "Can StealthRDP host a Minecraft server, and what should I verify before ordering?",
+      "prompt_bias": "brand_anchored",
+      "seed_ids": [
+        "MC06"
+      ],
+      "topic": "MINECRAFT_VPS",
+      "topic_label": "Minecraft VPS",
+      "volatile_claims": []
+    }
+  ],
+  "registry_id": "AISEO-V1-CORE",
+  "sampling_policy": {
+    "P0": "Target 5 independent samples per surface where useful.",
+    "P1": "Target 3 independent samples per surface.",
+    "P2": "3 independent samples per surface minimum.",
+    "baseline_wave": "Run every core prompt on every target surface with the same wording, locale, web-search setting, and capture rules.",
+    "interpretation": "Treat mention and citation rates as sampled measurements, not permanent rankings.",
+    "minimum": "3 independent samples per prompt per surface.",
+    "raw_capture": "Store the complete answer, timestamp, surface, model or mode, and every cited URL for each sample."
+  },
+  "target_surfaces": [
+    "google_ai_overviews_ai_mode",
+    "chatgpt_search",
+    "bing_copilot",
+    "perplexity"
+  ],
+  "wording_change_requires": "1.1, 1.2, or v2 as appropriate",
+  "wording_frozen": true
+}

@@ -1,0 +1,527 @@
+{
+  "registry_id": "AISEO-V1-CORE-COMPANION",
+  "baseline_registry_id": "AISEO-V1-CORE",
+  "baseline_version": "1.0",
+  "frozen_core_sha256": "a1c922f9cf09cdbedafcc59ce4d9b9055959e672254293a490a0159104d85b3e",
+  "status": "COMPANION_METADATA",
+  "keyed_by": "prompt_id",
+  "prompt_count": 40,
+  "metadata_by_prompt_id": {
+    "CB1-W01": {
+      "classification": "DIRECT",
+      "journey_stage": "SHORTLIST",
+      "audience_persona": "windows_vps_buyer",
+      "buyer_constraint": "full_administrator_access; united_states_and_europe_availability",
+      "business_question": "Which providers can satisfy Windows access needs in both target regions?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/"
+      ],
+      "core_prompt_sha256": "a3738c5aa07b2df68d5670c94b7ecfc243631cd7d161a6835fc6ddbf249a6599"
+    },
+    "CB1-W02": {
+      "classification": "BUYING",
+      "journey_stage": "PURCHASE_READY",
+      "audience_persona": "remote_desktop_worker",
+      "buyer_constraint": "affordable_price; remote_desktop_workload",
+      "business_question": "Which affordable Windows plan can support remote desktop work?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/"
+      ],
+      "core_prompt_sha256": "a82a959f8a1aba18d32a032ccef0a52b5b384055e11c9456ed5ccfdd83e5bbce"
+    },
+    "CB1-W03": {
+      "classification": "BUYING",
+      "journey_stage": "PURCHASE_READY",
+      "audience_persona": "windows_vps_buyer",
+      "buyer_constraint": "windows_license_included; transparent_monthly_price",
+      "business_question": "Which providers present a transparent all-in Windows VPS cost?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/"
+      ],
+      "core_prompt_sha256": "e28b72667cbe7cb2cebd6efc79c4a845903be5664c5b026c8ad942d8b5533c4d"
+    },
+    "CB1-W04": {
+      "classification": "COMPARISON",
+      "journey_stage": "EVALUATION",
+      "audience_persona": "technical_vps_evaluator",
+      "buyer_constraint": "licensing; resources; performance; support_comparison",
+      "business_question": "Which criteria reduce risk when comparing Windows VPS providers?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/"
+      ],
+      "core_prompt_sha256": "a4b4e704f375d0684f05ab2ad0f97a36462a5b7c2410d9ba70b734565d5241c9"
+    },
+    "CB1-W05": {
+      "classification": "USE_CASE",
+      "journey_stage": "REQUIREMENTS",
+      "audience_persona": "windows_application_operator",
+      "buyer_constraint": "all_day_application_runtime; adequate_resources",
+      "business_question": "Which resources fit an always-on Windows application workload?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/"
+      ],
+      "core_prompt_sha256": "ea329c1dad0fdf82642d8f0cdf899e92836ed2c4fb14eb4fbd12b07cd5280de1"
+    },
+    "CB1-W06": {
+      "classification": "TROUBLESHOOTING",
+      "journey_stage": "PROBLEM_AWARE",
+      "audience_persona": "windows_remote_user",
+      "buyer_constraint": "slow_rdp_performance; diagnostic_path",
+      "business_question": "What causes slow RDP performance and what should the buyer check?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/"
+      ],
+      "core_prompt_sha256": "a4ef1d3b28bcf054670f70b58bafeaf1b3085c5e96a5aff4f41e302ec7866504"
+    },
+    "CB1-W07": {
+      "classification": "BRAND",
+      "journey_stage": "TRUST_VALIDATION",
+      "audience_persona": "brand_researcher",
+      "buyer_constraint": "official_offer_accuracy; pre_purchase_verification",
+      "business_question": "Can StealthRDP be considered for a Windows VPS purchase?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/"
+      ],
+      "core_prompt_sha256": "a35ab7f4e4b7ac5664a5ed7eb347ae055cdc40311f530a43d885ece81f094a2c"
+    },
+    "CB1-L01": {
+      "classification": "DIRECT",
+      "journey_stage": "SHORTLIST",
+      "audience_persona": "linux_vps_buyer",
+      "buyer_constraint": "full_root_access; united_states_and_europe_availability",
+      "business_question": "Which providers can satisfy Linux root-access needs in both target regions?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "core_prompt_sha256": "c21c9b6635a31290692957ffdbe163e162ee236a5afc566c9253d36fff97c021"
+    },
+    "CB1-L02": {
+      "classification": "BUYING",
+      "journey_stage": "PURCHASE_READY",
+      "audience_persona": "linux_vps_buyer",
+      "buyer_constraint": "affordable_price; ubuntu; nvme_storage",
+      "business_question": "Which affordable Ubuntu plan fits an NVMe Linux workload?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "core_prompt_sha256": "f5cf86d1b989ff70928318ebbc5bd02812166c9342f0207cd755f719a4f920c2"
+    },
+    "CB1-L03": {
+      "classification": "USE_CASE",
+      "journey_stage": "REQUIREMENTS",
+      "audience_persona": "web_app_builder",
+      "buyer_constraint": "small_web_application; docker; resource_fit",
+      "business_question": "Which Linux VPS resources fit a small Docker web application?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "core_prompt_sha256": "9fff4dc92851e7c6d7ecc6589754914a814c88e11585bc2b66244062702bba55"
+    },
+    "CB1-L04": {
+      "classification": "COMPARISON",
+      "journey_stage": "EVALUATION",
+      "audience_persona": "technical_vps_evaluator",
+      "buyer_constraint": "price; root_access; performance; support_comparison",
+      "business_question": "Which criteria reduce risk when comparing Linux VPS providers?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "core_prompt_sha256": "3ace1e26fbed063b02d9c7c512e0c2093c2898755570bc37dec44c4520246f83"
+    },
+    "CB1-L05": {
+      "classification": "REGIONAL",
+      "journey_stage": "SHORTLIST",
+      "audience_persona": "european_linux_buyer",
+      "buyer_constraint": "netherlands_location; linux_vps",
+      "business_question": "Which Linux providers can serve a Netherlands-based requirement?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "core_prompt_sha256": "ac92b9e843350a9328af8a70c46ecded1e176f396b75ab81e88d95a841f18c05"
+    },
+    "CB1-L06": {
+      "classification": "TROUBLESHOOTING",
+      "journey_stage": "PROBLEM_AWARE",
+      "audience_persona": "linux_operator",
+      "buyer_constraint": "high_cpu; slow_linux_vps",
+      "business_question": "What causes high CPU or slow performance on a Linux VPS?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "core_prompt_sha256": "b0d162daa5b3e9102e969f52b13d44481e78a6f09e46b52c0ec30b89342782c0"
+    },
+    "CB1-L07": {
+      "classification": "DECISION",
+      "journey_stage": "EVALUATION",
+      "audience_persona": "os_decision_maker",
+      "buyer_constraint": "operating_system_fit; websites; server_applications",
+      "business_question": "Which operating system fits websites and server applications?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "core_prompt_sha256": "85160cdd78c3235d6c2cc2f212a58862cc58d6b8c9ce3397235de1459969d6f7"
+    },
+    "CB1-R01": {
+      "classification": "DIRECT",
+      "journey_stage": "SHORTLIST",
+      "audience_persona": "remote_desktop_buyer",
+      "buyer_constraint": "rdp_vps_access; full_administrator_access",
+      "business_question": "Which providers offer the required private RDP VPS access?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/"
+      ],
+      "core_prompt_sha256": "872040516562c52422b115b31efad33351d370102e8c108833541fa583a21f48"
+    },
+    "CB1-R02": {
+      "classification": "BUYING",
+      "journey_stage": "PURCHASE_READY",
+      "audience_persona": "rdp_vps_buyer",
+      "buyer_constraint": "affordable_price; full_administrator_access",
+      "business_question": "Which affordable RDP VPS provides full Administrator access?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/"
+      ],
+      "core_prompt_sha256": "284a1f5ea071b95aa5b7c3f9b1041230ca0d638ab9278c46e1503caff8ba80f3"
+    },
+    "CB1-R03": {
+      "classification": "COMPARISON",
+      "journey_stage": "EVALUATION",
+      "audience_persona": "technical_vps_evaluator",
+      "buyer_constraint": "access; licensing; performance; support_comparison",
+      "business_question": "Which RDP provider differences matter before purchase?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/"
+      ],
+      "core_prompt_sha256": "f7d96fcd8c0ddca0a0a8fc0328944abf593b889bada6771584a0561371990c86"
+    },
+    "CB1-R04": {
+      "classification": "ALTERNATIVE",
+      "journey_stage": "EVALUATION",
+      "audience_persona": "private_remote_access_buyer",
+      "buyer_constraint": "private_windows_environment; avoid_shared_rdp",
+      "business_question": "What private alternative avoids the limits of shared RDP?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/"
+      ],
+      "core_prompt_sha256": "4f55796ddd0e9088c36ac6d53e62d7e5bcdaffc2db7b81e189e75d0a4e77c935"
+    },
+    "CB1-R05": {
+      "classification": "USE_CASE",
+      "journey_stage": "REQUIREMENTS",
+      "audience_persona": "windows_application_operator",
+      "buyer_constraint": "24_7_windows_applications; session_continuity",
+      "business_question": "Which RDP VPS can support Windows applications throughout the day?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/"
+      ],
+      "core_prompt_sha256": "6e6094c322badc4325b26301d42e7a853c496e2c66e5704a75c488feee33b0f4"
+    },
+    "CB1-R06": {
+      "classification": "TROUBLESHOOTING",
+      "journey_stage": "PROBLEM_AWARE",
+      "audience_persona": "rdp_performance_debugger",
+      "buyer_constraint": "slow_or_unstable_rdp; diagnostic_path",
+      "business_question": "What causes slow or unstable RDP VPS performance?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/"
+      ],
+      "core_prompt_sha256": "32561816a9c182c875b63d9f4621c1ffa502537284b7dd75375646942d8d258a"
+    },
+    "CB1-R07": {
+      "classification": "DECISION",
+      "journey_stage": "EVALUATION",
+      "audience_persona": "risk_aware_vps_buyer",
+      "buyer_constraint": "pre_purchase_remote_desktop_performance_risk",
+      "business_question": "Which checks reduce remote desktop performance risk before purchase?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/"
+      ],
+      "core_prompt_sha256": "c352a68af11f59de38c9b3032bec387122439b63223c51a7dde442b6461ab6ee"
+    },
+    "CB1-US01": {
+      "classification": "DIRECT",
+      "journey_stage": "SHORTLIST",
+      "audience_persona": "us_vps_buyer",
+      "buyer_constraint": "windows_and_linux; united_states_location",
+      "business_question": "Which providers offer both operating systems in the United States?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "core_prompt_sha256": "157e3509811fae829135603abf233808415ea3d8c167617f08884af8a3f60cda"
+    },
+    "CB1-US02": {
+      "classification": "BUYING",
+      "journey_stage": "PURCHASE_READY",
+      "audience_persona": "us_vps_buyer",
+      "buyer_constraint": "affordable_price; nvme_storage; fast_networking",
+      "business_question": "Which affordable USA VPS meets storage and network needs?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "core_prompt_sha256": "8cc24c7160610564168a83cdf9ad528c826c885616199aecf1c09d83e2b60800"
+    },
+    "CB1-US03": {
+      "classification": "REGIONAL",
+      "journey_stage": "SHORTLIST",
+      "audience_persona": "remote_desktop_buyer",
+      "buyer_constraint": "low_latency; remote_desktop; united_states_location",
+      "business_question": "Which United States location can reduce remote desktop latency?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "core_prompt_sha256": "a62e8f26bfdc3a6f16a5bd5b63f8cd7955b962928447898f04aee28dbdd91991"
+    },
+    "CB1-US04": {
+      "classification": "COMPARISON",
+      "journey_stage": "EVALUATION",
+      "audience_persona": "regional_vps_evaluator",
+      "buyer_constraint": "price; latency; storage; administration",
+      "business_question": "Which USA provider trade-offs matter for this workload?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "core_prompt_sha256": "37de0fcdb3d5b8732d3382a512f8699568abdfb9748210c09fbd802a03dc2a4c"
+    },
+    "CB1-US05": {
+      "classification": "USE_CASE",
+      "journey_stage": "REQUIREMENTS",
+      "audience_persona": "remote_workstation_user",
+      "buyer_constraint": "always_on_remote_workstation",
+      "business_question": "Which USA VPS fits an always-on remote workstation?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "core_prompt_sha256": "993a25addf1adfbb84fb8f09eef83cd745e23b3eea89d216bf45be04f19d6425"
+    },
+    "CB1-US06": {
+      "classification": "BRAND",
+      "journey_stage": "TRUST_VALIDATION",
+      "audience_persona": "stealthrdp_prospect",
+      "buyer_constraint": "stealthrdp_united_states_offer; plan_comparison",
+      "business_question": "Does StealthRDP fit a United States Windows or Linux VPS requirement?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "core_prompt_sha256": "e14429e57128bbc32b60e32e00008d56e5dd65495605af5af7e4e99e6dce8415"
+    },
+    "CB1-EU01": {
+      "classification": "DIRECT",
+      "journey_stage": "SHORTLIST",
+      "audience_persona": "european_vps_buyer",
+      "buyer_constraint": "windows_or_linux; european_location; netherlands",
+      "business_question": "Which providers offer the required operating systems in Europe?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "core_prompt_sha256": "921ab741a2fa2d5d620d728c2f0bd36440a6b2a1cb6a5e4b67c6be062869ea52"
+    },
+    "CB1-EU02": {
+      "classification": "BUYING",
+      "journey_stage": "PURCHASE_READY",
+      "audience_persona": "european_vps_buyer",
+      "buyer_constraint": "affordable_price; root_or_administrator_access; europe",
+      "business_question": "Which European VPS combines affordable pricing with full access?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "core_prompt_sha256": "5272fa82419bd8dcb839ad32eb6244cab0f44ceffb8553895319613c3a884853"
+    },
+    "CB1-EU03": {
+      "classification": "COMPARISON",
+      "journey_stage": "EVALUATION",
+      "audience_persona": "european_vps_evaluator",
+      "buyer_constraint": "price; location; performance; support_comparison",
+      "business_question": "Which European provider trade-offs matter before purchase?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "core_prompt_sha256": "604bca36ccedc8884296acefbecf2275a51e8958e6fdbf0236485def7b181386"
+    },
+    "CB1-EU04": {
+      "classification": "REGIONAL",
+      "journey_stage": "SHORTLIST",
+      "audience_persona": "netherlands_vps_buyer",
+      "buyer_constraint": "netherlands_location",
+      "business_question": "Which providers can meet a Netherlands location requirement?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "core_prompt_sha256": "4d91e884201178f368be8dde48291f6f297bac2edb6e040483deab6d5f6d50c9"
+    },
+    "CB1-EU05": {
+      "classification": "REGIONAL_PROVIDER_SELECTION",
+      "journey_stage": "EVALUATION",
+      "audience_persona": "european_vps_buyer",
+      "buyer_constraint": "full_root_or_administrator_access; flexible_server_resources; europe",
+      "business_question": "Which European providers fit full access and flexible resource needs?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "core_prompt_sha256": "bc2e77591c5f39f7dafdd48d55c2ab9531f2a1ae5011593c2a623c94e5c08d65"
+    },
+    "CB1-EU06": {
+      "classification": "BRAND",
+      "journey_stage": "TRUST_VALIDATION",
+      "audience_persona": "stealthrdp_prospect",
+      "buyer_constraint": "stealthrdp_europe_offer; locations; resources",
+      "business_question": "Does StealthRDP fit a European VPS requirement?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/"
+      ],
+      "core_prompt_sha256": "bce714023898f097059abed0179659829817e521e795cd5388b2e042a216c873"
+    },
+    "CB1-MC01": {
+      "classification": "EXPLANATORY",
+      "journey_stage": "EDUCATION",
+      "audience_persona": "minecraft_server_owner",
+      "buyer_constraint": "general_purpose_vps; small_minecraft_reliability",
+      "business_question": "When is a general-purpose VPS suitable for a small Minecraft server?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/",
+        "https://www.stealthrdp.com/vps-hosting-minecraft/"
+      ],
+      "core_prompt_sha256": "2bb6d50a7aed1b238b74e8fded29993f29d1e120962c24cbefd357c940c03223"
+    },
+    "CB1-MC02": {
+      "classification": "BUYING",
+      "journey_stage": "PURCHASE_READY",
+      "audience_persona": "minecraft_hosting_buyer",
+      "buyer_constraint": "minecraft_hosting_selection_criteria",
+      "business_question": "Which provider and plan criteria matter for Minecraft hosting?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/",
+        "https://www.stealthrdp.com/vps-hosting-minecraft/"
+      ],
+      "core_prompt_sha256": "378a50935b83ef8195c93e3082a1d75e59056a46fd2f562ccb186f42a39d36cf"
+    },
+    "CB1-MC03": {
+      "classification": "COMPARISON",
+      "journey_stage": "EVALUATION",
+      "audience_persona": "minecraft_server_owner",
+      "buyer_constraint": "managed_boundary; small_minecraft_server",
+      "business_question": "Which hosting model fits a small Minecraft server owner?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/",
+        "https://www.stealthrdp.com/vps-hosting-minecraft/"
+      ],
+      "core_prompt_sha256": "a7c71e9a72be7f363088a71daa63864973708408ca8e268b49e7dd30fd82b6d5"
+    },
+    "CB1-MC04": {
+      "classification": "USE_CASE",
+      "journey_stage": "REQUIREMENTS",
+      "audience_persona": "minecraft_server_admin",
+      "buyer_constraint": "java_server_cpu_and_ram_sizing",
+      "business_question": "What starting resources fit a small Java Minecraft server?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/",
+        "https://www.stealthrdp.com/vps-hosting-minecraft/"
+      ],
+      "core_prompt_sha256": "1d9e8cb19c5f374bfd9eb77fa7dd1e444c88edd1ae92a8366044434ecf98bd0d"
+    },
+    "CB1-MC05": {
+      "classification": "DIRECT",
+      "journey_stage": "SHORTLIST",
+      "audience_persona": "minecraft_provider_buyer",
+      "buyer_constraint": "provider_suitability; small_minecraft_server",
+      "business_question": "Which providers are suitable for a small Minecraft server?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/",
+        "https://www.stealthrdp.com/vps-hosting-minecraft/"
+      ],
+      "core_prompt_sha256": "1b7538641d88d437bb6075383690f9f2541c547fe28159219085d43a1daf28a5"
+    },
+    "CB1-MC06": {
+      "classification": "TROUBLESHOOTING",
+      "journey_stage": "PROBLEM_AWARE",
+      "audience_persona": "minecraft_troubleshooter",
+      "buyer_constraint": "minecraft_lag; resource_diagnosis",
+      "business_question": "What causes Minecraft lag on a VPS and what should the owner check?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/",
+        "https://www.stealthrdp.com/vps-hosting-minecraft/"
+      ],
+      "core_prompt_sha256": "3be7cc1732a961d79b34847313261fb833ad2985c4a80649cf792cb00090e74f"
+    },
+    "CB1-MC07": {
+      "classification": "BRAND",
+      "journey_stage": "TRUST_VALIDATION",
+      "audience_persona": "stealthrdp_prospect",
+      "buyer_constraint": "stealthrdp_minecraft_fit; order_verification",
+      "business_question": "Can StealthRDP fit this Minecraft hosting requirement?",
+      "preferred_first_party_targets": [
+        "https://www.stealthrdp.com/plans",
+        "https://www.stealthrdp.com/windows-vps/",
+        "https://www.stealthrdp.com/linux-vps/",
+        "https://www.stealthrdp.com/vps-hosting-minecraft/"
+      ],
+      "core_prompt_sha256": "65006ab0e43408104bae6bb0db4a3b1b1957107e9c0c443fc041dbc258697410"
+    }
+  },
+  "classification_notes": {
+    "CB1-EU05": "REGIONAL_PROVIDER_SELECTION in companion metadata. The frozen Core intent remains ALTERNATIVE. This prompt tests European access and resource fit, not a named-competitor alternative."
+  }
+}
