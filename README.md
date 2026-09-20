@@ -1,69 +1,41 @@
-# Sage Prime Starter
+# Sage Prime Web Starter
 
-The canonical Sage Prime foundation for new product repositories.
+The canonical Sage Prime foundation for **public traffic websites**.
 
-This repository provides reusable application infrastructure without imposing product-specific copy, pricing, data, or visual direction.
+Use this repository for content-heavy sites, free tools, calculators, generators, checkers, guides, and other public properties whose primary job is to earn attention and organic traffic. A site may monetize later, promote Sage Prime SaaS products, use affiliates/ads/leads, or remain non-commercial.
+
+## What this starter is
+
+- Public-facing by default
+- SEO and content infrastructure first
+- Built to host useful free tools
+- Database-capable without requiring accounts
+- Strongly tested and deployable on Coolify
+- Neutral about monetization
+
+## What this starter is not
+
+The default foundation intentionally has **no authentication provider, no organizations/tenants, no SaaS dashboard, and no billing provider**. Those are product assumptions, not requirements for a traffic website.
+
+If a child site genuinely needs a protected subsystem later, add it as an explicit architecture change rather than carrying SaaS baggage into every project.
 
 ## Canonical stack
 
-The machine-readable architecture source of truth is `stack.contract.json`.
+The machine-readable source of truth is `stack.contract.json`.
 
-- Next.js App Router, React, and strict TypeScript
-- Tailwind CSS 4 with shadcn/ui and Radix primitives
-- Lucide icons
-- Clerk authentication
-- Neon PostgreSQL + Drizzle ORM through the locked `pg` runtime boundary
+- Next.js App Router, React, strict TypeScript
+- Tailwind CSS 4, shadcn/ui, Radix, Lucide
+- Neon PostgreSQL + Drizzle ORM
 - PGlite for local development
-- Polar billing
 - pnpm
 - Coolify-compatible deployment
 - next-intl
-- Vitest, Playwright, and Storybook
+- Vitest, Playwright, Storybook
+- Optional Sentry and Better Stack observability
 
-Do not substitute canonical providers or frameworks without an explicit architecture change.
+## SEO
 
-## Contracts
-
-The starter is self-enforcing:
-
-- `stack.contract.json` — architecture and provider choices
-- `design.contract.json` — frontend/design-system rules
-- `security.contract.json` — authentication, privacy, CI, billing, DB, telemetry, and supply-chain rules
-- `ARCHITECTURE.md` — architecture boundaries
-- `DESIGN_SYSTEM.md` — frontend behavior and visual rules
-- `SECURITY.md` — security/privacy operating model
-
-Run `pnpm check:architecture` to validate all machine-readable contracts.
-
-## Security and privacy
-
-Security is enforced at application resources, not by SEO route classification.
-
-- API Route Handlers are private by default unless explicitly allowlisted.
-- Sensitive routes authenticate with Clerk inside the resource.
-- Billing identity is derived server-side from the active Clerk user/organization.
-- Polar products come from a server-side allowlist.
-- Sentry PII/log forwarding and Session Replay default off.
-- Better Stack credentials are server-only.
-- CSP, HSTS, frame denial, referrer policy, permissions policy, and nosniff headers are configured.
-- Production DB connections require TLS and use bounded pool/query timeouts.
-- GitHub Actions use read-only CI permissions and immutable action SHAs.
-- Releases run only from a successful CI run at the exact tested SHA.
-- Production dependencies are audited in PR CI.
-
-Read `SECURITY.md` before adding APIs, persisted tenant data, telemetry, billing, or third-party integrations.
-
-## Frontend contract
-
-The canonical frontend is Next.js + TypeScript + Tailwind + shadcn/ui + Radix + Lucide.
-
-Design tokens live in `src/styles/global.css`; shadcn configuration lives in `components.json`. Material UI work must pass Storybook accessibility/component tests and browser screenshot regression.
-
-Read `DESIGN_SYSTEM.md` before material UI changes.
-
-## SEO contract
-
-The technical SEO engine is a protected subsystem. Product work must preserve:
+SEO is a protected subsystem:
 
 ```text
 SEO pre-build validation
@@ -71,7 +43,17 @@ SEO pre-build validation
 → SEO post-build audit
 ```
 
-Do not remove, bypass, or reorder those gates as collateral work.
+The starter includes metadata/canonical helpers, robots, sitemap, RSS/article infrastructure, internal-link validation, structured-data helpers, project identity, research-artifact contracts, and deterministic SEO checks.
+
+## Database
+
+Neon/Drizzle/PGlite stay in the web starter because public sites and free tools may need persistence for content metadata, tool data, forms, leads, attribution, redirects, or other project-specific uses.
+
+The database is a **capability**, not a tenant/user model. The default schema contains no owner/tenant identity.
+
+## Security and privacy
+
+Public does not mean unprotected. The starter preserves CSP and security headers, server-only boundaries, safe logging defaults, production DB TLS requirements, bounded DB pools, dependency auditing, immutable GitHub Actions, secret scanning checks, health/readiness endpoints, and public-output privacy boundaries.
 
 ## Local setup
 
@@ -86,19 +68,9 @@ cp .env.example .env
 pnpm dev
 ```
 
-## Required environment
+Production `DATABASE_URL` should use Neon PostgreSQL with TLS. Local development uses PGlite.
 
-```text
-CLERK_SECRET_KEY
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-DATABASE_URL
-```
-
-Production `DATABASE_URL` must use Neon PostgreSQL and enforce TLS. Local development uses PGlite.
-
-Keep runtime secrets outside Git and configure them through Coolify/runtime secret storage.
-
-## Checks
+## Verification
 
 ```bash
 pnpm check:architecture
@@ -114,32 +86,4 @@ pnpm test:visual
 pnpm build
 ```
 
-`pnpm build` includes both SEO gates and remains the production build command.
-
-## Database
-
-Production: **Neon PostgreSQL**  
-ORM: **Drizzle**  
-Runtime driver: **node-postgres (`pg`)**  
-Local: **PGlite**
-
-```bash
-pnpm db:generate
-pnpm db:migrate
-```
-
-Production migrations require a reviewed release/deployment step. Tenant-owned child-product data must use the canonical tenant/data boundary and include cross-tenant isolation tests.
-
-## Product usage
-
-Create a new product from this repository, replace the foundation homepage with the product-approved surface, and keep authentication, data, billing, security, SEO, frontend, health, and deployment boundaries intact.
-
-Read `ARCHITECTURE.md`, `DESIGN_SYSTEM.md`, `SECURITY.md`, `AGENTS.md`, and `skills/saas-builder/SKILL.md` before autonomous implementation.
-
-Do not add fictional metrics, product claims, or live credentials.
-
-## Ownership
-
-Sage Prime owns the original code and product configuration in this repository. See `LICENSE`, `OWNERSHIP.md`, and `THIRD_PARTY_NOTICES.md`.
-
-Third-party dependencies retain their own licenses and notices.
+Read `ARCHITECTURE.md`, `DESIGN_SYSTEM.md`, `SECURITY.md`, `AGENTS.md`, and `skills/web-builder/SKILL.md` before autonomous implementation.

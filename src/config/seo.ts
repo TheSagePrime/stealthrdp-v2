@@ -8,32 +8,24 @@ export type SeoConfig = {
   siteUrl: string;
   projectName?: string;
   description?: string;
-
-  environment: {
-    deployEnv: DeployEnv;
-  };
-
+  environment: { deployEnv: DeployEnv };
   url: {
     trailingSlash: 'strip' | 'append';
     trackingParams: string[];
     legacyRedirects?: readonly LegacyRedirect[];
     legacyInternalLinkPolicy?: 'warn' | 'fail';
   };
-
   articles: ArticleRegistryConfig;
-
   brand?: {
     companyName?: string;
     logoUrl?: string;
     socialProfiles?: string[];
   };
-
   softwareApp?: {
     category?: string;
     operatingSystem?: string;
     priceRange?: string;
   };
-
   routes: {
     publicMarketing: string[];
     publicUtility: string[];
@@ -51,14 +43,13 @@ export function resolveSeoSite(config: Pick<SeoConfig, 'siteUrl' | 'environment'
 }
 
 /**
- * Starter defaults list only routes that exist in this repository.
- * Child projects replace this object with their real routes and identity.
+ * Public-web defaults list only routes that exist in this repository.
+ * Child sites add real content pages, free tools, and any deliberately
+ * protected routes without changing the SEO engine itself.
  */
 export const defaultSeoConfig: SeoConfig = {
   siteUrl: '',
-  environment: {
-    deployEnv: 'development',
-  },
+  environment: { deployEnv: 'development' },
   url: {
     trailingSlash: 'strip',
     trackingParams: ['utm_*', 'fbclid', 'gclid'],
@@ -71,10 +62,9 @@ export const defaultSeoConfig: SeoConfig = {
   },
   routes: {
     publicMarketing: ['/'],
-    publicUtility: ['/sign-in', '/sign-up'],
-    privatePages: ['/dashboard', '/onboarding'],
-    // Classification for robots/noindex/auditing only. Authorization lives in each Route Handler.
-    privateApis: ['/api/polar/checkout', '/api/polar/portal'],
+    publicUtility: [],
+    privatePages: [],
+    privateApis: [],
     dynamicPublic: [],
   },
 };

@@ -38,10 +38,7 @@ try {
   expectFailure('scripts/check-design-contract.mjs', 'raw control and AI-slop decoration');
 
   fs.rmSync(badSurfacePath, { force: true });
-  fs.writeFileSync(
-    duplicatePrimitivePath,
-    "export { Button } from './ui/button';\n",
-  );
+  fs.writeFileSync(duplicatePrimitivePath, "export { Button } from './ui/button';\n");
   expectFailure('scripts/check-design-contract.mjs', 'duplicate canonical primitive');
 
   fs.rmSync(duplicatePrimitivePath, { force: true });
@@ -51,11 +48,11 @@ try {
   expectFailure('scripts/check-seo-contract.mjs', 'SEO pipeline bypass');
 
   fs.writeFileSync(packagePath, packageOriginal);
-  fs.writeFileSync(seoRunnerPath, seoRunnerOriginal.replace(
-    'failures.every(isSyntheticClerkFailure)',
-    'failures.some(isSyntheticClerkFailure)',
-  ));
-  expectFailure('scripts/check-seo-contract.mjs', 'partial SEO failure suppression');
+  fs.writeFileSync(
+    seoRunnerPath,
+    seoRunnerOriginal.replace('scripts/seo-post-build-v2.mjs', 'scripts/seo-post-build.mjs'),
+  );
+  expectFailure('scripts/check-seo-contract.mjs', 'SEO audited runner changed');
 } finally {
   fs.writeFileSync(packagePath, packageOriginal);
   fs.writeFileSync(uiProbePath, uiOriginal);

@@ -7,25 +7,24 @@ Describe what changed and why.
 - [ ] No canonical stack changes
 - [ ] No protected architecture files changed
 - [ ] If protected architecture files changed, owner review is complete and the `architecture-approved` label may be applied
-- [ ] No new framework, ORM, auth, database, UI, icon, billing, or deployment substitute was introduced
+- [ ] No mandatory auth, tenant, dashboard, or billing subsystem was introduced
+- [ ] Neon/Drizzle/PGlite remain generic data capabilities rather than identity/tenant assumptions
 
 ## Frontend
 
-- [ ] Existing product/shadcn/Radix primitives were reused before creating new UI primitives
+- [ ] Existing shadcn/Radix primitives were reused before creating new primitives
 - [ ] Theme tokens are used instead of arbitrary component colors
 - [ ] Mobile and desktop behavior were reviewed where relevant
 - [ ] Accessibility/keyboard/focus behavior was preserved
-- [ ] Material UI changes include visual evidence where relevant
 - [ ] Storybook accessibility/component tests pass
-- [ ] Visual baseline images were not changed unless the rendered diff was reviewed and the visual change was intentional
+- [ ] Visual baseline changes were reviewed and intentional
 
 ## Security / Privacy
 
-- [ ] New API routes authenticate at the resource unless explicitly public
-- [ ] Tenant/user/customer identifiers are derived server-side where possible
-- [ ] No secrets or personal data were added to client-visible env, logs, or telemetry
-- [ ] Billing routes keep product allowlists, server-derived identity, and rate limits
+- [ ] Public APIs/tools have deliberate validation and abuse controls where needed
+- [ ] No secrets or private records were exposed to public surfaces
 - [ ] Security headers/CSP were preserved
+- [ ] No obsolete SaaS provider origins were added to CSP
 - [ ] No GitHub Action was changed back to a mutable tag
 - [ ] `pnpm check:security` and `pnpm test:security` pass
 
@@ -33,15 +32,14 @@ Describe what changed and why.
 
 - [ ] SEO infrastructure was not changed as collateral work
 - [ ] The pre-build -> Next build -> post-build audit sequence remains intact
-- [ ] Robots, sitemap, canonical/metadata, article registry, and protected SEO styles remain intact
-- [ ] Any intentional SEO architecture change is explicitly described below
+- [ ] Robots, sitemap, canonical/metadata, article/RSS, research contracts, and protected SEO styles remain intact
 
 ## Data / Platform
 
 - [ ] Neon remains the production PostgreSQL provider
 - [ ] Drizzle remains the ORM
 - [ ] PGlite remains local-only
-- [ ] Clerk/Polar boundaries are preserved
+- [ ] No tenant/user ownership model was added by default
 - [ ] No secret was added to source control
 
 ## Verification
@@ -57,7 +55,3 @@ Describe what changed and why.
 - [ ] `pnpm storybook:test`
 - [ ] `pnpm test:visual`
 - [ ] `pnpm build`
-
-## Architecture / SEO changes requiring owner approval
-
-None.

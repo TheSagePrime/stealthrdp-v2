@@ -8,21 +8,12 @@ importers:
 
   .:
     dependencies:
-      '@clerk/localizations':
-        specifier: ^4.8.1
-        version: 4.15.8(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@clerk/nextjs':
         specifier: ^7.5.2
         version: 7.8.3(next@16.3.3(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@playwright/test@1.62.1)(@types/node@25.9.5)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
-      '@clerk/shared':
-        specifier: ^4.30.2
-        version: 4.30.2(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@logtape/logtape':
         specifier: ^2.1.5
         version: 2.3.2
-      '@polar-sh/nextjs':
-        specifier: ^0.9.6
-        version: 0.9.6(next@16.3.3(@babel/core@7.29.7)(@opentelemetry/api@1.9.1)(@playwright/test@1.62.1)(@types/node@25.9.5)(babel-plugin-react-compiler@1.0.0)(react-dom@19.2.8(react@19.2.8))(react@19.2.8))
       '@polar-sh/sdk':
         specifier: ^0.49.0
         version: 0.49.0

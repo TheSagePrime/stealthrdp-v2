@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
-  "name": "Sage Prime canonical stack",
+  "name": "Sage Prime public web stack",
+  "purpose": "public-content-tools-traffic",
   "packageManager": {
     "name": "pnpm",
     "version": "10.34.5"
@@ -17,9 +18,6 @@
     "primitives": "radix-ui",
     "icons": "lucide-react"
   },
-  "authentication": {
-    "provider": "clerk"
-  },
   "database": {
     "engine": "postgresql",
     "productionProvider": "neon",
@@ -27,30 +25,27 @@
     "runtimeDriver": "pg",
     "localProvider": "pglite"
   },
-  "billing": {
-    "provider": "polar"
-  },
   "deployment": {
     "provider": "coolify"
   },
   "requiredDependencies": [
-    "@clerk/nextjs",
-    "@polar-sh/nextjs",
-    "@polar-sh/sdk",
+    "@logtape/logtape",
     "class-variance-authority",
     "clsx",
     "drizzle-orm",
     "lucide-react",
     "next",
+    "next-intl",
     "pg",
     "react",
     "react-dom",
+    "server-only",
     "tailwind-merge",
-    "zod",
-    "server-only"
+    "zod"
   ],
   "requiredDevDependencies": [
     "@electric-sql/pglite",
+    "@electric-sql/pglite-socket",
     "@tailwindcss/postcss",
     "drizzle-kit",
     "tailwindcss",
@@ -58,13 +53,18 @@
   ],
   "forbiddenDependencies": [
     "@auth0/nextjs-auth0",
+    "@clerk/localizations",
+    "@clerk/nextjs",
+    "@clerk/shared",
+    "@clerk/ui",
     "@fortawesome/fontawesome-svg-core",
     "@fortawesome/free-solid-svg-icons",
     "@fortawesome/react-fontawesome",
-    "@clerk/ui",
     "@heroicons/react",
     "@mui/material",
     "@neondatabase/serverless",
+    "@polar-sh/nextjs",
+    "@polar-sh/sdk",
     "@prisma/client",
     "@supabase/supabase-js",
     "antd",
@@ -77,12 +77,23 @@
     "sequelize",
     "typeorm"
   ],
+  "forbiddenPaths": [
+    "skills/saas-builder",
+    "src/app/[locale]/(auth)",
+    "src/app/api/polar",
+    "src/features/billing",
+    "src/features/dashboard",
+    "src/features/data",
+    "src/features/security/principal.ts",
+    "src/features/security/routing.ts",
+    "src/types/Auth.ts"
+  ],
   "requiredFiles": [
     "components.json",
     "drizzle.config.ts",
     "src/styles/global.css",
     "src/utils/DBConnection.ts",
-    "skills/saas-builder/SKILL.md",
+    "skills/web-builder/SKILL.md",
     "security.contract.json",
     "scripts/check-security-contract.mjs",
     "SECURITY.md"

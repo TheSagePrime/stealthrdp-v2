@@ -1,48 +1,57 @@
-# Sage Prime Architecture
+# Sage Prime Web Architecture
 
-This repository is the canonical foundation for Sage Prime products. The architecture is enforced by `stack.contract.json`, `design.contract.json`, `security.contract.json`, local hooks, and CI.
+This repository is the canonical foundation for Sage Prime public web properties.
+
+## Purpose
+
+The default project is a public, crawlable website designed to accumulate useful content, free tools, links, brand demand, and organic traffic. Monetization is optional and may happen directly or by promoting separate SaaS products.
 
 ## Canonical stack
 
-- Framework: Next.js App Router
-- UI runtime: React
-- Language: strict TypeScript
-- Styling: Tailwind CSS
-- Component system: shadcn/ui
-- Behavior primitives: Radix UI
-- Icons: Lucide
-- Authentication: Clerk
-- Production database: Neon PostgreSQL
-- ORM: Drizzle ORM
-- Runtime PostgreSQL driver: pg
-- Local database: PGlite
-- Billing: Polar
-- Deployment: Coolify
-- Package manager: pnpm
+- Next.js App Router
+- React
+- strict TypeScript
+- Tailwind CSS
+- shadcn/ui + Radix
+- Lucide
+- Neon PostgreSQL
+- Drizzle ORM
+- pg runtime driver
+- PGlite local development
+- Coolify
+- pnpm
 
-Neon is the production PostgreSQL provider. The runtime uses the standard `pg` driver through Drizzle so the application remains compatible with Coolify and standard Node.js execution. PGlite is local-only.
+## Deliberately absent SaaS assumptions
 
-## Architectural boundaries
+The default web foundation does not include:
 
-Application code must use the existing database, authentication, billing, UI, and runtime boundaries before introducing alternatives. Provider SDK calls must remain behind the existing product-owned integration layers. Client components must not access secrets.
+- authentication providers
+- sign-in/sign-up flows
+- organizations or tenants
+- SaaS dashboards
+- subscription billing
+- checkout/customer portals
+- billing webhooks
 
-Architecture changes are explicit migrations, not incidental implementation details. A change to an ORM, auth provider, database provider, UI system, icon library, billing provider, package manager, or deployment model requires updating the contract deliberately and reviewing the migration impact.
+Those capabilities require a deliberate architecture change if a specific child site truly needs them.
+
+## Database boundary
+
+Neon/Drizzle/PGlite are retained as generic infrastructure. Persistence can support content, free tools, forms, attribution, redirects, or other site-specific data. The base database model does not encode user or tenant ownership.
+
+Direct database access remains behind server-owned boundaries so public pages and SEO code do not accidentally serialize private backend records.
 
 ## SEO is a protected subsystem
 
-The SEO engine, route classification, metadata helpers, robots, sitemap, article registry, canonical handling, pre-build validation, and post-build audit are part of the starter architecture.
+The SEO engine, route classification, metadata helpers, robots, sitemap, article/RSS infrastructure, canonical handling, research contracts, pre-build validation, and post-build audit are protected.
 
-The production build order must remain:
+The production build order remains:
 
 ```text
 SEO pre-build validation
 → Next.js application build
 → SEO post-build audit
 ```
-
-Frontend or architecture cleanup must not remove or normalize away SEO-specific styles, routes, metadata behavior, or audit scripts.
-
-SEO/public-frontend code may consume approved read-only evidence, but it must never mutate backend systems or serialize raw sensitive backend records into public output. This rule is provider-agnostic and applies to every future child project.
 
 ## Enforcement
 
@@ -54,12 +63,4 @@ pnpm check
 pnpm build
 ```
 
-`check:architecture` rejects known stack drift, design-system drift, protected SEO changes, and security/privacy regressions. CI repeats these checks for pull requests.
-
-
-## Protected-change approval
-
-Pull requests that change protected architecture files or SEO engine boundaries must
-carry the `architecture-approved` label after owner review. CI fails protected changes
-without that explicit approval signal. This approval does not bypass stack, design,
-SEO, type, test, or build checks; all technical gates still have to pass.
+Architecture changes are explicit migrations, not incidental implementation details.

@@ -1,51 +1,6 @@
 {
   "schemaVersion": 1,
-  "name": "Sage Prime security and privacy contract",
-  "authentication": {
-    "provider": "clerk",
-    "routeLevelAuthRequiredForApiByDefault": true,
-    "publicApiAllowlist": [
-      "src/app/api/health/route.ts",
-      "src/app/api/ready/route.ts",
-      "src/app/api/polar/webhook/route.ts"
-    ],
-    "protectedPageFiles": [
-      "src/app/[locale]/(auth)/dashboard/page.tsx",
-      "src/app/[locale]/(auth)/dashboard/organization-profile/[[...organization-profile]]/page.tsx",
-      "src/app/[locale]/(auth)/dashboard/user-profile/[[...user-profile]]/page.tsx",
-      "src/app/[locale]/(auth)/onboarding/organization-selection/page.tsx"
-    ],
-    "protectedLayoutFiles": [
-      "src/app/[locale]/(auth)/dashboard/layout.tsx",
-      "src/app/[locale]/(auth)/onboarding/layout.tsx"
-    ],
-    "clerkContextPagePrefixes": [
-      "/sign-in",
-      "/sign-up",
-      "/dashboard",
-      "/onboarding"
-    ]
-  },
-  "billing": {
-    "provider": "polar",
-    "customerIdentitySource": "server-derived-clerk-principal",
-    "productAllowlistEnv": "POLAR_PRODUCT_IDS",
-    "sensitiveRoutes": [
-      "src/app/api/polar/checkout/route.ts",
-      "src/app/api/polar/portal/route.ts"
-    ],
-    "forbiddenClientSelectors": [
-      "customerId",
-      "externalCustomerId",
-      "external_customer_id"
-    ],
-    "webhookReplayGuard": "src/features/billing/webhook-replay.ts",
-    "maxWebhookBytes": 1048576,
-    "sensitiveRouteMethod": "POST",
-    "sameOriginRequired": true,
-    "sensitiveResponsesNoStore": true,
-    "organizationBillingRole": "org:admin"
-  },
+  "name": "Sage Prime public web security and privacy contract",
   "privacy": {
     "sentryDefaultPii": false,
     "sentryReplayDefault": false,
@@ -79,6 +34,12 @@
     "productionRequiredHeaders": [
       "Strict-Transport-Security"
     ],
+    "forbiddenCspFragments": [
+      "clerk.com",
+      "clerk.accounts.dev",
+      "polar.sh",
+      "stripe.com"
+    ],
     "readinessCacheMs": 5000,
     "noStoreHealthEndpoints": true,
     "coalesceReadinessProbes": true
@@ -96,16 +57,17 @@
     "requireDependencyAuditInCi": true,
     "pinGithubActionsToCommitSha": true,
     "forbiddenDependencies": [
-      "@clerk/ui"
+      "@clerk/localizations",
+      "@clerk/nextjs",
+      "@clerk/shared",
+      "@polar-sh/nextjs",
+      "@polar-sh/sdk"
     ]
   },
   "database": {
     "directDbImportAllowedPrefixes": [
-      "src/features/data/",
-      "src/features/billing/webhook-idempotency.ts",
       "src/features/runtime/"
     ],
-    "tenantKey": "ownerId",
     "productionTlsRequired": true,
     "pool": {
       "max": 10,
@@ -121,13 +83,8 @@
     "src/libs/Logger.ts",
     "src/utils/DBConnection.ts",
     "src/libs/DB.ts",
-    "src/features/security/principal.ts",
-    "src/features/billing/polar-api.ts",
     "src/features/security/origin.ts",
     "src/features/security/rate-limit.ts",
-    "src/features/billing/webhook-replay.ts",
-    "src/features/billing/polar.ts",
-    "src/features/data/tenant.ts",
     "src/features/security/response.ts"
   ],
   "release": {
@@ -146,36 +103,20 @@
     "forbiddenBackendImports": [
       "@/libs/DB",
       "@/utils/DBConnection",
-      "@/features/data/",
-      "@/features/billing/",
-      "@/features/security/principal",
       "@/models/Schema"
     ],
     "forbiddenSensitiveIdentifiers": [
-      "userEmail",
-      "customerEmail",
-      "billingEmail",
-      "customerId",
-      "externalCustomerId",
-      "paymentMethodId",
-      "paymentIntent",
-      "cardNumber",
-      "billingAddress",
+      "password",
       "accessToken",
       "refreshToken",
-      "sessionToken"
+      "sessionToken",
+      "paymentMethodId",
+      "cardNumber",
+      "billingAddress"
     ],
     "rawSensitiveDataMayReachPublicFrontend": false,
     "backendMutationFromSeo": false,
     "requireAggregateOrDeidentifiedAnalyticsForPublishableSeoArtifacts": true,
-    "publicRouteConvention": "All public App Router page/layout files outside the (auth) route group are treated as public surfaces.",
-    "forbiddenBackendImportFragments": [
-      "/billing/",
-      "/data/",
-      "/server/",
-      "DBConnection",
-      "/models/Schema",
-      "/security/principal"
-    ]
+    "publicRouteConvention": "All public App Router page/layout files are public surfaces unless a child project deliberately introduces a protected subsystem."
   }
 }

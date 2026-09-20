@@ -5,68 +5,39 @@ function expectFailure(label, mutate, restore) {
   mutate();
   const result = spawnSync(process.execPath, ['scripts/check-security-contract.mjs'], { encoding: 'utf8' });
   restore();
-
   if (result.status === 0) {
     console.error(`[security-self-test] expected rejection was not detected: ${label}`);
     process.exitCode = 1;
     return;
   }
-
   console.log(`[security-self-test] rejected as expected: ${label}`);
 }
 
-const portalPath = 'src/app/api/polar/portal/route.ts';
+const packagePath = 'package.json';
 const marketingPath = 'src/app/[locale]/(marketing)/page.tsx';
 const sentryPath = 'src/instrumentation-client.ts';
-const securityRoutingPath = 'src/features/security/routing.ts';
 const proxyPath = 'src/proxy.ts';
-const apiProbePath = 'src/app/api/__security-probe/route.ts';
-const portalOriginal = fs.readFileSync(portalPath, 'utf8');
+const dbPath = 'src/utils/DBConnection.ts';
+const packageOriginal = fs.readFileSync(packagePath, 'utf8');
 const marketingOriginal = fs.readFileSync(marketingPath, 'utf8');
 const sentryOriginal = fs.readFileSync(sentryPath, 'utf8');
-const securityRoutingOriginal = fs.readFileSync(securityRoutingPath, 'utf8');
 const proxyOriginal = fs.readFileSync(proxyPath, 'utf8');
+const dbOriginal = fs.readFileSync(dbPath, 'utf8');
 
 try {
   expectFailure(
-    'client-controlled Polar customer ID',
-    () => fs.writeFileSync(portalPath, portalOriginal + "\n// searchParams.get('customerId')\n"),
-    () => fs.writeFileSync(portalPath, portalOriginal),
-  );
-
-  expectFailure(
-    'billing session exposed as GET',
-    () => fs.writeFileSync(portalPath, portalOriginal.replace('export async function POST', 'export async function GET')),
-    () => fs.writeFileSync(portalPath, portalOriginal),
-  );
-
-  expectFailure(
-    'billing session without same-origin guard',
-    () => fs.writeFileSync(portalPath, portalOriginal.replace('isSameOriginMutation(request)', 'true')),
-    () => fs.writeFileSync(portalPath, portalOriginal),
-  );
-
-  expectFailure(
-    'organization billing without role authorization',
-    () => fs.writeFileSync(portalPath, portalOriginal.replace('principal.canManageBilling', 'true')),
-    () => fs.writeFileSync(portalPath, portalOriginal),
-  );
-
-  expectFailure(
-    'sensitive billing redirect without no-store helper',
-    () => fs.writeFileSync(portalPath, portalOriginal.replace('sensitiveRedirect(portalUrl)', 'Response.redirect(portalUrl, 303)')),
-    () => fs.writeFileSync(portalPath, portalOriginal),
+    'SaaS auth dependency reintroduced',
+    () => {
+      const pkg = JSON.parse(packageOriginal);
+      pkg.dependencies = { ...pkg.dependencies, '@clerk/nextjs': '0.0.0-security-probe' };
+      fs.writeFileSync(packagePath, JSON.stringify(pkg, null, 2) + '\n');
+    },
+    () => fs.writeFileSync(packagePath, packageOriginal),
   );
 
   expectFailure(
     'backend DB import from public marketing surface',
     () => fs.writeFileSync(marketingPath, marketingOriginal + "\nimport { db } from '@/libs/DB';\n"),
-    () => fs.writeFileSync(marketingPath, marketingOriginal),
-  );
-
-  expectFailure(
-    'sensitive customer identifier on public marketing surface',
-    () => fs.writeFileSync(marketingPath, marketingOriginal + "\nconst customerEmail = 'probe@example.test';\n"),
     () => fs.writeFileSync(marketingPath, marketingOriginal),
   );
 
@@ -77,33 +48,22 @@ try {
   );
 
   expectFailure(
-    'public API omitted from the explicit security routing boundary',
-    () => fs.writeFileSync(securityRoutingPath, securityRoutingOriginal.replace("'/api/health', ", '')),
-    () => fs.writeFileSync(securityRoutingPath, securityRoutingOriginal),
-  );
-
-  expectFailure(
-    'synthetic CI auth response enabled outside reserved .invalid origins',
-    () => fs.writeFileSync(proxyPath, proxyOriginal.replace(
-      "return site.hostname.endsWith('.invalid');",
-      'return true;',
-    )),
+    'synthetic SEO audit enabled on real origins',
+    () => fs.writeFileSync(proxyPath, proxyOriginal.replace("return site.hostname.endsWith('.invalid');", 'return true;')),
     () => fs.writeFileSync(proxyPath, proxyOriginal),
   );
 
-  fs.mkdirSync('src/app/api/__security-probe', { recursive: true });
   expectFailure(
-    'API route without resource-level authentication',
-    () => fs.writeFileSync(apiProbePath, "export function GET() { return Response.json({ ok: true }); }\n"),
-    () => fs.rmSync('src/app/api/__security-probe', { recursive: true, force: true }),
+    'production DB TLS requirement weakened',
+    () => fs.writeFileSync(dbPath, dbOriginal.replace('sslmode=require or stronger', 'TLS optional')),
+    () => fs.writeFileSync(dbPath, dbOriginal),
   );
 } finally {
-  fs.writeFileSync(portalPath, portalOriginal);
+  fs.writeFileSync(packagePath, packageOriginal);
   fs.writeFileSync(marketingPath, marketingOriginal);
   fs.writeFileSync(sentryPath, sentryOriginal);
-  fs.writeFileSync(securityRoutingPath, securityRoutingOriginal);
   fs.writeFileSync(proxyPath, proxyOriginal);
-  fs.rmSync('src/app/api/__security-probe', { recursive: true, force: true });
+  fs.writeFileSync(dbPath, dbOriginal);
 }
 
 if (!process.exitCode) console.log('[security-self-test] all rejection probes passed');

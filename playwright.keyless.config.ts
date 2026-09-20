@@ -9,20 +9,18 @@ export default defineConfig({
   timeout: 30 * 1000,
   forbidOnly: !!process.env.CI,
   reporter: process.env.CI ? 'github' : 'list',
-  expect: {
-    timeout: 15 * 1000,
-  },
+  expect: { timeout: 15 * 1000 },
   webServer: {
     command: process.env.CI
-      ? 'pglite-server -m 100 --run \'run-s db:migrate start\''
-      : 'pglite-server -m 100 --run \'run-s db:migrate dev:next\'',
+      ? "pglite-server -m 100 --run 'run-s db:migrate start'"
+      : "pglite-server -m 100 --run 'run-s db:migrate dev:next'",
     url: baseURL,
     timeout: 60 * 1000,
     reuseExistingServer: !process.env.CI,
     gracefulShutdown: { signal: 'SIGTERM', timeout: 2 * 1000 },
     env: {
       BROWSER_TO_TERMINAL_ENABLED: 'false',
-      NEXT_PUBLIC_SENTRY_DISABLED: 'true',
+      NEXT_PUBLIC_SENTRY_ENABLED: 'false',
       NEXT_PUBLIC_APP_URL: baseURL,
       PORT,
     },
@@ -33,13 +31,7 @@ export default defineConfig({
     screenshot: 'only-on-failure',
   },
   projects: [
-    {
-      name: 'desktop-chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
-    {
-      name: 'mobile-chromium',
-      use: { ...devices['Pixel 7'] },
-    },
+    { name: 'desktop-chromium', use: { ...devices['Desktop Chrome'] } },
+    { name: 'mobile-chromium', use: { ...devices['Pixel 7'] } },
   ],
 });

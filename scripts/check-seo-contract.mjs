@@ -17,13 +17,15 @@ for (const file of contract.seo.requiredFiles) {
 for (const className of design.protectedSeoStyles) {
   if (!css.includes(`.${className}`)) errors.push(`protected SEO article style missing: .${className}`);
 }
-for (const marker of [
-  "process.env.SEO_AUDIT_LOCAL !== 'true'",
-  "hostname.endsWith('.invalid')",
-  'failures.every(isSyntheticClerkFailure)',
-]) {
+
+for (const marker of ['scripts/seo-post-build-v2.mjs', "stdio: 'inherit'", 'process.exit(exitCode)']) {
   if (!postBuildRunner.includes(marker)) {
-    errors.push(`SEO synthetic Clerk exception lost fail-closed guard: ${marker}`);
+    errors.push(`SEO post-build runner lost required fail-closed marker: ${marker}`);
+  }
+}
+for (const forbidden of ['Clerk', 'rewriteSynthetic', 'failures.every', 'failures.some']) {
+  if (postBuildRunner.includes(forbidden)) {
+    errors.push(`SEO post-build runner contains obsolete provider exception: ${forbidden}`);
   }
 }
 

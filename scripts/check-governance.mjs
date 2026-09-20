@@ -27,18 +27,20 @@ const protectedExact = new Set([
   'scripts/check-security-contract.mjs',
   'scripts/test-security-guards.mjs',
   'src/components/ui/VisualContract.visual.test.tsx',
-  'skills/saas-builder/SKILL.md',
+  'skills/web-builder/SKILL.md',
   'src/styles/global.css',
   'src/utils/DBConnection.ts'
 ]);
+
 const protectedPrefixes = [
   '.storybook/',
+  'migrations/',
   'src/components/ui/__screenshots__/',
   'src/libs/seo/',
   'scripts/seo-',
-  'src/features/billing/',
   'src/features/security/',
-  'src/features/data/',
+  'src/features/runtime/',
+  'src/models/',
   'src/app/robots.',
   'src/app/sitemap.'
 ];
