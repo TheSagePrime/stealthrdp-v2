@@ -8,7 +8,6 @@ import {
   HardDrive,
   Headphones,
   Server,
-  ShieldCheck,
   Zap,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
