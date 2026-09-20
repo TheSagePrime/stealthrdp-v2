@@ -14,7 +14,19 @@ export default function BlogPage() {
   const config = getSeoConfig();
   return (
     <>
-      <section className="sr-page-hero"><div className="sr-container"><p className="sr-kicker">StealthRDP blog</p><h1 className="sr-title">Operate servers with <span>fewer surprises.</span></h1><p className="sr-lede">Guides and practical infrastructure articles migrated from the current StealthRDP publishing surface.</p></div></section>
+      <section className="sr-page-hero">
+        <div className="sr-container sr-page-hero-inner">
+          <div>
+            <p className="sr-kicker">StealthRDP blog</p>
+            <h1 className="sr-title">Operate servers with <span>fewer surprises.</span></h1>
+            <p className="sr-lede">Guides and practical infrastructure articles migrated from the current StealthRDP publishing surface.</p>
+          </div>
+          <div className="sr-page-hero-aside">
+            <strong>Practical infrastructure guides</strong>
+            <span>VPS · Windows · Linux · operations</span>
+          </div>
+        </div>
+      </section>
       <section className="sr-section"><div className="sr-container"><ArticleIndex config={config} heading="Latest articles" /></div></section>
     </>
   );
