@@ -119,7 +119,7 @@ export default async function HomePage({ params }: Props) {
                   <ArrowRight />
                 </a>
               </Button>
-              <Button asChild size="lg" variant="secondary">
+              <Button asChild size="lg" variant="outline" className="sr-button-inverse">
                 <Link href="/plans">Explore plans</Link>
               </Button>
             </div>
@@ -373,7 +373,7 @@ export default async function HomePage({ params }: Props) {
                 <ArrowRight />
               </a>
             </Button>
-            <Button asChild size="lg" variant="secondary">
+            <Button asChild size="lg" variant="outline" className="sr-button-inverse">
               <a href="https://dash.stealthrdp.com/submitticket.php">
                 Ask a pre-sales question
               </a>
