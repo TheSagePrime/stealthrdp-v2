@@ -19,10 +19,16 @@ export default function MinecraftPage() {
   if (!article || !publication) notFound();
   return (
     <article className="sr-article-shell">
-      <p className="sr-kicker">{article.category}</p>
-      <h1>{article.title}</h1>
-      <ArticlePublicationMeta article={publication} />
-      <p className="sr-lede">{article.excerpt}</p>
+      <header className="sr-article-header">
+        <p className="sr-kicker">{article.category}</p>
+        <h1>{article.title}</h1>
+        <ArticlePublicationMeta article={publication} />
+        <p className="sr-lede">{article.excerpt}</p>
+        <div className="sr-article-facts">
+          <span>{article.author}</span>
+          <span>{article.readingTime} min read</span>
+        </div>
+      </header>
       <ArticleJsonLd article={publication} config={config} />
       <TrustedArticleBody html={article.html} />
     </article>
