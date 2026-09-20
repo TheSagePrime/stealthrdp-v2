@@ -3,6 +3,8 @@
 import { useMemo, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
 import { billingCycles, checkoutUrl, plans, type BillingCycle } from '@/lib/stealth/content';
 
 const cycleOrder: BillingCycle[] = ['monthly', 'quarterly', 'annual', 'biannual'];
@@ -45,12 +47,12 @@ export function PricingExplorer({
   }, [compact, region]);
 
   return (
-    <div>
+    <div className="sr-pricing-explorer">
       {guided ? (
-        <div className="sr-plan-finder" aria-label="VPS workload finder">
+        <Card className="sr-plan-finder" aria-label="VPS workload finder">
           <div className="sr-finder-block">
             <span className="sr-control-label">Use case</span>
-            <div className="sr-finder-options">
+            <div className="sr-finder-options" role="group" aria-label="Workload">
               {workloadOptions.map(item => (
                 <Button
                   key={item.key}
@@ -67,7 +69,7 @@ export function PricingExplorer({
 
           <div className="sr-finder-block">
             <span className="sr-control-label">Operating system</span>
-            <div className="sr-finder-options">
+            <div className="sr-finder-options" role="group" aria-label="Operating system">
               {osOptions.map(item => (
                 <Button
                   key={item.key}
@@ -82,17 +84,19 @@ export function PricingExplorer({
             </div>
           </div>
 
+          <Separator />
+
           <p className="sr-finder-note">
             <strong>Best fit: {recommendedTier} {region}</strong>
             <span>
               {osLabel === 'Any OS' ? 'Windows and Linux images' : `${osLabel} images`} are available across the VPS range. Confirm the exact image and current stock in checkout.
             </span>
           </p>
-        </div>
+        </Card>
       ) : null}
 
       <div className="sr-control-row">
-        <div className="sr-control-group">
+        <div className="sr-control-group" role="group" aria-label="Deployment region">
           <span className="sr-control-label">Region</span>
           {(['USA', 'EU'] as const).map(item => (
             <Button
@@ -106,7 +110,8 @@ export function PricingExplorer({
             </Button>
           ))}
         </div>
-        <div className="sr-control-group">
+
+        <div className="sr-control-group" role="group" aria-label="Billing cycle">
           <span className="sr-control-label">Billing</span>
           {cycleOrder.map((item) => {
             const billing = billingCycles[item] as { label: string; discountLabel?: string };
@@ -133,7 +138,7 @@ export function PricingExplorer({
           const recommended = plan.name.startsWith(recommendedTier);
 
           return (
-            <article
+            <Card
               key={plan.name}
               className="sr-plan-card"
               data-popular={plan.popular}
@@ -149,20 +154,27 @@ export function PricingExplorer({
                   {plan.popular ? <Badge>Popular</Badge> : null}
                 </div>
               </div>
-              <p className="sr-plan-price">
-                €{price.amount}
-                <small>{price.suffix}</small>
-              </p>
-              <p className="sr-plan-period">
-                {price.periodLabel}
-                {price.discountLabel ? ` · ${price.discountLabel}` : ''}
-              </p>
+
+              <div>
+                <p className="sr-plan-price">
+                  €{price.amount}
+                  <small>{price.suffix}</small>
+                </p>
+                <p className="sr-plan-period">
+                  {price.periodLabel}
+                  {price.discountLabel ? ` · ${price.discountLabel}` : ''}
+                </p>
+              </div>
+
+              <Separator />
+
               <ul className="sr-plan-specs">
                 <li><span>CPU</span><b>{plan.specs.cpu}</b></li>
                 <li><span>RAM</span><b>{plan.specs.ram}</b></li>
                 <li><span>Storage</span><b>{plan.specs.storage}</b></li>
                 <li><span>Bandwidth</span><b>{plan.specs.bandwidth}</b></li>
               </ul>
+
               <div className="sr-plan-actions">
                 {available ? (
                   <Button asChild className="w-full">
@@ -172,7 +184,7 @@ export function PricingExplorer({
                   <span className="sr-unavailable">Currently unavailable</span>
                 )}
               </div>
-            </article>
+            </Card>
           );
         })}
       </div>
