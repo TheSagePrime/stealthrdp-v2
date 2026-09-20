@@ -28,7 +28,7 @@ COPY --from=dependencies /corepack /corepack
 COPY --from=dependencies /app/node_modules ./node_modules
 COPY . .
 
-RUN pnpm build
+RUN pnpm build:app
 
 FROM node:22-bookworm-slim AS runner
 
