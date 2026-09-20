@@ -25,10 +25,16 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   if (!article) notFound();
   return (
     <article className="sr-article-shell">
-      <p className="sr-kicker">{article.category}</p>
-      <h1>{article.title}</h1>
-      <p className="sr-article-meta">Last updated: {article.date}</p>
-      <p className="sr-lede">{article.summary}</p>
+      <header className="sr-article-header">
+        <p className="sr-kicker">{article.category}</p>
+        <h1>{article.title}</h1>
+        <p className="sr-article-meta">Last updated: {article.date}</p>
+        <p className="sr-lede">{article.summary}</p>
+        <div className="sr-article-facts">
+          <span>StealthRDP documentation</span>
+          <span>{article.category}</span>
+        </div>
+      </header>
       <DocBody content={article.content} />
     </article>
   );
