@@ -1,5 +1,5 @@
 {
-  "name": "@thesageprime/web-starter",
+  "name": "@thesageprime/stealthrdp-v2",
   "packageManager": "pnpm@10.34.5",
   "author": "Sage Prime",
   "engines": {
@@ -145,5 +145,6 @@
     "plugins": {
       "@tailwindcss/postcss": {}
     }
-  }
+  },
+  "description": "StealthRDP v2 public website built on the Sage Prime web starter"
 }

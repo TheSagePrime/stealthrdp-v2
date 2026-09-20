@@ -1,66 +1,44 @@
-# Sage Prime Web Architecture
-
-This repository is the canonical foundation for Sage Prime public web properties.
+# StealthRDP v2 Architecture
 
 ## Purpose
 
-The default project is a public, crawlable website designed to accumulate useful content, free tools, links, brand demand, and organic traffic. Monetization is optional and may happen directly or by promoting separate SaaS products.
+StealthRDP v2 is the public product and traffic surface for StealthRDP. It is built on the Sage Prime public-web foundation and is intentionally separate from the billing/client backend.
 
-## Canonical stack
+## System boundaries
 
-- Next.js App Router
-- React
-- strict TypeScript
-- Tailwind CSS
-- shadcn/ui + Radix
-- Lucide
-- Neon PostgreSQL
-- Drizzle ORM
-- pg runtime driver
-- PGlite local development
-- Coolify
-- pnpm
+### This repository owns
 
-## Deliberately absent SaaS assumptions
+- public marketing pages
+- VPS plan comparison
+- Windows and Linux landing pages
+- public documentation and blog
+- FAQ, about, privacy, and public status presentation
+- SEO, structured data, sitemap, robots, RSS, and content discovery
+- future public tools and traffic features
 
-The default web foundation does not include:
+### WHMCS owns
 
-- authentication providers
-- sign-in/sign-up flows
-- organizations or tenants
-- SaaS dashboards
-- subscription billing
-- checkout/customer portals
-- billing webhooks
+`https://dash.stealthrdp.com`
 
-Those capabilities require a deliberate architecture change if a specific child site truly needs them.
+- login
+- checkout
+- billing
+- customer accounts
+- support tickets
+- service lifecycle/account actions
 
-## Database boundary
+The public website links into WHMCS. It does not duplicate WHMCS authentication, billing, or dashboard logic.
 
-Neon/Drizzle/PGlite are retained as generic infrastructure. Persistence can support content, free tools, forms, attribution, redirects, or other site-specific data. The base database model does not encode user or tenant ownership.
+## Data
 
-Direct database access remains behind server-owned boundaries so public pages and SEO code do not accidentally serialize private backend records.
+Current public plans, FAQ, reviews, blog, docs, and status snapshots were migrated from the existing StealthRDP public repository into `src/content/`.
 
-## SEO is a protected subsystem
+Neon/Drizzle/PGlite remain available for future public-site persistence. They are not a customer-account or tenant database.
 
-The SEO engine, route classification, metadata helpers, robots, sitemap, article/RSS infrastructure, canonical handling, research contracts, pre-build validation, and post-build audit are protected.
+## SEO migration
 
-The production build order remains:
+Existing public route intent is preserved wherever practical. Preview deployments must remain non-indexable. Production canonical origin is `https://www.stealthrdp.com`.
 
-```text
-SEO pre-build validation
-→ Next.js application build
-→ SEO post-build audit
-```
+## Deployment
 
-## Enforcement
-
-Run:
-
-```bash
-pnpm check:architecture
-pnpm check
-pnpm build
-```
-
-Architecture changes are explicit migrations, not incidental implementation details.
+Coolify is the intended deployment path. V2 should be validated on `preview.antah.de` before any production switch.

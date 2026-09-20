@@ -1,24 +1,13 @@
 import { expect, test } from '@playwright/test';
 
-test.describe('Public web default UI', () => {
-  test('renders the responsive web foundation and public health boundary', async ({
-    page,
-    request,
-  }, testInfo) => {
+test.describe('StealthRDP v2 public UI', () => {
+  test('renders the responsive homepage and public health boundary', async ({ page, request }, testInfo) => {
     const response = await page.goto('/');
-
     expect(response?.ok()).toBe(true);
     await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-    await expect(
-      page.getByRole('heading', {
-        level: 1,
-        name: 'Build useful websites people can discover.',
-      }),
-    ).toBeVisible();
-    await expect(page.getByText('Web foundation manifest')).toBeVisible();
-    await expect(page.locator('.module-list > li')).toHaveCount(3);
-    await expect(page.getByRole('link', { name: 'Inspect content feed' })).toBeVisible();
-    await expect(page.getByRole('link', { name: 'Check runtime' })).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: /Your server/ })).toBeVisible();
+    await expect(page.getByText('Plans priced for the work')).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Client Area' })).toBeVisible();
 
     const horizontalOverflow = await page.evaluate(
       () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
@@ -29,7 +18,7 @@ test.describe('Public web default UI', () => {
     expect(health.ok()).toBe(true);
     await expect(health.json()).resolves.toEqual({
       status: 'ok',
-      service: 'web-starter',
+      service: 'stealthrdp-v2',
     });
 
     await page.screenshot({
@@ -38,10 +27,10 @@ test.describe('Public web default UI', () => {
     });
   });
 
-  test('renders the localized public route without provider credentials', async ({ page }) => {
-    const response = await page.goto('/fr');
+  test('renders a core commercial route without provider credentials', async ({ page }) => {
+    const response = await page.goto('/plans');
     expect(response?.ok()).toBe(true);
-    await expect(page.locator('html')).toHaveAttribute('lang', 'fr');
-    await expect(page.getByText('Web foundation manifest')).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: /Pick the resources/ })).toBeVisible();
+    await expect(page.getByText('Bronze USA')).toBeVisible();
   });
 });
