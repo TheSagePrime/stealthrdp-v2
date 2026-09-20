@@ -24,10 +24,17 @@ export default function StatusPage() {
   return (
     <>
       <section className="sr-page-hero">
-        <div className="sr-container">
-          <p className="sr-kicker">Service status</p>
-          <h1 className="sr-title">Infrastructure <span>at a glance.</span></h1>
-          <p className="sr-lede">The page renders the last published safe snapshot immediately, then refreshes from StealthRDP’s public UptimeRobot status feed without exposing provider IDs or raw monitor targets.</p>
+        <div className="sr-container sr-page-hero-inner">
+          <div>
+            <p className="sr-kicker">Service status</p>
+            <h1 className="sr-title">Infrastructure <span>at a glance.</span></h1>
+            <p className="sr-lede">The page renders the last published safe snapshot immediately, then refreshes from StealthRDP’s public UptimeRobot status feed without exposing provider IDs or raw monitor targets.</p>
+          </div>
+          <div className="sr-page-hero-aside">
+            <span className="sr-live-dot" aria-hidden="true" />
+            <strong>Public health snapshot</strong>
+            <span>Live refresh when available</span>
+          </div>
         </div>
       </section>
       <section className="sr-section">
