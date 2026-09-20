@@ -5,12 +5,12 @@ import { buildArticleSitemapEntries } from '@/libs/seo/articles';
 import { getSeoConfig } from '@/libs/seo/config';
 import { localizedPath } from '@/libs/seo/locale';
 import { canonicalUrlForPath } from '@/libs/seo/normalize';
-import { docPublicPaths } from '@/lib/stealth/content';
+import { indexableDocPublicPaths } from '@/lib/stealth/content';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const config = getSeoConfig();
   const site = resolveSeoSite(config);
-  const routes = [...config.routes.publicMarketing, ...docPublicPaths];
+  const routes = [...config.routes.publicMarketing, ...indexableDocPublicPaths];
   const routeEntries = routes.flatMap(route =>
     AllLocales.map(locale => ({
       url: canonicalUrlForPath(localizedPath(route, locale, config), site, config),

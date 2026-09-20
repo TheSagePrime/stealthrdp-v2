@@ -3,6 +3,7 @@ import type { DeployEnv } from '../libs/seo/env';
 import type { LegacyRedirect } from '../libs/seo/internal-links';
 import type { ResolvedSiteUrl } from '../libs/seo/site-url';
 import blogData from '../content/blog-articles.json';
+import { noindexDocPaths } from '../lib/stealth/routes';
 import { parseSiteUrl, resolveSiteUrl } from '../libs/seo/site-url';
 
 type BlogSeed = {
@@ -97,7 +98,7 @@ export const defaultSeoConfig: SeoConfig = {
   },
   routes: {
     publicMarketing: ['/', '/plans', '/windows-vps', '/linux-vps', '/status', '/blog', '/faq', '/about', '/docs'],
-    publicUtility: ['/privacy'],
+    publicUtility: ['/privacy', ...noindexDocPaths],
     privatePages: [],
     privateApis: [],
     dynamicPublic: ['/docs', '/vps-hosting-minecraft'],

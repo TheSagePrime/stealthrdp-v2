@@ -5,6 +5,7 @@ import reviewsJson from '@/content/reviews.json';
 import blogJson from '@/content/blog-articles.json';
 import docsJson from '@/content/docs-articles.json';
 import uptimeJson from '@/content/uptime.json';
+import { isNoindexDocPath } from '@/lib/stealth/routes';
 
 export type BillingCycle = 'monthly' | 'quarterly' | 'annual' | 'biannual';
 
@@ -110,6 +111,7 @@ export function docPublicSlug(article: DocArticle): string {
 }
 
 export const docPublicPaths = docsArticles.map(article => `/docs/${docPublicSlug(article)}`);
+export const indexableDocPublicPaths = docPublicPaths.filter(path => !isNoindexDocPath(path));
 
 export function findDocByPublicSlug(slug: string): DocArticle | undefined {
   return docsArticles.find(article => docPublicSlug(article) === slug);
