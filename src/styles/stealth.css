@@ -23,7 +23,7 @@ img { max-width: 100%; }
   --card-foreground: #f7fafc;
   --popover: #0d1928;
   --popover-foreground: #f7fafc;
-  --primary: #f5b93b;
+  --primary: #67e8f9;
   --primary-foreground: #07111f;
   --secondary: #132238;
   --secondary-foreground: #f7fafc;
@@ -34,10 +34,10 @@ img { max-width: 100%; }
   --destructive: #ef5350;
   --border: #26384d;
   --input: #26384d;
-  --ring: #f5b93b;
+  --ring: #67e8f9;
   --sr-surface: #0b1726;
   --sr-surface-strong: #102035;
-  --sr-gold-soft: #ffe4a3;
+  --sr-gold-soft: #dffaff;
   --sr-success: #4ade80;
   --sr-warning: #ffb45c;
   --sr-danger: #ef5350;
@@ -354,8 +354,8 @@ img { max-width: 100%; }
   --card-foreground: #f7fbff;
   --popover: #0d1324;
   --popover-foreground: #f7fbff;
-  --primary: #22d46b;
-  --primary-foreground: #06110b;
+  --primary: #67e8f9;
+  --primary-foreground: #07111f;
   --secondary: #111a31;
   --secondary-foreground: #f7fbff;
   --muted: #0e172a;
