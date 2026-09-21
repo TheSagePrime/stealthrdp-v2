@@ -100,7 +100,7 @@ export function PricingExplorer({
   return (
     <div className="sr-pricing-explorer">
       {guided ? (
-        <Card className="sr-plan-finder" aria-label="VPS workload finder">
+        <div className="sr-plan-finder" aria-label="VPS workload finder">
           <div className="sr-finder-block">
             <span className="sr-control-label">Use case</span>
             <div className="sr-finder-options" role="group" aria-label="Workload">
@@ -143,7 +143,7 @@ export function PricingExplorer({
               {osLabel === 'Any OS' ? 'Windows and Linux images' : `${osLabel} images`} are available across the VPS range. Confirm the exact image and current stock in checkout.
             </span>
           </p>
-        </Card>
+        </div>
       ) : null}
 
       <div className="sr-control-row">

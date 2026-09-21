@@ -44,18 +44,22 @@ export function SiteHeader() {
           </div>
 
           <details className="sr-mobile-nav">
-            <summary aria-label="Open navigation">
+            <summary aria-label="Open navigation" aria-controls="sr-mobile-menu">
               <Menu />
               <span>Menu</span>
             </summary>
-            <nav aria-label="Mobile navigation">
-              {links.map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
-              <Link href="/about">About</Link>
-              <a href="https://dash.stealthrdp.com/index.php?rp=/login">Client Area</a>
-              <a href="https://dash.stealthrdp.com/submitticket.php">Support</a>
-            </nav>
           </details>
         </div>
+
+        {/* The panel sits outside the details: a closed details gives its
+            content a zero box, and this panel must be measured against the
+            header it hangs from, not against the 44px trigger. */}
+        <nav className="sr-mobile-menu" id="sr-mobile-menu" aria-label="Mobile navigation">
+          {links.map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
+          <Link href="/about">About</Link>
+          <a href="https://dash.stealthrdp.com/index.php?rp=/login">Client Area</a>
+          <a href="https://dash.stealthrdp.com/submitticket.php">Support</a>
+        </nav>
       </header>
     </>
   );

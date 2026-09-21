@@ -317,6 +317,8 @@
   justify-self: end;
 }
 
+/* Desktop has no trigger. The wrapper only holds the summary; the panel itself
+   is a child of .sr-header so the header positions it. */
 .sr-mobile-nav {
   display: none;
 }
@@ -347,7 +349,7 @@
   clip-path: inset(50%);
 }
 
-.sr-mobile-nav nav {
+.sr-mobile-menu {
   position: absolute;
   inset-inline: 0;
   top: 100%;
@@ -357,9 +359,18 @@
   border-bottom: 1px solid var(--border-divider);
   background: var(--bg-elev);
   padding: 16px 24px 24px;
+  /* The closed panel keeps a real box at every width: its geometry stays
+     measurable against the header, and it never leaves the site's overflow
+     clip. visibility hides it from sight, from the tab order and from
+     assistive tech until the trigger opens it. */
+  visibility: hidden;
 }
 
-.sr-mobile-nav nav a {
+.sr-header:has(.sr-mobile-nav[open]) .sr-mobile-menu {
+  visibility: visible;
+}
+
+.sr-mobile-menu a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
@@ -369,7 +380,7 @@
   font-size: var(--text-body);
 }
 
-.sr-mobile-nav nav a:hover {
+.sr-mobile-menu a:hover {
   background: var(--surface-2);
   color: var(--text);
 }
@@ -632,9 +643,11 @@
    system mark, no third-party desktop-environment clone. Conventions only.
    -------------------------------------------------------------------------- */
 
+/* A window mock is defined by its chrome and its elevation, not by a hairline
+   border: DESIGN.md section 6 gives elev-2 as surface-2 + shadow only. The 1px
+   border plus the 32px shadow read as generated chrome, so the border goes. */
 .sr-session {
   display: grid;
-  border: 1px solid var(--border-divider);
   border-radius: var(--radius-lg);
   background: var(--surface-2);
   box-shadow: var(--elev-2-shadow);
@@ -1191,6 +1204,8 @@
   border: 1px solid var(--border-divider);
   border-radius: var(--radius-lg);
   background: var(--surface-1);
+  /* The frame owns the inset: the table never lands flush on its own border. */
+  padding: 12px;
   /* A column cut by the viewport edge must read as scrollable, not broken.
      The fade marks that more table exists to the right. */
   mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 28px), transparent 100%);
@@ -1533,13 +1548,14 @@
   gap: 24px;
 }
 
+/* The finder is a band between two dividers, not a card: the controls inside
+   are bordered buttons, and a card frame around them nests a card in a card
+   (STEALTHRDP_DESIGN.md line 61). */
 .sr-plan-finder {
   display: grid;
   gap: 16px;
-  border: 1px solid var(--border-divider);
-  border-radius: var(--radius-lg);
-  background: var(--surface-1);
-  padding: 24px;
+  border-block: 1px solid var(--border-divider);
+  padding-block: 24px;
 }
 
 .sr-finder-block {
@@ -1746,6 +1762,8 @@
   border: 1px solid var(--border-divider);
   border-radius: var(--radius-lg);
   background: var(--surface-1);
+  /* Same inset as the region frame: no cell sits on the frame's own edge. */
+  padding: 12px;
   /* Same scroll affordance as the region table: the fade marks that the table
      continues past the viewport edge. */
   mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 28px), transparent 100%);
@@ -1856,7 +1874,6 @@
 
   .sr-mobile-nav {
     display: block;
-    position: relative;
   }
 
   .sr-section-head {
@@ -2021,7 +2038,7 @@
   .sr-topline-inner > a,
   .sr-footer li a,
   .sr-social-links a,
-  .sr-mobile-nav nav a,
+  .sr-mobile-menu a,
   .sr-index-item a,
   .sr-resources-list a,
   .sr-plan-card {
