@@ -16,7 +16,15 @@ import {
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Pill } from '@/components/ui/pill';
-import { uptime } from '@/lib/stealth/content';
+import { SessionPreview } from '@/components/site/SessionPreview';
+import { plans, uptime } from '@/lib/stealth/content';
+
+/**
+ * The hero device shows one real plan. Its title and every spec value come from
+ * `src/content/plans.json`, which is the same data the plans surface renders.
+ */
+const HERO_PLAN_NAME = 'Silver USA';
+const heroPlan = plans.find(plan => plan.name === HERO_PLAN_NAME) ?? null;
 
 const highlights = [
   { value: '10,000+', label: 'orders delivered' },
@@ -163,27 +171,25 @@ export function HomeHero() {
           </div>
 
           <div className="sr-hero-stage" aria-label="StealthRDP infrastructure preview">
-            <div className="sr-server-card">
-              <div className="sr-server-card-head">
-                <div>
-                  <h2>Silver USA</h2>
+            <SessionPreview
+              variant="desktop"
+              title={heroPlan ? heroPlan.name : HERO_PLAN_NAME}
+              mark={<Cpu aria-hidden="true" />}
+              tray={
+                <>
+                  <span>Windows / Linux</span>
+                  {heroPlan ? <span>{`${heroPlan.location} region`}</span> : null}
+                </>
+              }
+            >
+              {heroPlan ? (
+                <div className="sr-server-metrics">
+                  <div><span>vCPU</span><strong>{heroPlan.specs.cpu}</strong></div>
+                  <div><span>Memory</span><strong>{heroPlan.specs.ram}</strong></div>
+                  <div><span>Storage</span><strong>{heroPlan.specs.storage}</strong></div>
+                  <div><span>Traffic</span><strong>{heroPlan.specs.bandwidth}</strong></div>
                 </div>
-                <div className="sr-server-icon">
-                  <Cpu aria-hidden="true" />
-                </div>
-              </div>
-
-              <div className="sr-server-metrics">
-                <div><span>vCPU</span><strong>2 cores</strong></div>
-                <div><span>Memory</span><strong>8 GB</strong></div>
-                <div><span>Storage</span><strong>80 GB NVMe</strong></div>
-                <div><span>Traffic</span><strong>Unlimited</strong></div>
-              </div>
-
-              <div className="sr-activity-meta">
-                <span>Windows / Linux</span>
-                <span>USA region</span>
-              </div>
+              ) : null}
 
               <div className="sr-status-device">
                 <ol className="sr-provision-list">
@@ -217,7 +223,7 @@ export function HomeHero() {
                   ))}
                 </dl>
               </div>
-            </div>
+            </SessionPreview>
 
             <div className="sr-stage-float">
               <Gauge aria-hidden="true" />

@@ -562,42 +562,15 @@
   line-height: var(--text-micro--line-height);
 }
 
-/* Hero panel: a real plan label plate, not a mock dashboard. */
+/* Hero stage: the frame around the session window. The window itself carries
+   elevation level 2 (DESIGN.md section 6), so the stage no longer draws a
+   second panel around it. */
 
 .sr-hero-stage {
   display: grid;
-  gap: 16px;
-  border: 1px solid var(--border-divider);
-  border-radius: var(--radius-lg);
-  background: var(--surface-1);
-  padding: 24px;
-}
-
-.sr-server-card {
-  display: grid;
-  gap: 20px;
-}
-
-.sr-server-card-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  align-content: start;
   gap: 16px;
 }
-
-.sr-server-card-head > div {
-  display: grid;
-  gap: 8px;
-}
-
-.sr-server-card-head h2 {
-  margin: 0;
-  font-family: var(--font-body);
-  font-size: var(--text-heading-4);
-  font-weight: 600;
-  line-height: var(--text-heading-4--line-height);
-}
-
 
 .sr-server-icon {
   display: grid;
@@ -652,8 +625,162 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* The card's OS / region line. The rule was dropped in the rewrite, which ran
-   the two labels together as one string. Restored so the labels stay separate. */
+/* --------------------------------------------------------------------------
+   Session preview — the hero's remote-session device (card t_48af6be8).
+   Chrome drawn in HTML and CSS: a title bar, a screen, and for the desktop
+   variant a bottom taskbar with a start affordance. No image, no operating
+   system mark, no third-party desktop-environment clone. Conventions only.
+   -------------------------------------------------------------------------- */
+
+.sr-session {
+  display: grid;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+  box-shadow: var(--elev-2-shadow);
+  overflow: hidden;
+}
+
+.sr-session-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  border-bottom: 1px solid var(--border-divider);
+  background: var(--surface-3);
+  padding: 8px 24px;
+}
+
+/* The plan plate doubles as the window's application mark. */
+.sr-session-bar .sr-server-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+}
+
+.sr-session-bar .sr-server-icon svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.sr-session-mark {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-sm);
+  color: var(--accent);
+}
+
+.sr-session-mark svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.sr-session-title {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: 600;
+  line-height: var(--text-small--line-height);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The terminal variant titles the window with the documentation article the
+   transcript comes from, which is a longer string than a plan name. */
+.sr-session[data-variant='terminal'] .sr-session-title {
+  font-size: var(--text-small);
+}
+
+/* The screen is the recessed content plane of the window. */
+.sr-session-screen {
+  display: grid;
+  align-content: start;
+  gap: 20px;
+  background: var(--surface-1);
+  padding: 24px;
+}
+
+/* The screen is the top of the window now, not a card below a card head. */
+.sr-session-screen .sr-server-metrics {
+  border-top: 0;
+}
+
+/* Desktop convention: a bottom bar with a start affordance and a session tray.
+   The mark is decoration. It has no hover state, no transition, no pointer
+   events and no size change, because nothing behind it acts (rule 5). */
+.sr-session-taskbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 48px;
+  border-top: 1px solid var(--border-divider);
+  background: var(--surface-3);
+  padding: 8px 24px;
+}
+
+.sr-session-start {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  place-items: center;
+  color: var(--accent);
+  pointer-events: none;
+}
+
+.sr-session-start svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.sr-session-taskbar .sr-activity-meta {
+  padding-block: 0;
+}
+
+/* Terminal variant: the documented commands, one per line. */
+
+.sr-session-screen-term {
+  gap: 0;
+}
+
+.sr-term-lines {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sr-term-line {
+  display: flex;
+  gap: 8px;
+  min-width: 0;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  line-height: var(--text-mono-sm--line-height);
+}
+
+.sr-term-prompt {
+  flex: 0 0 auto;
+  color: var(--accent);
+}
+
+.sr-term-command {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* The session tray. The rule was dropped in the rewrite, which ran the two
+   labels together as one string. Restored so the labels stay separate. */
 .sr-activity-meta {
   display: flex;
   flex-wrap: wrap;
@@ -1820,6 +1947,16 @@
 
   .sr-hero {
     padding-block: 64px 48px;
+  }
+
+  .sr-session-screen {
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .sr-session-bar,
+  .sr-session-taskbar {
+    padding-inline: 20px;
   }
 
   .sr-hero-proof {
