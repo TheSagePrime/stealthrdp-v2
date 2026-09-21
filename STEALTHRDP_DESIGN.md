@@ -43,19 +43,26 @@ The terminal motif belongs to deployment, status, commands, and technical eviden
 
 ## Visual direction
 
-Use a dark control-room foundation with a restrained electric-gold deployment signal.
-Use green only for healthy or online states.
-Use orange for warnings, maintenance, and service risk.
-Use red for severe failure or destructive actions.
-Use neutral gray for unknown or unavailable data.
-Use blue only when a future external-system bridge needs a neutral action relationship.
+Use a dark control-room foundation with no chromatic brand accent.
+
+Colour is state, not identity:
+
+- Use green only for healthy or online states.
+- Use orange for warnings, maintenance, and service risk.
+- Use red for severe failure or destructive actions.
+- Use neutral gray for unknown or unavailable data.
+- Use blue only when a future external-system bridge needs a neutral action relationship.
+- Do not add a brand hue. The deployment signal is carried by hairline rules, type, and
+  tabular data instead. See `DESIGN.md` for the home page direction this describes.
 
 Use Space Grotesk for display hierarchy.
-Use Inter for reading and interface text.
+Use IBM Plex Sans for reading and interface text.
 Use JetBrains Mono for commands, technical values, timestamps, and status labels.
 Keep the type system limited to these self-hosted families.
+Self-host the files. A declared family that is not loaded is not a type system.
 
-Use charcoal surfaces, thin borders, deliberate shared edges, and modest radius values.
+Use ink surfaces, thin hairline rules, deliberate shared edges, and square corners.
+A rule and a margin contain content; a rounded card is not the only container available.
 Use gradients only when they reinforce depth or a state.
 Do not use purple-blue gradient chrome, glass orbs, neon decoration, or generic SaaS blobs.
 Do not nest cards without a clear information relationship.
@@ -68,7 +75,8 @@ The first viewport must answer three questions:
 2. Why should the buyer trust it?
 3. What is the next action?
 
-The homepage may use one technical console as a product explanation.
+The homepage may use one live data surface as a product explanation. It must read real
+runtime values; do not dress a static mockup as live instrumentation.
 The plans page must prioritise comparison over atmosphere.
 The docs index must prioritise search and task selection over marketing copy.
 An article must prioritise reading and safe execution over decoration.

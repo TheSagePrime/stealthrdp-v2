@@ -14,7 +14,11 @@ Do not fabricate live status, reviews, scarcity, deadlines, or service guarantee
 
 ## Frontend
 
-Preserve the StealthRDP dark control-room direction: restrained gold deployment signal, charcoal/navy surfaces, clear information hierarchy, modest radii, and technical motifs only where they explain infrastructure.
+Preserve the StealthRDP dark control-room direction: ink surfaces, a warm bone foreground, clear information hierarchy, square rule-based surfaces, and technical motifs only where they explain infrastructure.
+
+Colour carries state and nothing else — green for reporting or healthy, amber for degraded, warning or unavailable, red for failure, grey for unknown. Do not introduce a chromatic brand accent. The deployment signal is expressed through rule, type and tabular data, not pigment.
+
+Home page implements this direction; see `DESIGN.md`. Routes that have not had their own design pass keep their current tokens until they do.
 
 Reuse shadcn/Radix primitives and Lucide icons. Avoid generic AI dashboard chrome.
 
@@ -29,3 +33,13 @@ WHMCS owns login, billing, checkout, client accounts, and tickets. Links to it a
 ## Verification
 
 Run the repository architecture, security, types, lint, tests, Storybook, visual, and SEO build gates before handoff.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

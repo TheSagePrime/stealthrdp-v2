@@ -4559,3 +4559,1261 @@ img { max-width: 100%; }
     flex-direction: column;
   }
 }
+
+/* ==========================================================================
+   HOME — MANIFEST
+   Author: Suho / #Builder · 2026-09-21 · home page only
+   Every rule here is scoped to .sr-home. No other route uses these classes,
+   the fonts or the tokens. See DESIGN.md.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'SR Ledger Display';
+  src: url('/fonts/space-grotesk-latin.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'SR Ledger Text';
+  src: url('/fonts/ibm-plex-sans-latin.woff2') format('woff2');
+  font-weight: 100 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'SR Ledger Mono';
+  src: url('/fonts/jetbrains-mono-latin.woff2') format('woff2');
+  font-weight: 100 800;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
+    U+FEFF, U+FFFD;
+}
+
+/* The site wrapper sets `overflow-x: hidden`, which computes `overflow-y: auto` and makes
+   .sr-site a scroll container. That silently disables position: sticky for every descendant,
+   including the site header. The home route sets `overflow-x: visible` instead, which is safe
+   because the home page has zero horizontal overflow at 1440/1024/768/430/390/360/320, so
+   nothing here needs clipping. The wrapper's radial cyan wash and navy field are also switched
+   off: the home page paints its own opaque surface, so they were invisible behind it. Scoped
+   to the home route only. */
+.sr-site:has(.sr-home) {
+  overflow-x: visible;
+  background: none;
+  font-family: var(--srx-text);
+}
+
+body:has(.sr-home),
+.sr-home {
+  --srx-ink-000: #0a0b0c;
+  --srx-ink-100: #0e1011;
+  --srx-ink-200: #141617;
+  --srx-ink-300: #1b1e20;
+  --srx-rule: #23272b;
+  --srx-rule-hi: #34393e;
+  --srx-paper: #e8e6e1;
+  --srx-paper-dim: #a9aaa3;
+  --srx-paper-faint: #8b8d87;
+  --srx-ok: #5bc98c;
+  --srx-warn: #e0a75e;
+  --srx-stop: #e4695f;
+
+  --srx-display: 'SR Ledger Display', 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --srx-text: 'SR Ledger Text', 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system,
+    sans-serif;
+  --srx-mono-face: 'SR Ledger Mono', 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo,
+    monospace;
+
+  --srx-pad: clamp(3rem, 6vw, 6rem);
+  --srx-gutter: 118px;
+  --srx-header-h: 77px;
+
+  background: var(--srx-ink-000);
+  color: var(--srx-paper);
+  font-family: var(--srx-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.sr-home .srx-wrap {
+  width: min(1240px, calc(100% - 2.5rem));
+  margin-inline: auto;
+}
+
+.sr-home .srx-mono {
+  font-family: var(--srx-mono-face);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'zero' 0;
+}
+
+.sr-home .srx-num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-home .srx-table th.srx-num,
+.sr-home .srx-table td.srx-num {
+  text-align: right;
+}
+
+.sr-home .srx-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  border: 0;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+/* Focus is drawn in `paper` — 15.79:1 on ink-000 and 15.29:1 on ink-100 — because a focus
+   ring is a UI component state and WCAG 2.2 SC 1.4.11 requires 3:1 for it. `rule-hi` is
+   1.69:1 and is a decorative hairline only; it must not carry a control state. */
+.sr-home a:focus-visible,
+.sr-home [data-slot='button']:focus-visible {
+  outline: 2px solid var(--srx-paper);
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+/* ---------------------------------------------------------------- actions */
+
+.sr-home [data-slot='button'] {
+  min-width: 0;
+  height: auto;
+  min-height: 2.5rem;
+  padding-block: 0.6rem;
+  border-radius: 0;
+  box-shadow: none;
+  font-family: var(--srx-mono-face);
+  font-size: 0.78rem;
+  font-weight: 700;
+    text-transform: uppercase;
+}
+
+.sr-home [data-slot='button']:hover {
+  box-shadow: none;
+  transform: none;
+}
+
+.sr-home .srx-btn-primary[data-slot='button'] {
+  border: 1px solid var(--srx-paper);
+  background: var(--srx-paper);
+  color: var(--srx-ink-000);
+}
+
+.sr-home .srx-btn-primary[data-slot='button']:hover {
+  background: transparent;
+  color: var(--srx-paper);
+}
+
+/* Control boundaries use `paper-faint` (5.87:1 on ink-000, 5.68:1 on ink-100, 5.41:1 on
+   ink-200). A border is what identifies these as controls, so it is a UI component
+   boundary under SC 1.4.11 and needs 3:1. Decorative hairlines keep `rule-hi`. */
+.sr-home .srx-btn-quiet[data-slot='button'] {
+  border: 1px solid var(--srx-paper-faint);
+  background: transparent;
+  color: var(--srx-paper);
+}
+
+.sr-home .srx-btn-quiet[data-slot='button']:hover {
+  border-color: var(--srx-paper);
+  background: var(--srx-paper);
+  color: var(--srx-ink-000);
+}
+
+/* plain table-action buttons stay lighter than the page's primary action */
+.sr-home .srx-table [data-slot='button'] {
+  width: 6.75rem;
+  height: auto;
+  min-height: 2rem;
+  justify-content: center;
+  font-size: 0.75rem;
+  padding: 0.45rem 0.5rem;
+}
+
+.sr-home .srx-table [data-slot='button']:not(.srx-btn-primary) {
+  border: 1px solid var(--srx-paper-faint);
+  background: transparent;
+  color: var(--srx-paper);
+}
+
+.sr-home .srx-table [data-slot='button']:hover {
+  border-color: var(--srx-paper);
+  background: var(--srx-paper);
+  color: var(--srx-ink-000);
+}
+
+.sr-home .srx-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem 1.75rem;
+  margin-top: 2rem;
+}
+
+.sr-home .srx-quiet {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-bottom: 1px solid var(--srx-paper-faint);
+  padding-bottom: 0.2rem;
+  color: var(--srx-paper-dim);
+  font-family: var(--srx-mono-face);
+  font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.sr-home .srx-quiet:hover {
+  border-color: var(--srx-paper);
+  color: var(--srx-paper);
+}
+
+.sr-home .srx-quiet svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+/* ------------------------------------------------------------- first sheet */
+
+.sr-home .srx-sheet {
+  padding: clamp(2.5rem, 5.5vw, 4.25rem) 0 2.25rem;
+}
+
+.sr-home .srx-claim {
+  margin: 0;
+  max-width: 30ch;
+  font-family: var(--srx-display);
+  font-size: clamp(2.3rem, 5.9vw, 4.4rem);
+  font-weight: 500;
+  line-height: 1.0;
+  letter-spacing: -0.038em;
+  text-wrap: balance;
+}
+
+.sr-home .srx-sheet-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(19rem, 0.62fr);
+  gap: 2.25rem clamp(2rem, 4vw, 4rem);
+  align-items: stretch;
+  margin-top: 1.6rem;
+}
+
+/* the lead column distributes: the proposition at the top, the action on the last ledger row */
+.sr-home .srx-sheet-lead {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.sr-home .srx-sheet-lead .srx-lede {
+  margin-top: 0;
+}
+
+.sr-home .srx-keyfacts {
+  margin: 0;
+  border-top: 1px solid var(--srx-rule);
+}
+
+.sr-home .srx-keyfacts > div {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--srx-rule);
+}
+
+.sr-home .srx-keyfacts dt {
+  color: var(--srx-paper-faint);
+  font-family: var(--srx-mono-face);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.sr-home .srx-keyfacts dd {
+  margin: 0;
+  color: var(--srx-paper);
+  font-family: var(--srx-mono-face);
+  font-size: 0.78rem;
+  text-align: right;
+}
+
+.sr-home .srx-lede {
+  max-width: 52ch;
+  margin: 1.5rem 0 0;
+  color: var(--srx-paper-dim);
+  font-size: clamp(1rem, 1.4vw, 1.12rem);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+/* ----------------------------------------------------------- the state rule */
+
+.sr-home .srx-rule {
+  position: sticky;
+  z-index: 20;
+  top: var(--srx-header-h);
+  margin-inline: calc(-1 * var(--srx-bleed, 0px));
+  border-block: 1px solid var(--srx-rule);
+  background: var(--srx-ink-100);
+}
+
+.sr-home .srx-rule-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1.5rem;
+  margin: 0;
+  padding: 0.7rem 0;
+  font-size: 0.75rem;
+    text-transform: uppercase;
+  color: var(--srx-paper-faint);
+}
+
+.sr-home .srx-rule-lead {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--srx-paper);
+}
+
+.sr-home .srx-rule-tail {
+  margin-left: auto;
+}
+
+.sr-home .srx-rule-link {
+  padding-left: 1.5rem;
+  border-left: 1px solid var(--srx-paper-faint);
+  border-bottom: 1px solid transparent;
+  color: var(--srx-paper-dim);
+}
+
+.sr-home .srx-rule-link:hover {
+  border-bottom-color: var(--srx-paper);
+  color: var(--srx-paper);
+}
+
+.sr-home .srx-dot {
+  display: inline-block;
+  width: 0.4rem;
+  height: 0.4rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--srx-ok);
+  animation: srx-pulse 2.4s ease-in-out infinite;
+}
+
+.sr-home .srx-is-down .srx-dot,
+.sr-home .srx-dot.srx-is-down {
+  background: var(--srx-stop);
+}
+
+@keyframes srx-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* -------------------------------------------------------------- live ledger */
+
+.sr-home .srx-ledger {
+  padding: clamp(1.35rem, 2.4vw, 2rem) 0 0;
+}
+
+.sr-home .srx-ledger-head {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.5rem;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid var(--srx-rule-hi);
+}
+
+.sr-home .srx-ledger-title {
+  margin: 0;
+  font-family: var(--srx-display);
+  font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.sr-home .srx-ledger-source {
+  margin: 0;
+  color: var(--srx-paper-faint);
+  font-size: 0.75rem;
+}
+
+.sr-home .srx-ledger-rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sr-home .srx-lrow {
+  display: grid;
+  grid-template-columns: 10.5rem minmax(0, 1fr) 7.5rem 10.5rem;
+  grid-template-areas: 'region node figure state';
+  gap: 0.5rem 1.5rem;
+  align-items: baseline;
+  padding: 0.68rem 0;
+  border-bottom: 1px solid var(--srx-rule);
+}
+
+.sr-home .srx-lrow-region {
+  grid-area: region;
+  color: var(--srx-paper-faint);
+  font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.sr-home .srx-lrow-node {
+  grid-area: node;
+  font-size: 0.95rem;
+}
+
+.sr-home .srx-lrow-figure {
+  grid-area: figure;
+  text-align: right;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.sr-home .srx-lrow-figure em {
+  margin-left: 0.15rem;
+  font-size: 0.75rem;
+  font-style: normal;
+  color: var(--srx-paper-faint);
+}
+
+.sr-home .srx-lrow-state {
+  grid-area: state;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  font-size: 0.75rem;
+    text-transform: uppercase;
+  color: var(--srx-ok);
+}
+
+.sr-home .srx-lrow-state.srx-is-down {
+  color: var(--srx-stop);
+}
+
+.sr-home .srx-ledger-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.75rem;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0.85rem 0 0;
+  color: var(--srx-paper-dim);
+  font-size: 0.75rem;
+  }
+
+/* ------------------------------------------------------------------ clauses */
+
+.sr-home .srx-clause {
+  display: grid;
+  grid-template-columns: var(--srx-gutter) minmax(0, 1fr);
+  gap: 1rem clamp(1.5rem, 4vw, 4rem);
+  margin-top: var(--srx-pad);
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--srx-rule-hi);
+}
+
+.sr-home .srx-clause-index,
+.sr-home .srx-clause-label {
+  display: block;
+  color: var(--srx-paper-faint);
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.sr-home .srx-clause-index {
+  color: var(--srx-paper);
+}
+
+.sr-home .srx-clause-label {
+  margin-top: 0.4rem;
+}
+
+.sr-home .srx-clause-title {
+  max-width: 34ch;
+  margin: 0 0 2rem;
+  font-family: var(--srx-display);
+  font-size: clamp(1.5rem, 3vw, 2.35rem);
+  font-weight: 500;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+}
+
+.sr-home .srx-note {
+  max-width: 56ch;
+  margin: 1.6rem 0 0;
+  color: var(--srx-paper-faint);
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+
+.sr-home .srx-note a {
+  border-bottom: 1px solid var(--srx-rule-hi);
+  color: var(--srx-paper-dim);
+}
+
+.sr-home .srx-note a:hover {
+  border-color: var(--srx-paper);
+  color: var(--srx-paper);
+}
+
+/* ------------------------------------------------------------ plan inventory */
+
+.sr-home .srx-inventory-group + .srx-inventory-group {
+  margin-top: 3rem;
+}
+
+.sr-home .srx-inventory-region {
+  margin: 0 0 0.75rem;
+  font-family: var(--srx-display);
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.sr-home .srx-inventory-region span {
+  color: var(--srx-paper-faint);
+  font-size: 0.75rem;
+  font-weight: 400;
+  }
+
+.sr-home .srx-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.sr-home .srx-table th,
+.sr-home .srx-table td {
+  padding: 0.68rem 0.85rem;
+  border-bottom: 1px solid var(--srx-rule);
+  text-align: left;
+  vertical-align: baseline;
+}
+
+.sr-home .srx-table th:first-child,
+.sr-home .srx-table td:first-child {
+  padding-left: 0;
+}
+
+.sr-home .srx-table th:last-child,
+.sr-home .srx-table td:last-child {
+  padding-right: 0;
+}
+
+.sr-home .srx-table thead th {
+  border-bottom-color: var(--srx-rule-hi);
+  color: var(--srx-paper-faint);
+  font-family: var(--srx-mono-face);
+  font-size: 0.75rem;
+  font-weight: 500;
+    text-transform: uppercase;
+}
+
+.sr-home .srx-table tbody tr:hover {
+  background: var(--srx-ink-200);
+}
+
+.sr-home .srx-plan-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.sr-home .srx-table td {
+  color: var(--srx-paper-dim);
+  font-size: 0.85rem;
+}
+
+.sr-home .srx-price {
+  color: var(--srx-paper);
+  font-size: 1.02rem;
+  font-weight: 600;
+}
+
+.sr-home .srx-cur {
+  margin-right: 0.1rem;
+  color: var(--srx-paper-faint);
+  font-size: 0.75rem;
+}
+
+.sr-home .srx-stock {
+  color: var(--srx-warn);
+  font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+.sr-home .srx-stock.srx-is-up {
+  color: var(--srx-ok);
+}
+
+.sr-home .srx-table th:first-child,
+.sr-home .srx-table td:nth-child(2),
+.sr-home .srx-table td:nth-child(3),
+.sr-home .srx-table td:nth-child(4),
+.sr-home .srx-table td:nth-child(5) {
+  width: 12%;
+}
+
+.sr-home .srx-table th:last-child,
+.sr-home .srx-table td.srx-cell-action {
+  width: 8.5rem;
+  text-align: right;
+}
+
+.sr-home .srx-table tbody tr.srx-out .srx-plan-name {
+  color: var(--srx-paper-dim);
+}
+
+/* ------------------------------------------------------------- hardware list */
+
+.sr-home .srx-facts-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sr-home .srx-facts-list li {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr);
+  gap: 0.5rem 1.25rem;
+  align-items: start;
+  padding: 1.35rem 0;
+  border-bottom: 1px solid var(--srx-rule);
+}
+
+.sr-home .srx-facts-list li:first-child {
+  border-top: 1px solid var(--srx-rule);
+}
+
+.sr-home .srx-fact-mark {
+  display: grid;
+  width: 2.4rem;
+  height: 2.4rem;
+  place-items: center;
+  border: 1px solid var(--srx-rule);
+  color: var(--srx-paper-dim);
+}
+
+.sr-home .srx-fact-mark svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.sr-home .srx-facts-list h3 {
+  margin: 0.35rem 0 0.4rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.sr-home .srx-facts-list p {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--srx-paper-dim);
+  font-size: 0.86rem;
+  line-height: 1.62;
+}
+
+/* ----------------------------------------------------------------- systems */
+
+.sr-home .srx-systems {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--srx-rule);
+}
+
+.sr-home .srx-systems li {
+  padding: 0.85rem 0.9rem;
+  border-bottom: 1px solid var(--srx-rule);
+  border-right: 1px solid var(--srx-rule);
+  color: var(--srx-paper-dim);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+}
+
+.sr-home .srx-systems li:nth-child(3n) {
+  border-right: 0;
+}
+
+/* ----------------------------------------------------------------- regions */
+
+.sr-home .srx-regions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--srx-rule);
+}
+
+.sr-home .srx-regions article {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--srx-rule);
+}
+
+.sr-home .srx-regions article + article {
+  padding-left: clamp(1.25rem, 3vw, 3rem);
+  border-left: 1px solid var(--srx-rule);
+}
+
+.sr-home .srx-region-code {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.sr-home .srx-region-count {
+  margin: 0.5rem 0 0;
+  color: var(--srx-ok);
+  font-size: 0.75rem;
+  }
+
+.sr-home .srx-region-text {
+  max-width: 44ch;
+  margin: 0.85rem 0 1rem;
+  color: var(--srx-paper-dim);
+  font-size: 0.86rem;
+  line-height: 1.62;
+}
+
+/* ------------------------------------------------------------------ record */
+
+.sr-home .srx-record-featured {
+  margin: 0;
+  padding-bottom: 1.9rem;
+  border-bottom: 1px solid var(--srx-rule-hi);
+}
+
+.sr-home .srx-record-featured blockquote {
+  max-width: 46ch;
+  margin: 0;
+  font-family: var(--srx-display);
+  font-size: clamp(1.2rem, 2.2vw, 1.7rem);
+  font-weight: 400;
+  line-height: 1.32;
+  letter-spacing: -0.015em;
+}
+
+.sr-home .srx-record-featured blockquote::before {
+  content: '\201C';
+  color: var(--srx-paper-faint);
+}
+
+.sr-home .srx-record-featured blockquote::after {
+  content: '\201D';
+  color: var(--srx-paper-faint);
+}
+
+.sr-home .srx-record-featured figcaption {
+  margin-top: 1.1rem;
+  color: var(--srx-paper-dim);
+  font-size: 0.75rem;
+}
+
+.sr-home .srx-record-featured figcaption span {
+  color: var(--srx-paper-faint);
+}
+
+.sr-home .srx-record-rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sr-home .srx-record-rows li {
+  display: grid;
+  grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr);
+  gap: 0.5rem 2rem;
+  align-items: baseline;
+  padding: 1.05rem 0;
+  border-bottom: 1px solid var(--srx-rule);
+}
+
+.sr-home .srx-record-quote {
+  max-width: 58ch;
+  margin: 0;
+  color: var(--srx-paper);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.sr-home .srx-record-meta {
+  margin: 0;
+  color: var(--srx-paper-faint);
+  font-size: 0.75rem;
+  }
+
+.sr-home .srx-record-meta a {
+  border-bottom: 1px solid var(--srx-rule-hi);
+  color: var(--srx-paper-dim);
+}
+
+.sr-home .srx-record-meta a:hover {
+  border-color: var(--srx-paper);
+  color: var(--srx-paper);
+}
+
+/* ------------------------------------------------------------------- close */
+
+.sr-home .srx-close {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) auto;
+  gap: 1.5rem 3rem;
+  align-items: end;
+  margin-top: var(--srx-pad);
+  padding: clamp(2.5rem, 5vw, 4rem) 0 clamp(3rem, 6vw, 5rem);
+  border-top: 1px solid var(--srx-rule-hi);
+}
+
+.sr-home .srx-close-title {
+  margin: 0;
+  font-family: var(--srx-display);
+  font-size: clamp(1.7rem, 3.4vw, 2.7rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.sr-home .srx-close-text {
+  max-width: 52ch;
+  margin: 0.9rem 0 0;
+  color: var(--srx-paper-dim);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}
+
+.sr-home .srx-close .srx-actions {
+  margin-top: 0;
+  justify-content: flex-end;
+}
+
+/* ------------------------------------------------------------- breakpoints */
+
+@media (max-width: 1100px) {
+  .sr-home {
+    --srx-gutter: 92px;
+  }
+
+  .sr-home .srx-lrow {
+    grid-template-columns: 9rem minmax(0, 1fr) 6.5rem 9.5rem;
+  }
+}
+@media (max-width: 900px) {
+  .sr-home .srx-lrow {
+    grid-template-columns: 8rem minmax(0, 1fr) 6.5rem;
+    grid-template-areas:
+      'region node figure'
+      'state state state';
+    justify-items: start;
+  }
+
+  .sr-home .srx-lrow-figure {
+    text-align: right;
+    justify-self: end;
+  }
+
+  .sr-home .srx-lrow-state {
+    justify-content: flex-start;
+  }
+
+  .sr-home .srx-close {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .sr-home .srx-close .srx-actions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .sr-home {
+    --srx-gutter: 0px;
+    --srx-pad: 3rem;
+  }
+
+  .sr-home .srx-wrap {
+    width: min(1240px, calc(100% - 2rem));
+  }
+
+  .sr-home .srx-claim {
+    max-width: 24ch;
+    font-size: clamp(2.05rem, 8.6vw, 3rem);
+  }
+
+  .sr-home .srx-sheet-body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.6rem;
+  }
+
+  .sr-home .srx-clause {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+
+  .sr-home .srx-clause-gutter {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  .sr-home .srx-clause-label {
+    margin-top: 0;
+  }
+
+  .sr-home .srx-clause-title {
+    margin-bottom: 1.4rem;
+  }
+
+  /* inventory becomes stacked rows; the table semantics stay in the DOM */
+  .sr-home .srx-table,
+  .sr-home .srx-table thead,
+  .sr-home .srx-table tbody,
+  .sr-home .srx-table tr,
+  .sr-home .srx-table th,
+  .sr-home .srx-table td {
+    display: block;
+    width: auto;
+  }
+
+  .sr-home .srx-table thead {
+    display: none;
+  }
+
+  .sr-home .srx-table tr {
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--srx-rule-hi);
+  }
+
+  .sr-home .srx-table th,
+  .sr-home .srx-table td {
+    padding: 0;
+    border-bottom: 0;
+    text-align: left;
+  }
+
+  .sr-home .srx-table th:first-child,
+  .sr-home .srx-table td:first-child {
+    width: auto;
+    padding-left: 0;
+  }
+
+  .sr-home .srx-table td,
+  .sr-home .srx-table td:nth-child(n) {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: 0.75rem;
+    width: auto;
+    padding: 0.22rem 0;
+    font-size: 0.84rem;
+  }
+
+  .sr-home .srx-table td::before {
+    content: attr(data-label);
+    color: var(--srx-paper-faint);
+    font-family: var(--srx-mono-face);
+    font-size: 0.75rem;
+        text-transform: uppercase;
+  }
+
+  .sr-home .srx-table td.srx-cell-action {
+    display: block;
+    width: auto;
+    padding-top: 0.8rem;
+    text-align: left;
+  }
+
+  .sr-home .srx-table td.srx-cell-action::before {
+    content: none;
+  }
+
+  .sr-home .srx-table th:last-child,
+  .sr-home .srx-table td.srx-cell-action {
+    width: auto;
+  }
+
+  .sr-home .srx-plan-name {
+    padding-bottom: 0.55rem;
+    font-size: 1rem;
+  }
+
+  .sr-home .srx-systems {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sr-home .srx-systems li:nth-child(3n) {
+    border-right: 1px solid var(--srx-rule);
+  }
+
+  .sr-home .srx-systems li:nth-child(2n) {
+    border-right: 0;
+  }
+
+  .sr-home .srx-regions {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sr-home .srx-regions article + article {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .sr-home .srx-record-rows li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* the site header is 77px tall with the topline, and 69px below 560px where the topline
+   is hidden and .sr-header-inner drops to min-height 68px */
+@media (max-width: 560px) {
+  .sr-home {
+    --srx-header-h: 69px;
+  }
+}
+
+@media (max-width: 640px) {
+  .sr-home .srx-lrow {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'node figure'
+      'region region'
+      'state state';
+    gap: 0.35rem 1rem;
+  }
+
+  .sr-home .srx-lrow-region {
+    margin-top: 0.15rem;
+  }
+
+  .sr-home .srx-rule-line {
+    gap: 0.2rem 1rem;
+    font-size: 0.75rem;
+      }
+
+  .sr-home .srx-rule-tail {
+    margin-left: 0;
+  }
+
+  .sr-home .srx-ledger-head {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 470px) {
+  /* The spine is one line at every mandated width. At 430 and 390 the two derived counts
+     ("9 MONITORS", "9/9 UP") would push the STATUS link onto a second line, so they leave the
+     visual line and stay in the accessibility tree: the ledger directly below renders all nine
+     rows with their real figures, and "ALL REPORTING" already states the condition. Nothing is
+     dropped from the page or from the DOM. */
+  .sr-home .srx-rule-count,
+  .sr-home .srx-rule-tail {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    border: 0;
+    white-space: nowrap;
+  }
+
+  .sr-home {
+    --srx-pad: 2.5rem;
+  }
+
+  .sr-home .srx-wrap {
+    width: calc(100% - 1.6rem);
+  }
+
+  .sr-home .srx-actions {
+    gap: 0.75rem 1.25rem;
+  }
+
+  .sr-home .srx-table td,
+  .sr-home .srx-table td:nth-child(n) {
+    grid-template-columns: 6rem minmax(0, 1fr);
+    gap: 0.5rem;
+  }
+
+  .sr-home .srx-ledger-foot {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sr-home .srx-dot {
+    animation: none;
+  }
+
+  .sr-home *,
+  .sr-home *::before,
+  .sr-home *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* The shared footer's social labels render under the 11px legibility floor. Raised on the
+   home route only; other routes keep the shared footer exactly as it is. */
+.sr-site:has(.sr-home) .sr-footer .sr-social-links a,
+.sr-site:has(.sr-home) .sr-footer .sr-social-links a span {
+  font-size: 0.75rem;
+}
+
+/* Shared chrome carries three real defects the home page cannot inherit: the header action
+   renders white text on a cyan fill (1.4:1), the footer's legal line runs to 81 characters,
+   and the topline, footer headings and footer legal line all set 11.5px text. All are
+   corrected on the home route only. Other routes keep the shared chrome unchanged and the
+   defects remain there for a route-by-route pass. */
+.sr-site:has(.sr-home) .sr-header-action [data-slot='button'] {
+  height: auto;
+  min-height: 2.25rem;
+  padding: 0.5rem 0.95rem;
+  border: 1px solid var(--srx-paper);
+  border-radius: 0;
+  background: var(--srx-paper);
+  color: var(--srx-ink-000);
+  font-family: var(--srx-mono-face);
+  font-size: 0.75rem;
+  font-weight: 700;
+    text-transform: uppercase;
+  box-shadow: none;
+}
+
+.sr-site:has(.sr-home) .sr-header-action [data-slot='button']:hover {
+  background: transparent;
+  color: var(--srx-paper);
+  box-shadow: none;
+}
+
+.sr-site:has(.sr-home) .sr-footer-bottom span {
+  max-width: 24rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sr-site:has(.sr-home) .srx-dot {
+    animation: none;
+  }
+}
+
+.sr-site:has(.sr-home) .sr-topline span,
+.sr-site:has(.sr-home) .sr-topline a,
+.sr-site:has(.sr-home) .sr-topline-center,
+.sr-site:has(.sr-home) .sr-footer h2,
+.sr-site:has(.sr-home) .sr-footer-bottom span,
+.sr-site:has(.sr-home) .sr-social-links a,
+.sr-site:has(.sr-home) .sr-social-links a span {
+  font-size: 0.75rem;
+}
+
+/* The shared mobile menu is chrome on the home route: a 0.7rem rounded trigger and a navy
+   panel with a 1rem radius and a 22px/70px shadow. Carrying a rounded, shadowed container into
+   a design whose premise is squared rules would make the page's own claim false, so the menu is
+   repainted with the home shape language on this route only. Other routes keep the shared menu.
+   Panel links measure paper-dim on ink-100 = 8.14:1; hover paper on ink-200 = 14.55:1; the
+   trigger border is paper-faint = 5.68:1. */
+.sr-site:has(.sr-home) .sr-mobile-nav summary {
+  border: 1px solid var(--srx-paper-faint);
+  border-radius: 0;
+  color: var(--srx-paper);
+  font-family: var(--srx-mono-face);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.sr-site:has(.sr-home) .sr-mobile-nav nav {
+  border: 1px solid var(--srx-rule-hi);
+  border-radius: 0;
+  background: var(--srx-ink-100);
+  box-shadow: none;
+}
+
+.sr-site:has(.sr-home) .sr-mobile-nav nav a {
+  border-radius: 0;
+  color: var(--srx-paper-dim);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.sr-site:has(.sr-home) .sr-mobile-nav nav a:hover {
+  background: var(--srx-ink-200);
+  color: var(--srx-paper);
+}
+
+/* Focus on the home route is one thing: a 2px `paper` ring. Shared chrome — the header nav, the
+   footer links, the social chips, the mobile menu — otherwise falls back to the user-agent ring,
+   which measures 3.60:1 on ink-000 and paints the tree's cyan at 50% alpha: a chromatic accent
+   this design removed, on the page that removed it. `paper` measures 15.79:1 on ink-000 and
+   15.29:1 on ink-100. Other routes keep the shared ring. */
+.sr-site:has(.sr-home) a:focus-visible,
+.sr-site:has(.sr-home) summary:focus-visible,
+.sr-site:has(.sr-home) [data-slot='button']:focus-visible {
+  outline: 2px solid var(--srx-paper);
+  outline-offset: 2px;
+}
+
+/* The shared header nav and footer social links paint rounded chips in the shared navy
+   palette. They are chrome on the home route, so they take the home shape and palette here:
+   square, hairline, paper. Contrast: nav rest paper-dim on ink-000 = 8.41:1, hover paper on
+   ink-200 = 14.55:1; social chip rest paper-dim on ink-000 with a paper-faint border = 8.41:1
+   text and 5.87:1 boundary. Other routes keep the shared chips. */
+.sr-site:has(.sr-home) .sr-nav a {
+  border-radius: 0;
+  color: var(--srx-paper-dim);
+}
+
+.sr-site:has(.sr-home) .sr-nav a:hover {
+  background: var(--srx-ink-200);
+  color: var(--srx-paper);
+}
+
+.sr-site:has(.sr-home) .sr-social-links a {
+  border-radius: 0;
+  border-color: var(--srx-paper-faint);
+  color: var(--srx-paper-dim);
+}
+
+.sr-site:has(.sr-home) .sr-social-links a:hover {
+  border-color: var(--srx-paper);
+  color: var(--srx-paper);
+}

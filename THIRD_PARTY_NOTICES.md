@@ -45,6 +45,22 @@ Authentication and subscription-billing providers are not part of the default we
 Their license texts remain in installed package metadata.
 Regenerate this notice after dependency changes.
 
+## Self-hosted fonts
+
+`public/fonts/` carries three typefaces, used by the home page through `@font-face`
+declarations in `src/styles/stealth.css`. All three are licensed under the SIL Open Font
+License 1.1 (OFL-1.1). The OFL permits bundling and self-hosting, including in commercial
+products. Keep the licence notice with the files when redistributing.
+
+| File | Family | Upstream | Licence |
+|---|---|---|---|
+| `space-grotesk-latin.woff2` | Space Grotesk | https://github.com/floriankarsten/space-grotesk | OFL-1.1 |
+| `ibm-plex-sans-latin.woff2` | IBM Plex Sans | https://github.com/IBM/plex | OFL-1.1 |
+| `jetbrains-mono-latin.woff2` | JetBrains Mono | https://github.com/JetBrains/JetBrainsMono | OFL-1.1 |
+
+Files were retrieved from the Google Fonts CDN (latin subset) on 2026-09-21.
+The full OFL text is available at https://openfontlicense.org/.
+
 ## Distribution rule
 
 Keep this notice and all required upstream notices when distributing products.

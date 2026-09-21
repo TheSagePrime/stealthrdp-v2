@@ -6,7 +6,12 @@ test.describe('StealthRDP v2 public UI', () => {
     expect(response?.ok()).toBe(true);
     await expect(page.locator('html')).toHaveAttribute('lang', 'en');
     await expect(page.getByRole('heading', { level: 1, name: /Your server/ })).toBeVisible();
-    await expect(page.getByText('Plans priced for the work')).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 2, name: 'Live infrastructure record' }),
+    ).toBeVisible();
+    await expect(
+      page.getByRole('heading', { level: 2, name: /Every specification, one table/ }),
+    ).toBeVisible();
     await expect(page.getByRole('link', { name: 'Client Area' })).toBeVisible();
 
     const horizontalOverflow = await page.evaluate(
