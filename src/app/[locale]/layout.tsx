@@ -4,6 +4,7 @@ import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/libs/I18nRouting';
 import '@/styles/global.css';
+import '@/styles/surfaces.css';
 import '@/styles/stealth.css';
 
 export const metadata: Metadata = {

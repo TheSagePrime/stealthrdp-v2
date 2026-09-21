@@ -6,11 +6,87 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* ==========================================================================
+   Self-hosted OFL faces. No Google Fonts CDN.
+   Libre Caslon Display (display) · IBM Plex Sans (body/UI) · JetBrains Mono (technical)
+   Files live in /public/fonts and are served from this origin.
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Libre Caslon Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/libre-caslon-display-400-normal-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Libre Caslon Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/libre-caslon-display-400-normal-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* ==========================================================================
+   Tailwind theme mapping.
+   Every utility resolves to a design token; no literal colour in components.
+   ========================================================================== */
+
+/* Static theme values: emitted as real CSS custom properties and as utilities. */
+@theme {
+  /* radius — DESIGN.md section 6. No ad-hoc values. */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 16px;
+  --radius-full: 999px;
+
+  /* type families — DESIGN.md section 4 */
+  --font-display: 'Libre Caslon Display', ui-serif, Georgia, 'Times New Roman', serif;
+  --font-body: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* type scale — DESIGN.md section 4 */
+  --text-display-1: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
+  --text-display-1--line-height: 1.04;
+  --text-display-2: clamp(2rem, 1.4rem + 2.4vw, 3.25rem);
+  --text-display-2--line-height: 1.08;
+  --text-display-3: clamp(1.5rem, 1.25rem + 1.1vw, 2.125rem);
+  --text-display-3--line-height: 1.15;
+  --text-heading-4: clamp(1.25rem, 1.13rem + 0.5vw, 1.5rem);
+  --text-heading-4--line-height: 1.25;
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.65;
+  --text-body: 1rem;
+  --text-body--line-height: 1.65;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.5;
+  --text-micro: 0.75rem;
+  --text-micro--line-height: 1.4;
+  --text-mono-sm: 0.8125rem;
+  --text-mono-sm--line-height: 1.5;
+
+  /* two-tier spacing scale — DESIGN.md section 5 */
+  --spacing: 4px;
+  --spacing-product-1: 4px;
+  --spacing-product-2: 8px;
+  --spacing-product-3: 12px;
+  --spacing-product-4: 16px;
+  --spacing-product-5: 24px;
+  --spacing-marketing-1: 24px;
+  --spacing-marketing-2: 32px;
+  --spacing-marketing-3: 48px;
+  --spacing-marketing-4: 64px;
+  --spacing-marketing-5: 96px;
+  --spacing-marketing-6: 128px;
+}
+
+/* Colour mappings resolve to role tokens declared below. */
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  /* shadcn names, mapped onto the Graphite / Restrained Gold palette */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -34,69 +110,180 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+
+  /* design-system surface and role tokens — DESIGN.md sections 3-6 */
+  --color-ground: var(--bg);
+  --color-ground-elev: var(--bg-elev);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-body-text: var(--text);
+  --color-body-muted: var(--text-muted);
+  --color-body-dim: var(--text-dim);
+  --color-divider: var(--border-divider);
+  --color-border-soft: var(--border-soft);
+  --color-border-control: var(--border-control);
+  --color-focus-ring: var(--focus-ring);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-press: var(--accent-press);
+  --color-accent-ink: var(--accent-ink);
+  --color-status-ok: var(--status-ok);
+  --color-status-warn: var(--status-warn);
+  --color-status-bad: var(--status-bad);
+  --color-status-unknown: var(--status-unknown);
 }
 
+/* ==========================================================================
+   :root — light counterpart. The public site renders dark (.dark on <html>);
+   this block keeps the shadcn visual contract honest in light mode.
+   ========================================================================== */
+
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
+  --radius: var(--radius-md);
+
+  --background: oklch(0.99 0.002 250);
+  --foreground: oklch(0.21 0.014 260);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
+  --card-foreground: oklch(0.21 0.014 260);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
+  --popover-foreground: oklch(0.21 0.014 260);
+  --primary: oklch(0.62 0.12 82);
+  --primary-foreground: oklch(0.99 0.002 250);
+  --secondary: oklch(0.955 0.004 250);
+  --secondary-foreground: oklch(0.21 0.014 260);
+  --muted: oklch(0.955 0.004 250);
+  --muted-foreground: oklch(0.45 0.012 258);
+  --accent: oklch(0.62 0.12 82);
+  --accent-foreground: oklch(0.99 0.002 250);
+  --destructive: oklch(0.55 0.19 27);
+  --border: oklch(0.9 0.005 255);
+  --input: oklch(0.82 0.008 255);
+  --ring: oklch(0.62 0.12 82);
+  --chart-1: oklch(0.62 0.12 82);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
+
+  --bg: oklch(0.99 0.002 250);
+  --bg-elev: oklch(0.975 0.003 250);
+  --surface-1: oklch(1 0 0);
+  --surface-2: oklch(0.965 0.004 250);
+  --surface-3: oklch(0.93 0.006 252);
+  --text: oklch(0.21 0.014 260);
+  --text-muted: oklch(0.45 0.012 258);
+  --text-dim: oklch(0.58 0.01 256);
+  --border-divider: oklch(0.9 0.005 255);
+  --border-soft: oklch(0.78 0.008 255);
+  --border-control: oklch(0.62 0.01 256);
+  --focus-ring: oklch(0.52 0.12 82);
+  --accent-hover: oklch(0.56 0.13 82);
+  --accent-press: oklch(0.68 0.11 82);
+  --accent-ink: oklch(0.99 0.002 250);
+  --status-ok: oklch(0.52 0.13 163);
+  --status-warn: oklch(0.55 0.15 55);
+  --status-bad: oklch(0.52 0.19 27);
+  --status-unknown: oklch(0.58 0.01 256);
 }
 
+/* ==========================================================================
+   .dark — Graphite / Restrained Gold. The shipped palette.
+   Measured contrast table lives in review-artifacts/contrast.md.
+   ========================================================================== */
+
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
+  --background: #0b0c0e;
+  --foreground: #eaecf0;
+  --card: #14171c;
+  --card-foreground: #eaecf0;
+  --popover: #1a1e25;
+  --popover-foreground: #eaecf0;
+  --primary: #e8b84b;
+  --primary-foreground: #171204;
+  --secondary: #1a1e25;
+  --secondary-foreground: #eaecf0;
+  --muted: #1a1e25;
+  --muted-foreground: #9ba3af;
+  --accent: #e8b84b;
+  --accent-foreground: #171204;
+  --destructive: #f87171;
+  --border: #242a33;
+  --input: #5f5e5b;
+  --ring: #e8b84b;
+  --chart-1: #e8b84b;
+  --chart-2: #34d399;
+  --chart-3: #f87171;
+  --chart-4: #fb923c;
+  --chart-5: #9ba3af;
+
+  --bg: #0b0c0e;
+  --bg-elev: #101216;
+  --surface-1: #14171c;
+  --surface-2: #1a1e25;
+  --surface-3: #222831;
+  --text: #eaecf0;
+  --text-muted: #9ba3af;
+  /* --text-dim paints small labels (feature numbers, table headers, footer
+     meta), so it is text, not decoration. #6e7683 measured 4.27:1 on --bg and
+     3.92:1 on --surface-1, below the AA 4.5:1 floor. #8a92a0 measures 6.24:1 on
+     --bg, 5.73:1 on --surface-1, 5.33:1 on --surface-2, 4.73:1 on --surface-3. */
+  --text-dim: #8a92a0;
+  --border-divider: #242a33;
+  --border-soft: #42413e;
+  --border-control: #5f5e5b;
+  --focus-ring: #e8b84b;
+  --accent-hover: #f2c86b;
+  --accent-press: #d2a338;
+  --accent-ink: #171204;
+  --status-ok: #34d399;
+  --status-warn: #fb923c;
+  --status-bad: #f87171;
+  --status-unknown: #6e7683;
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+  :root {
+    color-scheme: light;
+  }
+  .dark {
+    color-scheme: dark;
+  }
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
   body {
     @apply bg-background text-foreground antialiased;
+    font-family: var(--font-body);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    margin: 0;
+  }
+
+  /* Accessibility: one visible focus treatment for the whole product. */
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  /* Accessibility: motion is opt-in. DESIGN.md section 7. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
+
+/* ==========================================================================
+   Protected SEO styles. Referenced by design.contract.json — keep the names.
+   ========================================================================== */
 
 .seo-article-publication-meta {
   display: flex;
