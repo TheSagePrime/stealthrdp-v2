@@ -2,13 +2,15 @@ import {
   Activity,
   ArrowRight,
   CheckCircle2,
+  CircleHelp,
   Cpu,
   Gauge,
   Globe2,
   HardDrive,
-  Network,
   Server,
   ShieldCheck,
+  TriangleAlert,
+  XCircle,
   Zap,
 } from 'lucide-react';
 import Link from 'next/link';
@@ -46,13 +48,42 @@ const systems = [
 /**
  * The hero's status device. Relocated here from the feedback section so the
  * hero carries one purposeful operational object instead of a decorative
- * progress bar (review R1 + R2). Copy is unchanged.
+ * progress bar (review R1 + R2).
+ *
+ * The three rows report states the monitoring actually measures. They are read
+ * from the same published snapshot that powers the proof rail pill
+ * (src/content/uptime.json), so the card never claims a state nothing checks.
  */
-const statusRows = [
-  { icon: Server, label: 'Compute node 01', state: 'online' },
-  { icon: HardDrive, label: 'NVMe storage pool', state: 'healthy' },
-  { icon: Network, label: 'Network edge', state: 'connected' },
+const statusRoles = [
+  { id: 'usa', region: 'USA', icon: Server },
+  { id: 'eu', region: 'EU / Netherlands', icon: Server },
+  { id: 'website', region: 'Website', icon: Globe2 },
 ];
+
+function statusRows() {
+  const monitors = uptime.monitors ?? [];
+  const snapshot = uptime.stat === 'ok' && monitors.length > 0;
+
+  return statusRoles.map(role => {
+    const monitor = snapshot ? monitors.find(item => item.region === role.region) : undefined;
+
+    return {
+      id: role.id,
+      icon: role.icon,
+      label: monitor ? monitor.label : 'Status unavailable',
+      status: monitor ? monitor.status : 'unknown',
+      uptimeRatio: monitor ? monitor.uptimeRatio : null,
+    };
+  });
+}
+
+/** DESIGN.md section 10: status is never colour alone. Icon and label together. */
+function StatusIcon({ status }: { status: string }) {
+  if (status === 'up') return <CheckCircle2 aria-hidden="true" />;
+  if (status === 'degraded') return <TriangleAlert aria-hidden="true" />;
+  if (status === 'down') return <XCircle aria-hidden="true" />;
+  return <CircleHelp aria-hidden="true" />;
+}
 
 const statusMeta = [
   { term: 'Virtualization', value: 'Isolated VMs' },
@@ -156,8 +187,8 @@ export function HomeHero() {
 
               <div className="sr-status-device">
                 <ol className="sr-provision-list">
-                  {statusRows.map(({ icon: Icon, label, state }, index) => (
-                    <li className="sr-provision-step" key={label}>
+                  {statusRows().map(({ id, icon: Icon, label, status, uptimeRatio }, index) => (
+                    <li className="sr-provision-step" key={id}>
                       <span className="sr-provision-num">{`0${index + 1}`}</span>
                       <span className="sr-provision-icon">
                         <Icon aria-hidden="true" />
@@ -165,9 +196,13 @@ export function HomeHero() {
                       <div className="sr-provision-body">
                         <strong>{label}</strong>
                       </div>
-                      <span className="sr-provision-state">
-                        <CheckCircle2 aria-hidden="true" />
-                        {state}
+                      <span className="sr-provision-state" data-state={status}>
+                        <StatusIcon status={status} />
+                        {stateLabel(status)}
+                        <span className="sr-provision-sep" aria-hidden="true">·</span>
+                        <span className="sr-provision-ratio">
+                          {uptimeRatio === null ? '—' : `${uptimeRatio.toFixed(3)}%`}
+                        </span>
                       </span>
                     </li>
                   ))}

@@ -950,7 +950,29 @@
 .sr-provision-state svg {
   width: 0.875rem;
   height: 0.875rem;
+  color: var(--status-unknown);
+}
+
+/* Never a hardcoded green: the default is the unknown state. */
+.sr-provision-state[data-state='up'] svg {
   color: var(--status-ok);
+}
+
+.sr-provision-state[data-state='degraded'] svg {
+  color: var(--status-warn);
+}
+
+.sr-provision-state[data-state='down'] svg {
+  color: var(--status-bad);
+}
+
+.sr-provision-ratio {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-provision-sep {
+  color: var(--text-muted);
 }
 
 /* The status device inside the hero card. Same list, compact cells, no frame. */
