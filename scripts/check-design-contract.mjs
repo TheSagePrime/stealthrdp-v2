@@ -104,6 +104,25 @@ for (const path of sourceFiles) {
   }
 }
 
+if (contract.visualSourceOfTruth && !fs.existsSync(contract.visualSourceOfTruth)) {
+  errors.push(`missing visual source of truth ${contract.visualSourceOfTruth}`);
+}
+
+const marketingRoots = [
+  'src/app/[locale]/(marketing)/',
+  'src/components/site/home/',
+];
+
+for (const path of sourceFiles) {
+  if (!marketingRoots.some(root => path.startsWith(root))) continue;
+  const source = fs.readFileSync(path, 'utf8');
+  for (const pattern of contract.rules.forbidLegacyMarketingPatterns ?? []) {
+    if (source.includes(pattern)) {
+      errors.push(`${path}: legacy marketing pattern "${pattern}" is forbidden by DESIGN.md`);
+    }
+  }
+}
+
 if (errors.length) {
   for (const error of [...new Set(errors)]) console.error(`[design-contract] ${error}`);
   process.exitCode = 1;
