@@ -1,8 +1,17 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import {
+  ArrowRight,
+  Cpu,
+  Globe2,
+  HardDrive,
+  MemoryStick,
+  Network,
+} from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { ButtonGroup } from '@/components/ui/button-group';
 import { Card } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -13,7 +22,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { billingCycles, checkoutUrl, plans, type BillingCycle, type Plan } from '@/lib/stealth/content';
+import {
+  billingCycles,
+  checkoutUrl,
+  plans,
+  type BillingCycle,
+  type Plan,
+} from '@/lib/stealth/content';
 
 const cycleOrder: BillingCycle[] = ['monthly', 'quarterly', 'annual', 'biannual'];
 
@@ -33,6 +48,13 @@ const osOptions = [
 
 type WorkloadKey = (typeof workloadOptions)[number]['key'];
 type OsKey = (typeof osOptions)[number]['key'];
+
+const specs = [
+  { key: 'cpu', label: 'CPU', icon: Cpu },
+  { key: 'ram', label: 'Memory', icon: MemoryStick },
+  { key: 'storage', label: 'Storage', icon: HardDrive },
+  { key: 'bandwidth', label: 'Traffic', icon: Network },
+] as const;
 
 /** Row of the comparison table: real records, one row per published plan. */
 function ComparisonRow({
@@ -101,84 +123,114 @@ export function PricingExplorer({
     <div className="sr-pricing-explorer">
       {guided ? (
         <div className="sr-plan-finder" aria-label="VPS workload finder">
-          <div className="sr-finder-block">
-            <span className="sr-control-label">Use case</span>
-            <div className="sr-finder-options" role="group" aria-label="Workload">
-              {workloadOptions.map(item => (
-                <Button
-                  key={item.key}
-                  type="button"
-                  size="sm"
-                  variant={workload === item.key ? 'default' : 'outline'}
-                  onClick={() => setWorkload(item.key)}
-                >
-                  {item.label}
-                </Button>
-              ))}
+          <div className="sr-finder-copy">
+            <div>
+              <span className="sr-control-label">Find a starting point</span>
+              <strong>Tell us what the server is for.</strong>
+            </div>
+            <p>We highlight a sensible tier. You still control the final configuration.</p>
+          </div>
+
+          <div className="sr-finder-grid">
+            <div className="sr-finder-block">
+              <span className="sr-control-label">Use case</span>
+              <ButtonGroup className="sr-segmented-control" aria-label="Workload">
+                {workloadOptions.map(item => (
+                  <Button
+                    key={item.key}
+                    type="button"
+                    size="sm"
+                    variant={workload === item.key ? 'default' : 'outline'}
+                    aria-pressed={workload === item.key}
+                    onClick={() => setWorkload(item.key)}
+                  >
+                    {item.label}
+                  </Button>
+                ))}
+              </ButtonGroup>
+            </div>
+
+            <div className="sr-finder-block">
+              <span className="sr-control-label">Operating system</span>
+              <ButtonGroup className="sr-segmented-control" aria-label="Operating system">
+                {osOptions.map(item => (
+                  <Button
+                    key={item.key}
+                    type="button"
+                    size="sm"
+                    variant={os === item.key ? 'default' : 'outline'}
+                    aria-pressed={os === item.key}
+                    onClick={() => setOs(item.key)}
+                  >
+                    {item.label}
+                  </Button>
+                ))}
+              </ButtonGroup>
             </div>
           </div>
 
-          <div className="sr-finder-block">
-            <span className="sr-control-label">Operating system</span>
-            <div className="sr-finder-options" role="group" aria-label="Operating system">
-              {osOptions.map(item => (
-                <Button
-                  key={item.key}
-                  type="button"
-                  size="sm"
-                  variant={os === item.key ? 'default' : 'outline'}
-                  onClick={() => setOs(item.key)}
-                >
-                  {item.label}
-                </Button>
-              ))}
-            </div>
-          </div>
-
-          <Separator />
-
-          <p className="sr-finder-note">
-            <strong>Best fit: {recommendedTier} {region}</strong>
-            <span>
-              {osLabel === 'Any OS' ? 'Windows and Linux images' : `${osLabel} images`} are available across the VPS range. Confirm the exact image and current stock in checkout.
+          <div className="sr-finder-result">
+            <span className="sr-finder-result-icon">
+              <Globe2 aria-hidden="true" />
             </span>
-          </p>
+            <div>
+              <span>Suggested starting tier</span>
+              <strong>{recommendedTier} {region}</strong>
+              <small>
+                {osLabel === 'Any OS'
+                  ? 'Windows and Linux images are available.'
+                  : `${osLabel} images are available.`}
+              </small>
+            </div>
+          </div>
         </div>
       ) : null}
 
       <div className="sr-control-row">
-        <div className="sr-control-group" role="group" aria-label="Deployment region">
+        <div className="sr-control-stack">
           <span className="sr-control-label">Region</span>
-          {(['USA', 'EU'] as const).map(item => (
-            <Button
-              key={item}
-              type="button"
-              size="sm"
-              variant={region === item ? 'default' : 'outline'}
-              onClick={() => setRegion(item)}
-            >
-              {item}
-            </Button>
-          ))}
-        </div>
-
-        <div className="sr-control-group" role="group" aria-label="Billing cycle">
-          <span className="sr-control-label">Billing</span>
-          {cycleOrder.map((item) => {
-            const billing = billingCycles[item] as { label: string; discountLabel?: string };
-            return (
+          <ButtonGroup className="sr-segmented-control" aria-label="Deployment region">
+            {(['USA', 'EU'] as const).map(item => (
               <Button
                 key={item}
                 type="button"
                 size="sm"
-                variant={cycle === item ? 'default' : 'outline'}
-                onClick={() => setCycle(item)}
+                variant={region === item ? 'default' : 'outline'}
+                aria-pressed={region === item}
+                onClick={() => setRegion(item)}
               >
-                {billing.label}
-                {billing.discountLabel ? ` · ${billing.discountLabel}` : ''}
+                {item}
               </Button>
-            );
-          })}
+            ))}
+          </ButtonGroup>
+        </div>
+
+        <div className="sr-control-stack">
+          <span className="sr-control-label">Billing cycle</span>
+          <ButtonGroup className="sr-segmented-control" aria-label="Billing cycle">
+            {cycleOrder.map((item) => {
+              const billing = billingCycles[item] as {
+                label: string;
+                discountLabel?: string;
+              };
+
+              return (
+                <Button
+                  key={item}
+                  type="button"
+                  size="sm"
+                  variant={cycle === item ? 'default' : 'outline'}
+                  aria-pressed={cycle === item}
+                  onClick={() => setCycle(item)}
+                >
+                  <span>{billing.label}</span>
+                  {billing.discountLabel ? (
+                    <small className="sr-billing-save">{billing.discountLabel}</small>
+                  ) : null}
+                </Button>
+              );
+            })}
+          </ButtonGroup>
         </div>
       </div>
 
@@ -214,6 +266,7 @@ export function PricingExplorer({
             const price = plan.pricing[cycle];
             const available = plan.source.availability !== 'out-of-stock';
             const recommended = plan.name.startsWith(recommendedTier);
+            const featured = guided ? recommended : plan.popular;
 
             return (
               <Card
@@ -221,42 +274,57 @@ export function PricingExplorer({
                 className="sr-plan-card"
                 data-popular={plan.popular}
                 data-recommended={guided && recommended}
+                data-featured={featured}
               >
+                {featured ? (
+                  <div className="sr-plan-featured-line" aria-hidden="true" />
+                ) : null}
+
                 <div className="sr-plan-top">
                   <div>
+                    <span className="sr-plan-region">{plan.location} VPS</span>
                     <h3 className="sr-plan-name">{plan.name}</h3>
-                    <p className="sr-plan-desc">{plan.description}</p>
                   </div>
                   <div className="sr-plan-badges">
                     {guided && recommended ? <Badge>Best fit</Badge> : null}
-                    {plan.popular && !(guided && recommended) ? <Badge variant="outline">Popular</Badge> : null}
+                    {plan.popular && !(guided && recommended) ? (
+                      <Badge variant="outline">Popular</Badge>
+                    ) : null}
                   </div>
                 </div>
 
-                <div>
+                <div className="sr-plan-pricing">
                   <p className="sr-plan-price">
                     €{price.amount}
                     <small>{price.suffix}</small>
                   </p>
                   <p className="sr-plan-period">
                     {price.periodLabel}
-                    {price.discountLabel ? ` · ${price.discountLabel}` : ''}
+                    {price.discountLabel ? <span>{price.discountLabel}</span> : null}
                   </p>
                 </div>
 
                 <Separator />
 
                 <ul className="sr-plan-specs">
-                  <li><span>CPU</span><b>{plan.specs.cpu}</b></li>
-                  <li><span>RAM</span><b>{plan.specs.ram}</b></li>
-                  <li><span>Storage</span><b>{plan.specs.storage}</b></li>
-                  <li><span>Bandwidth</span><b>{plan.specs.bandwidth}</b></li>
+                  {specs.map(({ key, label, icon: Icon }) => (
+                    <li key={key}>
+                      <span>
+                        <Icon aria-hidden="true" />
+                        {label}
+                      </span>
+                      <b>{plan.specs[key]}</b>
+                    </li>
+                  ))}
                 </ul>
 
                 <div className="sr-plan-actions">
                   {available ? (
                     <Button asChild className="w-full">
-                      <a href={checkoutUrl(plan, cycle)}>Buy now</a>
+                      <a href={checkoutUrl(plan, cycle)}>
+                        Configure server
+                        <ArrowRight />
+                      </a>
                     </Button>
                   ) : (
                     <span className="sr-unavailable">Currently unavailable</span>
