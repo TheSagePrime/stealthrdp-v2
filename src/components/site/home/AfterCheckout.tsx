@@ -1,4 +1,4 @@
-import { Quote, Star } from 'lucide-react';
+import { ArrowUpRight, Quote } from 'lucide-react';
 import { testimonials } from '@/lib/stealth/content';
 
 export function AfterCheckout() {
@@ -19,17 +19,31 @@ export function AfterCheckout() {
           {testimonials.slice(0, 3).map((item, index) => (
             <article className="srv3-review-card" key={item.id ?? item._id ?? index}>
               <div className="srv3-review-top">
-                <Quote aria-hidden="true" />
-                <div className="srv3-stars" aria-label="Customer review">
-                  {[0, 1, 2, 3, 4].map(star => <Star key={star} aria-hidden="true" />)}
-                </div>
-              </div>
-              <blockquote>{item.quote}</blockquote>
-              <footer>
-                <strong>{item.authorName}</strong>
-                <span>
-                  {item.publishedOn || item.authorCompany || item.sourceLabel || 'StealthRDP customer'}
+                <span className="srv3-review-quote">
+                  <Quote aria-hidden="true" />
                 </span>
+                <span className="srv3-review-source">
+                  {item.sourceLabel || item.publishedOn || 'Customer feedback'}
+                </span>
+              </div>
+
+              <blockquote>{item.quote}</blockquote>
+
+              <footer>
+                <div>
+                  <strong>{item.authorName}</strong>
+                  <span>{item.authorCompany || item.publishedOn || 'StealthRDP customer'}</span>
+                </div>
+                {item.sourceUrl ? (
+                  <a
+                    href={item.sourceUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`View source for review by ${item.authorName}`}
+                  >
+                    <ArrowUpRight aria-hidden="true" />
+                  </a>
+                ) : null}
               </footer>
             </article>
           ))}
