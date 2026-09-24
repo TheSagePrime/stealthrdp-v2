@@ -19,8 +19,16 @@
       "dialog.tsx",
       "card.tsx",
       "tabs.tsx",
-      "tooltip.tsx"
-    ]
+      "tooltip.tsx",
+      "accordion.tsx",
+      "button-group.tsx"
+    ],
+    "registryPolicy": {
+      "officialShadcnAllowed": true,
+      "openSourceDirectoryAllowed": true,
+      "reviewThirdPartyCodeBeforeUse": true,
+      "forbidSecondGeneralPurposeUiKit": true
+    }
   },
   "tokens": {
     "source": "src/styles/global.css",
