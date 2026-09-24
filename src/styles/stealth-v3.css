@@ -2309,6 +2309,24 @@ body {
   gap: 18px;
 }
 
+.sr-workload-trigger {
+  min-height: 44px;
+  width: min(100%, 320px);
+  justify-content: space-between;
+  border-color: var(--srv3-border-strong);
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 0.875rem;
+}
+
+.sr-workload-menu {
+  min-width: min(280px, calc(100vw - 40px));
+}
+
+.sr-workload-menu [data-slot="dropdown-menu-radio-item"] {
+  min-height: 40px;
+}
+
 .sr-finder-os-note p {
   margin: 0;
   color: var(--muted-foreground);
@@ -2361,8 +2379,8 @@ body {
 }
 
 .sr-segmented-control [data-slot="button"][aria-pressed="true"] {
-  border-color: rgb(119 143 255 / 38%);
-  background: #677ef2;
+  border-color: var(--primary);
+  background: var(--primary);
   color: var(--primary-foreground);
 }
 
@@ -2476,10 +2494,10 @@ body {
 .sr-plan-region {
   display: block;
   margin-bottom: 5px;
-  color: #65728a;
-  font-size: 0.62rem;
+  color: #aab6cb;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 

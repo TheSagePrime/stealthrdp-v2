@@ -36,4 +36,24 @@ describe('active marketing palette', () => {
     expect(light).toBeDefined();
     expect(primaryContrast(light!)).toBeGreaterThanOrEqual(4.5);
   });
+
+  it('uses the primary action token for selected pricing controls', () => {
+    const selected = marketingCss.match(/\.sr-segmented-control \[data-slot="button"\]\[aria-pressed="true"\]\s*\{([^}]+)\}/)?.[1];
+    expect(selected).toBeDefined();
+    expect(selected).toMatch(/background:\s*var\(--primary\)/);
+    expect(selected).toMatch(/color:\s*var\(--primary-foreground\)/);
+  });
+
+  it('keeps plan region labels readable against the dark cards', () => {
+    const label = [...marketingCss.matchAll(/\.sr-plan-region\s*\{([^}]+)\}/g)].at(-1)?.[1];
+    expect(label).toBeDefined();
+    const color = label!.match(/color:\s*(#[a-f\d]{6})/i)?.[1];
+    const size = Number(label!.match(/font-size:\s*([\d.]+)rem/)?.[1]);
+    const dark = globalCss.match(/\.dark\s*\{([^}]+)\}/)?.[1];
+    const card = dark?.match(/--card:\s*(#[a-f\d]{6})/i)?.[1];
+    expect(color).toBeDefined();
+    expect(card).toBeDefined();
+    expect((luminance(color!) + 0.05) / (luminance(card!) + 0.05)).toBeGreaterThanOrEqual(4.5);
+    expect(size).toBeGreaterThanOrEqual(0.75);
+  });
 });

@@ -22,6 +22,22 @@ describe('PricingExplorer purchase decisions', () => {
     expect(page.getByRole('rowheader', { name: /Bronze USA/ })).not.toBeInTheDocument();
   });
 
+  it('shows the same two-decimal price in cards and comparison', async () => {
+    await render(<PricingExplorer showComparison />);
+
+    expect(page.getByRole('cell', { name: '€9.50/mo' })).toBeInTheDocument();
+    expect(page.getByText('€9.50').first()).toBeInTheDocument();
+  });
+
+  it('selects a workload from the existing menu and updates the best fit', async () => {
+    await render(<PricingExplorer />);
+    await userEvent.click(page.getByRole('button', { name: /Remote desktop/ }));
+    await userEvent.click(page.getByRole('menuitemradio', { name: 'Trading' }));
+
+    expect(page.getByRole('button', { name: /Trading/ })).toBeInTheDocument();
+    expect(page.getByText('Gold USA').first()).toBeInTheDocument();
+  });
+
   it('describes OS selection at checkout rather than offering an ineffective filter', async () => {
     await render(<PricingExplorer />);
 

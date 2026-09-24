@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react';
 import {
   ArrowRight,
+  ChevronDown,
   Cpu,
   Globe2,
   HardDrive,
@@ -13,6 +14,14 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
 import { Card } from '@/components/ui/card';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Separator } from '@/components/ui/separator';
 import {
   Table,
@@ -31,6 +40,8 @@ import {
 } from '@/lib/stealth/content';
 
 const cycleOrder: BillingCycle[] = ['monthly', 'quarterly', 'annual', 'biannual'];
+
+const formatPrice = (amount: number) => Number.isInteger(amount) ? `${amount}` : amount.toFixed(2);
 
 const workloadOptions = [
   { key: 'remote-desktop', label: 'Remote desktop', tier: 'Bronze' },
@@ -75,7 +86,7 @@ function ComparisonRow({
       <TableCell>{plan.specs.ram}</TableCell>
       <TableCell>{plan.specs.storage}</TableCell>
       <TableCell>{plan.specs.bandwidth}</TableCell>
-      <TableCell>{`€${price.amount}${price.suffix}`}</TableCell>
+      <TableCell>{`€${formatPrice(price.amount)}${price.suffix}`}</TableCell>
       <TableCell>
         {available ? (
           <Button asChild size="sm" variant="outline">
@@ -124,20 +135,24 @@ export function PricingExplorer({
           <div className="sr-finder-grid">
             <div className="sr-finder-block">
               <span className="sr-control-label">Use case</span>
-              <ButtonGroup className="sr-segmented-control" aria-label="Workload">
-                {workloadOptions.map(item => (
-                  <Button
-                    key={item.key}
-                    type="button"
-                    size="sm"
-                    variant={workload === item.key ? 'default' : 'outline'}
-                    aria-pressed={workload === item.key}
-                    onClick={() => setWorkload(item.key)}
-                  >
-                    {item.label}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button type="button" variant="outline" className="sr-workload-trigger" aria-label={`Use case: ${workloadOptions.find(item => item.key === workload)?.label}`}>
+                    {workloadOptions.find(item => item.key === workload)?.label}
+                    <ChevronDown aria-hidden="true" />
                   </Button>
-                ))}
-              </ButtonGroup>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="sr-workload-menu">
+                  <DropdownMenuLabel>What will you run?</DropdownMenuLabel>
+                  <DropdownMenuRadioGroup value={workload} onValueChange={value => setWorkload(value as WorkloadKey)}>
+                    {workloadOptions.map(item => (
+                      <DropdownMenuRadioItem key={item.key} value={item.key}>
+                        {item.label}
+                      </DropdownMenuRadioItem>
+                    ))}
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
 
             <div className="sr-finder-block sr-finder-os-note">
@@ -241,7 +256,7 @@ export function PricingExplorer({
 
                 <div className="sr-plan-pricing">
                   <p className="sr-plan-price">
-                    €{price.amount}
+                    €{formatPrice(price.amount)}
                     <small>{price.suffix}</small>
                   </p>
                   <p className="sr-plan-period">
