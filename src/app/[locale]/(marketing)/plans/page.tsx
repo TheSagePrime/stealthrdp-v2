@@ -27,7 +27,7 @@ const included = [
   { icon: ShieldCheck, title: 'Full admin access', text: 'Control your server from day one.' },
   { icon: HardDrive, title: 'NVMe SSD storage', text: 'Fast disk for everyday workloads.' },
   { icon: Server, title: 'Isolated VMs', text: 'Separate virtual machines per server.' },
-  { icon: Zap, title: 'Instant activation', text: 'Ready after checkout.' },
+  { icon: Zap, title: 'Fast provisioning', text: 'Automated setup after checkout.' },
   { icon: Headphones, title: '24/7 support', text: 'Help when you need it.' },
 ];
 
@@ -62,7 +62,7 @@ export default function PlansPage() {
         <div className="sr-container">
           <div className="sr-section-head">
             <div>
-              <p className="sr-kicker">01 / Choose an operating system</p>
+              <p className="sr-kicker">Choose an operating system</p>
               <h2 className="sr-section-title">Pick the VPS environment that fits your work.</h2>
             </div>
             <p>
@@ -155,7 +155,7 @@ export default function PlansPage() {
         <div className="sr-container">
           <div className="sr-section-head">
             <div>
-              <p className="sr-kicker">02 / Compare precisely</p>
+              <p className="sr-kicker">Compare precisely</p>
               <h2 className="sr-section-title">See the difference in one view.</h2>
             </div>
             <p>Use this table for a quick resource check. Checkout confirms the current price and availability.</p>
