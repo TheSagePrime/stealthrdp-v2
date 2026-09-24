@@ -1,5 +1,10 @@
 /* ==========================================================================
-   StealthRDP surfaces that M1 does not recompose.
+   Legacy migrated StealthRDP route surfaces.
+
+   Keep only as compatibility for routes not yet structurally rewritten.
+   New visual work must follow DESIGN.md and src/styles/stealth-v3.css.
+
+   Historical note: surfaces that M1 does not recompose.
 
    Token-migrated from base ae5f38c: three generations of palette (cobalt, cyan
    and a light-mode island) collapse into the single Graphite / Restrained Gold
