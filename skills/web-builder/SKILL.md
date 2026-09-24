@@ -28,7 +28,18 @@ Validate inputs with Zod. Keep expensive operations bounded. Use rate limiting a
 
 ## Frontend
 
-Use the design system and existing primitives. Avoid generic AI-dashboard patterns, unnecessary glass/blur decoration, random hardcoded colors, or duplicate primitives.
+Read DESIGN.md before visual work. It is the single project visual source of truth.
+
+Use DESIGN_SYSTEM.md for component and layout implementation.
+Use shadcn/Radix as the primary interactive foundation and custom product components for authored marketing surfaces.
+
+For StealthRDP:
+- build a modern commercial hosting site, not a dashboard or control-room UI.
+- keep one shared container and section rhythm.
+- use brand colour intentionally; keep status colours semantic.
+- cards are valid for real product objects such as VPS plans, locations and reviews.
+- do not revive fake terminals, orbit-ring dashboards, floating telemetry cards, numbered-clause layouts, or repetitive feature-card grids.
+- verify meaningful frontend work at desktop and mobile sizes.
 
 ## Verification
 
