@@ -1,268 +1,109 @@
-import {
-  Activity,
-  ArrowRight,
-  CheckCircle2,
-  CircleHelp,
-  Cpu,
-  Gauge,
-  Globe2,
-  HardDrive,
-  Server,
-  ShieldCheck,
-  TriangleAlert,
-  XCircle,
-  Zap,
-} from 'lucide-react';
+import { ArrowRight, Cpu, Globe2, HardDrive, Server, ShieldCheck, Zap } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Pill } from '@/components/ui/pill';
-import { SessionPreview } from '@/components/site/SessionPreview';
-import { plans, uptime } from '@/lib/stealth/content';
+import { plans } from '@/lib/stealth/content';
 
-/**
- * The hero device shows one real plan. Its title and every spec value come from
- * `src/content/plans.json`, which is the same data the plans surface renders.
- */
-const HERO_PLAN_NAME = 'Silver USA';
-const heroPlan = plans.find(plan => plan.name === HERO_PLAN_NAME) ?? null;
+const availablePlans = plans.filter(plan => plan.source.availability !== 'out-of-stock');
+const startingPlan = [...availablePlans].sort(
+  (a, b) => a.pricing.monthly.amount - b.pricing.monthly.amount,
+)[0];
 
-const highlights = [
-  { value: '10,000+', label: 'orders delivered' },
-  { value: '99.9%', label: 'uptime SLA' },
-  { value: '60 sec', label: 'average deploy' },
-  { value: 'USA + EU', label: 'server regions' },
-];
-
-const rail = [
-  { icon: Zap, label: 'Instant deployment' },
-  { icon: ShieldCheck, label: '99.9% uptime SLA' },
+const heroFacts = [
+  { icon: Cpu, label: 'Full admin access' },
   { icon: HardDrive, label: 'NVMe storage' },
-  { icon: Globe2, label: 'USA + EU regions' },
-  { icon: Activity, label: '24/7 monitoring' },
-];
+  { icon: Globe2, label: 'USA + EU' },
+  { icon: ShieldCheck, label: '99.9% uptime SLA' },
+] as const;
 
-const systems = [
-  'Debian',
-  'CentOS',
-  'Rocky Linux',
-  'Ubuntu',
-  'Fedora',
-  'FreeBSD',
-  'Alpine Linux',
-  'AlmaLinux',
-  'Windows',
-];
-
-/**
- * The hero's status device. Relocated here from the feedback section so the
- * hero carries one purposeful operational object instead of a decorative
- * progress bar (review R1 + R2).
- *
- * The three rows report states the monitoring actually measures. They are read
- * from the same published snapshot that powers the proof rail pill
- * (src/content/uptime.json), so the card never claims a state nothing checks.
- */
-const statusRoles = [
-  { id: 'usa', region: 'USA', icon: Server },
-  { id: 'eu', region: 'EU / Netherlands', icon: Server },
-  { id: 'website', region: 'Website', icon: Globe2 },
-];
-
-function statusRows() {
-  const monitors = uptime.monitors ?? [];
-  const snapshot = uptime.stat === 'ok' && monitors.length > 0;
-
-  return statusRoles.map(role => {
-    const monitor = snapshot ? monitors.find(item => item.region === role.region) : undefined;
-
-    return {
-      id: role.id,
-      icon: role.icon,
-      label: monitor ? monitor.label : 'Status unavailable',
-      status: monitor ? monitor.status : 'unknown',
-      uptimeRatio: monitor ? monitor.uptimeRatio : null,
-    };
-  });
-}
-
-/** DESIGN.md section 10: status is never colour alone. Icon and label together. */
-function StatusIcon({ status }: { status: string }) {
-  if (status === 'up') return <CheckCircle2 aria-hidden="true" />;
-  if (status === 'degraded') return <TriangleAlert aria-hidden="true" />;
-  if (status === 'down') return <XCircle aria-hidden="true" />;
-  return <CircleHelp aria-hidden="true" />;
-}
-
-const statusMeta = [
-  { term: 'Virtualization', value: 'Isolated VMs' },
-  { term: 'Regions', value: 'USA + EU' },
-  { term: 'Access', value: 'Full admin' },
-];
-
-function stateLabel(status: string): string {
-  if (status === 'up') return 'Operational';
-  if (status === 'degraded') return 'Degraded';
-  if (status === 'down') return 'Down';
-  if (status === 'paused') return 'Paused';
-  return 'Unknown';
-}
-
-function pillState(status: string): 'ok' | 'warn' | 'bad' | 'unknown' {
-  if (status === 'up') return 'ok';
-  if (status === 'degraded') return 'warn';
-  if (status === 'down') return 'bad';
-  return 'unknown';
-}
-
-/**
- * DESIGN.md section 9, position 1: one claim, one primary action, one secondary,
- * and a proof strip carrying real numbers plus the live status.
- */
 export function HomeHero() {
-  const monitors = uptime.monitors ?? [];
-  const worst = monitors.find(monitor => monitor.status !== 'up')?.status ?? 'up';
-  const live = monitors.length > 0 && uptime.stat === 'ok';
-
   return (
-    <>
-      <section className="sr-hero">
-        <div className="sr-container sr-hero-grid">
-          <div className="sr-hero-copy">
-            <div className="sr-kicker-row">
-              <span className="sr-live-dot" aria-hidden="true" />
-              <p className="sr-kicker">Windows & Linux VPS · Instant setup</p>
+    <section className="srv3-hero">
+      <div className="sr-container srv3-hero-grid">
+        <div className="srv3-hero-copy">
+          <div className="srv3-eyebrow">
+            <span className="srv3-eyebrow-dot" aria-hidden="true" />
+            Windows & Linux VPS
+          </div>
+
+          <h1>
+            Fast servers.
+            <span>Less hosting friction.</span>
+          </h1>
+
+          <p className="srv3-hero-lede">
+            Deploy a VPS with full administrative access, NVMe storage and flexible
+            billing across USA and Europe.
+          </p>
+
+          <div className="srv3-hero-actions">
+            <Button asChild size="lg">
+              <Link href="/plans">
+                Explore servers
+                <ArrowRight />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <a href="https://dash.stealthrdp.com/index.php?rp=/store">View pricing</a>
+            </Button>
+          </div>
+
+          <div className="srv3-hero-price">
+            <span>Starting at</span>
+            <strong>
+              €{startingPlan?.pricing.monthly.amount.toFixed(2) ?? '9.50'}
+              <small>/mo</small>
+            </strong>
+            <span>{startingPlan?.name ?? 'Bronze USA'} · Dedicated IPv4</span>
+          </div>
+
+          <ul className="srv3-hero-facts" aria-label="VPS highlights">
+            {heroFacts.map(({ icon: Icon, label }) => (
+              <li key={label}>
+                <Icon aria-hidden="true" />
+                {label}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="srv3-hero-visual" aria-label="StealthRDP infrastructure illustration">
+          <div className="srv3-orbit srv3-orbit-one" aria-hidden="true" />
+          <div className="srv3-orbit srv3-orbit-two" aria-hidden="true" />
+
+          <div className="srv3-rack-shell">
+            <div className="srv3-rack-top">
+              <span>STEALTHRDP</span>
+              <span>INFRASTRUCTURE</span>
             </div>
 
-            <h1 className="sr-title">
-              Your server.
-              <span>Live in 60 seconds.</span>
-            </h1>
-
-            <p className="sr-lede">
-              Serious VPS infrastructure without the usual hosting friction.
-              Enterprise hardware, full admin access and a 99.9% uptime SLA —
-              ready when your work is.
-            </p>
-
-            <div className="sr-actions">
-              <Button asChild size="lg">
-                <a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">
-                  Deploy a server
-                  <ArrowRight />
-                </a>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="sr-button-inverse">
-                <Link href="/plans">Explore plans</Link>
-              </Button>
-            </div>
-
-            <p className="sr-micro">
-              From €9.50/month · No hidden fees · Cancel anytime · 7-day money-back
-            </p>
-
-            <div className="sr-hero-proof" aria-label="StealthRDP highlights">
-              {highlights.map(item => (
-                <div key={item.label}>
-                  <strong>{item.value}</strong>
-                  <span>{item.label}</span>
+            <div className="srv3-rack">
+              {[0, 1, 2, 3].map(index => (
+                <div className="srv3-rack-unit" key={index}>
+                  <span className="srv3-rack-led" />
+                  <span className="srv3-rack-line" />
+                  <span className="srv3-rack-line srv3-rack-line-short" />
+                  <span className="srv3-rack-port" />
+                  <span className="srv3-rack-port" />
                 </div>
               ))}
             </div>
-          </div>
 
-          <div className="sr-hero-stage" aria-label="StealthRDP infrastructure preview">
-            <SessionPreview
-              variant="desktop"
-              title={heroPlan ? heroPlan.name : HERO_PLAN_NAME}
-              mark={<Cpu aria-hidden="true" />}
-              tray={
-                <>
-                  <span>Windows / Linux</span>
-                  {heroPlan ? <span>{`${heroPlan.location} region`}</span> : null}
-                </>
-              }
-            >
-              {heroPlan ? (
-                <div className="sr-server-metrics">
-                  <div><span>vCPU</span><strong>{heroPlan.specs.cpu}</strong></div>
-                  <div><span>Memory</span><strong>{heroPlan.specs.ram}</strong></div>
-                  <div><span>Storage</span><strong>{heroPlan.specs.storage}</strong></div>
-                  <div><span>Traffic</span><strong>{heroPlan.specs.bandwidth}</strong></div>
-                </div>
-              ) : null}
-
-              <div className="sr-status-device">
-                <ol className="sr-provision-list">
-                  {statusRows().map(({ id, icon: Icon, label, status, uptimeRatio }, index) => (
-                    <li className="sr-provision-step" key={id}>
-                      <span className="sr-provision-num">{`0${index + 1}`}</span>
-                      <span className="sr-provision-icon">
-                        <Icon aria-hidden="true" />
-                      </span>
-                      <div className="sr-provision-body">
-                        <strong>{label}</strong>
-                      </div>
-                      <span className="sr-provision-state" data-state={status}>
-                        <StatusIcon status={status} />
-                        {stateLabel(status)}
-                        <span className="sr-provision-sep" aria-hidden="true">·</span>
-                        <span className="sr-provision-ratio">
-                          {uptimeRatio === null ? '—' : `${uptimeRatio.toFixed(3)}%`}
-                        </span>
-                      </span>
-                    </li>
-                  ))}
-                </ol>
-
-                <dl className="sr-provision-meta">
-                  {statusMeta.map(item => (
-                    <div key={item.term}>
-                      <dt>{item.term}</dt>
-                      <dd>{item.value}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-            </SessionPreview>
-
-            <div className="sr-stage-float">
-              <Gauge aria-hidden="true" />
-              <span>
-                <strong>Fast setup</strong>
-                <small>built to be ready in minutes</small>
-              </span>
-            </div>
-            <div className="sr-stage-float">
-              <Globe2 aria-hidden="true" />
-              <span>
-                <strong>USA + EU</strong>
-                <small>choose your region</small>
-              </span>
+            <div className="srv3-rack-footer">
+              <span><Server /> Virtual machines</span>
+              <span><Zap /> Rapid setup</span>
             </div>
           </div>
-        </div>
-      </section>
 
-      <section className="sr-proof-rail" aria-label="Platform strengths">
-        <div className="sr-container sr-proof-rail-inner">
-          <Pill state={pillState(live ? worst : 'unknown')} icon={<CheckCircle2 aria-hidden="true" />}>
-            {live ? stateLabel(worst) : stateLabel('unknown')}
-          </Pill>
-          {rail.map(({ icon: Icon, label }) => (
-            <span key={label}>
-              <Icon aria-hidden="true" />
-              {label}
-            </span>
-          ))}
+          <div className="srv3-visual-tag srv3-visual-tag-us">
+            <Globe2 />
+            <span><strong>USA</strong> region</span>
+          </div>
+          <div className="srv3-visual-tag srv3-visual-tag-eu">
+            <Globe2 />
+            <span><strong>EU</strong> region</span>
+          </div>
         </div>
-      </section>
-
-      <section className="sr-os-strip">
-        <div className="sr-container sr-os-row">
-          <span className="sr-os-label">Deploy your preferred OS</span>
-          {systems.map(system => <span className="sr-os-pill" key={system}>{system}</span>)}
-        </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
