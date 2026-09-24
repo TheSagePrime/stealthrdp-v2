@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { Activity, CheckCircle2, CircleHelp, TriangleAlert, XCircle } from 'lucide-react';
+import { Pulse as Activity, CheckCircle as CheckCircle2, Question as CircleHelp, Warning as TriangleAlert, XCircle } from '@phosphor-icons/react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Pill, type PillState } from '@/components/ui/pill';
 import { Progress } from '@/components/ui/progress';
@@ -36,10 +36,10 @@ function pillState(status: string): PillState {
 }
 
 function pillIcon(status: string) {
-  if (status === 'up') return <CheckCircle2 aria-hidden="true" />;
-  if (status === 'degraded') return <TriangleAlert aria-hidden="true" />;
-  if (status === 'down') return <XCircle aria-hidden="true" />;
-  return <CircleHelp aria-hidden="true" />;
+  if (status === 'up') return <CheckCircle2 size={16} aria-hidden="true" />;
+  if (status === 'degraded') return <TriangleAlert size={16} aria-hidden="true" />;
+  if (status === 'down') return <XCircle size={16} aria-hidden="true" />;
+  return <CircleHelp size={16} aria-hidden="true" />;
 }
 
 export function StatusGrid({ fallback }: { fallback: StatusPayload }) {
@@ -92,14 +92,14 @@ export function StatusGrid({ fallback }: { fallback: StatusPayload }) {
           <div className="flex flex-wrap gap-2">
             <Pill
               state={summary.operational > 0 ? 'ok' : 'unknown'}
-              icon={<CheckCircle2 aria-hidden="true" />}
+              icon={<CheckCircle2 size={16} aria-hidden="true" />}
             >
               <span>
                 <strong className="font-semibold text-body-text">{summary.operational}</strong>
                 {' operational'}
               </span>
             </Pill>
-            <Pill state="neutral" icon={<Activity aria-hidden="true" />}>
+            <Pill state="neutral" icon={<Activity size={16} aria-hidden="true" />}>
               <span>
                 <strong className="font-semibold text-body-text">{payload.monitors.length}</strong>
                 {' monitored'}

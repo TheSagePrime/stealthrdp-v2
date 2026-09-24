@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
@@ -91,7 +91,7 @@ export default async function HomePage({ params }: Props) {
             <Button asChild variant="outline">
               <Link href="/plans">
                 Compare every plan
-                <ArrowRight aria-hidden="true" />
+                <ArrowRight size={16} aria-hidden="true" />
               </Link>
             </Button>
           </div>
@@ -122,7 +122,7 @@ export default async function HomePage({ params }: Props) {
               <Button asChild size="lg">
                 <Link href="/plans">
                   View VPS plans
-                  <ArrowRight aria-hidden="true" />
+                  <ArrowRight size={16} aria-hidden="true" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline">

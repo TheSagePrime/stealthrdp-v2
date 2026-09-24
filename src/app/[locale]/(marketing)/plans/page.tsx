@@ -1,10 +1,5 @@
 import type { Metadata } from 'next';
-import {
-  ArrowRight,
-  Monitor,
-  Settings2,
-  Terminal,
-} from 'lucide-react';
+import { ArrowRight, Monitor, SlidersHorizontal as Settings2, Terminal } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
 import { Badge } from '@/components/ui/badge';
@@ -168,13 +163,13 @@ export default function PlansPage() {
             <p>Choose your own CPU, RAM, storage, location, and billing cycle in the server configurator.</p>
           </div>
           <div className="sr-byo-visual" aria-hidden="true">
-            <Settings2 />
+            <Settings2 size={16} />
             <span>CPU · RAM · STORAGE · REGION</span>
           </div>
           <Button asChild size="lg">
             <a href="https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps">
               Configure & Deploy
-              <ArrowRight />
+              <ArrowRight size={16} />
             </a>
           </Button>
         </div>

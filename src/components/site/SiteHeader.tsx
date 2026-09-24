@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Headphones, Menu } from 'lucide-react';
+import { Headphones, List as Menu } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
@@ -18,7 +18,7 @@ export function SiteHeader() {
         <div className="sr-container">
           <span>Windows & Linux VPS · USA + Europe</span>
           <a href="https://dash.stealthrdp.com/submitticket.php">
-            <Headphones aria-hidden="true" />
+            <Headphones size={16} aria-hidden="true" />
             24/7 support
           </a>
         </div>
@@ -53,7 +53,7 @@ export function SiteHeader() {
 
         <details className="srv3-mobile-nav">
           <summary>
-            <Menu aria-hidden="true" />
+            <Menu size={16} aria-hidden="true" />
             <span>Menu</span>
           </summary>
           <nav aria-label="Mobile navigation">

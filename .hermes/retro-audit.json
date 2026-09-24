@@ -1,8 +1,8 @@
 {
  "summary": {
   "REPLACE": 11,
-  "CHECK": 2,
-  "KEEP": 4
+  "CHECK": 3,
+  "KEEP": 3
  },
  "components": [
   {
@@ -103,11 +103,27 @@
   },
   {
    "file": "src/components/seo/Article.tsx",
-   "bytes": 4453,
+   "bytes": 5982,
    "animated": false,
-   "need": "article",
-   "verdict": "KEEP",
-   "best": []
+   "need": "article badge",
+   "verdict": "CHECK",
+   "best": [
+    {
+     "source": "8bitcn",
+     "name": "badge",
+     "score": 3
+    },
+    {
+     "source": "animate-ui",
+     "name": "icons-badge-check",
+     "score": 3
+    },
+    {
+     "source": "basecn",
+     "name": "badge",
+     "score": 3
+    }
+   ]
   },
   {
    "file": "src/components/site/DocBody.tsx",
@@ -135,7 +151,7 @@
   },
   {
    "file": "src/components/site/OSHeroVisual.tsx",
-   "bytes": 1086,
+   "bytes": 1360,
    "animated": false,
    "need": "visual",
    "verdict": "KEEP",
@@ -143,9 +159,9 @@
   },
   {
    "file": "src/components/site/PricingExplorer.tsx",
-   "bytes": 11604,
+   "bytes": 11812,
    "animated": false,
-   "need": "badge dropdown explorer nav pricing table",
+   "need": "badge dropdown explorer pricing table",
    "verdict": "REPLACE",
    "best": [
     {
@@ -167,7 +183,7 @@
   },
   {
    "file": "src/components/site/SiteFooter.tsx",
-   "bytes": 2880,
+   "bytes": 2819,
    "animated": false,
    "need": "footer",
    "verdict": "REPLACE",
@@ -191,7 +207,7 @@
   },
   {
    "file": "src/components/site/SiteHeader.tsx",
-   "bytes": 2299,
+   "bytes": 2258,
    "animated": false,
    "need": "header nav",
    "verdict": "REPLACE",
@@ -215,7 +231,7 @@
   },
   {
    "file": "src/components/site/StatusGrid.tsx",
-   "bytes": 3564,
+   "bytes": 5541,
    "animated": false,
    "need": "nav status",
    "verdict": "REPLACE",
@@ -247,9 +263,9 @@
   },
   {
    "file": "src/components/site/home/AfterCheckout.tsx",
-   "bytes": 1906,
+   "bytes": 2707,
    "animated": false,
-   "need": "after checkout",
+   "need": "after badge checkout",
    "verdict": "REPLACE",
    "best": [
     {
@@ -271,9 +287,9 @@
   },
   {
    "file": "src/components/site/home/HomeHero.tsx",
-   "bytes": 4727,
+   "bytes": 4308,
    "animated": false,
-   "need": "badge globe hero",
+   "need": "badge hero",
    "verdict": "REPLACE",
    "best": [
     {
@@ -295,7 +311,7 @@
   },
   {
    "file": "src/components/site/home/Infrastructure.tsx",
-   "bytes": 2201,
+   "bytes": 3018,
    "animated": false,
    "need": "infrastructure",
    "verdict": "KEEP",
@@ -303,9 +319,9 @@
   },
   {
    "file": "src/components/site/home/RegionTable.tsx",
-   "bytes": 2782,
+   "bytes": 3382,
    "animated": false,
-   "need": "code region table",
+   "need": "badge code region table",
    "verdict": "REPLACE",
    "best": [
     {
@@ -327,7 +343,7 @@
   },
   {
    "file": "src/components/site/home/Resources.tsx",
-   "bytes": 1530,
+   "bytes": 1952,
    "animated": false,
    "need": "resources",
    "verdict": "CHECK",

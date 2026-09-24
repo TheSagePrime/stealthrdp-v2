@@ -1,0 +1,77 @@
+{
+ "verdict": "PASS",
+ "source": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src",
+ "gates": [
+  {
+   "gate": "scale",
+   "exit": 0,
+   "verdict": "PASS",
+   "summary": "0 finding(s)",
+   "detail": {
+    "violations": [],
+    "counts": {}
+   }
+  },
+  {
+   "gate": "slop",
+   "exit": 0,
+   "verdict": "PASS",
+   "summary": "no HIGH \u2014 13 medium finding(s)",
+   "detail": {
+    "files_scanned": 128,
+    "rules_tripped": [
+     "blur-surface",
+     "shadow-soup"
+    ],
+    "counts": {
+     "blur-surface": 2,
+     "shadow-soup": 11
+    },
+    "high_tripped": [],
+    "findings": [
+     {
+      "rule": "blur-surface",
+      "severity": "medium",
+      "file": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src/styles/stealth-v3.css",
+      "evidence": "backdrop-filter: blur",
+      "description": "blur treatment without a glass panel"
+     },
+     {
+      "rule": "shadow-soup",
+      "severity": "medium",
+      "file": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src/styles/stealth-v3.css",
+      "evidence": "box-shadow: 0 12px 32px",
+      "description": "many independent shadows"
+     },
+     {
+      "rule": "shadow-soup",
+      "severity": "medium",
+      "file": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src/styles/surfaces.css",
+      "evidence": "box-shadow: 0 12px 32px",
+      "description": "many independent shadows"
+     }
+    ],
+    "verdict": "PASS"
+   }
+  },
+  {
+   "gate": "layout",
+   "exit": 0,
+   "verdict": "PASS",
+   "summary": "url=/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src, viewport=None, elements=128, spacingBase=2, distinctSpacing=15, subPixelValues=[], high=0, medium=0",
+   "detail": {
+    "summary": {
+     "url": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src",
+     "viewport": null,
+     "elements": 128,
+     "spacingBase": 2,
+     "distinctSpacing": 15,
+     "subPixelValues": [],
+     "high": 0,
+     "medium": 0
+    },
+    "findings": []
+   }
+  }
+ ]
+}

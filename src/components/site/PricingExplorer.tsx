@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { CaretDown as ChevronDown } from '@phosphor-icons/react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
@@ -204,7 +204,7 @@ export function PricingExplorer({
                     aria-label={`Use case: ${workloadOptions.find(item => item.key === workload)?.label}`}
                   >
                     {workloadOptions.find(item => item.key === workload)?.label}
-                    <ChevronDown aria-hidden="true" />
+                    <ChevronDown size={16} aria-hidden="true" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="start" className="sr-workload-menu">

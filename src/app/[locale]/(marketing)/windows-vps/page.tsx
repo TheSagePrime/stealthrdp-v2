@@ -1,13 +1,5 @@
 import type { Metadata } from 'next';
-import {
-  ArrowRight,
-  Cpu,
-  HardDrive,
-  Info,
-  MapPin,
-  MemoryStick,
-  Scale,
-} from 'lucide-react';
+import { ArrowRight, Cpu, HardDrive, Info, MapPin, Memory as MemoryStick, Scales as Scale } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
 import { OSHeroVisual } from '@/components/site/OSHeroVisual';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
@@ -87,7 +79,7 @@ export default function WindowsVpsPage() {
               StealthRDP sells Windows VPS plans in USA and EU regions. Compare the current catalog, then continue to checkout.
             </p>
             <div className="sr-actions">
-              <Button asChild size="lg"><Link href="#windows-plans">Compare Windows VPS plans <ArrowRight /></Link></Button>
+              <Button asChild size="lg"><Link href="#windows-plans">Compare Windows VPS plans <ArrowRight size={16} /></Link></Button>
               <Button asChild size="lg" variant="outline"><Link href="#windows-versions">Windows versions</Link></Button>
             </div>
           </div>
@@ -116,7 +108,7 @@ export default function WindowsVpsPage() {
               <h3>Choose the plan first. Select Windows or Linux in checkout.</h3>
               <p>The existing checkout provides the operating-system selector before payment.</p>
             </div>
-            <Button asChild><a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">Configure this VPS <ArrowRight /></a></Button>
+            <Button asChild><a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">Configure this VPS <ArrowRight size={16} /></a></Button>
           </div>
         </div>
       </section>
@@ -131,8 +123,8 @@ export default function WindowsVpsPage() {
             <p>A Windows VPS gives you a remote Windows environment for software, testing, administration, and business workflows. It can also suit users who need access to a Windows desktop or server without keeping the machine on site.</p>
             <p>Start with the software and users. A plan that fits one application may not fit several concurrent sessions or a larger installation.</p>
             <div className="sr-inline-links">
-              <Link href="/plans#windows-vps">Windows VPS catalog <ArrowRight /></Link>
-              <Link href="/plans#comparison">Plan comparison <ArrowRight /></Link>
+              <Link href="/plans#windows-vps">Windows VPS catalog <ArrowRight size={16} /></Link>
+              <Link href="/plans#comparison">Plan comparison <ArrowRight size={16} /></Link>
             </div>
           </div>
         </div>
@@ -180,7 +172,7 @@ export default function WindowsVpsPage() {
                   <TableHead scope="row">{item.name}</TableHead>
                   <TableCell>{item.text}</TableCell>
                   <TableCell>
-                    <Pill state="neutral" icon={<Info aria-hidden="true" />}>
+                    <Pill state="neutral" icon={<Info size={16} aria-hidden="true" />}>
                       Confirm during ordering
                     </Pill>
                   </TableCell>
@@ -189,7 +181,7 @@ export default function WindowsVpsPage() {
             </TableBody>
           </Table>
           <div className="sr-disclosure">
-            <Scale aria-hidden="true" />
+            <Scale size={16} aria-hidden="true" />
             <p>
               <strong>Windows licensing:</strong> StealthRDP provides the infrastructure only.
               Microsoft Windows licensing is not included and is not supplied by StealthRDP.
@@ -351,7 +343,7 @@ export default function WindowsVpsPage() {
           </Accordion>
           <div className="sr-cta-inline">
             <div><span className="sr-location-code">Choose another environment</span><h3>Need Linux instead?</h3><p>For websites, applications, databases, or development stacks, see Linux VPS hosting.</p></div>
-            <Button asChild variant="outline"><Link href="/linux-vps">Linux VPS hosting <ArrowRight /></Link></Button>
+            <Button asChild variant="outline"><Link href="/linux-vps">Linux VPS hosting <ArrowRight size={16} /></Link></Button>
           </div>
         </div>
       </section>
@@ -360,7 +352,7 @@ export default function WindowsVpsPage() {
         <div className="sr-container sr-cta sr-cta-premium">
           <div><p className="sr-kicker">Windows VPS plans</p><h2>Compare Windows VPS plans</h2><p>Check the current plan, region, and displayed price, then confirm Windows and the exact image in checkout.</p></div>
           <div className="sr-actions">
-            <Button asChild size="lg"><Link href="/plans#windows-vps">Compare plans <ArrowRight /></Link></Button>
+            <Button asChild size="lg"><Link href="/plans#windows-vps">Compare plans <ArrowRight size={16} /></Link></Button>
             <Button asChild size="lg" variant="outline"><a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">Continue to checkout</a></Button>
           </div>
         </div>

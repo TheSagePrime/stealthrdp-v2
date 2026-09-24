@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/utils/Helpers';
@@ -128,7 +128,7 @@ export default function AboutPage() {
             <Button asChild size="lg">
               <a href="https://dash.stealthrdp.com/submitticket.php">
                 Talk to our team
-                <ArrowRight />
+                <ArrowRight size={16} />
               </a>
             </Button>
             <Button asChild size="lg" variant="outline">

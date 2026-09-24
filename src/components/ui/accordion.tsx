@@ -1,4 +1,4 @@
-import { Plus } from 'lucide-react';
+import { Plus } from '@phosphor-icons/react/dist/ssr';
 import { cn } from '@/utils/Helpers';
 
 /**

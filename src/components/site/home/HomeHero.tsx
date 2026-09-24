@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -41,7 +41,7 @@ export function HomeHero() {
             <Button asChild size="lg">
               <Link href="/plans">
                 Explore servers
-                <ArrowRight aria-hidden="true" />
+                <ArrowRight size={16} aria-hidden="true" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline">

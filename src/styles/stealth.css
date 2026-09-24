@@ -67,7 +67,7 @@
   position: absolute;
   width: 1px;
   height: 1px;
-  margin: -1px;
+  margin: -2px;
   border: 0;
   padding: 0;
   overflow: hidden;
@@ -238,8 +238,8 @@
 }
 
 .sr-topline-inner svg {
-  width: 0.875rem;
-  height: 0.875rem;
+  width: 1rem;
+  height: 1rem;
   color: var(--accent);
 }
 
@@ -600,8 +600,8 @@
 }
 
 .sr-server-icon svg {
-  width: 1.125rem;
-  height: 1.125rem;
+  width: 1rem;
+  height: 1rem;
 }
 
 .sr-server-metrics {
@@ -804,7 +804,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 8px 16px;
-  padding-block: 14px;
+  padding-block: 16px;
   color: var(--text-muted);
   font-size: var(--text-micro);
   letter-spacing: 0.02em;
@@ -989,8 +989,8 @@
 }
 
 .sr-pill svg {
-  width: 0.875rem;
-  height: 0.875rem;
+  width: 1rem;
+  height: 1rem;
   flex: 0 0 auto;
 }
 
@@ -1055,8 +1055,8 @@
 }
 
 .sr-provision-icon svg {
-  width: 1.125rem;
-  height: 1.125rem;
+  width: 1rem;
+  height: 1rem;
 }
 
 .sr-provision-num {
@@ -1093,8 +1093,8 @@
 }
 
 .sr-provision-state svg {
-  width: 0.875rem;
-  height: 0.875rem;
+  width: 1rem;
+  height: 1rem;
   color: var(--status-unknown);
 }
 
@@ -1209,8 +1209,7 @@
   border: 1px solid var(--border-divider);
   border-radius: var(--radius-lg);
   background: var(--surface-1);
-  /* The frame owns the inset: the table never lands flush on its own border. */
-  padding: 12px;
+  /* The frame owns the inset: the table never lands flush on its own border. */ padding: 12px;
   /* A column cut by the viewport edge must read as scrollable, not broken.
      The fade marks that more table exists to the right. */
   mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 28px), transparent 100%);
@@ -1316,8 +1315,8 @@
 }
 
 .sr-infra-badge svg {
-  width: 0.875rem;
-  height: 0.875rem;
+  width: 1rem;
+  height: 1rem;
   color: var(--status-ok);
 }
 
@@ -1354,8 +1353,8 @@
 }
 
 .sr-feature-icon svg {
-  width: 1.125rem;
-  height: 1.125rem;
+  width: 1rem;
+  height: 1rem;
 }
 
 .sr-infra-list h3 {
@@ -1478,8 +1477,8 @@
 }
 
 .sr-resources-list svg {
-  width: 1.125rem;
-  height: 1.125rem;
+  width: 1rem;
+  height: 1rem;
   color: var(--accent);
 }
 
@@ -1784,7 +1783,7 @@
 .sr-table th,
 .sr-table td {
   border-bottom: 1px solid var(--border-divider);
-  padding: 14px 20px;
+  padding: 16px 20px;
   text-align: start;
   vertical-align: middle;
 }
@@ -2014,7 +2013,7 @@
   }
 
   .sr-cta {
-    padding: 28px;
+    padding: 32px;
   }
 
   .sr-actions {

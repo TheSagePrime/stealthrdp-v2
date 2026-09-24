@@ -1,4 +1,4 @@
-import { ChevronRight } from 'lucide-react';
+import { CaretRight as ChevronRight } from '@phosphor-icons/react/dist/ssr';
 import { cn } from '@/utils/Helpers';
 
 function Breadcrumb({ className, ...props }: React.ComponentProps<'nav'>) {
@@ -61,7 +61,7 @@ function BreadcrumbSeparator({ className, ...props }: React.ComponentProps<'li'>
       className={cn('text-body-dim', className)}
       {...props}
     >
-      <ChevronRight className="size-3.5" />
+      <ChevronRight className="size-4" />
     </li>
   );
 }

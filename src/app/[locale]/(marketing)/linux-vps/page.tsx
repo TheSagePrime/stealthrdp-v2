@@ -1,11 +1,5 @@
 import type { Metadata } from 'next';
-import {
-  ArrowRight,
-  Cpu,
-  HardDrive,
-  MapPin,
-  MemoryStick,
-} from 'lucide-react';
+import { ArrowRight, Cpu, HardDrive, MapPin, Memory as MemoryStick } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
 import { OSHeroVisual } from '@/components/site/OSHeroVisual';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
@@ -103,7 +97,7 @@ export default function LinuxVpsPage() {
               VPN workloads, and general-purpose Linux infrastructure on a supported image.
             </p>
             <div className="sr-actions">
-              <Button asChild size="lg"><Link href="#linux-plans">Compare Linux VPS plans <ArrowRight /></Link></Button>
+              <Button asChild size="lg"><Link href="#linux-plans">Compare Linux VPS plans <ArrowRight size={16} /></Link></Button>
               <Button asChild size="lg" variant="outline"><Link href="#linux-distros">Linux distributions</Link></Button>
             </div>
           </div>
@@ -125,7 +119,7 @@ export default function LinuxVpsPage() {
           <PricingExplorer guided={false} />
           <div className="sr-cta-inline">
             <div><span className="sr-location-code">Next step</span><h3>Choose the plan first. Select Windows or Linux in checkout.</h3><p>The existing checkout provides the operating-system selector before payment.</p></div>
-            <Button asChild><a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">Configure this VPS <ArrowRight /></a></Button>
+            <Button asChild><a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">Configure this VPS <ArrowRight size={16} /></a></Button>
           </div>
         </div>
       </section>
@@ -144,8 +138,8 @@ export default function LinuxVpsPage() {
               Confirm the current row before ordering because prices and stock can change.
             </p>
             <div className="sr-inline-links">
-              <Link href="/plans#linux-vps">Linux VPS catalog <ArrowRight /></Link>
-              <Link href="/plans#comparison">Plan comparison <ArrowRight /></Link>
+              <Link href="/plans#linux-vps">Linux VPS catalog <ArrowRight size={16} /></Link>
+              <Link href="/plans#comparison">Plan comparison <ArrowRight size={16} /></Link>
             </div>
           </div>
         </div>
@@ -200,7 +194,7 @@ export default function LinuxVpsPage() {
             </TableBody>
           </Table>
           <div className="sr-section-link">
-            <Link href="/docs/how-to-install-direct-admin-in-a-linux-server">How to install DirectAdmin in a Linux server <ArrowRight /></Link>
+            <Link href="/docs/how-to-install-direct-admin-in-a-linux-server">How to install DirectAdmin in a Linux server <ArrowRight size={16} /></Link>
           </div>
         </div>
       </section>
@@ -210,7 +204,7 @@ export default function LinuxVpsPage() {
           <div><p className="sr-kicker">Control</p><h2 className="sr-section-title">Root access</h2></div>
           <div className="sr-prose-block">
             <p>VPS plans include full Root access. You administer the server, keep backups of important data, and stay inside the published Use of Service terms.</p>
-            <div className="sr-inline-links"><Link href="/docs/use-of-service">Use of Service terms <ArrowRight /></Link></div>
+            <div className="sr-inline-links"><Link href="/docs/use-of-service">Use of Service terms <ArrowRight size={16} /></Link></div>
           </div>
         </div>
       </section>
@@ -378,7 +372,7 @@ export default function LinuxVpsPage() {
           </Accordion>
           <div className="sr-cta-inline">
             <div><span className="sr-location-code">Choose another environment</span><h3>Need Windows instead?</h3><p>For familiar Windows software and remote Windows desktop or server access, see Windows VPS hosting.</p></div>
-            <Button asChild variant="outline"><Link href="/windows-vps">Windows VPS hosting <ArrowRight /></Link></Button>
+            <Button asChild variant="outline"><Link href="/windows-vps">Windows VPS hosting <ArrowRight size={16} /></Link></Button>
           </div>
         </div>
       </section>
@@ -387,7 +381,7 @@ export default function LinuxVpsPage() {
         <div className="sr-container sr-cta sr-cta-premium">
           <div><p className="sr-kicker">Linux VPS plans</p><h2>Compare Linux VPS plans</h2><p>Check the current plan, region, and displayed price, then confirm Linux and the exact image in checkout.</p></div>
           <div className="sr-actions">
-            <Button asChild size="lg"><Link href="/plans#linux-vps">Compare plans <ArrowRight /></Link></Button>
+            <Button asChild size="lg"><Link href="/plans#linux-vps">Compare plans <ArrowRight size={16} /></Link></Button>
             <Button asChild size="lg" variant="outline"><a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">Continue to checkout</a></Button>
           </div>
         </div>

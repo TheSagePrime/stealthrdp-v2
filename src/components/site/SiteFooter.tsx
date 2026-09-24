@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
 
 const columns = [
@@ -70,7 +70,7 @@ export function SiteFooter() {
                       {href.startsWith('http') ? (
                         <a href={href}>
                           {label}
-                          <ArrowUpRight aria-hidden="true" />
+                          <ArrowUpRight size={16} aria-hidden="true" />
                         </a>
                       ) : (
                         <Link href={href}>{label}</Link>

@@ -1,4 +1,4 @@
-import { AlertTriangle, CheckCircle2, Info, XCircle } from 'lucide-react';
+import { Warning as AlertTriangle, CheckCircle as CheckCircle2, Info, XCircle } from '@phosphor-icons/react/dist/ssr';
 import { cn } from '@/utils/Helpers';
 
 export type AlertTone = 'info' | 'ok' | 'warn' | 'bad';

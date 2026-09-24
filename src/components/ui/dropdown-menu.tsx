@@ -1,7 +1,7 @@
 'use client';
 
 import * as DropdownMenuPrimitive from '@radix-ui/react-dropdown-menu';
-import { CheckIcon, ChevronRightIcon, CircleIcon } from 'lucide-react';
+import { Check as CheckIcon, CaretRight as ChevronRightIcon, Circle as CircleIcon } from '@phosphor-icons/react';
 import { cn } from '@/utils/Helpers';
 
 function DropdownMenu({
@@ -182,7 +182,7 @@ function DropdownMenuRadioItem({
       "
       >
         <DropdownMenuPrimitive.ItemIndicator>
-          <CircleIcon className="size-2 fill-current" />
+          <CircleIcon className="size-4 fill-current" />
         </DropdownMenuPrimitive.ItemIndicator>
       </span>
       {children}

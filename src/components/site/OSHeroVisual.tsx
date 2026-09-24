@@ -1,4 +1,4 @@
-import { Check, Globe2, KeyRound } from 'lucide-react';
+import { Check, GlobeHemisphereWest as Globe2, Key as KeyRound } from '@phosphor-icons/react/dist/ssr';
 
 type Props = {
   kind: 'windows' | 'linux';
@@ -30,15 +30,15 @@ export function OSHeroVisual({ kind, title, items, access }: Props) {
       <div className="srv3-os-visual-list">
         {items.slice(0, 4).map(item => (
           <div key={item}>
-            <Check className="srv3-os-check size-3 shrink-0" aria-hidden="true" />
+            <Check className="srv3-os-check size-4 shrink-0" aria-hidden="true" />
             <span>{item}</span>
           </div>
         ))}
       </div>
 
       <div className="srv3-os-visual-meta">
-        <span><KeyRound aria-hidden="true" /> {access}</span>
-        <span><Globe2 aria-hidden="true" /> USA + EU</span>
+        <span><KeyRound size={16} aria-hidden="true" /> {access}</span>
+        <span><Globe2 size={16} aria-hidden="true" /> USA + EU</span>
       </div>
     </div>
   );
