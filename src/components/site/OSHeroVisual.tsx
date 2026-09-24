@@ -1,4 +1,4 @@
-import { Check, Globe2, KeyRound, Monitor, Terminal } from 'lucide-react';
+import { Check, Globe2, KeyRound } from 'lucide-react';
 
 type Props = {
   kind: 'windows' | 'linux';
@@ -7,13 +7,20 @@ type Props = {
   access: string;
 };
 
-export function OSHeroVisual({ kind, title, items, access }: Props) {
-  const Icon = kind === 'windows' ? Monitor : Terminal;
+/** Real operating-system marks, not stand-in icons. Provenance: public/brand/provenance.json */
+const OS_MARK = {
+  windows: '/brand/windows.svg',
+  linux: '/brand/linux.svg',
+} as const;
 
+export function OSHeroVisual({ kind, title, items, access }: Props) {
   return (
     <div className="srv3-os-visual" aria-label={title}>
       <div className="srv3-os-visual-head">
-        <div className="srv3-os-visual-icon"><Icon aria-hidden="true" /></div>
+        <div className="srv3-os-visual-icon">
+          {/* Decorative: the title text next to it already names the system. */}
+          <img src={OS_MARK[kind]} alt="" width={26} height={26} />
+        </div>
         <div>
           <span>{kind === 'windows' ? 'Windows VPS' : 'Linux VPS'}</span>
           <strong>{title}</strong>

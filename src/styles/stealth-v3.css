@@ -1144,6 +1144,13 @@ body {
   color:var(--primary);
 }
 
+/* Real OS mark in the hero tile: keep every mark on the same 26px box. */
+.srv3-os-visual-icon img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+}
+
 .srv3-os-visual-head > div:last-child {
   display: grid;
   gap: 3px;
