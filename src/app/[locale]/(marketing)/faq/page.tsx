@@ -1,12 +1,14 @@
 import type { Metadata } from 'next';
 import { MessageCircleQuestion } from 'lucide-react';
-import { createPageMetadata } from '@/libs/seo/metadata';
+import { Accordion, AccordionItem } from '@/components/ui/accordion';
 import { faqs } from '@/lib/stealth/content';
+import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/faq',
   title: 'FAQ — StealthRDP',
-  description: 'Frequently asked questions about StealthRDP VPS hosting: setup, operating systems, upgrades, refunds, and more.',
+  description:
+    'Frequently asked questions about StealthRDP VPS hosting: setup, operating systems, upgrades, refunds, and more.',
   ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
@@ -19,14 +21,17 @@ export default function FaqPage() {
         <div className="sr-container sr-page-hero-inner">
           <div>
             <p className="sr-kicker">FAQ</p>
-            <h1 className="sr-title">Questions before you <span>deploy.</span></h1>
+            <h1 className="sr-title">
+              Questions before you <span>deploy.</span>
+            </h1>
             <p className="sr-lede">
               Current public StealthRDP FAQ content, organized by topic without removing
               any of the migrated answers.
             </p>
           </div>
+
           <div className="sr-page-hero-aside">
-            <MessageCircleQuestion />
+            <MessageCircleQuestion aria-hidden="true" />
             <strong>{faqs.length} published answers</strong>
             <span>{categories.length} topic groups</span>
           </div>
@@ -38,7 +43,10 @@ export default function FaqPage() {
           <aside className="sr-faq-nav" aria-label="FAQ categories">
             <span className="sr-control-label">Browse topics</span>
             {categories.map(category => (
-              <a key={category} href={`#${category.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
+              <a
+                key={category}
+                href={`#${category.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
+              >
                 {category}
               </a>
             ))}
@@ -53,23 +61,23 @@ export default function FaqPage() {
                 <section className="sr-faq-group" id={id} key={category}>
                   <div className="sr-collection-head">
                     <div>
-                      <p className="sr-kicker">{category}</p>
+                      <p className="sr-kicker">Support topic</p>
                       <h2>{category}</h2>
                     </div>
                     <span>{items.length} answers</span>
                   </div>
 
-                  <div className="sr-faq-list">
+                  <Accordion className="sr-faq-accordion">
                     {items.map(item => (
-                      <details key={item._id}>
-                        <summary>
-                          <span>{item.question}</span>
-                          <span className="sr-faq-plus" aria-hidden="true">+</span>
-                        </summary>
+                      <AccordionItem
+                        key={item._id}
+                        title={item.question}
+                        className="sr-faq-item"
+                      >
                         <p>{item.answer}</p>
-                      </details>
+                      </AccordionItem>
                     ))}
-                  </div>
+                  </Accordion>
                 </section>
               );
             })}
