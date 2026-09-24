@@ -11,6 +11,7 @@ import {
   Zap,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
@@ -70,13 +71,21 @@ export default function AboutPage() {
             </div>
             <p>Fast deployment, clear infrastructure boundaries, visible service health, and flexible plans are part of the product—not footnotes.</p>
           </div>
-          <div className="sr-about-reasons">
-            {reasons.map(({ icon: Icon, title, text }) => (
-              <article key={title}>
-                <Icon />
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </article>
+          <div className="srv3-about-reasons">
+            {reasons.map(({ icon: Icon, title, text }, index) => (
+              <Card
+                key={title}
+                className="srv3-about-reason"
+                data-featured={index === 0}
+              >
+                <div className="srv3-about-reason-icon">
+                  <Icon aria-hidden="true" />
+                </div>
+                <div>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </div>
+              </Card>
             ))}
           </div>
         </div>
@@ -92,11 +101,11 @@ export default function AboutPage() {
             <p>StealthRDP has served remote work, web hosting, trading infrastructure, automation, development, and general VPS workloads.</p>
           </div>
 
-          <div className="sr-about-stats">
-            <article><Server /><strong>10,000+</strong><span>orders</span></article>
-            <article><Globe2 /><strong>USA + EU</strong><span>server regions</span></article>
-            <article><Gauge /><strong>99.9%</strong><span>uptime SLA</span></article>
-            <article><Clock3 /><strong>24/7</strong><span>monitoring and support availability</span></article>
+          <div className="srv3-about-stats">
+            <article><Server aria-hidden="true" /><strong>10,000+</strong><span>orders</span></article>
+            <article><Globe2 aria-hidden="true" /><strong>USA + EU</strong><span>server regions</span></article>
+            <article><Gauge aria-hidden="true" /><strong>99.9%</strong><span>uptime SLA</span></article>
+            <article><Clock3 aria-hidden="true" /><strong>24/7</strong><span>monitoring and support availability</span></article>
           </div>
         </div>
       </section>
