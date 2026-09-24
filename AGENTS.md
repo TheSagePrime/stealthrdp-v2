@@ -14,9 +14,14 @@ Do not fabricate live status, reviews, scarcity, deadlines, or service guarantee
 
 ## Frontend
 
-Preserve the StealthRDP dark control-room direction: restrained gold deployment signal, charcoal/navy surfaces, clear information hierarchy, modest radii, and technical motifs only where they explain infrastructure.
+Follow DESIGN.md as the single visual source of truth and DESIGN_SYSTEM.md for implementation rules.
 
-Reuse shadcn/Radix primitives and Lucide icons. Avoid generic AI dashboard chrome.
+Build a modern commercial hosting website, not a control-room or dashboard aesthetic.
+Brand colour is allowed. Status colour remains semantic.
+Use the shared section/container/layout hierarchy and canonical spacing.
+Use shadcn/Radix for interactive primitives and custom StealthRDP components for marketing surfaces.
+Do not add another full UI kit.
+Do not revive the old terminal, orbit-ring, floating-dashboard or clause/index visual language.
 
 ## SEO
 
