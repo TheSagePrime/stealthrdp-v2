@@ -8,10 +8,10 @@ import {
   MapPin,
   MemoryStick,
   Server,
-  Terminal,
   Zap,
 } from 'lucide-react';
 import Link from 'next/link';
+import { OSHeroVisual } from '@/components/site/OSHeroVisual';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
 import { Button } from '@/components/ui/button';
 import { createPageMetadata } from '@/libs/seo/metadata';
@@ -71,14 +71,12 @@ export default function LinuxVpsPage() {
               <Button asChild size="lg" variant="outline"><Link href="#linux-distros">Linux distributions</Link></Button>
             </div>
           </div>
-          <div className="sr-os-terminal" aria-label="Linux VPS deployment summary">
-            <div className="sr-os-terminal-head"><Terminal /><span>Linux VPS</span></div>
-            <code>$ stealth deploy --os linux --region eu</code>
-            <div><span>access</span><strong>Root</strong></div>
-            <div><span>images</span><strong>Ubuntu · Debian · Rocky · more</strong></div>
-            <div><span>storage</span><strong>NVMe</strong></div>
-            <p><Zap /> Confirm the exact image and version during checkout.</p>
-          </div>
+          <OSHeroVisual
+            kind="linux"
+            title="Choose the Linux image that fits your stack"
+            items={distros.map(item => item.name)}
+            access="Root access"
+          />
         </div>
       </section>
 
