@@ -67,3 +67,18 @@ Intentional visual baseline changes must be reviewed before updating references.
 
 Protected SEO article styles remain in src/styles/global.css.
 Visual work must not remove or bypass the SEO pipeline.
+
+
+## shadcn registry usage
+
+The official shadcn component library and the open-source shadcn Registry Directory may be used when they improve a real product surface.
+
+Rules:
+- review third-party registry code before adding it.
+- adapt the component to StealthRDP tokens and layout ownership.
+- do not import a second general-purpose UI kit.
+- prefer components with no new runtime dependency when an equivalent exists.
+- registry code is an implementation starting point, not a visual identity.
+- paid or proprietary template code must not be copied into this repository.
+
+Current shared patterns include Button, Badge, Card, Separator, Accordion, Tabs, Tooltip and ButtonGroup.
