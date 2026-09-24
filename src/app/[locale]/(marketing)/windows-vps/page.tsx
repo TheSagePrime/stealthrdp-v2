@@ -3,6 +3,7 @@ import {
   ArrowRight,
   Cpu,
   HardDrive,
+  Info,
   MapPin,
   MemoryStick,
   Scale,
@@ -10,7 +11,25 @@ import {
 import Link from 'next/link';
 import { OSHeroVisual } from '@/components/site/OSHeroVisual';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
+import { Accordion, AccordionItem } from '@/components/ui/accordion';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Pill } from '@/components/ui/pill';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
@@ -24,6 +43,11 @@ const windowsVersions = [
   { name: 'Windows Server 2019', version: '2019', text: 'Use when the software or workflow asks for Windows Server 2019.' },
   { name: 'Windows Server 2022', version: '2022', text: 'Use when the software or workflow asks for Windows Server 2022.' },
   { name: 'Windows Server 2025', version: '2025', text: 'Use when the software or workflow asks for Windows Server 2025.' },
+];
+
+/* Nominative brand marks for the operating system this page lists. */
+const osBrands = [
+  { src: '/brand/windows.svg', alt: 'Windows logo', width: 28, height: 28 },
 ];
 
 const resourceFit = [
@@ -43,6 +67,9 @@ const questions = [
   ['Where can I get support?', 'Use the client-area ticketing system or support email. The FAQ provides the current support details.'],
   ['Can I run any workload?', 'No. Use must remain lawful and follow the published Use of Service terms.'],
 ] as const;
+
+/* Token utilities for the card link rows, replacing the bespoke .sr-location-grid hook. */
+const cardLinkClass = 'inline-flex min-h-11 items-center gap-2 text-small font-semibold text-primary transition-colors hover:text-accent-hover';
 
 export default function WindowsVpsPage() {
   return (
@@ -123,15 +150,44 @@ export default function WindowsVpsPage() {
               Confirm the operating-system option during ordering.
             </p>
           </div>
-          <div className="sr-version-grid">
-            {windowsVersions.map(item => (
-              <article key={item.version}>
-                <span>{item.version}</span>
-                <h3>{item.name}</h3>
-                <p>{item.text}</p>
-              </article>
+          <ul
+            className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-4"
+            aria-label="Operating system listed on this page"
+          >
+            {osBrands.map(brand => (
+              <li key={brand.src}>
+                <img
+                  src={brand.src}
+                  alt={brand.alt}
+                  width={brand.width}
+                  height={brand.height}
+                  className="h-7 w-auto"
+                />
+              </li>
             ))}
-          </div>
+          </ul>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Version</TableHead>
+                <TableHead>What it is for</TableHead>
+                <TableHead>Availability</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {windowsVersions.map(item => (
+                <TableRow key={item.version}>
+                  <TableHead scope="row">{item.name}</TableHead>
+                  <TableCell>{item.text}</TableCell>
+                  <TableCell>
+                    <Pill state="neutral" icon={<Info aria-hidden="true" />}>
+                      Confirm during ordering
+                    </Pill>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
           <div className="sr-disclosure">
             <Scale aria-hidden="true" />
             <p>
@@ -166,13 +222,30 @@ export default function WindowsVpsPage() {
             </div>
             <p>Count what runs at the same time: Windows, applications, users, files, and future additions.</p>
           </div>
-          <div className="sr-resource-grid">
+          <ol className="grid list-none gap-0 p-0">
             {resourceFit.map(({ icon: Icon, number, title, text }) => (
-              <article key={number}>
-                <span>{number}</span><Icon /><h3>{title}</h3><p>{text}</p>
-              </article>
+              <li
+                key={number}
+                className="
+                  grid gap-3 border-t border-divider py-6 last:border-b
+                  sm:grid-cols-[auto_1fr] sm:items-start sm:gap-x-6
+                "
+              >
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-micro font-bold text-body-dim tabular-nums">
+                    {number}
+                  </span>
+                  <span className="grid size-10 shrink-0 place-items-center rounded-md border border-border-soft bg-surface-2 text-primary">
+                    <Icon aria-hidden="true" className="size-5" />
+                  </span>
+                </div>
+                <div className="grid gap-1.5">
+                  <h3 className="text-heading-4 font-semibold text-body-text">{title}</h3>
+                  <p className="text-small text-body-muted">{text}</p>
+                </div>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
@@ -182,30 +255,84 @@ export default function WindowsVpsPage() {
             <div><p className="sr-kicker">Regions</p><h2 className="sr-section-title">USA or EU</h2></div>
             <p>Choose the region that fits your users, latency, and operating requirements.</p>
           </div>
-          <div className="sr-location-grid">
-            <article><div className="sr-location-mark"><MapPin /></div><div><span className="sr-location-code">USA</span><h3>United States</h3><p>StealthRDP lists Windows VPS options for USA regions. Compare the region and resources in the catalog.</p></div><Link href="/plans">View plans <ArrowRight /></Link></article>
-            <article><div className="sr-location-mark"><MapPin /></div><div><span className="sr-location-code">EU</span><h3>Europe</h3><p>EU Windows VPS options also appear in the public catalog. Confirm the region and current configuration in checkout.</p></div><Link href="/plans">View plans <ArrowRight /></Link></article>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Card>
+              <CardHeader>
+                <span className="grid size-11 place-items-center rounded-md border border-divider bg-surface-1 text-primary">
+                  <MapPin aria-hidden="true" className="size-5" />
+                </span>
+                <Badge variant="outline" className="w-fit text-body-muted">USA</Badge>
+                <CardTitle className="text-heading-4 text-body-text">
+                  <h3>United States</h3>
+                </CardTitle>
+                <CardDescription className="text-small text-body-muted">
+                  StealthRDP lists Windows VPS options for USA regions. Compare the region and resources in the catalog.
+                </CardDescription>
+              </CardHeader>
+              <CardFooter className="mt-auto">
+                <Link href="/plans" className={cardLinkClass}>
+                  View plans <ArrowRight aria-hidden="true" className="size-4" />
+                </Link>
+              </CardFooter>
+            </Card>
+            <Card>
+              <CardHeader>
+                <span className="grid size-11 place-items-center rounded-md border border-divider bg-surface-1 text-primary">
+                  <MapPin aria-hidden="true" className="size-5" />
+                </span>
+                <Badge variant="outline" className="w-fit text-body-muted">EU</Badge>
+                <CardTitle className="text-heading-4 text-body-text">
+                  <h3>Europe</h3>
+                </CardTitle>
+                <CardDescription className="text-small text-body-muted">
+                  EU Windows VPS options also appear in the public catalog. Confirm the region and current configuration in checkout.
+                </CardDescription>
+              </CardHeader>
+              <CardFooter className="mt-auto">
+                <Link href="/plans" className={cardLinkClass}>
+                  View plans <ArrowRight aria-hidden="true" className="size-4" />
+                </Link>
+              </CardFooter>
+            </Card>
           </div>
         </div>
       </section>
 
       <section className="sr-section sr-section-border">
-        <div className="sr-container sr-order-grid">
-          <article>
-            <span className="sr-location-code">After payment</span>
-            <h3>Provisioning</h3>
-            <p>Standard Windows and Linux installations are typically activated within 5 minutes. Most services are activated within 5–10 minutes after payment confirmation.</p>
-          </article>
-          <article>
-            <span className="sr-location-code">Credentials</span>
-            <h3>Delivered by email</h3>
-            <p>StealthRDP sends your service credentials by email after payment confirmation.</p>
-          </article>
-          <article>
-            <span className="sr-location-code">Support and limits</span>
-            <h3>Operate within the published terms</h3>
-            <p>Support is available through the client-area ticketing system and support email. Lawful use and the published Use of Service terms apply.</p>
-          </article>
+        <div className="sr-container grid gap-4 md:grid-cols-3">
+          <Card>
+            <CardHeader>
+              <Badge variant="outline" className="w-fit text-body-muted">After payment</Badge>
+              <CardTitle className="text-heading-4 text-body-text">
+                <h3>Provisioning</h3>
+              </CardTitle>
+              <CardDescription className="text-small text-body-muted">
+                Standard Windows and Linux installations are typically activated within 5 minutes. Most services are activated within 5–10 minutes after payment confirmation.
+              </CardDescription>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader>
+              <Badge variant="outline" className="w-fit text-body-muted">Credentials</Badge>
+              <CardTitle className="text-heading-4 text-body-text">
+                <h3>Delivered by email</h3>
+              </CardTitle>
+              <CardDescription className="text-small text-body-muted">
+                StealthRDP sends your service credentials by email after payment confirmation.
+              </CardDescription>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader>
+              <Badge variant="outline" className="w-fit text-body-muted">Support and limits</Badge>
+              <CardTitle className="text-heading-4 text-body-text">
+                <h3>Operate within the published terms</h3>
+              </CardTitle>
+              <CardDescription className="text-small text-body-muted">
+                Support is available through the client-area ticketing system and support email. Lawful use and the published Use of Service terms apply.
+              </CardDescription>
+            </CardHeader>
+          </Card>
         </div>
       </section>
 
@@ -215,11 +342,13 @@ export default function WindowsVpsPage() {
             <div><p className="sr-kicker">Common questions</p><h2 className="sr-section-title">Windows VPS questions</h2></div>
             <p>Quick answers for software, access, activation, licensing, resources, and support.</p>
           </div>
-          <div className="sr-qa-grid">
+          <Accordion>
             {questions.map(([question, answer]) => (
-              <article key={question}><h3>{question}</h3><p>{answer}</p></article>
+              <AccordionItem key={question} title={question}>
+                <p>{answer}</p>
+              </AccordionItem>
             ))}
-          </div>
+          </Accordion>
           <div className="sr-cta-inline">
             <div><span className="sr-location-code">Choose another environment</span><h3>Need Linux instead?</h3><p>For websites, applications, databases, or development stacks, see Linux VPS hosting.</p></div>
             <Button asChild variant="outline"><Link href="/linux-vps">Linux VPS hosting <ArrowRight /></Link></Button>

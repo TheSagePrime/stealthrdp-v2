@@ -1,0 +1,353 @@
+{
+ "summary": {
+  "REPLACE": 11,
+  "CHECK": 2,
+  "KEEP": 4
+ },
+ "components": [
+  {
+   "file": "src/components/ActiveLink.tsx",
+   "bytes": 475,
+   "animated": false,
+   "need": "active link",
+   "verdict": "REPLACE",
+   "best": [
+    {
+     "source": "animate-ui",
+     "name": "components-base-preview-link-card",
+     "score": 4
+    },
+    {
+     "source": "animate-ui",
+     "name": "components-radix-preview-link-card",
+     "score": 4
+    },
+    {
+     "source": "animate-ui",
+     "name": "demo-components-base-preview-link-card",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "file": "src/components/Background.tsx",
+   "bytes": 230,
+   "animated": false,
+   "need": "background",
+   "verdict": "REPLACE",
+   "best": [
+    {
+     "source": "beui",
+     "name": "shader-background",
+     "score": 4
+    },
+    {
+     "source": "eldora",
+     "name": "hacker-background",
+     "score": 4
+    },
+    {
+     "source": "eldora",
+     "name": "hacker-background-demo",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "file": "src/components/LocaleSwitcher.tsx",
+   "bytes": 1843,
+   "animated": false,
+   "need": "dropdown locale switcher",
+   "verdict": "REPLACE",
+   "best": [
+    {
+     "source": "8bitcn",
+     "name": "retro-mode-switcher",
+     "score": 4
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "theme-switcher-theme-switcher-composition-1",
+     "score": 4
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "theme-switcher-theme-switcher-controlled-1",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "file": "src/components/MenuToggle.tsx",
+   "bytes": 719,
+   "animated": false,
+   "need": "menu toggle",
+   "verdict": "REPLACE",
+   "best": [
+    {
+     "source": "8bitcn",
+     "name": "context-menu",
+     "score": 4
+    },
+    {
+     "source": "8bitcn",
+     "name": "dropdown-menu",
+     "score": 4
+    },
+    {
+     "source": "8bitcn",
+     "name": "main-menu",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "file": "src/components/seo/Article.tsx",
+   "bytes": 4453,
+   "animated": false,
+   "need": "article",
+   "verdict": "KEEP",
+   "best": []
+  },
+  {
+   "file": "src/components/site/DocBody.tsx",
+   "bytes": 2119,
+   "animated": false,
+   "need": "code",
+   "verdict": "CHECK",
+   "best": [
+    {
+     "source": "animate-ui",
+     "name": "components-animate-code",
+     "score": 3
+    },
+    {
+     "source": "animate-ui",
+     "name": "components-animate-code-tabs",
+     "score": 3
+    },
+    {
+     "source": "animate-ui",
+     "name": "demo-components-animate-code",
+     "score": 3
+    }
+   ]
+  },
+  {
+   "file": "src/components/site/OSHeroVisual.tsx",
+   "bytes": 1086,
+   "animated": false,
+   "need": "visual",
+   "verdict": "KEEP",
+   "best": []
+  },
+  {
+   "file": "src/components/site/PricingExplorer.tsx",
+   "bytes": 11604,
+   "animated": false,
+   "need": "badge dropdown explorer nav pricing table",
+   "verdict": "REPLACE",
+   "best": [
+    {
+     "source": "8bitcn",
+     "name": "pricing2",
+     "score": 4
+    },
+    {
+     "source": "eldora",
+     "name": "pricing-01",
+     "score": 4
+    },
+    {
+     "source": "eldora",
+     "name": "pricing-02",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "file": "src/components/site/SiteFooter.tsx",
+   "bytes": 2880,
+   "animated": false,
+   "need": "footer",
+   "verdict": "REPLACE",
+   "best": [
+    {
+     "source": "eldora",
+     "name": "footer-01",
+     "score": 4
+    },
+    {
+     "source": "launchui",
+     "name": "footer",
+     "score": 4
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "ecommerce-footer1",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "file": "src/components/site/SiteHeader.tsx",
+   "bytes": 2299,
+   "animated": false,
+   "need": "header nav",
+   "verdict": "REPLACE",
+   "best": [
+    {
+     "source": "eldora",
+     "name": "header-01",
+     "score": 4
+    },
+    {
+     "source": "eldora",
+     "name": "header-02",
+     "score": 4
+    },
+    {
+     "source": "intentui",
+     "name": "leaderboard-header-example",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "file": "src/components/site/StatusGrid.tsx",
+   "bytes": 3564,
+   "animated": false,
+   "need": "nav status",
+   "verdict": "REPLACE",
+   "best": [
+    {
+     "source": "intentui",
+     "name": "toast-status-example",
+     "score": 4
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "gantt-gantt-status-1",
+     "score": 4
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "pill-pill-status-1",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "file": "src/components/site/TrustedArticleBody.tsx",
+   "bytes": 177,
+   "animated": false,
+   "need": "article",
+   "verdict": "KEEP",
+   "best": []
+  },
+  {
+   "file": "src/components/site/home/AfterCheckout.tsx",
+   "bytes": 1906,
+   "animated": false,
+   "need": "after checkout",
+   "verdict": "REPLACE",
+   "best": [
+    {
+     "source": "reui",
+     "name": "checkout-2",
+     "score": 4
+    },
+    {
+     "source": "reui",
+     "name": "checkout-4",
+     "score": 4
+    },
+    {
+     "source": "reui",
+     "name": "checkout-5",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "file": "src/components/site/home/HomeHero.tsx",
+   "bytes": 4727,
+   "animated": false,
+   "need": "badge globe hero",
+   "verdict": "REPLACE",
+   "best": [
+    {
+     "source": "8bitcn",
+     "name": "game-hero1",
+     "score": 4
+    },
+    {
+     "source": "8bitcn",
+     "name": "game-hero2",
+     "score": 4
+    },
+    {
+     "source": "8bitcn",
+     "name": "hero1",
+     "score": 4
+    }
+   ]
+  },
+  {
+   "file": "src/components/site/home/Infrastructure.tsx",
+   "bytes": 2201,
+   "animated": false,
+   "need": "infrastructure",
+   "verdict": "KEEP",
+   "best": []
+  },
+  {
+   "file": "src/components/site/home/RegionTable.tsx",
+   "bytes": 2782,
+   "animated": false,
+   "need": "code region table",
+   "verdict": "REPLACE",
+   "best": [
+    {
+     "source": "8bitcn",
+     "name": "table",
+     "score": 6
+    },
+    {
+     "source": "assistant-ui",
+     "name": "elements-data-table",
+     "score": 6
+    },
+    {
+     "source": "basecn",
+     "name": "table",
+     "score": 6
+    }
+   ]
+  },
+  {
+   "file": "src/components/site/home/Resources.tsx",
+   "bytes": 1530,
+   "animated": false,
+   "need": "resources",
+   "verdict": "CHECK",
+   "best": [
+    {
+     "source": "shadcnblocks",
+     "name": "resources1",
+     "score": 4
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "resources2",
+     "score": 4
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "resources3",
+     "score": 4
+    }
+   ]
+  }
+ ]
+}

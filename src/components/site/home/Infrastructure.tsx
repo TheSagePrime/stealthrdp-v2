@@ -1,4 +1,4 @@
-import { Cpu, EthernetPort, HardDrive, KeyRound } from 'lucide-react';
+import { Cpu, EthernetPort, HardDrive, KeyRound, ShieldCheck } from 'lucide-react';
 
 const items = [
   {
@@ -35,26 +35,39 @@ export function Infrastructure() {
             choose a region, choose Windows or Linux, then manage the service through
             the existing client area.
           </p>
-          <div className="srv3-infra-proof">
-            <span>
-              <strong>Public service status</strong>
+          <div className="mt-7 flex items-start gap-3 border-t border-divider pt-5 text-small text-body-muted">
+            <ShieldCheck aria-hidden="true" className="mt-0.5 size-5 shrink-0 text-body-dim" />
+            <span className="grid gap-0.5">
+              <strong className="font-semibold text-body-text">Public service status</strong>
               Monitoring is available from the status page.
             </span>
           </div>
         </div>
 
-        <div className="srv3-infra-list">
+        <ol className="grid list-none gap-0 p-0">
           {items.map(({ icon: Icon, title, text }, index) => (
-            <article key={title}>
-              <span className="srv3-infra-index">{String(index + 1).padStart(2, '0')}</span>
-              <div className="srv3-infra-icon"><Icon aria-hidden="true" /></div>
-              <div>
-                <h3>{title}</h3>
-                <p>{text}</p>
+            <li
+              key={title}
+              className="
+                grid gap-3 border-t border-divider py-6 last:border-b
+                sm:grid-cols-[auto_1fr] sm:items-start sm:gap-x-6
+              "
+            >
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-micro font-bold text-body-dim tabular-nums">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <span className="grid size-10 shrink-0 place-items-center rounded-md border border-border-soft bg-surface-2 text-primary">
+                  <Icon aria-hidden="true" className="size-5" />
+                </span>
               </div>
-            </article>
+              <div className="grid gap-1.5">
+                <h3 className="text-heading-4 font-semibold text-body-text">{title}</h3>
+                <p className="text-small text-body-muted">{text}</p>
+              </div>
+            </li>
           ))}
-        </div>
+        </ol>
       </div>
     </section>
   );

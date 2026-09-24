@@ -4,16 +4,6 @@ import { describe, expect, it } from 'vitest';
 const globalCss = readFileSync('src/styles/global.css', 'utf8');
 const marketingCss = readFileSync('src/styles/stealth-v3.css', 'utf8');
 
-function primaryContrast(tokens: string) {
-  const background = tokens.match(/--primary:\s*(#[a-f\d]{6})/i)?.[1];
-  const foreground = tokens.match(/--primary-foreground:\s*(#[a-f\d]{6})/i)?.[1];
-  expect(background).toBeDefined();
-  expect(foreground).toBeDefined();
-  const bright = Math.max(luminance(background!), luminance(foreground!));
-  const darkValue = Math.min(luminance(background!), luminance(foreground!));
-  return (bright + 0.05) / (darkValue + 0.05);
-}
-
 function luminance(hex: string) {
   const rgb = hex.match(/[a-f\d]{2}/gi)?.map(channel => Number.parseInt(channel, 16) / 255);
   if (!rgb || rgb.length !== 3) throw new Error(`Invalid hex colour ${hex}`);
@@ -23,18 +13,43 @@ function luminance(hex: string) {
   return linear[0]! * 0.2126 + linear[1]! * 0.7152 + linear[2]! * 0.0722;
 }
 
+function contrast(a: string, b: string) {
+  const bright = Math.max(luminance(a), luminance(b));
+  const darkValue = Math.min(luminance(a), luminance(b));
+  return (bright + 0.05) / (darkValue + 0.05);
+}
+
+function block(css: string, selector: string) {
+  const escaped = selector.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return css.match(new RegExp(`${escaped}\\s*\\{([^}]+)\\}`))?.[1];
+}
+
+/** Resolve a hex-valued token from a palette block of global.css. */
+function tokenHex(palette: string, name: string) {
+  return palette.match(new RegExp(`--${name}:\\s*(#[a-f\\d]{6})`, 'i'))?.[1];
+}
+
+const activePalette = block(globalCss, ':root')!;
+const darkPalette = block(globalCss, '.dark')!;
+
+function primaryContrast(tokens: string) {
+  const background = tokenHex(tokens, 'primary');
+  const foreground = tokenHex(tokens, 'primary-foreground');
+  expect(background).toBeDefined();
+  expect(foreground).toBeDefined();
+  return contrast(background!, foreground!);
+}
+
 describe('active marketing palette', () => {
-  it('has one dark token source and readable primary action text', () => {
-    const dark = globalCss.match(/\.dark\s*\{([^}]+)\}/)?.[1];
-    expect(dark).toBeDefined();
+  it('keeps one dark palette source available and readable primary action text', () => {
+    expect(darkPalette).toBeDefined();
     expect(marketingCss).not.toMatch(/\.dark\s*\{/);
-    expect(primaryContrast(dark!)).toBeGreaterThanOrEqual(4.5);
+    expect(primaryContrast(darkPalette)).toBeGreaterThanOrEqual(4.5);
   });
 
-  it('keeps light-mode foundation components readable', () => {
-    const light = globalCss.match(/:root\s*\{([^}]+)\}/)?.[1];
-    expect(light).toBeDefined();
-    expect(primaryContrast(light!)).toBeGreaterThanOrEqual(4.5);
+  it('keeps the active light palette readable for primary actions', () => {
+    expect(activePalette).toBeDefined();
+    expect(primaryContrast(activePalette)).toBeGreaterThanOrEqual(4.5);
   });
 
   it('uses the primary action token for selected pricing controls', () => {
@@ -44,16 +59,47 @@ describe('active marketing palette', () => {
     expect(selected).toMatch(/color:\s*var\(--primary-foreground\)/);
   });
 
-  it('keeps plan region labels readable against the dark cards', () => {
-    const label = [...marketingCss.matchAll(/\.sr-plan-region\s*\{([^}]+)\}/g)].at(-1)?.[1];
+  it('keeps ledger secondary labels readable against the ledger surface', () => {
+    const label = [...marketingCss.matchAll(/\.sr-ledger-meta\s*\{([^}]+)\}/g)].at(-1)?.[1];
     expect(label).toBeDefined();
-    const color = label!.match(/color:\s*(#[a-f\d]{6})/i)?.[1];
+    const token = label!.match(/color:\s*var\(--([a-z-]+)\)/)?.[1];
     const size = Number(label!.match(/font-size:\s*([\d.]+)rem/)?.[1]);
-    const dark = globalCss.match(/\.dark\s*\{([^}]+)\}/)?.[1];
-    const card = dark?.match(/--card:\s*(#[a-f\d]{6})/i)?.[1];
+    expect(token).toBeDefined();
+    const color = tokenHex(activePalette, token!);
+    const card = tokenHex(activePalette, 'card');
     expect(color).toBeDefined();
     expect(card).toBeDefined();
-    expect((luminance(color!) + 0.05) / (luminance(card!) + 0.05)).toBeGreaterThanOrEqual(4.5);
+    expect(contrast(color!, card!)).toBeGreaterThanOrEqual(4.5);
     expect(size).toBeGreaterThanOrEqual(0.75);
+  });
+
+  it('keeps secondary text readable on every layered surface', () => {
+    for (const surface of ['bg', 'card', 'secondary', 'surface-2', 'surface-3'] as const) {
+      const text = tokenHex(activePalette, 'text-muted');
+      const ground = tokenHex(activePalette, surface);
+      expect(ground, `--${surface} must be a hex token`).toBeDefined();
+      expect(contrast(text!, ground!), `--text-muted on --${surface}`).toBeGreaterThanOrEqual(4.5);
+    }
+  });
+
+  it('never uses a border token as a text colour', () => {
+    const allStyles = ['global.css', 'stealth.css', 'surfaces.css', 'stealth-v3.css']
+      .map(file => readFileSync(`src/styles/${file}`, 'utf8')).join('\n');
+    expect(allStyles).not.toMatch(/(?<!border-)color:\s*var\(--border[a-z-]*\)/);
+  });
+
+  it('keeps the marketing stylesheet free of literal colours', () => {
+    expect(marketingCss).not.toMatch(/#[0-9a-f]{3,8}\b/i);
+    expect(marketingCss).not.toMatch(/\brgba?\(/i);
+    expect(marketingCss).not.toMatch(/color:\s*(white|black)\b/i);
+  });
+
+  it('keeps marketing surfaces, radii and motion on the shared token scale', () => {
+    for (const radius of marketingCss.matchAll(/border-radius:\s*([^;]+);/g)) {
+      const value = radius[1]!.trim();
+      expect(value, `off-scale radius ${value}`).toMatch(
+        /^var\(--radius-(sm|md|lg|xl)\)$|^999px$|^50%$/,
+      );
+    }
   });
 });

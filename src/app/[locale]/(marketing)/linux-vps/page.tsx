@@ -9,7 +9,24 @@ import {
 import Link from 'next/link';
 import { OSHeroVisual } from '@/components/site/OSHeroVisual';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
+import { Accordion, AccordionItem } from '@/components/ui/accordion';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
@@ -34,6 +51,20 @@ const distros = [
   { name: 'Oracle Linux', versions: '8 · 9', text: 'Use when the stack asks for Oracle Linux.' },
 ];
 
+/* One chip per published version string. The split only removes the display
+   separator, so every version below is rendered exactly as listed above. */
+const distroVersionChips = (versions: string) => versions.split(' · ');
+
+/* Nominative brand marks for distribution families the table below lists. */
+const osBrands = [
+  { src: '/brand/ubuntu.svg', alt: 'Ubuntu logo', width: 18, height: 28 },
+  { src: '/brand/debian.svg', alt: 'Debian logo', width: 23, height: 28 },
+  { src: '/brand/centos.svg', alt: 'CentOS logo', width: 28, height: 28 },
+  { src: '/brand/almalinux.svg', alt: 'AlmaLinux logo', width: 29, height: 28 },
+  { src: '/brand/fedora.svg', alt: 'Fedora logo', width: 100, height: 28 },
+  { src: '/brand/linux.svg', alt: 'Linux logo (Tux)', width: 28, height: 28 },
+];
+
 const resourceFit = [
   { icon: Cpu, number: '01', title: 'Concurrent work', text: 'Compare CPU against the application, services, workers, and expected load.' },
   { icon: MemoryStick, number: '02', title: 'Active services', text: 'Size memory for the OS plus web server, app processes, databases, panels, and jobs.' },
@@ -49,6 +80,15 @@ const questions = [
   ['When is it activated?', 'Standard installations are typically activated within 5 minutes. Most services are activated within 5–10 minutes after payment confirmation.'],
   ['How do I get credentials?', 'Credentials are sent by email after payment confirmation.'],
 ] as const;
+
+const orderSteps = [
+  { number: '01', title: 'Write down the image and services', text: 'Start with the Linux image you need and the services you will run.' },
+  { number: '02', title: 'Compare the catalog', text: 'Compare CPU, RAM, disk, region, bandwidth, and the current price.' },
+  { number: '03', title: 'Continue to checkout', text: 'Select Linux and confirm the exact image and version there.' },
+];
+
+/* Token utilities for the card link rows, replacing the bespoke .sr-location-grid hook. */
+const cardLinkClass = 'inline-flex min-h-11 items-center gap-2 text-small font-semibold text-primary transition-colors hover:text-accent-hover';
 
 export default function LinuxVpsPage() {
   return (
@@ -117,15 +157,48 @@ export default function LinuxVpsPage() {
             <div><p className="sr-kicker">Environment</p><h2 className="sr-section-title">Linux distributions you can run</h2></div>
             <p>Choose the operating-system family your stack needs, then confirm the exact image and version during checkout.</p>
           </div>
-          <div className="sr-distro-grid">
-            {distros.map(distro => (
-              <article key={distro.name}>
-                <h3>{distro.name}</h3>
-                <strong>{distro.versions}</strong>
-                <p>{distro.text}</p>
-              </article>
+          <ul
+            className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-4"
+            aria-label="Linux distributions listed on this page"
+          >
+            {osBrands.map(brand => (
+              <li key={brand.src}>
+                <img
+                  src={brand.src}
+                  alt={brand.alt}
+                  width={brand.width}
+                  height={brand.height}
+                  className="h-7 w-auto"
+                />
+              </li>
             ))}
-          </div>
+          </ul>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Distribution</TableHead>
+                <TableHead>Published versions</TableHead>
+                <TableHead>Notes</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {distros.map(distro => (
+                <TableRow key={distro.name}>
+                  <TableHead scope="row">{distro.name}</TableHead>
+                  <TableCell>
+                    <ul className="flex flex-wrap gap-2">
+                      {distroVersionChips(distro.versions).map(version => (
+                        <li key={version}>
+                          <Badge variant="outline">{version}</Badge>
+                        </li>
+                      ))}
+                    </ul>
+                  </TableCell>
+                  <TableCell>{distro.text}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
           <div className="sr-section-link">
             <Link href="/docs/how-to-install-direct-admin-in-a-linux-server">How to install DirectAdmin in a Linux server <ArrowRight /></Link>
           </div>
@@ -148,11 +221,30 @@ export default function LinuxVpsPage() {
             <div><p className="sr-kicker">Resource fit</p><h2 className="sr-section-title">Size the machine to the stack</h2></div>
             <p>Count what runs at the same time: OS, web server, application, database, jobs, and files.</p>
           </div>
-          <div className="sr-resource-grid">
+          <ol className="grid list-none gap-0 p-0">
             {resourceFit.map(({ icon: Icon, number, title, text }) => (
-              <article key={number}><span>{number}</span><Icon /><h3>{title}</h3><p>{text}</p></article>
+              <li
+                key={number}
+                className="
+                  grid gap-3 border-t border-divider py-6 last:border-b
+                  sm:grid-cols-[auto_1fr] sm:items-start sm:gap-x-6
+                "
+              >
+                <div className="flex items-center gap-3">
+                  <span className="font-mono text-micro font-bold text-body-dim tabular-nums">
+                    {number}
+                  </span>
+                  <span className="grid size-10 shrink-0 place-items-center rounded-md border border-border-soft bg-surface-2 text-primary">
+                    <Icon aria-hidden="true" className="size-5" />
+                  </span>
+                </div>
+                <div className="grid gap-1.5">
+                  <h3 className="text-heading-4 font-semibold text-body-text">{title}</h3>
+                  <p className="text-small text-body-muted">{text}</p>
+                </div>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
@@ -162,18 +254,84 @@ export default function LinuxVpsPage() {
             <div><p className="sr-kicker">Regions</p><h2 className="sr-section-title">USA or EU</h2></div>
             <p>Choose the region that matches your users, your own location, and your latency needs.</p>
           </div>
-          <div className="sr-location-grid">
-            <article><div className="sr-location-mark"><MapPin /></div><div><span className="sr-location-code">USA</span><h3>United States</h3><p>USA Linux plans appear in the public catalog. Compare the current resource and availability details before checkout.</p></div><Link href="/plans">View plans <ArrowRight /></Link></article>
-            <article><div className="sr-location-mark"><MapPin /></div><div><span className="sr-location-code">EU</span><h3>Europe</h3><p>EU Linux plans also appear in the public catalog. Confirm the current region and configuration in checkout.</p></div><Link href="/plans">View plans <ArrowRight /></Link></article>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Card>
+              <CardHeader>
+                <span className="grid size-11 place-items-center rounded-md border border-divider bg-surface-1 text-primary">
+                  <MapPin aria-hidden="true" className="size-5" />
+                </span>
+                <Badge variant="outline" className="w-fit text-body-muted">USA</Badge>
+                <CardTitle className="text-heading-4 text-body-text">
+                  <h3>United States</h3>
+                </CardTitle>
+                <CardDescription className="text-small text-body-muted">
+                  USA Linux plans appear in the public catalog. Compare the current resource and availability details before checkout.
+                </CardDescription>
+              </CardHeader>
+              <CardFooter className="mt-auto">
+                <Link href="/plans" className={cardLinkClass}>
+                  View plans <ArrowRight aria-hidden="true" className="size-4" />
+                </Link>
+              </CardFooter>
+            </Card>
+            <Card>
+              <CardHeader>
+                <span className="grid size-11 place-items-center rounded-md border border-divider bg-surface-1 text-primary">
+                  <MapPin aria-hidden="true" className="size-5" />
+                </span>
+                <Badge variant="outline" className="w-fit text-body-muted">EU</Badge>
+                <CardTitle className="text-heading-4 text-body-text">
+                  <h3>Europe</h3>
+                </CardTitle>
+                <CardDescription className="text-small text-body-muted">
+                  EU Linux plans also appear in the public catalog. Confirm the current region and configuration in checkout.
+                </CardDescription>
+              </CardHeader>
+              <CardFooter className="mt-auto">
+                <Link href="/plans" className={cardLinkClass}>
+                  View plans <ArrowRight aria-hidden="true" className="size-4" />
+                </Link>
+              </CardFooter>
+            </Card>
           </div>
         </div>
       </section>
 
       <section className="sr-section sr-section-border">
-        <div className="sr-container sr-order-grid">
-          <article><span className="sr-location-code">After payment</span><h3>Provisioning</h3><p>Standard Linux installations are typically activated within 5 minutes. Most services are activated within 5–10 minutes after payment confirmation.</p></article>
-          <article><span className="sr-location-code">Credentials</span><h3>Delivered by email</h3><p>Credentials arrive by email after payment confirmation.</p></article>
-          <article><span className="sr-location-code">Support and limits</span><h3>Operate within the published terms</h3><p>Support is available through the client-area ticketing system and support email. Unlawful use, scanning, hacking, spam, and botnets are prohibited.</p></article>
+        <div className="sr-container grid gap-4 md:grid-cols-3">
+          <Card>
+            <CardHeader>
+              <Badge variant="outline" className="w-fit text-body-muted">After payment</Badge>
+              <CardTitle className="text-heading-4 text-body-text">
+                <h3>Provisioning</h3>
+              </CardTitle>
+              <CardDescription className="text-small text-body-muted">
+                Standard Linux installations are typically activated within 5 minutes. Most services are activated within 5–10 minutes after payment confirmation.
+              </CardDescription>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader>
+              <Badge variant="outline" className="w-fit text-body-muted">Credentials</Badge>
+              <CardTitle className="text-heading-4 text-body-text">
+                <h3>Delivered by email</h3>
+              </CardTitle>
+              <CardDescription className="text-small text-body-muted">
+                Credentials arrive by email after payment confirmation.
+              </CardDescription>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader>
+              <Badge variant="outline" className="w-fit text-body-muted">Support and limits</Badge>
+              <CardTitle className="text-heading-4 text-body-text">
+                <h3>Operate within the published terms</h3>
+              </CardTitle>
+              <CardDescription className="text-small text-body-muted">
+                Support is available through the client-area ticketing system and support email. Unlawful use, scanning, hacking, spam, and botnets are prohibited.
+              </CardDescription>
+            </CardHeader>
+          </Card>
         </div>
       </section>
 
@@ -183,11 +341,25 @@ export default function LinuxVpsPage() {
             <div><p className="sr-kicker">Order steps</p><h2 className="sr-section-title">Order a Linux VPS</h2></div>
             <p>Move from your requirements to checkout without guessing at the resource level.</p>
           </div>
-          <div className="sr-step-grid">
-            <article><span>01</span><h3>Write down the image and services</h3><p>Start with the Linux image you need and the services you will run.</p></article>
-            <article><span>02</span><h3>Compare the catalog</h3><p>Compare CPU, RAM, disk, region, bandwidth, and the current price.</p></article>
-            <article><span>03</span><h3>Continue to checkout</h3><p>Select Linux and confirm the exact image and version there.</p></article>
-          </div>
+          <ol className="grid list-none gap-0 p-0">
+            {orderSteps.map(({ number, title, text }) => (
+              <li
+                key={number}
+                className="
+                  grid gap-3 border-t border-divider py-6 last:border-b
+                  sm:grid-cols-[auto_1fr] sm:items-start sm:gap-x-6
+                "
+              >
+                <span className="font-mono text-micro font-bold text-body-dim tabular-nums">
+                  {number}
+                </span>
+                <div className="grid gap-1.5">
+                  <h3 className="text-heading-4 font-semibold text-body-text">{title}</h3>
+                  <p className="text-small text-body-muted">{text}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
         </div>
       </section>
 
@@ -197,11 +369,13 @@ export default function LinuxVpsPage() {
             <div><p className="sr-kicker">Common questions</p><h2 className="sr-section-title">Linux VPS questions</h2></div>
             <p>Quick answers for price, Ubuntu, access, regions, activation, and credentials.</p>
           </div>
-          <div className="sr-qa-grid">
+          <Accordion>
             {questions.map(([question, answer]) => (
-              <article key={question}><h3>{question}</h3><p>{answer}</p></article>
+              <AccordionItem key={question} title={question}>
+                <p>{answer}</p>
+              </AccordionItem>
             ))}
-          </div>
+          </Accordion>
           <div className="sr-cta-inline">
             <div><span className="sr-location-code">Choose another environment</span><h3>Need Windows instead?</h3><p>For familiar Windows software and remote Windows desktop or server access, see Windows VPS hosting.</p></div>
             <Button asChild variant="outline"><Link href="/windows-vps">Windows VPS hosting <ArrowRight /></Link></Button>

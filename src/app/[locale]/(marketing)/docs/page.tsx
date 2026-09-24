@@ -1,6 +1,14 @@
 import type { Metadata } from 'next';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { createPageMetadata } from '@/libs/seo/metadata';
 import { docPublicSlug, docsArticles } from '@/lib/stealth/content';
 
@@ -52,27 +60,51 @@ export default function DocsPage() {
               return (
                 <section className="sr-library-group" id={id} key={category}>
                   <div className="sr-collection-head">
+                    <h2>{category}</h2>
                     <div>
-                      <p className="sr-kicker">{category}</p>
-                      <h2>{category}</h2>
+                      <Badge variant="outline">{articles.length} guides</Badge>
                     </div>
-                    <span>{articles.length} guides</span>
                   </div>
 
                   <div className="sr-doc-grid">
-                    {articles.map(article => (
-                      <article className="sr-content-card" key={article.slug}>
-                        <Link href={`/docs/${docPublicSlug(article)}`}>
-                          <small>{article.category}</small>
-                          <h3>{article.title}</h3>
-                          <p>{article.summary}</p>
-                          <span className="sr-content-card-link">
-                            Read guide
-                            <ArrowRight />
-                          </span>
-                        </Link>
-                      </article>
-                    ))}
+                    {articles.map((article) => {
+                      const href = `/docs/${docPublicSlug(article)}`;
+
+                      return (
+                        <Card key={article.slug}>
+                          <CardHeader>
+                            <Badge variant="outline" className="w-fit text-body-muted">
+                              {article.category}
+                            </Badge>
+                            <CardTitle className="text-heading-4 text-body-text">
+                              <Link
+                                href={href}
+                                className="transition-colors hover:text-primary"
+                              >
+                                <h3>{article.title}</h3>
+                              </Link>
+                            </CardTitle>
+                            <CardDescription className="text-small text-body-muted">
+                              {article.summary}
+                            </CardDescription>
+                          </CardHeader>
+
+                          <CardFooter className="mt-auto">
+                            <Link
+                              href={href}
+                              className="
+                                inline-flex min-h-11 items-center gap-2 text-small
+                                font-semibold text-primary transition-colors
+                                hover:text-accent-hover
+                              "
+                            >
+                              Read guide
+                              <ArrowRight aria-hidden="true" className="size-4" />
+                            </Link>
+                          </CardFooter>
+                        </Card>
+                      );
+                    })}
                   </div>
                 </section>
               );

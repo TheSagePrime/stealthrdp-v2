@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  colorScheme: 'dark',
+  colorScheme: 'light',
 };
 
 export function generateStaticParams() {
@@ -35,7 +35,7 @@ export default async function RootLayout(props: {
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
   return (
-    <html lang={locale} className="dark">
+    <html lang={locale}>
       <body>
         <NextIntlClientProvider>{props.children}</NextIntlClientProvider>
       </body>

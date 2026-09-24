@@ -5,7 +5,6 @@ import { ChevronDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
-import { Card } from '@/components/ui/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +13,8 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Separator } from '@/components/ui/separator';
+import { Pill } from '@/components/ui/pill';
+import { Progress } from '@/components/ui/progress';
 import {
   Table,
   TableBody,
@@ -45,47 +45,100 @@ const workloadOptions = [
 
 type WorkloadKey = (typeof workloadOptions)[number]['key'];
 
-const specs = [
-  { key: 'cpu', label: 'CPU' },
-  { key: 'ram', label: 'Memory' },
-  { key: 'storage', label: 'Storage' },
-  { key: 'bandwidth', label: 'Traffic' },
-] as const;
+/** Months covered by each term, used to show the effective monthly rate. */
+const termMonths: Record<BillingCycle, number> = {
+  monthly: 1,
+  quarterly: 3,
+  annual: 12,
+  biannual: 24,
+};
 
-/** Row of the comparison table: real records, one row per published plan. */
-function ComparisonRow({
+/** Read a comparable number out of a published spec string. */
+const specNumber = (value: string) => Number.parseInt(value.replace(/[^\d]/g, ''), 10) || 0;
+
+function SpecCell({
+  value,
+  numeric,
+  max,
+  label,
+}: {
+  value: string;
+  numeric: number;
+  max: number;
+  label: string;
+}) {
+  return (
+    <TableCell className="sr-ledger-spec">
+      <span className="sr-ledger-value">{value}</span>
+      <Progress value={numeric} max={max} label={label} />
+    </TableCell>
+  );
+}
+
+function PlanRow({
   plan,
   cycle,
   recommended,
+  maxima,
 }: {
   plan: Plan;
   cycle: BillingCycle;
   recommended: boolean;
+  maxima: { cpu: number; ram: number; storage: number };
 }) {
   const price = plan.pricing[cycle];
   const available = plan.source.availability !== 'out-of-stock';
 
   return (
-    <TableRow>
+    <TableRow data-availability={available ? 'in-stock' : 'out-of-stock'}>
       <th scope="row">
         <span className="sr-plan-row">
           {plan.name}
           {recommended ? <Badge>Best fit</Badge> : null}
           {plan.popular && !recommended ? <Badge variant="outline">Popular</Badge> : null}
         </span>
+        <span className="sr-ledger-meta">
+          {plan.location} region · full administrative access
+        </span>
       </th>
-      <TableCell>{plan.specs.cpu}</TableCell>
-      <TableCell>{plan.specs.ram}</TableCell>
-      <TableCell>{plan.specs.storage}</TableCell>
-      <TableCell>{plan.specs.bandwidth}</TableCell>
-      <TableCell>{`€${formatPrice(price.amount)}${price.suffix}`}</TableCell>
-      <TableCell>
+      <SpecCell
+        value={plan.specs.cpu}
+        numeric={specNumber(plan.specs.cpu)}
+        max={maxima.cpu}
+        label={`CPU: ${plan.specs.cpu} of ${maxima.cpu} cores in this region`}
+      />
+      <SpecCell
+        value={plan.specs.ram}
+        numeric={specNumber(plan.specs.ram)}
+        max={maxima.ram}
+        label={`Memory: ${plan.specs.ram} of ${maxima.ram} GB in this region`}
+      />
+      <SpecCell
+        value={plan.specs.storage}
+        numeric={specNumber(plan.specs.storage)}
+        max={maxima.storage}
+        label={`Storage: ${plan.specs.storage} of ${maxima.storage} GB in this region`}
+      />
+      <TableCell className="sr-ledger-traffic">
+        <span className="sr-ledger-value">{plan.specs.bandwidth}</span>
+        <span className="sr-ledger-meta">traffic</span>
+      </TableCell>
+      <TableCell className="sr-ledger-price">
+        {`€${formatPrice(price.amount)}${price.suffix}`}
+        <span className="sr-ledger-meta">{price.periodLabel}</span>
+        {price.referenceAmount ? (
+          <span className="sr-ledger-was">{`standard €${formatPrice(price.referenceAmount)}`}</span>
+        ) : null}
+      </TableCell>
+      <TableCell className="sr-ledger-action">
         {available ? (
-          <Button asChild size="sm" variant="outline">
-            <a href={checkoutUrl(plan, cycle)}>Buy now</a>
+          <Button asChild size="sm">
+            <a href={checkoutUrl(plan, cycle)}>Configure server</a>
           </Button>
         ) : (
-          <span className="sr-table-unavailable">Currently unavailable</span>
+          <Pill state="warn" icon={<span aria-hidden="true">!</span>}>
+            Out of stock
+          </Pill>
         )}
       </TableCell>
     </TableRow>
@@ -112,6 +165,21 @@ export function PricingExplorer({
     return compact ? matching.slice(0, 3) : matching;
   }, [compact, region]);
 
+  const maxima = useMemo(() => {
+    const inRegion = plans.filter(plan => plan.location === region);
+    return {
+      cpu: Math.max(...inRegion.map(plan => specNumber(plan.specs.cpu))),
+      ram: Math.max(...inRegion.map(plan => specNumber(plan.specs.ram))),
+      storage: Math.max(...inRegion.map(plan => specNumber(plan.specs.storage))),
+    };
+  }, [region]);
+
+  const ladderPlan = useMemo(
+    () => plans.find(plan => plan.location === region && plan.name === `Bronze ${region}`)
+      ?? plans.find(plan => plan.location === region),
+    [region],
+  );
+
   return (
     <div className="sr-pricing-explorer">
       {guided ? (
@@ -129,7 +197,12 @@ export function PricingExplorer({
               <span className="sr-control-label">Use case</span>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button type="button" variant="outline" className="sr-workload-trigger" aria-label={`Use case: ${workloadOptions.find(item => item.key === workload)?.label}`}>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="sr-workload-trigger"
+                    aria-label={`Use case: ${workloadOptions.find(item => item.key === workload)?.label}`}
+                  >
                     {workloadOptions.find(item => item.key === workload)?.label}
                     <ChevronDown aria-hidden="true" />
                   </Button>
@@ -182,133 +255,83 @@ export function PricingExplorer({
           </ButtonGroup>
         </div>
 
-        <div className="sr-control-stack">
-          <span className="sr-control-label">Billing cycle</span>
-          <ButtonGroup className="sr-segmented-control" aria-label="Billing cycle">
-            {cycleOrder.map((item) => {
+        <div className="sr-control-stack sr-term-stack">
+          <span className="sr-control-label">Billing term</span>
+          <ul className="sr-term-ladder">
+            {cycleOrder.map(item => {
               const billing = billingCycles[item] as {
                 label: string;
                 discountLabel?: string;
               };
+              const termPrice = ladderPlan?.pricing[item];
+              const effective = termPrice ? termPrice.amount / termMonths[item] : 0;
+              const selected = cycle === item;
 
               return (
-                <Button
-                  key={item}
-                  type="button"
-                  size="sm"
-                  variant={cycle === item ? 'default' : 'outline'}
-                  aria-pressed={cycle === item}
-                  onClick={() => setCycle(item)}
-                >
-                  <span>{billing.label}</span>
-                  {billing.discountLabel ? (
-                    <small className="sr-billing-save">{billing.discountLabel}</small>
-                  ) : null}
-                </Button>
+                <li key={item}>
+                  <button
+                    type="button"
+                    className="sr-term-option"
+                    data-selected={selected}
+                    aria-pressed={selected}
+                    onClick={() => setCycle(item)}
+                  >
+                    <span className="sr-term-label">{billing.label}</span>
+                    <span className="sr-term-rate">
+                      {termPrice ? `€${formatPrice(Number(effective.toFixed(2)))}` : '—'}
+                      <small>per month</small>
+                    </span>
+                    <span className="sr-term-total">
+                      {termPrice ? `€${formatPrice(termPrice.amount)} billed` : 'See checkout'}
+                    </span>
+                    {billing.discountLabel ? <Badge variant="outline">{billing.discountLabel}</Badge> : null}
+                  </button>
+                </li>
               );
             })}
-          </ButtonGroup>
+          </ul>
         </div>
       </div>
 
-      <div className="sr-plan-grid">
-        {visible.map((plan) => {
-            const price = plan.pricing[cycle];
-            const available = plan.source.availability !== 'out-of-stock';
-            const recommended = plan.name.startsWith(recommendedTier);
-            const featured = guided ? recommended : plan.popular;
+      <section id="comparison" className="sr-ledger-section">
+        <h3 className="sr-ledger-title">
+          {showComparison
+            ? `Compare ${region} plans · ${billingCycles[cycle].label}`
+            : `Choose your resource level · ${region}`}
+        </h3>
+        <p className="sr-ledger-note">
+          Bars compare each plan against the largest configuration in {region}.
+          Published prices and availability are confirmed during checkout.
+        </p>
+        <span className="sr-ledger-hint">Swipe the table to compare every column.</span>
 
-            return (
-              <Card
-                key={plan.name}
-                className="sr-plan-card"
-                data-popular={plan.popular}
-                data-recommended={guided && recommended}
-                data-featured={featured}
-              >
-                {featured ? (
-                  <div className="sr-plan-featured-line" aria-hidden="true" />
-                ) : null}
-
-                <div className="sr-plan-top">
-                  <div>
-                    <span className="sr-plan-region">{plan.location} VPS</span>
-                    <h3 className="sr-plan-name">{plan.name}</h3>
-                  </div>
-                  <div className="sr-plan-badges">
-                    {guided && recommended ? <Badge>Best fit</Badge> : null}
-                    {plan.popular && !(guided && recommended) ? (
-                      <Badge variant="outline">Popular</Badge>
-                    ) : null}
-                  </div>
-                </div>
-
-                <div className="sr-plan-pricing">
-                  <p className="sr-plan-price">
-                    €{formatPrice(price.amount)}
-                    <small>{price.suffix}</small>
-                  </p>
-                  <p className="sr-plan-period">
-                    {price.periodLabel}
-                    {price.discountLabel ? <span>{price.discountLabel}</span> : null}
-                  </p>
-                </div>
-
-                <Separator />
-
-                <ul className="sr-plan-specs">
-                  {specs.map(({ key, label }) => (
-                    <li key={key}>
-                      <span>{label}</span>
-                      <b>{plan.specs[key]}</b>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="sr-plan-actions">
-                  {available ? (
-                    <Button asChild className="w-full">
-                      <a href={checkoutUrl(plan, cycle)}>
-                        Configure server
-                      </a>
-                    </Button>
-                  ) : (
-                    <span className="sr-unavailable">Currently unavailable</span>
-                  )}
-                </div>
-              </Card>
-            );
-          })}
-        </div>
-      {showComparison ? (
-        <div id="comparison" className="sr-comparison-panel">
-          <h3>Compare {region} plans · {billingCycles[cycle].label}</h3>
-          <p>Published prices and availability are confirmed during checkout.</p>
+        <div className="sr-ledger-scroll">
           <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Plan</TableHead>
                 <TableHead>CPU</TableHead>
-                <TableHead>RAM</TableHead>
+                <TableHead>Memory</TableHead>
                 <TableHead>Storage</TableHead>
-                <TableHead>Bandwidth</TableHead>
+                <TableHead>Traffic</TableHead>
                 <TableHead>{`Price${plans[0]?.pricing[cycle].suffix ?? ''}`}</TableHead>
                 <TableHead><span className="sr-visually-hidden">Action</span></TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {visible.map(plan => (
-                <ComparisonRow
+                <PlanRow
                   key={plan.name}
                   plan={plan}
                   cycle={cycle}
-                  recommended={guided && plan.name.startsWith(recommendedTier) && plan.location === region}
+                  recommended={guided && plan.name.startsWith(recommendedTier)}
+                  maxima={maxima}
                 />
               ))}
             </TableBody>
           </Table>
         </div>
-      ) : null}
+      </section>
     </div>
   );
 }

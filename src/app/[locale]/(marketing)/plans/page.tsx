@@ -7,7 +7,16 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
@@ -24,6 +33,9 @@ const included = [
   { title: 'Fast provisioning', text: 'Automated setup after checkout.' },
   { title: '24/7 support', text: 'Help when you need it.' },
 ];
+
+/* Token utilities for the card link rows, replacing the bespoke .sr-inline-links hook. */
+const cardLinkClass = 'inline-flex min-h-11 items-center gap-2 text-small font-semibold text-primary transition-colors hover:text-accent-hover';
 
 export default function PlansPage() {
   return (
@@ -65,41 +77,59 @@ export default function PlansPage() {
             </p>
           </div>
 
-          <div className="sr-os-choice-grid">
-            <article id="windows-vps">
-              <div className="sr-choice-icon"><Monitor /></div>
-              <div>
-                <span className="sr-location-code">Windows VPS</span>
-                <h3>Windows VPS for graphical remote access.</h3>
-                <p>
+          <div className="grid gap-4 lg:grid-cols-2">
+            <Card id="windows-vps">
+              <CardHeader>
+                <span className="grid size-11 place-items-center rounded-md border border-border-soft bg-surface-2 text-primary">
+                  <Monitor aria-hidden="true" className="size-5" />
+                </span>
+                <Badge variant="outline" className="w-fit text-body-muted">Windows VPS</Badge>
+                <CardTitle className="text-heading-4 text-body-text">
+                  <h3>Windows VPS for graphical remote access.</h3>
+                </CardTitle>
+                <CardDescription className="text-small text-body-muted">
                   Choose Windows when your workflow needs a graphical desktop or Microsoft-compatible
                   software. Compare CPU, RAM, NVMe storage, bandwidth, region, and billing cycle above.
-                </p>
-                <p className="sr-choice-note">
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="rounded-md border-l-2 border-primary bg-surface-2 px-4 py-3 text-small text-body-muted">
                   Windows licensing is not included. Customers are responsible for their own Microsoft licensing compliance.
                 </p>
-                <div className="sr-inline-links">
-                  <Link href="/windows-vps">Read the Windows VPS hosting guide <ArrowRight /></Link>
-                  <Link href="/docs/windows-licensing">Windows licensing <ArrowRight /></Link>
-                </div>
-              </div>
-            </article>
+              </CardContent>
+              <CardFooter className="mt-auto flex-wrap gap-x-6 gap-y-2">
+                <Link href="/windows-vps" className={cardLinkClass}>
+                  Read the Windows VPS hosting guide <ArrowRight aria-hidden="true" className="size-4" />
+                </Link>
+                <Link href="/docs/windows-licensing" className={cardLinkClass}>
+                  Windows licensing <ArrowRight aria-hidden="true" className="size-4" />
+                </Link>
+              </CardFooter>
+            </Card>
 
-            <article id="linux-vps">
-              <div className="sr-choice-icon"><Terminal /></div>
-              <div>
-                <span className="sr-location-code">Linux VPS</span>
-                <h3>Linux VPS for server and open-source workloads.</h3>
-                <p>
+            <Card id="linux-vps">
+              <CardHeader>
+                <span className="grid size-11 place-items-center rounded-md border border-border-soft bg-surface-2 text-primary">
+                  <Terminal aria-hidden="true" className="size-5" />
+                </span>
+                <Badge variant="outline" className="w-fit text-body-muted">Linux VPS</Badge>
+                <CardTitle className="text-heading-4 text-body-text">
+                  <h3>Linux VPS for server and open-source workloads.</h3>
+                </CardTitle>
+                <CardDescription className="text-small text-body-muted">
                   Choose Linux for command-line administration, web hosting, open-source applications,
                   automation, and server tooling. Compare the same resource levels before checkout.
-                </p>
-                <div className="sr-inline-links">
-                  <Link href="/linux-vps">Read the Linux VPS hosting guide <ArrowRight /></Link>
-                  <Link href="#comparison">Compare Linux VPS resources <ArrowRight /></Link>
-                </div>
-              </div>
-            </article>
+                </CardDescription>
+              </CardHeader>
+              <CardFooter className="mt-auto flex-wrap gap-x-6 gap-y-2">
+                <Link href="/linux-vps" className={cardLinkClass}>
+                  Read the Linux VPS hosting guide <ArrowRight aria-hidden="true" className="size-4" />
+                </Link>
+                <Link href="#comparison" className={cardLinkClass}>
+                  Compare Linux VPS resources <ArrowRight aria-hidden="true" className="size-4" />
+                </Link>
+              </CardFooter>
+            </Card>
           </div>
         </div>
       </section>
@@ -113,12 +143,18 @@ export default function PlansPage() {
             </div>
             <p>Choose a plan by resource level. These service basics stay with every server.</p>
           </div>
-          <div className="sr-included-grid">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {included.map(({ title, text }) => (
-              <article key={title}>
-                <h3>{title}</h3>
-                <p>{text}</p>
-              </article>
+              <Card key={title}>
+                <CardHeader>
+                  <CardTitle className="text-heading-4 text-body-text">
+                    <h3>{title}</h3>
+                  </CardTitle>
+                  <CardDescription className="text-small text-body-muted">
+                    {text}
+                  </CardDescription>
+                </CardHeader>
+              </Card>
             ))}
           </div>
         </div>

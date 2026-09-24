@@ -1,5 +1,6 @@
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import { Card, CardContent } from '@/components/ui/card';
 
 const resources = [
   {
@@ -35,17 +36,30 @@ export function Resources() {
           </div>
         </div>
 
-        <div className="srv3-resource-grid">
-          {resources.map(({ label, text, href }) => (
-            <Link href={href} key={href}>
-              <div>
-                <h3>{label}</h3>
-                <p>{text}</p>
-              </div>
-              <ArrowRight className="srv3-resource-arrow" aria-hidden="true" />
-            </Link>
-          ))}
-        </div>
+        <Card>
+          <CardContent>
+            <dl className="grid gap-x-12 gap-y-8 md:grid-cols-2">
+              {resources.map(({ label, text, href }) => (
+                <div key={href} className="grid content-start gap-1.5">
+                  <dt>
+                    <Link
+                      href={href}
+                      className="
+                        inline-flex min-h-11 items-center gap-2 text-body
+                        font-semibold text-body-text transition-colors
+                        hover:text-primary
+                      "
+                    >
+                      {label}
+                      <ArrowRight aria-hidden="true" className="size-4" />
+                    </Link>
+                  </dt>
+                  <dd className="text-small text-body-muted">{text}</dd>
+                </div>
+              ))}
+            </dl>
+          </CardContent>
+        </Card>
       </div>
     </section>
   );

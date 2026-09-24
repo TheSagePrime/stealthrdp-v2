@@ -1,7 +1,10 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { Activity, CheckCircle2 } from 'lucide-react';
+import { Activity, CheckCircle2, CircleHelp, TriangleAlert, XCircle } from 'lucide-react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Pill, type PillState } from '@/components/ui/pill';
+import { Progress } from '@/components/ui/progress';
 
 type Monitor = {
   label: string;
@@ -22,6 +25,21 @@ function stateLabel(status: string): string {
   if (status === 'down') return 'Down';
   if (status === 'paused') return 'Paused';
   return 'Unknown';
+}
+
+function pillState(status: string): PillState {
+  if (status === 'up') return 'ok';
+  if (status === 'degraded') return 'warn';
+  if (status === 'down') return 'bad';
+  if (status === 'paused') return 'unknown';
+  return 'neutral';
+}
+
+function pillIcon(status: string) {
+  if (status === 'up') return <CheckCircle2 aria-hidden="true" />;
+  if (status === 'degraded') return <TriangleAlert aria-hidden="true" />;
+  if (status === 'down') return <XCircle aria-hidden="true" />;
+  return <CircleHelp aria-hidden="true" />;
 }
 
 export function StatusGrid({ fallback }: { fallback: StatusPayload }) {
@@ -56,21 +74,40 @@ export function StatusGrid({ fallback }: { fallback: StatusPayload }) {
     return { operational, degraded, unavailable };
   }, [payload.monitors]);
 
+  const allHealthy = summary.unavailable === 0 && summary.degraded === 0;
+
   return (
     <div className="sr-status-panel">
-      <div className="sr-status-summary">
-        <div>
-          <div>
+      <Card className="gap-4 py-5">
+        <CardContent className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="grid gap-1">
             <p className="sr-kicker">Current snapshot</p>
-            <h2>{summary.unavailable === 0 && summary.degraded === 0 ? 'All monitored services operational' : 'Service health requires attention'}</h2>
+            <h2 className="text-heading-4 font-semibold text-body-text">
+              {allHealthy
+                ? 'All monitored services operational'
+                : 'Service health requires attention'}
+            </h2>
           </div>
-        </div>
 
-        <div className="sr-status-summary-stats">
-          <span><CheckCircle2 aria-hidden="true" /> <strong>{summary.operational}</strong> operational</span>
-          <span><Activity aria-hidden="true" /> <strong>{payload.monitors.length}</strong> monitored</span>
-        </div>
-      </div>
+          <div className="flex flex-wrap gap-2">
+            <Pill
+              state={summary.operational > 0 ? 'ok' : 'unknown'}
+              icon={<CheckCircle2 aria-hidden="true" />}
+            >
+              <span>
+                <strong className="font-semibold text-body-text">{summary.operational}</strong>
+                {' operational'}
+              </span>
+            </Pill>
+            <Pill state="neutral" icon={<Activity aria-hidden="true" />}>
+              <span>
+                <strong className="font-semibold text-body-text">{payload.monitors.length}</strong>
+                {' monitored'}
+              </span>
+            </Pill>
+          </div>
+        </CardContent>
+      </Card>
 
       <p className="sr-status-source" aria-live="polite">
         {live ? 'Live status · refreshed from the public UptimeRobot status feed' : 'Published fallback snapshot · live refresh unavailable'}
@@ -78,21 +115,35 @@ export function StatusGrid({ fallback }: { fallback: StatusPayload }) {
 
       <div className="sr-status-grid">
         {payload.monitors.map(monitor => (
-          <article className="sr-status-card" key={monitor.label}>
-            <div className="sr-status-card-head">
-              <span className="sr-status-dot" data-state={monitor.status} aria-hidden="true" />
-              <div>
-                <span className="sr-status-name">{monitor.label}</span>
-                <p className="sr-muted">{monitor.region}</p>
+          <Card key={monitor.label}>
+            <CardHeader className="grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
+              <div className="grid gap-1.5">
+                <CardTitle className="text-small text-body-text">{monitor.label}</CardTitle>
+                <CardDescription className="text-micro text-body-dim">
+                  {monitor.region}
+                </CardDescription>
               </div>
-              <span className="sr-status-value" data-state={monitor.status}>{stateLabel(monitor.status)}</span>
-            </div>
+              <Pill state={pillState(monitor.status)} icon={pillIcon(monitor.status)}>
+                {stateLabel(monitor.status)}
+              </Pill>
+            </CardHeader>
 
-            <div className="sr-status-metric">
-              <span>90-day uptime</span>
-              <b>{monitor.uptimeRatio === null ? '—' : `${monitor.uptimeRatio.toFixed(3)}%`}</b>
-            </div>
-          </article>
+            <CardContent className="grid gap-2">
+              <div className="flex items-baseline justify-between gap-3">
+                <span className="text-micro text-body-dim">90-day uptime</span>
+                <span className="font-mono text-small text-body-text tabular-nums">
+                  {monitor.uptimeRatio === null ? '—' : `${monitor.uptimeRatio.toFixed(3)}%`}
+                </span>
+              </div>
+              {monitor.uptimeRatio === null ? null : (
+                <Progress
+                  value={monitor.uptimeRatio}
+                  max={100}
+                  label={`90-day uptime for ${monitor.label}`}
+                />
+              )}
+            </CardContent>
+          </Card>
         ))}
       </div>
     </div>

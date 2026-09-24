@@ -1,4 +1,7 @@
 import { ArrowUpRight } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
+import { cn } from '@/utils/Helpers';
 import { testimonials } from '@/lib/stealth/content';
 
 export function AfterCheckout() {
@@ -17,19 +20,30 @@ export function AfterCheckout() {
 
         <div className="srv3-review-grid">
           {testimonials.slice(0, 3).map((item, index) => (
-            <article className="srv3-review-card" key={item.id ?? item._id ?? index}>
-              <div className="srv3-review-top">
-                <span className="srv3-review-source">
+            <Card
+              key={item.id ?? item._id ?? index}
+              className={cn('gap-4', index === 0 && 'bg-surface-2')}
+            >
+              <CardHeader>
+                <Badge variant="outline" className="w-fit text-body-muted">
                   {item.sourceLabel || item.publishedOn || 'Customer feedback'}
-                </span>
-              </div>
+                </Badge>
+              </CardHeader>
 
-              <blockquote>{item.quote}</blockquote>
+              <CardContent>
+                <blockquote className="text-body leading-relaxed text-body-text">
+                  {item.quote}
+                </blockquote>
+              </CardContent>
 
-              <footer>
-                <div>
-                  <strong>{item.authorName}</strong>
-                  <span>{item.authorCompany || item.publishedOn || 'StealthRDP customer'}</span>
+              <CardFooter className="mt-auto items-end justify-between gap-4">
+                <div className="grid gap-0.5">
+                  <strong className="text-small font-semibold text-body-text">
+                    {item.authorName}
+                  </strong>
+                  <span className="text-micro text-body-dim">
+                    {item.authorCompany || item.publishedOn || 'StealthRDP customer'}
+                  </span>
                 </div>
                 {item.sourceUrl ? (
                   <a
@@ -37,12 +51,17 @@ export function AfterCheckout() {
                     target="_blank"
                     rel="noreferrer"
                     aria-label={`View source for review by ${item.authorName}`}
+                    className="
+                      grid size-11 shrink-0 place-items-center rounded-md border
+                      border-divider text-primary transition-colors
+                      hover:border-border-soft hover:text-accent-hover
+                    "
                   >
-                    <ArrowUpRight aria-hidden="true" />
+                    <ArrowUpRight aria-hidden="true" className="size-4" />
                   </a>
                 ) : null}
-              </footer>
-            </article>
+              </CardFooter>
+            </Card>
           ))}
         </div>
       </div>

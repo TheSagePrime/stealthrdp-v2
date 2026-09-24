@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { cn } from '@/utils/Helpers';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
@@ -17,6 +18,13 @@ const reasons = [
   { title: 'Transparent operations', text: 'A public status page keeps production-node health visible.' },
   { title: 'Support that answers', text: 'Technical assistance is available around the clock through the normal support channels.' },
   { title: 'Flexible plans', text: 'USA and EU locations, monthly to biannual billing, and a build-your-own configurator.' },
+];
+
+const proof = [
+  { value: '10,000+', label: 'orders' },
+  { value: 'USA + EU', label: 'server regions' },
+  { value: '99.9%', label: 'uptime SLA' },
+  { value: '24/7', label: 'monitoring and support availability' },
 ];
 
 export default function AboutPage() {
@@ -65,13 +73,19 @@ export default function AboutPage() {
             {reasons.map(({ title, text }, index) => (
               <Card
                 key={title}
-                className="srv3-about-reason"
-                data-featured={index === 0}
+                className={cn(
+                  'sm:min-h-48',
+                  index === 0 && 'bg-surface-2 lg:row-span-2 lg:min-h-96',
+                )}
               >
-                <div>
-                  <h3>{title}</h3>
-                  <p>{text}</p>
-                </div>
+                <CardHeader>
+                  <CardTitle className="text-heading-4 text-body-text">
+                    <h3>{title}</h3>
+                  </CardTitle>
+                  <CardDescription className="text-small text-body-muted">
+                    {text}
+                  </CardDescription>
+                </CardHeader>
               </Card>
             ))}
           </div>
@@ -88,12 +102,18 @@ export default function AboutPage() {
             <p>StealthRDP has served remote work, web hosting, trading infrastructure, automation, development, and general VPS workloads.</p>
           </div>
 
-          <div className="srv3-about-stats">
-            <article><strong>10,000+</strong><span>orders</span></article>
-            <article><strong>USA + EU</strong><span>server regions</span></article>
-            <article><strong>99.9%</strong><span>uptime SLA</span></article>
-            <article><strong>24/7</strong><span>monitoring and support availability</span></article>
-          </div>
+          <Card>
+            <CardContent>
+              <dl className="grid gap-x-12 gap-y-6 sm:grid-cols-2">
+                {proof.map(({ value, label }) => (
+                  <div key={label} className="grid content-start gap-1">
+                    <dt className="text-heading-4 text-body-text">{value}</dt>
+                    <dd className="text-small text-body-dim">{label}</dd>
+                  </div>
+                ))}
+              </dl>
+            </CardContent>
+          </Card>
         </div>
       </section>
 

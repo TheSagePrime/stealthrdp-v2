@@ -9,6 +9,7 @@ import { Infrastructure } from '@/components/site/home/Infrastructure';
 import { RegionTable } from '@/components/site/home/RegionTable';
 import { Resources } from '@/components/site/home/Resources';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
 import { createPageMetadata } from '@/libs/seo/metadata';
@@ -53,13 +54,22 @@ export default async function HomePage({ params }: Props) {
       <HomeHero />
 
       <section className="srv3-trust" aria-label="StealthRDP proof">
-        <div className="sr-container srv3-trust-grid">
-          {trust.map(([value, label]) => (
-            <div key={label}>
-              <strong>{value}</strong>
-              <span>{label}</span>
-            </div>
-          ))}
+        <div className="sr-container">
+          <dl className="grid grid-cols-2 gap-x-6 gap-y-6 py-6 md:grid-cols-4 md:gap-y-0 md:py-0">
+            {trust.map(([value, label]) => (
+              <div
+                key={label}
+                className="
+                  grid content-center gap-1
+                  md:min-h-24 md:border-l md:border-divider md:pl-6
+                  md:first:border-l-0 md:first:pl-0
+                "
+              >
+                <dt className="text-heading-4 font-semibold text-body-text">{value}</dt>
+                <dd className="text-small text-body-dim">{label}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
@@ -98,15 +108,17 @@ export default async function HomePage({ params }: Props) {
 
       <section className="sr-section srv3-final-section">
         <div className="sr-container">
-          <div className="srv3-final-cta">
-            <div>
+          <Card className="gap-8 rounded-lg p-8 md:grid md:grid-cols-[1fr_auto] md:items-center md:gap-12 md:p-12">
+            <div className="grid gap-2">
               <p className="sr-kicker">Ready to deploy?</p>
-              <h2>Your next server is a few clicks away.</h2>
-              <p>
+              <h2 className="text-display-2 font-semibold text-body-text">
+                Your next server is a few clicks away.
+              </h2>
+              <p className="max-w-xl text-small text-body-muted">
                 Choose a region and plan here, then finish configuration in the StealthRDP client area.
               </p>
             </div>
-            <div className="srv3-final-actions">
+            <div className="flex flex-col gap-2.5 md:min-w-48">
               <Button asChild size="lg">
                 <Link href="/plans">
                   View VPS plans
@@ -117,7 +129,7 @@ export default async function HomePage({ params }: Props) {
                 <a href="https://dash.stealthrdp.com/submitticket.php">Ask a question</a>
               </Button>
             </div>
-          </div>
+          </Card>
         </div>
       </section>
     </>

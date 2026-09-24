@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Accordion, AccordionItem } from '@/components/ui/accordion';
+import { Badge } from '@/components/ui/badge';
 import { faqs } from '@/lib/stealth/content';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
@@ -62,16 +63,14 @@ export default function FaqPage() {
                       <p className="sr-kicker">Support topic</p>
                       <h2>{category}</h2>
                     </div>
-                    <span>{items.length} answers</span>
+                    <div>
+                      <Badge variant="outline">{items.length} answers</Badge>
+                    </div>
                   </div>
 
-                  <Accordion className="sr-faq-accordion">
+                  <Accordion>
                     {items.map(item => (
-                      <AccordionItem
-                        key={item._id}
-                        title={item.question}
-                        className="sr-faq-item"
-                      >
+                      <AccordionItem key={item._id} title={item.question}>
                         <p>{item.answer}</p>
                       </AccordionItem>
                     ))}
