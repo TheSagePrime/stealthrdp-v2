@@ -1,4 +1,4 @@
-import { ArrowUpRight, Quote } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { testimonials } from '@/lib/stealth/content';
 
 export function AfterCheckout() {
@@ -19,9 +19,6 @@ export function AfterCheckout() {
           {testimonials.slice(0, 3).map((item, index) => (
             <article className="srv3-review-card" key={item.id ?? item._id ?? index}>
               <div className="srv3-review-top">
-                <span className="srv3-review-quote">
-                  <Quote aria-hidden="true" />
-                </span>
                 <span className="srv3-review-source">
                   {item.sourceLabel || item.publishedOn || 'Customer feedback'}
                 </span>

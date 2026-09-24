@@ -81,7 +81,7 @@ export default async function HomePage({ params }: Props) {
             <Button asChild variant="outline">
               <Link href="/plans">
                 Compare every plan
-                <ArrowRight />
+                <ArrowRight aria-hidden="true" />
               </Link>
             </Button>
           </div>
@@ -110,7 +110,7 @@ export default async function HomePage({ params }: Props) {
               <Button asChild size="lg">
                 <Link href="/plans">
                   View VPS plans
-                  <ArrowRight />
+                  <ArrowRight aria-hidden="true" />
                 </Link>
               </Button>
               <Button asChild size="lg" variant="outline">

@@ -1,14 +1,10 @@
 import type { Metadata } from 'next';
 import {
   ArrowRight,
-  Boxes,
   Cpu,
   HardDrive,
-  KeyRound,
   MapPin,
   MemoryStick,
-  Server,
-  Zap,
 } from 'lucide-react';
 import Link from 'next/link';
 import { OSHeroVisual } from '@/components/site/OSHeroVisual';
@@ -124,7 +120,6 @@ export default function LinuxVpsPage() {
           <div className="sr-distro-grid">
             {distros.map(distro => (
               <article key={distro.name}>
-                <Boxes />
                 <h3>{distro.name}</h3>
                 <strong>{distro.versions}</strong>
                 <p>{distro.text}</p>
@@ -176,9 +171,9 @@ export default function LinuxVpsPage() {
 
       <section className="sr-section sr-section-border">
         <div className="sr-container sr-order-grid">
-          <article><Zap /><span className="sr-location-code">After payment</span><h3>Provisioning</h3><p>Standard Linux installations are typically activated within 5 minutes. Most services are activated within 5–10 minutes after payment confirmation.</p></article>
-          <article><KeyRound /><span className="sr-location-code">Credentials</span><h3>Delivered by email</h3><p>Credentials arrive by email after payment confirmation.</p></article>
-          <article><Server /><span className="sr-location-code">Support and limits</span><h3>Operate within the published terms</h3><p>Support is available through the client-area ticketing system and support email. Unlawful use, scanning, hacking, spam, and botnets are prohibited.</p></article>
+          <article><span className="sr-location-code">After payment</span><h3>Provisioning</h3><p>Standard Linux installations are typically activated within 5 minutes. Most services are activated within 5–10 minutes after payment confirmation.</p></article>
+          <article><span className="sr-location-code">Credentials</span><h3>Delivered by email</h3><p>Credentials arrive by email after payment confirmation.</p></article>
+          <article><span className="sr-location-code">Support and limits</span><h3>Operate within the published terms</h3><p>Support is available through the client-area ticketing system and support email. Unlawful use, scanning, hacking, spam, and botnets are prohibited.</p></article>
         </div>
       </section>
 

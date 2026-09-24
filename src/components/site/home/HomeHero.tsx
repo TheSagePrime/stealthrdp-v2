@@ -1,12 +1,4 @@
-import {
-  ArrowRight,
-  Cpu,
-  Globe2,
-  HardDrive,
-  Server,
-  ShieldCheck,
-  Zap,
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -18,10 +10,10 @@ const startingPlan = [...availablePlans].sort(
 )[0];
 
 const heroFacts = [
-  { icon: Cpu, label: 'Full admin access' },
-  { icon: HardDrive, label: 'NVMe storage' },
-  { icon: Globe2, label: 'USA + EU' },
-  { icon: ShieldCheck, label: '99.9% uptime SLA' },
+  'Full admin access',
+  'NVMe storage',
+  'USA + EU',
+  '99.9% uptime SLA',
 ] as const;
 
 export function HomeHero() {
@@ -49,7 +41,7 @@ export function HomeHero() {
             <Button asChild size="lg">
               <Link href="/plans">
                 Explore servers
-                <ArrowRight />
+                <ArrowRight aria-hidden="true" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline">
@@ -74,11 +66,8 @@ export function HomeHero() {
           </div>
 
           <ul className="srv3-hero-facts" aria-label="VPS highlights">
-            {heroFacts.map(({ icon: Icon, label }) => (
-              <li key={label}>
-                <Icon aria-hidden="true" />
-                {label}
-              </li>
+            {heroFacts.map(label => (
+              <li key={label}>{label}</li>
             ))}
           </ul>
         </div>
@@ -99,7 +88,6 @@ export function HomeHero() {
                   <div className="srv3-rack-unit" key={index}>
                     <div className="srv3-rack-unit-left">
                       <span className="srv3-rack-led" />
-                      <Server aria-hidden="true" />
                     </div>
                     <div className="srv3-rack-unit-center">
                       <span className="srv3-rack-line" />
@@ -115,19 +103,17 @@ export function HomeHero() {
               </div>
 
               <div className="srv3-rack-footer">
-                <span><Cpu /> Isolated VMs</span>
-                <span><HardDrive /> NVMe storage</span>
-                <span><Zap /> Fast provisioning</span>
+                <span>Isolated VMs</span>
+                <span>NVMe storage</span>
+                <span>Fast provisioning</span>
               </div>
             </div>
 
             <div className="srv3-region-dock">
               <div>
-                <Globe2 aria-hidden="true" />
                 <span><strong>USA</strong><small>North America</small></span>
               </div>
               <div>
-                <Globe2 aria-hidden="true" />
                 <span><strong>EU</strong><small>Europe</small></span>
               </div>
             </div>

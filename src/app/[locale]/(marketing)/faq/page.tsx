@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import { MessageCircleQuestion } from 'lucide-react';
 import { Accordion, AccordionItem } from '@/components/ui/accordion';
 import { faqs } from '@/lib/stealth/content';
 import { createPageMetadata } from '@/libs/seo/metadata';
@@ -31,7 +30,6 @@ export default function FaqPage() {
           </div>
 
           <div className="sr-page-hero-aside">
-            <MessageCircleQuestion aria-hidden="true" />
             <strong>{faqs.length} published answers</strong>
             <span>{categories.length} topic groups</span>
           </div>

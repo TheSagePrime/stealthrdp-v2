@@ -1,4 +1,4 @@
-import { Boxes, Globe2, Monitor, Server } from 'lucide-react';
+import { Check, Globe2, KeyRound, Monitor, Terminal } from 'lucide-react';
 
 type Props = {
   kind: 'windows' | 'linux';
@@ -8,7 +8,7 @@ type Props = {
 };
 
 export function OSHeroVisual({ kind, title, items, access }: Props) {
-  const Icon = kind === 'windows' ? Monitor : Boxes;
+  const Icon = kind === 'windows' ? Monitor : Terminal;
 
   return (
     <div className="srv3-os-visual" aria-label={title}>
@@ -23,14 +23,14 @@ export function OSHeroVisual({ kind, title, items, access }: Props) {
       <div className="srv3-os-visual-list">
         {items.slice(0, 4).map(item => (
           <div key={item}>
-            <span className="srv3-os-check" aria-hidden="true">✓</span>
+            <Check className="srv3-os-check size-3 shrink-0" aria-hidden="true" />
             <span>{item}</span>
           </div>
         ))}
       </div>
 
       <div className="srv3-os-visual-meta">
-        <span><Server aria-hidden="true" /> {access}</span>
+        <span><KeyRound aria-hidden="true" /> {access}</span>
         <span><Globe2 aria-hidden="true" /> USA + EU</span>
       </div>
     </div>

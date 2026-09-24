@@ -29,6 +29,18 @@ describe('PricingExplorer purchase decisions', () => {
     expect(page.getByText('€9.50').first()).toBeInTheDocument();
   });
 
+  it('keeps specifications readable without repeated icons and preserves checkout actions', async () => {
+    await render(<PricingExplorer />);
+
+    const specs = document.querySelector('.sr-plan-specs');
+    expect(specs?.textContent).toContain('CPU');
+    expect(specs?.textContent).toContain('Memory');
+    expect(specs?.textContent).toContain('Storage');
+    expect(specs?.textContent).toContain('Traffic');
+    expect(document.querySelectorAll('.sr-plan-specs svg')).toHaveLength(0);
+    expect(page.getByRole('link', { name: 'Configure server' }).first()).toHaveAttribute('href');
+  });
+
   it('selects a workload from the existing menu and updates the best fit', async () => {
     await render(<PricingExplorer />);
     await userEvent.click(page.getByRole('button', { name: /Remote desktop/ }));

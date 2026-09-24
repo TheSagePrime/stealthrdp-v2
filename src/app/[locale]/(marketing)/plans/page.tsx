@@ -1,14 +1,9 @@
 import type { Metadata } from 'next';
 import {
   ArrowRight,
-  HardDrive,
-  Headphones,
   Monitor,
-  Server,
   Settings2,
-  ShieldCheck,
   Terminal,
-  Zap,
 } from 'lucide-react';
 import Link from 'next/link';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
@@ -23,11 +18,11 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 const included = [
-  { icon: ShieldCheck, title: 'Full admin access', text: 'Control your server from day one.' },
-  { icon: HardDrive, title: 'NVMe SSD storage', text: 'Fast disk for everyday workloads.' },
-  { icon: Server, title: 'Isolated VMs', text: 'Separate virtual machines per server.' },
-  { icon: Zap, title: 'Fast provisioning', text: 'Automated setup after checkout.' },
-  { icon: Headphones, title: '24/7 support', text: 'Help when you need it.' },
+  { title: 'Full admin access', text: 'Control your server from day one.' },
+  { title: 'NVMe SSD storage', text: 'Fast disk for everyday workloads.' },
+  { title: 'Isolated VMs', text: 'Separate virtual machines per server.' },
+  { title: 'Fast provisioning', text: 'Automated setup after checkout.' },
+  { title: '24/7 support', text: 'Help when you need it.' },
 ];
 
 export default function PlansPage() {
@@ -119,9 +114,8 @@ export default function PlansPage() {
             <p>Choose a plan by resource level. These service basics stay with every server.</p>
           </div>
           <div className="sr-included-grid">
-            {included.map(({ icon: Icon, title, text }) => (
+            {included.map(({ title, text }) => (
               <article key={title}>
-                <Icon />
                 <h3>{title}</h3>
                 <p>{text}</p>
               </article>

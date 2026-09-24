@@ -1,4 +1,4 @@
-import { Activity, Cpu, HardDrive, Network, ShieldCheck } from 'lucide-react';
+import { Cpu, EthernetPort, HardDrive, KeyRound } from 'lucide-react';
 
 const items = [
   {
@@ -12,12 +12,12 @@ const items = [
     text: 'Fast local storage for remote desktops, applications, databases, automation and active files.',
   },
   {
-    icon: Network,
+    icon: EthernetPort,
     title: 'Built for sustained network use',
     text: 'Current plans include high-speed connectivity and unlimited bandwidth for everyday server workloads.',
   },
   {
-    icon: ShieldCheck,
+    icon: KeyRound,
     title: 'Full administrative control',
     text: 'Run Windows or Linux with full server access and isolated virtual machine boundaries.',
   },
@@ -36,7 +36,6 @@ export function Infrastructure() {
             the existing client area.
           </p>
           <div className="srv3-infra-proof">
-            <Activity aria-hidden="true" />
             <span>
               <strong>Public service status</strong>
               Monitoring is available from the status page.

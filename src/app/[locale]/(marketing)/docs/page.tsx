@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ArrowRight, BookOpen, FileText } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { createPageMetadata } from '@/libs/seo/metadata';
 import { docPublicSlug, docsArticles } from '@/lib/stealth/content';
@@ -27,7 +27,6 @@ export default function DocsPage() {
             </p>
           </div>
           <div className="sr-page-hero-aside">
-            <BookOpen />
             <strong>{docsArticles.length} documentation pages</strong>
             <span>{categories.length} collections</span>
           </div>
@@ -64,7 +63,6 @@ export default function DocsPage() {
                     {articles.map(article => (
                       <article className="sr-content-card" key={article.slug}>
                         <Link href={`/docs/${docPublicSlug(article)}`}>
-                          <div className="sr-content-card-icon"><FileText /></div>
                           <small>{article.category}</small>
                           <h3>{article.title}</h3>
                           <p>{article.summary}</p>

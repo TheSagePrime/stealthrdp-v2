@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { Activity, CheckCircle2, Clock3 } from 'lucide-react';
+import { Activity, CheckCircle2 } from 'lucide-react';
 
 type Monitor = {
   label: string;
@@ -60,7 +60,6 @@ export function StatusGrid({ fallback }: { fallback: StatusPayload }) {
     <div className="sr-status-panel">
       <div className="sr-status-summary">
         <div>
-          <span className="sr-status-summary-icon"><Activity /></span>
           <div>
             <p className="sr-kicker">Current snapshot</p>
             <h2>{summary.unavailable === 0 && summary.degraded === 0 ? 'All monitored services operational' : 'Service health requires attention'}</h2>
@@ -68,8 +67,8 @@ export function StatusGrid({ fallback }: { fallback: StatusPayload }) {
         </div>
 
         <div className="sr-status-summary-stats">
-          <span><CheckCircle2 /> <strong>{summary.operational}</strong> operational</span>
-          <span><Clock3 /> <strong>{payload.monitors.length}</strong> monitored</span>
+          <span><CheckCircle2 aria-hidden="true" /> <strong>{summary.operational}</strong> operational</span>
+          <span><Activity aria-hidden="true" /> <strong>{payload.monitors.length}</strong> monitored</span>
         </div>
       </div>
 

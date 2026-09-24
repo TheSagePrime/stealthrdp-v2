@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { ArrowUpRight, MessageCircle, Send } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 
 const columns = [
@@ -52,11 +52,9 @@ export function SiteFooter() {
             </p>
             <div className="srv3-socials">
               <a href="https://discord.gg/9JJFs4DDyF" target="_blank" rel="noreferrer">
-                <MessageCircle />
                 Discord
               </a>
               <a href="https://t.me/StealthRDP" target="_blank" rel="noreferrer">
-                <Send />
                 Telegram
               </a>
             </div>
@@ -72,7 +70,7 @@ export function SiteFooter() {
                       {href.startsWith('http') ? (
                         <a href={href}>
                           {label}
-                          <ArrowUpRight />
+                          <ArrowUpRight aria-hidden="true" />
                         </a>
                       ) : (
                         <Link href={href}>{label}</Link>

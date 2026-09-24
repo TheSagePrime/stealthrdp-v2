@@ -898,45 +898,13 @@ body {
     linear-gradient(140deg, #0c1428, #090e1c);
 }
 
-.srv3-region-art::before,
-.srv3-region-art::after {
-  content: "";
-  position: absolute;
-  width: 240px;
-  height: 240px;
-  border: 1px solid rgb(99 128 255 / 12%);
-  border-radius: 50%;
-}
-
-.srv3-region-art::after {
-  width: 160px;
-  height: 160px;
-  border-style: dashed;
-}
-
-.srv3-region-art > svg {
+.srv3-region-code {
   position: relative;
-  z-index: 1;
-  width: 74px;
-  height: 74px;
-  color: #6e86ff;
-  stroke-width: 1.1;
-}
-
-.srv3-region-pulse {
-  position: absolute;
-  z-index: 2;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: #52dcff;
-  box-shadow: 0 0 0 6px rgb(82 220 255 / 10%);
-  transform: translate(28px, -15px);
-}
-
-.srv3-region-pulse-two {
-  background: #8297ff;
-  transform: translate(-34px, 24px);
+  color: #a9b9ff;
+  font-size: clamp(2.75rem, 4vw, 4.5rem);
+  font-weight: 750;
+  letter-spacing: -0.06em;
+  line-height: 1;
 }
 
 .srv3-region-body {
@@ -1106,9 +1074,10 @@ body {
 
 .srv3-resource-grid > a {
   position: relative;
-  display: grid;
-  min-height: 210px;
-  grid-template-rows: auto 1fr auto;
+  display: flex;
+  min-height: 190px;
+  flex-direction: column;
+  justify-content: space-between;
   gap: 18px;
   border-right: 1px solid rgb(255 255 255 / 8%);
   padding: 26px;
@@ -1634,7 +1603,7 @@ body {
   }
 
   .srv3-region-art {
-    min-height: 210px;
+    min-height: 96px;
     border-right: 0;
     border-bottom: 1px solid rgb(255 255 255 / 7%);
   }
@@ -2562,7 +2531,7 @@ body {
 }
 
 .sr-plan-actions [data-slot="button"] {
-  justify-content: space-between;
+  justify-content: center;
 }
 
 /* Infrastructure refinement --------------------------------------------- */
@@ -2607,8 +2576,8 @@ body {
 }
 
 .srv3-region-card {
-  min-height: 370px;
-  grid-template-columns: 0.72fr 1.28fr;
+  min-height: 310px;
+  grid-template-columns: minmax(140px, 0.5fr) minmax(0, 1.5fr);
   border-color: var(--srv3-border);
   border-radius: 18px;
 }
@@ -2619,19 +2588,8 @@ body {
     #0a1020;
 }
 
-.srv3-region-art::before {
-  width: 210px;
-  height: 210px;
-}
-
-.srv3-region-art::after {
-  width: 138px;
-  height: 138px;
-}
-
-.srv3-region-art > svg {
-  width: 58px;
-  height: 58px;
+.srv3-region-code {
+  font-size: clamp(2.75rem, 4vw, 4.5rem);
 }
 
 .srv3-region-body {
@@ -3400,9 +3358,13 @@ body {
     grid-template-columns: 1fr;
   }
 
+  .srv3-about-reason {
+    min-height: 0;
+  }
+
   .srv3-about-reason[data-featured="true"] {
     grid-column: auto;
-    min-height: 220px;
+    min-height: 0;
   }
 
   .srv3-about-stats article,

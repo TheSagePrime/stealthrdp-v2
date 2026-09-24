@@ -1,15 +1,5 @@
 import type { Metadata } from 'next';
-import {
-  Activity,
-  ArrowRight,
-  Clock3,
-  Gauge,
-  Globe2,
-  HardDrive,
-  Headphones,
-  Server,
-  Zap,
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { createPageMetadata } from '@/libs/seo/metadata';
@@ -22,11 +12,11 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 const reasons = [
-  { icon: Zap, title: 'Speed of deployment', text: 'Full server access within 60 seconds of purchase for standard provisioning flows.' },
-  { icon: HardDrive, title: 'Enterprise-grade hardware', text: 'NVMe storage and isolated virtual machine instances.' },
-  { icon: Activity, title: 'Transparent operations', text: 'A public status page keeps production-node health visible.' },
-  { icon: Headphones, title: 'Support that answers', text: 'Technical assistance is available around the clock through the normal support channels.' },
-  { icon: Globe2, title: 'Flexible plans', text: 'USA and EU locations, monthly to biannual billing, and a build-your-own configurator.' },
+  { title: 'Speed of deployment', text: 'Full server access within 60 seconds of purchase for standard provisioning flows.' },
+  { title: 'Enterprise-grade hardware', text: 'NVMe storage and isolated virtual machine instances.' },
+  { title: 'Transparent operations', text: 'A public status page keeps production-node health visible.' },
+  { title: 'Support that answers', text: 'Technical assistance is available around the clock through the normal support channels.' },
+  { title: 'Flexible plans', text: 'USA and EU locations, monthly to biannual billing, and a build-your-own configurator.' },
 ];
 
 export default function AboutPage() {
@@ -72,15 +62,12 @@ export default function AboutPage() {
             <p>Fast deployment, clear infrastructure boundaries, visible service health, and flexible plans are part of the product—not footnotes.</p>
           </div>
           <div className="srv3-about-reasons">
-            {reasons.map(({ icon: Icon, title, text }, index) => (
+            {reasons.map(({ title, text }, index) => (
               <Card
                 key={title}
                 className="srv3-about-reason"
                 data-featured={index === 0}
               >
-                <div className="srv3-about-reason-icon">
-                  <Icon aria-hidden="true" />
-                </div>
                 <div>
                   <h3>{title}</h3>
                   <p>{text}</p>
@@ -102,10 +89,10 @@ export default function AboutPage() {
           </div>
 
           <div className="srv3-about-stats">
-            <article><Server aria-hidden="true" /><strong>10,000+</strong><span>orders</span></article>
-            <article><Globe2 aria-hidden="true" /><strong>USA + EU</strong><span>server regions</span></article>
-            <article><Gauge aria-hidden="true" /><strong>99.9%</strong><span>uptime SLA</span></article>
-            <article><Clock3 aria-hidden="true" /><strong>24/7</strong><span>monitoring and support availability</span></article>
+            <article><strong>10,000+</strong><span>orders</span></article>
+            <article><strong>USA + EU</strong><span>server regions</span></article>
+            <article><strong>99.9%</strong><span>uptime SLA</span></article>
+            <article><strong>24/7</strong><span>monitoring and support availability</span></article>
           </div>
         </div>
       </section>

@@ -3,11 +3,9 @@ import {
   ArrowRight,
   Cpu,
   HardDrive,
-  KeyRound,
   MapPin,
   MemoryStick,
-  ShieldCheck,
-  Zap,
+  Scale,
 } from 'lucide-react';
 import Link from 'next/link';
 import { OSHeroVisual } from '@/components/site/OSHeroVisual';
@@ -135,7 +133,7 @@ export default function WindowsVpsPage() {
             ))}
           </div>
           <div className="sr-disclosure">
-            <ShieldCheck />
+            <Scale aria-hidden="true" />
             <p>
               <strong>Windows licensing:</strong> StealthRDP provides the infrastructure only.
               Microsoft Windows licensing is not included and is not supplied by StealthRDP.
@@ -194,19 +192,16 @@ export default function WindowsVpsPage() {
       <section className="sr-section sr-section-border">
         <div className="sr-container sr-order-grid">
           <article>
-            <Zap />
             <span className="sr-location-code">After payment</span>
             <h3>Provisioning</h3>
             <p>Standard Windows and Linux installations are typically activated within 5 minutes. Most services are activated within 5–10 minutes after payment confirmation.</p>
           </article>
           <article>
-            <KeyRound />
             <span className="sr-location-code">Credentials</span>
             <h3>Delivered by email</h3>
             <p>StealthRDP sends your service credentials by email after payment confirmation.</p>
           </article>
           <article>
-            <ShieldCheck />
             <span className="sr-location-code">Support and limits</span>
             <h3>Operate within the published terms</h3>
             <p>Support is available through the client-area ticketing system and support email. Lawful use and the published Use of Service terms apply.</p>

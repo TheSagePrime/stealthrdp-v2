@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { ArrowRight, Headphones, Menu } from 'lucide-react';
+import { Headphones, Menu } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
@@ -47,7 +47,6 @@ export function SiteHeader() {
           <Button asChild size="sm">
             <Link href="/plans">
               View plans
-              <ArrowRight />
             </Link>
           </Button>
         </div>

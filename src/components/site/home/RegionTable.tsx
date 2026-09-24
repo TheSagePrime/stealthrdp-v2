@@ -1,4 +1,4 @@
-import { ArrowRight, Globe2, MapPin } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { plans } from '@/lib/stealth/content';
 
@@ -49,14 +49,11 @@ export function RegionTable() {
             return (
               <article key={region.code} className="srv3-region-card">
                 <div className="srv3-region-art" aria-hidden="true">
-                  <Globe2 />
-                  <span className="srv3-region-pulse" />
-                  <span className="srv3-region-pulse srv3-region-pulse-two" />
+                  <span className="srv3-region-code">{region.code}</span>
                 </div>
 
                 <div className="srv3-region-body">
                   <div className="srv3-region-label">
-                    <MapPin />
                     {region.code}
                   </div>
                   <h3>{region.title}</h3>
@@ -70,7 +67,7 @@ export function RegionTable() {
                     </div>
                     <Link href="/plans">
                       View plans
-                      <ArrowRight />
+                      <ArrowRight aria-hidden="true" />
                     </Link>
                   </div>
                 </div>

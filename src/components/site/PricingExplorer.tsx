@@ -1,15 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import {
-  ArrowRight,
-  ChevronDown,
-  Cpu,
-  Globe2,
-  HardDrive,
-  MemoryStick,
-  Network,
-} from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
@@ -54,10 +46,10 @@ const workloadOptions = [
 type WorkloadKey = (typeof workloadOptions)[number]['key'];
 
 const specs = [
-  { key: 'cpu', label: 'CPU', icon: Cpu },
-  { key: 'ram', label: 'Memory', icon: MemoryStick },
-  { key: 'storage', label: 'Storage', icon: HardDrive },
-  { key: 'bandwidth', label: 'Traffic', icon: Network },
+  { key: 'cpu', label: 'CPU' },
+  { key: 'ram', label: 'Memory' },
+  { key: 'storage', label: 'Storage' },
+  { key: 'bandwidth', label: 'Traffic' },
 ] as const;
 
 /** Row of the comparison table: real records, one row per published plan. */
@@ -162,9 +154,6 @@ export function PricingExplorer({
           </div>
 
           <div className="sr-finder-result">
-            <span className="sr-finder-result-icon">
-              <Globe2 aria-hidden="true" />
-            </span>
             <div>
               <span>Suggested starting tier</span>
               <strong>{recommendedTier} {region}</strong>
@@ -268,12 +257,9 @@ export function PricingExplorer({
                 <Separator />
 
                 <ul className="sr-plan-specs">
-                  {specs.map(({ key, label, icon: Icon }) => (
+                  {specs.map(({ key, label }) => (
                     <li key={key}>
-                      <span>
-                        <Icon aria-hidden="true" />
-                        {label}
-                      </span>
+                      <span>{label}</span>
                       <b>{plan.specs[key]}</b>
                     </li>
                   ))}
@@ -284,7 +270,6 @@ export function PricingExplorer({
                     <Button asChild className="w-full">
                       <a href={checkoutUrl(plan, cycle)}>
                         Configure server
-                        <ArrowRight />
                       </a>
                     </Button>
                   ) : (
