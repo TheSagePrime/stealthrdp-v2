@@ -6,46 +6,7 @@
    public brand, shared geometry, marketing components and legacy route cleanup.
    ========================================================================== */
 
-.dark {
-  --background: #070a14;
-  --foreground: #f5f7ff;
-  --card: #0d1222;
-  --card-foreground: #f5f7ff;
-  --popover: #10162a;
-  --popover-foreground: #f5f7ff;
-  --primary: #6380ff;
-  --primary-foreground: #ffffff;
-  --secondary: #11182b;
-  --secondary-foreground: #f5f7ff;
-  --muted: #11182b;
-  --muted-foreground: #9aa6bd;
-  --accent: #38d7ff;
-  --accent-foreground: #031019;
-  --destructive: #ff6b7a;
-  --border: #202a43;
-  --input: #34405c;
-  --ring: #7b92ff;
-
-  --bg: #070a14;
-  --bg-elev: #0a0f1d;
-  --surface-1: #0d1222;
-  --surface-2: #11182b;
-  --surface-3: #172139;
-  --text: #f5f7ff;
-  --text-muted: #9aa6bd;
-  --text-dim: #74819a;
-  --border-divider: #202a43;
-  --border-soft: #2c3854;
-  --border-control: #465473;
-  --focus-ring: #7b92ff;
-  --accent-hover: #7790ff;
-  --accent-press: #526dde;
-  --accent-ink: #ffffff;
-  --status-ok: #3fd18b;
-  --status-warn: #f5ad50;
-  --status-bad: #ff6b7a;
-  --status-unknown: #8792a8;
-}
+/* Shared dark colour roles are defined in global.css. */
 
 html {
   background: var(--background);
@@ -356,9 +317,7 @@ body {
 .srv3-hero-copy h1 span {
   display: block;
   margin-top: 8px;
-  background: linear-gradient(90deg, #8ea1ff, #5ee6ff);
-  background-clip: text;
-  color: transparent;
+  color: #8ea1ff;
 }
 
 .srv3-hero-lede {
@@ -454,7 +413,7 @@ body {
   width: min(100%, 410px);
   overflow: hidden;
   border: 1px solid rgb(129 153 255 / 23%);
-  border-radius: 24px;
+  border-radius: 20px;
   background:
     linear-gradient(180deg, rgb(17 24 43 / 96%), rgb(8 12 24 / 98%));
   box-shadow:
@@ -504,8 +463,7 @@ body {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #46deaa;
-  box-shadow: 0 0 12px rgb(70 222 170 / 60%);
+  background: var(--border-control);
 }
 
 .srv3-rack-line {
@@ -625,6 +583,8 @@ body {
 
 .sr-pricing-explorer {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
   gap: 24px;
 }
 
@@ -1201,7 +1161,7 @@ body {
   align-items: center;
   overflow: hidden;
   border: 1px solid rgb(114 140 255 / 25%);
-  border-radius: 24px;
+  border-radius: 20px;
   background:
     radial-gradient(circle at 90% 10%, rgb(56 215 255 / 10%), transparent 18rem),
     linear-gradient(135deg, rgb(99 128 255 / 12%), transparent 46%),
@@ -2047,8 +2007,7 @@ body {
 
 .srv3-hero-copy h1 span {
   margin-top: 5px;
-  background: linear-gradient(92deg, #9bafff 0%, #6d8aff 48%, #71dcf4 100%);
-  background-clip: text;
+  color: #9bafff;
 }
 
 .srv3-hero-lede {
@@ -2134,19 +2093,6 @@ body {
   display: none;
 }
 
-.srv3-hero-gridwash {
-  position: absolute;
-  inset: 2% -8% -5%;
-  opacity: 0.62;
-  background-image:
-    linear-gradient(rgb(108 132 238 / 9%) 1px, transparent 1px),
-    linear-gradient(90deg, rgb(108 132 238 / 9%) 1px, transparent 1px);
-  background-size: 38px 38px;
-  mask-image: radial-gradient(circle at center, black 28%, transparent 72%);
-  transform: perspective(700px) rotateX(58deg) translateY(24%);
-  transform-origin: center bottom;
-}
-
 .srv3-rack-stage {
   position: relative;
   z-index: 2;
@@ -2189,22 +2135,10 @@ body {
   font-weight: 600;
 }
 
-.srv3-rack-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  border: 1px solid rgb(63 209 139 / 18%);
-  border-radius: 999px;
-  background: rgb(63 209 139 / 5%);
-  padding: 6px 9px;
-  color: #87dcb4;
-  font-size: 0.65rem;
-  font-weight: 700;
-}
-
-.srv3-rack-status svg {
-  width: 13px;
-  height: 13px;
+.srv3-rack-model {
+  color: var(--muted-foreground);
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
 }
 
 .srv3-rack {
@@ -2375,6 +2309,33 @@ body {
   gap: 18px;
 }
 
+.sr-finder-os-note p {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.83rem;
+  line-height: 1.5;
+}
+
+.sr-comparison-panel {
+  scroll-margin-top: 130px;
+  margin-top: 24px;
+}
+
+.sr-comparison-panel h3 {
+  margin: 0 0 4px;
+  font-size: 1.4rem;
+}
+
+.sr-comparison-panel > p {
+  margin: 0 0 20px;
+  color: var(--muted-foreground);
+}
+
+.sr-comparison-panel .sr-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 .sr-finder-block,
 .sr-control-stack {
   display: grid;
@@ -2402,10 +2363,10 @@ body {
 .sr-segmented-control [data-slot="button"][aria-pressed="true"] {
   border-color: rgb(119 143 255 / 38%);
   background: #677ef2;
-  color: white;
+  color: var(--primary-foreground);
 }
 
-.sr-segmented-control [data-slot="button"]:hover {
+.sr-segmented-control [data-slot="button"]:not([aria-pressed="true"]):hover {
   color: white;
 }
 
@@ -2881,10 +2842,6 @@ body {
     min-height: 410px;
   }
 
-  .srv3-hero-gridwash {
-    inset: 4% -35% -8%;
-  }
-
   .sr-finder-copy {
     align-items: flex-start;
     flex-direction: column;
@@ -2941,6 +2898,21 @@ body {
 
   .sr-plan-actions {
     padding-inline: 18px !important;
+  }
+
+  .sr-segmented-control[aria-label="Billing cycle"] {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+    overflow: visible;
+  }
+
+  .sr-segmented-control[aria-label="Billing cycle"] [data-slot="button"] {
+    min-width: 0;
+    width: 100%;
+    margin-left: 0;
+    border-radius: 8px;
+    padding-inline: 8px;
   }
 }
 

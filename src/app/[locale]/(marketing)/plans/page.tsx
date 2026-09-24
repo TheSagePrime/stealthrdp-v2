@@ -13,7 +13,6 @@ import {
 import Link from 'next/link';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
 import { Button } from '@/components/ui/button';
-import { checkoutUrl, plans } from '@/lib/stealth/content';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
@@ -52,9 +51,9 @@ export default function PlansPage() {
               <p className="sr-kicker">Standard plans</p>
               <h2 className="sr-section-title">Choose your resource level</h2>
             </div>
-            <p>All 11 current public plans are available here with live region availability and direct WHMCS checkout links.</p>
+            <p>Compare published plan specifications and prices. Checkout confirms current availability.</p>
           </div>
-          <PricingExplorer />
+          <PricingExplorer showComparison />
         </div>
       </section>
 
@@ -151,54 +150,6 @@ export default function PlansPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border" id="comparison">
-        <div className="sr-container">
-          <div className="sr-section-head">
-            <div>
-              <p className="sr-kicker">Compare precisely</p>
-              <h2 className="sr-section-title">See the difference in one view.</h2>
-            </div>
-            <p>Use this table for a quick resource check. Checkout confirms the current price and availability.</p>
-          </div>
-
-          <div className="sr-comparison-wrap">
-            <table className="sr-comparison-table">
-              <thead>
-                <tr>
-                  <th>Plan</th>
-                  <th>CPU</th>
-                  <th>RAM</th>
-                  <th>Storage</th>
-                  <th>Bandwidth</th>
-                  <th>Price/mo</th>
-                  <th><span className="sr-visually-hidden">Action</span></th>
-                </tr>
-              </thead>
-              <tbody>
-                {plans.map(plan => (
-                  <tr key={plan.name}>
-                    <td><strong>{plan.name}</strong></td>
-                    <td>{plan.specs.cpu}</td>
-                    <td>{plan.specs.ram}</td>
-                    <td>{plan.specs.storage}</td>
-                    <td>{plan.specs.bandwidth}</td>
-                    <td>€{plan.pricing.monthly.amount}{plan.pricing.monthly.suffix}</td>
-                    <td>
-                      {plan.source.availability === 'out-of-stock' ? (
-                        <span className="sr-table-unavailable">Unavailable</span>
-                      ) : (
-                        <Button asChild size="sm" variant="outline">
-                          <a href={checkoutUrl(plan, 'monthly')}>Buy now</a>
-                        </Button>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
     </>
   );
 }

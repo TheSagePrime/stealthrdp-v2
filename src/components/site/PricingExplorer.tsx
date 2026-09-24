@@ -40,14 +40,7 @@ const workloadOptions = [
   { key: 'storage', label: 'Storage & backups', tier: 'Silver' },
 ] as const;
 
-const osOptions = [
-  { key: 'any', label: 'Any OS' },
-  { key: 'windows', label: 'Windows' },
-  { key: 'linux', label: 'Linux' },
-] as const;
-
 type WorkloadKey = (typeof workloadOptions)[number]['key'];
-type OsKey = (typeof osOptions)[number]['key'];
 
 const specs = [
   { key: 'cpu', label: 'CPU', icon: Cpu },
@@ -71,13 +64,13 @@ function ComparisonRow({
 
   return (
     <TableRow>
-      <TableHead>
+      <th scope="row">
         <span className="sr-plan-row">
           {plan.name}
           {recommended ? <Badge>Best fit</Badge> : null}
           {plan.popular && !recommended ? <Badge variant="outline">Popular</Badge> : null}
         </span>
-      </TableHead>
+      </th>
       <TableCell>{plan.specs.cpu}</TableCell>
       <TableCell>{plan.specs.ram}</TableCell>
       <TableCell>{plan.specs.storage}</TableCell>
@@ -99,25 +92,22 @@ function ComparisonRow({
 export function PricingExplorer({
   compact = false,
   guided = true,
-  variant = 'cards',
+  showComparison = false,
 }: {
   compact?: boolean;
   guided?: boolean;
-  variant?: 'cards' | 'table';
+  showComparison?: boolean;
 }) {
   const [region, setRegion] = useState<'USA' | 'EU'>('USA');
   const [cycle, setCycle] = useState<BillingCycle>('monthly');
   const [workload, setWorkload] = useState<WorkloadKey>('remote-desktop');
-  const [os, setOs] = useState<OsKey>('any');
 
   const recommendedTier = workloadOptions.find(item => item.key === workload)?.tier ?? 'Bronze';
-  const osLabel = osOptions.find(item => item.key === os)?.label ?? 'Any OS';
 
   const visible = useMemo(() => {
     const matching = plans.filter(plan => plan.location === region);
-    if (variant === 'table') return matching;
     return compact ? matching.slice(0, 3) : matching;
-  }, [compact, region, variant]);
+  }, [compact, region]);
 
   return (
     <div className="sr-pricing-explorer">
@@ -150,22 +140,9 @@ export function PricingExplorer({
               </ButtonGroup>
             </div>
 
-            <div className="sr-finder-block">
+            <div className="sr-finder-block sr-finder-os-note">
               <span className="sr-control-label">Operating system</span>
-              <ButtonGroup className="sr-segmented-control" aria-label="Operating system">
-                {osOptions.map(item => (
-                  <Button
-                    key={item.key}
-                    type="button"
-                    size="sm"
-                    variant={os === item.key ? 'default' : 'outline'}
-                    aria-pressed={os === item.key}
-                    onClick={() => setOs(item.key)}
-                  >
-                    {item.label}
-                  </Button>
-                ))}
-              </ButtonGroup>
+              <p>Choose Windows or Linux during checkout. Both options use these VPS plans.</p>
             </div>
           </div>
 
@@ -176,11 +153,7 @@ export function PricingExplorer({
             <div>
               <span>Suggested starting tier</span>
               <strong>{recommendedTier} {region}</strong>
-              <small>
-                {osLabel === 'Any OS'
-                  ? 'Windows and Linux images are available.'
-                  : `${osLabel} images are available.`}
-              </small>
+              <small>Final OS and availability are confirmed during checkout.</small>
             </div>
           </div>
         </div>
@@ -234,35 +207,8 @@ export function PricingExplorer({
         </div>
       </div>
 
-      {variant === 'table' ? (
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Plan</TableHead>
-              <TableHead>CPU</TableHead>
-              <TableHead>RAM</TableHead>
-              <TableHead>Storage</TableHead>
-              <TableHead>Bandwidth</TableHead>
-              <TableHead>Price/mo</TableHead>
-              <TableHead>
-                <span className="sr-visually-hidden">Action</span>
-              </TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {visible.map(plan => (
-              <ComparisonRow
-                key={plan.name}
-                plan={plan}
-                cycle={cycle}
-                recommended={guided && plan.name.startsWith(recommendedTier)}
-              />
-            ))}
-          </TableBody>
-        </Table>
-      ) : (
-        <div className="sr-plan-grid">
-          {visible.map((plan) => {
+      <div className="sr-plan-grid">
+        {visible.map((plan) => {
             const price = plan.pricing[cycle];
             const available = plan.source.availability !== 'out-of-stock';
             const recommended = plan.name.startsWith(recommendedTier);
@@ -334,7 +280,35 @@ export function PricingExplorer({
             );
           })}
         </div>
-      )}
+      {showComparison ? (
+        <div id="comparison" className="sr-comparison-panel">
+          <h3>Compare {region} plans · {billingCycles[cycle].label}</h3>
+          <p>Published prices and availability are confirmed during checkout.</p>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Plan</TableHead>
+                <TableHead>CPU</TableHead>
+                <TableHead>RAM</TableHead>
+                <TableHead>Storage</TableHead>
+                <TableHead>Bandwidth</TableHead>
+                <TableHead>{`Price${plans[0]?.pricing[cycle].suffix ?? ''}`}</TableHead>
+                <TableHead><span className="sr-visually-hidden">Action</span></TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {visible.map(plan => (
+                <ComparisonRow
+                  key={plan.name}
+                  plan={plan}
+                  cycle={cycle}
+                  recommended={guided && plan.name.startsWith(recommendedTier) && plan.location === region}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ) : null}
     </div>
   );
 }

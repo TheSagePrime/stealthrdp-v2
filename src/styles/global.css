@@ -86,7 +86,7 @@
 
 /* Colour mappings resolve to role tokens declared below. */
 @theme inline {
-  /* shadcn names, mapped onto the Graphite / Restrained Gold palette */
+  /* shadcn names, mapped onto the active dark palette and light counterpart */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -147,19 +147,19 @@
   --card-foreground: oklch(0.21 0.014 260);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.21 0.014 260);
-  --primary: oklch(0.62 0.12 82);
-  --primary-foreground: oklch(0.99 0.002 250);
+  --primary: #4059c6;
+  --primary-foreground: #ffffff;
   --secondary: oklch(0.955 0.004 250);
   --secondary-foreground: oklch(0.21 0.014 260);
   --muted: oklch(0.955 0.004 250);
   --muted-foreground: oklch(0.45 0.012 258);
-  --accent: oklch(0.62 0.12 82);
-  --accent-foreground: oklch(0.99 0.002 250);
+  --accent: #4059c6;
+  --accent-foreground: #ffffff;
   --destructive: oklch(0.55 0.19 27);
   --border: oklch(0.9 0.005 255);
   --input: oklch(0.82 0.008 255);
-  --ring: oklch(0.62 0.12 82);
-  --chart-1: oklch(0.62 0.12 82);
+  --ring: #4059c6;
+  --chart-1: #4059c6;
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
@@ -176,69 +176,61 @@
   --border-divider: oklch(0.9 0.005 255);
   --border-soft: oklch(0.78 0.008 255);
   --border-control: oklch(0.62 0.01 256);
-  --focus-ring: oklch(0.52 0.12 82);
-  --accent-hover: oklch(0.56 0.13 82);
-  --accent-press: oklch(0.68 0.11 82);
-  --accent-ink: oklch(0.99 0.002 250);
+  --focus-ring: #4059c6;
+  --accent-hover: #526dde;
+  --accent-press: #334cad;
+  --accent-ink: #ffffff;
   --status-ok: oklch(0.52 0.13 163);
   --status-warn: oklch(0.55 0.15 55);
   --status-bad: oklch(0.52 0.19 27);
   --status-unknown: oklch(0.58 0.01 256);
 }
 
-/* ==========================================================================
-   .dark — Graphite / Restrained Gold. The shipped palette.
-   Measured contrast table lives in review-artifacts/contrast.md.
-   ========================================================================== */
-
+/* Shared dark palette. Marketing and shadcn primitives use the same tokens. */
 .dark {
-  --background: #0b0c0e;
-  --foreground: #eaecf0;
-  --card: #14171c;
-  --card-foreground: #eaecf0;
-  --popover: #1a1e25;
-  --popover-foreground: #eaecf0;
-  --primary: #e8b84b;
-  --primary-foreground: #171204;
-  --secondary: #1a1e25;
-  --secondary-foreground: #eaecf0;
-  --muted: #1a1e25;
-  --muted-foreground: #9ba3af;
-  --accent: #e8b84b;
-  --accent-foreground: #171204;
-  --destructive: #f87171;
-  --border: #242a33;
-  --input: #5f5e5b;
-  --ring: #e8b84b;
-  --chart-1: #e8b84b;
-  --chart-2: #34d399;
-  --chart-3: #f87171;
-  --chart-4: #fb923c;
-  --chart-5: #9ba3af;
+  --background: #070a14;
+  --foreground: #f5f7ff;
+  --card: #0d1222;
+  --card-foreground: #f5f7ff;
+  --popover: #10162a;
+  --popover-foreground: #f5f7ff;
+  --primary: #6380ff;
+  --primary-foreground: #070a14;
+  --secondary: #11182b;
+  --secondary-foreground: #f5f7ff;
+  --muted: #11182b;
+  --muted-foreground: #9aa6bd;
+  --accent: #38d7ff;
+  --accent-foreground: #031019;
+  --destructive: #ff6b7a;
+  --border: #202a43;
+  --input: #34405c;
+  --ring: #7b92ff;
+  --chart-1: #6380ff;
+  --chart-2: #38d7ff;
+  --chart-3: #3fd18b;
+  --chart-4: #f5ad50;
+  --chart-5: #ff6b7a;
 
-  --bg: #0b0c0e;
-  --bg-elev: #101216;
-  --surface-1: #14171c;
-  --surface-2: #1a1e25;
-  --surface-3: #222831;
-  --text: #eaecf0;
-  --text-muted: #9ba3af;
-  /* --text-dim paints small labels (feature numbers, table headers, footer
-     meta), so it is text, not decoration. #6e7683 measured 4.27:1 on --bg and
-     3.92:1 on --surface-1, below the AA 4.5:1 floor. #8a92a0 measures 6.24:1 on
-     --bg, 5.73:1 on --surface-1, 5.33:1 on --surface-2, 4.73:1 on --surface-3. */
-  --text-dim: #8a92a0;
-  --border-divider: #242a33;
-  --border-soft: #42413e;
-  --border-control: #5f5e5b;
-  --focus-ring: #e8b84b;
-  --accent-hover: #f2c86b;
-  --accent-press: #d2a338;
-  --accent-ink: #171204;
-  --status-ok: #34d399;
-  --status-warn: #fb923c;
-  --status-bad: #f87171;
-  --status-unknown: #6e7683;
+  --bg: #070a14;
+  --bg-elev: #0a0f1d;
+  --surface-1: #0d1222;
+  --surface-2: #11182b;
+  --surface-3: #172139;
+  --text: #f5f7ff;
+  --text-muted: #9aa6bd;
+  --text-dim: #74819a;
+  --border-divider: #202a43;
+  --border-soft: #2c3854;
+  --border-control: #465473;
+  --focus-ring: #7b92ff;
+  --accent-hover: #7790ff;
+  --accent-press: #526dde;
+  --accent-ink: #070a14;
+  --status-ok: #3fd18b;
+  --status-warn: #f5ad50;
+  --status-bad: #ff6b7a;
+  --status-unknown: #8792a8;
 }
 
 @layer base {

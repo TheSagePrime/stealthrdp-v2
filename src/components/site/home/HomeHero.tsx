@@ -1,6 +1,5 @@
 import {
   ArrowRight,
-  CheckCircle2,
   Cpu,
   Globe2,
   HardDrive,
@@ -84,9 +83,7 @@ export function HomeHero() {
           </ul>
         </div>
 
-        <div className="srv3-hero-visual" aria-label="StealthRDP infrastructure illustration">
-          <div className="srv3-hero-gridwash" aria-hidden="true" />
-
+        <div className="srv3-hero-visual" aria-hidden="true">
           <div className="srv3-rack-stage">
             <div className="srv3-rack-shell">
               <div className="srv3-rack-top">
@@ -94,10 +91,7 @@ export function HomeHero() {
                   <span className="srv3-rack-brand">STEALTHRDP</span>
                   <small>Virtual infrastructure</small>
                 </div>
-                <span className="srv3-rack-status">
-                  <CheckCircle2 aria-hidden="true" />
-                  Ready
-                </span>
+                <span className="srv3-rack-model">VPS platform</span>
               </div>
 
               <div className="srv3-rack">
