@@ -6,6 +6,7 @@ import { routing } from '@/libs/I18nRouting';
 import '@/styles/global.css';
 import '@/styles/surfaces.css';
 import '@/styles/stealth.css';
+import '@/styles/stealth-v3.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.stealthrdp.com'),
