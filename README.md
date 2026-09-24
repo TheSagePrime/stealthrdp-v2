@@ -22,6 +22,14 @@ It does **not** replace WHMCS. `dash.stealthrdp.com` continues to own login, che
 
 The V2 build includes the current homepage, plans, Windows VPS, Linux VPS, status, FAQ, about, privacy, docs, blog, and the Minecraft VPS page. Existing public content data is stored under `src/content/`.
 
+## Design
+
+`DESIGN.md` is the single visual source of truth.
+`DESIGN_SYSTEM.md` defines the shared layout/component implementation rules.
+`src/styles/stealth-v3.css` is the active public brand layer.
+
+The older `stealth.css` and `surfaces.css` files are compatibility layers for migrated routes and must not be used as visual references for new work.
+
 ## Development
 
 ```bash
