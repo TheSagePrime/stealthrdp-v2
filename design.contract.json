@@ -80,7 +80,17 @@
       "shadow-[",
       "bg-gradient-to-",
       "bg-linear-to-"
-    ]
+    ],
+    "forbidLegacyMarketingPatterns": [
+      "SessionPreview",
+      "sr-stage-ring",
+      "sr-stage-float",
+      "sr-section-index",
+      "srx-sheet",
+      "srx-clause"
+    ],
+    "brandColorAllowed": true,
+    "statusColorsSemanticOnly": true
   },
   "protectedSeoStyles": [
     "seo-article-publication-meta",
@@ -88,5 +98,27 @@
     "seo-article-sources",
     "seo-article-table-wrap",
     "seo-article-index"
-  ]
+  ],
+  "visualSourceOfTruth": "DESIGN.md",
+  "layout": {
+    "maxContentWidthPx": 1240,
+    "desktopGutterPx": 32,
+    "mobileGutterPx": 20,
+    "sectionSpacingPx": {
+      "min": 72,
+      "max": 112
+    },
+    "readingWidthPx": {
+      "min": 680,
+      "max": 760
+    },
+    "hierarchy": [
+      "page",
+      "section",
+      "container",
+      "layout",
+      "component",
+      "element"
+    ]
+  }
 }
