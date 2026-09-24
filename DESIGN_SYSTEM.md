@@ -1,48 +1,69 @@
 # Sage Prime Design System
 
-The frontend foundation is intentionally constrained so AI-generated code stays consistent instead of inventing a new visual language per task.
+This repository uses one primary component foundation and one project-owned visual system.
 
-## Foundation
+## Component foundation
 
-Use Tailwind CSS, shadcn/ui, Radix UI primitives, Lucide icons, CVA, and the tokens in `src/styles/global.css`.
+Primary:
+- Tailwind CSS
+- shadcn/ui
+- Radix UI
+- Lucide
+- CVA
 
-The hierarchy is:
+Do not mix in MUI, Chakra, Ant Design, Bootstrap, React Icons, Font Awesome, or another full UI kit.
 
-1. Reuse an existing product component.
-2. Reuse an existing `src/components/ui` primitive.
-3. Add the appropriate shadcn/Radix primitive.
-4. Create a reusable product component.
-5. Use bespoke one-off markup only when the earlier options do not fit.
+Specialist libraries may be added only for a real missing capability such as charts, maps, motion or carousels.
+
+## Reuse order
+
+1. Reuse an existing StealthRDP product component.
+2. Reuse a canonical src/components/ui primitive.
+3. Add the correct shadcn/Radix primitive.
+4. Create a reusable StealthRDP component.
+5. Use bespoke route markup only when it is genuinely route-specific.
+
+## Layout system
+
+Page → Section → Container → Layout → Component → Element
+
+- Section owns vertical spacing.
+- Container owns max width and horizontal padding.
+- Layout owns grid/flex columns and gap.
+- Component owns internal padding.
+- Elements do not add arbitrary page margins.
+
+Canonical marketing geometry lives in src/styles/stealth-v3.css.
+Do not invent a new container width, section rhythm or breakpoint inside individual pages.
 
 ## Tokens
 
-Colors, borders, backgrounds, foregrounds, rings, radii, and state styling should come from the existing theme tokens. Do not introduce arbitrary brand colors inside components.
+All product colours use tokens from src/styles/global.css.
+Brand colour is allowed.
+Status colours remain semantic.
 
-Avoid:
-- hardcoded hex/RGB/HSL colors in product components
-- arbitrary Tailwind hex colors
-- alternate icon libraries
-- parallel button/input/dialog/card systems
-- random gradients, glass effects, oversized radii, or decorative cards without product purpose
-- inline style objects for visual design when Tailwind/tokens cover the need
+Use the shared type, radius and spacing scales.
+Avoid arbitrary visual values inside JSX when an existing token or product class exists.
 
-## Product UI requirements
+## Marketing components
 
-Material UI work should account for desktop and mobile states. Interactive controls must preserve keyboard behavior, focus treatment, disabled/loading behavior, and accessible semantics. Prefer Radix-backed primitives for behavior that is easy to get wrong.
+The public site is not a dashboard.
 
-A page should communicate hierarchy through typography, spacing, grouping, and content structure before decoration.
+Custom marketing components are expected for hero, pricing, infrastructure, regions, proof/reviews and final CTA.
+
+A card must represent a real content object. Do not wrap every section in a card.
+
+## Accessibility
+
+Keep semantic landmarks, visible focus styles, keyboard-safe primitives, reduced-motion handling, non-colour status labels, responsive controls and tables.
 
 ## Visual QA
 
-Meaningful UI changes must be rendered and reviewed, not accepted from source code alone.
+Material frontend changes require desktop and mobile review.
+Storybook accessibility and screenshot regression remain blocking checks.
+Intentional visual baseline changes must be reviewed before updating references.
 
-The starter enforces three frontend QA layers:
-- Storybook component tests for canonical states
-- Storybook axe accessibility checks with violations treated as errors
-- Vitest browser screenshot regression at desktop/mobile and light/dark reference states
+## SEO
 
-Run `pnpm storybook:test` and `pnpm test:visual` before handing off frontend changes. The visual test renders real Chromium screenshots and compares them against reviewed Linux reference images committed beside the test. CI uploads the generated diff artifacts when a visual comparison fails. Intentional visual changes require reviewing the new images first, then running `pnpm test:visual:update` and committing only the approved baseline changes. Chromatic remains an optional additional cross-browser cloud layer.
-
-## SEO compatibility
-
-The SEO article styles in `src/styles/global.css` are protected. Design cleanup must not remove the article publication metadata, citation, sources, table, or index styles merely because they are custom CSS.
+Protected SEO article styles remain in src/styles/global.css.
+Visual work must not remove or bypass the SEO pipeline.
