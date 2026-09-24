@@ -8,10 +8,10 @@ import {
   MemoryStick,
   Monitor,
   ShieldCheck,
-  Terminal,
   Zap,
 } from 'lucide-react';
 import Link from 'next/link';
+import { OSHeroVisual } from '@/components/site/OSHeroVisual';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
 import { Button } from '@/components/ui/button';
 import { createPageMetadata } from '@/libs/seo/metadata';
@@ -67,14 +67,12 @@ export default function WindowsVpsPage() {
               <Button asChild size="lg" variant="outline"><Link href="#windows-versions">Windows versions</Link></Button>
             </div>
           </div>
-          <div className="sr-os-terminal" aria-label="Windows VPS deployment summary">
-            <div className="sr-os-terminal-head"><Monitor /><span>Windows VPS</span></div>
-            <code>$ stealth deploy --os windows --region us</code>
-            <div><span>region</span><strong>USA / EU</strong></div>
-            <div><span>image</span><strong>Server 2019 / 2022 / 2025</strong></div>
-            <div><span>storage</span><strong>NVMe</strong></div>
-            <p><Zap /> Confirm the exact image during checkout.</p>
-          </div>
+          <OSHeroVisual
+            kind="windows"
+            title="A familiar Windows environment on VPS infrastructure"
+            items={windowsVersions.map(item => item.name)}
+            access="Administrator access"
+          />
         </div>
       </section>
 
@@ -209,7 +207,7 @@ export default function WindowsVpsPage() {
             <p>StealthRDP sends your service credentials by email after payment confirmation.</p>
           </article>
           <article>
-            <Terminal />
+            <ShieldCheck />
             <span className="sr-location-code">Support and limits</span>
             <h3>Operate within the published terms</h3>
             <p>Support is available through the client-area ticketing system and support email. Lawful use and the published Use of Service terms apply.</p>
