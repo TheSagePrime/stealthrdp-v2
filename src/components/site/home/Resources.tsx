@@ -1,37 +1,56 @@
-import { Activity, BookOpen, FileText, HelpCircle } from 'lucide-react';
+import { Activity, ArrowRight, BookOpen, FileText, HelpCircle } from 'lucide-react';
 import Link from 'next/link';
 
 const resources = [
-  { label: 'Documentation', href: '/docs', icon: BookOpen },
-  { label: 'Tutorials', href: '/blog', icon: FileText },
-  { label: 'FAQ', href: '/faq', icon: HelpCircle },
-  { label: 'Server status', href: '/status', icon: Activity },
+  {
+    label: 'Documentation',
+    text: 'Setup guides, server tasks and product documentation.',
+    href: '/docs',
+    icon: BookOpen,
+  },
+  {
+    label: 'Tutorials',
+    text: 'Practical VPS guides and technical articles.',
+    href: '/blog',
+    icon: FileText,
+  },
+  {
+    label: 'FAQ',
+    text: 'Quick answers about plans, setup, billing and service.',
+    href: '/faq',
+    icon: HelpCircle,
+  },
+  {
+    label: 'Server status',
+    text: 'Check current public infrastructure health.',
+    href: '/status',
+    icon: Activity,
+  },
 ] as const;
 
-/**
- * Documentation and support entry points. DESIGN.md section 9, position 7.
- * The heading and labels reuse the footer's own wording.
- */
 export function Resources() {
   return (
-    <section className="sr-section sr-section-border" id="resources">
+    <section className="sr-section srv3-resources-section" id="resources">
       <div className="sr-container">
-        <div className="sr-section-head">
+        <div className="srv3-section-heading">
           <div>
-            <h2 className="sr-section-title">Resources</h2>
+            <p className="sr-kicker">Need more detail?</p>
+            <h2>Everything useful stays close to the product.</h2>
           </div>
         </div>
 
-        <ul className="sr-resources-list">
-          {resources.map(({ label, href, icon: Icon }) => (
-            <li key={href}>
-              <Link href={href}>
-                <Icon aria-hidden="true" />
-                <span>{label}</span>
-              </Link>
-            </li>
+        <div className="srv3-resource-grid">
+          {resources.map(({ label, text, href, icon: Icon }) => (
+            <Link href={href} key={href}>
+              <Icon aria-hidden="true" />
+              <div>
+                <h3>{label}</h3>
+                <p>{text}</p>
+              </div>
+              <ArrowRight className="srv3-resource-arrow" aria-hidden="true" />
+            </Link>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   );
