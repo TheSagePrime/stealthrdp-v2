@@ -1,5 +1,15 @@
-import { ArrowRight, Cpu, Globe2, HardDrive, Server, ShieldCheck, Zap } from 'lucide-react';
+import {
+  ArrowRight,
+  CheckCircle2,
+  Cpu,
+  Globe2,
+  HardDrive,
+  Server,
+  ShieldCheck,
+  Zap,
+} from 'lucide-react';
 import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { plans } from '@/lib/stealth/content';
 
@@ -23,6 +33,7 @@ export function HomeHero() {
           <div className="srv3-eyebrow">
             <span className="srv3-eyebrow-dot" aria-hidden="true" />
             Windows & Linux VPS
+            <Badge variant="outline">Infrastructure-first hosting</Badge>
           </div>
 
           <h1>
@@ -48,12 +59,19 @@ export function HomeHero() {
           </div>
 
           <div className="srv3-hero-price">
-            <span>Starting at</span>
-            <strong>
-              €{startingPlan?.pricing.monthly.amount.toFixed(2) ?? '9.50'}
-              <small>/mo</small>
-            </strong>
-            <span>{startingPlan?.name ?? 'Bronze USA'} · Dedicated IPv4</span>
+            <div>
+              <span>Starting at</span>
+              <strong>
+                €{startingPlan?.pricing.monthly.amount.toFixed(2) ?? '9.50'}
+                <small>/mo</small>
+              </strong>
+            </div>
+            <span className="srv3-hero-price-divider" aria-hidden="true" />
+            <div>
+              <span>Entry plan</span>
+              <b>{startingPlan?.name ?? 'Bronze USA'}</b>
+              <small>Dedicated IPv4 included</small>
+            </div>
           </div>
 
           <ul className="srv3-hero-facts" aria-label="VPS highlights">
@@ -67,40 +85,58 @@ export function HomeHero() {
         </div>
 
         <div className="srv3-hero-visual" aria-label="StealthRDP infrastructure illustration">
-          <div className="srv3-orbit srv3-orbit-one" aria-hidden="true" />
-          <div className="srv3-orbit srv3-orbit-two" aria-hidden="true" />
+          <div className="srv3-hero-gridwash" aria-hidden="true" />
 
-          <div className="srv3-rack-shell">
-            <div className="srv3-rack-top">
-              <span>STEALTHRDP</span>
-              <span>INFRASTRUCTURE</span>
-            </div>
-
-            <div className="srv3-rack">
-              {[0, 1, 2, 3].map(index => (
-                <div className="srv3-rack-unit" key={index}>
-                  <span className="srv3-rack-led" />
-                  <span className="srv3-rack-line" />
-                  <span className="srv3-rack-line srv3-rack-line-short" />
-                  <span className="srv3-rack-port" />
-                  <span className="srv3-rack-port" />
+          <div className="srv3-rack-stage">
+            <div className="srv3-rack-shell">
+              <div className="srv3-rack-top">
+                <div>
+                  <span className="srv3-rack-brand">STEALTHRDP</span>
+                  <small>Virtual infrastructure</small>
                 </div>
-              ))}
+                <span className="srv3-rack-status">
+                  <CheckCircle2 aria-hidden="true" />
+                  Ready
+                </span>
+              </div>
+
+              <div className="srv3-rack">
+                {[0, 1, 2, 3].map(index => (
+                  <div className="srv3-rack-unit" key={index}>
+                    <div className="srv3-rack-unit-left">
+                      <span className="srv3-rack-led" />
+                      <Server aria-hidden="true" />
+                    </div>
+                    <div className="srv3-rack-unit-center">
+                      <span className="srv3-rack-line" />
+                      <span className="srv3-rack-line srv3-rack-line-short" />
+                    </div>
+                    <div className="srv3-rack-unit-right">
+                      <span className="srv3-rack-port" />
+                      <span className="srv3-rack-port" />
+                      <span className="srv3-rack-port" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="srv3-rack-footer">
+                <span><Cpu /> Isolated VMs</span>
+                <span><HardDrive /> NVMe storage</span>
+                <span><Zap /> Fast provisioning</span>
+              </div>
             </div>
 
-            <div className="srv3-rack-footer">
-              <span><Server /> Virtual machines</span>
-              <span><Zap /> Rapid setup</span>
+            <div className="srv3-region-dock">
+              <div>
+                <Globe2 aria-hidden="true" />
+                <span><strong>USA</strong><small>North America</small></span>
+              </div>
+              <div>
+                <Globe2 aria-hidden="true" />
+                <span><strong>EU</strong><small>Europe</small></span>
+              </div>
             </div>
-          </div>
-
-          <div className="srv3-visual-tag srv3-visual-tag-us">
-            <Globe2 />
-            <span><strong>USA</strong> region</span>
-          </div>
-          <div className="srv3-visual-tag srv3-visual-tag-eu">
-            <Globe2 />
-            <span><strong>EU</strong> region</span>
           </div>
         </div>
       </div>
