@@ -6,7 +6,6 @@ import {
   KeyRound,
   MapPin,
   MemoryStick,
-  Monitor,
   ShieldCheck,
   Zap,
 } from 'lucide-react';
