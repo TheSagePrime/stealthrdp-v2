@@ -1,63 +1,58 @@
-import { Activity, HardDrive, Network, ShieldCheck } from 'lucide-react';
+import { Activity, Cpu, HardDrive, Network, ShieldCheck } from 'lucide-react';
 
-const infrastructure = [
+const items = [
   {
-    icon: HardDrive,
-    title: 'NVMe-first storage',
-    text: 'Fast disk I/O for remote desktops, applications, databases, automation and active workloads.',
-    value: 'NVMe',
+    icon: Cpu,
+    title: 'Compute that scales with the workload',
+    text: 'Choose from practical CPU and memory tiers instead of paying for resources you do not need.',
   },
   {
-    icon: ShieldCheck,
-    title: 'Isolated virtual machines',
-    text: 'Dedicated VM boundaries with full administrative access and infrastructure-level protection.',
-    value: 'Full admin',
+    icon: HardDrive,
+    title: 'NVMe-backed storage',
+    text: 'Fast local storage for remote desktops, applications, databases, automation and active files.',
   },
   {
     icon: Network,
-    title: 'High-speed networking',
-    text: 'Fast connectivity and unlimited bandwidth on current plans, built for sustained workloads.',
-    value: 'Unlimited',
+    title: 'Built for sustained network use',
+    text: 'Current plans include high-speed connectivity and unlimited bandwidth for everyday server workloads.',
   },
   {
-    icon: Activity,
-    title: 'Visible service health',
-    text: 'Public status information and clear support paths when something needs attention.',
-    value: '24/7 monitoring',
+    icon: ShieldCheck,
+    title: 'Full administrative control',
+    text: 'Run Windows or Linux with full server access and isolated virtual machine boundaries.',
   },
-];
+] as const;
 
-/**
- * Infrastructure claims. DESIGN.md section 9, position 5: each claim carries one
- * measured property, so the section never becomes a feature grid.
- */
 export function Infrastructure() {
   return (
-    <section className="sr-section sr-section-border" id="infrastructure">
-      <div className="sr-container">
-        <div className="sr-section-head">
-          <div>
-            <p className="sr-kicker">Core infrastructure</p>
-            <h2 className="sr-section-title">Built for the workload, not the brochure.</h2>
-          </div>
-          <span className="sr-infra-badge">
+    <section className="sr-section srv3-infra-section" id="infrastructure">
+      <div className="sr-container srv3-infra-layout">
+        <div className="srv3-infra-copy">
+          <p className="sr-kicker">Infrastructure that gets out of the way</p>
+          <h2>Enough power to work. Simple enough to manage.</h2>
+          <p>
+            StealthRDP keeps the public offer easy to understand: choose resources,
+            choose a region, choose Windows or Linux, then manage the service through
+            the existing client area.
+          </p>
+          <div className="srv3-infra-proof">
             <Activity aria-hidden="true" />
-            Live monitoring
-          </span>
+            <span>
+              <strong>Public service status</strong>
+              Monitoring is available from the status page.
+            </span>
+          </div>
         </div>
 
-        <div className="sr-infra-list">
-          {infrastructure.map(({ icon: Icon, title, text, value }, index) => (
+        <div className="srv3-infra-list">
+          {items.map(({ icon: Icon, title, text }, index) => (
             <article key={title}>
-              <span className="sr-feature-number">{`0${index + 1}`}</span>
-              <span className="sr-feature-icon">
-                <Icon aria-hidden="true" />
-              </span>
+              <span className="srv3-infra-index">{String(index + 1).padStart(2, '0')}</span>
+              <div className="srv3-infra-icon"><Icon aria-hidden="true" /></div>
               <div>
                 <h3>{title}</h3>
                 <p>{text}</p>
               </div>
-              <span className="sr-infra-value">{value}</span>
             </article>
           ))}
         </div>
