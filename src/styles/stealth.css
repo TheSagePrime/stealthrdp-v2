@@ -1,7 +1,12 @@
 /* ==========================================================================
-   StealthRDP — design system layer.
-   Implements DESIGN.md sections 3-10 for the site chrome and the home surface.
-   Loaded after global.css (tokens) and surfaces.css (not-yet-recomposed pages).
+   StealthRDP legacy compatibility layer.
+
+   This file preserves migrated route classes while V3 is rolled out.
+   It is NOT the canonical visual direction. Do not copy its old composition
+   patterns into new work.
+
+   Canonical visual rules: DESIGN.md
+   Canonical V3 overrides: src/styles/stealth-v3.css
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
