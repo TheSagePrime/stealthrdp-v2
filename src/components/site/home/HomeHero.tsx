@@ -104,7 +104,7 @@ export function HomeHero() {
                     </div>
                     <div className="srv3-rack-unit-center">
                       <span className="srv3-rack-plan-name">
-                        {plan.name} <small>{plan.location}</small>
+                        {plan.name}
                       </span>
                       <span className="srv3-rack-plan-specs">
                         {plan.specs.cpu} · {plan.specs.ram} · {plan.specs.storage}
