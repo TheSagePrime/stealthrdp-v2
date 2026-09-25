@@ -1074,6 +1074,16 @@ body {
     width: 100%;
   }
 
+  .srv3-hero-price {
+    flex-direction: column;
+    width: 100%;
+    gap: 12px;
+  }
+
+  .srv3-hero-price-divider {
+    display: none;
+  }
+
   .srv3-hero-visual {
     min-height: 360px;
   }
@@ -2447,7 +2457,7 @@ body {
 
 .sr-term-badge {
   display: flex;
-  min-height: 1.5rem;
+  min-height: 2rem;
   align-items: center;
 }
 
