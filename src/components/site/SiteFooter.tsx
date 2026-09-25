@@ -13,6 +13,7 @@ const columns = [
       ['Windows VPS', '/windows-vps'],
       ['Linux VPS', '/linux-vps'],
       ['Build your own VPS', 'https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps'],
+      ['Citadel protection', '/citadel'],
     ],
   },
   {
@@ -29,8 +30,10 @@ const columns = [
     links: [
       ['About', '/about'],
       ['Support', 'https://dash.stealthrdp.com/submitticket.php'],
+      ['WhatsApp support', 'https://wa.me/447441426993'],
       ['Privacy', '/privacy'],
       ['Terms of service', '/docs/use-of-service'],
+      ['Windows licensing', '/docs/windows-licensing'],
     ],
   },
 ] as const;

@@ -33,7 +33,7 @@ const trust = [
   ['10,000+', 'orders delivered'],
   ['99.9%', 'uptime SLA'],
   ['USA + EU', 'server regions'],
-  ['24/7', 'support availability'],
+  ['60s', 'average deploy'],
 ] as const;
 
 export default async function HomePage({ params }: Props) {
@@ -66,7 +66,15 @@ export default async function HomePage({ params }: Props) {
                 "
               >
                 <dt className="text-heading-4 font-semibold text-body-text">{value}</dt>
-                <dd className="text-small text-body-dim">{label}</dd>
+                <dd className="text-small text-body-dim">
+                  {label === 'uptime SLA' ? (
+                    <Link href="/status" className="transition-colors hover:text-primary">
+                      {label} · live status
+                    </Link>
+                  ) : (
+                    label
+                  )}
+                </dd>
               </div>
             ))}
           </dl>
@@ -101,6 +109,57 @@ export default async function HomePage({ params }: Props) {
       <Infrastructure />
 
       <RegionTable />
+
+      <section className="sr-section srv3-family-section" aria-label="StealthRDP product family">
+        <div className="sr-container">
+          <div className="srv3-section-heading">
+            <div>
+              <p className="sr-kicker">One company, two products</p>
+              <h2>Hosting to run on. Protection to hide behind.</h2>
+            </div>
+          </div>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            <Card className="gap-3 p-8">
+              <p className="sr-kicker">Hosting</p>
+              <h3 className="text-heading-4 font-semibold text-body-text">
+                Windows and Linux VPS infrastructure
+              </h3>
+              <p className="text-small text-body-muted">
+                Comparable plans in USA and EU regions with NVMe storage,
+                full administrative access, and honest billing terms.
+              </p>
+              <div>
+                <Button asChild variant="outline">
+                  <Link href="/plans">
+                    Compare VPS plans
+                    <ArrowRight size={16} aria-hidden="true" />
+                  </Link>
+                </Button>
+              </div>
+            </Card>
+
+            <Card className="gap-3 p-8">
+              <p className="sr-kicker">Protection</p>
+              <h3 className="text-heading-4 font-semibold text-body-text">
+                Citadel L7 HTTP/HTTPS protection
+              </h3>
+              <p className="text-small text-body-muted">
+                Application-layer controls between Cloudflare and the origin:
+                adaptive challenges, rate limits, allowlists, and automatic recovery.
+              </p>
+              <div>
+                <Button asChild variant="outline">
+                  <Link href="/citadel">
+                    Understand Citadel
+                    <ArrowRight size={16} aria-hidden="true" />
+                  </Link>
+                </Button>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
 
       <AfterCheckout />
 

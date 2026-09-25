@@ -31,23 +31,19 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 const distros = [
-  { name: 'Ubuntu', versions: '18.04 LTS · 20.04 LTS · 22.04 LTS · 24.04 LTS · 26.04 LTS', text: 'Fits many websites, panels, and development stacks.' },
-  { name: 'Debian', versions: '10 · 11 · 12 · 13', text: 'Use when the stack asks for Debian.' },
-  { name: 'CentOS', versions: '7 · Stream 8 · Stream 9', text: 'Use when the stack asks for CentOS.' },
-  { name: 'AlmaLinux', versions: '8 · 9 · 10', text: 'Use when the stack asks for AlmaLinux.' },
-  { name: 'Rocky Linux', versions: '8 · 9 · 10', text: 'Use when the stack asks for Rocky Linux.' },
-  { name: 'Fedora', versions: '37 · 38 · 39 · 40 · 41 · 42 · 43 · 44', text: 'Use when the stack asks for Fedora.' },
-  { name: 'Alpine Linux', versions: '3.15 · 3.19 · 3.23', text: 'Use when the stack asks for Alpine Linux.' },
-  { name: 'FreeBSD', versions: '13.2 · 13.3 · 14.0 · 14.1 · 14.2 · 14.3 · 15.0', text: 'Use when the stack asks for FreeBSD.' },
-  { name: 'openSUSE', versions: 'Leap 15', text: 'Use when the stack asks for openSUSE Leap 15.' },
-  { name: 'CloudLinux', versions: '9', text: 'Use when the stack asks for CloudLinux 9.' },
-  { name: 'Arch Linux', versions: 'Latest', text: 'Use when the stack asks for Arch Linux.' },
-  { name: 'Oracle Linux', versions: '8 · 9', text: 'Use when the stack asks for Oracle Linux.' },
+  { name: 'Ubuntu', text: 'Fits many websites, panels, and development stacks.' },
+  { name: 'Debian', text: 'Use when the stack asks for Debian.' },
+  { name: 'CentOS', text: 'Use when the stack asks for CentOS.' },
+  { name: 'AlmaLinux', text: 'Use when the stack asks for AlmaLinux.' },
+  { name: 'Rocky Linux', text: 'Use when the stack asks for Rocky Linux.' },
+  { name: 'Fedora', text: 'Use when the stack asks for Fedora.' },
+  { name: 'Alpine Linux', text: 'Use when the stack asks for Alpine Linux.' },
+  { name: 'FreeBSD', text: 'Use when the stack asks for FreeBSD.' },
+  { name: 'openSUSE', text: 'Use when the stack asks for openSUSE.' },
+  { name: 'CloudLinux', text: 'Use when the stack asks for CloudLinux.' },
+  { name: 'Arch Linux', text: 'Use when the stack asks for Arch Linux.' },
+  { name: 'Oracle Linux', text: 'Use when the stack asks for Oracle Linux.' },
 ];
-
-/* One chip per published version string. The split only removes the display
-   separator, so every version below is rendered exactly as listed above. */
-const distroVersionChips = (versions: string) => versions.split(' · ');
 
 /* Nominative brand marks for distribution families the table below lists. */
 const osBrands = [
@@ -70,7 +66,7 @@ const resourceFit = [
 const questions = [
   ['Can I order a cheap Linux VPS?', 'You can compare current Linux plan prices on the catalog, including Bronze at €9.50/month. Confirm the current price. StealthRDP does not claim to be the cheapest host.'],
   ['Which Linux distributions can I run?', 'AlmaLinux, Alpine Linux, CentOS, Debian, Fedora, FreeBSD, Rocky Linux, Ubuntu, openSUSE, CloudLinux, Arch Linux, and Oracle Linux are listed in the current public options.'],
-  ['Can I run Ubuntu?', 'Yes. Ubuntu 18.04 LTS, 20.04 LTS, 22.04 LTS, 24.04 LTS, and 26.04 LTS are listed.'],
+  ['Can I run Ubuntu?', 'Yes. Ubuntu is listed. Confirm the exact image and version during checkout.'],
   ['Do plans include Root?', 'Yes. VPS plans include full Root access.'],
   ['Are USA and EU Linux plans available?', 'Both appear in the public catalog. Confirm the region and current availability at checkout.'],
   ['When is it activated?', 'Standard installations are typically activated within 5 minutes. Most services are activated within 5–10 minutes after payment confirmation.'],
@@ -169,7 +165,6 @@ export default function LinuxVpsPage() {
             <TableHeader>
               <TableRow>
                 <TableHead>Distribution</TableHead>
-                <TableHead>Published versions</TableHead>
                 <TableHead>Notes</TableHead>
               </TableRow>
             </TableHeader>
@@ -177,16 +172,7 @@ export default function LinuxVpsPage() {
               {distros.map(distro => (
                 <TableRow key={distro.name}>
                   <TableHead scope="row">{distro.name}</TableHead>
-                  <TableCell>
-                    <ul className="flex flex-wrap gap-2">
-                      {distroVersionChips(distro.versions).map(version => (
-                        <li key={version}>
-                          <Badge variant="outline">{version}</Badge>
-                        </li>
-                      ))}
-                    </ul>
-                  </TableCell>
-                  <TableCell>{distro.text}</TableCell>
+                  <TableCell>{distro.text} Confirm the exact image and version during checkout.</TableCell>
                 </TableRow>
               ))}
             </TableBody>

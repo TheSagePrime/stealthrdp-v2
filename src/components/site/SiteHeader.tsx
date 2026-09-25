@@ -1,29 +1,25 @@
 /* eslint-disable @next/next/no-img-element */
-import { Headphones, List as Menu } from '@phosphor-icons/react/dist/ssr';
+import { List as Menu } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
-const links = [
-  ['Plans', '/plans'],
+const productLinks = [
+  ['VPS plans', '/plans'],
   ['Windows VPS', '/windows-vps'],
   ['Linux VPS', '/linux-vps'],
+  ['Citadel protection', '/citadel'],
+] as const;
+
+const resourceLinks = [
   ['Docs', '/docs'],
-  ['Status', '/status'],
+  ['Blog', '/blog'],
+  ['FAQ', '/faq'],
+  ['Server status', '/status'],
 ] as const;
 
 export function SiteHeader() {
   return (
     <header className="srv3-header">
-      <div className="srv3-announcement">
-        <div className="sr-container">
-          <span>Windows & Linux VPS · USA + Europe</span>
-          <a href="https://dash.stealthrdp.com/submitticket.php">
-            <Headphones size={16} aria-hidden="true" />
-            24/7 support
-          </a>
-        </div>
-      </div>
-
       <div className="sr-container srv3-header-row">
         <Link className="srv3-logo" href="/" aria-label="StealthRDP home">
           <img
@@ -35,9 +31,32 @@ export function SiteHeader() {
         </Link>
 
         <nav className="srv3-nav" aria-label="Main navigation">
-          {links.map(([label, href]) => (
-            <Link key={href} href={href}>{label}</Link>
-          ))}
+          <div className="srv3-nav-group">
+            <span className="srv3-nav-label" aria-haspopup="true">Products</span>
+            <ul className="srv3-nav-menu" aria-label="Products">
+              {productLinks.map(([label, href]) => (
+                <li key={href}>
+                  <Link href={href}>{label}</Link>
+                </li>
+              ))}
+              <li>
+                <a href="https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps">
+                  Build your own VPS
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div className="srv3-nav-group">
+            <span className="srv3-nav-label" aria-haspopup="true">Resources</span>
+            <ul className="srv3-nav-menu" aria-label="Resources">
+              {resourceLinks.map(([label, href]) => (
+                <li key={href}>
+                  <Link href={href}>{label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <Link href="/about">About</Link>
         </nav>
 
         <div className="srv3-header-actions">
@@ -57,11 +76,15 @@ export function SiteHeader() {
             <span>Menu</span>
           </summary>
           <nav aria-label="Mobile navigation">
-            {links.map(([label, href]) => (
-              <Link key={href} href={href}>{label}</Link>
-            ))}
+            <Link href="/plans">VPS plans</Link>
+            <Link href="/windows-vps">Windows VPS</Link>
+            <Link href="/linux-vps">Linux VPS</Link>
+            <Link href="/citadel">Citadel protection</Link>
+            <a href="https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps">Build your own VPS</a>
+            <Link href="/docs">Docs</Link>
             <Link href="/blog">Blog</Link>
             <Link href="/faq">FAQ</Link>
+            <Link href="/status">Server status</Link>
             <Link href="/about">About</Link>
             <a href="https://dash.stealthrdp.com/index.php?rp=/login">Client area</a>
             <a href="https://dash.stealthrdp.com/submitticket.php">Support</a>

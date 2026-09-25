@@ -80,11 +80,13 @@ function PlanRow({
   plan,
   cycle,
   recommended,
+  showPopular,
   maxima,
 }: {
   plan: Plan;
   cycle: BillingCycle;
   recommended: boolean;
+  showPopular: boolean;
   maxima: { cpu: number; ram: number; storage: number };
 }) {
   const price = plan.pricing[cycle];
@@ -96,7 +98,7 @@ function PlanRow({
         <span className="sr-plan-row">
           {plan.name}
           {recommended ? <Badge>Best fit</Badge> : null}
-          {plan.popular && !recommended ? <Badge variant="outline">Popular</Badge> : null}
+          {showPopular && !recommended ? <Badge variant="outline">Popular</Badge> : null}
         </span>
         <span className="sr-ledger-meta">
           {plan.location} region · full administrative access
@@ -178,6 +180,13 @@ export function PricingExplorer({
   const ladderPlan = useMemo(
     () => plans.find(plan => plan.location === region && plan.name === `Bronze ${region}`)
       ?? plans.find(plan => plan.location === region),
+    [region],
+  );
+
+  /* One intentional recommendation per region: the first plan flagged popular
+     in that region. Every other Popular flag stays in data but off the page. */
+  const popularName = useMemo(
+    () => plans.find(plan => plan.location === region && plan.popular)?.name,
     [region],
   );
 
@@ -330,6 +339,7 @@ export function PricingExplorer({
                   plan={plan}
                   cycle={cycle}
                   recommended={guided && plan.name.startsWith(recommendedTier)}
+                  showPopular={plan.name === popularName}
                   maxima={maxima}
                 />
               ))}
