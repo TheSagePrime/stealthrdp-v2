@@ -119,10 +119,6 @@ export default function LinuxVpsPage() {
             <p>Compare the current displayed monthly price, CPU, RAM, NVMe storage, bandwidth, and region. Windows and Linux use this shared VPS catalog.</p>
           </div>
           <PricingExplorer guided={false} />
-          <div className="sr-cta-inline">
-            <div><span className="sr-location-code">Next step</span><h3>Choose the plan first. Select Windows or Linux in checkout.</h3><p>Pick any plan above — you will choose Windows or Linux before you pay.</p></div>
-            <Button asChild><a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">Configure this VPS <ArrowRight size={16} /></a></Button>
-          </div>
         </div>
       </section>
 
