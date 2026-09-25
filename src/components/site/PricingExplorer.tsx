@@ -286,7 +286,9 @@ export function PricingExplorer({
                     <span className="sr-term-total">
                       {termPrice ? `€${formatPrice(termPrice.amount)} ${termPrice.periodLabel}` : 'See checkout'}
                     </span>
-                    {billing.discountLabel ? <Badge variant="outline">{billing.discountLabel}</Badge> : null}
+                    <span className="sr-term-badge" aria-hidden={!billing.discountLabel}>
+                      {billing.discountLabel ? <Badge variant="outline">{billing.discountLabel}</Badge> : null}
+                    </span>
                   </button>
                 </li>
               );
