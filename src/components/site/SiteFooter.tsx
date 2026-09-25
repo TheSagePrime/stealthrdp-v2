@@ -58,6 +58,7 @@ export function SiteFooter() {
                 alt="StealthRDP"
                 width="700"
                 height="170"
+                loading="lazy"
               />
             </Link>
             <p>

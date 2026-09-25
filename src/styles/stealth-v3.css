@@ -202,16 +202,20 @@ body {
 
 .srv3-nav-label {
   display: inline-block;
+  border: 0;
   border-radius: var(--radius-md);
+  background: transparent;
   padding: 10px 12px;
   color: var(--text-muted);
+  font: inherit;
   font-size: 0.875rem;
   font-weight: 650;
-  cursor: default;
+  cursor: pointer;
 }
 
 .srv3-nav-group:hover .srv3-nav-label,
-.srv3-nav-group:focus-within .srv3-nav-label {
+.srv3-nav-group:focus-within .srv3-nav-label,
+.srv3-nav-group[data-open="true"] .srv3-nav-label {
   background: color-mix(in srgb, var(--text) 5%, transparent);
   color: var(--foreground);
 }
@@ -233,7 +237,8 @@ body {
 }
 
 .srv3-nav-group:hover .srv3-nav-menu,
-.srv3-nav-group:focus-within .srv3-nav-menu {
+.srv3-nav-group:focus-within .srv3-nav-menu,
+.srv3-nav-group[data-open="true"] .srv3-nav-menu {
   display: grid;
 }
 
@@ -250,6 +255,13 @@ body {
 .srv3-nav-menu a:hover {
   background: var(--surface-2);
   color: var(--text);
+}
+
+/* Trust-rail status link: tappable without breaking the proof-rail rhythm. */
+.srv3-trust dd a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
 }
 
 .srv3-header-actions {
@@ -920,7 +932,7 @@ body {
 
 .srv3-footer-links ul {
   display: grid;
-  gap: 10px;
+  gap: 2px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -930,7 +942,8 @@ body {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color:var(--text-dim);
+  min-height: 44px;
+  color: var(--text-dim);
   font-size: 0.75rem;
 }
 

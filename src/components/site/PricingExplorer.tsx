@@ -276,7 +276,7 @@ export function PricingExplorer({
               const termPrice = ladderPlan?.pricing[item];
               const effective = termPrice ? termPrice.amount / monthsForSuffix(termPrice.suffix) : 0;
               const selected = cycle === item;
-              const termLabel = termPrice?.suffix === '/2yr' ? '2-year' : billing.label;
+              const termLabel = termPrice?.suffix === '/2yr' ? '2-year' : termPrice?.suffix === '/6mo' ? '6-month' : billing.label;
 
               return (
                 <li key={item}>
@@ -295,8 +295,8 @@ export function PricingExplorer({
                     <span className="sr-term-total">
                       {termPrice ? `€${formatPrice(termPrice.amount)} ${termPrice.periodLabel}` : 'See checkout'}
                     </span>
-                    <span className="sr-term-badge" aria-hidden={!billing.discountLabel}>
-                      {billing.discountLabel ? <Badge variant="outline">{billing.discountLabel}</Badge> : null}
+                    <span className="sr-term-badge" aria-hidden={!termPrice?.discountLabel}>
+                      {termPrice?.discountLabel ? <Badge variant="outline">{termPrice.discountLabel}</Badge> : null}
                     </span>
                   </button>
                 </li>
@@ -310,7 +310,7 @@ export function PricingExplorer({
       <section id="comparison" className="sr-ledger-section">
         <h3 className="sr-ledger-title">
           {showComparison
-            ? `Compare ${region} plans · ${ladderPlan?.pricing[cycle]?.suffix === '/2yr' ? '2-year' : billingCycles[cycle].label}`
+            ? `Compare ${region} plans · ${ladderPlan?.pricing[cycle]?.suffix === '/2yr' ? '2-year' : ladderPlan?.pricing[cycle]?.suffix === '/6mo' ? '6-month' : billingCycles[cycle].label}`
             : `Choose your resource level · ${region}`}
         </h3>
         <p className="sr-ledger-note">

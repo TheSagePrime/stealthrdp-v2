@@ -3,7 +3,10 @@ import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { getSeoConfig } from '@/libs/seo/config';
+import { serializeJsonLd } from '@/libs/seo/json-ld';
 import { createPageMetadata } from '@/libs/seo/metadata';
+import { buildPageJsonLd } from '@/libs/seo/schema';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/citadel',
@@ -73,8 +76,18 @@ const plans = [
 ] as const;
 
 export default function CitadelPage() {
+  const jsonLd = buildPageJsonLd(getSeoConfig());
+
   return (
     <>
+      {jsonLd.map(block => (
+        <script
+          key={String(block['@type'])}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(block) }}
+        />
+      ))}
+
       <section className="sr-page-hero">
         <div className="sr-container">
           <p className="sr-kicker">Citadel by StealthRDP</p>
@@ -120,7 +133,7 @@ export default function CitadelPage() {
               { step: '03', title: 'Cache, then origin', text: 'Per-domain caching absorbs repeats; clean requests reach the origin.' },
             ].map(item => (
               <Card key={item.step} className="gap-2 p-8">
-                <span className="font-mono text-micro font-bold text-body-dim tabular-nums">
+                <span className="text-micro font-bold text-body-dim tabular-nums">
                   {item.step}
                 </span>
                 <h3 className="text-heading-4 font-semibold text-body-text">{item.title}</h3>
@@ -167,7 +180,7 @@ export default function CitadelPage() {
                 key={step}
                 className="grid gap-3 border-t border-divider py-6 last:border-b sm:grid-cols-[auto_1fr] sm:items-start sm:gap-x-6"
               >
-                <span className="font-mono text-micro font-bold text-body-dim tabular-nums">
+                <span className="text-micro font-bold text-body-dim tabular-nums">
                   {String(index + 1).padStart(2, '0')}
                 </span>
                 <p className="text-body text-body-text">{step}</p>

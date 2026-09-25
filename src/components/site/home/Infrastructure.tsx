@@ -65,7 +65,7 @@ export function Infrastructure() {
               "
             >
               <div className="flex items-center gap-3">
-                <Badge variant="outline" className="font-mono tabular-nums">
+                <Badge variant="outline" className="tabular-nums">
                   {String(index + 1).padStart(2, '0')}
                 </Badge>
                 <span className="grid size-10 shrink-0 place-items-center rounded-md border border-border-soft bg-surface-2 text-primary">

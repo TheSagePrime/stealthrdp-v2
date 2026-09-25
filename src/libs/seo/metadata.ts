@@ -4,6 +4,7 @@ import { AllLocales, I18nConfig } from '../../config/i18n';
 import { resolveSeoSite } from '../../config/seo';
 import { classifyPath, robotsForClass } from './classify';
 import { getSeoConfig } from './config';
+import { isProductionDeployEnv } from './env';
 import { localizedPath } from './locale';
 import { canonicalUrlForPath } from './normalize';
 
@@ -31,7 +32,11 @@ export function createPageMetadata(input: PageMetadataInput): Metadata {
   const canonical = canonicalUrlForPath(localized, site, config);
   const title = input.title ?? config.projectName;
   const description = input.description ?? config.description;
-  const robots = robotsForClass(routeClass);
+  /* Non-production environments (preview, staging, dev) are never indexable,
+     regardless of route class. Production keeps the per-route behavior. */
+  const robots = isProductionDeployEnv(config.environment.deployEnv)
+    ? robotsForClass(routeClass)
+    : 'noindex, nofollow';
 
   if (routeClass === 'privatePage' || routeClass === 'privateApi') {
     return {

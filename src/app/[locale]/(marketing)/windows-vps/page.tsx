@@ -216,7 +216,7 @@ export default function WindowsVpsPage() {
                 "
               >
                 <div className="flex items-center gap-3">
-                  <span className="font-mono text-micro font-bold text-body-dim tabular-nums">
+                  <span className="text-micro font-bold text-body-dim tabular-nums">
                     {number}
                   </span>
                   <span className="grid size-10 shrink-0 place-items-center rounded-md border border-border-soft bg-surface-2 text-primary">
@@ -283,21 +283,24 @@ export default function WindowsVpsPage() {
       </section>
 
       <section className="sr-section sr-section-border">
-        <div className="sr-container grid gap-4 md:grid-cols-3">
+        <div className="sr-container">
+          <div className="sr-section-head">
+            <div><p className="sr-kicker">After payment</p><h2 className="sr-section-title">From payment to login</h2></div>
+            <p>What happens once checkout completes.</p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
           <Card>
             <CardHeader>
-              <Badge variant="outline" className="w-fit text-body-muted">After payment</Badge>
               <CardTitle className="text-heading-4 text-body-text">
                 <h3>Provisioning</h3>
               </CardTitle>
               <CardDescription className="text-small text-body-muted">
-                Standard Windows and Linux installations are typically activated within 5 minutes. Most services are activated within 5–10 minutes after payment confirmation.
+                Provisioning starts within about 60 seconds. Most services are active within 5–10 minutes after payment confirmation.
               </CardDescription>
             </CardHeader>
           </Card>
           <Card>
             <CardHeader>
-              <Badge variant="outline" className="w-fit text-body-muted">Credentials</Badge>
               <CardTitle className="text-heading-4 text-body-text">
                 <h3>Delivered by email</h3>
               </CardTitle>
@@ -308,7 +311,6 @@ export default function WindowsVpsPage() {
           </Card>
           <Card>
             <CardHeader>
-              <Badge variant="outline" className="w-fit text-body-muted">Support and limits</Badge>
               <CardTitle className="text-heading-4 text-body-text">
                 <h3>Operate within the published terms</h3>
               </CardTitle>
@@ -317,6 +319,7 @@ export default function WindowsVpsPage() {
               </CardDescription>
             </CardHeader>
           </Card>
+          </div>
         </div>
       </section>
 

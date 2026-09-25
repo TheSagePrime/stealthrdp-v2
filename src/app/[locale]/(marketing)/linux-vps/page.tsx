@@ -60,7 +60,7 @@ const osBrands = [
 const resourceFit = [
   { icon: Cpu, number: '01', title: 'Concurrent work', text: 'Compare CPU against the application, services, workers, and expected load.' },
   { icon: MemoryStick, number: '02', title: 'Active services', text: 'Size memory for the OS plus web server, app processes, databases, panels, and jobs.' },
-  { icon: HardDrive, number: '03', title: 'Files and data', text: 'Compare NVMe storage, bandwidth, region, and billing cycle on the current catalog.' },
+  { icon: HardDrive, number: '03', title: 'Files and data', text: 'Include the operating system, installed software, files, and future additions.' },
 ];
 
 const questions = [
@@ -209,7 +209,7 @@ export default function LinuxVpsPage() {
                 "
               >
                 <div className="flex items-center gap-3">
-                  <span className="font-mono text-micro font-bold text-body-dim tabular-nums">
+                  <span className="text-micro font-bold text-body-dim tabular-nums">
                     {number}
                   </span>
                   <span className="grid size-10 shrink-0 place-items-center rounded-md border border-border-soft bg-surface-2 text-primary">
@@ -276,21 +276,24 @@ export default function LinuxVpsPage() {
       </section>
 
       <section className="sr-section sr-section-border">
-        <div className="sr-container grid gap-4 md:grid-cols-3">
+        <div className="sr-container">
+          <div className="sr-section-head">
+            <div><p className="sr-kicker">After payment</p><h2 className="sr-section-title">From payment to login</h2></div>
+            <p>What happens once checkout completes.</p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
           <Card>
             <CardHeader>
-              <Badge variant="outline" className="w-fit text-body-muted">After payment</Badge>
               <CardTitle className="text-heading-4 text-body-text">
                 <h3>Provisioning</h3>
               </CardTitle>
               <CardDescription className="text-small text-body-muted">
-                Standard Linux installations are typically activated within 5 minutes. Most services are activated within 5–10 minutes after payment confirmation.
+                Provisioning starts within about 60 seconds. Most services are active within 5–10 minutes after payment confirmation.
               </CardDescription>
             </CardHeader>
           </Card>
           <Card>
             <CardHeader>
-              <Badge variant="outline" className="w-fit text-body-muted">Credentials</Badge>
               <CardTitle className="text-heading-4 text-body-text">
                 <h3>Delivered by email</h3>
               </CardTitle>
@@ -301,7 +304,6 @@ export default function LinuxVpsPage() {
           </Card>
           <Card>
             <CardHeader>
-              <Badge variant="outline" className="w-fit text-body-muted">Support and limits</Badge>
               <CardTitle className="text-heading-4 text-body-text">
                 <h3>Operate within the published terms</h3>
               </CardTitle>
@@ -310,6 +312,7 @@ export default function LinuxVpsPage() {
               </CardDescription>
             </CardHeader>
           </Card>
+          </div>
         </div>
       </section>
 
@@ -328,7 +331,7 @@ export default function LinuxVpsPage() {
                   sm:grid-cols-[auto_1fr] sm:items-start sm:gap-x-6
                 "
               >
-                <span className="font-mono text-micro font-bold text-body-dim tabular-nums">
+                <span className="text-micro font-bold text-body-dim tabular-nums">
                   {number}
                 </span>
                 <div className="grid gap-1.5">

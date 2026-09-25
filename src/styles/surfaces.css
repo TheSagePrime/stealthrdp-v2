@@ -541,7 +541,7 @@
 .sr-about-stats article {
   border: 1px solid var(--border-divider);
   border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, var(--surface-2), var(--surface-2));
+  background: var(--surface-2);
   padding: 1.25rem;
 }
 .sr-os-choice-grid > article {
@@ -965,11 +965,10 @@
 .sr-content-card {
   border: 1px solid var(--border-divider);
   border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, var(--surface-2), var(--surface-2));
-  transition: transform 170ms ease, border-color 170ms ease, background-color 170ms ease;
+  background: var(--surface-2);
+  transition: border-color 170ms ease, background-color 170ms ease;
 }
 .sr-content-card:hover {
-  transform: translateY(-2px);
   border-color: color-mix(in srgb, var(--accent) 24%, transparent);
   background: var(--surface-2);
 }
@@ -1026,10 +1025,9 @@
   padding: 0;
   color: var(--text);
   box-shadow: 0 12px 32px rgb(0 0 0 / 45%);
-  transition: transform 180ms ease, box-shadow 180ms ease;
+  transition: box-shadow 180ms ease;
 }
 .sr-blog-card:hover {
-  transform: translateY(-3px);
   box-shadow: 0 12px 32px rgb(0 0 0 / 45%);
 }
 .sr-blog-card > a {
@@ -1264,7 +1262,7 @@
   align-items: center;
   border: 1px solid var(--border-divider);
   border-radius: var(--radius-lg);
-  background: linear-gradient(180deg, var(--surface-2), var(--surface-2));
+  background: var(--surface-2);
   padding: 1.25rem;
 }
 .sr-status-summary > div:first-child {

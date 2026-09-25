@@ -57,7 +57,7 @@
   {
     "_id": "6824a1ca105d77ad34fbf09b",
     "question": "What features are included with StealthRDP plans?",
-    "answer": "All our plans include: dedicated IPv4 addresses, high-speed network connections (1Gbps standard), unlimited bandwidth (fair usage policy applies), full Administrator/Root access, 99.99% uptime guarantee, and responsive technical support. Higher-tier plans include additional features like priority support, and faster provisioning times.",
+    "answer": "All our plans include: dedicated IPv4 addresses, high-speed network connections (1Gbps standard), unlimited bandwidth (fair usage policy applies), full Administrator/Root access, 99.9% uptime SLA, and responsive technical support. Higher-tier plans include additional features like priority support, and faster provisioning times.",
     "category": "Services & Plans",
     "displayOrder": 6,
     "isPublished": true,
@@ -68,7 +68,7 @@
   {
     "_id": "6824a1e3105d77ad34fbf0a3",
     "question": "What billing cycles do you offer?",
-    "answer": "We offer flexible billing cycles to suit different needs: Monthly (5% discount compared to standard rates), Quarterly (10% discount), Annual (20% discount), and BiAnnual/2-year (30% discount). The longer the billing cycle you choose, the greater your savings.",
+    "answer": "We offer flexible billing cycles to suit different needs: Monthly, Quarterly (Save 5%), Annual (Save 15–16%), and 2-year (Save 26%). The longer the billing cycle you choose, the greater your savings. All prices are in EUR and the exact billed total for the selected cycle is shown before checkout.",
     "category": "Pricing & Billing",
     "displayOrder": 7,
     "isPublished": true,
@@ -79,7 +79,7 @@
   {
     "_id": "6824a1f8105d77ad34fbf0a8",
     "question": "How do the discounts work?",
-    "answer": "Discounts are automatically applied based on your selected billing cycle. For example, if a plan costs $100/month at standard rates, you would pay $95/month on the monthly cycle (5% off), $90/month on the quarterly cycle (10% off), $80/month on the annual cycle (20% off), or $70/month on the biannual cycle (30% off). The total amount charged will be for the entire period (e.g., 3 months for quarterly billing).",
+    "answer": "Discounts are automatically applied based on your selected billing cycle. For example, on a €9.50/month Bronze USA plan, the quarterly cycle saves 5%, the annual cycle saves 15–16%, and the 2-year cycle saves 26% compared with paying monthly. The total amount charged covers the entire period (e.g., 3 months for quarterly billing) and is always shown in EUR before checkout.",
     "category": "Pricing & Billing",
     "displayOrder": 8,
     "isPublished": true,
@@ -134,7 +134,7 @@
   {
     "_id": "6824a2fd105d77ad34fbf0b2",
     "question": "How quickly are services activated?",
-    "answer": "Most services are activated within 5-10 minutes after payment confirmation. The exact time depends on the operating system being installed and current system load. For standard Windows and Linux installations, activation is typically completed within 5 minutes. During peak periods, it may take up to 15 minutes. You'll receive an email with your login credentials as soon as your server is ready.",
+    "answer": "Provisioning starts within about 60 seconds after payment confirmation. Most services are active within 5–10 minutes. The exact time depends on the operating system being installed and current system load. During peak periods, it may take up to 15 minutes. You'll receive an email with your login credentials as soon as your server is ready.",
     "category": "Account Management",
     "displayOrder": 13,
     "isPublished": true,
@@ -189,7 +189,7 @@
   {
     "_id": "6824a38b105d77ad34fbf0be",
     "question": "How is my data protected with StealthRDP?",
-    "answer": "We implement multiple security measures to protect your data:\n1) Physical security at our data centers including biometric access controls and 24/7 surveillance\n2) Network security with enterprise-grade firewalls\n3) Regular security patches and updates for host systems\n4) Encrypted storage options available on request\n\nHowever, we recommend maintaining your own regular backups of critical data as an additional precaution.",
+    "answer": "We implement multiple security measures to protect your data:\n1) Physical security at our data centers including biometric access controls and 24/7 surveillance\n2) Network security with a managed firewall in front of every host system\n3) Regular security patches and updates for host systems\n4) Encrypted storage options available on request\n\nHowever, we recommend maintaining your own regular backups of critical data as an additional precaution.",
     "category": "Technical Support & Security",
     "displayOrder": 18,
     "isPublished": true,

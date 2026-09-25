@@ -1,4 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
+'use client';
+
+import { useState } from 'react';
 import { List as Menu } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -18,6 +21,27 @@ const resourceLinks = [
 ] as const;
 
 export function SiteHeader() {
+  const [open, setOpen] = useState<'products' | 'resources' | null>(null);
+
+  const closeOnEscape = (event: React.KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      setOpen(null);
+    }
+  };
+
+  const groupProps = (name: 'products' | 'resources') => ({
+    'data-open': open === name,
+    onMouseEnter: () => setOpen(name),
+    onMouseLeave: () => setOpen(null),
+  });
+
+  const buttonProps = (name: 'products' | 'resources', menuId: string) => ({
+    'aria-expanded': open === name,
+    'aria-controls': menuId,
+    onClick: () => setOpen(open === name ? null : name),
+    onKeyDown: closeOnEscape,
+  });
+
   return (
     <header className="srv3-header">
       <div className="sr-container srv3-header-row">
@@ -30,13 +54,15 @@ export function SiteHeader() {
           />
         </Link>
 
-        <nav className="srv3-nav" aria-label="Main navigation">
-          <div className="srv3-nav-group">
-            <span className="srv3-nav-label" aria-haspopup="true">Products</span>
-            <ul className="srv3-nav-menu" aria-label="Products">
+        <nav className="srv3-nav" aria-label="Main navigation" onKeyDown={closeOnEscape}>
+          <div className="srv3-nav-group" {...groupProps('products')}>
+            <button type="button" className="srv3-nav-label" {...buttonProps('products', 'nav-menu-products')}>
+              Products
+            </button>
+            <ul className="srv3-nav-menu" id="nav-menu-products" aria-label="Products">
               {productLinks.map(([label, href]) => (
                 <li key={href}>
-                  <Link href={href}>{label}</Link>
+                  <Link href={href} onClick={() => setOpen(null)}>{label}</Link>
                 </li>
               ))}
               <li>
@@ -46,9 +72,11 @@ export function SiteHeader() {
               </li>
             </ul>
           </div>
-          <div className="srv3-nav-group">
-            <span className="srv3-nav-label" aria-haspopup="true">Resources</span>
-            <ul className="srv3-nav-menu" aria-label="Resources">
+          <div className="srv3-nav-group" {...groupProps('resources')}>
+            <button type="button" className="srv3-nav-label" {...buttonProps('resources', 'nav-menu-resources')}>
+              Resources
+            </button>
+            <ul className="srv3-nav-menu" id="nav-menu-resources" aria-label="Resources">
               {resourceLinks.map(([label, href]) => (
                 <li key={href}>
                   <Link href={href}>{label}</Link>

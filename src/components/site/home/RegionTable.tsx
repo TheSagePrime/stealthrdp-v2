@@ -58,7 +58,7 @@ export function RegionTable() {
             return (
               <Card key={region.code}>
                 <CardHeader className="gap-2">
-                  <Badge variant="outline" className="w-fit font-mono">
+                  <Badge variant="outline" className="w-fit tabular-nums">
                     {region.code}
                   </Badge>
                   <CardTitle className="text-heading-4 text-body-text">
