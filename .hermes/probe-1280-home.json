@@ -1,68 +1,71 @@
 {
-  "url": "http://localhost:3124/linux-vps",
+  "url": "http://localhost:3124/",
   "viewport": [
     1280,
     900
   ],
-  "elementCount": 824,
+  "elementCount": 596,
   "spacing": {
-    "2": 110,
-    "4": 122,
-    "6": 123,
-    "8": 207,
-    "10": 55,
-    "12": 146,
-    "14": 4,
-    "16": 319,
+    "2": 57,
+    "4": 49,
+    "6": 101,
+    "8": 114,
+    "10": 49,
+    "12": 122,
+    "14": 2,
+    "16": 173,
     "18": 4,
-    "20": 146,
-    "24": 35,
-    "32": 7,
-    "40": 18,
-    "48": 8,
+    "20": 60,
+    "24": 28,
+    "28": 1,
+    "32": 9,
+    "40": 12,
+    "48": 9,
     "64": 1,
-    "100": 6,
     "128": 2,
-    "89.6": 21,
-    "76.8": 1,
-    "102.4": 1
+    "89.6": 15,
+    "102.4": 4,
+    "99.8": 1
   },
   "spacingSingletons": [
+    28,
     64,
-    76.8,
-    102.4
+    73.8,
+    99.8
   ],
   "radii": {
-    "0": 663,
-    "12": 116,
-    "18": 9,
-    "999": 36
+    "0": 477,
+    "12": 89,
+    "18": 7,
+    "50": 4,
+    "999": 19
   },
   "type": {
-    "10": 1,
-    "11": 41,
-    "12": 107,
-    "13": 261,
-    "14": 67,
-    "16": 328,
-    "24": 6,
-    "34": 1,
-    "64": 2,
-    "46.72": 8,
-    "18.56": 1,
-    "23.68": 1
+    "10": 13,
+    "11": 24,
+    "12": 89,
+    "13": 72,
+    "14": 57,
+    "16": 321,
+    "20": 1,
+    "24": 10,
+    "52": 1,
+    "46.72": 4,
+    "73.6": 2,
+    "23.68": 1,
+    "48.64": 1
   },
   "lineHeights": {
     "18": 17,
+    "21": 33,
     "24": 35,
-    "26.4": 276,
-    "21.45": 252,
-    "19.8": 75,
-    "23.1": 38,
-    "18.15": 23,
-    "15.4": 18
+    "26.4": 277,
+    "21.45": 72,
+    "19.8": 61,
+    "23.1": 19,
+    "18.15": 15
   },
-  "shadowCount": 4,
+  "shadowCount": 5,
   "overflow": [],
   "overflowIntentional": [],
   "overflowContained": [
@@ -74,7 +77,7 @@
   ],
   "clipped": [],
   "alignmentEdges": {
-    "0": 13,
+    "0": 10,
     "32": 1,
     "228": 1
   },
@@ -91,6 +94,79 @@
         44,
         44,
         44
+      ]
+    },
+    {
+      "parent": "section.srv3-hero > div.sr-container > div.srv3-hero-copy > ul.srv3-hero-facts",
+      "tag": "LI",
+      "n": 4,
+      "heightSpread": 0,
+      "widthSpread": 48,
+      "heights": [
+        18,
+        18,
+        18,
+        18
+      ]
+    },
+    {
+      "parent": "div.srv3-rack-stage > div.srv3-rack-shell > div.srv3-rack > div.srv3-rack-unit",
+      "tag": "DIV",
+      "n": 3,
+      "heightSpread": 7,
+      "widthSpread": 267,
+      "heights": [
+        7,
+        14,
+        9
+      ]
+    },
+    {
+      "parent": "div.srv3-rack-stage > div.srv3-rack-shell > div.srv3-rack > div.srv3-rack-unit",
+      "tag": "DIV",
+      "n": 3,
+      "heightSpread": 7,
+      "widthSpread": 267,
+      "heights": [
+        7,
+        14,
+        9
+      ]
+    },
+    {
+      "parent": "div.srv3-rack-stage > div.srv3-rack-shell > div.srv3-rack > div.srv3-rack-unit",
+      "tag": "DIV",
+      "n": 3,
+      "heightSpread": 7,
+      "widthSpread": 267,
+      "heights": [
+        7,
+        14,
+        9
+      ]
+    },
+    {
+      "parent": "div.srv3-rack-stage > div.srv3-rack-shell > div.srv3-rack > div.srv3-rack-unit",
+      "tag": "DIV",
+      "n": 3,
+      "heightSpread": 7,
+      "widthSpread": 267,
+      "heights": [
+        7,
+        14,
+        9
+      ]
+    },
+    {
+      "parent": "div.srv3-hero-visual > div.srv3-rack-stage > div.srv3-rack-shell > div.srv3-rack-footer",
+      "tag": "SPAN",
+      "n": 3,
+      "heightSpread": 0,
+      "widthSpread": 24,
+      "heights": [
+        17,
+        17,
+        17
       ]
     },
     {
@@ -146,81 +222,24 @@
       "heightSpread": 0,
       "widthSpread": 123,
       "heights": [
-        88,
-        88,
-        88,
-        88,
-        88,
-        88
+        87,
+        87,
+        87,
+        87,
+        87,
+        87
       ]
     },
     {
-      "parent": "div.sr-table-wrap > table.sr-table > tbody > tr",
-      "tag": "TD",
-      "n": 6,
-      "heightSpread": 0,
-      "widthSpread": 123,
-      "heights": [
-        82,
-        82,
-        82,
-        82,
-        82,
-        82
-      ]
-    },
-    {
-      "parent": "div.sr-table-wrap > table.sr-table > tbody > tr",
-      "tag": "TD",
-      "n": 6,
-      "heightSpread": 0,
-      "widthSpread": 123,
-      "heights": [
-        88,
-        88,
-        88,
-        88,
-        88,
-        88
-      ]
-    },
-    {
-      "parent": "div.sr-table-wrap > table.sr-table > tbody > tr",
-      "tag": "TD",
-      "n": 6,
-      "heightSpread": 0,
-      "widthSpread": 123,
-      "heights": [
-        81,
-        81,
-        81,
-        81,
-        81,
-        81
-      ]
-    },
-    {
-      "parent": "div.sr-table-wrap > table.sr-table > thead > tr",
-      "tag": "TH",
+      "parent": "section#reviews > div.sr-container > div.srv3-review-grid",
+      "tag": "DIV",
       "n": 3,
       "heightSpread": 0,
-      "widthSpread": 404,
+      "widthSpread": 88,
       "heights": [
-        52,
-        52,
-        52
-      ]
-    },
-    {
-      "parent": "tbody > tr > td > ul.flex",
-      "tag": "LI",
-      "n": 3,
-      "heightSpread": 0,
-      "widthSpread": 54,
-      "heights": [
-        27,
-        27,
-        27
+        276,
+        276,
+        276
       ]
     },
     {
@@ -256,7 +275,7 @@
       "w": 52,
       "h": 44,
       "x": 45,
-      "y": 1114
+      "y": 1383
     },
     {
       "sel": "div.sr-control-row > div.sr-control-stack > div.inline-flex > button.inline-flex",
@@ -264,7 +283,7 @@
       "w": 44,
       "h": 44,
       "x": 96,
-      "y": 1114
+      "y": 1383
     },
     {
       "sel": "div.sr-control-stack > ul.sr-term-ladder > li > button.sr-term-option",
@@ -272,7 +291,7 @@
       "w": 261,
       "h": 118,
       "x": 148,
-      "y": 1004
+      "y": 1272
     },
     {
       "sel": "div.sr-control-stack > ul.sr-term-ladder > li > button.sr-term-option",
@@ -280,7 +299,7 @@
       "w": 261,
       "h": 155,
       "x": 418,
-      "y": 1004
+      "y": 1272
     },
     {
       "sel": "div.sr-control-stack > ul.sr-term-ladder > li > button.sr-term-option",
@@ -288,7 +307,7 @@
       "w": 261,
       "h": 155,
       "x": 689,
-      "y": 1004
+      "y": 1272
     },
     {
       "sel": "div.sr-control-stack > ul.sr-term-ladder > li > button.sr-term-option",
@@ -296,7 +315,7 @@
       "w": 261,
       "h": 155,
       "x": 959,
-      "y": 1004
+      "y": 1272
     }
   ],
   "smallTargets": []

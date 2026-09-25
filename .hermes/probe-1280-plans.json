@@ -1,60 +1,65 @@
 {
-  "url": "http://localhost:3124/linux-vps",
+  "url": "http://localhost:3124/plans",
   "viewport": [
-    390,
-    844
+    1280,
+    900
   ],
-  "elementCount": 823,
+  "elementCount": 499,
   "spacing": {
-    "2": 110,
-    "4": 122,
-    "6": 123,
-    "8": 207,
-    "10": 55,
-    "12": 153,
-    "14": 4,
-    "16": 319,
-    "18": 4,
-    "20": 146,
-    "24": 29,
-    "32": 19,
-    "40": 12,
-    "48": 8,
-    "58": 1,
-    "60": 2,
-    "64": 21,
-    "72": 2
+    "2": 20,
+    "4": 29,
+    "6": 111,
+    "8": 81,
+    "10": 31,
+    "12": 111,
+    "14": 2,
+    "16": 210,
+    "18": 2,
+    "20": 56,
+    "24": 13,
+    "32": 10,
+    "34": 1,
+    "40": 9,
+    "48": 2,
+    "64": 1,
+    "128": 2,
+    "89.6": 9,
+    "38.4": 4,
+    "76.8": 1
   },
   "spacingSingletons": [
-    58
+    34,
+    64,
+    76.8,
+    102.4
   ],
   "radii": {
-    "0": 662,
-    "12": 116,
-    "18": 9,
+    "0": 402,
+    "12": 55,
+    "18": 6,
     "999": 36
   },
   "type": {
-    "10": 1,
-    "11": 41,
-    "12": 108,
-    "13": 261,
-    "14": 67,
-    "16": 327,
-    "34.4": 8,
-    "20.03": 6,
-    "44.8": 2,
-    "18.4": 1,
-    "24.29": 1
+    "10": 2,
+    "11": 27,
+    "12": 87,
+    "13": 133,
+    "14": 52,
+    "16": 190,
+    "64": 2,
+    "46.72": 3,
+    "18.56": 1,
+    "23.68": 1,
+    "44.8": 1
   },
   "lineHeights": {
     "18": 17,
-    "24": 34,
-    "26.4": 275,
-    "21.45": 252,
-    "19.8": 76,
-    "23.1": 38,
-    "18.15": 23,
+    "21": 16,
+    "24": 35,
+    "26.4": 141,
+    "21.45": 132,
+    "19.8": 64,
+    "23.1": 26,
     "15.4": 18
   },
   "shadowCount": 4,
@@ -69,17 +74,31 @@
   ],
   "clipped": [],
   "alignmentEdges": {
-    "0": 13,
-    "16": 1,
-    "64": 1
+    "0": 7,
+    "32": 1,
+    "228": 1
   },
   "siblingVariance": [
+    {
+      "parent": "div.sr-site > header.srv3-header > div.sr-container > nav.srv3-nav",
+      "tag": "A",
+      "n": 5,
+      "heightSpread": 0,
+      "widthSpread": 65,
+      "heights": [
+        44,
+        44,
+        44,
+        44,
+        44
+      ]
+    },
     {
       "parent": "div.sr-table-wrap > table.sr-table > thead > tr",
       "tag": "TH",
       "n": 7,
       "heightSpread": 0,
-      "widthSpread": 146,
+      "widthSpread": 259,
       "heights": [
         52,
         52,
@@ -95,14 +114,14 @@
       "tag": "TD",
       "n": 6,
       "heightSpread": 0,
-      "widthSpread": 110,
+      "widthSpread": 123,
       "heights": [
-        108,
-        108,
-        108,
-        108,
-        108,
-        108
+        88,
+        88,
+        88,
+        88,
+        88,
+        88
       ]
     },
     {
@@ -110,14 +129,14 @@
       "tag": "TD",
       "n": 6,
       "heightSpread": 0,
-      "widthSpread": 110,
+      "widthSpread": 123,
       "heights": [
-        102,
-        102,
-        102,
-        102,
-        102,
-        102
+        82,
+        82,
+        82,
+        82,
+        82,
+        82
       ]
     },
     {
@@ -125,14 +144,14 @@
       "tag": "TD",
       "n": 6,
       "heightSpread": 0,
-      "widthSpread": 110,
+      "widthSpread": 123,
       "heights": [
-        108,
-        108,
-        108,
-        108,
-        108,
-        108
+        88,
+        88,
+        88,
+        88,
+        88,
+        88
       ]
     },
     {
@@ -140,14 +159,14 @@
       "tag": "TD",
       "n": 6,
       "heightSpread": 0,
-      "widthSpread": 110,
+      "widthSpread": 123,
       "heights": [
-        102,
-        102,
-        102,
-        102,
-        102,
-        102
+        82,
+        82,
+        82,
+        82,
+        82,
+        82
       ]
     },
     {
@@ -155,14 +174,14 @@
       "tag": "TD",
       "n": 6,
       "heightSpread": 0,
-      "widthSpread": 110,
+      "widthSpread": 123,
       "heights": [
-        139,
-        139,
-        139,
-        139,
-        139,
-        139
+        88,
+        88,
+        88,
+        88,
+        88,
+        88
       ]
     },
     {
@@ -170,89 +189,98 @@
       "tag": "TD",
       "n": 6,
       "heightSpread": 0,
-      "widthSpread": 110,
+      "widthSpread": 123,
       "heights": [
-        101,
-        101,
-        101,
-        101,
-        101,
-        101
+        81,
+        81,
+        81,
+        81,
+        81,
+        81
       ]
     },
     {
-      "parent": "div.sr-table-wrap > table.sr-table > thead > tr",
-      "tag": "TH",
-      "n": 3,
-      "heightSpread": 0,
-      "widthSpread": 179,
-      "heights": [
-        52,
-        52,
-        52
-      ]
-    },
-    {
-      "parent": "tbody > tr > td > ul.flex",
+      "parent": "div.sr-container > div.srv3-footer-top > div.srv3-footer-brand > ul.srv3-socials",
       "tag": "LI",
+      "n": 4,
+      "heightSpread": 0,
+      "widthSpread": 60,
+      "heights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "parent": "div.sr-site > footer.srv3-footer > div.sr-container > div.srv3-footer-bottom",
+      "tag": "SPAN",
       "n": 3,
       "heightSpread": 0,
-      "widthSpread": 54,
+      "widthSpread": 200,
       "heights": [
-        27,
-        27,
-        27
+        18,
+        18,
+        18
       ]
     }
   ],
   "buttons": [
     {
+      "sel": "button#radix-_R_2cp5fiv9fivb_",
+      "label": "Remote desktop",
+      "w": 320,
+      "h": 44,
+      "x": 225,
+      "y": 863
+    },
+    {
       "sel": "div.sr-control-row > div.sr-control-stack > div.inline-flex > button.inline-flex",
       "label": "USA",
       "w": 52,
       "h": 44,
-      "x": 29,
-      "y": 1609
+      "x": 45,
+      "y": 1225
     },
     {
       "sel": "div.sr-control-row > div.sr-control-stack > div.inline-flex > button.inline-flex",
       "label": "EU",
       "w": 44,
       "h": 44,
-      "x": 80,
-      "y": 1609
+      "x": 96,
+      "y": 1225
     },
     {
       "sel": "div.sr-control-stack > ul.sr-term-ladder > li > button.sr-term-option",
       "label": "Monthly\u20ac9.50per month\u20ac9.",
-      "w": 161,
+      "w": 261,
       "h": 118,
-      "x": 29,
-      "y": 1689
+      "x": 148,
+      "y": 1115
     },
     {
       "sel": "div.sr-control-stack > ul.sr-term-ladder > li > button.sr-term-option",
       "label": "Quarterly\u20ac9per month\u20ac27 ",
-      "w": 161,
+      "w": 261,
       "h": 155,
-      "x": 200,
-      "y": 1689
+      "x": 418,
+      "y": 1115
     },
     {
       "sel": "div.sr-control-stack > ul.sr-term-ladder > li > button.sr-term-option",
       "label": "Annual\u20ac8per month\u20ac96 bil",
-      "w": 161,
+      "w": 261,
       "h": 155,
-      "x": 29,
-      "y": 1853
+      "x": 689,
+      "y": 1115
     },
     {
       "sel": "div.sr-control-stack > ul.sr-term-ladder > li > button.sr-term-option",
       "label": "Biannual\u20ac7per month\u20ac168 ",
-      "w": 161,
+      "w": 261,
       "h": 155,
-      "x": 200,
-      "y": 1853
+      "x": 959,
+      "y": 1115
     }
   ],
   "smallTargets": []

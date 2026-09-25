@@ -1,13 +1,83 @@
 {
   "source": "Wikimedia Commons",
-  "usage": "Nominative use in a supported-operating-system list",
+  "usage": "Nominative use in a supported-operating-system list. Not modified except where noted.",
+  "verified": "sha1 compared against the Commons original at download time",
+  "attribution": "Linux Tux artwork by Larry Ewing, CC BY-SA 3.0, via Wikimedia Commons.",
   "assets": {
-    "windows.svg": "File:Windows logo - 2021.svg",
-    "debian.svg": "File:Openlogo-debianV2.svg",
-    "ubuntu.svg": "File:Ubuntu-logo-no-wordmark-2022.svg",
-    "linux.svg": "File:Linux tux circle logo.svg",
-    "fedora.svg": "File:Fedora icon (2021).svg",
     "almalinux.svg": "File:AlmaLinux Icon Logo.svg",
-    "centos.svg": "File:CentOS Linux color logo (2020).svg"
-  }
+    "centos.svg": "File:CentOS Linux color logo (2020).svg",
+    "debian.svg": "File:Openlogo-debianV2.svg",
+    "fedora.svg": "File:Fedora icon (2021).svg",
+    "linux.svg": "File:Tux-simple.svg",
+    "ubuntu.svg": "File:UbuntuCoF.svg",
+    "windows.svg": "File:Windows 11 start button icon.svg"
+  },
+  "records": [
+    {
+      "file": "almalinux.svg",
+      "commonsFile": "File:AlmaLinux Icon Logo.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:AlmaLinux_Icon_Logo.svg",
+      "licence": "CC BY-SA 4.0",
+      "artist": "AlmaLinux OS Foundation",
+      "attributionRequired": true,
+      "sha1": "adffadc926f2c6c934b3ec565bc479f76ff9fae0"
+    },
+    {
+      "file": "centos.svg",
+      "commonsFile": "File:CentOS Linux color logo (2020).svg",
+      "page": "https://commons.wikimedia.org/wiki/File:CentOS_Linux_color_logo_(2020).svg",
+      "licence": "CC BY-SA 4.0",
+      "artist": "CentOS Project",
+      "attributionRequired": true,
+      "sha1": "9def2298904226a3dce9279865e50546aa0c19d3"
+    },
+    {
+      "file": "debian.svg",
+      "commonsFile": "File:Openlogo-debianV2.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Openlogo-debianV2.svg",
+      "licence": "Public domain",
+      "artist": "Debian Project",
+      "attributionRequired": false,
+      "sha1": "31c4628593d3a059945dc7dfca28d54dc7c8e6c1"
+    },
+    {
+      "file": "fedora.svg",
+      "commonsFile": "File:Fedora icon (2021).svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Fedora_icon_(2021).svg",
+      "licence": "Public domain",
+      "artist": "Red Hat",
+      "attributionRequired": false,
+      "sha1": "86d88f9ad5e499fb5b4ce68de10864e33cb6e3e5"
+    },
+    {
+      "file": "linux.svg",
+      "commonsFile": "File:Tux-simple.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Tux-simple.svg",
+      "licence": "Attribution (CC BY-SA 3.0)",
+      "artist": "Larry Ewing",
+      "attributionRequired": true,
+      "sha1": "8770ac68243a39dbf43a1f5d37983232c7814823",
+      "replaces": "File:Linux tux circle logo.svg (reduced penguin-face emblem; replaced 2026-09-25)"
+    },
+    {
+      "file": "ubuntu.svg",
+      "commonsFile": "File:UbuntuCoF.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:UbuntuCoF.svg",
+      "licence": "Public domain",
+      "artist": "Canonical Ltd",
+      "attributionRequired": false,
+      "sha1": "e2fabf8eb1e894652a06ae3d110cdb4ca445ee8a",
+      "replaces": "File:Ubuntu-logo-no-wordmark-2022.svg (opaque #e9500e canvas 1038x1600, mark low in frame, rendered as a tall orange slab at 28px; replaced 2026-09-25)"
+    },
+    {
+      "file": "windows.svg",
+      "commonsFile": "File:Windows 11 start button icon.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Windows_11_start_button_icon.svg",
+      "licence": "Public domain",
+      "artist": "Microsoft",
+      "attributionRequired": false,
+      "sha1": "e68c879a9b8e03eb77dfe58f1621fa5af4a632b9",
+      "replaces": "File:Windows logo - 2021.svg (flat single-tone pane mark; replaced 2026-09-25)"
+    }
+  ]
 }

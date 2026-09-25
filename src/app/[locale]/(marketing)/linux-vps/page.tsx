@@ -51,12 +51,14 @@ const distroVersionChips = (versions: string) => versions.split(' · ');
 
 /* Nominative brand marks for distribution families the table below lists. */
 const osBrands = [
-  { src: '/brand/ubuntu.svg', alt: 'Ubuntu logo', width: 18, height: 28 },
-  { src: '/brand/debian.svg', alt: 'Debian logo', width: 23, height: 28 },
-  { src: '/brand/centos.svg', alt: 'CentOS logo', width: 28, height: 28 },
-  { src: '/brand/almalinux.svg', alt: 'AlmaLinux logo', width: 29, height: 28 },
-  { src: '/brand/fedora.svg', alt: 'Fedora logo', width: 100, height: 28 },
-  { src: '/brand/linux.svg', alt: 'Linux logo (Tux)', width: 28, height: 28 },
+  { src: '/brand/ubuntu.svg', alt: 'Ubuntu logo', width: 28, height: 28, className: 'h-7 w-auto' },
+  { src: '/brand/debian.svg', alt: 'Debian logo', width: 23, height: 28, className: 'h-7 w-auto' },
+  { src: '/brand/centos.svg', alt: 'CentOS logo', width: 28, height: 28, className: 'h-7 w-auto' },
+  { src: '/brand/almalinux.svg', alt: 'AlmaLinux logo', width: 29, height: 28, className: 'h-7 w-auto' },
+  { src: '/brand/fedora.svg', alt: 'Fedora logo', width: 28, height: 28, className: 'h-7 w-auto' },
+  // Tux is a portrait mark with less ink than the flat distro badges, so it needs one
+  // step more height to carry the same optical weight next to them.
+  { src: '/brand/linux.svg', alt: 'Linux logo (Tux)', width: 28, height: 32, className: 'h-8 w-auto' },
 ];
 
 const resourceFit = [
@@ -162,7 +164,7 @@ export default function LinuxVpsPage() {
                   alt={brand.alt}
                   width={brand.width}
                   height={brand.height}
-                  className="h-7 w-auto"
+                  className={brand.className}
                 />
               </li>
             ))}

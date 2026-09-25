@@ -24,7 +24,7 @@ export function OSHeroVisual({ kind, title, items, access }: Props) {
       <div className="srv3-os-visual-head">
         <div className="srv3-os-visual-icon">
           {/* Decorative: the title text next to it already names the system. */}
-          <img src={OS_MARK[kind]} alt="" width={26} height={26} />
+          <img src={OS_MARK[kind]} alt="" width={32} height={32} />
         </div>
         <div>
           <Badge variant="outline">{kind === 'windows' ? 'Windows VPS' : 'Linux VPS'}</Badge>

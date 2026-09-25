@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import { SiDiscord, SiInstagram, SiTelegram, SiX } from '@icons-pack/react-simple-icons';
 import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -34,6 +35,14 @@ const columns = [
   },
 ] as const;
 
+/* Same four profiles the brand schema declares in src/config/seo.ts. Official marks from Simple Icons. */
+const socials = [
+  ['Discord', 'https://discord.gg/9JJFs4DDyF', SiDiscord],
+  ['Telegram', 'https://t.me/StealthRDP', SiTelegram],
+  ['X', 'https://x.com/stealthrdp', SiX],
+  ['Instagram', 'https://www.instagram.com/stealth_rdp', SiInstagram],
+] as const;
+
 export function SiteFooter() {
   return (
     <footer className="srv3-footer">
@@ -52,18 +61,18 @@ export function SiteFooter() {
               Windows and Linux VPS infrastructure with USA and EU regions,
               NVMe storage and full administrative access.
             </p>
-            <div className="srv3-socials">
-              <Button asChild variant="outline" size="sm">
-                <a href="https://discord.gg/9JJFs4DDyF" target="_blank" rel="noreferrer">
-                  Discord
-                </a>
-              </Button>
-              <Button asChild variant="outline" size="sm">
-                <a href="https://t.me/StealthRDP" target="_blank" rel="noreferrer">
-                  Telegram
-                </a>
-              </Button>
-            </div>
+            <ul className="srv3-socials">
+              {socials.map(([label, href, Mark]) => (
+                <li key={label}>
+                  <Button asChild variant="outline" size="sm">
+                    <a href={href} target="_blank" rel="noreferrer">
+                      <Mark size={16} aria-hidden="true" />
+                      {label}
+                    </a>
+                  </Button>
+                </li>
+              ))}
+            </ul>
           </div>
 
           <div className="srv3-footer-links">
@@ -94,6 +103,7 @@ export function SiteFooter() {
         <div className="srv3-footer-bottom">
           <span>© 2026 StealthRDP. All rights reserved.</span>
           <span>Billing and account management are handled in the StealthRDP client area.</span>
+          <span>Tux artwork by Larry Ewing, CC BY-SA 3.0.</span>
         </div>
       </div>
     </footer>

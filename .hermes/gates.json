@@ -107,60 +107,67 @@
       }
     },
     {
-      "gate": "rendered",
+      "gate": "layout-live-1280",
       "exit": 0,
       "verdict": "PASS",
-      "summary": "high=0, review=5",
+      "summary": "0 overflow, 0 clipped, 0 tap-target findings (824 elements at 1280px)",
       "detail": {
-        "summary": {
-          "url": "http://localhost:3124/",
+        "viewport": [
+          1280,
+          900
+        ],
+        "route": "http://localhost:3124/linux-vps",
+        "elements": 824,
+        "overflow": 0,
+        "clipped": 0,
+        "smallTargets": 0,
+        "audit": {
+          "url": "http://localhost:3124/linux-vps",
           "viewport": [
             1280,
             900
           ],
-          "elements": 577,
+          "elements": 824,
           "spacingBase": 2,
           "distinctSpacing": 20,
           "subPixelValues": [
             89.6,
-            102.4,
-            99.8
+            76.8,
+            102.4
           ],
           "high": 0,
           "medium": 5
-        },
-        "findings": [
-          {
-            "severity": "medium",
-            "rule": "spacing-one-offs",
-            "detail": "4 spacing value(s) used exactly once: [28, 64, 74, 100]",
-            "move": "Review against the declared scale. A one-off can be intentional; it is not an automatic defect."
-          },
-          {
-            "severity": "medium",
-            "rule": "type-scale-drift",
-            "detail": "13 distinct values (review threshold 12): ['10', '11', '12', '13', '14', '16', '20', '24', '52', '46.72', '73.6', '23.68']",
-            "move": "Reduce to a named type scale (6-9 steps)."
-          },
-          {
-            "severity": "medium",
-            "rule": "uneven-siblings",
-            "detail": "12 sibling group(s); worst height 7px / width 267px",
-            "move": "Check intended hierarchy; equalize only when siblings are meant to be peers."
-          },
-          {
-            "severity": "medium",
-            "rule": "button-size-drift",
-            "detail": "3 button heights on one page: {155: 3, 44: 2, 118: 1}",
-            "move": "One button height per size class."
-          },
-          {
-            "severity": "medium",
-            "rule": "button-placement",
-            "detail": "buttons sit on 6 different left edges: [45, 96, 148, 418, 689, 959]",
-            "move": "Align actions to the container content edge or the field grid."
-          }
-        ]
+        }
+      }
+    },
+    {
+      "gate": "layout-live-390",
+      "exit": 0,
+      "verdict": "PASS",
+      "summary": "0 overflow, 0 clipped, 0 tap-target findings (823 elements at 390px)",
+      "detail": {
+        "viewport": [
+          390,
+          844
+        ],
+        "route": "http://localhost:3124/linux-vps",
+        "elements": 823,
+        "overflow": 0,
+        "clipped": 0,
+        "smallTargets": 0,
+        "audit": {
+          "url": "http://localhost:3124/linux-vps",
+          "viewport": [
+            390,
+            844
+          ],
+          "elements": 823,
+          "spacingBase": 2,
+          "distinctSpacing": 18,
+          "subPixelValues": [],
+          "high": 0,
+          "medium": 3
+        }
       }
     }
   ],
