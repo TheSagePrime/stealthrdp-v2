@@ -1,13 +1,18 @@
-import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
+import { ArrowRight, ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { plans } from '@/lib/stealth/content';
+import { plans, uptime } from '@/lib/stealth/content';
 
 const availablePlans = plans.filter(plan => plan.source.availability !== 'out-of-stock');
 const startingPlan = [...availablePlans].sort(
   (a, b) => a.pricing.monthly.amount - b.pricing.monthly.amount,
 )[0];
+const heroPlans = [...availablePlans]
+  .sort((a, b) => a.pricing.monthly.amount - b.pricing.monthly.amount)
+  .slice(0, 3);
+const monitorsUp = uptime.monitors.filter(monitor => monitor.status === 'up').length;
+const allSystemsUp = monitorsUp === uptime.monitors.length;
 
 const heroFacts = [
   'Full admin access',
@@ -84,28 +89,42 @@ export function HomeHero() {
               </div>
 
               <div className="srv3-rack">
-                {[0, 1, 2, 3].map(index => (
-                  <div className="srv3-rack-unit" key={index}>
+                {heroPlans.map(plan => (
+                  <a
+                    className="srv3-rack-unit srv3-rack-plan"
+                    key={plan.name}
+                    href={plan.purchaseUrl}
+                    aria-label={`Configure ${plan.name} at €${plan.pricing.monthly.amount.toFixed(2)} per month`}
+                  >
                     <div className="srv3-rack-unit-left">
-                      <span className="srv3-rack-led" />
+                      <span
+                        className={`srv3-rack-led${allSystemsUp ? ' srv3-rack-led-live' : ''}`}
+                        aria-hidden="true"
+                      />
                     </div>
                     <div className="srv3-rack-unit-center">
-                      <span className="srv3-rack-line" />
-                      <span className="srv3-rack-line srv3-rack-line-short" />
+                      <span className="srv3-rack-plan-name">
+                        {plan.name} <small>{plan.location}</small>
+                      </span>
+                      <span className="srv3-rack-plan-specs">
+                        {plan.specs.cpu} · {plan.specs.ram} · {plan.specs.storage}
+                      </span>
                     </div>
                     <div className="srv3-rack-unit-right">
-                      <span className="srv3-rack-port" />
-                      <span className="srv3-rack-port" />
-                      <span className="srv3-rack-port" />
+                      <span className="srv3-rack-plan-price">
+                        €{plan.pricing.monthly.amount.toFixed(2)}
+                        <small>/mo</small>
+                      </span>
+                      <ArrowUpRight aria-hidden="true" />
                     </div>
-                  </div>
+                  </a>
                 ))}
               </div>
 
               <div className="srv3-rack-footer">
                 <span>Isolated VMs</span>
                 <span>NVMe storage</span>
-                <span>Fast provisioning</span>
+                <span>{allSystemsUp ? `${monitorsUp} of ${uptime.monitors.length} nodes up` : 'Status check needed'}</span>
               </div>
             </div>
 

@@ -1525,7 +1525,70 @@ body {
 .srv3-rack-port {
   width: 15px;
   height: 9px;
-  border-color:var(--border-soft);
+  border-color: var(--border-soft);
+}
+
+.srv3-rack-plan {
+  text-decoration: none;
+  color: inherit;
+}
+
+.srv3-rack-plan:hover {
+  border-color: var(--primary);
+}
+
+.srv3-rack-led-live {
+  background: var(--status-ok);
+}
+
+.srv3-rack-plan-name {
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.srv3-rack-plan-name small {
+  color: var(--text-dim);
+  font-size: 0.62rem;
+  font-weight: 600;
+}
+
+.srv3-rack-plan-specs {
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+}
+
+.srv3-rack-plan-price {
+  color: var(--text);
+  font-size: 0.8rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.srv3-rack-plan-price small {
+  color: var(--text-dim);
+  font-size: 0.62rem;
+  font-weight: 600;
+}
+
+.srv3-rack-unit-right svg {
+  width: 14px;
+  height: 14px;
+  color: var(--text-dim);
+}
+
+.srv3-rack-plan:hover .srv3-rack-unit-right svg {
+  color: var(--primary);
+}
+
+.srv3-rack-plan .srv3-rack-unit-center {
+  min-width: 0;
+}
+
+.srv3-rack-plan-price,
+.srv3-rack-unit-right svg {
+  flex-shrink: 0;
 }
 
 .srv3-rack-footer {
