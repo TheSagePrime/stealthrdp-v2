@@ -1,8 +1,8 @@
 {
-  "repo": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix",
-  "source": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src",
-  "tokens": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/design-tokens.json",
-  "verdict": "PASS",
+  "repo": "/opt/data/stealthrdp-v2",
+  "source": "/opt/data/stealthrdp-v2/src",
+  "tokens": "/opt/data/stealthrdp-v2/design-tokens.json",
+  "verdict": "FAIL",
   "gates": [
     {
       "gate": "workflow",
@@ -12,19 +12,62 @@
       "detail": {
         "verdict": "PASS",
         "errors": [],
-        "path": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/.sageprime/frontend-workflow.json",
+        "path": "/opt/data/stealthrdp-v2/.sageprime/frontend-workflow.json",
         "projectId": "stealthrdp-v2"
       }
     },
     {
       "gate": "scale",
-      "exit": 0,
-      "verdict": "PASS",
-      "summary": "0 off-scale value(s)",
+      "exit": 1,
+      "verdict": "FAIL",
+      "summary": "5 off-scale value(s)",
       "detail": {
-        "tokens": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/design-tokens.json",
-        "violations": [],
-        "counts": {}
+        "tokens": "/opt/data/stealthrdp-v2/design-tokens.json",
+        "violations": [
+          {
+            "category": "fontSize",
+            "value": 12.48,
+            "raw": "font-size: 0.78rem",
+            "file": "styles/stealth-v3.css",
+            "line": 1546,
+            "nearest": 12
+          },
+          {
+            "category": "fontSize",
+            "value": 9.92,
+            "raw": "font-size: 0.62rem",
+            "file": "styles/stealth-v3.css",
+            "line": 1552,
+            "nearest": 10
+          },
+          {
+            "category": "fontSize",
+            "value": 10.4,
+            "raw": "font-size: 0.65rem",
+            "file": "styles/stealth-v3.css",
+            "line": 1559,
+            "nearest": 10
+          },
+          {
+            "category": "fontSize",
+            "value": 12.8,
+            "raw": "font-size: 0.8rem",
+            "file": "styles/stealth-v3.css",
+            "line": 1564,
+            "nearest": 13
+          },
+          {
+            "category": "fontSize",
+            "value": 9.92,
+            "raw": "font-size: 0.62rem",
+            "file": "styles/stealth-v3.css",
+            "line": 1571,
+            "nearest": 10
+          }
+        ],
+        "counts": {
+          "fontSize": 5
+        }
       }
     },
     {
@@ -49,7 +92,7 @@
             "rule": "glassmorphism",
             "kind": "visual",
             "severity": "medium",
-            "file": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src/styles/stealth-v3.css",
+            "file": "/opt/data/stealthrdp-v2/src/styles/stealth-v3.css",
             "count": 2,
             "description": "glass treatment"
           },
@@ -57,7 +100,7 @@
             "rule": "shadow-soup",
             "kind": "review",
             "severity": "medium",
-            "file": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src/styles/stealth-v3.css",
+            "file": "/opt/data/stealthrdp-v2/src/styles/stealth-v3.css",
             "count": 7,
             "description": "many independent shadows"
           },
@@ -65,7 +108,7 @@
             "rule": "shadow-soup",
             "kind": "review",
             "severity": "medium",
-            "file": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src/styles/surfaces.css",
+            "file": "/opt/data/stealthrdp-v2/src/styles/surfaces.css",
             "count": 4,
             "description": "many independent shadows"
           }
@@ -80,12 +123,13 @@
       "summary": "high=0, review=0",
       "detail": {
         "summary": {
-          "url": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src",
+          "url": "/opt/data/stealthrdp-v2/src",
           "viewport": null,
           "elements": 128,
           "spacingBase": 2,
           "distinctSpacing": 15,
           "subPixelValues": [],
+          "contrastChecked": null,
           "high": 0,
           "medium": 0
         },
@@ -103,73 +147,9 @@
         "new": 0,
         "authorized": 0,
         "unapproved": [],
-        "receipt": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/.sageprime/frontend-reuse.json"
-      }
-    },
-    {
-      "gate": "layout-live-1280",
-      "exit": 0,
-      "verdict": "PASS",
-      "summary": "0 overflow, 0 clipped, 0 tap-target findings (824 elements at 1280px)",
-      "detail": {
-        "viewport": [
-          1280,
-          900
-        ],
-        "route": "http://localhost:3124/linux-vps",
-        "elements": 824,
-        "overflow": 0,
-        "clipped": 0,
-        "smallTargets": 0,
-        "audit": {
-          "url": "http://localhost:3124/linux-vps",
-          "viewport": [
-            1280,
-            900
-          ],
-          "elements": 824,
-          "spacingBase": 2,
-          "distinctSpacing": 20,
-          "subPixelValues": [
-            89.6,
-            76.8,
-            102.4
-          ],
-          "high": 0,
-          "medium": 5
-        }
-      }
-    },
-    {
-      "gate": "layout-live-390",
-      "exit": 0,
-      "verdict": "PASS",
-      "summary": "0 overflow, 0 clipped, 0 tap-target findings (823 elements at 390px)",
-      "detail": {
-        "viewport": [
-          390,
-          844
-        ],
-        "route": "http://localhost:3124/linux-vps",
-        "elements": 823,
-        "overflow": 0,
-        "clipped": 0,
-        "smallTargets": 0,
-        "audit": {
-          "url": "http://localhost:3124/linux-vps",
-          "viewport": [
-            390,
-            844
-          ],
-          "elements": 823,
-          "spacingBase": 2,
-          "distinctSpacing": 18,
-          "subPixelValues": [],
-          "high": 0,
-          "medium": 3
-        }
+        "receipt": "/opt/data/stealthrdp-v2/.sageprime/frontend-reuse.json"
       }
     }
   ],
-  "receipt": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/.hermes/gates.json"
+  "receipt": "/opt/data/stealthrdp-v2/.hermes/gates.json"
 }

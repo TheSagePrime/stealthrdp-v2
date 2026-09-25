@@ -1543,32 +1543,32 @@ body {
 
 .srv3-rack-plan-name {
   color: var(--text);
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-weight: 700;
 }
 
 .srv3-rack-plan-name small {
   color: var(--text-dim);
-  font-size: 0.62rem;
+  font-size: 0.625rem;
   font-weight: 600;
 }
 
 .srv3-rack-plan-specs {
   color: var(--text-dim);
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.625rem;
 }
 
 .srv3-rack-plan-price {
   color: var(--text);
-  font-size: 0.8rem;
+  font-size: 0.8125rem;
   font-weight: 800;
   white-space: nowrap;
 }
 
 .srv3-rack-plan-price small {
   color: var(--text-dim);
-  font-size: 0.62rem;
+  font-size: 0.625rem;
   font-weight: 600;
 }
 
