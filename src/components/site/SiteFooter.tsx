@@ -1,6 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
 import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { Separator } from '@/components/ui/separator';
 
 const columns = [
   {
@@ -51,12 +53,16 @@ export function SiteFooter() {
               NVMe storage and full administrative access.
             </p>
             <div className="srv3-socials">
-              <a href="https://discord.gg/9JJFs4DDyF" target="_blank" rel="noreferrer">
-                Discord
-              </a>
-              <a href="https://t.me/StealthRDP" target="_blank" rel="noreferrer">
-                Telegram
-              </a>
+              <Button asChild variant="outline" size="sm">
+                <a href="https://discord.gg/9JJFs4DDyF" target="_blank" rel="noreferrer">
+                  Discord
+                </a>
+              </Button>
+              <Button asChild variant="outline" size="sm">
+                <a href="https://t.me/StealthRDP" target="_blank" rel="noreferrer">
+                  Telegram
+                </a>
+              </Button>
             </div>
           </div>
 
@@ -82,6 +88,8 @@ export function SiteFooter() {
             ))}
           </div>
         </div>
+
+        <Separator className="mt-12" />
 
         <div className="srv3-footer-bottom">
           <span>© 2026 StealthRDP. All rights reserved.</span>

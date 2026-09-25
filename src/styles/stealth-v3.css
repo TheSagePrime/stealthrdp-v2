@@ -62,7 +62,7 @@ body {
   max-width: 900px;
   margin: 0;
   font-size: clamp(3rem, 6.2vw, 6.5rem);
-  line-height: 0.96;
+  line-height: 0.95;
 }
 
 .sr-title span {
@@ -91,7 +91,7 @@ body {
   max-width: 780px;
   margin: 0;
   font-size: clamp(2.25rem, 4.2vw, 4.35rem);
-  line-height: 1.02;
+  line-height: 1;
 }
 
 .sr-section-head > p,
@@ -312,7 +312,7 @@ body {
   font-family: var(--font-body);
   font-size: clamp(3.8rem, 6.7vw, 7.4rem);
   font-weight: 780;
-  line-height: 0.88;
+  line-height: 0.9;
   letter-spacing: -0.065em;
 }
 
@@ -327,7 +327,7 @@ body {
   margin: 32px 0 0;
   color:var(--text-muted);
   font-size: clamp(1.02rem, 1.5vw, 1.18rem);
-  line-height: 1.72;
+  line-height: 1.7;
 }
 
 .srv3-hero-actions {
@@ -580,14 +580,14 @@ body {
   max-width: 560px;
   margin: 0;
   font-size: clamp(2.4rem, 4.4vw, 4.8rem);
-  line-height: 0.99;
+  line-height: 1;
 }
 
 .srv3-infra-copy > p:not(.sr-kicker) {
   max-width: 540px;
   margin: 24px 0 0;
   color:var(--text-dim);
-  line-height: 1.72;
+  line-height: 1.7;
 }
 
 .srv3-infra-list article:last-child {
@@ -727,7 +727,7 @@ body {
 
 .sr-prose-block {
   color:var(--text-dim);
-  line-height: 1.78;
+  line-height: 1.8;
 }
 
 .sr-prose-block a,
@@ -891,7 +891,6 @@ body {
   justify-content: space-between;
   gap: 24px;
   margin-top: 48px;
-  border-top:1px solid var(--border-divider);
   padding-top: 24px;
   color:var(--text-dim);
   font-size: 0.6875rem;
@@ -1102,23 +1101,19 @@ body {
   overflow: hidden;
   border:1px solid var(--border-soft);
   border-radius: var(--radius-lg);
-  background:radial-gradient(circle at 84% 10%, color-mix(in srgb, var(--primary) 9%, transparent), transparent 15rem),
+  background:
+      /* corner ring, same geometry as the old ::after circle: radius 115px,
+         centre 35px in from the right edge and 11px up from the bottom edge */
+      radial-gradient(circle 115px at calc(100% - 35px) calc(100% - 11px),
+        transparent 114px, var(--border-soft) 114px, var(--border-soft) 115px, transparent 115px),
+      radial-gradient(circle at 84% 10%, color-mix(in srgb, var(--primary) 9%, transparent), transparent 15rem),
     linear-gradient(145deg, color-mix(in srgb, var(--primary) 10%, transparent), transparent 44%),
     var(--surface-1);
   box-shadow: 0 12px 32px color-mix(in srgb, var(--text) 9%, transparent);
   padding: 32px;
 }
 
-.srv3-os-visual::after {
-  content: "";
-  position: absolute;
-  width: 230px;
-  height: 230px;
-  right: -80px;
-  bottom: -104px;
-  border:1px solid var(--border-soft);
-  border-radius: 50%;
-}
+
 
 .srv3-os-visual-head {
   display: flex;
@@ -1262,7 +1257,7 @@ body {
 .srv3-section-heading h2 {
   max-width: 720px;
   font-size: clamp(2.15rem, 3.65vw, 3.75rem);
-  line-height: 1.04;
+  line-height: 1.05;
   letter-spacing: -0.042em;
 }
 
@@ -1349,7 +1344,7 @@ body {
   max-width: 680px;
   font-size: clamp(3.7rem, 5.75vw, 6.2rem);
   font-weight: 760;
-  line-height: 0.94;
+  line-height: 0.95;
   letter-spacing: -0.058em;
 }
 
@@ -1677,8 +1672,9 @@ body {
 
 .sr-segmented-control [data-slot="button"] {
   flex: 0 0 auto;
-  min-height: 40px;
-  height: 40px;
+  min-width: 44px;
+  min-height: 44px;
+  height: 44px;
   border-color:var(--border-divider);
   background:var(--bg);
   padding-inline: 12px;
@@ -2403,4 +2399,19 @@ body {
 /* Anchored comparison jumps must clear the sticky header. */
 .sr-ledger-section {
   scroll-margin-top: 128px;
+}
+
+
+/* --- Tap targets ---------------------------------------------------------
+   The rendered-layout gate fails any interactive target below 44x44 px.
+   These controls render 20-41 px tall. min-height lifts the hit area only:
+   type, colour, and the surrounding rhythm stay as approved.
+   ------------------------------------------------------------------------- */
+.srv3-announcement a,
+.srv3-nav a,
+.srv3-login,
+.srv3-logo,
+.sr-faq-nav a,
+.sr-library-nav a {
+  min-height: 44px;
 }

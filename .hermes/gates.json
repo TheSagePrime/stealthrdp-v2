@@ -1,77 +1,168 @@
 {
- "verdict": "PASS",
- "source": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src",
- "gates": [
-  {
-   "gate": "scale",
-   "exit": 0,
-   "verdict": "PASS",
-   "summary": "0 finding(s)",
-   "detail": {
-    "violations": [],
-    "counts": {}
-   }
-  },
-  {
-   "gate": "slop",
-   "exit": 0,
-   "verdict": "PASS",
-   "summary": "no HIGH \u2014 13 medium finding(s)",
-   "detail": {
-    "files_scanned": 128,
-    "rules_tripped": [
-     "blur-surface",
-     "shadow-soup"
-    ],
-    "counts": {
-     "blur-surface": 2,
-     "shadow-soup": 11
+  "repo": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix",
+  "source": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src",
+  "tokens": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/design-tokens.json",
+  "verdict": "PASS",
+  "gates": [
+    {
+      "gate": "workflow",
+      "exit": 0,
+      "verdict": "PASS",
+      "summary": "canonical workflow contract valid",
+      "detail": {
+        "verdict": "PASS",
+        "errors": [],
+        "path": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/.sageprime/frontend-workflow.json",
+        "projectId": "stealthrdp-v2"
+      }
     },
-    "high_tripped": [],
-    "findings": [
-     {
-      "rule": "blur-surface",
-      "severity": "medium",
-      "file": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src/styles/stealth-v3.css",
-      "evidence": "backdrop-filter: blur",
-      "description": "blur treatment without a glass panel"
-     },
-     {
-      "rule": "shadow-soup",
-      "severity": "medium",
-      "file": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src/styles/stealth-v3.css",
-      "evidence": "box-shadow: 0 12px 32px",
-      "description": "many independent shadows"
-     },
-     {
-      "rule": "shadow-soup",
-      "severity": "medium",
-      "file": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src/styles/surfaces.css",
-      "evidence": "box-shadow: 0 12px 32px",
-      "description": "many independent shadows"
-     }
-    ],
-    "verdict": "PASS"
-   }
-  },
-  {
-   "gate": "layout",
-   "exit": 0,
-   "verdict": "PASS",
-   "summary": "url=/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src, viewport=None, elements=128, spacingBase=2, distinctSpacing=15, subPixelValues=[], high=0, medium=0",
-   "detail": {
-    "summary": {
-     "url": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src",
-     "viewport": null,
-     "elements": 128,
-     "spacingBase": 2,
-     "distinctSpacing": 15,
-     "subPixelValues": [],
-     "high": 0,
-     "medium": 0
+    {
+      "gate": "scale",
+      "exit": 0,
+      "verdict": "PASS",
+      "summary": "0 off-scale value(s)",
+      "detail": {
+        "tokens": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/design-tokens.json",
+        "violations": [],
+        "counts": {}
+      }
     },
-    "findings": []
-   }
-  }
- ]
+    {
+      "gate": "slop",
+      "exit": 0,
+      "verdict": "PASS",
+      "summary": "13 review finding(s), evidence-required=0, no blockers",
+      "detail": {
+        "files_scanned": 128,
+        "rules_tripped": [
+          "glassmorphism",
+          "shadow-soup"
+        ],
+        "counts": {
+          "glassmorphism": 2,
+          "shadow-soup": 11
+        },
+        "high_tripped": [],
+        "evidence_required": [],
+        "findings": [
+          {
+            "rule": "glassmorphism",
+            "kind": "visual",
+            "severity": "medium",
+            "file": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src/styles/stealth-v3.css",
+            "count": 2,
+            "description": "glass treatment"
+          },
+          {
+            "rule": "shadow-soup",
+            "kind": "review",
+            "severity": "medium",
+            "file": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src/styles/stealth-v3.css",
+            "count": 7,
+            "description": "many independent shadows"
+          },
+          {
+            "rule": "shadow-soup",
+            "kind": "review",
+            "severity": "medium",
+            "file": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src/styles/surfaces.css",
+            "count": 4,
+            "description": "many independent shadows"
+          }
+        ],
+        "verdict": "PASS"
+      }
+    },
+    {
+      "gate": "layout",
+      "exit": 0,
+      "verdict": "PASS",
+      "summary": "high=0, review=0",
+      "detail": {
+        "summary": {
+          "url": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/src",
+          "viewport": null,
+          "elements": 128,
+          "spacingBase": 2,
+          "distinctSpacing": 15,
+          "subPixelValues": [],
+          "high": 0,
+          "medium": 0
+        },
+        "findings": []
+      }
+    },
+    {
+      "gate": "reuse",
+      "exit": 0,
+      "verdict": "PASS",
+      "summary": "0 new component file(s), all authorized",
+      "detail": {
+        "verdict": "PASS",
+        "baseline": 41,
+        "new": 0,
+        "authorized": 0,
+        "unapproved": [],
+        "receipt": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/.sageprime/frontend-reuse.json"
+      }
+    },
+    {
+      "gate": "rendered",
+      "exit": 0,
+      "verdict": "PASS",
+      "summary": "high=0, review=5",
+      "detail": {
+        "summary": {
+          "url": "http://localhost:3124/",
+          "viewport": [
+            1280,
+            900
+          ],
+          "elements": 577,
+          "spacingBase": 2,
+          "distinctSpacing": 20,
+          "subPixelValues": [
+            89.6,
+            102.4,
+            99.8
+          ],
+          "high": 0,
+          "medium": 5
+        },
+        "findings": [
+          {
+            "severity": "medium",
+            "rule": "spacing-one-offs",
+            "detail": "4 spacing value(s) used exactly once: [28, 64, 74, 100]",
+            "move": "Review against the declared scale. A one-off can be intentional; it is not an automatic defect."
+          },
+          {
+            "severity": "medium",
+            "rule": "type-scale-drift",
+            "detail": "13 distinct values (review threshold 12): ['10', '11', '12', '13', '14', '16', '20', '24', '52', '46.72', '73.6', '23.68']",
+            "move": "Reduce to a named type scale (6-9 steps)."
+          },
+          {
+            "severity": "medium",
+            "rule": "uneven-siblings",
+            "detail": "12 sibling group(s); worst height 7px / width 267px",
+            "move": "Check intended hierarchy; equalize only when siblings are meant to be peers."
+          },
+          {
+            "severity": "medium",
+            "rule": "button-size-drift",
+            "detail": "3 button heights on one page: {155: 3, 44: 2, 118: 1}",
+            "move": "One button height per size class."
+          },
+          {
+            "severity": "medium",
+            "rule": "button-placement",
+            "detail": "buttons sit on 6 different left edges: [45, 96, 148, 418, 689, 959]",
+            "move": "Align actions to the container content edge or the field grid."
+          }
+        ]
+      }
+    }
+  ],
+  "receipt": "/opt/data/profiles/suho_kang/cache/scratch/stealthrdp-v2-design-fix/.hermes/gates.json"
 }

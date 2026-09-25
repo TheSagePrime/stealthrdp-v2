@@ -1,7 +1,28 @@
 import type { ReactNode } from 'react';
+import { CodeBlock } from '@/components/ui/code-block';
+
+const CODE_INDENT = /^ {4}/;
+const CODE_PREFIXES = ['sudo ', 'winrm ', 'yum ', 'bash ', 'wget '];
+const HEADING_3 = /^###\s+/;
+const HEADING_2 = /^##\s+/;
+const HEADING_1 = /^#\s+/;
+const RULE = /^=+$|^-+$/;
+const STEP = /^\d+\.\s+/;
+// The docs content marks bullets with '-', '*' and '~'. All three are bullets;
+// the old renderer printed the marker literally for the tilde.
+const BULLET = /^[*\-~]\s+/;
+// Emphasis markers around whole words. The alphanumeric guards keep identifiers
+// such as open_lite_speed intact.
+const EMPHASIS = /(?<![A-Za-z0-9])_([^_\n]+)_(?![A-Za-z0-9])/g;
+
+type Block =
+  | { kind: 'heading'; level: 2 | 3; text: string }
+  | { kind: 'paragraph'; text: string }
+  | { kind: 'list'; ordered: boolean; items: string[] }
+  | { kind: 'code'; lines: string[] };
 
 function inline(text: string): ReactNode[] {
-  const cleaned = text.replace(/\*\*/g, '');
+  const cleaned = text.replace(/\*\*/g, '').replace(EMPHASIS, '$1');
   const parts = cleaned.split(/(\[[^\]]+\]\([^)]+\)|`[^`]+`)/g).filter(Boolean);
   return parts.map((part, index) => {
     const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
@@ -15,44 +36,101 @@ function inline(text: string): ReactNode[] {
   });
 }
 
-export function DocBody({ content }: { content: string }) {
-  const lines = content.split(/\r?\n/);
-  const nodes: ReactNode[] = [];
+/**
+ * Group the source lines into semantic blocks, so lists become real lists and
+ * commands become a code block instead of styled paragraphs.
+ */
+function parse(content: string): Block[] {
+  const blocks: Block[] = [];
   let code: string[] = [];
+  let list: { ordered: boolean; items: string[] } | null = null;
 
   const flushCode = () => {
-    if (!code.length) return;
-    nodes.push(<pre key={`code-${nodes.length}`}><code>{code.join('\n')}</code></pre>);
-    code = [];
+    if (code.length) {
+      blocks.push({ kind: 'code', lines: code });
+      code = [];
+    }
+  };
+  const flushList = () => {
+    if (list) {
+      blocks.push({ kind: 'list', ordered: list.ordered, items: list.items });
+      list = null;
+    }
   };
 
-  lines.forEach((raw, index) => {
-    const line = raw.trimEnd();
-    const trimmed = line.trim();
+  for (const raw of content.split(/\r?\n/)) {
+    const trimmed = raw.trim();
     if (!trimmed) {
+      // A blank line inside a run of list items must not split the list,
+      // otherwise every numbered step renders as "1." again.
       flushCode();
-      return;
+      continue;
     }
-    if (/^ {4}/.test(raw) || trimmed.startsWith('sudo ') || trimmed.startsWith('winrm ') || trimmed.startsWith('yum ') || trimmed.startsWith('bash ') || trimmed.startsWith('wget ')) {
+    if (CODE_INDENT.test(raw) || CODE_PREFIXES.some(prefix => trimmed.startsWith(prefix))) {
+      flushList();
       code.push(trimmed);
-      return;
+      continue;
     }
     flushCode();
-    if (/^###\s+/.test(trimmed)) {
-      nodes.push(<h3 key={index}>{inline(trimmed.replace(/^###\s+/, ''))}</h3>);
-    } else if (/^##\s+/.test(trimmed)) {
-      nodes.push(<h2 key={index}>{inline(trimmed.replace(/^##\s+/, ''))}</h2>);
-    } else if (/^#\s+/.test(trimmed) || /^=+$/.test(trimmed) || /^-+$/.test(trimmed)) {
-      return;
-    } else if (/^\d+\.\s+/.test(trimmed)) {
-      nodes.push(<p className="sr-doc-line sr-doc-step" key={index}>{inline(trimmed)}</p>);
-    } else if (/^\*\s+/.test(trimmed) || /^-\s+/.test(trimmed)) {
-      nodes.push(<p className="sr-doc-line" key={index}>• {inline(trimmed.replace(/^(?:\*|-)\s+/, ''))}</p>);
-    } else {
-      nodes.push(<p className="sr-doc-line" key={index}>{inline(trimmed)}</p>);
+    if (HEADING_3.test(trimmed)) {
+      flushList();
+      blocks.push({ kind: 'heading', level: 3, text: trimmed.replace(HEADING_3, '') });
+      continue;
     }
-  });
+    if (HEADING_2.test(trimmed)) {
+      flushList();
+      blocks.push({ kind: 'heading', level: 2, text: trimmed.replace(HEADING_2, '') });
+      continue;
+    }
+    if (HEADING_1.test(trimmed) || RULE.test(trimmed)) {
+      flushList();
+      continue;
+    }
+    if (STEP.test(trimmed)) {
+      if (!list || !list.ordered) {
+        flushList();
+        list = { ordered: true, items: [] };
+      }
+      list.items.push(trimmed.replace(STEP, ''));
+      continue;
+    }
+    if (BULLET.test(trimmed)) {
+      if (!list || list.ordered) {
+        flushList();
+        list = { ordered: false, items: [] };
+      }
+      list.items.push(trimmed.replace(BULLET, ''));
+      continue;
+    }
+    flushList();
+    blocks.push({ kind: 'paragraph', text: trimmed });
+  }
   flushCode();
+  flushList();
 
-  return <div className="sr-richtext">{nodes}</div>;
+  return blocks;
+}
+
+export function DocBody({ content }: { content: string }) {
+  return (
+    <div className="sr-richtext">
+      {parse(content).map((block, index) => {
+        if (block.kind === 'heading') {
+          return block.level === 2
+            ? <h2 key={index}>{inline(block.text)}</h2>
+            : <h3 key={index}>{inline(block.text)}</h3>;
+        }
+        if (block.kind === 'list') {
+          const items = block.items.map((item, itemIndex) => <li key={itemIndex}>{inline(item)}</li>);
+          return block.ordered
+            ? <ol key={index}>{items}</ol>
+            : <ul key={index}>{items}</ul>;
+        }
+        if (block.kind === 'code') {
+          return <CodeBlock key={index}><code>{block.lines.join('\n')}</code></CodeBlock>;
+        }
+        return <p key={index}>{inline(block.text)}</p>;
+      })}
+    </div>
+  );
 }

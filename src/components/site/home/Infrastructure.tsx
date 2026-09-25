@@ -1,5 +1,7 @@
 import { HugeiconsIcon } from '@hugeicons/react';
 import { CpuIcon, EthernetPortIcon, HardDriveIcon, Key01Icon, ShieldCheckIcon } from '@hugeicons/core-free-icons';
+import { Badge } from '@/components/ui/badge';
+import { Card } from '@/components/ui/card';
 
 const items = [
   {
@@ -36,19 +38,21 @@ export function Infrastructure() {
             choose a region, choose Windows or Linux, then manage the service through
             the existing client area.
           </p>
-          <div className="mt-7 flex items-start gap-3 border-t border-divider pt-5 text-small text-body-muted">
-            <HugeiconsIcon
-              icon={ShieldCheckIcon}
-              aria-hidden="true"
-              size={20}
-              strokeWidth={1.5}
-              className="mt-0.5 shrink-0 text-body-dim"
-            />
-            <span className="grid gap-0.5">
-              <strong className="font-semibold text-body-text">Public service status</strong>
-              Monitoring is available from the status page.
-            </span>
-          </div>
+          <Card className="mt-7 gap-3 border-0 border-t border-divider py-5 shadow-none">
+            <div className="flex items-start gap-3 px-0 text-small text-body-muted">
+              <HugeiconsIcon
+                icon={ShieldCheckIcon}
+                aria-hidden="true"
+                size={20}
+                strokeWidth={1.5}
+                className="mt-0.5 shrink-0 text-body-dim"
+              />
+              <span className="grid gap-0.5">
+                <strong className="font-semibold text-body-text">Public service status</strong>
+                Monitoring is available from the status page.
+              </span>
+            </div>
+          </Card>
         </div>
 
         <ol className="grid list-none gap-0 p-0">
@@ -61,9 +65,9 @@ export function Infrastructure() {
               "
             >
               <div className="flex items-center gap-3">
-                <span className="font-mono text-micro font-bold text-body-dim tabular-nums">
+                <Badge variant="outline" className="font-mono tabular-nums">
                   {String(index + 1).padStart(2, '0')}
-                </span>
+                </Badge>
                 <span className="grid size-10 shrink-0 place-items-center rounded-md border border-border-soft bg-surface-2 text-primary">
                   <HugeiconsIcon icon={icon} aria-hidden="true" size={20} strokeWidth={1.5} className="size-5" />
                 </span>

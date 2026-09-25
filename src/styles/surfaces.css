@@ -416,7 +416,7 @@
   margin: 0;
   color: var(--muted-foreground);
   font-size: 0.75rem;
-  line-height: 1.58;
+  line-height: 1.6;
 }
 .sr-about-stats {
   display: grid;
@@ -563,7 +563,7 @@
   margin: 0;
   color: var(--text-muted);
   font-size: 0.8125rem;
-  line-height: 1.64;
+  line-height: 1.65;
 }
 .sr-choice-note {
   margin-top: 0.75rem;
@@ -609,7 +609,7 @@
   margin: 0;
   color: var(--text-muted);
   font-size: 0.75rem;
-  line-height: 1.58;
+  line-height: 1.6;
 }
 .sr-byo-panel {
   display: grid;
@@ -750,7 +750,7 @@
 }
 .sr-prose-block {
   color: var(--text-muted);
-  line-height: 1.76;
+  line-height: 1.75;
 }
 .sr-prose-block p {
   margin: 0 0 1rem;
@@ -1095,7 +1095,7 @@
   margin: 0;
   color: var(--text);
   font-size: clamp(2.4rem, 5vw, 4.3rem);
-  line-height: 1.02;
+  line-height: 1;
   letter-spacing: -.05em;
   text-wrap: balance;
 }
@@ -1166,6 +1166,12 @@
 }
 .sr-richtext ol {
   padding-left: 1.25rem;
+  list-style: revert;
+}
+
+.sr-richtext ul {
+  padding-left: 1.25rem;
+  list-style: revert;
 }
 .sr-richtext li + li {
   margin-top: 0.375rem;
@@ -1492,15 +1498,7 @@
   font-size: 0.8125rem;
 }
 
-.sr-doc-line {
-  margin: 0.75rem 0;
-  color: var(--text-muted);
-}
 
-.sr-doc-step {
-  border-inline-start: 1px solid var(--border-soft);
-  padding-inline-start: 1rem;
-}
 
 .sr-location-code {
   color: var(--accent);
