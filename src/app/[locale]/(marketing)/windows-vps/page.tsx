@@ -106,7 +106,7 @@ export default function WindowsVpsPage() {
             <div>
               <span className="sr-location-code">Next step</span>
               <h3>Choose the plan first. Select Windows or Linux in checkout.</h3>
-              <p>The existing checkout provides the operating-system selector before payment.</p>
+              <p>Pick any plan above — you will choose Windows or Linux before you pay.</p>
             </div>
             <Button asChild><a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">Configure this VPS <ArrowRight size={16} /></a></Button>
           </div>

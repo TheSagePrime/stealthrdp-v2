@@ -45,13 +45,14 @@ const workloadOptions = [
 
 type WorkloadKey = (typeof workloadOptions)[number]['key'];
 
-/** Months covered by each term, used to show the effective monthly rate. */
-const termMonths: Record<BillingCycle, number> = {
-  monthly: 1,
-  quarterly: 3,
-  annual: 12,
-  biannual: 24,
-};
+/** Months covered by a published price suffix (/mo, /3mo, /6mo, /yr, /2yr). Read from
+    the plan's own data so a 6-month EU term is never divided as a 24-month one. */
+function monthsForSuffix(suffix: string): number {
+  const match = /\/(\d+)?(mo|yr)/.exec(suffix);
+  if (!match) return 1;
+  const count = match[1] ? Number.parseInt(match[1], 10) : 1;
+  return match[2] === 'yr' ? count * 12 : count;
+}
 
 /** Read a comparable number out of a published spec string. */
 const specNumber = (value: string) => Number.parseInt(value.replace(/[^\d]/g, ''), 10) || 0;
@@ -264,8 +265,9 @@ export function PricingExplorer({
                 discountLabel?: string;
               };
               const termPrice = ladderPlan?.pricing[item];
-              const effective = termPrice ? termPrice.amount / termMonths[item] : 0;
+              const effective = termPrice ? termPrice.amount / monthsForSuffix(termPrice.suffix) : 0;
               const selected = cycle === item;
+              const termLabel = termPrice?.suffix === '/2yr' ? '2-year' : billing.label;
 
               return (
                 <li key={item}>
@@ -276,13 +278,13 @@ export function PricingExplorer({
                     aria-pressed={selected}
                     onClick={() => setCycle(item)}
                   >
-                    <span className="sr-term-label">{billing.label}</span>
+                    <span className="sr-term-label">{termLabel}</span>
                     <span className="sr-term-rate">
                       {termPrice ? `€${formatPrice(Number(effective.toFixed(2)))}` : '—'}
                       <small>per month</small>
                     </span>
                     <span className="sr-term-total">
-                      {termPrice ? `€${formatPrice(termPrice.amount)} billed` : 'See checkout'}
+                      {termPrice ? `€${formatPrice(termPrice.amount)} ${termPrice.periodLabel}` : 'See checkout'}
                     </span>
                     {billing.discountLabel ? <Badge variant="outline">{billing.discountLabel}</Badge> : null}
                   </button>
@@ -290,13 +292,14 @@ export function PricingExplorer({
               );
             })}
           </ul>
+          <p className="sr-ledger-note">All prices in EUR. Final availability is confirmed during checkout.</p>
         </div>
       </div>
 
       <section id="comparison" className="sr-ledger-section">
         <h3 className="sr-ledger-title">
           {showComparison
-            ? `Compare ${region} plans · ${billingCycles[cycle].label}`
+            ? `Compare ${region} plans · ${ladderPlan?.pricing[cycle]?.suffix === '/2yr' ? '2-year' : billingCycles[cycle].label}`
             : `Choose your resource level · ${region}`}
         </h3>
         <p className="sr-ledger-note">
