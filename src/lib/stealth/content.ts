@@ -7,7 +7,7 @@ import docsJson from '@/content/docs-articles.json';
 import uptimeJson from '@/content/uptime.json';
 import { isNoindexDocPath } from '@/lib/stealth/routes';
 
-export type BillingCycle = 'monthly' | 'quarterly' | 'annual' | 'biannual';
+export type BillingCycle = 'monthly' | 'quarterly' | 'semiannual' | 'annual' | 'biannual';
 
 export type Plan = {
   name: string;
@@ -129,7 +129,8 @@ export function articlePath(article: BlogArticle): string {
 
 export function checkoutUrl(plan: Plan, cycle: BillingCycle): string {
   const value = new URL(plan.purchaseUrl);
-  const key = cycle === 'annual' ? 'annually' : cycle === 'biannual' ? 'biannually' : cycle;
+  /* WHMCS urlKeys: annually, semiannually, biennially. Monthly and quarterly keep their own name. */
+  const key = billingCycles[cycle]?.urlKey ?? cycle;
   value.searchParams.set('billingcycle', key);
   return value.toString();
 }

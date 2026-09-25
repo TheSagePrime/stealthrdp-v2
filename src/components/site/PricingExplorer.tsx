@@ -31,7 +31,7 @@ import {
   type Plan,
 } from '@/lib/stealth/content';
 
-const cycleOrder: BillingCycle[] = ['monthly', 'quarterly', 'annual', 'biannual'];
+const cycleOrder: BillingCycle[] = ['monthly', 'quarterly', 'semiannual', 'annual', 'biannual'];
 
 const formatPrice = (amount: number) => Number.isInteger(amount) ? `${amount}` : amount.toFixed(2);
 

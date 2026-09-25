@@ -13,10 +13,23 @@ function badgeFor(name: string) {
 describe('PricingExplorer purchase decisions', () => {
   it('uses one selected billing cycle for the ledger price column', async () => {
     await render(<PricingExplorer showComparison />);
-    await userEvent.click(page.getByRole('button', { name: /Annual/ }));
+    await userEvent.click(page.getByRole('button', { name: /^Annual/ }));
 
     expect(page.getByRole('columnheader', { name: 'Price/yr' })).toBeInTheDocument();
-    expect(page.getByRole('cell', { name: /€96\/yr/ })).toBeInTheDocument();
+    expect(page.getByRole('cell', { name: /€96\.50\/yr/ })).toBeInTheDocument();
+  });
+
+  it('offers every published billing cycle, semi-annual included', async () => {
+    await render(<PricingExplorer />);
+
+    const terms = [...document.querySelectorAll('.sr-term-option')].map(
+      element => element.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+    );
+
+    expect(terms).toHaveLength(5);
+    for (const label of ['Monthly', 'Quarterly', '6-month', 'Annual', '2-year']) {
+      expect(terms.some(term => term.startsWith(label)), `missing ${label} term: ${terms.join(' | ')}`).toBe(true);
+    }
   });
 
   it('keeps region selection aligned across the control and the ledger', async () => {
@@ -71,7 +84,7 @@ describe('PricingExplorer purchase decisions', () => {
     await userEvent.click(page.getByRole('button', { name: 'EU', exact: true }));
 
     const row = [...document.querySelectorAll('tbody tr')]
-      .find(candidate => candidate.textContent?.includes('Silver EU'));
+      .find(candidate => candidate.textContent?.includes('Platinum EU'));
     expect(row).toBeDefined();
     expect(row?.getAttribute('data-availability')).toBe('out-of-stock');
     expect(row?.querySelector('a')).toBeNull();

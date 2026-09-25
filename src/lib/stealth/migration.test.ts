@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import featuresJson from '../../content/features.json';
 import {
   articlePath,
+  billingCycles,
   blogArticles,
   checkoutUrl,
   docsArticles,
@@ -11,6 +12,7 @@ import {
   reviews,
   testimonials,
   uptime,
+  type BillingCycle,
 } from './content';
 import { noindexDocPaths } from './routes';
 
@@ -89,6 +91,29 @@ describe('StealthRDP public-site migration contract', () => {
       const checkout = new URL(checkoutUrl(plan, 'monthly'));
       expect(checkout.hostname).toBe('dash.stealthrdp.com');
       expect(checkout.searchParams.get('billingcycle')).toBe('monthly');
+    }
+  });
+
+  it('publishes every WHMCS billing cycle with its own interval and checkout key', () => {
+    const suffixByCycle: Record<BillingCycle, string> = {
+      monthly: '/mo',
+      quarterly: '/3mo',
+      semiannual: '/6mo',
+      annual: '/yr',
+      biannual: '/2yr',
+    };
+
+    for (const plan of plans) {
+      for (const [cycle, suffix] of Object.entries(suffixByCycle) as [BillingCycle, string][]) {
+        const price = plan.pricing[cycle];
+        expect(price, `${plan.name} is missing the ${cycle} price`).toBeDefined();
+        expect(price.amount, `${plan.name} ${cycle} amount`).toBeGreaterThan(0);
+        expect(price.suffix, `${plan.name} ${cycle} interval`).toBe(suffix);
+        expect(
+          checkoutUrl(plan, cycle),
+          `${plan.name} ${cycle} browser cycle`,
+        ).toContain(`billingcycle=${billingCycles[cycle].urlKey}`);
+      }
     }
   });
 });

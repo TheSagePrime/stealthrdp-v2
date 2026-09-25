@@ -2472,7 +2472,9 @@ body {
 
 .sr-term-ladder {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  /* Five published cycles: monthly, quarterly, semi-annual, annual, 2-year.
+     auto-fit keeps the ladder readable if the row gets narrow. */
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
   gap: 10px;
   margin: 0;
   padding: 0;

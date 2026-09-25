@@ -4,6 +4,21 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { cn } from '@/utils/Helpers';
 import { testimonials } from '@/lib/stealth/content';
 
+/** Third-party reviews name the site they were published on; first-party
+    testimonials say so. The design contract forbids blurring the two. */
+function sourceLabelFor(item: (typeof testimonials)[number]) {
+  if (!item.sourceUrl) {
+    return 'First-party testimonial · StealthRDP';
+  }
+  let host = 'review source';
+  try {
+    host = new URL(item.sourceUrl).hostname.replace(/^www\./, '');
+  } catch {
+    host = 'review source';
+  }
+  return `${item.sourceType === 'third-party review' ? 'Third-party review' : 'Customer feedback'} · ${host}`;
+}
+
 export function AfterCheckout() {
   return (
     <section className="sr-section srv3-reviews-section" id="reviews">
@@ -14,7 +29,8 @@ export function AfterCheckout() {
             <h2>Proof should come from customers, not decoration.</h2>
           </div>
           <p>
-            A selection of feedback already published by StealthRDP and its review sources.
+            Third-party reviews link to the site that published them. First-party
+            testimonials come from StealthRDP and are not independently verified.
           </p>
         </div>
 
@@ -26,7 +42,7 @@ export function AfterCheckout() {
             >
               <CardHeader>
                 <Badge variant="outline" className="w-fit text-body-muted">
-                  {item.sourceLabel || item.publishedOn || 'Customer feedback'}
+                  {sourceLabelFor(item)}
                 </Badge>
               </CardHeader>
 
