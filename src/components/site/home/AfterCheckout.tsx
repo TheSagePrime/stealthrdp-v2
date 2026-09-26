@@ -10,7 +10,7 @@ function sourceLabelFor(item: (typeof testimonials)[number]) {
   if (!item.sourceUrl) {
     return 'Customer testimonial';
   }
-  return item.publishedOn || 'Third-party review';
+  return item.sourceUrl.includes('trustpilot.com') ? 'Trustpilot' : 'Third-party review';
 }
 
 export function AfterCheckout() {
