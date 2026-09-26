@@ -3129,3 +3129,276 @@ main:has(.srv3-final-section) + .srv3-footer .srv3-footer-top {
     border-bottom: 0;
   }
 }
+
+
+/* ==========================================================================
+   Homepage UX polish pass
+   Decision hierarchy, false-affordance cleanup, and final density tuning.
+   ========================================================================== */
+
+.srv3-hero-price {
+  gap: 8px;
+  margin-top: 20px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.srv3-hero-price strong {
+  font-size: 1.125rem;
+}
+
+.srv3-hero-os {
+  margin-top: 12px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+}
+
+.srv3-hero-os > span {
+  color: var(--text-dim);
+}
+
+.srv3-hero-os ul {
+  color: var(--text-dim);
+}
+
+.srv3-hero-visual > [data-slot="card"] {
+  max-width: 390px;
+  border-color: var(--border-soft);
+}
+
+.srv3-workload-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+.srv3-workload-line > span {
+  color: var(--text-dim);
+  font-size: 0.6875rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.srv3-plan-surface .sr-pricing-explorer[data-compact="true"] {
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  column-gap: 24px;
+  row-gap: 18px;
+  align-items: end;
+}
+
+.srv3-plan-surface .sr-pricing-explorer[data-compact="true"] .sr-cycle-stack {
+  min-width: 0;
+}
+
+.srv3-plan-surface .sr-pricing-explorer[data-compact="true"] .sr-cycle-strip {
+  grid-template-columns: repeat(5, minmax(112px, 1fr));
+}
+
+.srv3-plan-surface .sr-pricing-explorer[data-compact="true"] .sr-ledger-summary {
+  align-self: end;
+  padding-bottom: 10px;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.srv3-plan-surface .sr-pricing-explorer[data-compact="true"] .sr-pick-cards {
+  grid-column: 1 / -1;
+}
+
+.srv3-plan-surface .sr-term-option {
+  min-height: 42px;
+  padding-inline: 10px;
+}
+
+.srv3-plan-surface .sr-term-save {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: var(--text-dim);
+  font-size: 0.6875rem;
+}
+
+.srv3-plan-surface .sr-term-option[data-selected="true"] .sr-term-save {
+  border: 0;
+}
+
+.srv3-plan-surface .sr-pick-card {
+  min-height: 88px;
+}
+
+.srv3-plan-surface .sr-pick-card[data-popular="true"] {
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.srv3-plan-surface .srv3-section-action {
+  justify-content: flex-end;
+}
+
+.srv3-regions-section {
+  padding-top: 64px;
+}
+
+.srv3-family-section {
+  padding: 16px 0 60px;
+}
+
+.srv3-family-section .srv3-section-heading {
+  max-width: 760px;
+}
+
+.srv3-family-section .srv3-section-heading h2 {
+  font-size: clamp(2.15rem, 3vw, 3rem);
+}
+
+.srv3-family-section .grid > [data-slot="card"] {
+  min-height: 190px;
+  padding: 28px;
+}
+
+.srv3-reviews-section {
+  padding: 64px 0;
+}
+
+.srv3-reviews-section .srv3-section-heading h2 {
+  font-size: clamp(2.15rem, 3vw, 3rem);
+}
+
+.srv3-review-card {
+  min-height: 220px;
+}
+
+.srv3-review-card [data-slot="card-header"] {
+  padding-bottom: 0;
+}
+
+.srv3-review-card [data-slot="badge"] {
+  max-width: 100%;
+  color: var(--text-dim);
+  font-size: 0.6875rem;
+}
+
+.srv3-resources-section {
+  padding-top: 48px;
+}
+
+.srv3-final-section {
+  padding-top: 16px;
+  padding-bottom: 48px;
+}
+
+.srv3-final-section [data-slot="card"] {
+  padding: 36px 44px;
+}
+
+.srv3-final-support {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-weight: 650;
+  transition: color 160ms ease;
+}
+
+.srv3-final-support:hover {
+  color: var(--primary);
+}
+
+main:has(.srv3-final-section) + .srv3-footer {
+  padding: 36px 0 24px;
+}
+
+main:has(.srv3-final-section) + .srv3-footer .srv3-footer-top {
+  gap: clamp(40px, 6vw, 80px);
+}
+
+main:has(.srv3-final-section) + .srv3-footer .srv3-footer-brand p {
+  margin-top: 16px;
+}
+
+main:has(.srv3-final-section) + .srv3-footer .srv3-socials {
+  margin-top: 16px;
+}
+
+main:has(.srv3-final-section) + .srv3-footer .srv3-footer-bottom {
+  margin-top: 32px;
+  padding-top: 20px;
+}
+
+@media (max-width: 1120px) {
+  .srv3-plan-surface .sr-pricing-explorer[data-compact="true"] {
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .srv3-plan-surface .sr-pricing-explorer[data-compact="true"] .sr-ledger-summary {
+    grid-column: 1 / -1;
+    padding-bottom: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .srv3-plan-surface .sr-pricing-explorer[data-compact="true"] {
+    grid-template-columns: 1fr;
+  }
+
+  .srv3-plan-surface .sr-pricing-explorer[data-compact="true"] .sr-cycle-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .srv3-plan-surface .sr-pricing-explorer[data-compact="true"] .sr-ledger-summary {
+    grid-column: auto;
+  }
+
+  .srv3-plan-surface .srv3-section-action {
+    justify-content: stretch;
+  }
+
+  .srv3-plan-surface .srv3-section-action [data-slot="button"] {
+    width: 100%;
+  }
+
+  .srv3-family-section {
+    padding-top: 0;
+  }
+
+  .srv3-final-section [data-slot="card"] {
+    padding: 28px;
+  }
+}
+
+@media (max-width: 520px) {
+  .srv3-hero-price,
+  .srv3-hero-os {
+    width: 100%;
+  }
+
+  .srv3-hero-os {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .srv3-plan-surface .sr-pricing-explorer[data-compact="true"] .sr-cycle-strip {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .srv3-review-card {
+    min-height: 0;
+  }
+
+  main:has(.srv3-final-section) + .srv3-footer {
+    padding-top: 32px;
+  }
+}
