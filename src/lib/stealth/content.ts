@@ -16,7 +16,7 @@ export type Plan = {
   popular: boolean;
   specs: { cpu: string; ram: string; storage: string; bandwidth: string };
   purchaseUrl: string;
-  source: { url: string; availability: 'in-stock' | 'out-of-stock' | string };
+  source: { url: string; availability: 'in-stock' | 'out-of-stock' | string; stock?: number; os?: 'linux-only' | 'linux-windows' | string };
   pricing: Record<BillingCycle, {
     amount: number;
     referenceAmount?: number;

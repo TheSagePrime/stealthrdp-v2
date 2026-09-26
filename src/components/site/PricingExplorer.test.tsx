@@ -56,21 +56,27 @@ describe('PricingExplorer purchase decisions', () => {
     expect(page.getByRole('rowheader', { name: /Bronze USA/ })).not.toBeInTheDocument();
   });
 
-  it('shows only buyable plans as cards, each with specs and a visible total', async () => {
+  it('lists every tier as a WHMCS-style card with specs, stock, and an action', async () => {
     await render(<PricingExplorer showComparison />);
     await userEvent.click(page.getByRole('button', { name: /^Annual/ }));
 
     const cards = [...document.querySelectorAll('.sr-pick-card')];
-    expect(cards.length, 'only the in-stock USA plan renders as a card').toBe(1);
-    expect(cards[0]?.textContent).toContain('Bronze USA');
+    expect(cards.length, 'all 7 USA tiers stay listed').toBe(7);
+    /* Price ladder opens with the cheapest tier, like the WHMCS store. */
+    expect(cards[0]?.textContent).toContain('Starter USA');
     expect(cards.every(card => (card.textContent ?? '').includes('due today')), 'every card shows its total due today').toBe(true);
-    expect(cards.every(card => !(card.textContent ?? '').includes('Out of stock')), 'no card is a dead end').toBe(true);
-    expect(cards[0]?.querySelector('a[href*="dash.stealthrdp.com"]')).not.toBeNull();
+    /* Live WHMCS stock counts mirror the store: 20 / 16 / 0. */
+    expect(cards[0]?.textContent).toContain('20 Available');
+    expect(cards[1]?.textContent).toContain('16 Available');
 
-    /* Sold-out plans collapse to one honest line instead of five dead cards. */
-    expect(page.getByText(/are out of stock/)).toBeInTheDocument();
+    /* Sold-out cards stay listed with an honest state and a stocked alternative. */
+    const silver = cards.find(card => (card.textContent ?? '').includes('Silver USA'));
+    expect(silver?.textContent).toContain('0 Available');
+    expect(silver?.textContent).toContain('Out of Stock');
+    expect(silver?.querySelector('a[href*="silver-usa"]')).toBeNull();
+    expect(silver?.querySelector('a.sr-ledger-alt')).not.toBeNull();
 
-    /* The sticky summary always names the current selection and its total. */
+    /* The sticky summary follows the featured buyable plan and its total. */
     const summary = document.querySelector('.sr-picker-summary');
     expect(summary?.textContent?.replace(/\s+/g, ' ').trim()).toContain('Bronze USA');
     expect(summary?.textContent).toContain('€96.50');
@@ -83,8 +89,8 @@ describe('PricingExplorer purchase decisions', () => {
     const priceCells = [...document.querySelectorAll('.sr-ledger-price')].map(
       cell => cell.textContent?.replace(/\s+/g, ' ').trim() ?? '',
     );
-    expect(priceCells.some(text => text.includes('€9.50/mo')), `rendered prices: ${priceCells.join(' | ')}`).toBe(true);
-    expect(page.getByText('€9.5/mo')).not.toBeInTheDocument();
+    expect(priceCells.some(text => text.includes('€4.59/mo')), `rendered prices: ${priceCells.join(' | ')}`).toBe(true);
+    expect(page.getByText('€4.5/mo')).not.toBeInTheDocument();
   });
 
   it('keeps every specification readable without repeated icons and preserves checkout actions', async () => {
@@ -96,20 +102,20 @@ describe('PricingExplorer purchase decisions', () => {
       expect(page.getByRole('columnheader', { name: column })).toBeInTheDocument();
     }
     const specCells = [...document.querySelectorAll('.sr-ledger-spec')];
-    expect(specCells.length, 'the ledger publishes one spec cell per plan and column').toBe(18);
+    expect(specCells.length, 'the ledger publishes one spec cell per plan and column').toBe(21);
     expect(specCells.every(cell => (cell.textContent ?? '').trim().length > 0), 'every spec cell carries a value').toBe(true);
     expect(document.querySelectorAll('tbody .sr-ledger-spec svg')).toHaveLength(0);
     const checkoutLink = document.querySelector('tbody a[href*="dash.stealthrdp.com"]:not(.sr-ledger-alt)');
-    expect(checkoutLink, 'the in-stock plan still offers a checkout link').not.toBeNull();
-    expect(document.querySelectorAll('tbody a[href*="dash.stealthrdp.com"]:not(.sr-ledger-alt)').length).toBe(1);
+    expect(checkoutLink, 'an in-stock plan still offers a checkout link').not.toBeNull();
+    expect(document.querySelectorAll('tbody a[href*="dash.stealthrdp.com"]:not(.sr-ledger-alt)').length).toBe(2);
   });
 
-  it('marks the popular in-stock plan and invents no best-fit guess', async () => {
+  it('marks the featured in-stock plan and invents no best-fit guess', async () => {
     /* The marker lives on the comparison table, so render it (collapsed). */
     await render(<PricingExplorer showComparison />);
     await userEvent.click(page.getByRole('button', { name: /^Monthly/ }));
 
-    expect(badgeFor('Bronze USA')).toBe('Most Popular');
+    expect(badgeFor('Bronze USA')).toBe('Featured');
     expect(document.body.textContent).not.toContain('Best fit');
   });
 

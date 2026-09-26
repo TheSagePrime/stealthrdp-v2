@@ -97,7 +97,7 @@ export default async function HomePage({ params }: Props) {
               <h2>Plans priced for the work</h2>
             </div>
             <p>
-              Pick a workload to highlight the plan that fits. All plans include free migration
+              Three starting points below. All plans include free migration
               assistance, 24/7 support, and our industry-leading uptime guarantee.
             </p>
           </div>
@@ -111,7 +111,7 @@ export default async function HomePage({ params }: Props) {
           </ul>
 
           <p className="mt-4 text-small text-body-muted">
-            Best fit: Bronze USA — Windows and Linux images available on every plan.
+            Windows and Linux images available on every plan.
           </p>
 
           <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2">

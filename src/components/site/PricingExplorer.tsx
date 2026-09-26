@@ -95,7 +95,7 @@ function PlanRow({
       <th scope="row">
         <span className="sr-plan-row">
           {plan.name}
-          {showPopular ? <Badge variant="outline">Most Popular</Badge> : null}
+          {showPopular ? <Badge variant="outline">Featured</Badge> : null}
           <span className="sr-ledger-meta">{plan.description}</span>
         </span>
         <span className="sr-ledger-meta">
@@ -162,49 +162,106 @@ function PlanRow({
   );
 }
 
-/** One buyable plan as a self-contained card: specs, total due today, and its
-    own Buy action. Sold-out plans never reach this component. */
+/** Months covered by each billing cycle: drives the honest per-month equivalent. */
+const cycleMonths: Record<BillingCycle, number> = {
+  monthly: 1,
+  quarterly: 3,
+  semiannual: 6,
+  annual: 12,
+  biannual: 24,
+};
+
+/** One plan as a self-contained card mirroring the WHMCS store pattern:
+    badge, price, OS, spec rows, live stock count, and its own action.
+    Sold-out plans render the same card with an honest stock state. */
 function PlanCard({
   plan,
   cycle,
   showPopular,
+  alternative,
 }: {
   plan: Plan;
   cycle: BillingCycle;
   showPopular: boolean;
+  alternative?: Plan | null;
 }) {
   const price = plan.pricing[cycle];
+  const available = plan.source.availability !== 'out-of-stock';
+  const stock = plan.source.stock;
+  const osLabel = plan.source.os === 'linux-only' ? 'Linux only' : 'Linux + Windows';
+  const months = cycleMonths[cycle] ?? 1;
 
   return (
     <article
       className="sr-pick-card"
       id={`plan-${planSlug(plan.name)}`}
+      data-popular={showPopular}
+      data-availability={available ? 'in-stock' : 'out-of-stock'}
     >
       <div className="sr-pick-card-head">
         <h3 className="sr-pick-card-name">{plan.name}</h3>
         <div className="sr-pick-card-badges">
-          {showPopular ? <Badge variant="outline">Most Popular</Badge> : null}
+          {showPopular ? <Badge variant="outline">Featured</Badge> : null}
         </div>
       </div>
-      <p className="sr-pick-card-specs">
-        {plan.specs.cpu} · {plan.specs.ram} RAM · {plan.specs.storage} · {plan.specs.bandwidth} bandwidth
-      </p>
       <p className="sr-pick-card-price">
         <span className="sr-pick-card-amount">{`€${formatPrice(price.amount)}${price.suffix}`}</span>
         <span className="sr-pick-card-period">{`due today · ${price.periodLabel}`}</span>
         {price.referenceAmount ? (
           <span className="sr-pick-card-was">{`standard €${formatPrice(price.referenceAmount)}`}</span>
         ) : null}
+        {months > 1 ? (
+          <span className="sr-pick-card-effective">{`€${(price.amount / months).toFixed(2)}/mo effective`}</span>
+        ) : null}
+      </p>
+      <p className="sr-pick-card-os">{osLabel}</p>
+      <dl className="sr-pick-specs">
+        <div className="sr-pick-spec">
+          <dt>CPU</dt>
+          <dd>{plan.specs.cpu}</dd>
+        </div>
+        <div className="sr-pick-spec">
+          <dt>RAM</dt>
+          <dd>{plan.specs.ram}</dd>
+        </div>
+        <div className="sr-pick-spec">
+          <dt>Storage</dt>
+          <dd>{plan.specs.storage}</dd>
+        </div>
+        <div className="sr-pick-spec">
+          <dt>Bandwidth</dt>
+          <dd>{plan.specs.bandwidth}</dd>
+        </div>
+      </dl>
+      <p className="sr-pick-stock" data-state={available ? 'in-stock' : 'out-of-stock'}>
+        {stock !== undefined ? `${stock} Available` : (available ? 'In stock' : 'Out of stock')}
       </p>
       <div className="sr-pick-card-action">
-        <Button asChild className="sr-pick-card-buy">
-          <a
-            href={checkoutUrl(plan, cycle)}
-            aria-label={`Buy ${plan.name} — leaves this site for the StealthRDP checkout at dash.stealthrdp.com`}
-          >
-            Buy Now (secure checkout) <ArrowSquareOut size={14} aria-hidden="true" />
-          </a>
-        </Button>
+        {available ? (
+          <Button asChild className="sr-pick-card-buy">
+            <a
+              href={checkoutUrl(plan, cycle)}
+              aria-label={`Buy ${plan.name} — leaves this site for the StealthRDP checkout at dash.stealthrdp.com`}
+            >
+              Buy Now (secure checkout) <ArrowSquareOut size={14} aria-hidden="true" />
+            </a>
+          </Button>
+        ) : (
+          <div className="sr-ledger-stack">
+            <Pill state="warn" icon={<span aria-hidden="true">!</span>}>
+              Out of Stock
+            </Pill>
+            {alternative ? (
+              <a
+                className="sr-ledger-alt"
+                href={`#plan-${planSlug(alternative.name)}`}
+                aria-label={`${plan.name} is out of stock — see ${alternative.name} instead`}
+              >
+                See {alternative.name}
+              </a>
+            ) : null}
+          </div>
+        )}
       </div>
     </article>
   );
@@ -235,13 +292,9 @@ export function PricingExplorer({
   }, [region, cycle]);
 
   const inRegion = useMemo(() => plans.filter(plan => plan.location === region), [region]);
-  /* Cards show only what the customer can buy today. Sold-out plans get one
-     honest line below the cards; the full lineup stays in the comparison table. */
-  const buyable = useMemo(
-    () => inRegion.filter(plan => plan.source.availability !== 'out-of-stock'),
-    [inRegion],
-  );
-  const visible = useMemo(() => (compact ? buyable.slice(0, 3) : buyable), [compact, buyable]);
+  /* Every tier stays listed, like the WHMCS store: sold-out plans render the
+     same card with an honest stock state, never a dead-end checkout. */
+  const visible = useMemo(() => (compact ? inRegion.slice(0, 3) : inRegion), [compact, inRegion]);
 
   const maxima = useMemo(() => ({
     cpu: Math.max(...inRegion.map(plan => specNumber(plan.specs.cpu))),
@@ -266,8 +319,9 @@ export function PricingExplorer({
      otherwise the first buyable plan in the region. */
   const highlighted = useMemo(
     () => inRegion.find(plan => plan.name === popularName && plan.source.availability !== 'out-of-stock')
-      ?? buyable[0] ?? null,
-    [inRegion, buyable, popularName],
+      ?? inRegion.find(plan => plan.source.availability !== 'out-of-stock')
+      ?? inRegion[0] ?? null,
+    [inRegion, popularName],
   );
   const highlightedAvailable = highlighted?.source.availability !== 'out-of-stock';
   const highlightedPrice = highlighted?.pricing[cycle];
@@ -335,7 +389,7 @@ export function PricingExplorer({
       </div>
 
       <p className="sr-ledger-note sr-ledger-summary" data-plan-summary>
-        Showing {visible.length} available {region} {visible.length === 1 ? 'plan' : 'plans'} · {priceHeader[cycle].toLowerCase()}
+        Showing {visible.length} {region} {visible.length === 1 ? 'plan' : 'plans'} · {priceHeader[cycle].toLowerCase()}
       </p>
 
       <div className="sr-pick-cards">
@@ -345,6 +399,7 @@ export function PricingExplorer({
             plan={plan}
             cycle={cycle}
             showPopular={plan.name === popularName}
+            alternative={alternativeFor(plan, plans)}
           />
         ))}
       </div>

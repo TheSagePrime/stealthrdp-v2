@@ -2498,10 +2498,58 @@ body {
   gap: 6px;
 }
 
-.sr-pick-card-specs {
+.sr-pick-card[data-popular="true"] {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.sr-pick-card-os {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.sr-pick-specs {
+  display: grid;
+  gap: 6px;
+  margin: 4px 0 0;
+  padding: 12px 0 0;
+  border-top: 1px solid var(--border-divider);
+}
+
+.sr-pick-spec {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.sr-pick-spec dt {
+  color: var(--text-dim);
+}
+
+.sr-pick-spec dd {
   margin: 0;
   color: var(--text);
-  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-pick-stock {
+  margin: 4px 0 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.sr-pick-stock[data-state="in-stock"] {
+  color: var(--sr-status-success);
+}
+
+.sr-pick-stock[data-state="out-of-stock"] {
+  color: var(--text-dim);
+  font-weight: 400;
 }
 
 .sr-pick-card-price {
@@ -2526,6 +2574,12 @@ body {
   color: var(--text-dim);
   font-size: 0.75rem;
   text-decoration: line-through;
+}
+
+.sr-pick-card-effective {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
 }
 
 .sr-pick-card-buy {
