@@ -81,7 +81,7 @@ export function RegionTable() {
                     </strong>
                   </div>
                   <Link
-                    href="/plans"
+                    href={`/plans?region=${region.code}`}
                     className="
                       inline-flex min-h-11 items-center gap-2 text-small
                       font-semibold text-primary transition-colors
