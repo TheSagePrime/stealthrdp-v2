@@ -138,7 +138,7 @@ function PlanRow({
               href={checkoutUrl(plan, cycle)}
               aria-label={`Buy ${plan.name} — leaves this site for the StealthRDP checkout at dash.stealthrdp.com`}
             >
-              Buy Now (secure checkout) <ArrowSquareOut size={14} aria-hidden="true" />
+              Order Now <ArrowSquareOut size={14} aria-hidden="true" />
             </a>
           </Button>
         ) : (
@@ -205,14 +205,16 @@ function PlanCard({
         </div>
       </div>
       <p className="sr-pick-card-price">
-        <span className="sr-pick-card-amount">{`€${formatPrice(price.amount)}${price.suffix}`}</span>
-        <span className="sr-pick-card-period">{`due today · ${price.periodLabel}`}</span>
-        {price.referenceAmount ? (
-          <span className="sr-pick-card-was">{`standard €${formatPrice(price.referenceAmount)}`}</span>
-        ) : null}
-        {months > 1 ? (
-          <span className="sr-pick-card-effective">{`€${(price.amount / months).toFixed(2)}/mo effective`}</span>
-        ) : null}
+        <span className="sr-pick-card-amount">
+          {`€${formatPrice(price.amount)}${price.suffix}`}
+          {price.referenceAmount ? (
+            <span className="sr-pick-card-was">{` €${formatPrice(price.referenceAmount)}`}</span>
+          ) : null}
+        </span>
+        <span className="sr-pick-card-period">
+          {`due today · ${price.periodLabel}`}
+          {months > 1 ? ` · €${(price.amount / months).toFixed(2)}/mo effective` : null}
+        </span>
       </p>
       <p className="sr-pick-card-os">{osLabel}</p>
       <dl className="sr-pick-specs">
@@ -233,9 +235,6 @@ function PlanCard({
           <dd>{plan.specs.bandwidth}</dd>
         </div>
       </dl>
-      <p className="sr-pick-stock" data-state={available ? 'in-stock' : 'out-of-stock'}>
-        {stock !== undefined ? `${stock} Available` : (available ? 'In stock' : 'Out of stock')}
-      </p>
       <div className="sr-pick-card-action">
         {available ? (
           <Button asChild className="sr-pick-card-buy">
@@ -243,7 +242,7 @@ function PlanCard({
               href={checkoutUrl(plan, cycle)}
               aria-label={`Buy ${plan.name} — leaves this site for the StealthRDP checkout at dash.stealthrdp.com`}
             >
-              Buy Now (secure checkout) <ArrowSquareOut size={14} aria-hidden="true" />
+              Order Now <ArrowSquareOut size={14} aria-hidden="true" />
             </a>
           </Button>
         ) : (
@@ -263,6 +262,9 @@ function PlanCard({
           </div>
         )}
       </div>
+      <p className="sr-pick-stock" data-state={available ? 'in-stock' : 'out-of-stock'}>
+        {stock !== undefined ? `${stock} Available` : (available ? 'In stock' : 'Out of stock')}
+      </p>
     </article>
   );
 }
@@ -417,7 +419,7 @@ export function PricingExplorer({
                 href={checkoutUrl(highlighted, cycle)}
                 aria-label={`Buy ${highlighted.name} — leaves this site for the StealthRDP checkout at dash.stealthrdp.com`}
               >
-                Buy Now (secure checkout) <ArrowSquareOut size={14} aria-hidden="true" />
+                Order Now <ArrowSquareOut size={14} aria-hidden="true" />
               </a>
             </Button>
           ) : (

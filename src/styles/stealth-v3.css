@@ -2470,11 +2470,11 @@ body {
 .sr-pick-card {
   display: grid;
   align-content: start;
-  gap: 8px;
+  gap: 6px;
   background: var(--surface-1);
   border: 1px solid var(--border-divider);
   border-radius: var(--radius-md);
-  padding: 20px;
+  padding: 16px;
   scroll-margin-top: 128px;
 }
 
@@ -2513,9 +2513,9 @@ body {
 
 .sr-pick-specs {
   display: grid;
-  gap: 6px;
-  margin: 4px 0 0;
-  padding: 12px 0 0;
+  gap: 2px;
+  margin: 2px 0 0;
+  padding: 8px 0 0;
   border-top: 1px solid var(--border-divider);
 }
 
@@ -2538,9 +2538,10 @@ body {
 }
 
 .sr-pick-stock {
-  margin: 4px 0 0;
+  margin: 2px 0 0;
   font-size: 0.8125rem;
   font-weight: 600;
+  text-align: center;
 }
 
 .sr-pick-stock[data-state="in-stock"] {
@@ -2560,7 +2561,7 @@ body {
 
 .sr-pick-card-amount {
   color: var(--text);
-  font-size: 1.375rem;
+  font-size: 1.25rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
@@ -2574,12 +2575,6 @@ body {
   color: var(--text-dim);
   font-size: 0.75rem;
   text-decoration: line-through;
-}
-
-.sr-pick-card-effective {
-  color: var(--text-dim);
-  font-size: 0.75rem;
-  font-variant-numeric: tabular-nums;
 }
 
 .sr-pick-card-buy {
