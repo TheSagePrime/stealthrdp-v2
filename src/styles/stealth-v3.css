@@ -585,35 +585,6 @@ body {
   gap: 24px;
 }
 
-.sr-plan-finder {
-  display: grid;
-  gap: 20px;
-  border:1px solid var(--border-divider);
-  border-radius: var(--radius-lg);
-  background:color-mix(in srgb, var(--surface-1) 82%, transparent);
-  padding: 24px;
-}
-
-.sr-finder-block {
-  display: grid;
-  gap: 10px;
-}
-
-.sr-finder-options,
-.sr-control-row,
-.sr-control-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-}
-
-.sr-control-row {
-  justify-content: space-between;
-  border-bottom:1px solid var(--border-divider);
-  padding-bottom: 20px;
-}
-
 .sr-control-label {
   margin-right: 4px;
   color:var(--text-dim);
@@ -1740,78 +1711,6 @@ body {
   gap: 20px;
 }
 
-.sr-plan-finder {
-  gap: 24px;
-  border-color: var(--srv3-border);
-  border-radius: var(--radius-lg);
-  background:linear-gradient(120deg, color-mix(in srgb, var(--primary) 5%, transparent), transparent 38%),
-    var(--surface-1);
-  padding: 24px;
-}
-
-.sr-finder-copy {
-  display: flex;
-  justify-content: space-between;
-  gap: 32px;
-  align-items: end;
-}
-
-.sr-finder-copy > div {
-  display: grid;
-  gap: 4px;
-}
-
-.sr-finder-copy strong {
-  color:var(--text);
-  font-size: 1rem;
-  letter-spacing: -0.015em;
-}
-
-.sr-finder-copy p {
-  max-width: 380px;
-  margin: 0;
-  color:var(--text-dim);
-  font-size: 0.75rem;
-  line-height: 1.55;
-}
-
-.sr-finder-grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.6fr);
-  gap: 20px;
-}
-
-.sr-workload-trigger {
-  min-height: 44px;
-  width: min(100%, 320px);
-  justify-content: space-between;
-  border-color: var(--srv3-border-strong);
-  background: var(--background);
-  color: var(--foreground);
-  font-size: 0.875rem;
-}
-
-.sr-workload-menu {
-  min-width: min(280px, calc(100vw - 40px));
-}
-
-.sr-workload-menu [data-slot="dropdown-menu-radio-item"] {
-  min-height: 40px;
-}
-
-.sr-finder-os-note p {
-  margin: 0;
-  color: var(--muted-foreground);
-  font-size: 0.8125rem;
-  line-height: 1.5;
-}
-
-.sr-comparison-panel .sr-table-wrap {
-  max-width: 100%;
-  overflow-x: auto;
-}
-
-.sr-finder-block,
 .sr-control-stack {
   display: grid;
   gap: 8px;
@@ -1844,41 +1743,6 @@ body {
 
 .sr-segmented-control [data-slot="button"]:not([aria-pressed="true"]):hover {
   color: var(--text);
-}
-
-.sr-finder-result {
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  border-top: 1px solid var(--srv3-border);
-  padding-top: 20px;
-}
-
-.sr-finder-result > div {
-  display: grid;
-  gap: 2px;
-}
-
-.sr-finder-result span {
-  color:var(--text-dim);
-  font-size: 0.625rem;
-}
-
-.sr-finder-result strong {
-  font-size: 0.8125rem;
-}
-
-.sr-finder-result small {
-  color:var(--text-dim);
-  font-size: 0.6875rem;
-}
-
-.sr-control-row {
-  align-items: end;
-  border: 1px solid var(--srv3-border);
-  border-radius: var(--radius-lg);
-  background:color-mix(in srgb, var(--surface-1) 70%, transparent);
-  padding: 12px;
 }
 
 .sr-plan-card:hover {
@@ -2034,20 +1898,6 @@ body {
 
   .srv3-hero-visual {
     min-height: 410px;
-  }
-
-  .sr-finder-copy {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .sr-finder-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .sr-control-row {
-    align-items: stretch;
   }
 
   .sr-segmented-control {
@@ -2555,39 +2405,66 @@ body {
   display: none;
 }
 
-.sr-term-stack {
-  flex: 1 1 auto;
+/* --- Plan picker ----------------------------------------------------------
+   One guided stack: region + use-case row, a compact billing strip, stacked
+   plan cards, and a sticky selection summary. The ledger table survives only
+   as a collapsed comparison inside .sr-compare-details.
+   ------------------------------------------------------------------------- */
+.sr-picker-row {
+  display: grid;
+  gap: 16px;
 }
 
-.sr-term-ladder {
-  display: grid;
-  /* Five published cycles: monthly, quarterly, semi-annual, annual, 2-year.
-     auto-fit keeps the ladder readable if the row gets narrow. */
-  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
-  gap: 10px;
+@media (min-width: 900px) {
+  .sr-picker-row {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.sr-use-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sr-use-chips [data-slot="button"] {
+  min-height: 44px;
+}
+
+.sr-cycle-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
 .sr-term-option {
-  display: grid;
-  gap: 4px;
-  width: 100%;
-  height: 100%;
-  padding: 12px 12px;
-  text-align: left;
-  color: var(--text);
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  color: var(--text-dim);
   background: var(--surface-1);
   border: 1px solid var(--border-divider);
   border-radius: var(--radius-md);
+  font-size: 0.8125rem;
   cursor: pointer;
 }
 
 .sr-term-option[data-selected="true"] {
-  background: var(--surface-2);
+  color: var(--primary-foreground);
+  background: var(--primary);
   border-color: var(--primary);
-  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.sr-term-option[data-selected="true"] .sr-term-save {
+  color: inherit;
+  border-color: currentColor;
+  background: transparent;
 }
 
 .sr-term-option:disabled {
@@ -2596,40 +2473,152 @@ body {
 }
 
 .sr-term-label {
-  color: var(--text-muted);
-  font-size: 0.75rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-weight: 600;
 }
 
-.sr-term-rate {
-  color: var(--text);
-  font-variant-numeric: tabular-nums;
-  font-weight: 700;
+.sr-plan-cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
 }
 
-.sr-term-rate small {
-  display: block;
-  color: var(--text-dim);
-  font-size: 0.6875rem;
-  font-weight: 400;
-}
-
-.sr-term-total {
-  color: var(--text-dim);
-  font-size: 0.75rem;
-}
-
-.sr-term-badge {
-  display: flex;
-  min-height: 2rem;
-  align-items: center;
-}
-
-@media (max-width: 900px) {
-  .sr-term-ladder {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+@media (min-width: 900px) {
+  .sr-plan-cards {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
+}
+
+.sr-pick-card {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  background: var(--surface-1);
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  scroll-margin-top: 128px;
+}
+
+.sr-pick-card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: start;
+}
+
+.sr-pick-card-name {
+  margin: 0;
+  color: var(--text);
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.sr-pick-card-badges {
+  display: flex;
+  flex-shrink: 0;
+  gap: 6px;
+}
+
+.sr-pick-card-tag {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+}
+
+.sr-pick-card-specs {
+  margin: 0;
+  color: var(--text);
+  font-size: 0.875rem;
+}
+
+.sr-pick-card-price {
+  display: grid;
+  gap: 2px;
+  margin: 4px 0 0;
+}
+
+.sr-pick-card-amount {
+  color: var(--text);
+  font-size: 1.375rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-pick-card-period {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
+.sr-pick-card-was {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  text-decoration: line-through;
+}
+
+.sr-pick-card-buy {
+  width: 100%;
+  min-height: 44px;
+}
+
+.sr-picker-summary {
+  position: sticky;
+  bottom: 12px;
+  z-index: 5;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+  background: var(--surface-2);
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 0.25);
+  padding: 12px 16px;
+}
+
+.sr-picker-summary-text {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  align-items: baseline;
+  margin: 0;
+  font-size: 0.875rem;
+}
+
+.sr-picker-summary-text strong {
+  color: var(--text);
+}
+
+.sr-picker-summary-text span {
+  color: var(--text-dim);
+}
+
+.sr-picker-summary-price {
+  color: var(--text);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-compare-details {
+  background: var(--surface-1);
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-md);
+}
+
+.sr-compare-summary {
+  display: grid;
+  gap: 4px;
+  padding: 16px 20px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.sr-compare-summary::-webkit-details-marker {
+  display: none;
+}
+
+.sr-compare-summary .sr-ledger-title {
+  margin: 0;
 }
 
 @media (max-width: 900px) {

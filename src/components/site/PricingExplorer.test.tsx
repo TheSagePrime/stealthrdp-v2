@@ -18,10 +18,16 @@ function badgeFor(name: string) {
   return row?.querySelector('[data-slot="badge"]')?.textContent ?? '';
 }
 
+/** The spec table lives inside a collapsed comparison expander: open it first. */
+async function openComparison() {
+  await userEvent.click(page.getByText(/See the difference in one view/));
+}
+
 describe('PricingExplorer purchase decisions', () => {
   it('uses one selected billing cycle for the ledger price column', async () => {
     await render(<PricingExplorer showComparison />);
     await userEvent.click(page.getByRole('button', { name: /^Annual/ }));
+    await openComparison();
 
     expect(page.getByRole('columnheader', { name: 'Price per year' })).toBeInTheDocument();
     expect(page.getByRole('cell', { name: /€96\.50\/yr/ })).toBeInTheDocument();
@@ -45,8 +51,24 @@ describe('PricingExplorer purchase decisions', () => {
     await userEvent.click(page.getByRole('button', { name: 'EU', exact: true }));
 
     expect(page.getByRole('heading', { name: /See the difference in one view/ })).toBeInTheDocument();
+    await openComparison();
     expect(page.getByRole('rowheader', { name: /Bronze EU/ })).toBeInTheDocument();
     expect(page.getByRole('rowheader', { name: /Bronze USA/ })).not.toBeInTheDocument();
+  });
+
+  it('shows every plan as a card with its specs and a visible total due today', async () => {
+    await render(<PricingExplorer showComparison />);
+    await userEvent.click(page.getByRole('button', { name: /^Annual/ }));
+
+    const cards = [...document.querySelectorAll('.sr-pick-card')];
+    expect(cards.length, 'every USA plan renders as a card').toBe(6);
+    expect(cards.every(card => (card.textContent ?? '').includes('due today')), 'every card shows its total due today').toBe(true);
+    expect(cards.every(card => card.querySelector('a[href*="dash.stealthrdp.com"]') !== null || card.querySelector('.sr-ledger-alt') !== null), 'every card offers a buy route or a stocked alternative').toBe(true);
+
+    /* The sticky summary always names the current selection and its total. */
+    const summary = document.querySelector('.sr-picker-summary');
+    expect(summary?.textContent?.replace(/\s+/g, ' ').trim()).toContain('Bronze USA');
+    expect(summary?.textContent).toContain('€96.50');
   });
 
   it('shows the published price with two decimals and never a rounded variant', async () => {
@@ -61,8 +83,9 @@ describe('PricingExplorer purchase decisions', () => {
   });
 
   it('keeps every specification readable without repeated icons and preserves checkout actions', async () => {
-    await render(<PricingExplorer />);
+    await render(<PricingExplorer showComparison />);
     await userEvent.click(page.getByRole('button', { name: /^Monthly/ }));
+    await openComparison();
 
     for (const column of ['CPU', 'RAM', 'Storage', 'Bandwidth']) {
       expect(page.getByRole('columnheader', { name: column })).toBeInTheDocument();
@@ -76,22 +99,17 @@ describe('PricingExplorer purchase decisions', () => {
     expect(document.querySelectorAll('tbody a[href*="dash.stealthrdp.com"]:not(.sr-ledger-alt)').length).toBe(1);
   });
 
-  it('selects a workload from the existing menu and moves the best-fit marker', async () => {
-    await render(<PricingExplorer />);
+  it('selects a use case from the visible chips and moves the best-fit marker', async () => {
+    /* The marker lives on the comparison table, so render it (collapsed). */
+    await render(<PricingExplorer showComparison />);
     await userEvent.click(page.getByRole('button', { name: /^Monthly/ }));
 
-    const rowDump = () =>
-      [...document.querySelectorAll('tbody tr')]
-        .map(candidate => `${(candidate.textContent ?? '').replace(/\s+/g, ' ').trim().slice(0, 24)}→${candidate.querySelector('[data-slot="badge"]')?.textContent ?? '-'}`)
-        .join(' | ');
+    expect(badgeFor('Bronze USA')).toBe('Best fit');
 
-    expect(badgeFor('Bronze USA'), `rows: ${rowDump()}`).toBe('Best fit');
+    await userEvent.click(page.getByRole('button', { name: 'Trading', exact: true }));
 
-    await userEvent.click(page.getByRole('button', { name: /Remote desktop/ }));
-    await userEvent.click(page.getByRole('menuitemradio', { name: 'Trading' }));
-
-    expect(page.getByRole('button', { name: /Trading/ })).toBeInTheDocument();
-    expect(badgeFor('Gold USA'), `rows: ${rowDump()}`).toBe('Best fit');
+    expect(page.getByRole('button', { name: 'Trading', exact: true })).toHaveAttribute('aria-pressed', 'true');
+    expect(badgeFor('Gold USA')).toBe('Best fit');
   });
 
   it('describes OS selection at checkout rather than offering an ineffective filter', async () => {

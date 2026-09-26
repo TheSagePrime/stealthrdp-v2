@@ -1,18 +1,10 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { CaretDown as ChevronDown, ArrowSquareOut } from '@phosphor-icons/react';
+import { ArrowSquareOut } from '@phosphor-icons/react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuLabel,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import { Pill } from '@/components/ui/pill';
 import { Progress } from '@/components/ui/progress';
 import {
@@ -54,17 +46,10 @@ const workloadOptions = [
 
 type WorkloadKey = (typeof workloadOptions)[number]['key'];
 
-/** Months covered by a published price suffix (/mo, /3mo, /6mo, /yr, /2yr). Read from
-    the plan's own data so a 6-month EU term is never divided as a 24-month one. */
-function monthsForSuffix(suffix: string): number {
-  const match = /\/(\d+)?(mo|yr)/.exec(suffix);
-  if (!match) return 1;
-  const count = match[1] ? Number.parseInt(match[1], 10) : 1;
-  return match[2] === 'yr' ? count * 12 : count;
-}
-
 /** Read a comparable number out of a published spec string. */
 const specNumber = (value: string) => Number.parseInt(value.replace(/[^\d]/g, ''), 10) || 0;
+
+const planSlug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
 function SpecCell({
   value,
@@ -190,6 +175,78 @@ function PlanRow({
   );
 }
 
+/** One plan as a self-contained card: specs, total due today, and its own Buy action. No sideways scroll. */
+function PlanCard({
+  plan,
+  cycle,
+  recommended,
+  showPopular,
+  alternative,
+}: {
+  plan: Plan;
+  cycle: BillingCycle;
+  recommended: boolean;
+  showPopular: boolean;
+  alternative?: Plan | null;
+}) {
+  const price = plan.pricing[cycle];
+  const available = plan.source.availability !== 'out-of-stock';
+
+  return (
+    <article
+      className="sr-pick-card"
+      id={`plan-${planSlug(plan.name)}`}
+      data-availability={available ? 'in-stock' : 'out-of-stock'}
+    >
+      <div className="sr-pick-card-head">
+        <h3 className="sr-pick-card-name">{plan.name}</h3>
+        <div className="sr-pick-card-badges">
+          {recommended ? <Badge>Best fit</Badge> : null}
+          {showPopular && !recommended ? <Badge variant="outline">Most Popular</Badge> : null}
+        </div>
+      </div>
+      <p className="sr-pick-card-tag">{plan.description}</p>
+      <p className="sr-pick-card-specs">
+        {plan.specs.cpu} · {plan.specs.ram} RAM · {plan.specs.storage} · {plan.specs.bandwidth} bandwidth
+      </p>
+      <p className="sr-pick-card-price">
+        <span className="sr-pick-card-amount">{`€${formatPrice(price.amount)}${price.suffix}`}</span>
+        <span className="sr-pick-card-period">{`due today · ${price.periodLabel}`}</span>
+        {price.referenceAmount ? (
+          <span className="sr-pick-card-was">{`standard €${formatPrice(price.referenceAmount)}`}</span>
+        ) : null}
+      </p>
+      <div className="sr-pick-card-action">
+        {available ? (
+          <Button asChild className="sr-pick-card-buy">
+            <a
+              href={checkoutUrl(plan, cycle)}
+              aria-label={`Buy ${plan.name} — leaves this site for the StealthRDP checkout at dash.stealthrdp.com`}
+            >
+              Buy Now (secure checkout) <ArrowSquareOut size={14} aria-hidden="true" />
+            </a>
+          </Button>
+        ) : (
+          <div className="sr-ledger-stack">
+            <Pill state="warn" icon={<span aria-hidden="true">!</span>}>
+              Out of stock
+            </Pill>
+            {alternative ? (
+              <a
+                className="sr-ledger-alt"
+                href={`#plan-${planSlug(alternative.name)}`}
+                aria-label={`${plan.name} is out of stock — see ${alternative.name} instead`}
+              >
+                See {alternative.name}
+              </a>
+            ) : null}
+          </div>
+        )}
+      </div>
+    </article>
+  );
+}
+
 export function PricingExplorer({
   compact = false,
   guided = true,
@@ -219,20 +276,17 @@ export function PricingExplorer({
   }, [region, cycle]);
 
   const recommendedTier = workloadOptions.find(item => item.key === workload)?.tier ?? 'Bronze';
+  const isRecommended = (plan: Plan) =>
+    guided && plan.name.toLowerCase().startsWith(recommendedTier.toLowerCase());
 
-  const visible = useMemo(() => {
-    const matching = plans.filter(plan => plan.location === region);
-    return compact ? matching.slice(0, 3) : matching;
-  }, [compact, region]);
+  const inRegion = useMemo(() => plans.filter(plan => plan.location === region), [region]);
+  const visible = useMemo(() => (compact ? inRegion.slice(0, 3) : inRegion), [compact, inRegion]);
 
-  const maxima = useMemo(() => {
-    const inRegion = plans.filter(plan => plan.location === region);
-    return {
-      cpu: Math.max(...inRegion.map(plan => specNumber(plan.specs.cpu))),
-      ram: Math.max(...inRegion.map(plan => specNumber(plan.specs.ram))),
-      storage: Math.max(...inRegion.map(plan => specNumber(plan.specs.storage))),
-    };
-  }, [region]);
+  const maxima = useMemo(() => ({
+    cpu: Math.max(...inRegion.map(plan => specNumber(plan.specs.cpu))),
+    ram: Math.max(...inRegion.map(plan => specNumber(plan.specs.ram))),
+    storage: Math.max(...inRegion.map(plan => specNumber(plan.specs.storage))),
+  }), [inRegion]);
 
   const ladderPlan = useMemo(
     () => plans.find(plan => plan.location === region && plan.name === `Bronze ${region}`)
@@ -247,67 +301,21 @@ export function PricingExplorer({
     [region],
   );
 
+  /* The summary follows the highlighted tier: recommended and buyable when
+     possible, otherwise the first buyable plan in the region. */
+  const highlighted = useMemo(
+    () => inRegion.find(plan => isRecommended(plan) && plan.source.availability !== 'out-of-stock')
+      ?? inRegion.find(plan => plan.source.availability !== 'out-of-stock')
+      ?? inRegion[0] ?? null,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [inRegion, region, workload, guided],
+  );
+  const highlightedAvailable = highlighted?.source.availability !== 'out-of-stock';
+  const highlightedPrice = highlighted?.pricing[cycle];
+
   return (
     <div className="sr-pricing-explorer">
-      {guided ? (
-        <div className="sr-plan-finder" aria-label="VPS workload finder">
-          <div className="sr-finder-copy">
-            <div>
-              <span className="sr-control-label">Find a starting point</span>
-              <strong>Tell us what the server is for.</strong>
-            </div>
-            <p>We highlight a sensible tier. You still control the final configuration.</p>
-          </div>
-
-          <div className="sr-finder-grid">
-            <div className="sr-finder-block">
-              <span className="sr-control-label">Use case</span>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="sr-workload-trigger"
-                    aria-label={`Use case: ${workloadOptions.find(item => item.key === workload)?.label}`}
-                  >
-                    {workloadOptions.find(item => item.key === workload)?.label}
-                    <ChevronDown size={16} aria-hidden="true" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="sr-workload-menu">
-                  <DropdownMenuLabel>What will you run?</DropdownMenuLabel>
-                  <DropdownMenuRadioGroup value={workload} onValueChange={value => setWorkload(value as WorkloadKey)}>
-                    {workloadOptions.map(item => (
-                      <DropdownMenuRadioItem key={item.key} value={item.key}>
-                        {item.label}
-                      </DropdownMenuRadioItem>
-                    ))}
-                  </DropdownMenuRadioGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-
-            <div className="sr-finder-block sr-finder-os-note">
-              <span className="sr-control-label">Operating system</span>
-              <p>Choose Windows or Linux during checkout. Both options use these VPS plans.</p>
-            </div>
-          </div>
-
-          <div className="sr-finder-result">
-            <div>
-              <span>Suggested starting tier</span>
-              <strong>{recommendedTier} {region}</strong>
-              <small>Final OS and availability are confirmed during checkout.</small>
-            </div>
-          </div>
-        </div>
-      ) : null}
-
-      <p className="sr-ledger-note sr-ledger-summary" data-plan-summary>
-        Showing {visible.length} {region} {visible.length === 1 ? 'plan' : 'plans'} · {priceHeader[cycle].toLowerCase()}
-      </p>
-
-      <div className="sr-control-row">
+      <div className="sr-picker-row">
         <div className="sr-control-stack">
           <span className="sr-control-label">Deployment region</span>
           <ButtonGroup className="sr-segmented-control" aria-label="Deployment region">
@@ -326,118 +334,176 @@ export function PricingExplorer({
           </ButtonGroup>
         </div>
 
-        <div className="sr-control-stack sr-term-stack">
-          <span className="sr-control-label" id="sr-billing-label">Billing cycle</span>
-          <ul className="sr-term-ladder" role="group" aria-labelledby="sr-billing-label">
-            {cycleOrder.map(item => {
-              const billing = billingCycles[item] as {
-                label: string;
-                discountLabel?: string;
-              };
-              const termPrice = ladderPlan?.pricing[item];
-              const effective = termPrice ? termPrice.amount / monthsForSuffix(termPrice.suffix) : 0;
-              const selected = cycle === item;
-              const termLabel = termPrice?.suffix === '/2yr' ? '2-year' : termPrice?.suffix === '/6mo' ? '6-month' : billing.label;
-
-              return (
-                <li key={item}>
-                  <button
-                    type="button"
-                    className="sr-term-option"
-                    data-selected={selected}
-                    aria-pressed={selected}
-                    disabled={!termPrice}
-                    aria-disabled={!termPrice}
-                    onClick={() => setCycle(item)}
-                  >
-                    <span className="sr-term-label">{termLabel}</span>
-                    <span className="sr-term-rate">
-                      {termPrice ? `from €${formatPrice(Number(effective.toFixed(2)))}` : '—'}
-                      <small>per month</small>
-                    </span>
-                    <span className="sr-term-total">
-                      {termPrice ? `€${formatPrice(termPrice.amount)} ${termPrice.periodLabel}, due today` : 'See checkout'}
-                    </span>
-                    <span className="sr-term-badge" aria-hidden={!termPrice?.discountLabel}>
-                      {termPrice?.discountLabel ? <Badge variant="outline">{termPrice.discountLabel}</Badge> : null}
-                    </span>
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-          <p className="sr-ledger-note">All prices in EUR. Final availability is confirmed during checkout.</p>
-        </div>
+        {guided ? (
+          <div className="sr-control-stack">
+            <span className="sr-control-label" id="sr-use-case-label">Use case</span>
+            <div className="sr-use-chips" role="group" aria-labelledby="sr-use-case-label">
+              {workloadOptions.map(item => (
+                <Button
+                  key={item.key}
+                  type="button"
+                  size="sm"
+                  variant={workload === item.key ? 'default' : 'outline'}
+                  aria-pressed={workload === item.key}
+                  onClick={() => setWorkload(item.key)}
+                >
+                  {item.label}
+                </Button>
+              ))}
+            </div>
+            <p className="sr-ledger-note">Choose Windows or Linux during checkout. Both options use these VPS plans.</p>
+          </div>
+        ) : null}
       </div>
 
-      <section id="comparison" className="sr-ledger-section">
-        {showComparison ? (
-          <>
-            <p className="sr-kicker">02 / Compare precisely</p>
-            <h2 className="sr-ledger-title">
-              See the difference in one view. <span className="sr-visually-hidden">VPS Features Comparison</span>
-            </h2>
-          </>
-        ) : (
-          <h3 className="sr-ledger-title">
-            {`Choose your resource level · ${region}`}
-          </h3>
-        )}
-        <p className="sr-ledger-note">
-          {showComparison
-            ? 'Use this table for a quick resource check. Checkout confirms the current price and availability.'
-            : `Bars compare each plan against the largest configuration in ${region}. Published prices and availability are confirmed during checkout.`}
-        </p>
-        <span className="sr-ledger-hint">Swipe the table to compare every column.</span>
+      <div className="sr-control-stack sr-cycle-stack">
+        <span className="sr-control-label" id="sr-billing-label">Billing cycle</span>
+        <ul className="sr-cycle-strip" role="group" aria-labelledby="sr-billing-label">
+          {cycleOrder.map(item => {
+            const billing = billingCycles[item] as {
+              label: string;
+              discountLabel?: string;
+            };
+            const termPrice = ladderPlan?.pricing[item];
+            const selected = cycle === item;
+            const termLabel = termPrice?.suffix === '/2yr' ? '2-year' : termPrice?.suffix === '/6mo' ? '6-month' : billing.label;
 
-        <div className="sr-ledger-scroll">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Plan</TableHead>
-                <TableHead>CPU</TableHead>
-                <TableHead>RAM</TableHead>
-                <TableHead>Storage</TableHead>
-                <TableHead>Bandwidth</TableHead>
-                <TableHead>{priceHeader[cycle]}</TableHead>
-                <TableHead><span className="sr-visually-hidden">Action</span></TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {visible.map(plan => (
-                <PlanRow
-                  key={plan.name}
-                  plan={plan}
-                  cycle={cycle}
-                  recommended={guided && plan.name.toLowerCase().startsWith(recommendedTier.toLowerCase())}
-                  showPopular={plan.name === popularName}
-                  maxima={maxima}
-                  alternative={alternativeFor(plan, plans)}
-                />
-              ))}
-            </TableBody>
-          </Table>
+            return (
+              <li key={item}>
+                <button
+                  type="button"
+                  className="sr-term-option"
+                  data-selected={selected}
+                  aria-pressed={selected}
+                  disabled={!termPrice}
+                  aria-disabled={!termPrice}
+                  onClick={() => setCycle(item)}
+                >
+                  <span className="sr-term-label">{termLabel}</span>
+                  {termPrice?.discountLabel ? (
+                    <Badge variant="outline" className="sr-term-save">{termPrice.discountLabel}</Badge>
+                  ) : null}
+                  <span className="sr-visually-hidden">
+                    {termPrice ? `from €${formatPrice(termPrice.amount)} ${termPrice.periodLabel}, due today` : 'price at checkout'}
+                  </span>
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+        <p className="sr-visually-hidden" aria-live="polite">
+          {highlighted && highlightedPrice
+            ? `${highlighted.name}, ${billingCycles[cycle]?.label}: €${formatPrice(highlightedPrice.amount)} ${highlightedPrice.periodLabel}, due today`
+            : 'No plan selected'}
+        </p>
+      </div>
+
+      <p className="sr-ledger-note sr-ledger-summary" data-plan-summary>
+        Showing {visible.length} {region} {visible.length === 1 ? 'plan' : 'plans'} · {priceHeader[cycle].toLowerCase()}
+      </p>
+
+      <div className="sr-pick-cards">
+        {visible.map(plan => (
+          <PlanCard
+            key={plan.name}
+            plan={plan}
+            cycle={cycle}
+            recommended={isRecommended(plan)}
+            showPopular={plan.name === popularName}
+            alternative={alternativeFor(plan, plans)}
+          />
+        ))}
+      </div>
+
+      {!compact && highlighted && highlightedPrice ? (
+        <div className="sr-picker-summary" aria-label="Current selection">
+          <p className="sr-picker-summary-text">
+            <strong>{highlighted.name}</strong>
+            <span>{region} · {billingCycles[cycle]?.label}</span>
+            <span className="sr-picker-summary-price">{`€${formatPrice(highlightedPrice.amount)} ${highlightedPrice.periodLabel}, due today`}</span>
+          </p>
+          {highlightedAvailable ? (
+            <Button asChild size="sm">
+              <a
+                href={checkoutUrl(highlighted, cycle)}
+                aria-label={`Buy ${highlighted.name} — leaves this site for the StealthRDP checkout at dash.stealthrdp.com`}
+              >
+                Buy Now (secure checkout) <ArrowSquareOut size={14} aria-hidden="true" />
+              </a>
+            </Button>
+          ) : (
+            <Pill state="warn" icon={<span aria-hidden="true">!</span>}>
+              Out of stock
+            </Pill>
+          )}
         </div>
+      ) : null}
 
-        {(() => {
-          const inRegion = plans.filter(plan => plan.location === region);
-          const available = inRegion.filter(plan => plan.source.availability !== 'out-of-stock');
-          const soldOut = inRegion.filter(plan => plan.source.availability === 'out-of-stock');
-          if (soldOut.length === 0) return null;
-          return (
-            <p className="sr-ledger-note" aria-live="polite">
-              {soldOut.map(plan => plan.name).join(', ')} {soldOut.length === 1 ? 'is' : 'are'} out of stock
-              {available.length > 0 ? ` — available in ${region} now: ${available.map(plan => plan.name).join(', ')}.` : '.'} Availability is confirmed at checkout.
-            </p>
-          );
-        })()}
-        <p className="sr-ledger-note">
-          Bandwidth is unlimited on a 250 Mbps port. The 1 Gbps upgrade costs €5.00 per month at checkout and activates manually within 12 hours.
-        </p>
-        <p className="sr-ledger-note">
-          Windows or Linux is selected during checkout. A Windows licence is not included — Evaluation image only; use your own eligible licence. <a href="/docs/windows-licensing">Windows licensing</a>
-        </p>
-      </section>
+      {!compact ? (
+        <>
+          {(() => {
+            const available = inRegion.filter(plan => plan.source.availability !== 'out-of-stock');
+            const soldOut = inRegion.filter(plan => plan.source.availability === 'out-of-stock');
+            if (soldOut.length === 0) return null;
+            return (
+              <p className="sr-ledger-note" aria-live="polite">
+                {soldOut.map(plan => plan.name).join(', ')} {soldOut.length === 1 ? 'is' : 'are'} out of stock
+                {available.length > 0 ? ` — available in ${region} now: ${available.map(plan => plan.name).join(', ')}.` : '.'} Availability is confirmed at checkout.
+              </p>
+            );
+          })()}
+          <p className="sr-ledger-note">
+            All prices in EUR. Bandwidth is unlimited on a 250 Mbps port. The 1 Gbps upgrade costs €5.00 per month at checkout and activates manually within 12 hours.
+          </p>
+          <p className="sr-ledger-note">
+            Windows or Linux is selected during checkout. A Windows licence is not included — Evaluation image only; use your own eligible licence. <a href="/docs/windows-licensing">Windows licensing</a>
+          </p>
+        </>
+      ) : null}
+
+      {showComparison ? (
+        <details className="sr-compare-details">
+          <summary className="sr-compare-summary">
+            <span className="sr-kicker">02 / Compare precisely</span>
+            <span className="sr-ledger-title">
+              See the difference in one view. <span className="sr-visually-hidden">VPS Features Comparison</span>
+            </span>
+          </summary>
+          <p className="sr-ledger-note">
+            Use this table for a quick resource check. Checkout confirms the current price and availability.
+          </p>
+          <span className="sr-ledger-hint">Swipe the table to compare every column.</span>
+
+          <div className="sr-ledger-scroll">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Plan</TableHead>
+                  <TableHead>CPU</TableHead>
+                  <TableHead>RAM</TableHead>
+                  <TableHead>Storage</TableHead>
+                  <TableHead>Bandwidth</TableHead>
+                  <TableHead>{priceHeader[cycle]}</TableHead>
+                  <TableHead><span className="sr-visually-hidden">Action</span></TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {visible.map(plan => (
+                  <PlanRow
+                    key={plan.name}
+                    plan={plan}
+                    cycle={cycle}
+                    recommended={isRecommended(plan)}
+                    showPopular={plan.name === popularName}
+                    maxima={maxima}
+                    alternative={alternativeFor(plan, plans)}
+                  />
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        </details>
+      ) : null}
     </div>
   );
 }
