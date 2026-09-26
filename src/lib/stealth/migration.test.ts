@@ -38,13 +38,17 @@ const expectedNoindexDocs = [
   '/docs/how-to-reset-server-change-or-reset-client-area-password',
 ];
 
+/* The live WHMCS catalog read on 2026-09-26: 7 USA tiers + 6 EU tiers,
+   Starter included. Order matches src/content/plans.json. */
 const expectedPlans = [
+  'Starter USA',
   'Bronze USA',
   'Silver USA',
   'Gold USA',
   'Platinum USA',
   'Diamond USA',
   'Emerald USA',
+  'Starter EU',
   'Bronze EU',
   'Silver EU',
   'Gold EU',
