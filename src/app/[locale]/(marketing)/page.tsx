@@ -2,10 +2,10 @@ import type { Metadata } from 'next';
 import {
   ArrowRight,
   ArrowUpRight,
-  Gauge,
-  GlobeHemisphereWest,
-  HardDrives,
-  ShieldCheck,
+  Cpu,
+  HardDrive,
+  Info,
+  MapPin,
 } from '@phosphor-icons/react/dist/ssr';
 import { setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
@@ -67,22 +67,22 @@ const infrastructure = [
   {
     title: 'NVMe storage',
     description: 'Fast disk I/O for applications, databases, and active desktop workloads.',
-    icon: <HardDrives className="size-5" weight="regular" />,
+    icon: <HardDrive className="size-5" weight="regular" />,
   },
   {
     title: 'Isolated virtual machines',
     description: 'Dedicated resources with full administrative access to your own VPS.',
-    icon: <ShieldCheck className="size-5" weight="regular" />,
+    icon: <Cpu className="size-5" weight="regular" />,
   },
   {
     title: 'USA + Europe',
     description: 'Choose the region closest to the workload, with dedicated IPv4 included.',
-    icon: <GlobeHemisphereWest className="size-5" weight="regular" />,
+    icon: <MapPin className="size-5" weight="regular" />,
   },
   {
     title: '24/7 monitoring',
     description: 'Production infrastructure is monitored continuously with a public status page.',
-    icon: <Gauge className="size-5" weight="regular" />,
+    icon: <Info className="size-5" weight="regular" />,
   },
 ];
 
