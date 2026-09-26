@@ -8,9 +8,9 @@ import { testimonials } from '@/lib/stealth/content';
     testimonials say so. The design contract forbids blurring the two. */
 function sourceLabelFor(item: (typeof testimonials)[number]) {
   if (!item.sourceUrl) {
-    return 'Verified customer testimonial';
+    return 'Customer testimonial';
   }
-  return 'Verified third-party customer review';
+  return item.publishedOn || 'Third-party review';
 }
 
 export function AfterCheckout() {
@@ -19,10 +19,10 @@ export function AfterCheckout() {
       <div className="sr-container">
         <div className="srv3-section-heading">
           <div>
-            <h2>Verified customer testimonials</h2>
+            <h2>What customers say</h2>
           </div>
           <p>
-            Selected customer feedback from verified testimonial and third-party review sources.
+            Selected feedback from customers and independent review sources.
           </p>
         </div>
 
