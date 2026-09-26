@@ -152,7 +152,7 @@ export function HomePricing() {
 
       <div className="flex justify-center">
         <Button asChild variant="outline">
-          <a href={`/plans?region=${region}&cycle=${cycle}`}>Compare all plans</a>
+          <a href="/plans">Compare all plans</a>
         </Button>
       </div>
     </div>
