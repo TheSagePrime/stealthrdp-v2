@@ -203,9 +203,13 @@ export default async function HomePage({ params }: Props) {
                   <ArrowRight size={16} aria-hidden="true" />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline">
-                <a href="https://dash.stealthrdp.com/submitticket.php">Ask a Pre-Sales Question</a>
-              </Button>
+              <a
+                className="srv3-final-support"
+                href="https://dash.stealthrdp.com/submitticket.php"
+              >
+                Talk to Sales
+                <ArrowRight size={16} aria-hidden="true" />
+              </a>
             </div>
           </Card>
         </div>
