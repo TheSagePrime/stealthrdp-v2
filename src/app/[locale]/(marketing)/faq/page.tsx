@@ -31,8 +31,7 @@ export default function FaqPage() {
           </div>
 
           <div className="sr-page-hero-aside">
-            <strong>{faqs.length} published answers</strong>
-            <span>{categories.length} topic groups</span>
+            <strong>{faqs.length} questions</strong>
           </div>
         </div>
       </section>
@@ -83,16 +82,20 @@ export default function FaqPage() {
       </section>
 
       <section className="sr-section">
-        <div className="sr-container sr-support-cta">
-          <h2>Still need a hand?</h2>
-          <p>Take the question to support.</p>
-          <p>
-            Account, billing, and server-specific requests are handled in the
-            client portal.
-          </p>
-          <a href="https://dash.stealthrdp.com/submitticket.php">
-            Contact support
-          </a>
+        <div className="sr-container sr-copy-grid">
+          <div>
+            <p className="sr-kicker">Still need a hand?</p>
+            <h2 className="sr-section-title">Take the question to support.</h2>
+          </div>
+          <div className="sr-prose-block">
+            <p>
+              Account, billing, and server-specific requests are handled in the
+              client portal.
+            </p>
+            <div className="sr-inline-links">
+              <a href="https://dash.stealthrdp.com/submitticket.php">Contact support</a>
+            </div>
+          </div>
         </div>
       </section>
     </>

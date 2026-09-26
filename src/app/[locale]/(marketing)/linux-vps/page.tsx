@@ -104,9 +104,9 @@ export default function LinuxVpsPage() {
           </div>
           <OSHeroVisual
             kind="linux"
-            title="Choose the Linux image that fits your stack"
-            items={distros.map(item => item.name)}
-            access="Root access"
+            title="Linux VPS deployment showcase"
+            items={['Ubuntu', 'Debian', 'CentOS']}
+            access="Root included"
           />
         </div>
       </section>

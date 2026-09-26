@@ -97,12 +97,12 @@ function PlanRow({
       <th scope="row">
         <span className="sr-plan-row">
           {plan.name}
-          <Badge variant="outline">{plan.description}</Badge>
           {recommended ? <Badge>Best fit</Badge> : null}
-          {showPopular && !recommended ? <Badge variant="outline">Popular</Badge> : null}
+          {showPopular && !recommended ? <Badge variant="outline">Most Popular</Badge> : null}
+          <span className="sr-ledger-meta">{plan.description}</span>
         </span>
         <span className="sr-ledger-meta">
-          {plan.location} region
+          Region: {plan.location}
         </span>
       </th>
       <SpecCell
@@ -312,7 +312,9 @@ export function PricingExplorer({
         {showComparison ? (
           <>
             <p className="sr-kicker">02 / Compare precisely</p>
-            <h2 className="sr-ledger-title">See the difference in one view. VPS Features Comparison</h2>
+            <h2 className="sr-ledger-title">
+              See the difference in one view. <span className="sr-visually-hidden">VPS Features Comparison</span>
+            </h2>
           </>
         ) : (
           <h3 className="sr-ledger-title">
@@ -335,7 +337,7 @@ export function PricingExplorer({
                 <TableHead>RAM</TableHead>
                 <TableHead>Storage</TableHead>
                 <TableHead>Bandwidth</TableHead>
-                <TableHead>Price per month</TableHead>
+                <TableHead>{`Price${visible[0]?.pricing[cycle].suffix ?? ''}`}</TableHead>
                 <TableHead><span className="sr-visually-hidden">Action</span></TableHead>
               </TableRow>
             </TableHeader>

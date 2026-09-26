@@ -85,9 +85,9 @@ export default function WindowsVpsPage() {
           </div>
           <OSHeroVisual
             kind="windows"
-            title="A familiar Windows environment on VPS infrastructure"
-            items={windowsVersions.map(item => item.name)}
-            access="Administrator access"
+            title="Windows VPS deployment showcase"
+            items={windowsVersions.map(item => `Server ${item.version}`)}
+            access="Admin included"
           />
         </div>
       </section>

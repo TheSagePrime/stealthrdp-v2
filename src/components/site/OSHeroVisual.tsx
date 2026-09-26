@@ -28,7 +28,6 @@ export function OSHeroVisual({ kind, title, items, access }: Props) {
         </div>
         <div>
           <Badge variant="outline">{kind === 'windows' ? 'Windows VPS' : 'Linux VPS'}</Badge>
-          <strong>{title}</strong>
         </div>
       </div>
 

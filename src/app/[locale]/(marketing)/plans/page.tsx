@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   Card,
+  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -58,7 +59,7 @@ export default function PlansPage() {
               <p className="sr-kicker">STANDARD PLANS</p>
               <h2 className="sr-section-title">Choose your resource level</h2>
             </div>
-            <p>6 USA plans · Monthly billing</p>
+            <p>6 USA plans · prices shown monthly</p>
           </div>
           <PricingExplorer showComparison />
         </div>
@@ -92,6 +93,14 @@ export default function PlansPage() {
                   software. Compare CPU, RAM, NVMe storage, bandwidth, region, and billing cycle above.
                 </CardDescription>
               </CardHeader>
+              <CardContent>
+                <p className="rounded-md border-l-2 border-primary bg-surface-2 px-4 py-3 text-small text-body-muted">
+                  <strong>Windows licensing:</strong> StealthRDP provides the infrastructure only.
+                  Microsoft Windows licensing is not included and is not supplied by StealthRDP.
+                  Customers using Windows are responsible for their own licensing compliance.{' '}
+                  <Link href="/docs/windows-licensing">Read the Windows licensing page.</Link>
+                </p>
+              </CardContent>
               <CardFooter className="mt-auto flex-wrap gap-x-6 gap-y-2">
                 <Link href="/windows-vps" className={cardLinkClass}>
                   Read the Windows VPS hosting guide <ArrowRight aria-hidden="true" className="size-4" />

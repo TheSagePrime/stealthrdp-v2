@@ -21,10 +21,9 @@ const reasons = [
 ];
 
 const proof = [
-  { value: '10,000+', label: 'orders' },
-  { value: 'USA + EU', label: 'server regions' },
-  { value: '99.9%', label: 'uptime SLA' },
-  { value: '24/7', label: 'monitoring and support availability' },
+  { value: '10,000+', label: 'Orders' },
+  { value: 'USA + EU', label: 'locations' },
+  { value: '99.9%', label: 'Uptime SLA' },
 ];
 
 export default function AboutPage() {
@@ -43,8 +42,7 @@ export default function AboutPage() {
       <section className="sr-section">
         <div className="sr-container sr-copy-grid">
           <div>
-            <p className="sr-kicker">What we do</p>
-            <h2 className="sr-section-title">Remote desktop and VPS infrastructure, without the maze.</h2>
+            <h2 className="sr-section-title">What we do</h2>
           </div>
           <div className="sr-prose-block">
             <p>
@@ -58,8 +56,7 @@ export default function AboutPage() {
         <div className="sr-container">
           <div className="sr-section-head">
             <div>
-              <p className="sr-kicker">Why people choose us</p>
-              <h2 className="sr-section-title">Operational details stay visible.</h2>
+              <h2 className="sr-section-title">Why people choose us</h2>
             </div>
           </div>
           <div className="srv3-about-reasons">
@@ -89,15 +86,14 @@ export default function AboutPage() {
         <div className="sr-container">
           <div className="sr-section-head">
             <div>
-              <p className="sr-kicker">Trusted at scale</p>
-              <h2 className="sr-section-title">10,000+ orders and counting.</h2>
+              <h2 className="sr-section-title">Trusted at scale</h2>
             </div>
             <p>10,000+ orders and counting for remote work, web hosting, trading infrastructure, and always-on automation. Every new server is backed by our 99.9% uptime SLA and a 7-day money-back guarantee.</p>
           </div>
 
           <Card>
             <CardContent>
-              <dl className="grid gap-x-12 gap-y-6 sm:grid-cols-2">
+              <dl className="grid gap-x-12 gap-y-6 sm:grid-cols-3">
                 {proof.map(({ value, label }) => (
                   <div key={label} className="grid content-start gap-1">
                     <dt className="text-heading-4 text-body-text">{value}</dt>
@@ -115,7 +111,7 @@ export default function AboutPage() {
           <div>
             <p className="sr-kicker">Questions about our infrastructure?</p>
             <h2>Talk to our team.</h2>
-            <p>Talk to our team or message WhatsApp support — we respond within 2 hours, 24/7.</p>
+            <p>or message WhatsApp support — we respond within 2 hours, 24/7.</p>
           </div>
           <div className="sr-actions">
             <Button asChild size="lg">
