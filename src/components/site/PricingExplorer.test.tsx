@@ -75,11 +75,6 @@ describe('PricingExplorer purchase decisions', () => {
     expect(silver?.textContent).toContain('Out of Stock');
     expect(silver?.querySelector('a[href*="silver-usa"]')).toBeNull();
     expect(silver?.querySelector('a.sr-ledger-alt')).not.toBeNull();
-
-    /* The sticky summary follows the featured buyable plan and its total. */
-    const summary = document.querySelector('.sr-picker-summary');
-    expect(summary?.textContent?.replace(/\s+/g, ' ').trim()).toContain('Bronze USA');
-    expect(summary?.textContent).toContain('€96.50');
   });
 
   it('shows the published price with two decimals and never a rounded variant', async () => {
@@ -102,7 +97,7 @@ describe('PricingExplorer purchase decisions', () => {
       expect(page.getByRole('columnheader', { name: column })).toBeInTheDocument();
     }
     const specCells = [...document.querySelectorAll('.sr-ledger-spec')];
-    expect(specCells.length, 'the ledger publishes one spec cell per plan and column').toBe(21);
+    expect(specCells.length, 'the ledger publishes one spec cell per plan and column').toBe(28);
     expect(specCells.every(cell => (cell.textContent ?? '').trim().length > 0), 'every spec cell carries a value').toBe(true);
     expect(document.querySelectorAll('tbody .sr-ledger-spec svg')).toHaveLength(0);
     const checkoutLink = document.querySelector('tbody a[href*="dash.stealthrdp.com"]:not(.sr-ledger-alt)');

@@ -325,7 +325,6 @@ export function PricingExplorer({
       ?? inRegion[0] ?? null,
     [inRegion, popularName],
   );
-  const highlightedAvailable = highlighted?.source.availability !== 'out-of-stock';
   const highlightedPrice = highlighted?.pricing[cycle];
 
   return (
@@ -405,30 +404,6 @@ export function PricingExplorer({
           />
         ))}
       </div>
-
-      {!compact && highlighted && highlightedPrice ? (
-        <div className="sr-picker-summary" aria-label="Current selection">
-          <p className="sr-picker-summary-text">
-            <strong>{highlighted.name}</strong>
-            <span>{region} · {billingCycles[cycle]?.label}</span>
-            <span className="sr-picker-summary-price">{`€${formatPrice(highlightedPrice.amount)} ${highlightedPrice.periodLabel}, due today`}</span>
-          </p>
-          {highlightedAvailable ? (
-            <Button asChild size="sm">
-              <a
-                href={checkoutUrl(highlighted, cycle)}
-                aria-label={`Buy ${highlighted.name} — leaves this site for the StealthRDP checkout at dash.stealthrdp.com`}
-              >
-                Order Now <ArrowSquareOut size={14} aria-hidden="true" />
-              </a>
-            </Button>
-          ) : (
-            <Pill state="warn" icon={<span aria-hidden="true">!</span>}>
-              Out of stock
-            </Pill>
-          )}
-        </div>
-      ) : null}
 
       {!compact ? (
         <>

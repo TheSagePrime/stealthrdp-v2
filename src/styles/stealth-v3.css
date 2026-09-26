@@ -2458,25 +2458,58 @@ body {
 .sr-plan-cards {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 12px;
-}
-
-@media (min-width: 900px) {
-  .sr-plan-cards {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  }
+  gap: 8px;
 }
 
 .sr-pick-card {
   display: grid;
-  align-content: start;
-  gap: 6px;
+  grid-template-columns: minmax(0, 1fr) minmax(130px, 0.75fr);
+  grid-template-areas:
+    "head price"
+    "os price"
+    "specs specs"
+    "action action"
+    "stock stock";
+  align-items: center;
+  gap: 4px 12px;
   background: var(--surface-1);
   border: 1px solid var(--border-divider);
   border-radius: var(--radius-md);
-  padding: 16px;
+  padding: 12px;
   scroll-margin-top: 128px;
 }
+
+.sr-pick-card-head { grid-area: head; }
+.sr-pick-card-price { grid-area: price; }
+.sr-pick-card-os { grid-area: os; }
+.sr-pick-specs { grid-area: specs; }
+.sr-pick-card-action { grid-area: action; }
+.sr-pick-stock { grid-area: stock; }
+
+@media (min-width: 720px) {
+  .sr-pick-card {
+    grid-template-columns: minmax(150px, 1fr) minmax(160px, 1fr) minmax(240px, 2fr) minmax(150px, 0.9fr);
+    grid-template-areas:
+      "head price specs action"
+      "os price specs stock";
+    gap: 4px 16px;
+    padding: 14px 18px;
+  }
+
+  .sr-pick-specs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 20px;
+    margin: 0;
+    padding: 0 0 0 16px;
+    border-top: 0;
+    border-left: 1px solid var(--border-divider);
+  }
+
+  .sr-pick-card-action {
+    align-self: end;
+  }
+}
+
 
 .sr-pick-card-head {
   display: flex;
@@ -2513,7 +2546,9 @@ body {
 
 .sr-pick-specs {
   display: grid;
-  gap: 2px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 20px;
+  min-width: 0;
   margin: 2px 0 0;
   padding: 8px 0 0;
   border-top: 1px solid var(--border-divider);
@@ -2521,17 +2556,20 @@ body {
 
 .sr-pick-spec {
   display: flex;
-  justify-content: space-between;
-  gap: 12px;
+  justify-content: flex-start;
+  gap: 8px;
+  min-width: 0;
   margin: 0;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
 }
 
 .sr-pick-spec dt {
+  flex: 0 0 60px;
   color: var(--text-dim);
 }
 
 .sr-pick-spec dd {
+  min-width: 0;
   margin: 0;
   color: var(--text);
   font-variant-numeric: tabular-nums;
@@ -2580,45 +2618,6 @@ body {
 .sr-pick-card-buy {
   width: 100%;
   min-height: 44px;
-}
-
-.sr-picker-summary {
-  position: sticky;
-  bottom: 12px;
-  z-index: 5;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 12px;
-  align-items: center;
-  background: var(--surface-2);
-  border: 1px solid var(--primary);
-  border-radius: var(--radius-md);
-  box-shadow: 0 12px 32px color-mix(in srgb, var(--text) 9%, transparent);
-  padding: 12px 16px;
-}
-
-.sr-picker-summary-text {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px 8px;
-  align-items: baseline;
-  margin: 0;
-  font-size: 0.875rem;
-}
-
-.sr-picker-summary-text strong {
-  color: var(--text);
-}
-
-.sr-picker-summary-text span {
-  color: var(--text-dim);
-}
-
-.sr-picker-summary-price {
-  color: var(--text);
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
 }
 
 .sr-compare-details {
