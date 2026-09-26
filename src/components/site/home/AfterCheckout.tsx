@@ -27,7 +27,7 @@ export function AfterCheckout() {
         </div>
 
         <div className="srv3-review-grid">
-          {testimonials.slice(0, 6).map((item, index) => (
+          {testimonials.slice(0, 3).map((item, index) => (
             <Card
               key={item.id ?? item._id ?? index}
               className={cn('gap-4', index === 0 && 'bg-surface-2')}
