@@ -85,9 +85,9 @@ export function HomePricing() {
   }, [visible, selectedWorkload.target]);
 
   return (
-    <div className="mx-auto flex max-w-7xl flex-col gap-6">
+    <div className="flex w-full flex-col gap-5">
       <Card>
-        <CardContent className="grid gap-5 p-5 lg:grid-cols-[auto_auto_1fr] lg:items-end">
+        <CardContent className="grid gap-5 p-5 md:p-6 xl:grid-cols-[auto_auto_minmax(520px,1fr)] xl:items-end xl:gap-8">
           <div className="flex flex-col gap-2">
             <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Region</span>
             <ButtonGroup aria-label="Deployment region">
@@ -128,9 +128,9 @@ export function HomePricing() {
             </ButtonGroup>
           </div>
 
-          <div className="flex flex-col gap-2 lg:items-end">
+          <div className="flex min-w-0 flex-col gap-2">
             <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Billing cycle</span>
-            <ButtonGroup aria-label="Billing cycle" className="flex-wrap lg:justify-end">
+            <ButtonGroup aria-label="Billing cycle" className="flex w-full flex-wrap xl:flex-nowrap">
               {cycles.map(item => (
                 <Button
                   key={item}
@@ -139,6 +139,7 @@ export function HomePricing() {
                   variant={cycle === item ? 'default' : 'outline'}
                   aria-pressed={cycle === item}
                   onClick={() => setCycle(item)}
+                  className="min-w-[96px] flex-1"
                 >
                   {cycleLabel[item]}
                 </Button>
@@ -170,7 +171,7 @@ export function HomePricing() {
         <Badge variant="outline">{visible.length} plans in preview</Badge>
       </div>
 
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-3 xl:gap-6">
         {visible.map(plan => {
           const price = plan.pricing[cycle];
           const monthEquivalent = price.amount / months[cycle];
