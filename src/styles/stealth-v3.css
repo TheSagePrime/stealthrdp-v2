@@ -2406,32 +2406,10 @@ body {
 }
 
 /* --- Plan picker ----------------------------------------------------------
-   One guided stack: region + use-case row, a compact billing strip, stacked
-   plan cards, and a sticky selection summary. The ledger table survives only
-   as a collapsed comparison inside .sr-compare-details.
+   Region + billing strip on top, buyable plan cards, sticky selection
+   summary. The ledger table survives only as a collapsed comparison
+   inside .sr-compare-details.
    ------------------------------------------------------------------------- */
-.sr-picker-row {
-  display: grid;
-  gap: 16px;
-}
-
-@media (min-width: 900px) {
-  .sr-picker-row {
-    grid-template-columns: auto minmax(0, 1fr);
-    align-items: start;
-  }
-}
-
-.sr-use-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-}
-
-.sr-use-chips [data-slot="button"] {
-  min-height: 44px;
-}
-
 .sr-cycle-strip {
   display: flex;
   flex-wrap: wrap;
@@ -2518,12 +2496,6 @@ body {
   display: flex;
   flex-shrink: 0;
   gap: 6px;
-}
-
-.sr-pick-card-tag {
-  margin: 0;
-  color: var(--text-dim);
-  font-size: 0.8125rem;
 }
 
 .sr-pick-card-specs {

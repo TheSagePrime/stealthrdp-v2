@@ -56,14 +56,19 @@ describe('PricingExplorer purchase decisions', () => {
     expect(page.getByRole('rowheader', { name: /Bronze USA/ })).not.toBeInTheDocument();
   });
 
-  it('shows every plan as a card with its specs and a visible total due today', async () => {
+  it('shows only buyable plans as cards, each with specs and a visible total', async () => {
     await render(<PricingExplorer showComparison />);
     await userEvent.click(page.getByRole('button', { name: /^Annual/ }));
 
     const cards = [...document.querySelectorAll('.sr-pick-card')];
-    expect(cards.length, 'every USA plan renders as a card').toBe(6);
+    expect(cards.length, 'only the in-stock USA plan renders as a card').toBe(1);
+    expect(cards[0]?.textContent).toContain('Bronze USA');
     expect(cards.every(card => (card.textContent ?? '').includes('due today')), 'every card shows its total due today').toBe(true);
-    expect(cards.every(card => card.querySelector('a[href*="dash.stealthrdp.com"]') !== null || card.querySelector('.sr-ledger-alt') !== null), 'every card offers a buy route or a stocked alternative').toBe(true);
+    expect(cards.every(card => !(card.textContent ?? '').includes('Out of stock')), 'no card is a dead end').toBe(true);
+    expect(cards[0]?.querySelector('a[href*="dash.stealthrdp.com"]')).not.toBeNull();
+
+    /* Sold-out plans collapse to one honest line instead of five dead cards. */
+    expect(page.getByText(/are out of stock/)).toBeInTheDocument();
 
     /* The sticky summary always names the current selection and its total. */
     const summary = document.querySelector('.sr-picker-summary');
@@ -99,23 +104,19 @@ describe('PricingExplorer purchase decisions', () => {
     expect(document.querySelectorAll('tbody a[href*="dash.stealthrdp.com"]:not(.sr-ledger-alt)').length).toBe(1);
   });
 
-  it('selects a use case from the visible chips and moves the best-fit marker', async () => {
+  it('marks the popular in-stock plan and invents no best-fit guess', async () => {
     /* The marker lives on the comparison table, so render it (collapsed). */
     await render(<PricingExplorer showComparison />);
     await userEvent.click(page.getByRole('button', { name: /^Monthly/ }));
 
-    expect(badgeFor('Bronze USA')).toBe('Best fit');
-
-    await userEvent.click(page.getByRole('button', { name: 'Trading', exact: true }));
-
-    expect(page.getByRole('button', { name: 'Trading', exact: true })).toHaveAttribute('aria-pressed', 'true');
-    expect(badgeFor('Gold USA')).toBe('Best fit');
+    expect(badgeFor('Bronze USA')).toBe('Most Popular');
+    expect(document.body.textContent).not.toContain('Best fit');
   });
 
   it('describes OS selection at checkout rather than offering an ineffective filter', async () => {
     await render(<PricingExplorer />);
 
-    expect(page.getByText(/Choose Windows or Linux during checkout/)).toBeInTheDocument();
+    expect(page.getByText(/Windows or Linux is selected during checkout/)).toBeInTheDocument();
     expect(page.getByRole('button', { name: 'Windows' })).not.toBeInTheDocument();
     expect(page.getByRole('button', { name: 'Linux' })).not.toBeInTheDocument();
   });

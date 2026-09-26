@@ -138,7 +138,7 @@ export default async function HomePage({ params }: Props) {
             </Link>
           </div>
 
-          <PricingExplorer compact guided={false} />
+          <PricingExplorer compact />
 
           <div className="srv3-section-action">
             <Button asChild variant="outline">

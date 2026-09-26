@@ -101,7 +101,7 @@ export default function WindowsVpsPage() {
             </div>
             <p>Compare the current displayed monthly price, CPU, RAM, NVMe storage, bandwidth, and region. Windows and Linux use this shared VPS catalog.</p>
           </div>
-          <PricingExplorer guided={false} />
+          <PricingExplorer />
         </div>
       </section>
 

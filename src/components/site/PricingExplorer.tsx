@@ -36,16 +36,6 @@ const priceHeader: Record<BillingCycle, string> = {
 
 const formatPrice = (amount: number) => Number.isInteger(amount) ? `${amount}` : amount.toFixed(2);
 
-const workloadOptions = [
-  { key: 'remote-desktop', label: 'Remote desktop', tier: 'Bronze' },
-  { key: 'web-hosting', label: 'Web hosting', tier: 'Silver' },
-  { key: 'automation', label: 'Automation & bots', tier: 'Gold' },
-  { key: 'trading', label: 'Trading', tier: 'Gold' },
-  { key: 'storage', label: 'Storage & backups', tier: 'Silver' },
-] as const;
-
-type WorkloadKey = (typeof workloadOptions)[number]['key'];
-
 /** Read a comparable number out of a published spec string. */
 const specNumber = (value: string) => Number.parseInt(value.replace(/[^\d]/g, ''), 10) || 0;
 
@@ -87,14 +77,12 @@ function alternativeFor(plan: Plan, candidates: Plan[]): Plan | null {
 function PlanRow({
   plan,
   cycle,
-  recommended,
   showPopular,
   maxima,
   alternative,
 }: {
   plan: Plan;
   cycle: BillingCycle;
-  recommended: boolean;
   showPopular: boolean;
   maxima: { cpu: number; ram: number; storage: number };
   alternative?: Plan | null;
@@ -107,8 +95,7 @@ function PlanRow({
       <th scope="row">
         <span className="sr-plan-row">
           {plan.name}
-          {recommended ? <Badge>Best fit</Badge> : null}
-          {showPopular && !recommended ? <Badge variant="outline">Most Popular</Badge> : null}
+          {showPopular ? <Badge variant="outline">Most Popular</Badge> : null}
           <span className="sr-ledger-meta">{plan.description}</span>
         </span>
         <span className="sr-ledger-meta">
@@ -175,37 +162,30 @@ function PlanRow({
   );
 }
 
-/** One plan as a self-contained card: specs, total due today, and its own Buy action. No sideways scroll. */
+/** One buyable plan as a self-contained card: specs, total due today, and its
+    own Buy action. Sold-out plans never reach this component. */
 function PlanCard({
   plan,
   cycle,
-  recommended,
   showPopular,
-  alternative,
 }: {
   plan: Plan;
   cycle: BillingCycle;
-  recommended: boolean;
   showPopular: boolean;
-  alternative?: Plan | null;
 }) {
   const price = plan.pricing[cycle];
-  const available = plan.source.availability !== 'out-of-stock';
 
   return (
     <article
       className="sr-pick-card"
       id={`plan-${planSlug(plan.name)}`}
-      data-availability={available ? 'in-stock' : 'out-of-stock'}
     >
       <div className="sr-pick-card-head">
         <h3 className="sr-pick-card-name">{plan.name}</h3>
         <div className="sr-pick-card-badges">
-          {recommended ? <Badge>Best fit</Badge> : null}
-          {showPopular && !recommended ? <Badge variant="outline">Most Popular</Badge> : null}
+          {showPopular ? <Badge variant="outline">Most Popular</Badge> : null}
         </div>
       </div>
-      <p className="sr-pick-card-tag">{plan.description}</p>
       <p className="sr-pick-card-specs">
         {plan.specs.cpu} · {plan.specs.ram} RAM · {plan.specs.storage} · {plan.specs.bandwidth} bandwidth
       </p>
@@ -217,31 +197,14 @@ function PlanCard({
         ) : null}
       </p>
       <div className="sr-pick-card-action">
-        {available ? (
-          <Button asChild className="sr-pick-card-buy">
-            <a
-              href={checkoutUrl(plan, cycle)}
-              aria-label={`Buy ${plan.name} — leaves this site for the StealthRDP checkout at dash.stealthrdp.com`}
-            >
-              Buy Now (secure checkout) <ArrowSquareOut size={14} aria-hidden="true" />
-            </a>
-          </Button>
-        ) : (
-          <div className="sr-ledger-stack">
-            <Pill state="warn" icon={<span aria-hidden="true">!</span>}>
-              Out of stock
-            </Pill>
-            {alternative ? (
-              <a
-                className="sr-ledger-alt"
-                href={`#plan-${planSlug(alternative.name)}`}
-                aria-label={`${plan.name} is out of stock — see ${alternative.name} instead`}
-              >
-                See {alternative.name}
-              </a>
-            ) : null}
-          </div>
-        )}
+        <Button asChild className="sr-pick-card-buy">
+          <a
+            href={checkoutUrl(plan, cycle)}
+            aria-label={`Buy ${plan.name} — leaves this site for the StealthRDP checkout at dash.stealthrdp.com`}
+          >
+            Buy Now (secure checkout) <ArrowSquareOut size={14} aria-hidden="true" />
+          </a>
+        </Button>
       </div>
     </article>
   );
@@ -249,11 +212,9 @@ function PlanCard({
 
 export function PricingExplorer({
   compact = false,
-  guided = true,
   showComparison = false,
 }: {
   compact?: boolean;
-  guided?: boolean;
   showComparison?: boolean;
 }) {
   const [region, setRegion] = useState<'USA' | 'EU'>(() => {
@@ -265,8 +226,6 @@ export function PricingExplorer({
     const fromUrl = new URLSearchParams(window.location.search).get('cycle') as BillingCycle | null;
     return cycleOrder.includes(fromUrl as BillingCycle) ? (fromUrl as BillingCycle) : 'monthly';
   });
-  const [workload, setWorkload] = useState<WorkloadKey>('remote-desktop');
-
   /* Shareable state: region + cycle survive refresh and shared links. */
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -275,12 +234,14 @@ export function PricingExplorer({
     window.history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`);
   }, [region, cycle]);
 
-  const recommendedTier = workloadOptions.find(item => item.key === workload)?.tier ?? 'Bronze';
-  const isRecommended = (plan: Plan) =>
-    guided && plan.name.toLowerCase().startsWith(recommendedTier.toLowerCase());
-
   const inRegion = useMemo(() => plans.filter(plan => plan.location === region), [region]);
-  const visible = useMemo(() => (compact ? inRegion.slice(0, 3) : inRegion), [compact, inRegion]);
+  /* Cards show only what the customer can buy today. Sold-out plans get one
+     honest line below the cards; the full lineup stays in the comparison table. */
+  const buyable = useMemo(
+    () => inRegion.filter(plan => plan.source.availability !== 'out-of-stock'),
+    [inRegion],
+  );
+  const visible = useMemo(() => (compact ? buyable.slice(0, 3) : buyable), [compact, buyable]);
 
   const maxima = useMemo(() => ({
     cpu: Math.max(...inRegion.map(plan => specNumber(plan.specs.cpu))),
@@ -301,59 +262,34 @@ export function PricingExplorer({
     [region],
   );
 
-  /* The summary follows the highlighted tier: recommended and buyable when
-     possible, otherwise the first buyable plan in the region. */
+  /* The summary follows the popular plan when it is buyable,
+     otherwise the first buyable plan in the region. */
   const highlighted = useMemo(
-    () => inRegion.find(plan => isRecommended(plan) && plan.source.availability !== 'out-of-stock')
-      ?? inRegion.find(plan => plan.source.availability !== 'out-of-stock')
-      ?? inRegion[0] ?? null,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [inRegion, region, workload, guided],
+    () => inRegion.find(plan => plan.name === popularName && plan.source.availability !== 'out-of-stock')
+      ?? buyable[0] ?? null,
+    [inRegion, buyable, popularName],
   );
   const highlightedAvailable = highlighted?.source.availability !== 'out-of-stock';
   const highlightedPrice = highlighted?.pricing[cycle];
 
   return (
     <div className="sr-pricing-explorer">
-      <div className="sr-picker-row">
-        <div className="sr-control-stack">
-          <span className="sr-control-label">Deployment region</span>
-          <ButtonGroup className="sr-segmented-control" aria-label="Deployment region">
-            {(['USA', 'EU'] as const).map(item => (
-              <Button
-                key={item}
-                type="button"
-                size="sm"
-                variant={region === item ? 'default' : 'outline'}
-                aria-pressed={region === item}
-                onClick={() => setRegion(item)}
-              >
-                {item}
-              </Button>
-            ))}
-          </ButtonGroup>
-        </div>
-
-        {guided ? (
-          <div className="sr-control-stack">
-            <span className="sr-control-label" id="sr-use-case-label">Use case</span>
-            <div className="sr-use-chips" role="group" aria-labelledby="sr-use-case-label">
-              {workloadOptions.map(item => (
-                <Button
-                  key={item.key}
-                  type="button"
-                  size="sm"
-                  variant={workload === item.key ? 'default' : 'outline'}
-                  aria-pressed={workload === item.key}
-                  onClick={() => setWorkload(item.key)}
-                >
-                  {item.label}
-                </Button>
-              ))}
-            </div>
-            <p className="sr-ledger-note">Choose Windows or Linux during checkout. Both options use these VPS plans.</p>
-          </div>
-        ) : null}
+      <div className="sr-control-stack">
+        <span className="sr-control-label">Deployment region</span>
+        <ButtonGroup className="sr-segmented-control" aria-label="Deployment region">
+          {(['USA', 'EU'] as const).map(item => (
+            <Button
+              key={item}
+              type="button"
+              size="sm"
+              variant={region === item ? 'default' : 'outline'}
+              aria-pressed={region === item}
+              onClick={() => setRegion(item)}
+            >
+              {item}
+            </Button>
+          ))}
+        </ButtonGroup>
       </div>
 
       <div className="sr-control-stack sr-cycle-stack">
@@ -399,7 +335,7 @@ export function PricingExplorer({
       </div>
 
       <p className="sr-ledger-note sr-ledger-summary" data-plan-summary>
-        Showing {visible.length} {region} {visible.length === 1 ? 'plan' : 'plans'} · {priceHeader[cycle].toLowerCase()}
+        Showing {visible.length} available {region} {visible.length === 1 ? 'plan' : 'plans'} · {priceHeader[cycle].toLowerCase()}
       </p>
 
       <div className="sr-pick-cards">
@@ -408,9 +344,7 @@ export function PricingExplorer({
             key={plan.name}
             plan={plan}
             cycle={cycle}
-            recommended={isRecommended(plan)}
             showPopular={plan.name === popularName}
-            alternative={alternativeFor(plan, plans)}
           />
         ))}
       </div>
@@ -498,7 +432,6 @@ export function PricingExplorer({
                     key={plan.name}
                     plan={plan}
                     cycle={cycle}
-                    recommended={isRecommended(plan)}
                     showPopular={plan.name === popularName}
                     maxima={maxima}
                     alternative={alternativeFor(plan, plans)}
