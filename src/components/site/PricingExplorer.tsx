@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowSquareOut } from '@phosphor-icons/react';
+import { ArrowSquareOut, CaretDown } from '@phosphor-icons/react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
@@ -462,13 +462,18 @@ export function PricingExplorer({
       ) : null}
 
       {showComparison ? (
-        <details className="sr-compare-details">
-          <summary className="sr-compare-summary">
-            <span className="sr-kicker">02 / Compare precisely</span>
-            <span className="sr-ledger-title">
-              See the difference in one view. <span className="sr-visually-hidden">VPS Features Comparison</span>
-            </span>
-          </summary>
+        <>
+          <h2 className="sr-ledger-title">
+            See the difference in one view. <span className="sr-visually-hidden">VPS Features Comparison</span>
+          </h2>
+          <details className="sr-compare-details">
+            <summary className="sr-compare-summary">
+              <span className="sr-kicker">02 / Compare precisely</span>
+              <span className="sr-compare-label">
+                Compare all specs
+                <CaretDown size={14} aria-hidden="true" />
+              </span>
+            </summary>
           <p className="sr-ledger-note">
             Use this table for a quick resource check. Checkout confirms the current price and availability.
           </p>
@@ -502,7 +507,8 @@ export function PricingExplorer({
               </TableBody>
             </Table>
           </div>
-        </details>
+          </details>
+        </>
       ) : null}
     </div>
   );

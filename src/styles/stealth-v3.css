@@ -2573,7 +2573,7 @@ body {
   background: var(--surface-2);
   border: 1px solid var(--primary);
   border-radius: var(--radius-md);
-  box-shadow: 0 8px 24px rgb(0 0 0 / 0.25);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--text) 9%, transparent);
   padding: 12px 16px;
 }
 
@@ -2620,6 +2620,27 @@ body {
 
 .sr-compare-summary .sr-ledger-title {
   margin: 0;
+}
+
+/* The expander hides the native marker, so the label carries the affordance. */
+.sr-compare-label {
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+}
+
+.sr-compare-label svg {
+  color: var(--text-dim);
+  transition: transform 160ms ease;
+}
+
+.sr-compare-details[open] .sr-compare-label svg {
+  transform: rotate(180deg);
 }
 
 @media (max-width: 900px) {

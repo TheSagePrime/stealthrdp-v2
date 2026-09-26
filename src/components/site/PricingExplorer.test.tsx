@@ -20,7 +20,7 @@ function badgeFor(name: string) {
 
 /** The spec table lives inside a collapsed comparison expander: open it first. */
 async function openComparison() {
-  await userEvent.click(page.getByText(/See the difference in one view/));
+  await userEvent.click(page.getByText('Compare all specs'));
 }
 
 describe('PricingExplorer purchase decisions', () => {
