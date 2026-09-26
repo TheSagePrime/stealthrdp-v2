@@ -6,6 +6,7 @@ import { useMemo, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
+import { Card, CardContent } from '@/components/ui/card';
 import { PricingColumn } from '@/components/launchui/pricing-column';
 import {
   billingCycles,
@@ -53,8 +54,9 @@ export function HomePricing() {
 
   return (
     <div className="mx-auto flex max-w-7xl flex-col gap-8">
-      <div className="flex flex-col justify-between gap-5 rounded-xl border border-border bg-card p-4 sm:flex-row sm:items-end sm:p-5">
-        <div className="flex flex-wrap gap-5 sm:gap-8">
+      <Card>
+        <CardContent className="flex flex-col justify-between gap-5 p-4 sm:flex-row sm:items-end sm:p-5">
+          <div className="flex flex-wrap gap-5 sm:gap-8">
           <div className="flex flex-col gap-2">
             <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
               Region
@@ -79,7 +81,7 @@ export function HomePricing() {
             <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
               Billing
             </span>
-            <ButtonGroup aria-label="Billing cycle" className="flex-wrap">
+            <ButtonGroup aria-label="Billing cycle" className="grid w-full grid-cols-3 sm:w-auto">
               {homepageCycles.map(item => {
                 const discount = (billingCycles[item] as { discountLabel?: string }).discountLabel;
                 return (
@@ -92,7 +94,7 @@ export function HomePricing() {
                     onClick={() => setCycle(item)}
                   >
                     {cycleLabel[item]}
-                    {discount ? <span className="text-xs opacity-75">{discount}</span> : null}
+                    {discount ? <span className="text-xs opacity-75">{discount.replace('Save ', '−')}</span> : null}
                   </Button>
                 );
               })}
@@ -100,10 +102,11 @@ export function HomePricing() {
           </div>
         </div>
 
-        <p className="text-sm text-muted-foreground">
-          {visible.length} {region} {visible.length === 1 ? 'plan' : 'plans'} available now
-        </p>
-      </div>
+          <p className="text-sm text-muted-foreground">
+            {visible.length} {region} {visible.length === 1 ? 'plan' : 'plans'} available now
+          </p>
+        </CardContent>
+      </Card>
 
       <div className={visible.length === 2
         ? 'mx-auto grid w-full max-w-4xl grid-cols-1 gap-5 md:grid-cols-2'
