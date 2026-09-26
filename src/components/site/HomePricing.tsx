@@ -9,8 +9,7 @@ import { ButtonGroup } from '@/components/ui/button-group';
 import { Card, CardContent } from '@/components/ui/card';
 import { PricingColumn } from '@/components/launchui/pricing-column';
 import {
-  billingCycles,
-  checkoutUrl,
+   checkoutUrl,
   plans,
   type BillingCycle,
 } from '@/lib/stealth/content';
@@ -57,7 +56,7 @@ export function HomePricing() {
       <Card>
         <CardContent className="flex flex-col justify-between gap-5 p-4 sm:flex-row sm:items-end sm:p-5">
           <div className="flex flex-wrap gap-5 sm:gap-8">
-          <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2">
             <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
               Region
             </span>
@@ -75,32 +74,28 @@ export function HomePricing() {
                 </Button>
               ))}
             </ButtonGroup>
-          </div>
+            </div>
 
-          <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2">
             <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
               Billing
             </span>
             <ButtonGroup aria-label="Billing cycle" className="grid w-full grid-cols-3 sm:w-auto">
-              {homepageCycles.map(item => {
-                const discount = (billingCycles[item] as { discountLabel?: string }).discountLabel;
-                return (
-                  <Button
-                    key={item}
-                    type="button"
-                    size="sm"
-                    variant={cycle === item ? 'default' : 'outline'}
-                    aria-pressed={cycle === item}
-                    onClick={() => setCycle(item)}
-                  >
-                    {cycleLabel[item]}
-                    {discount ? <span className="text-xs opacity-75">{discount.replace('Save ', '−')}</span> : null}
-                  </Button>
-                );
-              })}
+              {homepageCycles.map(item => (
+                <Button
+                  key={item}
+                  type="button"
+                  size="sm"
+                  variant={cycle === item ? 'default' : 'outline'}
+                  aria-pressed={cycle === item}
+                  onClick={() => setCycle(item)}
+                >
+                  {cycleLabel[item]}
+                </Button>
+              ))}
             </ButtonGroup>
+            </div>
           </div>
-        </div>
 
           <p className="text-sm text-muted-foreground">
             {visible.length} {region} {visible.length === 1 ? 'plan' : 'plans'} available now
