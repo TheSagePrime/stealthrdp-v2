@@ -266,44 +266,45 @@ export default async function HomePage({ params }: Props) {
         </div>
       </Section>
 
-      <Section className="border-y border-border bg-card/30 py-16 sm:py-20">
-        <div className="mx-auto flex max-w-7xl flex-col gap-10">
-          <div className="grid gap-5 lg:grid-cols-[1fr_0.65fr] lg:items-end">
-            <div className="grid max-w-4xl gap-4">
+      <Section className="srv-home-infra border-y border-border bg-card/30 py-10 sm:py-12 lg:py-14">
+        <div className="srv-home-wide flex flex-col gap-7">
+          <div className="grid gap-5 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.55fr)] lg:items-end">
+            <div className="grid max-w-4xl gap-3">
               <p className="text-xs font-semibold uppercase tracking-widest text-primary">
                 Core infrastructure
               </p>
-              <h2 className="text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
+              <h2 className="text-3xl font-semibold leading-tight tracking-tight">
                 Infrastructure that doesn&apos;t flinch.
               </h2>
             </div>
-            <div className="flex flex-col gap-4 lg:items-end">
-              <p className="max-w-lg text-base leading-7 text-muted-foreground">
-                Speed, isolation, network reach, and visibility without turning the page into a
-                wall of feature claims.
+            <div className="flex items-end gap-4 lg:justify-end">
+              <p className="max-w-md text-sm leading-6 text-muted-foreground">
+                Speed, isolation, network reach, and visibility without the feature-wall.
               </p>
-              <Button asChild variant="outline">
+              <Button asChild variant="outline" size="sm" className="shrink-0">
                 <Link href="/status">
-                  View server status
+                  Server status
                   <ArrowRight className="size-4" aria-hidden="true" />
                 </Link>
               </Button>
             </div>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
             {infrastructure.map(({ title, text, label, icon: Icon }, index) => (
-              <Card key={title} className="gap-5 p-7">
+              <Card key={title} className="srv-home-feature-card gap-3 p-5">
                 <CardHeader className="p-0">
-                  <div className="flex items-center justify-between gap-4">
-                    <div className="grid size-10 place-items-center rounded-md border border-border bg-muted/30 text-primary">
-                      <Icon className="size-5" />
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="srv-home-feature-icon grid size-9 place-items-center rounded-md border border-border bg-muted/30 text-primary">
+                      <Icon className="size-4" />
                     </div>
-                    <Badge variant="outline">{String(index + 1).padStart(2, '0')} · {label}</Badge>
+                    <span className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                      {String(index + 1).padStart(2, '0')} · {label}
+                    </span>
                   </div>
-                  <CardTitle className="mt-3 text-xl tracking-tight">{title}</CardTitle>
+                  <CardTitle className="mt-2 text-lg tracking-tight">{title}</CardTitle>
                 </CardHeader>
-                <CardContent className="p-0 text-sm leading-7 text-muted-foreground">
+                <CardContent className="p-0 text-sm leading-6 text-muted-foreground">
                   {text}
                 </CardContent>
               </Card>
@@ -312,9 +313,9 @@ export default async function HomePage({ params }: Props) {
         </div>
       </Section>
 
-      <Section className="py-16 sm:py-20">
-        <div className="mx-auto grid max-w-7xl gap-5 lg:grid-cols-[0.8fr_1.2fr] lg:items-stretch">
-          <div className="flex flex-col justify-between gap-8 rounded-xl border border-border bg-card p-8">
+      <Section className="srv-home-products py-10 sm:py-12 lg:py-14">
+        <div className="srv-home-wide grid gap-4 lg:grid-cols-[0.78fr_1.22fr] lg:items-stretch">
+          <div className="flex flex-col justify-between gap-6 rounded-xl border border-border bg-card p-6 lg:p-7">
             <div className="grid gap-4">
               <p className="text-xs font-semibold uppercase tracking-widest text-primary">
                 StealthRDP products
@@ -322,9 +323,9 @@ export default async function HomePage({ params }: Props) {
               <h2 className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
                 Run the workload. Protect the origin.
               </h2>
-              <p className="text-base leading-7 text-muted-foreground">
-                The hosting product runs the machine. Citadel adds application-layer protection
-                when the origin needs another defensive layer.
+              <p className="text-sm leading-6 text-muted-foreground">
+                VPS hosting runs the machine. Citadel adds application-layer protection when the
+                origin needs another defensive layer.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
@@ -337,13 +338,13 @@ export default async function HomePage({ params }: Props) {
             </div>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2">
-            <Card className="gap-5 p-7">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Card className="srv-home-product-card gap-4 p-6">
               <CardHeader className="p-0">
                 <Badge variant="outline" className="w-fit">Hosting</Badge>
-                <CardTitle className="mt-4 text-2xl tracking-tight">Windows and Linux VPS</CardTitle>
+                <CardTitle className="mt-3 text-xl tracking-tight">Windows and Linux VPS</CardTitle>
               </CardHeader>
-              <CardContent className="p-0 text-sm leading-7 text-muted-foreground">
+              <CardContent className="p-0 text-sm leading-6 text-muted-foreground">
                 USA and EU regions, NVMe storage, dedicated IPv4, full administrative access,
                 and flexible billing terms.
               </CardContent>
@@ -357,12 +358,12 @@ export default async function HomePage({ params }: Props) {
               </CardFooter>
             </Card>
 
-            <Card className="gap-5 p-7">
+            <Card className="srv-home-product-card gap-4 p-6">
               <CardHeader className="p-0">
                 <Badge variant="outline" className="w-fit">Protection</Badge>
-                <CardTitle className="mt-4 text-2xl tracking-tight">Citadel L7 HTTP/HTTPS protection</CardTitle>
+                <CardTitle className="mt-3 text-xl tracking-tight">Citadel L7 HTTP/HTTPS protection</CardTitle>
               </CardHeader>
-              <CardContent className="p-0 text-sm leading-7 text-muted-foreground">
+              <CardContent className="p-0 text-sm leading-6 text-muted-foreground">
                 Adaptive challenges, rate limits, allowlists, temporary bans, automatic
                 escalation, origin health, and incident visibility.
               </CardContent>
@@ -379,73 +380,84 @@ export default async function HomePage({ params }: Props) {
         </div>
       </Section>
 
-      <Section className="border-y border-border bg-card/30 py-16 sm:py-20">
-        <div className="mx-auto flex max-w-7xl flex-col gap-10">
-          <div className="grid gap-5 lg:grid-cols-[1fr_0.65fr] lg:items-end">
-            <div className="grid gap-4">
+      <Section className="srv-home-reviews border-y border-border bg-card/30 py-10 sm:py-12 lg:py-14">
+        <div className="srv-home-wide flex flex-col gap-7">
+          <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.5fr)] lg:items-end">
+            <div className="grid gap-3">
               <p className="text-xs font-semibold uppercase tracking-widest text-primary">
                 Customer proof
               </p>
-              <h2 className="text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
-                Verified customer testimonials.
+              <h2 className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
+                What customers say.
               </h2>
             </div>
-            <p className="max-w-lg text-base leading-7 text-muted-foreground lg:justify-self-end">
-              Selected first-party feedback and third-party reviews from customers who have used
-              StealthRDP.
+            <p className="max-w-md text-sm leading-6 text-muted-foreground lg:justify-self-end">
+              First-party feedback and independent reviews from StealthRDP customers.
             </p>
           </div>
 
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {testimonials.slice(0, 6).map((item, index) => (
-              <Card
-                key={item.id ?? item._id ?? index}
-                className={`gap-5 p-6 ${index === 0 ? 'md:col-span-2 lg:col-span-1' : ''}`}
-              >
-                <CardHeader className="p-0">
-                  <Badge variant="outline" className="w-fit text-muted-foreground">
-                    {reviewSource(item)}
-                  </Badge>
-                </CardHeader>
-                <CardContent className="p-0">
-                  <blockquote className="text-sm leading-7 text-foreground">
-                    {item.quote}
-                  </blockquote>
-                </CardContent>
-                <CardFooter className="mt-auto items-end justify-between gap-4 p-0">
-                  <div className="grid gap-1">
-                    <strong className="text-sm font-semibold">{item.authorName}</strong>
-                    <span className="text-xs text-muted-foreground">
-                      {item.authorCompany || item.publishedOn || 'StealthRDP customer'}
-                    </span>
-                  </div>
-                  {item.sourceUrl ? (
-                    <Button asChild size="icon" variant="outline">
-                      <a
-                        href={item.sourceUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label={`View source for review by ${item.authorName}`}
-                      >
-                        <ArrowUpRight className="size-4" aria-hidden="true" />
-                      </a>
-                    </Button>
-                  ) : null}
-                </CardFooter>
-              </Card>
-            ))}
+          <div className="srv-review-marquee" aria-label="Customer testimonials">
+            <div className="srv-review-track">
+              {[false, true].map(clone => (
+                <div
+                  className="srv-review-set"
+                  data-clone={clone ? 'true' : 'false'}
+                  aria-hidden={clone || undefined}
+                  key={String(clone)}
+                >
+                  {testimonials.slice(0, 6).map((item, index) => (
+                    <Card
+                      key={`${clone ? 'clone-' : ''}${item.id ?? item._id ?? index}`}
+                      className="srv-review-card gap-4 p-5"
+                    >
+                      <CardHeader className="p-0">
+                        <Badge variant="outline" className="w-fit text-muted-foreground">
+                          {reviewSource(item)}
+                        </Badge>
+                      </CardHeader>
+                      <CardContent className="p-0">
+                        <blockquote className="line-clamp-4 text-sm leading-6 text-foreground">
+                          {item.quote}
+                        </blockquote>
+                      </CardContent>
+                      <CardFooter className="mt-auto items-end justify-between gap-4 p-0">
+                        <div className="grid gap-1">
+                          <strong className="text-sm font-semibold">{item.authorName}</strong>
+                          <span className="text-xs text-muted-foreground">
+                            {item.authorCompany || item.publishedOn || 'StealthRDP customer'}
+                          </span>
+                        </div>
+                        {item.sourceUrl ? (
+                          <Button asChild size="icon" variant="outline">
+                            <a
+                              href={item.sourceUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              tabIndex={clone ? -1 : undefined}
+                              aria-label={clone ? undefined : `View source for review by ${item.authorName}`}
+                            >
+                              <ArrowUpRight className="size-4" aria-hidden="true" />
+                            </a>
+                          </Button>
+                        ) : null}
+                      </CardFooter>
+                    </Card>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </Section>
 
-      <Section className="py-16 sm:py-20">
-        <Card className="mx-auto max-w-7xl gap-8 p-8 sm:p-10 lg:grid lg:grid-cols-[1fr_auto] lg:items-center">
+      <Section className="srv-home-final-section py-8 sm:py-10 lg:py-12">
+        <Card className="srv-home-wide gap-6 p-6 sm:p-8 lg:grid lg:grid-cols-[1fr_auto] lg:items-center">
           <div className="grid gap-4">
             <Badge variant="outline" className="w-fit">Backed by 10,000+ orders</Badge>
-            <h2 className="max-w-4xl text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
+            <h2 className="max-w-3xl text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
               Ready to stop wasting time on server management?
             </h2>
-            <p className="max-w-2xl text-base leading-7 text-muted-foreground">
+            <p className="max-w-2xl text-sm leading-6 text-muted-foreground">
               Deploy a high-performance VPS in the next 60 seconds and focus on the work that
               actually matters.
             </p>
