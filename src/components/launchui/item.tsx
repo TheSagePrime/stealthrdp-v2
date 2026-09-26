@@ -26,7 +26,7 @@ function ItemDescription({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div
       data-slot="launch-item-description"
-      className={cn('flex max-w-[240px] flex-col gap-2 text-sm text-muted-foreground', className)}
+      className={cn('flex max-w-60 flex-col gap-2 text-sm text-muted-foreground', className)}
       {...props}
     />
   );
