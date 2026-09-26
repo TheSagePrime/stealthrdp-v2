@@ -29,18 +29,19 @@ export function Resources() {
   return (
     <section className="sr-section srv3-resources-section" id="resources">
       <div className="sr-container">
-        <div className="srv3-section-heading">
+        <div className="srv3-resources-head">
           <div>
             <p className="sr-kicker">Need more detail?</p>
-            <h2>Everything useful stays close to the product.</h2>
+            <h2>Docs, answers, and live status.</h2>
           </div>
+          <p>Everything important stays one click away without interrupting the buying flow.</p>
         </div>
 
-        <Card>
-          <CardContent>
-            <dl className="grid gap-x-12 gap-y-8 md:grid-cols-2">
+        <Card className="srv3-resources-card">
+          <CardContent className="p-0">
+            <dl className="srv3-resource-links">
               {resources.map(({ label, text, href }) => (
-                <div key={href} className="grid content-start gap-1.5">
+                <div key={href} className="srv3-resource-item">
                   <dt>
                     <Link
                       href={href}
