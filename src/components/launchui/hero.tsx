@@ -29,7 +29,7 @@ export default function Hero({
       <div className="mx-auto flex max-w-7xl flex-col items-center gap-8 pt-8 text-center sm:pt-12">
         {badge !== false && badge}
         <div className="flex max-w-5xl flex-col items-center gap-6">
-          <h1 className="text-5xl font-semibold leading-none tracking-tight text-balance sm:text-7xl lg:text-8xl">
+          <h1 className="text-5xl font-semibold leading-none tracking-tight text-balance sm:text-7xl lg:text-7xl">
             {title}
           </h1>
           <p className="max-w-3xl text-base font-medium leading-7 text-muted-foreground text-balance sm:text-xl sm:leading-8">
