@@ -31,7 +31,7 @@ export async function load(url, context, nextLoad) {
     return {
       format: 'module',
       source: stripTypeScriptTypes(source, {
-        mode: 'transform',
+        mode: 'strip',
         sourceMap: false,
       }),
       shortCircuit: true,
