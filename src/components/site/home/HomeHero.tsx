@@ -3,15 +3,11 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 
 const osList = [
-  'Debian',
-  'CentOS',
-  'Rocky Linux',
+  'Windows Server',
   'Ubuntu',
-  'Fedora',
-  'FreeBSD',
-  'Alpine Linux',
-  'AlmaLinux',
-  'Windows',
+  'Debian',
+  'Rocky / AlmaLinux',
+  'More Linux & BSD images',
 ] as const;
 
 const deploySteps = [
