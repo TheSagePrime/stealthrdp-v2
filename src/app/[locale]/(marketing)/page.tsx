@@ -105,7 +105,7 @@ export default async function HomePage({ params }: Props) {
         />
       ))}
 
-      <Section className="py-14 sm:py-18 lg:py-20">
+      <Section className="srv-home-hero py-14 sm:py-18 lg:py-20">
         <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
           <div className="flex flex-col items-start gap-6">
             <Badge variant="outline">Windows & Linux VPS · Instant setup</Badge>
