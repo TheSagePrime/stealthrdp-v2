@@ -11,7 +11,9 @@ import {
   ShieldCheck,
 } from '@phosphor-icons/react/dist/ssr';
 import { setRequestLocale } from 'next-intl/server';
+import Image from 'next/image';
 import Link from 'next/link';
+import { SiAlpinelinux, SiFreebsd, SiRockylinux } from '@icons-pack/react-simple-icons';
 
 import { Section } from '@/components/launchui/section';
 import { HomePricing } from '@/components/site/HomePricing';
@@ -24,7 +26,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
 import { createPageMetadata } from '@/libs/seo/metadata';
@@ -46,16 +47,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const operatingSystems = [
-  'Windows Server',
-  'Ubuntu',
-  'Debian',
-  'Rocky Linux',
-  'AlmaLinux',
-  'CentOS',
-  'Fedora',
-  'Alpine Linux',
-  'FreeBSD',
-];
+  { name: 'Windows Server', logo: '/brand/windows.svg' },
+  { name: 'Ubuntu', logo: '/brand/ubuntu.svg' },
+  { name: 'Debian', logo: '/brand/debian.svg' },
+  { name: 'Rocky Linux', icon: SiRockylinux },
+  { name: 'AlmaLinux', logo: '/brand/almalinux.svg' },
+  { name: 'CentOS', logo: '/brand/centos.svg' },
+  { name: 'Fedora', logo: '/brand/fedora.svg' },
+  { name: 'Alpine Linux', icon: SiAlpinelinux },
+  { name: 'FreeBSD', icon: SiFreebsd },
+] as const;
 
 const infrastructure = [
   {
@@ -211,46 +212,42 @@ export default async function HomePage({ params }: Props) {
         </div>
       </Section>
 
-      <Section className="border-y border-border bg-card/35 py-7 sm:py-8">
-        <div className="mx-auto flex max-w-7xl items-center gap-3 overflow-x-auto">
-          <span className="shrink-0 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            Works with your OS
-          </span>
-          <Separator orientation="vertical" className="hidden h-6 sm:block" />
-          <div className="flex min-w-max gap-2">
-            {operatingSystems.map(name => (
-              <Badge key={name} variant="outline" className="px-3 py-1.5">
-                {name}
-              </Badge>
-            ))}
+      <section className="srv-os-band border-y border-border bg-card/35" aria-label="Supported operating systems">
+        <div className="srv-home-wide srv-os-band-inner">
+          <div className="srv-os-band-label">
+            <span>Works with your OS</span>
+          </div>
+
+          <div className="srv-os-marquee">
+            <span className="sr-visually-hidden">
+              Windows Server, Ubuntu, Debian, Rocky Linux, AlmaLinux, CentOS, Fedora, Alpine Linux, and FreeBSD
+            </span>
+            <div className="srv-os-marquee-track" aria-hidden="true">
+              {[false, true].map(clone => (
+                <div className="srv-os-marquee-copy" data-clone={clone ? 'true' : 'false'} key={String(clone)}>
+                  {operatingSystems.map(item => {
+                    const Icon = 'icon' in item ? item.icon : null;
+                    return (
+                      <div className="srv-os-logo" key={`${clone ? 'clone-' : ''}${item.name}`}>
+                        {'logo' in item ? (
+                          <Image src={item.logo} alt="" width={26} height={26} />
+                        ) : Icon ? (
+                          <Icon aria-hidden="true" />
+                        ) : null}
+                        <span>{item.name}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </Section>
+      </section>
 
-      <Section className="py-8 sm:py-10">
-        <Card className="mx-auto max-w-7xl gap-0 overflow-hidden py-0">
-          <CardContent className="grid grid-cols-2 p-0 lg:grid-cols-4">
-            {[
-              ['10,000+', 'orders'],
-              ['USA + EU', 'locations'],
-              ['60-second', 'setup'],
-              ['24/7', 'support'],
-            ].map(([value, label], index) => (
-              <div
-                key={label}
-                className={`p-5 sm:p-6 ${index % 2 === 1 ? 'border-l border-border' : ''} ${index > 1 ? 'border-t border-border lg:border-t-0' : ''} ${index > 0 ? 'lg:border-l lg:border-border' : ''}`}
-              >
-                <strong className="block text-lg font-semibold tracking-tight">{value}</strong>
-                <span className="text-xs uppercase tracking-widest text-muted-foreground">{label}</span>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-      </Section>
-
-      <Section id="plans" className="py-16 sm:py-20 lg:py-24">
-        <div className="mx-auto flex max-w-7xl flex-col gap-9 sm:gap-10">
-          <div className="grid gap-5 lg:grid-cols-[1fr_0.7fr] lg:items-end">
+      <Section id="plans" className="py-12 sm:py-14 lg:py-16">
+        <div className="srv-home-wide flex flex-col gap-7 sm:gap-8">
+          <div className="grid gap-5 lg:grid-cols-[minmax(0,1.15fr)_minmax(360px,0.65fr)] lg:items-end">
             <div className="grid max-w-4xl gap-4">
               <p className="text-xs font-semibold uppercase tracking-widest text-primary">
                 Choose a workload
