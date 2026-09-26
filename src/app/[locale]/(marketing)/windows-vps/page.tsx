@@ -114,7 +114,7 @@ export default function WindowsVpsPage() {
           <div className="sr-prose-block">
             <p>The buyer chooses the resource plan and region on this page. The existing checkout then provides the operating-system selector before payment.</p>
             <div className="sr-actions">
-              <Button asChild size="lg"><a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">Configure this VPS <ArrowRight size={16} /></a></Button>
+              <Button asChild size="lg"><a href="/plans">Configure this VPS <ArrowRight size={16} /></a></Button>
             </div>
           </div>
         </div>
@@ -376,7 +376,7 @@ export default function WindowsVpsPage() {
           <div><p className="sr-kicker">Windows VPS plans</p><h2>Compare Windows VPS plans</h2></div>
           <div className="sr-actions">
             <Button asChild size="lg"><Link href="/plans#windows-vps">Compare plans <ArrowRight size={16} /></Link></Button>
-            <Button asChild size="lg" variant="outline"><a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">Continue to checkout</a></Button>
+            <Button asChild size="lg" variant="outline"><a href="/plans">Continue to checkout</a></Button>
           </div>
         </div>
       </section>

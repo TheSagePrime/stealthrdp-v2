@@ -12,6 +12,7 @@ const columns = [
       ['All VPS plans', '/plans'],
       ['Windows VPS', '/windows-vps'],
       ['Linux VPS', '/linux-vps'],
+      ['Minecraft VPS guide', '/vps-hosting-minecraft'],
       ['Build your own VPS', 'https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps'],
       ['Citadel protection', '/citadel'],
     ],
@@ -19,8 +20,8 @@ const columns = [
   {
     title: 'Resources',
     links: [
-      ['Documentation', '/docs'],
-      ['Tutorials', '/blog'],
+      ['Docs', '/docs'],
+      ['Blog', '/blog'],
       ['FAQ', '/faq'],
       ['Server status', '/status'],
     ],
@@ -32,7 +33,7 @@ const columns = [
       ['Support', 'https://dash.stealthrdp.com/submitticket.php'],
       ['WhatsApp support', 'https://wa.me/447441426993'],
       ['Privacy', '/privacy'],
-      ['Terms of service', '/docs/use-of-service'],
+      ['Use of service', '/docs/use-of-service'],
       ['Windows licensing', '/docs/windows-licensing'],
     ],
   },

@@ -12,10 +12,13 @@ function Accordion({ className, ...props }: React.ComponentProps<'div'>) {
 function AccordionItem({
   className,
   title,
+  titleHeadingLevel,
   children,
   ...props
 }: Omit<React.ComponentProps<'details'>, 'children'> & {
   title: React.ReactNode;
+  /** Expose the title as a heading to assistive tech without changing markup validity. */
+  titleHeadingLevel?: 2 | 3 | 4;
   children: React.ReactNode;
 }) {
   return (
@@ -28,7 +31,11 @@ function AccordionItem({
       {...props}
     >
       <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-4 py-4 font-semibold text-body-text marker:hidden">
-        <span>{title}</span>
+        {titleHeadingLevel ? (
+          <span role="heading" aria-level={titleHeadingLevel}>{title}</span>
+        ) : (
+          <span>{title}</span>
+        )}
         <Plus className="size-4 shrink-0 text-body-muted transition-transform group-open:rotate-45" aria-hidden="true" />
       </summary>
       <div className="pb-5 text-body-muted">{children}</div>

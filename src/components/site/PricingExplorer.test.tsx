@@ -15,7 +15,7 @@ describe('PricingExplorer purchase decisions', () => {
     await render(<PricingExplorer showComparison />);
     await userEvent.click(page.getByRole('button', { name: /^Annual/ }));
 
-    expect(page.getByRole('columnheader', { name: 'Price/yr' })).toBeInTheDocument();
+    expect(page.getByRole('columnheader', { name: 'Price per year' })).toBeInTheDocument();
     expect(page.getByRole('cell', { name: /€96\.50\/yr/ })).toBeInTheDocument();
   });
 

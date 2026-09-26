@@ -10,6 +10,7 @@ const productLinks = [
   ['VPS plans', '/plans'],
   ['Windows VPS', '/windows-vps'],
   ['Linux VPS', '/linux-vps'],
+  ['Minecraft VPS guide', '/vps-hosting-minecraft'],
   ['Citadel protection', '/citadel'],
 ] as const;
 
@@ -33,6 +34,11 @@ export function SiteHeader() {
     'data-open': open === name,
     onMouseEnter: () => setOpen(name),
     onMouseLeave: () => setOpen(null),
+    /* Keyboard focus also drives the open state, so aria-expanded never lies. */
+    onFocus: () => setOpen(name),
+    onBlur: (event: React.FocusEvent) => {
+      if (!event.currentTarget.contains(event.relatedTarget)) setOpen(null);
+    },
   });
 
   const buttonProps = (name: 'products' | 'resources', menuId: string) => ({
@@ -107,6 +113,7 @@ export function SiteHeader() {
             <Link href="/plans">VPS plans</Link>
             <Link href="/windows-vps">Windows VPS</Link>
             <Link href="/linux-vps">Linux VPS</Link>
+            <Link href="/vps-hosting-minecraft">Minecraft VPS guide</Link>
             <Link href="/citadel">Citadel protection</Link>
             <a href="https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps">Build your own VPS</a>
             <Link href="/docs">Docs</Link>

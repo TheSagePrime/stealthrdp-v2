@@ -129,7 +129,7 @@ export default function LinuxVpsPage() {
               The buyer chooses the resource plan and region on this page. The existing checkout then provides the operating-system selector before payment.
             </p>
             <div className="sr-actions">
-              <Button asChild><a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">Configure this VPS <ArrowRight size={16} /></a></Button>
+              <Button asChild><a href="/plans">Configure this VPS <ArrowRight size={16} /></a></Button>
             </div>
           </div>
         </div>
@@ -371,7 +371,7 @@ export default function LinuxVpsPage() {
           <div><p className="sr-kicker">Linux VPS plans</p><h2>Compare Linux VPS plans</h2><p>Check the current plan, region, and displayed price, then confirm Linux and the exact image in checkout.</p></div>
           <div className="sr-actions">
             <Button asChild size="lg"><Link href="/plans#linux-vps">Compare Linux VPS plans <ArrowRight size={16} /></Link></Button>
-            <Button asChild size="lg" variant="outline"><a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">Continue to checkout</a></Button>
+            <Button asChild size="lg" variant="outline"><a href="/plans">Continue to checkout</a></Button>
           </div>
         </div>
       </section>

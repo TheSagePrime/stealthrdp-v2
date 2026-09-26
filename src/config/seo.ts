@@ -75,6 +75,8 @@ export const defaultSeoConfig: SeoConfig = {
       { from: '/status.html', to: '/status' },
       { from: '/docs.html', to: '/docs' },
       { from: '/blog.html', to: '/blog' },
+      { from: '/minecraft-vps', to: '/vps-hosting-minecraft' },
+      { from: '/docs/frequently-asked-questions-fa-qs', to: '/faq' },
     ],
   },
   articles: {

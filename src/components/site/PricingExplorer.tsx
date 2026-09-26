@@ -1,7 +1,7 @@
 'use client';
 
-import { useMemo, useState } from 'react';
-import { CaretDown as ChevronDown } from '@phosphor-icons/react';
+import { useEffect, useMemo, useState } from 'react';
+import { CaretDown as ChevronDown, ArrowSquareOut } from '@phosphor-icons/react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
@@ -32,6 +32,15 @@ import {
 } from '@/lib/stealth/content';
 
 const cycleOrder: BillingCycle[] = ['monthly', 'quarterly', 'semiannual', 'annual', 'biannual'];
+
+/** Human price-column header per billing cycle: the cells show term totals, never monthly rates. */
+const priceHeader: Record<BillingCycle, string> = {
+  monthly: 'Price per month',
+  quarterly: 'Price per quarter',
+  semiannual: 'Price per 6 months',
+  annual: 'Price per year',
+  biannual: 'Price per 2 years',
+};
 
 const formatPrice = (amount: number) => Number.isInteger(amount) ? `${amount}` : amount.toFixed(2);
 
@@ -137,7 +146,9 @@ function PlanRow({
       <TableCell className="sr-ledger-action">
         {available ? (
           <Button asChild size="sm">
-            <a href={checkoutUrl(plan, cycle)}>Buy Now</a>
+            <a href={checkoutUrl(plan, cycle)} aria-label={`Buy ${plan.name} — continues to secure checkout`}>
+              Buy Now <ArrowSquareOut size={14} aria-hidden="true" />
+            </a>
           </Button>
         ) : (
           <Pill state="warn" icon={<span aria-hidden="true">!</span>}>
@@ -158,9 +169,24 @@ export function PricingExplorer({
   guided?: boolean;
   showComparison?: boolean;
 }) {
-  const [region, setRegion] = useState<'USA' | 'EU'>('USA');
-  const [cycle, setCycle] = useState<BillingCycle>('monthly');
+  const [region, setRegion] = useState<'USA' | 'EU'>(() => {
+    if (typeof window === 'undefined') return 'USA';
+    return new URLSearchParams(window.location.search).get('region') === 'EU' ? 'EU' : 'USA';
+  });
+  const [cycle, setCycle] = useState<BillingCycle>(() => {
+    if (typeof window === 'undefined') return 'monthly';
+    const fromUrl = new URLSearchParams(window.location.search).get('cycle') as BillingCycle | null;
+    return cycleOrder.includes(fromUrl as BillingCycle) ? (fromUrl as BillingCycle) : 'monthly';
+  });
   const [workload, setWorkload] = useState<WorkloadKey>('remote-desktop');
+
+  /* Shareable state: region + cycle survive refresh and shared links. */
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    params.set('region', region);
+    params.set('cycle', cycle);
+    window.history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`);
+  }, [region, cycle]);
 
   const recommendedTier = workloadOptions.find(item => item.key === workload)?.tier ?? 'Bronze';
 
@@ -267,8 +293,8 @@ export function PricingExplorer({
         </div>
 
         <div className="sr-control-stack sr-term-stack">
-          <span className="sr-control-label">Billing cycle</span>
-          <ul className="sr-term-ladder">
+          <span className="sr-control-label" id="sr-billing-label">Billing cycle</span>
+          <ul className="sr-term-ladder" role="group" aria-labelledby="sr-billing-label">
             {cycleOrder.map(item => {
               const billing = billingCycles[item] as {
                 label: string;
@@ -286,15 +312,17 @@ export function PricingExplorer({
                     className="sr-term-option"
                     data-selected={selected}
                     aria-pressed={selected}
+                    disabled={!termPrice}
+                    aria-disabled={!termPrice}
                     onClick={() => setCycle(item)}
                   >
                     <span className="sr-term-label">{termLabel}</span>
                     <span className="sr-term-rate">
-                      {termPrice ? `€${formatPrice(Number(effective.toFixed(2)))}` : '—'}
+                      {termPrice ? `from €${formatPrice(Number(effective.toFixed(2)))}` : '—'}
                       <small>per month</small>
                     </span>
                     <span className="sr-term-total">
-                      {termPrice ? `€${formatPrice(termPrice.amount)} ${termPrice.periodLabel}` : 'See checkout'}
+                      {termPrice ? `€${formatPrice(termPrice.amount)} ${termPrice.periodLabel}, due today` : 'See checkout'}
                     </span>
                     <span className="sr-term-badge" aria-hidden={!termPrice?.discountLabel}>
                       {termPrice?.discountLabel ? <Badge variant="outline">{termPrice.discountLabel}</Badge> : null}
@@ -337,7 +365,7 @@ export function PricingExplorer({
                 <TableHead>RAM</TableHead>
                 <TableHead>Storage</TableHead>
                 <TableHead>Bandwidth</TableHead>
-                <TableHead>{`Price${visible[0]?.pricing[cycle].suffix ?? ''}`}</TableHead>
+                <TableHead>{priceHeader[cycle]}</TableHead>
                 <TableHead><span className="sr-visually-hidden">Action</span></TableHead>
               </TableRow>
             </TableHeader>
@@ -347,7 +375,7 @@ export function PricingExplorer({
                   key={plan.name}
                   plan={plan}
                   cycle={cycle}
-                  recommended={guided && plan.name.startsWith(recommendedTier)}
+                  recommended={guided && plan.name.toLowerCase().startsWith(recommendedTier.toLowerCase())}
                   showPopular={plan.name === popularName}
                   maxima={maxima}
                 />
@@ -355,6 +383,25 @@ export function PricingExplorer({
             </TableBody>
           </Table>
         </div>
+
+        {(() => {
+          const inRegion = plans.filter(plan => plan.location === region);
+          const available = inRegion.filter(plan => plan.source.availability !== 'out-of-stock');
+          const soldOut = inRegion.filter(plan => plan.source.availability === 'out-of-stock');
+          if (soldOut.length === 0) return null;
+          return (
+            <p className="sr-ledger-note" aria-live="polite">
+              {soldOut.map(plan => plan.name).join(', ')} {soldOut.length === 1 ? 'is' : 'are'} out of stock
+              {available.length > 0 ? ` — available in ${region} now: ${available.map(plan => plan.name).join(', ')}.` : '.'} Availability is confirmed at checkout.
+            </p>
+          );
+        })()}
+        <p className="sr-ledger-note">
+          Bandwidth is unlimited on a 250 Mbps port. A 1 Gbps upgrade is available at checkout (+€5/mo, manual activation).
+        </p>
+        <p className="sr-ledger-note">
+          Windows or Linux is selected during checkout. A Windows licence is not included — Evaluation image only; use your own eligible licence. <a href="/docs/windows-licensing">Windows licensing</a>
+        </p>
       </section>
     </div>
   );

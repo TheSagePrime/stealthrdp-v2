@@ -1,8 +1,7 @@
 import type { Metadata } from 'next';
-import { Accordion, AccordionItem } from '@/components/ui/accordion';
-import { Badge } from '@/components/ui/badge';
 import { faqs } from '@/lib/stealth/content';
 import { createPageMetadata } from '@/libs/seo/metadata';
+import { FaqExplorer } from '@/components/site/FaqExplorer';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/faq',
@@ -13,8 +12,6 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default function FaqPage() {
-  const categories = Array.from(new Set(faqs.map(item => item.category)));
-
   return (
     <>
       <section className="sr-page-hero">
@@ -36,68 +33,7 @@ export default function FaqPage() {
         </div>
       </section>
 
-      <section className="sr-section">
-        <div className="sr-container sr-faq-layout">
-          <aside className="sr-faq-nav" aria-label="FAQ categories">
-            <span className="sr-control-label">Browse topics</span>
-            {categories.map(category => (
-              <a
-                key={category}
-                href={`#${category.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
-              >
-                {category}
-              </a>
-            ))}
-          </aside>
-
-          <div className="sr-faq-groups">
-            {categories.map((category) => {
-              const items = faqs.filter(item => item.category === category);
-              const id = category.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-
-              return (
-                <section className="sr-faq-group" id={id} key={category}>
-                  <div className="sr-collection-head">
-                    <div>
-                      <p className="sr-kicker">Support topic</p>
-                      <h2>{category}</h2>
-                    </div>
-                    <div>
-                      <Badge variant="outline">{items.length} answers</Badge>
-                    </div>
-                  </div>
-
-                  <Accordion>
-                    {items.map(item => (
-                      <AccordionItem key={item._id} title={item.question}>
-                        <p>{item.answer}</p>
-                      </AccordionItem>
-                    ))}
-                  </Accordion>
-                </section>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      <section className="sr-section">
-        <div className="sr-container sr-copy-grid">
-          <div>
-            <p className="sr-kicker">Still need a hand?</p>
-            <h2 className="sr-section-title">Take the question to support.</h2>
-          </div>
-          <div className="sr-prose-block">
-            <p>
-              Account, billing, and server-specific requests are handled in the
-              client portal.
-            </p>
-            <div className="sr-inline-links">
-              <a href="https://dash.stealthrdp.com/submitticket.php">Contact support</a>
-            </div>
-          </div>
-        </div>
-      </section>
+      <FaqExplorer faqs={faqs} />
     </>
   );
 }

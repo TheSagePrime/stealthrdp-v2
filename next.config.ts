@@ -31,6 +31,8 @@ const legacyRedirects = [
   ['/blog.html', '/blog'],
   ['/windows-vps/index.html', '/windows-vps'],
   ['/linux-vps/index.html', '/linux-vps'],
+  ['/minecraft-vps', '/vps-hosting-minecraft'],
+  ['/docs/frequently-asked-questions-fa-qs', '/faq'],
 ] as const;
 
 const baseConfig: NextConfig = {
