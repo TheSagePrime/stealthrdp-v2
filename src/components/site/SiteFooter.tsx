@@ -12,7 +12,6 @@ const columns = [
       ['All VPS plans', '/plans'],
       ['Windows VPS', '/windows-vps'],
       ['Linux VPS', '/linux-vps'],
-      ['Minecraft VPS guide', '/vps-hosting-minecraft'],
       ['Build your own VPS', 'https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps'],
       ['Citadel protection', '/citadel'],
     ],
@@ -22,6 +21,7 @@ const columns = [
     links: [
       ['Docs', '/docs'],
       ['Blog', '/blog'],
+      ['Minecraft VPS guide', '/vps-hosting-minecraft'],
       ['FAQ', '/faq'],
       ['Server status', '/status'],
     ],
