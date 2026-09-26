@@ -6,8 +6,6 @@ import { PricingExplorer } from '@/components/site/PricingExplorer';
 import { AfterCheckout } from '@/components/site/home/AfterCheckout';
 import { HomeHero } from '@/components/site/home/HomeHero';
 import { Infrastructure } from '@/components/site/home/Infrastructure';
-import { RegionTable } from '@/components/site/home/RegionTable';
-import { Resources } from '@/components/site/home/Resources';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { getSeoConfig } from '@/libs/seo/config';
@@ -34,9 +32,6 @@ const trust = [
   ['60s', 'Average deploy'],
   ['99.9%', 'Uptime SLA'],
 ] as const;
-
-const workloadSummary =
-  'Remote desktop · Web hosting · Automation & bots · Trading · Storage & backups';
 
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
@@ -85,25 +80,16 @@ export default async function HomePage({ params }: Props) {
 
       <section className="sr-section srv3-plans-section" id="plans">
         <div className="sr-container">
-          <div className="srv3-section-heading">
+          <div className="srv3-home-section-head">
             <div>
-              <p className="sr-kicker">Choose a workload</p>
-              <h2>Plans priced for the work</h2>
+              <p className="sr-kicker">VPS plans</p>
+              <h2>Choose a server without decoding a spreadsheet.</h2>
             </div>
             <p>
-              Three starting points below. All plans include free migration
-              assistance, 24/7 support, and our industry-leading uptime guarantee.
+              Start with one of three common resource levels. Switch region and billing
+              without leaving the page; choose Windows or Linux during checkout.
             </p>
           </div>
-
-          <p className="srv3-workload-line">
-            <span>Good fit for</span>
-            {workloadSummary}
-          </p>
-
-          <p className="mt-3 max-w-2xl text-small text-body-muted">
-            Choose a region and billing cycle first. Windows or Linux is selected during checkout.
-          </p>
 
           <div className="srv3-plan-surface">
             <PricingExplorer compact />
@@ -111,7 +97,7 @@ export default async function HomePage({ params }: Props) {
             <div className="srv3-section-action">
               <Button asChild variant="outline">
                 <Link href="/plans">
-                  View All 11 Plans
+                  Compare all 11 plans
                   <ArrowRight size={16} aria-hidden="true" />
                 </Link>
               </Button>
@@ -122,15 +108,18 @@ export default async function HomePage({ params }: Props) {
 
       <Infrastructure />
 
-      <RegionTable />
 
       <section className="sr-section srv3-family-section" aria-label="StealthRDP product family">
         <div className="sr-container">
-          <div className="srv3-section-heading">
+          <div className="srv3-home-section-head">
             <div>
-              <p className="sr-kicker">One company, two products</p>
-              <h2>Hosting to run on. Protection to hide behind.</h2>
+              <p className="sr-kicker">StealthRDP products</p>
+              <h2>Run the workload. Protect the origin.</h2>
             </div>
+            <p>
+              VPS hosting for the machine itself, and Citadel when the application layer
+              needs another line of defence.
+            </p>
           </div>
 
           <div className="grid gap-6 md:grid-cols-2">
@@ -177,7 +166,6 @@ export default async function HomePage({ params }: Props) {
 
       <AfterCheckout />
 
-      <Resources />
 
       <section className="sr-section srv3-final-section">
         <div className="sr-container">
