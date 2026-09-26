@@ -11,11 +11,13 @@ describe('Helpers', () => {
       expect(getI18nPath(url, locale)).toBe(url);
     });
 
-    it('prefixes path with locale when locale is not default', () => {
+    /* The public site publishes one locale with localePrefix 'never', so a
+       non-default locale must not gain a /fr segment: indexed URLs stay stable. */
+    it('keeps the published path unprefixed for every locale', () => {
       const url = '/random-url';
       const locale = 'fr';
 
-      expect(getI18nPath(url, locale)).toBe(`/fr${url}`);
+      expect(getI18nPath(url, locale)).toBe(url);
     });
   });
 });
