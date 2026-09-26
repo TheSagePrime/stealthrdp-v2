@@ -95,7 +95,7 @@ function PlanRow({
       <th scope="row">
         <span className="sr-plan-row">
           {plan.name}
-          {showPopular ? <Badge variant="outline">Featured</Badge> : null}
+          {showPopular ? <Badge variant="outline">Most popular</Badge> : null}
           <span className="sr-ledger-meta">{plan.description}</span>
         </span>
         <span className="sr-ledger-meta">
@@ -328,7 +328,7 @@ export function PricingExplorer({
   const highlightedPrice = highlighted?.pricing[cycle];
 
   return (
-    <div className="sr-pricing-explorer">
+    <div className="sr-pricing-explorer" data-compact={compact ? "true" : "false"}>
       <div className="sr-control-stack">
         <span className="sr-control-label">Deployment region</span>
         <ButtonGroup className="sr-segmented-control" aria-label="Deployment region">
