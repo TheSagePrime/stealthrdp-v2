@@ -3402,3 +3402,177 @@ main:has(.srv3-final-section) + .srv3-footer .srv3-footer-bottom {
     padding-top: 32px;
   }
 }
+
+
+/* ==========================================================================
+   Homepage production-parity polish: moving OS rail + wide desktop canvas
+   ========================================================================== */
+
+.srv-home-wide {
+  width: 100%;
+  max-width: 1480px;
+  margin-inline: auto;
+}
+
+.srv-os-band {
+  overflow: hidden;
+}
+
+.srv-os-band-inner {
+  display: grid;
+  min-height: 76px;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.srv-os-band-label {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  padding-right: 24px;
+  border-right: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 92%, transparent);
+}
+
+.srv-os-band-label span {
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.srv-os-marquee {
+  min-width: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    black 5%,
+    black 95%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    black 5%,
+    black 95%,
+    transparent 100%
+  );
+}
+
+.srv-os-marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: srv-os-marquee-right 38s linear infinite;
+}
+
+.srv-os-marquee-copy {
+  display: flex;
+  min-width: max-content;
+  align-items: center;
+  gap: 34px;
+  padding-right: 34px;
+}
+
+.srv-os-logo {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 10px;
+  color: var(--foreground);
+  opacity: 0.68;
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.srv-os-logo:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+.srv-os-logo img,
+.srv-os-logo svg {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  object-fit: contain;
+}
+
+.srv-os-logo span {
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+@keyframes srv-os-marquee-right {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (min-width: 1440px) {
+  .srv-home-wide {
+    max-width: 1520px;
+  }
+}
+
+@media (max-width: 900px) {
+  .srv-os-band-inner {
+    min-height: 70px;
+    gap: 16px;
+  }
+
+  .srv-os-band-label {
+    padding-right: 16px;
+  }
+
+  .srv-os-marquee-copy {
+    gap: 28px;
+    padding-right: 28px;
+  }
+}
+
+@media (max-width: 640px) {
+  .srv-os-band-inner {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding-block: 12px;
+  }
+
+  .srv-os-band-label {
+    min-height: 0;
+    padding-right: 0;
+    border-right: 0;
+  }
+
+  .srv-os-marquee {
+    margin-inline: -16px;
+  }
+
+  .srv-os-logo span {
+    font-size: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv-os-marquee-track {
+    animation: none;
+    transform: none;
+  }
+
+  .srv-os-marquee-copy[data-clone="true"] {
+    display: none;
+  }
+}
