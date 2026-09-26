@@ -43,12 +43,19 @@ export default function PlansPage() {
             Compare Windows and Linux VPS hosting plans in one place. Choose a resource level,
             region, and billing cycle before the checkout.
           </p>
-          <Button asChild size="lg">
-            <a href="https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps">
-              Build Your Own VPS
-              <ArrowRight size={16} />
-            </a>
-          </Button>
+          <div className="sr-actions">
+            <Button asChild size="lg">
+              <a href="#plan-grid">
+                Compare Standard Plans
+                <ArrowRight size={16} />
+              </a>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <a href="https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps">
+                Build Your Own VPS
+              </a>
+            </Button>
+          </div>
         </div>
       </section>
 
