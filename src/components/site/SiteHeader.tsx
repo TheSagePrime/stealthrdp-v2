@@ -10,13 +10,13 @@ const productLinks = [
   ['VPS plans', '/plans'],
   ['Windows VPS', '/windows-vps'],
   ['Linux VPS', '/linux-vps'],
-  ['Minecraft VPS guide', '/vps-hosting-minecraft'],
   ['Citadel protection', '/citadel'],
 ] as const;
 
 const resourceLinks = [
   ['Docs', '/docs'],
   ['Blog', '/blog'],
+  ['Minecraft VPS guide', '/vps-hosting-minecraft'],
   ['FAQ', '/faq'],
   ['Server status', '/status'],
 ] as const;
@@ -113,11 +113,11 @@ export function SiteHeader() {
             <Link href="/plans">VPS plans</Link>
             <Link href="/windows-vps">Windows VPS</Link>
             <Link href="/linux-vps">Linux VPS</Link>
-            <Link href="/vps-hosting-minecraft">Minecraft VPS guide</Link>
             <Link href="/citadel">Citadel protection</Link>
             <a href="https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps">Build your own VPS</a>
             <Link href="/docs">Docs</Link>
             <Link href="/blog">Blog</Link>
+            <Link href="/vps-hosting-minecraft">Minecraft VPS guide</Link>
             <Link href="/faq">FAQ</Link>
             <Link href="/status">Server status</Link>
             <Link href="/about">About</Link>
