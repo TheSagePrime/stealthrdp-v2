@@ -3576,3 +3576,203 @@ main:has(.srv3-final-section) + .srv3-footer .srv3-footer-bottom {
     display: none;
   }
 }
+
+
+/* ==========================================================================
+   Homepage lower-half density + motion
+   ========================================================================== */
+
+.srv-home-feature-card,
+.srv-home-product-card {
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.srv-home-feature-card:hover,
+.srv-home-product-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--primary) 24%, var(--border));
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--foreground) 6%, transparent);
+}
+
+.srv-home-feature-icon {
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease;
+}
+
+.srv-home-feature-card:hover .srv-home-feature-icon {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--primary) 28%, var(--border));
+  background: color-mix(in srgb, var(--primary) 6%, var(--muted));
+}
+
+/* Reviews become a single continuous proof rail instead of a 2-row wall. */
+.srv-review-marquee {
+  overflow: hidden;
+  margin-inline: calc((100vw - min(100vw, 1520px)) / -2);
+  padding-inline: max(16px, calc((100vw - 1520px) / 2));
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    black 4%,
+    black 96%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0,
+    black 4%,
+    black 96%,
+    transparent 100%
+  );
+}
+
+.srv-review-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: srv-review-drift 54s linear infinite;
+}
+
+.srv-review-marquee:hover .srv-review-track,
+.srv-review-marquee:focus-within .srv-review-track {
+  animation-play-state: paused;
+}
+
+.srv-review-set {
+  display: flex;
+  min-width: max-content;
+  gap: 16px;
+  padding-right: 16px;
+}
+
+.srv-review-card {
+  width: clamp(310px, 27vw, 390px);
+  min-height: 210px;
+  flex: 0 0 auto;
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.srv-review-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--primary) 22%, var(--border));
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--foreground) 5%, transparent);
+}
+
+@keyframes srv-review-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Homepage close should feel like one continuous ending, not CTA -> void -> footer. */
+main:has(.srv-home-final-section) + .srv3-footer {
+  margin-top: 0;
+  padding-top: 40px;
+  padding-bottom: 24px;
+}
+
+main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-top {
+  gap: clamp(36px, 5vw, 72px);
+}
+
+main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-brand p {
+  margin-top: 14px;
+}
+
+main:has(.srv-home-final-section) + .srv3-footer .srv3-socials {
+  margin-top: 14px;
+}
+
+main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-links {
+  gap: 24px;
+}
+
+main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-links h2 {
+  margin-bottom: 10px;
+}
+
+main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-links a {
+  min-height: 36px;
+}
+
+main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
+  margin-top: 32px;
+  padding-top: 18px;
+}
+
+@media (max-width: 1100px) {
+  .srv-home-infra .srv-home-wide,
+  .srv-home-products .srv-home-wide,
+  .srv-home-reviews .srv-home-wide,
+  .srv-home-final-section .srv-home-wide {
+    max-width: 1240px;
+  }
+
+  .srv-review-card {
+    width: min(360px, calc(100vw - 56px));
+  }
+}
+
+@media (max-width: 760px) {
+  .srv-home-infra,
+  .srv-home-products,
+  .srv-home-reviews {
+    padding-block: 40px;
+  }
+
+  .srv-home-final-section {
+    padding-block: 28px;
+  }
+
+  .srv-review-marquee {
+    margin-inline: -16px;
+    padding-inline: 16px;
+  }
+
+  main:has(.srv-home-final-section) + .srv3-footer {
+    padding-top: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv-home-feature-card,
+  .srv-home-product-card,
+  .srv-home-feature-icon,
+  .srv-review-card {
+    transition: none;
+  }
+
+  .srv-home-feature-card:hover,
+  .srv-home-product-card:hover,
+  .srv-review-card:hover,
+  .srv-home-feature-card:hover .srv-home-feature-icon {
+    transform: none;
+  }
+
+  .srv-review-marquee {
+    overflow-x: auto;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .srv-review-track {
+    animation: none;
+    transform: none;
+  }
+
+  .srv-review-set[data-clone="true"] {
+    display: none;
+  }
+}
