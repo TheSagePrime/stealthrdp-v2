@@ -46,14 +46,14 @@ export function HomeHero() {
 
           <div className="srv3-hero-actions">
             <Button asChild size="lg">
-              <a href="/plans">
+              <a href="#plans">
                 Choose Your Server
                 <ArrowRight size={16} aria-hidden="true" />
               </a>
             </Button>
             <Button asChild size="lg" variant="outline">
               <a href="https://dash.stealthrdp.com/submitticket.php">
-                Ask a Pre-Sales Question
+                Talk to Sales
               </a>
             </Button>
           </div>
