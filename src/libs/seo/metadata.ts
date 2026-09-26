@@ -4,7 +4,6 @@ import { AllLocales, I18nConfig } from '../../config/i18n';
 import { resolveSeoSite } from '../../config/seo';
 import { classifyPath, robotsForClass } from './classify';
 import { getSeoConfig } from './config';
-import { isProductionDeployEnv } from './env';
 import { localizedPath } from './locale';
 import { canonicalUrlForPath } from './normalize';
 
@@ -32,11 +31,11 @@ export function createPageMetadata(input: PageMetadataInput): Metadata {
   const canonical = canonicalUrlForPath(localized, site, config);
   const title = input.title ?? config.projectName;
   const description = input.description ?? config.description;
-  /* Non-production environments (preview, staging, dev) are never indexable,
-     regardless of route class. Production keeps the per-route behavior. */
-  const robots = isProductionDeployEnv(config.environment.deployEnv)
-    ? robotsForClass(routeClass)
-    : 'noindex, nofollow';
+  /* Per-route robots policy from the route class. Non-production environments stay
+     out of the index through robots.txt (disallow all) and the X-Robots-Tag header
+     set in next.config.ts — the built HTML keeps its production robots semantics so
+     the SEO post-build audit stays meaningful in preview builds. */
+  const robots = robotsForClass(routeClass);
 
   if (routeClass === 'privatePage' || routeClass === 'privateApi') {
     return {

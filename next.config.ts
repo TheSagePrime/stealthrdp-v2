@@ -2,6 +2,7 @@ import type { NextConfig } from 'next';
 import withBundleAnalyzer from '@next/bundle-analyzer';
 import { withSentryConfig } from '@sentry/nextjs';
 import createNextIntlPlugin from 'next-intl/plugin';
+import { isProductionDeployEnv, resolveDeployEnv } from './src/libs/seo/env';
 import './src/libs/Env';
 
 const csp = [
@@ -60,9 +61,10 @@ const baseConfig: NextConfig = {
       ...(process.env.NODE_ENV === 'production'
         ? [{ key: 'Strict-Transport-Security', value: 'max-age=31536000' }]
         : []),
-      /* Non-production builds (preview, staging, dev) must never be indexed,
-         even by crawlers that ignore robots.txt. Production sets APP_ENV=production. */
-      ...(process.env.APP_ENV === 'production'
+      /* Non-production deploys (preview, staging, dev) must never be indexed, even by
+         crawlers that ignore robots.txt. This uses the shared deploy-env resolver, so
+         the header can never contradict the SEO layer's environment classification. */
+      ...(isProductionDeployEnv(resolveDeployEnv(process.env))
         ? []
         : [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }]),
     ];
