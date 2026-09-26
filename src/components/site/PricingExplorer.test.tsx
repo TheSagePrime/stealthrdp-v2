@@ -1,7 +1,15 @@
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import { render } from 'vitest-browser-react';
 import { page, userEvent } from 'vitest/browser';
 import { PricingExplorer } from './PricingExplorer';
+
+/**
+ * The explorer mirrors region and cycle into the URL, so a previous test leaks
+ * its selection into the next render. Reset the URL to keep every test isolated.
+ */
+beforeEach(() => {
+  window.history.replaceState({}, '', '/');
+});
 
 /** Badge text shown on the ledger row whose plan name contains `name`. */
 function badgeFor(name: string) {
@@ -43,32 +51,47 @@ describe('PricingExplorer purchase decisions', () => {
 
   it('shows the published price with two decimals and never a rounded variant', async () => {
     await render(<PricingExplorer showComparison />);
+    await userEvent.click(page.getByRole('button', { name: /^Monthly/ }));
 
-    expect(page.getByRole('cell', { name: /€9\.50\/mo/ })).toBeInTheDocument();
+    const priceCells = [...document.querySelectorAll('.sr-ledger-price')].map(
+      cell => cell.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+    );
+    expect(priceCells.some(text => text.includes('€9.50/mo')), `rendered prices: ${priceCells.join(' | ')}`).toBe(true);
     expect(page.getByText('€9.5/mo')).not.toBeInTheDocument();
   });
 
   it('keeps every specification readable without repeated icons and preserves checkout actions', async () => {
     await render(<PricingExplorer />);
+    await userEvent.click(page.getByRole('button', { name: /^Monthly/ }));
 
     for (const column of ['CPU', 'RAM', 'Storage', 'Bandwidth']) {
       expect(page.getByRole('columnheader', { name: column })).toBeInTheDocument();
     }
-    expect(document.querySelectorAll('tbody svg')).toHaveLength(0);
-    expect(document.querySelectorAll('.sr-ledger-spec')).toHaveLength(18);
-    expect(page.getByRole('link', { name: 'Buy Now' }).first()).toHaveAttribute('href');
+    const specCells = [...document.querySelectorAll('.sr-ledger-spec')];
+    expect(specCells.length, 'the ledger publishes one spec cell per plan and column').toBe(18);
+    expect(specCells.every(cell => (cell.textContent ?? '').trim().length > 0), 'every spec cell carries a value').toBe(true);
+    expect(document.querySelectorAll('tbody .sr-ledger-spec svg')).toHaveLength(0);
+    const checkoutLink = document.querySelector('tbody a[href*="dash.stealthrdp.com"]:not(.sr-ledger-alt)');
+    expect(checkoutLink, 'the in-stock plan still offers a checkout link').not.toBeNull();
+    expect(document.querySelectorAll('tbody a[href*="dash.stealthrdp.com"]:not(.sr-ledger-alt)').length).toBe(1);
   });
 
   it('selects a workload from the existing menu and moves the best-fit marker', async () => {
     await render(<PricingExplorer />);
+    await userEvent.click(page.getByRole('button', { name: /^Monthly/ }));
 
-    expect(badgeFor('Bronze USA')).toBe('Best fit');
+    const rowDump = () =>
+      [...document.querySelectorAll('tbody tr')]
+        .map(candidate => `${(candidate.textContent ?? '').replace(/\s+/g, ' ').trim().slice(0, 24)}→${candidate.querySelector('[data-slot="badge"]')?.textContent ?? '-'}`)
+        .join(' | ');
+
+    expect(badgeFor('Bronze USA'), `rows: ${rowDump()}`).toBe('Best fit');
 
     await userEvent.click(page.getByRole('button', { name: /Remote desktop/ }));
     await userEvent.click(page.getByRole('menuitemradio', { name: 'Trading' }));
 
     expect(page.getByRole('button', { name: /Trading/ })).toBeInTheDocument();
-    expect(badgeFor('Gold USA')).toBe('Best fit');
+    expect(badgeFor('Gold USA'), `rows: ${rowDump()}`).toBe('Best fit');
   });
 
   it('describes OS selection at checkout rather than offering an ineffective filter', async () => {
@@ -87,6 +110,13 @@ describe('PricingExplorer purchase decisions', () => {
       .find(candidate => candidate.textContent?.includes('Platinum EU'));
     expect(row).toBeDefined();
     expect(row?.getAttribute('data-availability')).toBe('out-of-stock');
-    expect(row?.querySelector('a')).toBeNull();
+    /* The sold-out plan never links to its own suspended checkout. */
+    expect(row?.querySelector('a[href*="platinum-eu"]')).toBeNull();
+    expect(row?.textContent).toContain('Out of stock');
+    /* A sold-out row still offers the nearest in-stock plan in the same region. */
+    const alternative = row?.querySelector('a.sr-ledger-alt');
+    expect(alternative).not.toBeNull();
+    expect(alternative?.getAttribute('href')).toMatch(/dash\.stealthrdp\.com/);
+    expect(alternative?.getAttribute('href')).not.toContain('platinum-eu');
   });
 });

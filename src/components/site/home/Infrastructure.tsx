@@ -13,7 +13,7 @@ const items = [
   },
   {
     title: 'Global network',
-    text: 'Strategic locations with 1Gbps network speeds.',
+    text: 'Strategic locations with 250 Mbps ports and an optional 1 Gbps upgrade.',
   },
   {
     title: '24/7 monitoring',

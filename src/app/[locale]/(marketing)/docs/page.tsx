@@ -112,6 +112,28 @@ export default function DocsPage() {
           </div>
         </div>
       </section>
+
+      <section className="sr-section sr-section-border">
+        <div className="sr-container sr-copy-grid">
+          <div>
+            <p className="sr-kicker">Still need a hand?</p>
+            <h2 className="sr-section-title">Take the question to support.</h2>
+          </div>
+          <div className="sr-prose-block">
+            <p>
+              Account, billing, and server-specific requests are handled in the
+              client portal. For quick questions, message us on WhatsApp or email —
+              support answers around the clock. Common questions are answered on the{' '}
+              <Link href="/faq">FAQ page</Link>.
+            </p>
+            <div className="sr-inline-links">
+              <a href="https://dash.stealthrdp.com/submitticket.php">Contact support</a>
+              <a href="https://wa.me/447441426993">WhatsApp: +44 7441 426993</a>
+              <a href="mailto:support@stealthrdp.com">support@stealthrdp.com</a>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

@@ -10,7 +10,13 @@ import { indexableDocPublicPaths } from '@/lib/stealth/content';
 export default function sitemap(): MetadataRoute.Sitemap {
   const config = getSeoConfig();
   const site = resolveSeoSite(config);
-  const routes = [...config.routes.publicMarketing, ...indexableDocPublicPaths];
+  /* dynamicPublic holds indexable one-off marketing pages (the Minecraft guide),
+     so it belongs in the sitemap beside the fixed marketing routes. */
+  const routes = [
+    ...config.routes.publicMarketing,
+    ...(config.routes.dynamicPublic ?? []),
+    ...indexableDocPublicPaths,
+  ];
   const routeEntries = routes.flatMap(route =>
     AllLocales.map(locale => ({
       url: canonicalUrlForPath(localizedPath(route, locale, config), site, config),

@@ -57,7 +57,7 @@
   {
     "_id": "6824a1ca105d77ad34fbf09b",
     "question": "What features are included with StealthRDP plans?",
-    "answer": "All our plans include: dedicated IPv4 addresses, high-speed network connections (1Gbps standard), unlimited bandwidth (fair usage policy applies), full Administrator/Root access, 99.99% uptime guarantee, and responsive technical support. Higher-tier plans include additional features like priority support, and faster provisioning times.",
+    "answer": "All our plans include: dedicated IPv4 addresses, high-speed network connections (250 Mbps standard, with an optional 1 Gbps upgrade), unlimited bandwidth (fair usage policy applies), full Administrator/Root access, 99.99% uptime guarantee, and responsive technical support. Higher-tier plans include additional features like priority support, and faster provisioning times.",
     "category": "Services & Plans",
     "displayOrder": 6,
     "isPublished": true,

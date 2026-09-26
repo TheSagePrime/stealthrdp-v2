@@ -47,7 +47,7 @@ const expectedPlans = [
   'Emerald USA',
   'Bronze EU',
   'Silver EU',
-  'GOLD EU',
+  'Gold EU',
   'Platinum EU',
   'Diamond EU',
 ];
@@ -59,23 +59,23 @@ describe('StealthRDP public-site migration contract', () => {
     expect(testimonials).toHaveLength(6);
     expect(reviews).toHaveLength(48);
     expect(blogArticles).toHaveLength(12);
-    expect(docsArticles).toHaveLength(23);
+    expect(docsArticles).toHaveLength(22);
     expect(uptime.monitors).toHaveLength(9);
     expect(featuresJson).toHaveLength(16);
   });
 
-  it('preserves the 38 currently indexable public URLs', () => {
+  it('preserves the 37 indexable public URLs', () => {
     const articlePaths = blogArticles
       .filter(article => article.slug !== 'vps-hosting-minecraft')
       .map(articlePath);
 
     const paths = [...coreIndexablePaths, ...articlePaths, ...indexableDocPublicPaths];
 
-    expect(new Set(paths).size).toBe(38);
-    expect(paths).toHaveLength(38);
+    expect(new Set(paths).size).toBe(37);
+    expect(paths).toHaveLength(37);
     expect(articlePaths).toHaveLength(11);
     expect(articlePaths.every(path => path.endsWith('.html'))).toBe(true);
-    expect(indexableDocPublicPaths).toHaveLength(17);
+    expect(indexableDocPublicPaths).toHaveLength(16);
   });
 
   it('preserves the six existing noindex-follow documentation routes', () => {

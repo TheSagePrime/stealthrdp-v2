@@ -46,7 +46,7 @@ export default function AboutPage() {
           </div>
           <div className="sr-prose-block">
             <p>
-              We provide high-performance remote desktop and virtual private server infrastructure. Every StealthRDP server ships with NVMe storage, dedicated IPs, and 1Gbps network connectivity — online the moment you pay.
+              We provide high-performance remote desktop and virtual private server infrastructure. Every StealthRDP server ships with NVMe storage, dedicated IPs, and 250 Mbps network ports with an optional 1 Gbps upgrade — online the moment you pay.
             </p>
           </div>
         </div>

@@ -25,7 +25,7 @@ const deploySpecs = [
   ['2', 'vCPU'],
   ['4', 'GB RAM'],
   ['60', 'GB NVMe'],
-  ['1', 'Gbps'],
+  ['250', 'Mbps'],
 ] as const;
 
 export function HomeHero() {
@@ -50,8 +50,8 @@ export function HomeHero() {
 
           <div className="srv3-hero-actions">
             <Button asChild size="lg">
-              <a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">
-                Deploy Your Server Now
+              <a href="/plans">
+                Choose Your Server
                 <ArrowRight size={16} aria-hidden="true" />
               </a>
             </Button>

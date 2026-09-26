@@ -59,7 +59,7 @@ export default function PlansPage() {
               <p className="sr-kicker">STANDARD PLANS</p>
               <h2 className="sr-section-title">Choose your resource level</h2>
             </div>
-            <p>6 USA plans · prices shown monthly</p>
+            <p>Region and billing cycle change the table below. Prices are shown as the total due today.</p>
           </div>
           <PricingExplorer showComparison />
         </div>

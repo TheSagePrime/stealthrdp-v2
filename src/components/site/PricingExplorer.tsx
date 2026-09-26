@@ -85,18 +85,34 @@ function SpecCell({
   );
 }
 
+/** Nearest in-stock plan in the same region, so a sold-out row still offers a way to buy now. */
+function alternativeFor(plan: Plan, candidates: Plan[]): Plan | null {
+  if (plan.source.availability !== 'out-of-stock') return null;
+  const pool = candidates
+    .filter(candidate => candidate.name !== plan.name)
+    .filter(candidate => candidate.location === plan.location)
+    .filter(candidate => candidate.source.availability !== 'out-of-stock');
+  if (pool.length === 0) return null;
+  const ordered = [...pool].sort((a, b) => a.pricing.monthly.amount - b.pricing.monthly.amount);
+  return ordered.find(candidate => candidate.pricing.monthly.amount >= plan.pricing.monthly.amount)
+    ?? ordered[ordered.length - 1]
+    ?? null;
+}
+
 function PlanRow({
   plan,
   cycle,
   recommended,
   showPopular,
   maxima,
+  alternative,
 }: {
   plan: Plan;
   cycle: BillingCycle;
   recommended: boolean;
   showPopular: boolean;
   maxima: { cpu: number; ram: number; storage: number };
+  alternative?: Plan | null;
 }) {
   const price = plan.pricing[cycle];
   const available = plan.source.availability !== 'out-of-stock';
@@ -138,7 +154,7 @@ function PlanRow({
       </TableCell>
       <TableCell className="sr-ledger-price">
         {`€${formatPrice(price.amount)}${price.suffix}`}
-        <span className="sr-ledger-meta">{price.periodLabel}</span>
+        <span className="sr-ledger-meta">{`due today · ${price.periodLabel}`}</span>
         {price.referenceAmount ? (
           <span className="sr-ledger-was">{`standard €${formatPrice(price.referenceAmount)}`}</span>
         ) : null}
@@ -146,14 +162,28 @@ function PlanRow({
       <TableCell className="sr-ledger-action">
         {available ? (
           <Button asChild size="sm">
-            <a href={checkoutUrl(plan, cycle)} aria-label={`Buy ${plan.name} — continues to secure checkout`}>
-              Buy Now <ArrowSquareOut size={14} aria-hidden="true" />
+            <a
+              href={checkoutUrl(plan, cycle)}
+              aria-label={`Buy ${plan.name} — leaves this site for the StealthRDP checkout at dash.stealthrdp.com`}
+            >
+              Buy Now (secure checkout) <ArrowSquareOut size={14} aria-hidden="true" />
             </a>
           </Button>
         ) : (
-          <Pill state="warn" icon={<span aria-hidden="true">!</span>}>
-            Out of stock
-          </Pill>
+          <div className="sr-ledger-stack">
+            <Pill state="warn" icon={<span aria-hidden="true">!</span>}>
+              Out of stock
+            </Pill>
+            {alternative ? (
+              <a
+                className="sr-ledger-alt"
+                href={checkoutUrl(alternative, cycle)}
+                aria-label={`${plan.name} is out of stock — buy ${alternative.name} instead at dash.stealthrdp.com`}
+              >
+                See {alternative.name}
+              </a>
+            ) : null}
+          </div>
         )}
       </TableCell>
     </TableRow>
@@ -273,6 +303,10 @@ export function PricingExplorer({
         </div>
       ) : null}
 
+      <p className="sr-ledger-note sr-ledger-summary" data-plan-summary>
+        Showing {visible.length} {region} {visible.length === 1 ? 'plan' : 'plans'} · {priceHeader[cycle].toLowerCase()}
+      </p>
+
       <div className="sr-control-row">
         <div className="sr-control-stack">
           <span className="sr-control-label">Deployment region</span>
@@ -378,6 +412,7 @@ export function PricingExplorer({
                   recommended={guided && plan.name.toLowerCase().startsWith(recommendedTier.toLowerCase())}
                   showPopular={plan.name === popularName}
                   maxima={maxima}
+                  alternative={alternativeFor(plan, plans)}
                 />
               ))}
             </TableBody>
@@ -397,7 +432,7 @@ export function PricingExplorer({
           );
         })()}
         <p className="sr-ledger-note">
-          Bandwidth is unlimited on a 250 Mbps port. A 1 Gbps upgrade is available at checkout (+€5/mo, manual activation).
+          Bandwidth is unlimited on a 250 Mbps port. The 1 Gbps upgrade costs €5.00 per month at checkout and activates manually within 12 hours.
         </p>
         <p className="sr-ledger-note">
           Windows or Linux is selected during checkout. A Windows licence is not included — Evaluation image only; use your own eligible licence. <a href="/docs/windows-licensing">Windows licensing</a>

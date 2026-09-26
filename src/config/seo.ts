@@ -99,8 +99,8 @@ export const defaultSeoConfig: SeoConfig = {
     ],
   },
   routes: {
-    publicMarketing: ['/', '/plans', '/windows-vps', '/linux-vps', '/citadel', '/status', '/blog', '/faq', '/about', '/docs'],
-    publicUtility: ['/privacy', ...noindexDocPaths],
+    publicMarketing: ['/', '/plans', '/windows-vps', '/linux-vps', '/citadel', '/status', '/blog', '/faq', '/about', '/docs', '/privacy'],
+    publicUtility: [...noindexDocPaths],
     privatePages: [],
     privateApis: [],
     dynamicPublic: ['/vps-hosting-minecraft'],

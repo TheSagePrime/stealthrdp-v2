@@ -2660,3 +2660,56 @@ body {
 .sr-library-nav a {
   min-height: 44px;
 }
+
+/* --- Keyboard focus -------------------------------------------------------
+   The rendered-layout gate failed controls whose focus ring resolved to no
+   outline and a transparent shadow. One visible outline covers every control
+   in every browser, and nothing changes for pointer users.
+   ------------------------------------------------------------------------- */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-md);
+}
+
+/* Sold-out plan rows: state plus a route to an in-stock plan. */
+.sr-ledger-stack {
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+}
+
+.sr-ledger-alt {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: var(--primary);
+  font-size: 0.8125rem;
+  font-weight: 650;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sr-ledger-summary {
+  margin-bottom: 12px;
+  color: var(--text);
+  font-weight: 650;
+}
+
+/* Support route at the end of a documentation article. */
+.sr-article-support {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border-divider);
+}
+
+.sr-article-support .sr-section-title {
+  margin-top: 0;
+  font-size: clamp(1.15rem, 1rem + 0.6vw, 1.5rem);
+}
+
+.sr-article-support p {
+  max-width: 76ch;
+  margin: 12px 0 0;
+  color: var(--text-muted);
+}
