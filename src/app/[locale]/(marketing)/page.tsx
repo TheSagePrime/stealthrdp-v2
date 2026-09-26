@@ -110,33 +110,10 @@ export default async function HomePage({ params }: Props) {
             ))}
           </ul>
 
-          <p className="mt-4 text-small text-body-muted">
-            Windows and Linux images available on every plan.
+          <p className="mt-4 max-w-2xl text-small text-body-muted">
+            Windows and Linux images are available on the same resource ladder. Choose the
+            region and billing cycle first; the operating system is selected during checkout.
           </p>
-
-          <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
-            <Link
-              href="/windows-vps"
-              className="inline-flex min-h-11 items-center gap-2 text-small font-semibold text-primary transition-colors hover:text-accent-hover"
-            >
-              Windows VPS hosting
-              <ArrowRight aria-hidden="true" className="size-4" />
-            </Link>
-            <Link
-              href="/linux-vps"
-              className="inline-flex min-h-11 items-center gap-2 text-small font-semibold text-primary transition-colors hover:text-accent-hover"
-            >
-              Linux VPS hosting
-              <ArrowRight aria-hidden="true" className="size-4" />
-            </Link>
-            <Link
-              href="/plans#comparison"
-              className="inline-flex min-h-11 items-center gap-2 text-small font-semibold text-primary transition-colors hover:text-accent-hover"
-            >
-              Compare VPS resources
-              <ArrowRight aria-hidden="true" className="size-4" />
-            </Link>
-          </div>
 
           <PricingExplorer compact />
 
