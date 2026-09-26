@@ -56,7 +56,7 @@ export function HomePricing() {
       <div className="flex flex-col justify-between gap-5 rounded-xl border border-border bg-card p-4 sm:flex-row sm:items-end sm:p-5">
         <div className="flex flex-wrap gap-5 sm:gap-8">
           <div className="flex flex-col gap-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
               Region
             </span>
             <ButtonGroup aria-label="Deployment region">
@@ -76,7 +76,7 @@ export function HomePricing() {
           </div>
 
           <div className="flex flex-col gap-2">
-            <span className="text-xs font-semibold uppercase tracking-[0.08em] text-muted-foreground">
+            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">
               Billing
             </span>
             <ButtonGroup aria-label="Billing cycle" className="flex-wrap">
