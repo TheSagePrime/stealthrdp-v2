@@ -43,6 +43,150 @@
     "src/components/ui/tabs.tsx",
     "src/components/ui/tooltip.tsx"
   ],
-  "checks": [],
+  "checks": [
+    {
+      "need": "homepage hero section",
+      "keywords": [
+        "homepage",
+        "hero"
+      ],
+      "search_scope": "registry-directory-fallback",
+      "status": "REUSE_SELECTED",
+      "selected": {
+        "source": "launchui",
+        "name": "hero"
+      },
+      "authorized_paths": [
+        "src/components/launchui/hero.tsx",
+        "src/components/launchui/link-button.tsx",
+        "src/components/launchui/section.tsx"
+      ],
+      "candidate_count": 1,
+      "top": [
+        {
+          "source": "launchui",
+          "name": "hero",
+          "score": 2,
+          "role": "extended catalog",
+          "access": "free",
+          "default": false
+        }
+      ],
+      "at": "2026-09-26T18:30:00+00:00"
+    },
+    {
+      "need": "homepage stats proof",
+      "keywords": [
+        "stats",
+        "proof"
+      ],
+      "search_scope": "registry-directory-fallback",
+      "status": "REUSE_SELECTED",
+      "selected": {
+        "source": "launchui",
+        "name": "stats"
+      },
+      "authorized_paths": [
+        "src/components/launchui/stats.tsx"
+      ],
+      "candidate_count": 1,
+      "top": [
+        {
+          "source": "launchui",
+          "name": "stats",
+          "score": 2,
+          "role": "extended catalog",
+          "access": "free",
+          "default": false
+        }
+      ],
+      "at": "2026-09-26T18:30:00+00:00"
+    },
+    {
+      "need": "homepage infrastructure feature items",
+      "keywords": [
+        "feature",
+        "items"
+      ],
+      "search_scope": "registry-directory-fallback",
+      "status": "REUSE_SELECTED",
+      "selected": {
+        "source": "launchui",
+        "name": "items"
+      },
+      "authorized_paths": [
+        "src/components/launchui/items.tsx",
+        "src/components/launchui/item.tsx"
+      ],
+      "candidate_count": 1,
+      "top": [
+        {
+          "source": "launchui",
+          "name": "items",
+          "score": 2,
+          "role": "extended catalog",
+          "access": "free",
+          "default": false
+        }
+      ],
+      "at": "2026-09-26T18:30:00+00:00"
+    },
+    {
+      "need": "homepage VPS pricing cards",
+      "keywords": [
+        "pricing",
+        "cards"
+      ],
+      "search_scope": "registry-directory-fallback",
+      "status": "REUSE_SELECTED",
+      "selected": {
+        "source": "launchui",
+        "name": "pricing"
+      },
+      "authorized_paths": [
+        "src/components/launchui/pricing-column.tsx",
+        "src/components/site/HomePricing.tsx"
+      ],
+      "candidate_count": 1,
+      "top": [
+        {
+          "source": "launchui",
+          "name": "pricing",
+          "score": 2,
+          "role": "extended catalog",
+          "access": "free",
+          "default": false
+        }
+      ],
+      "at": "2026-09-26T18:30:00+00:00"
+    },
+    {
+      "need": "homepage final CTA",
+      "keywords": [
+        "cta"
+      ],
+      "search_scope": "registry-directory-fallback",
+      "status": "REUSE_SELECTED",
+      "selected": {
+        "source": "launchui",
+        "name": "cta"
+      },
+      "authorized_paths": [
+        "src/components/launchui/cta.tsx"
+      ],
+      "candidate_count": 1,
+      "top": [
+        {
+          "source": "launchui",
+          "name": "cta",
+          "score": 2,
+          "role": "extended catalog",
+          "access": "free",
+          "default": false
+        }
+      ],
+      "at": "2026-09-26T18:30:00+00:00"
+    }
+  ],
   "initialized_at": "2026-09-25T00:54:25.289745+00:00"
 }
