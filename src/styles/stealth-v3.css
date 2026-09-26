@@ -2763,3 +2763,369 @@ body {
   margin: 12px 0 0;
   color: var(--text-muted);
 }
+
+
+/* ==========================================================================
+   Homepage composition pass — senior UX/layout refinement
+   Keeps the existing palette and component language, but removes the
+   "stacked sections with air between them" feeling from the default homepage.
+   ========================================================================== */
+
+.srv3-hero {
+  min-height: 640px;
+  padding: 72px 0 76px;
+}
+
+.srv3-hero-grid {
+  grid-template-columns: minmax(0, 1.08fr) minmax(390px, 0.82fr);
+  gap: clamp(40px, 6vw, 84px);
+}
+
+.srv3-hero-visual {
+  min-height: 420px;
+}
+
+.srv3-hero-os {
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-top: 20px;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+  padding: 8px 12px;
+}
+
+.srv3-hero-os > span {
+  color: var(--text-dim);
+  font-size: 0.6875rem;
+  font-weight: 750;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.srv3-hero-os ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
+.srv3-hero-os li {
+  white-space: nowrap;
+}
+
+.srv3-plans-section {
+  padding: 72px 0;
+}
+
+.srv3-plans-section .srv3-section-heading {
+  align-items: start;
+  margin-bottom: 24px;
+}
+
+.srv3-plans-section .srv3-section-heading h2,
+.srv3-regions-section .srv3-section-heading h2,
+.srv3-family-section .srv3-section-heading h2,
+.srv3-reviews-section .srv3-section-heading h2 {
+  font-size: clamp(2.35rem, 3.25vw, 3.4rem);
+  line-height: 1.02;
+}
+
+.srv3-plan-surface {
+  margin-top: 28px;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+  padding: clamp(20px, 2.6vw, 32px);
+}
+
+.srv3-plan-surface .sr-pricing-explorer {
+  gap: 20px;
+}
+
+.srv3-plan-surface .sr-ledger-summary {
+  margin: 0;
+}
+
+.srv3-plan-surface .srv3-section-action {
+  margin-top: 20px;
+}
+
+.srv3-infra-section {
+  padding: 56px 0;
+}
+
+.srv3-infra-panel {
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-lg);
+  background: var(--surface-1);
+  padding: clamp(28px, 4vw, 48px);
+}
+
+.srv3-infra-layout {
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(44px, 7vw, 88px);
+}
+
+.srv3-infra-copy {
+  position: static;
+}
+
+.srv3-infra-copy h2 {
+  max-width: 500px;
+  font-size: clamp(2.35rem, 3.4vw, 3.65rem);
+  line-height: 1.02;
+}
+
+.srv3-infra-copy > p:not(.sr-kicker) {
+  margin-top: 18px;
+}
+
+.srv3-infra-list li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.srv3-infra-list li:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.srv3-regions-section {
+  padding: 72px 0 32px;
+}
+
+.srv3-regions-section .srv3-section-heading,
+.srv3-family-section .srv3-section-heading,
+.srv3-reviews-section .srv3-section-heading {
+  margin-bottom: 28px;
+}
+
+.srv3-region-grid {
+  gap: 16px;
+}
+
+.srv3-family-section {
+  padding: 24px 0 72px;
+}
+
+.srv3-family-section .grid > [data-slot="card"] {
+  min-height: 210px;
+}
+
+.srv3-reviews-section {
+  padding: 72px 0;
+}
+
+.srv3-review-grid {
+  grid-template-columns: 1.1fr 0.95fr 0.95fr;
+  gap: 16px;
+}
+
+.srv3-review-card {
+  min-height: 250px;
+}
+
+.srv3-review-card:first-child {
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--primary) 7%, transparent), transparent 52%),
+    var(--surface-1);
+}
+
+.srv3-resources-section {
+  padding: 56px 0 24px;
+}
+
+.srv3-resources-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.55fr);
+  gap: 32px;
+  align-items: end;
+  margin-bottom: 24px;
+}
+
+.srv3-resources-head h2 {
+  max-width: 620px;
+  margin: 0;
+  font-size: clamp(2rem, 3vw, 2.75rem);
+  font-weight: 760;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.srv3-resources-head > p {
+  max-width: 420px;
+  margin: 0 0 2px;
+  color: var(--text-dim);
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+.srv3-resources-card {
+  overflow: hidden;
+}
+
+.srv3-resource-links {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.srv3-resource-item {
+  min-width: 0;
+  padding: 22px 24px;
+  border-right: 1px solid var(--border-divider);
+}
+
+.srv3-resource-item:last-child {
+  border-right: 0;
+}
+
+.srv3-resource-item dd {
+  margin: 2px 0 0;
+}
+
+.srv3-final-section {
+  padding: 24px 0 64px;
+}
+
+.srv3-final-cta {
+  gap: 36px;
+  padding: clamp(30px, 3.6vw, 44px);
+}
+
+.srv3-final-cta h2 {
+  max-width: 680px;
+  font-size: clamp(2.3rem, 3.5vw, 3.35rem);
+}
+
+main:has(.srv3-final-section) + .srv3-footer {
+  margin-top: 0;
+  padding-top: 48px;
+}
+
+main:has(.srv3-final-section) + .srv3-footer .srv3-footer-top {
+  gap: clamp(48px, 7vw, 96px);
+}
+
+@media (max-width: 1040px) {
+  .srv3-hero {
+    min-height: auto;
+    padding: 64px 0;
+  }
+
+  .srv3-hero-grid {
+    gap: 36px;
+  }
+
+  .srv3-hero-visual {
+    min-height: 340px;
+  }
+
+  .srv3-infra-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .srv3-review-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .srv3-review-card:first-child {
+    grid-column: 1 / -1;
+    min-height: 220px;
+  }
+
+  .srv3-resource-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .srv3-resource-item:nth-child(2) {
+    border-right: 0;
+  }
+
+  .srv3-resource-item:nth-child(-n + 2) {
+    border-bottom: 1px solid var(--border-divider);
+  }
+}
+
+@media (max-width: 760px) {
+  .srv3-plans-section,
+  .srv3-regions-section,
+  .srv3-reviews-section {
+    padding-block: 56px;
+  }
+
+  .srv3-family-section {
+    padding: 8px 0 56px;
+  }
+
+  .srv3-infra-section {
+    padding: 40px 0;
+  }
+
+  .srv3-infra-panel {
+    padding: 24px;
+  }
+
+  .srv3-resources-section {
+    padding: 48px 0 16px;
+  }
+
+  .srv3-resources-head {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .srv3-final-section {
+    padding: 16px 0 48px;
+  }
+
+  main:has(.srv3-final-section) + .srv3-footer {
+    padding-top: 40px;
+  }
+}
+
+@media (max-width: 520px) {
+  .srv3-hero {
+    padding: 52px 0;
+  }
+
+  .srv3-hero-os {
+    width: 100%;
+  }
+
+  .srv3-hero-os ul {
+    gap: 6px 10px;
+  }
+
+  .srv3-plan-surface {
+    margin-top: 20px;
+    padding: 16px;
+  }
+
+  .srv3-review-grid,
+  .srv3-resource-links {
+    grid-template-columns: 1fr;
+  }
+
+  .srv3-review-card:first-child {
+    grid-column: auto;
+  }
+
+  .srv3-resource-item {
+    border-right: 0;
+    border-bottom: 1px solid var(--border-divider);
+  }
+
+  .srv3-resource-item:last-child {
+    border-bottom: 0;
+  }
+}
