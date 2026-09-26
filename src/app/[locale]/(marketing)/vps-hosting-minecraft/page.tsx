@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArticleJsonLd, ArticlePublicationMeta } from '@/components/seo/Article';
 import { TrustedArticleBody } from '@/components/site/TrustedArticleBody';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { getSeoConfig } from '@/libs/seo/config';
 import { createArticleMetadata } from '@/libs/seo/articles';
 import { findBlog } from '@/lib/stealth/content';
@@ -33,6 +35,17 @@ export default function MinecraftPage() {
       </header>
       <ArticleJsonLd article={publication} config={config} />
       <TrustedArticleBody html={article.html} />
+      <div className="flex flex-wrap items-center gap-2">
+        <Button asChild variant="ghost" size="sm">
+          <Link href="/plans">View plans</Link>
+        </Button>
+        <Button asChild size="sm">
+          <a href="https://dash.stealthrdp.com/submitticket.php">Ask support</a>
+        </Button>
+        <Button asChild variant="ghost" size="sm">
+          <a href="https://wa.me/447441426993">WhatsApp</a>
+        </Button>
+      </div>
     </article>
   );
 }

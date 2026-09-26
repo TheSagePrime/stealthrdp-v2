@@ -89,7 +89,7 @@ export function SiteHeader() {
 
         <div className="srv3-header-actions">
           <a className="srv3-login" href="https://dash.stealthrdp.com/index.php?rp=/login">
-            Client area
+            Client Area
           </a>
           <Button asChild size="sm">
             <Link href="/plans">
@@ -114,7 +114,7 @@ export function SiteHeader() {
             <Link href="/faq">FAQ</Link>
             <Link href="/status">Server status</Link>
             <Link href="/about">About</Link>
-            <a href="https://dash.stealthrdp.com/index.php?rp=/login">Client area</a>
+            <a href="https://dash.stealthrdp.com/index.php?rp=/login">Client Area</a>
             <a href="https://dash.stealthrdp.com/submitticket.php">Support</a>
           </nav>
         </details>
