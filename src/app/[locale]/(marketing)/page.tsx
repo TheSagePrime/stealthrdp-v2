@@ -199,7 +199,7 @@ export default async function HomePage({ params }: Props) {
       </Section>
 
       <Section id="plans" className="py-12 sm:py-14 lg:py-16">
-        <div className="srv-home-wide flex flex-col gap-7 sm:gap-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-7 sm:gap-8">
           <div className="grid gap-5 lg:grid-cols-[minmax(0,1.15fr)_minmax(360px,0.65fr)] lg:items-end">
             <div className="grid max-w-4xl gap-4">
               <p className="text-xs font-semibold uppercase tracking-widest text-primary">
