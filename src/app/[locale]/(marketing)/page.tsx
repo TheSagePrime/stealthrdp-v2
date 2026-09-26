@@ -115,15 +115,17 @@ export default async function HomePage({ params }: Props) {
             region and billing cycle first; the operating system is selected during checkout.
           </p>
 
-          <PricingExplorer compact />
+          <div className="srv3-plan-surface">
+            <PricingExplorer compact />
 
-          <div className="srv3-section-action">
-            <Button asChild variant="outline">
-              <Link href="/plans">
-                View All 11 Plans
-                <ArrowRight size={16} aria-hidden="true" />
-              </Link>
-            </Button>
+            <div className="srv3-section-action">
+              <Button asChild variant="outline">
+                <Link href="/plans">
+                  View All 11 Plans
+                  <ArrowRight size={16} aria-hidden="true" />
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
