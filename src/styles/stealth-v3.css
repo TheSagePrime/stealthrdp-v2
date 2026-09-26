@@ -1357,8 +1357,8 @@ body {
 /* Header refinement ------------------------------------------------------ */
 
 .srv3-header {
-  background:color-mix(in srgb, var(--surface-1) 94%, transparent);
-  backdrop-filter: blur(14px);
+  background: var(--surface-1);
+  backdrop-filter: none;
 }
 
 .srv3-announcement .sr-container {
@@ -2433,6 +2433,7 @@ body {
 }
 
 .sr-ledger-spec [data-slot="progress"] {
+  margin-top: 10px;
   gap: 6px;
 }
 
