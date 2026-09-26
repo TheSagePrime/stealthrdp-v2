@@ -9,7 +9,6 @@ import { Infrastructure } from '@/components/site/home/Infrastructure';
 import { RegionTable } from '@/components/site/home/RegionTable';
 import { Resources } from '@/components/site/home/Resources';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
@@ -36,13 +35,8 @@ const trust = [
   ['99.9%', 'Uptime SLA'],
 ] as const;
 
-const workloads = [
-  'Remote desktop',
-  'Web hosting',
-  'Automation & bots',
-  'Trading',
-  'Storage & backups',
-] as const;
+const workloadSummary =
+  'Remote desktop · Web hosting · Automation & bots · Trading · Storage & backups';
 
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
@@ -102,17 +96,13 @@ export default async function HomePage({ params }: Props) {
             </p>
           </div>
 
-          <ul className="flex flex-wrap gap-2" aria-label="Example workloads">
-            {workloads.map(label => (
-              <li key={label}>
-                <Badge variant="outline">{label}</Badge>
-              </li>
-            ))}
-          </ul>
+          <p className="srv3-workload-line">
+            <span>Good fit for</span>
+            {workloadSummary}
+          </p>
 
-          <p className="mt-4 max-w-2xl text-small text-body-muted">
-            Windows and Linux images are available on the same resource ladder. Choose the
-            region and billing cycle first; the operating system is selected during checkout.
+          <p className="mt-3 max-w-2xl text-small text-body-muted">
+            Choose a region and billing cycle first. Windows or Linux is selected during checkout.
           </p>
 
           <div className="srv3-plan-surface">
@@ -208,10 +198,10 @@ export default async function HomePage({ params }: Props) {
             </div>
             <div className="flex flex-col gap-2.5 md:min-w-48">
               <Button asChild size="lg">
-                <a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">
-                  Deploy Your Server Now
+                <Link href="/plans">
+                  Choose Your Server
                   <ArrowRight size={16} aria-hidden="true" />
-                </a>
+                </Link>
               </Button>
               <Button asChild size="lg" variant="outline">
                 <a href="https://dash.stealthrdp.com/submitticket.php">Ask a Pre-Sales Question</a>
