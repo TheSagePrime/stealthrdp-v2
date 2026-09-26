@@ -1,12 +1,17 @@
 'use client';
 
-/* State/data wiring only. Visual controls/cards come from shadcn + Launch UI. */
 import { useMemo, useState } from 'react';
+import {
+  ArrowSquareOut,
+  Cpu,
+  GlobeHemisphereWest,
+  HardDrive,
+  Lightning,
+  ShieldCheck,
+} from '@phosphor-icons/react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
-import { Card, CardContent } from '@/components/ui/card';
-import { PricingColumn } from '@/components/launchui/pricing-column';
 import {
   checkoutUrl,
   plans,
@@ -33,15 +38,14 @@ const cycleLabel: Record<BillingCycle, string> = {
 };
 
 const workloads = [
-  { id: 'remote', label: 'Remote desktop', target: 'Bronze' },
-  { id: 'web', label: 'Web hosting', target: 'Silver' },
-  { id: 'automation', label: 'Automation & bots', target: 'Gold' },
-  { id: 'trading', label: 'Trading', target: 'Gold' },
-  { id: 'storage', label: 'Storage & backups', target: 'Silver' },
+  { id: 'remote', label: 'Remote desktop', target: 'Bronze', icon: Lightning },
+  { id: 'web', label: 'Web hosting', target: 'Silver', icon: GlobeHemisphereWest },
+  { id: 'automation', label: 'Automation & bots', target: 'Gold', icon: Cpu },
+  { id: 'trading', label: 'Trading', target: 'Gold', icon: ShieldCheck },
+  { id: 'storage', label: 'Storage & backups', target: 'Silver', icon: HardDrive },
 ] as const;
 
 type Workload = (typeof workloads)[number]['id'];
-type OsChoice = 'any' | 'windows' | 'linux';
 
 const format = (value: number) => Number.isInteger(value) ? String(value) : value.toFixed(2);
 
@@ -49,185 +53,201 @@ function tierName(plan: Plan) {
   return plan.name.replace(/ USA| EU/g, '');
 }
 
-function previewWindow(regionPlans: Plan[], target: string) {
-  if (regionPlans.length <= 3) return regionPlans;
+function closestAvailablePlan(regionPlans: Plan[], target: string) {
   const targetIndex = Math.max(0, regionPlans.findIndex(plan => tierName(plan) === target));
-  const start = Math.min(Math.max(targetIndex - 1, 0), Math.max(regionPlans.length - 3, 0));
-  return regionPlans.slice(start, start + 3);
+  const available = regionPlans
+    .map((plan, index) => ({ plan, distance: Math.abs(index - targetIndex) }))
+    .filter(item => item.plan.source.availability !== 'out-of-stock')
+    .sort((a, b) => a.distance - b.distance || a.plan.pricing.monthly.amount - b.plan.pricing.monthly.amount);
+
+  return available[0]?.plan.name ?? regionPlans[targetIndex]?.name;
 }
 
 export function HomePricing() {
   const [region, setRegion] = useState<'USA' | 'EU'>('USA');
   const [cycle, setCycle] = useState<BillingCycle>('monthly');
-  const [os, setOs] = useState<OsChoice>('any');
   const [workload, setWorkload] = useState<Workload>('remote');
 
   const selectedWorkload = workloads.find(item => item.id === workload) ?? workloads[0];
 
-  const visible = useMemo(() => {
-    const filtered = plans
+  const regionPlans = useMemo(
+    () => plans
       .filter(plan => plan.location === region)
-      .filter(plan => {
-        if (os === 'windows') return plan.source.os !== 'linux-only';
-        if (os === 'linux') return true;
-        return true;
-      })
-      .sort((a, b) => a.pricing.monthly.amount - b.pricing.monthly.amount);
+      .sort((a, b) => a.pricing.monthly.amount - b.pricing.monthly.amount),
+    [region],
+  );
 
-    return previewWindow(filtered, selectedWorkload.target);
-  }, [region, os, selectedWorkload.target]);
-
-  const recommendedName = useMemo(() => {
-    const exact = visible.find(plan => tierName(plan) === selectedWorkload.target && plan.source.availability !== 'out-of-stock');
-    if (exact) return exact.name;
-    const firstAvailable = visible.find(plan => plan.source.availability !== 'out-of-stock');
-    return firstAvailable?.name ?? visible[0]?.name;
-  }, [visible, selectedWorkload.target]);
+  const recommendedName = useMemo(
+    () => closestAvailablePlan(regionPlans, selectedWorkload.target),
+    [regionPlans, selectedWorkload.target],
+  );
 
   return (
-    <div className="flex w-full flex-col gap-5">
-      <Card>
-        <CardContent className="grid gap-5 p-5 md:p-6 xl:grid-cols-[auto_auto_minmax(520px,1fr)] xl:items-end xl:gap-8">
-          <div className="flex flex-col gap-2">
-            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Region</span>
-            <ButtonGroup aria-label="Deployment region">
-              {(['USA', 'EU'] as const).map(item => (
-                <Button
-                  key={item}
-                  type="button"
-                  size="sm"
-                  variant={region === item ? 'default' : 'outline'}
-                  aria-pressed={region === item}
-                  onClick={() => setRegion(item)}
-                >
-                  {item}
-                </Button>
-              ))}
-            </ButtonGroup>
-          </div>
+    <div className="srv-plan-picker">
+      <div className="srv-plan-toolbar">
+        <div className="srv-plan-toolbar-group">
+          <span className="srv-plan-label">Region</span>
+          <ButtonGroup aria-label="Deployment region">
+            {(['USA', 'EU'] as const).map(item => (
+              <Button
+                key={item}
+                type="button"
+                size="sm"
+                variant={region === item ? 'default' : 'outline'}
+                aria-pressed={region === item}
+                onClick={() => setRegion(item)}
+              >
+                {item}
+              </Button>
+            ))}
+          </ButtonGroup>
+        </div>
 
-          <div className="flex flex-col gap-2">
-            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Operating system</span>
-            <ButtonGroup aria-label="Operating system">
-              {([
-                ['any', 'Any OS'],
-                ['windows', 'Windows'],
-                ['linux', 'Linux'],
-              ] as const).map(([value, label]) => (
-                <Button
-                  key={value}
-                  type="button"
-                  size="sm"
-                  variant={os === value ? 'default' : 'outline'}
-                  aria-pressed={os === value}
-                  onClick={() => setOs(value)}
-                >
-                  {label}
-                </Button>
-              ))}
-            </ButtonGroup>
-          </div>
+        <div className="srv-plan-toolbar-group srv-plan-cycle">
+          <span className="srv-plan-label">Billing cycle</span>
+          <ButtonGroup aria-label="Billing cycle" className="flex flex-wrap">
+            {cycles.map(item => (
+              <Button
+                key={item}
+                type="button"
+                size="sm"
+                variant={cycle === item ? 'default' : 'outline'}
+                aria-pressed={cycle === item}
+                onClick={() => setCycle(item)}
+              >
+                {cycleLabel[item]}
+              </Button>
+            ))}
+          </ButtonGroup>
+        </div>
 
-          <div className="flex min-w-0 flex-col gap-2">
-            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Billing cycle</span>
-            <ButtonGroup aria-label="Billing cycle" className="flex w-full flex-wrap xl:flex-nowrap">
-              {cycles.map(item => (
-                <Button
-                  key={item}
-                  type="button"
-                  size="sm"
-                  variant={cycle === item ? 'default' : 'outline'}
-                  aria-pressed={cycle === item}
-                  onClick={() => setCycle(item)}
-                  className="min-w-[96px] flex-1"
-                >
-                  {cycleLabel[item]}
-                </Button>
-              ))}
-            </ButtonGroup>
-          </div>
-        </CardContent>
-      </Card>
-
-      <div className="flex flex-wrap gap-2" aria-label="Choose a workload">
-        {workloads.map(item => (
-          <Button
-            key={item.id}
-            type="button"
-            size="sm"
-            variant={workload === item.id ? 'default' : 'outline'}
-            aria-pressed={workload === item.id}
-            onClick={() => setWorkload(item.id)}
-          >
-            {item.label}
-          </Button>
-        ))}
+        <div className="srv-plan-live" aria-label="Availability is live">
+          <span aria-hidden="true" />
+          Live stock
+        </div>
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm text-muted-foreground">
-          Best fit for <strong className="font-semibold text-foreground">{selectedWorkload.label}</strong> · {region} · {os === 'any' ? 'Windows or Linux' : os === 'windows' ? 'Windows' : 'Linux'}
-        </p>
-        <Badge variant="outline">{visible.length} plans in preview</Badge>
-      </div>
-
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-3 xl:gap-6">
-        {visible.map(plan => {
-          const price = plan.pricing[cycle];
-          const monthEquivalent = price.amount / months[cycle];
-          const osLabel = plan.source.os === 'linux-only' ? 'Linux only' : 'Windows + Linux';
-          const featured = plan.name === recommendedName;
-          const available = plan.source.availability !== 'out-of-stock';
+      <div className="srv-workload-tabs" aria-label="Choose a workload">
+        {workloads.map(item => {
+          const Icon = item.icon;
+          const selected = workload === item.id;
 
           return (
-            <PricingColumn
-              key={plan.name}
-              name={plan.name}
-              description={osLabel}
-              featured={featured}
-              badge={featured ? <Badge variant="outline">Recommended</Badge> : null}
-              price={
-                <span>
-                  €{format(price.amount)}
-                  <span className="ml-1 text-base font-medium text-muted-foreground">{price.suffix}</span>
-                </span>
-              }
-              priceNote={cycle === 'monthly'
-                ? 'Billed monthly'
-                : `€${monthEquivalent.toFixed(2)}/mo effective · due today`}
-              cta={{
-                label: available ? `Choose ${tierName(plan)}` : 'Out of stock',
-                href: available ? checkoutUrl(plan, cycle) : undefined,
-                disabled: !available,
-              }}
-              features={[
-                plan.specs.cpu,
-                plan.specs.ram,
-                plan.specs.storage,
-                `${plan.specs.bandwidth} bandwidth`,
-                'Dedicated IPv4',
-              ]}
-              footer={
-                <span className={available ? 'font-medium text-status-ok' : 'font-medium text-muted-foreground'}>
-                  {plan.source.stock !== undefined
-                    ? `${plan.source.stock} available`
-                    : available ? 'In stock' : 'Out of stock'}
-                </span>
-              }
-            />
+            <button
+              key={item.id}
+              type="button"
+              className="srv-workload-tab"
+              data-selected={selected}
+              aria-pressed={selected}
+              onClick={() => setWorkload(item.id)}
+            >
+              <Icon aria-hidden="true" />
+              <span>{item.label}</span>
+            </button>
           );
         })}
       </div>
 
-      <div className="flex flex-wrap justify-center gap-3">
-        <Button asChild variant="outline">
-          <a href="/plans">View all plans</a>
-        </Button>
-        <Button asChild variant="ghost">
-          <a href={os === 'windows' ? '/windows-vps' : '/linux-vps'}>
-            Browse {os === 'windows' ? 'Windows' : 'Linux'} VPS
-          </a>
-        </Button>
+      <div className="srv-plan-context">
+        <p>
+          Best fit for <strong>{selectedWorkload.label}</strong>
+          <span> · {region}</span>
+        </p>
+        <p>
+          Starter is Linux-only. Every other plan supports Windows or Linux.
+        </p>
+      </div>
+
+      <div className="srv-plan-ladder" role="list" aria-label={`${region} VPS plans`}>
+        {regionPlans.map((plan, index) => {
+          const price = plan.pricing[cycle];
+          const monthEquivalent = price.amount / months[cycle];
+          const available = plan.source.availability !== 'out-of-stock';
+          const recommended = plan.name === recommendedName;
+          const osLabel = plan.source.os === 'linux-only' ? 'Linux only' : 'Windows + Linux';
+
+          return (
+            <article
+              className="srv-plan-row"
+              data-recommended={recommended}
+              data-available={available}
+              key={plan.name}
+              role="listitem"
+            >
+              <div className="srv-plan-index" aria-hidden="true">
+                {String(index + 1).padStart(2, '0')}
+              </div>
+
+              <div className="srv-plan-identity">
+                <div className="srv-plan-name-line">
+                  <h3>{tierName(plan)}</h3>
+                  {recommended ? <Badge variant="outline">Best fit</Badge> : null}
+                </div>
+                <span>{osLabel}</span>
+              </div>
+
+              <dl className="srv-plan-specs">
+                <div>
+                  <dt>CPU</dt>
+                  <dd>{plan.specs.cpu}</dd>
+                </div>
+                <div>
+                  <dt>RAM</dt>
+                  <dd>{plan.specs.ram}</dd>
+                </div>
+                <div>
+                  <dt>Storage</dt>
+                  <dd>{plan.specs.storage}</dd>
+                </div>
+                <div>
+                  <dt>Traffic</dt>
+                  <dd>{plan.specs.bandwidth}</dd>
+                </div>
+              </dl>
+
+              <div className="srv-plan-commerce">
+                <div className="srv-plan-price">
+                  <strong>€{format(price.amount)}</strong>
+                  <span>{price.suffix}</span>
+                </div>
+                <span className="srv-plan-price-note">
+                  {cycle === 'monthly'
+                    ? 'Billed monthly'
+                    : `€${monthEquivalent.toFixed(2)}/mo effective`}
+                </span>
+                <span className="srv-plan-stock" data-available={available}>
+                  <i aria-hidden="true" />
+                  {plan.source.stock !== undefined
+                    ? (available ? `${plan.source.stock} available` : 'Out of stock')
+                    : (available ? 'In stock' : 'Out of stock')}
+                </span>
+              </div>
+
+              <div className="srv-plan-action">
+                {available ? (
+                  <Button asChild size="sm" variant={recommended ? 'default' : 'outline'}>
+                    <a href={checkoutUrl(plan, cycle)}>
+                      Choose
+                      <ArrowSquareOut aria-hidden="true" />
+                    </a>
+                  </Button>
+                ) : (
+                  <Button type="button" size="sm" variant="outline" disabled>
+                    Sold out
+                  </Button>
+                )}
+              </div>
+            </article>
+          );
+        })}
+      </div>
+
+      <div className="srv-plan-footer">
+        <span>{regionPlans.length} plans in {region}</span>
+        <a href="/plans">
+          Compare the full catalogue
+          <ArrowSquareOut aria-hidden="true" />
+        </a>
       </div>
     </div>
   );
