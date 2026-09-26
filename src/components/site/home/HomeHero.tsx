@@ -63,9 +63,9 @@ export function HomeHero() {
             anytime · 7-day money-back
           </p>
 
-          <div>
-            <p className="srv3-hero-price">Works with your OS:</p>
-            <ul className="srv3-hero-facts" aria-label="Supported operating systems">
+          <div className="srv3-hero-os" aria-label="Supported operating systems">
+            <span>Works with</span>
+            <ul>
               {osList.map(name => (
                 <li key={name}>{name}</li>
               ))}
