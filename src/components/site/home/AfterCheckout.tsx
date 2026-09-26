@@ -30,7 +30,7 @@ export function AfterCheckout() {
           {testimonials.slice(0, 3).map((item, index) => (
             <Card
               key={item.id ?? item._id ?? index}
-              className={cn('gap-4', index === 0 && 'bg-surface-2')}
+              className={cn('srv3-review-card gap-4', index === 0 && 'bg-surface-2')}
             >
               <CardHeader>
                 <Badge variant="outline" className="w-fit text-body-muted">
