@@ -3412,3 +3412,67 @@ main:has(.srv3-final-section) + .srv3-footer .srv3-footer-bottom {
     padding-top: 0;
   }
 }
+
+
+/* Homepage hero ambient motion ------------------------------------------------
+   Lightweight CSS-only drift: one grid cell per 28s. The oversized layer lets
+   transform animation stay GPU-friendly without exposing edges.
+   ------------------------------------------------------------------------- */
+.srv3-hero::after {
+  content: "";
+  position: absolute;
+  inset: -88px;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--primary) 8%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--primary) 8%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 44px 44px;
+  opacity: 0.24;
+  mask-image: radial-gradient(
+    circle at 64% 42%,
+    rgb(0 0 0 / 0.96) 0%,
+    rgb(0 0 0 / 0.68) 34%,
+    rgb(0 0 0 / 0.18) 62%,
+    transparent 82%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle at 64% 42%,
+    rgb(0 0 0 / 0.96) 0%,
+    rgb(0 0 0 / 0.68) 34%,
+    rgb(0 0 0 / 0.18) 62%,
+    transparent 82%
+  );
+  animation: srv3-grid-drift 28s linear infinite;
+  will-change: transform;
+}
+
+.srv3-hero > .sr-container {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes srv3-grid-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(44px, 44px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv3-hero::after {
+    animation: none;
+    transform: none;
+  }
+}
