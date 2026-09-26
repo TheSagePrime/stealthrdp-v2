@@ -1,23 +1,22 @@
+import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 
 const items = [
   {
     title: 'NVMe SSD storage',
-    text: 'Fast disk I/O for applications, databases, and terminals.',
+    text: 'Fast disk I/O for applications, databases, and active desktop workloads.',
   },
   {
-    title: 'Isolated VMs',
-    text: 'Separate virtual machines for each server.',
+    title: 'Isolated virtual machines',
+    text: 'Each service runs in its own VM with dedicated resources and full admin access.',
   },
   {
-    title: 'Global network',
-    text: 'Strategic locations with 250 Mbps ports and an optional 1 Gbps upgrade.',
+    title: 'USA + Europe regions',
+    text: 'Choose the location closest to the workload, with dedicated IPv4 included.',
   },
   {
     title: '24/7 monitoring',
-    text: 'Automated monitoring with a public status page.',
+    text: 'Production nodes are monitored continuously with a public status page.',
   },
 ] as const;
 
@@ -25,42 +24,32 @@ export function Infrastructure() {
   return (
     <section className="sr-section srv3-infra-section" id="infrastructure">
       <div className="sr-container">
-        <div className="srv3-infra-panel srv3-infra-layout">
-          <div className="srv3-infra-copy">
+        <div className="srv3-home-section-head">
+          <div>
             <p className="sr-kicker">Built for the workload</p>
-            <h2>Infrastructure that doesn&apos;t flinch</h2>
-            <p>
-              Speed, protection, and visibility without the extra surface area.
-            </p>
-            <div className="mt-7">
-              <Button asChild variant="outline">
-                <Link href="/status">View server status</Link>
-              </Button>
-            </div>
+            <h2>The infrastructure essentials, already included.</h2>
           </div>
-
-          <ol className="srv3-infra-list grid list-none gap-0 p-0">
-            {items.map(({ title, text }, index) => (
-              <li
-                key={title}
-                className="
-                  grid gap-3 border-t border-divider py-6 last:border-b
-                  sm:grid-cols-[auto_1fr] sm:items-start sm:gap-x-6
-                "
-              >
-                <div className="flex items-center gap-3">
-                  <Badge variant="outline" className="tabular-nums">
-                    {String(index + 1).padStart(2, '0')}
-                  </Badge>
-                </div>
-                <div className="grid gap-1.5">
-                  <h3 className="text-heading-4 font-semibold text-body-text">{title}</h3>
-                  <p className="text-small text-body-muted">{text}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
+          <div className="srv3-infra-intro">
+            <p>
+              No separate feature maze. The things most buyers care about are standard across
+              the VPS range.
+            </p>
+            <Link href="/status">
+              View live status
+              <ArrowRight size={16} aria-hidden="true" />
+            </Link>
+          </div>
         </div>
+
+        <ol className="srv3-home-feature-grid">
+          {items.map(({ title, text }, index) => (
+            <li key={title}>
+              <span>{String(index + 1).padStart(2, '0')}</span>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );
