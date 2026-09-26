@@ -269,6 +269,86 @@ function PlanCard({
   );
 }
 
+
+function HomePlanCard({
+  plan,
+  cycle,
+  showPopular,
+  alternative,
+}: {
+  plan: Plan;
+  cycle: BillingCycle;
+  showPopular: boolean;
+  alternative?: Plan | null;
+}) {
+  const price = plan.pricing[cycle];
+  const available = plan.source.availability !== 'out-of-stock';
+  const stock = plan.source.stock;
+  const osLabel = plan.source.os === 'linux-only' ? 'Linux only' : 'Linux + Windows';
+  const months = cycleMonths[cycle] ?? 1;
+
+  return (
+    <article
+      className="sr-home-plan-card"
+      id={`plan-${planSlug(plan.name)}`}
+      data-popular={showPopular}
+      data-availability={available ? 'in-stock' : 'out-of-stock'}
+    >
+      <header className="sr-home-plan-head">
+        <div>
+          <h3>{plan.name}</h3>
+          <p>{osLabel}</p>
+        </div>
+        {showPopular ? <Badge variant="outline">Most popular</Badge> : null}
+      </header>
+
+      <div className="sr-home-plan-price">
+        <strong>{`€${formatPrice(price.amount)}${price.suffix}`}</strong>
+        <span>
+          {months > 1
+            ? `€${(price.amount / months).toFixed(2)}/mo effective · due today`
+            : 'due today · billed monthly'}
+        </span>
+      </div>
+
+      <dl className="sr-home-plan-specs">
+        <div><dt>CPU</dt><dd>{plan.specs.cpu}</dd></div>
+        <div><dt>RAM</dt><dd>{plan.specs.ram}</dd></div>
+        <div><dt>Storage</dt><dd>{plan.specs.storage}</dd></div>
+        <div><dt>Bandwidth</dt><dd>{plan.specs.bandwidth}</dd></div>
+      </dl>
+
+      <footer className="sr-home-plan-footer">
+        <p className="sr-home-plan-stock" data-state={available ? 'in-stock' : 'out-of-stock'}>
+          {stock !== undefined ? `${stock} available` : (available ? 'In stock' : 'Out of stock')}
+        </p>
+
+        {available ? (
+          <Button asChild className="w-full">
+            <a
+              href={checkoutUrl(plan, cycle)}
+              aria-label={`Order ${plan.name} — opens StealthRDP checkout`}
+            >
+              Choose {plan.name.replace(/ USA| EU/g, '')}
+              <ArrowSquareOut size={14} aria-hidden="true" />
+            </a>
+          </Button>
+        ) : alternative ? (
+          <Button asChild variant="outline" className="w-full">
+            <a href={`#plan-${planSlug(alternative.name)}`}>
+              See {alternative.name.replace(/ USA| EU/g, '')}
+            </a>
+          </Button>
+        ) : (
+          <Button type="button" variant="outline" className="w-full" disabled>
+            Out of stock
+          </Button>
+        )}
+      </footer>
+    </article>
+  );
+}
+
 export function PricingExplorer({
   compact = false,
   showComparison = false,
@@ -389,21 +469,42 @@ export function PricingExplorer({
         </p>
       </div>
 
-      <p className="sr-ledger-note sr-ledger-summary" data-plan-summary>
-        Showing {visible.length} {region} {visible.length === 1 ? 'plan' : 'plans'} · {priceHeader[cycle].toLowerCase()}
-      </p>
+      {compact ? (
+        <>
+          <p className="sr-home-plan-summary" data-plan-summary>
+            {visible.length} recommended {region} {visible.length === 1 ? 'plan' : 'plans'} · {priceHeader[cycle].toLowerCase()}
+          </p>
+          <div className="sr-home-plan-grid">
+            {visible.map(plan => (
+              <HomePlanCard
+                key={plan.name}
+                plan={plan}
+                cycle={cycle}
+                showPopular={plan.name === popularName}
+                alternative={alternativeFor(plan, plans)}
+              />
+            ))}
+          </div>
+        </>
+      ) : (
+        <>
+          <p className="sr-ledger-note sr-ledger-summary" data-plan-summary>
+            Showing {visible.length} {region} {visible.length === 1 ? 'plan' : 'plans'} · {priceHeader[cycle].toLowerCase()}
+          </p>
 
-      <div className="sr-pick-cards">
-        {visible.map(plan => (
-          <PlanCard
-            key={plan.name}
-            plan={plan}
-            cycle={cycle}
-            showPopular={plan.name === popularName}
-            alternative={alternativeFor(plan, plans)}
-          />
-        ))}
-      </div>
+          <div className="sr-pick-cards">
+            {visible.map(plan => (
+              <PlanCard
+                key={plan.name}
+                plan={plan}
+                cycle={cycle}
+                showPopular={plan.name === popularName}
+                alternative={alternativeFor(plan, plans)}
+              />
+            ))}
+          </div>
+        </>
+      )}
 
       {!compact ? (
         <>
