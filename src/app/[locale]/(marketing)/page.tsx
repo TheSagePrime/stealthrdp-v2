@@ -24,7 +24,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { CodeBlock } from '@/components/ui/code-block';
 import { Separator } from '@/components/ui/separator';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
@@ -167,7 +166,9 @@ export default async function HomePage({ params }: Props) {
               </div>
             </CardHeader>
             <CardContent className="grid gap-4 px-5 py-5">
-              <CodeBlock>$ stealth deploy --plan bronze-usa --region us-east</CodeBlock>
+              <pre className="max-w-full overflow-x-auto rounded-md border border-border bg-muted/30 p-4 font-mono text-sm leading-6">
+                <code>$ stealth deploy --plan bronze-usa --region us-east</code>
+              </pre>
 
               <div className="grid gap-3 text-sm">
                 {[
