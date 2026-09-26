@@ -186,7 +186,7 @@ export default async function HomePage({ params }: Props) {
           </div>
 
           <div className="grid gap-5 md:grid-cols-2">
-            <Card className="gap-5 p-7 sm:p-8">
+            <Card className="gap-5 p-8 sm:p-8">
               <CardHeader className="p-0">
                 <Badge variant="outline" className="w-fit">Hosting</Badge>
                 <CardTitle className="mt-4 text-2xl tracking-tight">
@@ -207,7 +207,7 @@ export default async function HomePage({ params }: Props) {
               </CardFooter>
             </Card>
 
-            <Card className="gap-5 p-7 sm:p-8">
+            <Card className="gap-5 p-8 sm:p-8">
               <CardHeader className="p-0">
                 <Badge variant="outline" className="w-fit">Protection</Badge>
                 <CardTitle className="mt-4 text-2xl tracking-tight">
