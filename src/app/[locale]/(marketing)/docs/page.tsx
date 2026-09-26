@@ -79,7 +79,7 @@ export default function DocsPage() {
                             <CardTitle className="text-heading-4 text-body-text">
                               <Link
                                 href={href}
-                                className="transition-colors hover:text-primary"
+                                className="inline-flex min-h-11 items-center transition-colors hover:text-primary"
                               >
                                 <h3>{article.title}</h3>
                               </Link>
