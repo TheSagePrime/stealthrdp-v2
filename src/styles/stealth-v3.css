@@ -1880,15 +1880,13 @@ body {
   padding-inline: 20px;
 }
 
-/* Infrastructure refinement --------------------------------------------- */
+/* Infrastructure refinement (desktop only — mobile stacks via the 1040px rule) - */
 
-.srv3-infra-section {
-  background:linear-gradient(180deg, var(--bg), var(--bg));
-}
-
-.srv3-infra-layout {
-  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
-  gap: clamp(56px, 8vw, 104px);
+@media (min-width: 1041px) {
+  .srv3-infra-layout {
+    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+    gap: clamp(56px, 8vw, 104px);
+  }
 }
 
 .srv3-infra-copy h2 {
