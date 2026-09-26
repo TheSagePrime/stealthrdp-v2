@@ -2462,9 +2462,10 @@ body {
 }
 
 .sr-term-option[data-selected="true"] .sr-term-save {
-  color: inherit;
-  border-color: currentColor;
+  color: var(--primary-foreground);
+  border-color: color-mix(in srgb, var(--primary-foreground) 75%, transparent);
   background: transparent;
+  opacity: 1;
 }
 
 .sr-term-option:disabled {
