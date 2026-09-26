@@ -3402,3 +3402,13 @@ main:has(.srv3-final-section) + .srv3-footer .srv3-footer-bottom {
     padding-top: 32px;
   }
 }
+
+
+/* Desktop plan specs use one vertical separator only.
+   Keep the mobile top divider from leaking into the desktop cascade. */
+@media (min-width: 720px) {
+  .sr-pick-specs {
+    border-top: 0;
+    padding-top: 0;
+  }
+}
