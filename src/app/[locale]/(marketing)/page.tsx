@@ -149,7 +149,7 @@ export default async function HomePage({ params }: Props) {
       <Section id="plans" className="py-16 sm:py-20 lg:py-24">
         <div className="mx-auto flex max-w-7xl flex-col gap-10 sm:gap-12">
           <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-primary">
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary">
               VPS plans
             </p>
             <h2 className="text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
@@ -174,7 +174,7 @@ export default async function HomePage({ params }: Props) {
       <Section className="py-16 sm:py-20">
         <div className="mx-auto flex max-w-7xl flex-col gap-10">
           <div className="flex max-w-3xl flex-col gap-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-primary">
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary">
               StealthRDP products
             </p>
             <h2 className="text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
@@ -234,7 +234,7 @@ export default async function HomePage({ params }: Props) {
       <Section className="border-y border-border bg-card/30 py-16 sm:py-20">
         <div className="mx-auto flex max-w-7xl flex-col gap-10">
           <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-primary">
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary">
               Customer proof
             </p>
             <h2 className="text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
