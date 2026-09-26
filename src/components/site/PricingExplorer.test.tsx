@@ -15,7 +15,7 @@ describe('PricingExplorer purchase decisions', () => {
     await render(<PricingExplorer showComparison />);
     await userEvent.click(page.getByRole('button', { name: /^Annual/ }));
 
-    expect(page.getByRole('columnheader', { name: 'Price/yr' })).toBeInTheDocument();
+    expect(page.getByRole('columnheader', { name: 'Price per month' })).toBeInTheDocument();
     expect(page.getByRole('cell', { name: /€96\.50\/yr/ })).toBeInTheDocument();
   });
 
@@ -36,7 +36,7 @@ describe('PricingExplorer purchase decisions', () => {
     await render(<PricingExplorer showComparison />);
     await userEvent.click(page.getByRole('button', { name: 'EU', exact: true }));
 
-    expect(page.getByRole('heading', { name: /Compare EU plans/ })).toBeInTheDocument();
+    expect(page.getByRole('heading', { name: /See the difference in one view/ })).toBeInTheDocument();
     expect(page.getByRole('rowheader', { name: /Bronze EU/ })).toBeInTheDocument();
     expect(page.getByRole('rowheader', { name: /Bronze USA/ })).not.toBeInTheDocument();
   });
@@ -51,12 +51,12 @@ describe('PricingExplorer purchase decisions', () => {
   it('keeps every specification readable without repeated icons and preserves checkout actions', async () => {
     await render(<PricingExplorer />);
 
-    for (const column of ['CPU', 'Memory', 'Storage', 'Traffic']) {
+    for (const column of ['CPU', 'RAM', 'Storage', 'Bandwidth']) {
       expect(page.getByRole('columnheader', { name: column })).toBeInTheDocument();
     }
     expect(document.querySelectorAll('tbody svg')).toHaveLength(0);
     expect(document.querySelectorAll('.sr-ledger-spec')).toHaveLength(18);
-    expect(page.getByRole('link', { name: 'Configure server' }).first()).toHaveAttribute('href');
+    expect(page.getByRole('link', { name: 'Buy Now' }).first()).toHaveAttribute('href');
   });
 
   it('selects a workload from the existing menu and moves the best-fit marker', async () => {

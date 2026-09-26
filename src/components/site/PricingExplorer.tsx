@@ -97,11 +97,12 @@ function PlanRow({
       <th scope="row">
         <span className="sr-plan-row">
           {plan.name}
+          <Badge variant="outline">{plan.description}</Badge>
           {recommended ? <Badge>Best fit</Badge> : null}
           {showPopular && !recommended ? <Badge variant="outline">Popular</Badge> : null}
         </span>
         <span className="sr-ledger-meta">
-          {plan.location} region · full administrative access
+          {plan.location} region
         </span>
       </th>
       <SpecCell
@@ -136,7 +137,7 @@ function PlanRow({
       <TableCell className="sr-ledger-action">
         {available ? (
           <Button asChild size="sm">
-            <a href={checkoutUrl(plan, cycle)}>Configure server</a>
+            <a href={checkoutUrl(plan, cycle)}>Buy Now</a>
           </Button>
         ) : (
           <Pill state="warn" icon={<span aria-hidden="true">!</span>}>
@@ -248,7 +249,7 @@ export function PricingExplorer({
 
       <div className="sr-control-row">
         <div className="sr-control-stack">
-          <span className="sr-control-label">Region</span>
+          <span className="sr-control-label">Deployment region</span>
           <ButtonGroup className="sr-segmented-control" aria-label="Deployment region">
             {(['USA', 'EU'] as const).map(item => (
               <Button
@@ -266,7 +267,7 @@ export function PricingExplorer({
         </div>
 
         <div className="sr-control-stack sr-term-stack">
-          <span className="sr-control-label">Billing term</span>
+          <span className="sr-control-label">Billing cycle</span>
           <ul className="sr-term-ladder">
             {cycleOrder.map(item => {
               const billing = billingCycles[item] as {
@@ -308,14 +309,20 @@ export function PricingExplorer({
       </div>
 
       <section id="comparison" className="sr-ledger-section">
-        <h3 className="sr-ledger-title">
-          {showComparison
-            ? `Compare ${region} plans · ${ladderPlan?.pricing[cycle]?.suffix === '/2yr' ? '2-year' : ladderPlan?.pricing[cycle]?.suffix === '/6mo' ? '6-month' : billingCycles[cycle].label}`
-            : `Choose your resource level · ${region}`}
-        </h3>
+        {showComparison ? (
+          <>
+            <p className="sr-kicker">02 / Compare precisely</p>
+            <h2 className="sr-ledger-title">See the difference in one view. VPS Features Comparison</h2>
+          </>
+        ) : (
+          <h3 className="sr-ledger-title">
+            {`Choose your resource level · ${region}`}
+          </h3>
+        )}
         <p className="sr-ledger-note">
-          Bars compare each plan against the largest configuration in {region}.
-          Published prices and availability are confirmed during checkout.
+          {showComparison
+            ? 'Use this table for a quick resource check. Checkout confirms the current price and availability.'
+            : `Bars compare each plan against the largest configuration in ${region}. Published prices and availability are confirmed during checkout.`}
         </p>
         <span className="sr-ledger-hint">Swipe the table to compare every column.</span>
 
@@ -325,10 +332,10 @@ export function PricingExplorer({
               <TableRow>
                 <TableHead>Plan</TableHead>
                 <TableHead>CPU</TableHead>
-                <TableHead>Memory</TableHead>
+                <TableHead>RAM</TableHead>
                 <TableHead>Storage</TableHead>
-                <TableHead>Traffic</TableHead>
-                <TableHead>{`Price${plans[0]?.pricing[cycle].suffix ?? ''}`}</TableHead>
+                <TableHead>Bandwidth</TableHead>
+                <TableHead>Price per month</TableHead>
                 <TableHead><span className="sr-visually-hidden">Action</span></TableHead>
               </TableRow>
             </TableHeader>

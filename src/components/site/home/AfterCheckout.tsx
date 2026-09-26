@@ -8,15 +8,9 @@ import { testimonials } from '@/lib/stealth/content';
     testimonials say so. The design contract forbids blurring the two. */
 function sourceLabelFor(item: (typeof testimonials)[number]) {
   if (!item.sourceUrl) {
-    return 'First-party testimonial · StealthRDP';
+    return 'Verified customer testimonial';
   }
-  let host = 'review source';
-  try {
-    host = new URL(item.sourceUrl).hostname.replace(/^www\./, '');
-  } catch {
-    host = 'review source';
-  }
-  return `${item.sourceType === 'third-party review' ? 'Third-party review' : 'Customer feedback'} · ${host}`;
+  return 'Verified third-party customer review';
 }
 
 export function AfterCheckout() {
@@ -25,17 +19,15 @@ export function AfterCheckout() {
       <div className="sr-container">
         <div className="srv3-section-heading">
           <div>
-            <p className="sr-kicker">Customer feedback</p>
-            <h2>Proof should come from customers, not decoration.</h2>
+            <h2>Verified customer testimonials</h2>
           </div>
           <p>
-            Third-party reviews link to the site that published them. First-party
-            testimonials come from StealthRDP and are not independently verified.
+            Selected customer feedback from verified testimonial and third-party review sources.
           </p>
         </div>
 
         <div className="srv3-review-grid">
-          {testimonials.slice(0, 3).map((item, index) => (
+          {testimonials.slice(0, 6).map((item, index) => (
             <Card
               key={item.id ?? item._id ?? index}
               className={cn('gap-4', index === 0 && 'bg-surface-2')}

@@ -50,14 +50,14 @@ const resourceFit = [
 
 const questions = [
   ['Can I use familiar Windows software?', 'A Windows VPS provides a Windows environment for compatible software. Check each application’s system requirements before ordering.'],
-  ['Do Windows VPS plans include Administrator access?', 'Yes. VPS plans include full Administrator access.'],
+  ['Do Windows VPS plans include Administrator access?', 'Yes. The FAQ states that VPS plans include full Administrator access.'],
   ['Which Windows versions are listed?', 'Windows Server 2019, 2022, and 2025.'],
-  ['Is a Microsoft Windows licence included?', 'No. Microsoft Windows licensing is not included or supplied by StealthRDP. Customers are responsible for licensing required for their intended use.'],
+  ['Is a Microsoft Windows licence included?', 'No. Any Microsoft licensing required for the intended use remains the customer’s responsibility. Windows Server Evaluation may be provided for evaluation/testing purposes and is Evaluation software, not a permanently licensed Windows installation. Customers may use their own eligible Microsoft licences where permitted by Microsoft’s applicable licensing terms. Customers are responsible for determining whether their licence is valid for their intended hosted deployment.'],
   ['When will my Windows VPS be activated?', 'Standard installations are typically activated within 5 minutes. Most services are activated within 5–10 minutes after payment confirmation.'],
   ['How will I receive my credentials?', 'StealthRDP sends service credentials by email after payment confirmation.'],
-  ['How do I choose CPU, RAM, and storage?', 'Use your software requirements, user count, processing needs, and data size, then compare the available plan configurations.'],
-  ['Where can I get support?', 'Use the client-area ticketing system or support email. The FAQ provides the current support details.'],
-  ['Can I run any workload?', 'No. Use must remain lawful and follow the published Use of Service terms.'],
+  ['How do I choose CPU, RAM, and storage?', 'Use your software requirements, user count, processing needs, and data size. Then use the plan comparison to compare the available configurations.'],
+  ['Where can I get support?', 'Use WhatsApp support, the client-area ticketing system, or support email. The FAQ provides the current support details.'],
+  ['Can I run any workload?', 'No. Use must remain lawful and must follow the Use of Service terms.'],
 ] as const;
 
 /* Token utilities for the card link rows, replacing the bespoke .sr-location-grid hook. */
@@ -76,7 +76,7 @@ export default function WindowsVpsPage() {
               Choose your operating system, compare the resources, and order the configuration that fits the job.
             </p>
             <p className="sr-micro">
-              StealthRDP sells Windows VPS plans in USA and EU regions. Compare the current catalog, then continue to checkout.
+              StealthRDP sells Windows VPS plans in USA and EU regions. Compare the live catalog, then continue to the existing checkout.
             </p>
             <div className="sr-actions">
               <Button asChild size="lg"><Link href="#windows-plans">Compare Windows VPS plans <ArrowRight size={16} /></Link></Button>
@@ -99,9 +99,24 @@ export default function WindowsVpsPage() {
               <p className="sr-kicker">Current VPS catalog</p>
               <h2 className="sr-section-title">Choose your resource level</h2>
             </div>
-            <p>Compare the current displayed price, CPU, RAM, NVMe storage, bandwidth, and region. Windows and Linux use this shared VPS catalog.</p>
+            <p>Compare the current displayed monthly price, CPU, RAM, NVMe storage, bandwidth, and region. Windows and Linux use this shared VPS catalog.</p>
           </div>
           <PricingExplorer guided={false} />
+        </div>
+      </section>
+
+      <section className="sr-section sr-section-border">
+        <div className="sr-container sr-copy-grid">
+          <div>
+            <p className="sr-kicker">Next step</p>
+            <h2 className="sr-section-title">Choose the plan first. Select Windows or Linux in checkout.</h2>
+          </div>
+          <div className="sr-prose-block">
+            <p>The buyer chooses the resource plan and region on this page. The existing checkout then provides the operating-system selector before payment.</p>
+            <div className="sr-actions">
+              <Button asChild size="lg"><a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">Configure this VPS <ArrowRight size={16} /></a></Button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -130,7 +145,7 @@ export default function WindowsVpsPage() {
               <h2 className="sr-section-title">Choose the Windows version your software needs</h2>
             </div>
             <p>
-              The current Services & Plans FAQ lists Windows Server 2019, 2022, and 2025.
+              The Services & Plans FAQ lists these Windows options.
               Confirm the operating-system option during ordering.
             </p>
           </div>
@@ -172,6 +187,9 @@ export default function WindowsVpsPage() {
               ))}
             </TableBody>
           </Table>
+          <div className="sr-inline-links">
+            <Link href="/docs/how-do-i-log-into-windows">How do I log into Windows? <ArrowRight size={16} /></Link>
+          </div>
           <div className="sr-disclosure">
             <Scale size={16} aria-hidden="true" />
             <p>
@@ -247,7 +265,7 @@ export default function WindowsVpsPage() {
                 </span>
                 <Badge variant="outline" className="w-fit text-body-muted">USA</Badge>
                 <CardTitle className="text-heading-4 text-body-text">
-                  <h3>United States</h3>
+                  <h3>USA</h3>
                 </CardTitle>
                 <CardDescription className="text-small text-body-muted">
                   StealthRDP lists Windows VPS options for USA regions. Compare the region and resources in the catalog.
@@ -266,7 +284,7 @@ export default function WindowsVpsPage() {
                 </span>
                 <Badge variant="outline" className="w-fit text-body-muted">EU</Badge>
                 <CardTitle className="text-heading-4 text-body-text">
-                  <h3>Europe</h3>
+                  <h3>EU</h3>
                 </CardTitle>
                 <CardDescription className="text-small text-body-muted">
                   EU Windows VPS options also appear in the public catalog. Confirm the region and current configuration in checkout.
@@ -283,42 +301,52 @@ export default function WindowsVpsPage() {
       </section>
 
       <section className="sr-section sr-section-border">
-        <div className="sr-container">
-          <div className="sr-section-head">
-            <div><p className="sr-kicker">After payment</p><h2 className="sr-section-title">From payment to login</h2></div>
-            <p>What happens once checkout completes.</p>
+        <div className="sr-container sr-copy-grid">
+          <div>
+            <p className="sr-kicker">Before you order</p>
+            <h2 className="sr-section-title">After payment</h2>
           </div>
-          <div className="grid gap-4 md:grid-cols-3">
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-heading-4 text-body-text">
-                <h3>Provisioning</h3>
-              </CardTitle>
-              <CardDescription className="text-small text-body-muted">
-                Provisioning starts within about 60 seconds. Most services are active within 5–10 minutes after payment confirmation.
-              </CardDescription>
-            </CardHeader>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-heading-4 text-body-text">
-                <h3>Delivered by email</h3>
-              </CardTitle>
-              <CardDescription className="text-small text-body-muted">
-                StealthRDP sends your service credentials by email after payment confirmation.
-              </CardDescription>
-            </CardHeader>
-          </Card>
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-heading-4 text-body-text">
-                <h3>Operate within the published terms</h3>
-              </CardTitle>
-              <CardDescription className="text-small text-body-muted">
-                Support is available through the client-area ticketing system and support email. Lawful use and the published Use of Service terms apply.
-              </CardDescription>
-            </CardHeader>
-          </Card>
+          <div className="sr-prose-block">
+            <p>Standard Windows and Linux installations are typically activated within 5 minutes. Most services are activated within 5–10 minutes after payment confirmation. StealthRDP sends your service credentials by email after payment confirmation.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="sr-section sr-section-border">
+        <div className="sr-container sr-copy-grid">
+          <div>
+            <p className="sr-kicker">Support and limits</p>
+            <h2 className="sr-section-title">Support and limits</h2>
+          </div>
+          <div className="sr-prose-block">
+            <p>Support is available through WhatsApp, the client-area ticketing system, and support email. Review the <Link href="/faq">FAQ</Link> for support information, the <Link href="/docs/use-of-service">Use of Service terms</Link>, and the <Link href="/docs/windows-licensing">Windows licensing</Link> page before you order.</p>
+            <ul>
+              <li><a href="https://wa.me/447441426993">WhatsApp support</a></li>
+              <li>Use the client-area ticket system for service support.</li>
+              <li>Follow the published Use of Service terms.</li>
+              <li>The terms require lawful use. They prohibit abuse, scanning, hacking, spam, botnets, and similar misuse.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="sr-section sr-section-border">
+        <div className="sr-container sr-copy-grid">
+          <div>
+            <p className="sr-kicker">Order steps</p>
+            <h2 className="sr-section-title">Order your Windows VPS</h2>
+          </div>
+          <div className="sr-prose-block">
+            <p>Use these steps to move from workload requirements to a selected plan.</p>
+            <ol>
+              <li>Open the Windows VPS catalog.</li>
+              <li>Check the Windows version and required software.</li>
+              <li>Compare CPU, RAM, NVMe storage, bandwidth, and region.</li>
+              <li>Review the live order details and price, then confirm the purchase through StealthRDP.</li>
+            </ol>
+            <div className="sr-inline-links">
+              <Link href="/plans#windows-vps">Compare Windows VPS plans <ArrowRight size={16} /></Link>
+            </div>
           </div>
         </div>
       </section>
@@ -327,7 +355,7 @@ export default function WindowsVpsPage() {
         <div className="sr-container">
           <div className="sr-section-head">
             <div><p className="sr-kicker">Common questions</p><h2 className="sr-section-title">Windows VPS questions</h2></div>
-            <p>Quick answers for software, access, activation, licensing, resources, and support.</p>
+            <p>Quick answers for software, access, activation, and support.</p>
           </div>
           <Accordion>
             {questions.map(([question, answer]) => (
@@ -345,7 +373,7 @@ export default function WindowsVpsPage() {
 
       <section className="sr-section">
         <div className="sr-container sr-cta sr-cta-premium">
-          <div><p className="sr-kicker">Windows VPS plans</p><h2>Compare Windows VPS plans</h2><p>Check the current plan, region, and displayed price, then confirm Windows and the exact image in checkout.</p></div>
+          <div><p className="sr-kicker">Windows VPS plans</p><h2>Compare Windows VPS plans</h2></div>
           <div className="sr-actions">
             <Button asChild size="lg"><Link href="/plans#windows-vps">Compare plans <ArrowRight size={16} /></Link></Button>
             <Button asChild size="lg" variant="outline"><a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">Continue to checkout</a></Button>

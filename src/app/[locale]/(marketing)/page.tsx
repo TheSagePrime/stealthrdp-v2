@@ -9,6 +9,7 @@ import { Infrastructure } from '@/components/site/home/Infrastructure';
 import { RegionTable } from '@/components/site/home/RegionTable';
 import { Resources } from '@/components/site/home/Resources';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
@@ -30,10 +31,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const trust = [
-  ['10,000+', 'orders delivered'],
-  ['99.9%', 'uptime SLA'],
-  ['USA + EU', 'server regions'],
-  ['60s', 'average deploy'],
+  ['10,000+', 'Orders'],
+  ['60s', 'Average deploy'],
+  ['99.9%', 'Uptime SLA'],
+] as const;
+
+const workloads = [
+  'Remote desktop',
+  'Web hosting',
+  'Automation & bots',
+  'Trading',
+  'Storage & backups',
 ] as const;
 
 export default async function HomePage({ params }: Props) {
@@ -55,7 +63,7 @@ export default async function HomePage({ params }: Props) {
 
       <section className="srv3-trust" aria-label="StealthRDP proof">
         <div className="sr-container">
-          <dl className="grid grid-cols-2 gap-x-6 gap-y-6 py-6 md:grid-cols-4 md:gap-y-0 md:py-0">
+          <dl className="grid grid-cols-2 gap-x-6 gap-y-6 py-6 md:grid-cols-3 md:gap-y-0 md:py-0">
             {trust.map(([value, label]) => (
               <div
                 key={label}
@@ -67,7 +75,7 @@ export default async function HomePage({ params }: Props) {
               >
                 <dt className="text-heading-4 font-semibold text-body-text">{value}</dt>
                 <dd className="text-small text-body-dim">
-                  {label === 'uptime SLA' ? (
+                  {label === 'Uptime SLA' ? (
                     <Link href="/status" className="transition-colors hover:text-primary">
                       {label} · live status
                     </Link>
@@ -85,12 +93,49 @@ export default async function HomePage({ params }: Props) {
         <div className="sr-container">
           <div className="srv3-section-heading">
             <div>
-              <p className="sr-kicker">Popular VPS plans</p>
-              <h2>Pick the resources. Keep the rest simple.</h2>
+              <p className="sr-kicker">Choose a workload</p>
+              <h2>Plans priced for the work</h2>
             </div>
             <p>
-              Compare CPU, memory, NVMe storage, bandwidth and region before moving to checkout.
+              Pick a workload to highlight the plan that fits. All plans include free migration
+              assistance, 24/7 support, and our industry-leading uptime guarantee.
             </p>
+          </div>
+
+          <ul className="flex flex-wrap gap-2" aria-label="Example workloads">
+            {workloads.map(label => (
+              <li key={label}>
+                <Badge variant="outline">{label}</Badge>
+              </li>
+            ))}
+          </ul>
+
+          <p className="mt-4 text-small text-body-muted">
+            Best fit: Bronze USA — Windows and Linux images available on every plan.
+          </p>
+
+          <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+            <Link
+              href="/windows-vps"
+              className="inline-flex min-h-11 items-center gap-2 text-small font-semibold text-primary transition-colors hover:text-accent-hover"
+            >
+              Windows VPS hosting
+              <ArrowRight aria-hidden="true" className="size-4" />
+            </Link>
+            <Link
+              href="/linux-vps"
+              className="inline-flex min-h-11 items-center gap-2 text-small font-semibold text-primary transition-colors hover:text-accent-hover"
+            >
+              Linux VPS hosting
+              <ArrowRight aria-hidden="true" className="size-4" />
+            </Link>
+            <Link
+              href="/plans#comparison"
+              className="inline-flex min-h-11 items-center gap-2 text-small font-semibold text-primary transition-colors hover:text-accent-hover"
+            >
+              Compare VPS resources
+              <ArrowRight aria-hidden="true" className="size-4" />
+            </Link>
           </div>
 
           <PricingExplorer compact guided={false} />
@@ -98,7 +143,7 @@ export default async function HomePage({ params }: Props) {
           <div className="srv3-section-action">
             <Button asChild variant="outline">
               <Link href="/plans">
-                Compare every plan
+                View All 11 Plans
                 <ArrowRight size={16} aria-hidden="true" />
               </Link>
             </Button>
@@ -169,23 +214,28 @@ export default async function HomePage({ params }: Props) {
         <div className="sr-container">
           <Card className="gap-8 rounded-lg p-8 md:grid md:grid-cols-[1fr_auto] md:items-center md:gap-12 md:p-12">
             <div className="grid gap-2">
-              <p className="sr-kicker">Ready to deploy?</p>
+              <p className="sr-kicker">Backed by 10,000+ orders</p>
               <h2 className="text-display-2 font-semibold text-body-text">
-                Your next server is a few clicks away.
+                Ready to stop wasting time on server management?
               </h2>
               <p className="max-w-xl text-small text-body-muted">
-                Choose a region and plan here, then finish configuration in the StealthRDP client area.
+                Deploy your high-performance VPS in the next 60 seconds and focus on what
+                matters — your actual work.
+              </p>
+              <p className="max-w-xl text-small text-body-muted">
+                Starting at just <strong>€9.50/month</strong> · 7-day money-back guarantee ·
+                Cancel anytime
               </p>
             </div>
             <div className="flex flex-col gap-2.5 md:min-w-48">
               <Button asChild size="lg">
-                <Link href="/plans">
-                  View VPS plans
+                <a href="https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps">
+                  Deploy Your Server Now
                   <ArrowRight size={16} aria-hidden="true" />
-                </Link>
+                </a>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <a href="https://dash.stealthrdp.com/submitticket.php">Ask a question</a>
+                <a href="https://dash.stealthrdp.com/submitticket.php">Ask a Pre-Sales Question</a>
               </Button>
             </div>
           </Card>

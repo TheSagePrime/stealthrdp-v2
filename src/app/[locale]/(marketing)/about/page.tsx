@@ -13,10 +13,10 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 const reasons = [
-  { title: 'Speed of deployment', text: 'Full server access within 60 seconds of purchase for standard provisioning flows.' },
-  { title: 'Enterprise-grade hardware', text: 'NVMe storage and isolated virtual machine instances.' },
-  { title: 'Transparent operations', text: 'A public status page keeps production-node health visible.' },
-  { title: 'Support that answers', text: 'Technical assistance is available around the clock through the normal support channels.' },
+  { title: 'Speed of deployment', text: 'Full server access within 60 seconds of purchase. No waiting, no manual provisioning.' },
+  { title: 'Enterprise-grade hardware', text: 'NVMe storage and isolated VM instances.' },
+  { title: 'Transparent operations', text: 'Live status page showing every production node, monitored 24/7.' },
+  { title: 'Support that answers', text: '24/7 technical assistance with an average response under 2 hours.' },
   { title: 'Flexible plans', text: 'USA and EU locations, monthly to biannual billing, and a build-your-own configurator.' },
 ];
 
@@ -35,8 +35,7 @@ export default function AboutPage() {
           <p className="sr-kicker">Who we are</p>
           <h1 className="sr-title">Built for people who need servers that <span>just work.</span></h1>
           <p className="sr-lede">
-            StealthRDP exists to remove friction from remote infrastructure — deploy fast,
-            get full control, and spend less time thinking about the hardware underneath.
+            StealthRDP exists to remove the friction from remote infrastructure — deploy in 60 seconds, get full control, and never worry about the hardware again.
           </p>
         </div>
       </section>
@@ -49,12 +48,7 @@ export default function AboutPage() {
           </div>
           <div className="sr-prose-block">
             <p>
-              We provide high-performance remote desktop and virtual private server infrastructure.
-              Current StealthRDP plans use NVMe storage, dedicated IPv4 addresses, and high-speed network connectivity.
-            </p>
-            <p>
-              The public website handles product discovery, documentation, status, and support information.
-              Checkout, billing, and client-account flows continue through the existing StealthRDP client area.
+              We provide high-performance remote desktop and virtual private server infrastructure. Every StealthRDP server ships with NVMe storage, dedicated IPs, and 1Gbps network connectivity — online the moment you pay.
             </p>
           </div>
         </div>
@@ -67,7 +61,6 @@ export default function AboutPage() {
               <p className="sr-kicker">Why people choose us</p>
               <h2 className="sr-section-title">Operational details stay visible.</h2>
             </div>
-            <p>Fast deployment, clear infrastructure boundaries, visible service health, and flexible plans are part of the product—not footnotes.</p>
           </div>
           <div className="srv3-about-reasons">
             {reasons.map(({ title, text }, index) => (
@@ -99,7 +92,7 @@ export default function AboutPage() {
               <p className="sr-kicker">Trusted at scale</p>
               <h2 className="sr-section-title">10,000+ orders and counting.</h2>
             </div>
-            <p>StealthRDP has served remote work, web hosting, trading infrastructure, automation, development, and general VPS workloads.</p>
+            <p>10,000+ orders and counting for remote work, web hosting, trading infrastructure, and always-on automation. Every new server is backed by our 99.9% uptime SLA and a 7-day money-back guarantee.</p>
           </div>
 
           <Card>
@@ -120,9 +113,9 @@ export default function AboutPage() {
       <section className="sr-section">
         <div className="sr-container sr-cta sr-cta-premium">
           <div>
-            <p className="sr-kicker">Questions about the infrastructure?</p>
-            <h2>Talk to the StealthRDP team.</h2>
-            <p>Use the existing support system for pre-sales questions, account help, and service assistance.</p>
+            <p className="sr-kicker">Questions about our infrastructure?</p>
+            <h2>Talk to our team.</h2>
+            <p>Talk to our team or message WhatsApp support — we respond within 2 hours, 24/7.</p>
           </div>
           <div className="sr-actions">
             <Button asChild size="lg">
@@ -132,7 +125,7 @@ export default function AboutPage() {
               </a>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <a href="https://dash.stealthrdp.com/index.php?rp=/store">View server plans</a>
+              <a href="https://wa.me/447441426993">Message WhatsApp support</a>
             </Button>
           </div>
         </div>

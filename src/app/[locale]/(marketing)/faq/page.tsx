@@ -22,11 +22,11 @@ export default function FaqPage() {
           <div>
             <p className="sr-kicker">FAQ</p>
             <h1 className="sr-title">
-              Questions before you <span>deploy.</span>
+              Answers before you <span>deploy.</span>
             </h1>
             <p className="sr-lede">
-              Current public StealthRDP FAQ content, organized by topic without removing
-              any of the migrated answers.
+              Plans, setup, billing, security, and support — search or browse by
+              topic below.
             </p>
           </div>
 
@@ -79,6 +79,20 @@ export default function FaqPage() {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      <section className="sr-section">
+        <div className="sr-container sr-support-cta">
+          <h2>Still need a hand?</h2>
+          <p>Take the question to support.</p>
+          <p>
+            Account, billing, and server-specific requests are handled in the
+            client portal.
+          </p>
+          <a href="https://dash.stealthrdp.com/submitticket.php">
+            Contact support
+          </a>
         </div>
       </section>
     </>

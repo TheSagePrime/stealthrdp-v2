@@ -6,7 +6,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
   Card,
-  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
@@ -22,11 +21,11 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 const included = [
-  { title: 'Full admin access', text: 'Control your server from day one.' },
-  { title: 'NVMe SSD storage', text: 'Fast disk for everyday workloads.' },
-  { title: 'Isolated VMs', text: 'Separate virtual machines per server.' },
-  { title: 'Fast provisioning', text: 'Automated setup after checkout.' },
-  { title: '24/7 support', text: 'Help when you need it.' },
+  { title: 'Full admin access', text: 'Control your server from day one' },
+  { title: 'NVMe SSD storage', text: 'Fast disk for everyday workloads' },
+  { title: 'Isolated VMs', text: 'Separate virtual machines per server' },
+  { title: 'Instant activation', text: 'Ready after checkout' },
+  { title: '24/7 support', text: 'Help when you need it' },
 ];
 
 /* Token utilities for the card link rows, replacing the bespoke .sr-inline-links hook. */
@@ -38,11 +37,17 @@ export default function PlansPage() {
       <section className="sr-page-hero">
         <div className="sr-container">
           <p className="sr-kicker">Windows and Linux VPS</p>
-          <h1 className="sr-title">Windows & Linux VPS <span>hosting plans.</span></h1>
+          <h1 className="sr-title">Windows & Linux VPS Hosting Plans</h1>
           <p className="sr-lede">
             Compare Windows and Linux VPS hosting plans in one place. Choose a resource level,
-            region, operating system, workload, and billing cycle before checkout.
+            region, and billing cycle before the checkout.
           </p>
+          <Button asChild size="lg">
+            <a href="https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps">
+              Build Your Own VPS
+              <ArrowRight size={16} />
+            </a>
+          </Button>
         </div>
       </section>
 
@@ -50,10 +55,10 @@ export default function PlansPage() {
         <div className="sr-container">
           <div className="sr-section-head">
             <div>
-              <p className="sr-kicker">Standard plans</p>
+              <p className="sr-kicker">STANDARD PLANS</p>
               <h2 className="sr-section-title">Choose your resource level</h2>
             </div>
-            <p>Compare published plan specifications and prices. Checkout confirms current availability.</p>
+            <p>6 USA plans · Monthly billing</p>
           </div>
           <PricingExplorer showComparison />
         </div>
@@ -63,7 +68,7 @@ export default function PlansPage() {
         <div className="sr-container">
           <div className="sr-section-head">
             <div>
-              <p className="sr-kicker">Choose an operating system</p>
+              <p className="sr-kicker">01 / Choose an operating system</p>
               <h2 className="sr-section-title">Pick the VPS environment that fits your work.</h2>
             </div>
             <p>
@@ -87,17 +92,12 @@ export default function PlansPage() {
                   software. Compare CPU, RAM, NVMe storage, bandwidth, region, and billing cycle above.
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <p className="rounded-md border-l-2 border-primary bg-surface-2 px-4 py-3 text-small text-body-muted">
-                  Windows licensing is not included. Customers are responsible for their own Microsoft licensing compliance.
-                </p>
-              </CardContent>
               <CardFooter className="mt-auto flex-wrap gap-x-6 gap-y-2">
                 <Link href="/windows-vps" className={cardLinkClass}>
                   Read the Windows VPS hosting guide <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
-                <Link href="/docs/windows-licensing" className={cardLinkClass}>
-                  Windows licensing <ArrowRight aria-hidden="true" className="size-4" />
+                <Link href="/plans#plan-grid" className={cardLinkClass}>
+                  Compare Windows VPS resources <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
               </CardFooter>
             </Card>
@@ -113,14 +113,14 @@ export default function PlansPage() {
                 </CardTitle>
                 <CardDescription className="text-small text-body-muted">
                   Choose Linux for command-line administration, web hosting, open-source applications,
-                  automation, and server tooling. Compare the same resource levels before checkout.
+                  automation, and server tooling. Compare the same resource levels before you continue to the checkout.
                 </CardDescription>
               </CardHeader>
               <CardFooter className="mt-auto flex-wrap gap-x-6 gap-y-2">
                 <Link href="/linux-vps" className={cardLinkClass}>
                   Read the Linux VPS hosting guide <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
-                <Link href="#comparison" className={cardLinkClass}>
+                <Link href="/plans#plan-grid" className={cardLinkClass}>
                   Compare Linux VPS resources <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
               </CardFooter>
