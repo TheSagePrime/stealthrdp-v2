@@ -1,19 +1,35 @@
 import type { Metadata } from 'next';
-import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
+import {
+  ArrowRight,
+  ArrowUpRight,
+  Gauge,
+  GlobeHemisphereWest,
+  HardDrives,
+  ShieldCheck,
+} from '@phosphor-icons/react/dist/ssr';
 import { setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
-import { PricingExplorer } from '@/components/site/PricingExplorer';
-import { AfterCheckout } from '@/components/site/home/AfterCheckout';
-import { HomeHero } from '@/components/site/home/HomeHero';
-import { Infrastructure } from '@/components/site/home/Infrastructure';
-import { RegionTable } from '@/components/site/home/RegionTable';
-import { Resources } from '@/components/site/home/Resources';
+
+import CTA from '@/components/launchui/cta';
+import Hero from '@/components/launchui/hero';
+import Items from '@/components/launchui/items';
+import { Section } from '@/components/launchui/section';
+import Stats from '@/components/launchui/stats';
+import { HomePricing } from '@/components/site/HomePricing';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
 import { createPageMetadata } from '@/libs/seo/metadata';
 import { buildPageJsonLd } from '@/libs/seo/schema';
+import { testimonials } from '@/lib/stealth/content';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -29,14 +45,51 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-const trust = [
-  ['10,000+', 'Orders'],
-  ['60s', 'Average deploy'],
-  ['99.9%', 'Uptime SLA'],
-] as const;
+const stats = [
+  {
+    label: 'served',
+    value: '10,000+',
+    description: 'orders',
+  },
+  {
+    label: 'typical setup',
+    value: '60s',
+    description: 'average deploy',
+  },
+  {
+    label: 'service target',
+    value: '99.9%',
+    description: 'uptime SLA',
+  },
+];
 
-const workloadSummary =
-  'Remote desktop · Web hosting · Automation & bots · Trading · Storage & backups';
+const infrastructure = [
+  {
+    title: 'NVMe storage',
+    description: 'Fast disk I/O for applications, databases, and active desktop workloads.',
+    icon: <HardDrives className="size-5" weight="regular" />,
+  },
+  {
+    title: 'Isolated virtual machines',
+    description: 'Dedicated resources with full administrative access to your own VPS.',
+    icon: <ShieldCheck className="size-5" weight="regular" />,
+  },
+  {
+    title: 'USA + Europe',
+    description: 'Choose the region closest to the workload, with dedicated IPv4 included.',
+    icon: <GlobeHemisphereWest className="size-5" weight="regular" />,
+  },
+  {
+    title: '24/7 monitoring',
+    description: 'Production infrastructure is monitored continuously with a public status page.',
+    icon: <Gauge className="size-5" weight="regular" />,
+  },
+];
+
+function reviewSource(item: (typeof testimonials)[number]) {
+  if (!item.sourceUrl) return 'Customer testimonial';
+  return item.sourceUrl.includes('trustpilot.com') ? 'Trustpilot' : 'Third-party review';
+}
 
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
@@ -53,167 +106,202 @@ export default async function HomePage({ params }: Props) {
         />
       ))}
 
-      <HomeHero />
+      <Hero
+        className="pb-12 sm:pb-16"
+        badge={(
+          <Badge variant="outline" className="px-3 py-1.5">
+            Windows & Linux VPS · USA + Europe
+          </Badge>
+        )}
+        title={(
+          <>
+            Your server.
+            <span className="block text-primary">Live in 60 seconds.</span>
+          </>
+        )}
+        description="High-performance VPS infrastructure without the usual complexity. Choose the resources, region, and billing term — then deploy."
+        buttons={[
+          {
+            href: '#plans',
+            text: 'Choose your server',
+            variant: 'default',
+            iconRight: <ArrowRight className="size-4" aria-hidden="true" />,
+          },
+          {
+            href: 'https://dash.stealthrdp.com/submitticket.php',
+            text: 'Talk to sales',
+            variant: 'outline',
+          },
+        ]}
+        meta={(
+          <span>
+            From <strong className="font-semibold text-foreground">€4.59/mo</strong>
+            {' · '}Dedicated IPv4 · NVMe storage · 250 Mbps
+          </span>
+        )}
+      />
 
-      <section className="srv3-trust" aria-label="StealthRDP proof">
-        <div className="sr-container">
-          <dl className="grid grid-cols-2 gap-x-6 gap-y-6 py-6 md:grid-cols-3 md:gap-y-0 md:py-0">
-            {trust.map(([value, label]) => (
-              <div
-                key={label}
-                className="
-                  grid content-center gap-1
-                  md:min-h-24 md:border-l md:border-divider md:pl-6
-                  md:first:border-l-0 md:first:pl-0
-                "
-              >
-                <dt className="text-heading-4 font-semibold text-body-text">{value}</dt>
-                <dd className="text-small text-body-dim">
-                  {label === 'Uptime SLA' ? (
-                    <Link href="/status" className="transition-colors hover:text-primary">
-                      {label} · live status
-                    </Link>
-                  ) : (
-                    label
-                  )}
-                </dd>
-              </div>
-            ))}
-          </dl>
+      <Stats
+        className="border-y border-border bg-card/40 py-10 sm:py-12"
+        items={stats}
+      />
+
+      <Section id="plans" className="py-16 sm:py-20 lg:py-24">
+        <div className="mx-auto flex max-w-7xl flex-col gap-10 sm:gap-12">
+          <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-primary">
+              VPS plans
+            </p>
+            <h2 className="text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
+              Pick the resources. We keep the rest simple.
+            </h2>
+            <p className="max-w-2xl text-base leading-7 text-muted-foreground">
+              Only plans that are available right now are shown here. Switch region or billing
+              without leaving the page, then choose Windows or Linux during checkout.
+            </p>
+          </div>
+          <HomePricing />
         </div>
-      </section>
+      </Section>
 
-      <section className="sr-section srv3-plans-section" id="plans">
-        <div className="sr-container">
-          <div className="srv3-section-heading">
-            <div>
-              <p className="sr-kicker">Choose a workload</p>
-              <h2>Plans priced for the work</h2>
-            </div>
-            <p>
-              Three starting points below. All plans include free migration
-              assistance, 24/7 support, and our industry-leading uptime guarantee.
+      <Items
+        className="border-y border-border bg-card/30"
+        title="The infrastructure essentials, already included."
+        description="No feature maze. The things most VPS buyers actually care about are standard across the range."
+        items={infrastructure}
+      />
+
+      <Section className="py-16 sm:py-20">
+        <div className="mx-auto flex max-w-7xl flex-col gap-10">
+          <div className="flex max-w-3xl flex-col gap-4">
+            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-primary">
+              StealthRDP products
+            </p>
+            <h2 className="text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
+              Run the workload. Protect the origin.
+            </h2>
+            <p className="max-w-2xl text-base leading-7 text-muted-foreground">
+              VPS hosting for the machine itself, and Citadel when the application layer needs another line of defence.
             </p>
           </div>
 
-          <p className="srv3-workload-line">
-            <span>Good fit for</span>
-            {workloadSummary}
-          </p>
-
-          <p className="mt-3 max-w-2xl text-small text-body-muted">
-            Choose a region and billing cycle first. Windows or Linux is selected during checkout.
-          </p>
-
-          <div className="srv3-plan-surface">
-            <PricingExplorer compact />
-
-            <div className="srv3-section-action">
-              <Button asChild variant="outline">
-                <Link href="/plans">
-                  View All 11 Plans
-                  <ArrowRight size={16} aria-hidden="true" />
-                </Link>
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <Infrastructure />
-
-      <RegionTable />
-
-      <section className="sr-section srv3-family-section" aria-label="StealthRDP product family">
-        <div className="sr-container">
-          <div className="srv3-section-heading">
-            <div>
-              <p className="sr-kicker">One company, two products</p>
-              <h2>Hosting to run on. Protection to hide behind.</h2>
-            </div>
-          </div>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            <Card className="gap-3 p-8">
-              <p className="sr-kicker">Hosting</p>
-              <h3 className="text-heading-4 font-semibold text-body-text">
-                Windows and Linux VPS infrastructure
-              </h3>
-              <p className="text-small text-body-muted">
-                Comparable plans in USA and EU regions with NVMe storage,
-                full administrative access, and honest billing terms.
-              </p>
-              <div>
+          <div className="grid gap-5 md:grid-cols-2">
+            <Card className="gap-5 p-7 sm:p-8">
+              <CardHeader className="p-0">
+                <Badge variant="outline" className="w-fit">Hosting</Badge>
+                <CardTitle className="mt-4 text-2xl tracking-tight">
+                  Windows and Linux VPS
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 text-sm leading-6 text-muted-foreground">
+                USA and EU regions, NVMe storage, dedicated IPv4, full administrative access,
+                and flexible billing.
+              </CardContent>
+              <CardFooter className="mt-auto p-0 pt-2">
                 <Button asChild variant="outline">
                   <Link href="/plans">
                     Compare VPS plans
-                    <ArrowRight size={16} aria-hidden="true" />
+                    <ArrowRight className="size-4" aria-hidden="true" />
                   </Link>
                 </Button>
-              </div>
+              </CardFooter>
             </Card>
 
-            <Card className="gap-3 p-8">
-              <p className="sr-kicker">Protection</p>
-              <h3 className="text-heading-4 font-semibold text-body-text">
-                Citadel L7 HTTP/HTTPS protection
-              </h3>
-              <p className="text-small text-body-muted">
-                Application-layer controls between Cloudflare and the origin:
-                adaptive challenges, rate limits, allowlists, and automatic recovery.
-              </p>
-              <div>
+            <Card className="gap-5 p-7 sm:p-8">
+              <CardHeader className="p-0">
+                <Badge variant="outline" className="w-fit">Protection</Badge>
+                <CardTitle className="mt-4 text-2xl tracking-tight">
+                  Citadel L7 HTTP/HTTPS protection
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 text-sm leading-6 text-muted-foreground">
+                Application-layer controls between Cloudflare and the origin, including
+                challenges, rate limits, allowlists, and automatic escalation.
+              </CardContent>
+              <CardFooter className="mt-auto p-0 pt-2">
                 <Button asChild variant="outline">
                   <Link href="/citadel">
                     Understand Citadel
-                    <ArrowRight size={16} aria-hidden="true" />
+                    <ArrowRight className="size-4" aria-hidden="true" />
                   </Link>
                 </Button>
-              </div>
+              </CardFooter>
             </Card>
           </div>
         </div>
-      </section>
+      </Section>
 
-      <AfterCheckout />
+      <Section className="border-y border-border bg-card/30 py-16 sm:py-20">
+        <div className="mx-auto flex max-w-7xl flex-col gap-10">
+          <div className="mx-auto flex max-w-3xl flex-col items-center gap-4 text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.1em] text-primary">
+              Customer proof
+            </p>
+            <h2 className="text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
+              What customers say
+            </h2>
+            <p className="text-base leading-7 text-muted-foreground">
+              Selected customer feedback and independent review sources.
+            </p>
+          </div>
 
-      <Resources />
-
-      <section className="sr-section srv3-final-section">
-        <div className="sr-container">
-          <Card className="gap-8 rounded-lg p-8 md:grid md:grid-cols-[1fr_auto] md:items-center md:gap-12 md:p-12">
-            <div className="grid gap-2">
-              <p className="sr-kicker">Backed by 10,000+ orders</p>
-              <h2 className="text-display-2 font-semibold text-body-text">
-                Ready to stop wasting time on server management?
-              </h2>
-              <p className="max-w-xl text-small text-body-muted">
-                Deploy your high-performance VPS in the next 60 seconds and focus on what
-                matters — your actual work.
-              </p>
-              <p className="max-w-xl text-small text-body-muted">
-                Starting at just <strong>€9.50/month</strong> · 7-day money-back guarantee ·
-                Cancel anytime
-              </p>
-            </div>
-            <div className="flex flex-col gap-2.5 md:min-w-48">
-              <Button asChild size="lg">
-                <Link href="/plans">
-                  Choose Your Server
-                  <ArrowRight size={16} aria-hidden="true" />
-                </Link>
-              </Button>
-              <a
-                className="srv3-final-support"
-                href="https://dash.stealthrdp.com/submitticket.php"
-              >
-                Talk to Sales
-                <ArrowRight size={16} aria-hidden="true" />
-              </a>
-            </div>
-          </Card>
+          <div className="grid gap-5 md:grid-cols-3">
+            {testimonials.slice(0, 3).map((item, index) => (
+              <Card key={item.id ?? item._id ?? index} className="gap-5 p-6">
+                <CardHeader className="p-0">
+                  <Badge variant="outline" className="w-fit text-muted-foreground">
+                    {reviewSource(item)}
+                  </Badge>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <blockquote className="text-sm leading-7 text-foreground">
+                    {item.quote}
+                  </blockquote>
+                </CardContent>
+                <CardFooter className="mt-auto items-end justify-between gap-4 p-0">
+                  <div className="grid gap-1">
+                    <strong className="text-sm font-semibold">{item.authorName}</strong>
+                    <span className="text-xs text-muted-foreground">
+                      {item.authorCompany || item.publishedOn || 'StealthRDP customer'}
+                    </span>
+                  </div>
+                  {item.sourceUrl ? (
+                    <Button asChild size="icon" variant="outline">
+                      <a
+                        href={item.sourceUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`View source for review by ${item.authorName}`}
+                      >
+                        <ArrowUpRight className="size-4" aria-hidden="true" />
+                      </a>
+                    </Button>
+                  ) : null}
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
         </div>
-      </section>
+      </Section>
+
+      <CTA
+        className="py-16 sm:py-20"
+        title="Ready to deploy your server?"
+        description="Choose an available VPS, select your operating system during checkout, and get the service online."
+        buttons={[
+          {
+            href: '#plans',
+            text: 'Choose your server',
+            variant: 'default',
+            iconRight: <ArrowRight className="size-4" aria-hidden="true" />,
+          },
+          {
+            href: 'https://dash.stealthrdp.com/submitticket.php',
+            text: 'Talk to sales',
+            variant: 'outline',
+          },
+        ]}
+      />
     </>
   );
 }
