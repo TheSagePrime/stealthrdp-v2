@@ -227,6 +227,27 @@ export default async function HomePage({ params }: Props) {
         </div>
       </Section>
 
+      <Section className="py-8 sm:py-10">
+        <Card className="mx-auto max-w-7xl gap-0 overflow-hidden py-0">
+          <CardContent className="grid grid-cols-2 p-0 lg:grid-cols-4">
+            {[
+              ['10,000+', 'orders'],
+              ['USA + EU', 'locations'],
+              ['60-second', 'setup'],
+              ['24/7', 'support'],
+            ].map(([value, label], index) => (
+              <div
+                key={label}
+                className={`p-5 sm:p-6 ${index % 2 === 1 ? 'border-l border-border' : ''} ${index > 1 ? 'border-t border-border lg:border-t-0' : ''} ${index > 0 ? 'lg:border-l lg:border-border' : ''}`}
+              >
+                <strong className="block text-lg font-semibold tracking-tight">{value}</strong>
+                <span className="text-xs uppercase tracking-widest text-muted-foreground">{label}</span>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+      </Section>
+
       <Section id="plans" className="py-16 sm:py-20 lg:py-24">
         <div className="mx-auto flex max-w-7xl flex-col gap-9 sm:gap-10">
           <div className="grid gap-5 lg:grid-cols-[1fr_0.7fr] lg:items-end">
