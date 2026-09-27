@@ -146,7 +146,7 @@ export function HomePricing() {
                     aria-pressed={selected}
                     onClick={() => setWorkload(item.id)}
                   >
-                    <Icon aria-hidden="true" />
+                    <Icon aria-hidden="true" weight="fill" />
                     <span>{item.label}</span>
                   </button>
                 );
