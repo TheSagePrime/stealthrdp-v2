@@ -7036,8 +7036,8 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 
 @media (max-width: 520px) {
   .srv3-footer-main {
-    gap: 24px;
-    padding: 32px 0 22px;
+    gap: 22px;
+    padding: 28px 0 20px;
   }
 
   .srv3-footer-brand {
@@ -7053,10 +7053,10 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   }
 
   .srv3-socials a {
-    width: 36px;
-    height: 36px;
-    min-width: 36px;
-    min-height: 36px;
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
   }
 
   .srv3-footer-description {
@@ -7079,8 +7079,8 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 
   .srv3-footer-links {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px 18px;
-    padding-top: 20px;
+    gap: 18px 18px;
+    padding-top: 18px;
   }
 
   .srv3-footer-column:last-child {
