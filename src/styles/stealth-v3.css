@@ -9920,8 +9920,12 @@ a.srv-help-tree-heading:hover {
   animation: srv-home-hero-orbit 12s ease-in-out infinite alternate;
 }
 
-.srv-home-hero-copy > *,
-.srv-home-deploy-stage {
+.srv-home-hero-badge,
+.srv-home-hero-message,
+.srv-home-hero-actions,
+.srv-home-hero-meta,
+.srv-home-hero-proof,
+.srv-home-hero-visual-stage {
   opacity: 0;
   will-change: transform, opacity;
 }
@@ -9930,13 +9934,34 @@ a.srv-help-tree-heading:hover {
   animation: srv-home-hero-rise .68s cubic-bezier(.2,.8,.2,1) .05s both;
 }
 
+.srv-home-hero-message {
+  animation: srv-home-hero-message-in .24s ease-out .1s both;
+}
+
 .srv-home-hero-title-base {
   display: block;
-  animation: srv-home-hero-rise .76s cubic-bezier(.16,1,.3,1) .12s both;
+  animation: srv-home-hero-title-base-in .82s cubic-bezier(.16,1,.3,1) .12s both;
 }
 
 .srv-home-hero-title-accent {
-  animation: srv-home-hero-accent-in .9s cubic-bezier(.16,1,.3,1) .2s both;
+  background:
+    linear-gradient(
+      105deg,
+      var(--primary) 0%,
+      var(--primary) 38%,
+      color-mix(in srgb, var(--primary) 58%, white) 50%,
+      var(--primary) 62%,
+      var(--primary) 100%
+    );
+  background-size: 230% 100%;
+  background-position: 100% 0;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation:
+    srv-home-hero-accent-in .92s cubic-bezier(.16,1,.3,1) .2s both,
+    srv-home-hero-accent-shimmer 5.8s ease-in-out 1.65s infinite;
 }
 
 .srv-home-hero-lede {
@@ -10006,13 +10031,13 @@ a.srv-help-tree-heading:hover {
   transform: translateX(4px);
 }
 
-.srv-home-deploy-stage {
+.srv-home-hero-visual-stage {
   position: relative;
   transform-origin: 58% 50%;
   animation: srv-home-deploy-stage-in .95s cubic-bezier(.16,1,.3,1) .24s both;
 }
 
-.srv-home-deploy-stage::before {
+.srv-home-hero-visual-stage::before {
   content: "";
   position: absolute;
   z-index: -1;
@@ -10025,7 +10050,7 @@ a.srv-help-tree-heading:hover {
   animation: srv-home-deploy-aura 5.8s ease-in-out 1.3s infinite;
 }
 
-.srv-home-deploy-card {
+.srv-home-hero-visual {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -10039,7 +10064,7 @@ a.srv-help-tree-heading:hover {
     0 0 0 1px color-mix(in srgb, var(--primary) 5%, transparent);
 }
 
-.srv-home-deploy-card::before {
+.srv-home-hero-visual::before {
   content: "";
   position: absolute;
   z-index: 5;
@@ -10057,7 +10082,7 @@ a.srv-help-tree-heading:hover {
   animation: srv-home-deploy-sheen 7.5s ease-in-out 2.8s infinite;
 }
 
-.srv-home-deploy-card:hover {
+.srv-home-hero-visual:hover {
   transform: translateY(-6px) rotateX(1.1deg) rotateY(-1.2deg);
   border-color: color-mix(in srgb, var(--primary) 28%, var(--border));
   box-shadow:
@@ -10186,6 +10211,26 @@ a.srv-help-tree-heading:hover {
   }
 }
 
+@keyframes srv-home-hero-message-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes srv-home-hero-title-base-in {
+  from {
+    opacity: 0;
+    filter: blur(10px);
+    transform: translate3d(0, 30px, 0) scale(.985);
+    letter-spacing: -.075em;
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0) scale(1);
+    letter-spacing: inherit;
+  }
+}
+
 @keyframes srv-home-hero-accent-in {
   from {
     opacity: 0;
@@ -10197,6 +10242,11 @@ a.srv-help-tree-heading:hover {
     transform: translate3d(0, 0, 0);
     clip-path: inset(0 0 0 0);
   }
+}
+
+@keyframes srv-home-hero-accent-shimmer {
+  0%, 72%, 100% { background-position: 100% 0; }
+  84% { background-position: 0 0; }
 }
 
 @keyframes srv-home-deploy-stage-in {
@@ -10315,7 +10365,7 @@ a.srv-help-tree-heading:hover {
 }
 
 @media (max-width: 900px) {
-  .srv-home-deploy-card:hover {
+  .srv-home-hero-visual:hover {
     transform: translateY(-3px);
   }
 
@@ -10336,9 +10386,9 @@ a.srv-help-tree-heading:hover {
   .srv-home-hero-actions,
   .srv-home-hero-meta,
   .srv-home-hero-proof,
-  .srv-home-deploy-stage,
-  .srv-home-deploy-stage::before,
-  .srv-home-deploy-card::before,
+  .srv-home-hero-visual-stage,
+  .srv-home-hero-visual-stage::before,
+  .srv-home-hero-visual::before,
   .srv-home-deploy-head::after,
   .srv-home-deploy-head svg,
   .srv-home-deploy-command code,
@@ -10352,8 +10402,12 @@ a.srv-help-tree-heading:hover {
     animation: none !important;
   }
 
-  .srv-home-hero-copy > *,
-  .srv-home-deploy-stage,
+  .srv-home-hero-badge,
+  .srv-home-hero-message,
+  .srv-home-hero-actions,
+  .srv-home-hero-meta,
+  .srv-home-hero-proof,
+  .srv-home-hero-visual-stage,
   .srv-home-deploy-step,
   .srv-home-deploy-step svg,
   .srv-home-deploy-ready,
@@ -10367,11 +10421,17 @@ a.srv-help-tree-heading:hover {
     clip-path: none;
   }
 
-  .srv-home-deploy-card {
+  .srv-home-hero-title-accent {
+    background: none;
+    color: var(--primary);
+    -webkit-text-fill-color: currentColor;
+  }
+
+  .srv-home-hero-visual {
     transition: none;
   }
 
-  .srv-home-deploy-card:hover,
+  .srv-home-hero-visual:hover,
   .srv-home-hero-proof > div:hover,
   .srv-home-hero-proof > div:hover strong {
     transform: none;

@@ -138,7 +138,7 @@ export default async function HomePage({ params }: Props) {
           <div className="srv-home-hero-copy flex flex-col items-start gap-6">
             <Badge variant="outline" className="srv-home-hero-badge">Windows & Linux VPS · Instant setup</Badge>
 
-            <div className="grid gap-5">
+            <div className="srv-home-hero-message grid gap-5">
               <h1 className="srv-home-hero-title max-w-4xl text-5xl font-semibold leading-none tracking-tight text-balance sm:text-6xl lg:text-7xl">
                 <span className="srv-home-hero-title-base">Your server.</span>
                 <span className="srv-home-hero-title-accent block text-primary">Live in 60 seconds.</span>
@@ -184,8 +184,8 @@ export default async function HomePage({ params }: Props) {
             </div>
           </div>
 
-          <div className="srv-home-deploy-stage">
-          <Card className="srv-home-deploy-card gap-0 overflow-hidden py-0 shadow-sm">
+          <div className="srv-home-hero-visual-stage">
+          <Card className="srv-home-hero-visual srv-home-deploy-card gap-0 overflow-hidden py-0 shadow-sm">
             <CardHeader className="srv-home-deploy-head border-b border-border bg-muted/30 px-5 py-4">
               <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-2 text-sm font-semibold">
