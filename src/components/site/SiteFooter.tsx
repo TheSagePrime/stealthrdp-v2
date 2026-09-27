@@ -109,13 +109,18 @@ export function SiteFooter() {
         </div>
 
         <div className="srv3-footer-bottom">
-          <span className="srv3-footer-copyright">© 2026 StealthRDP. All rights reserved.</span>
-          <div className="srv3-footer-legal">
-            <Link href="/privacy">Privacy</Link>
-            <Link href="/docs/use-of-service">Use of service</Link>
-            <Link href="/docs/windows-licensing">Windows licensing</Link>
+          <div className="srv3-footer-bottom-main">
+            <span className="srv3-footer-copyright">© 2026 StealthRDP. All rights reserved.</span>
+            <div className="srv3-footer-legal">
+              <Link href="/privacy">Privacy</Link>
+              <Link href="/docs/use-of-service">Use of service</Link>
+              <Link href="/docs/windows-licensing">Windows licensing</Link>
+            </div>
           </div>
-          <span className="srv3-footer-credit">Tux artwork by Larry Ewing, CC BY-SA 3.0.</span>
+          <div className="srv3-footer-bottom-note">
+            <span>Billing and account management are handled in the StealthRDP client area.</span>
+            <span className="srv3-footer-credit">Tux artwork by Larry Ewing, CC BY-SA 3.0.</span>
+          </div>
         </div>
       </div>
     </footer>
