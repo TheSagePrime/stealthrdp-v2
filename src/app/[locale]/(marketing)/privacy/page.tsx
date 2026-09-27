@@ -9,7 +9,7 @@ export const metadata: Metadata = createPageMetadata({
 
 export default function PrivacyPage() {
   return (
-    <article className="sr-article-shell">
+    <article className="srv-page srv-page-article srv-page-legal sr-article-shell">
       <p className="sr-kicker">Legal</p>
       <h1>Privacy Policy</h1>
       <p className="sr-article-meta">Last updated: August 2026</p>

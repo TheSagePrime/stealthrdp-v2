@@ -27,7 +27,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
   if (!slug.endsWith('.html') || !article || !publication || articleSlug === 'vps-hosting-minecraft') notFound();
 
   return (
-    <article className="sr-article-shell">
+    <article className="srv-page srv-page-article srv-page-blog-article sr-article-shell">
       <header className="sr-article-header">
         <p className="sr-kicker">{article.category}</p>
         <h1>{article.title}</h1>

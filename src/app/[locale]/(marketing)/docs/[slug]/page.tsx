@@ -25,7 +25,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   const article = findDocByPublicSlug(slug);
   if (!article) notFound();
   return (
-    <article className="sr-article-shell">
+    <article className="srv-page srv-page-article srv-page-doc-article sr-article-shell">
       <header className="sr-article-header">
         <p className="sr-kicker">{article.category}</p>
         <h1>{article.title}</h1>
@@ -37,7 +37,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
         </div>
       </header>
       <DocBody content={article.content} />
-      <footer className="sr-article-support">
+      <footer className="sr-article-support srv-site-final">
         <h2 className="sr-section-title">Still need a hand?</h2>
         <p>
           Account, billing, and server-specific requests are handled in the client

@@ -13,7 +13,7 @@ export const metadata: Metadata = createPageMetadata({
 export default function BlogPage() {
   const config = getSeoConfig();
   return (
-    <>
+    <div className="srv-page srv-page-blog">
       <section className="sr-page-hero">
         <div className="sr-container sr-page-hero-inner">
           <div>
@@ -28,6 +28,6 @@ export default function BlogPage() {
         </div>
       </section>
       <section className="sr-section"><div className="sr-container"><ArticleIndex config={config} heading="Latest articles" /></div></section>
-    </>
+    </div>
   );
 }

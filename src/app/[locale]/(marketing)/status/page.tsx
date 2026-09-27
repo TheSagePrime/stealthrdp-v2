@@ -22,7 +22,7 @@ export default function StatusPage() {
   };
 
   return (
-    <>
+    <div className="srv-page srv-page-status">
       <section className="sr-page-hero">
         <div className="sr-container sr-page-hero-inner">
           <div>
@@ -42,6 +42,6 @@ export default function StatusPage() {
           <StatusGrid fallback={fallback} />
         </div>
       </section>
-    </>
+    </div>
   );
 }
