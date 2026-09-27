@@ -48,44 +48,41 @@ export function HomePricing() {
 
   return (
     <div className="flex w-full flex-col gap-5">
-      <div className="srv-plan-configurator">
-        <div className="srv-configurator-top srv-configurator-top-compact">
-          <div className="srv-configurator-group srv-configurator-region">
-            <div className="srv-selector" role="group" aria-label="Deployment region">
-              {(['USA', 'EU'] as const).map(item => (
-                <button
-                  key={item}
-                  type="button"
-                  className="srv-selector-option"
-                  data-selected={region === item}
-                  aria-pressed={region === item}
-                  onClick={() => setRegion(item)}
-                >
-                  <span className="srv-selector-dot" aria-hidden="true" />
-                  {item}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="srv-configurator-group srv-configurator-billing">
-            <div className="srv-billing-rail" role="group" aria-label="Billing cycle">
-              {cycles.map(item => (
-                <button
-                  key={item}
-                  type="button"
-                  className="srv-billing-option"
-                  data-selected={cycle === item}
-                  aria-pressed={cycle === item}
-                  onClick={() => setCycle(item)}
-                >
-                  {cycleLabel[item]}
-                </button>
-              ))}
-            </div>
+      <div className="srv-pricing-controls">
+        <div className="srv-pricing-control-card srv-pricing-region">
+          <div className="srv-selector" role="group" aria-label="Deployment region">
+            {(['USA', 'EU'] as const).map(item => (
+              <button
+                key={item}
+                type="button"
+                className="srv-selector-option"
+                data-selected={region === item}
+                aria-pressed={region === item}
+                onClick={() => setRegion(item)}
+              >
+                <span className="srv-selector-dot" aria-hidden="true" />
+                {item}
+              </button>
+            ))}
           </div>
         </div>
 
+        <div className="srv-pricing-control-card srv-pricing-billing">
+          <div className="srv-billing-rail" role="group" aria-label="Billing cycle">
+            {cycles.map(item => (
+              <button
+                key={item}
+                type="button"
+                className="srv-billing-option"
+                data-selected={cycle === item}
+                aria-pressed={cycle === item}
+                onClick={() => setCycle(item)}
+              >
+                {cycleLabel[item]}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
 
       <div className="srv-home-pricing-grid grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
