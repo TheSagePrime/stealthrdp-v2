@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { List as Menu, WhatsappLogo } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -16,6 +16,11 @@ const resourceLinks = [
 
 export function SiteHeader() {
   const [open, setOpen] = useState<'resources' | null>(null);
+  const mobileNavRef = useRef<HTMLDetailsElement>(null);
+
+  const closeMobileNav = () => {
+    if (mobileNavRef.current) mobileNavRef.current.open = false;
+  };
 
   const closeOnEscape = (event: React.KeyboardEvent) => {
     if (event.key === 'Escape') {
@@ -104,25 +109,17 @@ export function SiteHeader() {
           <span className="sr-visually-hidden">WhatsApp support</span>
         </a>
 
-        <details className="srv3-mobile-nav">
+        <details ref={mobileNavRef} className="srv3-mobile-nav">
           <summary>
             <Menu size={16} aria-hidden="true" />
             <span>Menu</span>
           </summary>
           <nav aria-label="Mobile navigation">
-            <Link href="/plans">VPS plans</Link>
-            <Link href="/citadel">DDoS Protection</Link>
-            <Link href="/status">Server status</Link>
-            <a href="https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps">Build your own VPS</a>
-            <Link href="/resources">Resources</Link>
-            <Link href="/blog">Guides</Link>
-            <Link href="/docs">Help Center</Link>
-            <Link href="/citadel/docs">Citadel Docs</Link>
-            <Link href="/faq">Common questions</Link>
-            <a href="https://wa.me/447441426993" target="_blank" rel="noopener noreferrer">WhatsApp support</a>
-            <Link href="/about">About</Link>
-            <a href="https://dash.stealthrdp.com/index.php?rp=/login">Client Area</a>
-            <a href="https://dash.stealthrdp.com/submitticket.php">Support</a>
+            <Link href="/plans" onClick={closeMobileNav}>VPS Plans</Link>
+            <Link href="/citadel" onClick={closeMobileNav}>DDoS Protection</Link>
+            <Link href="/resources" onClick={closeMobileNav}>Resources</Link>
+            <a href="https://dash.stealthrdp.com/submitticket.php" onClick={closeMobileNav}>Support</a>
+            <a href="https://dash.stealthrdp.com/index.php?rp=/login" onClick={closeMobileNav}>Client Area</a>
           </nav>
         </details>
       </div>
