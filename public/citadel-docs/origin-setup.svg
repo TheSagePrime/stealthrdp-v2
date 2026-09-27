@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="260" viewBox="0 0 960 260" role="img">
+  <rect width="960" height="260" rx="24" fill="#0b1220"/>
+  <text x="40" y="48" fill="#e2e8f0" font-family="Segoe UI,sans-serif" font-size="20" font-weight="700">Origin</text>
+  <rect x="40" y="72" width="360" height="48" rx="12" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="56" y="102" fill="#94a3b8" font-family="Segoe UI,sans-serif" font-size="14">Host - 203.0.113.10</text>
+  <rect x="420" y="72" width="120" height="48" rx="12" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="480" y="102" text-anchor="middle" fill="#e2e8f0" font-family="Segoe UI,sans-serif" font-size="14">443</text>
+  <rect x="560" y="72" width="160" height="48" rx="12" fill="rgba(34,211,238,0.12)" stroke="#22d3ee"/>
+  <text x="640" y="102" text-anchor="middle" fill="#67e8f9" font-family="Segoe UI,sans-serif" font-size="14">TLS to origin</text>
+  <text x="40" y="170" fill="#94a3b8" font-family="Segoe UI,sans-serif" font-size="13">HTTPS backends avoid origin force-HTTPS 301s on API POSTs.</text>
+  <rect x="40" y="196" width="280" height="36" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)"/>
+  <text x="56" y="220" fill="#e2e8f0" font-family="Segoe UI,sans-serif" font-size="13">+ Add subdomain hostname</text>
+</svg>
