@@ -10,9 +10,9 @@ import { buildPageJsonLd } from '@/libs/seo/schema';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/citadel',
-  title: 'Citadel L7 Protection by StealthRDP — HTTP/HTTPS Application-Layer Defense',
+  title: 'Layer 7 DDoS Protection — Citadel by StealthRDP',
   description:
-    'Citadel by StealthRDP is an L7 HTTP/HTTPS protection layer between Cloudflare and the origin: adaptive challenges, rate limits, allowlists, attack visibility, and automatic recovery.',
+    'Protect websites and HTTP/HTTPS applications from Layer 7 DDoS attacks with Citadel by StealthRDP: adaptive challenges, rate limits, lockdown mode, visibility, and origin protection.',
   ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
@@ -63,16 +63,42 @@ const visibility = [
 const plans = [
   {
     name: 'Starter',
-    text: 'Core L7 protection for a first domain. Same protection engine; smaller domain and clean-bandwidth allowances.',
+    currentName: 'Citadel Starter',
+    price: '€0',
+    domains: '2 protected domains',
+    bandwidth: '10 GB / month',
+    text: 'Start protecting smaller websites with the same core Layer 7 controls.',
+    checkout: 'https://dash.stealthrdp.com/store/layer-7-ddos-protection/citadel-starter',
+    featured: false,
   },
   {
-    name: 'Business',
-    text: 'More domains and clean bandwidth for services under regular bot and flood pressure.',
+    name: 'Growth',
+    currentName: 'Citadel Business',
+    price: '€49',
+    domains: '5 protected domains',
+    bandwidth: '50 GB / month',
+    text: 'For growing websites and applications that need more protected domains and traffic allowance.',
+    checkout: 'https://dash.stealthrdp.com/store/layer-7-ddos-protection/citadel-business',
+    featured: true,
   },
   {
-    name: 'Enterprise',
-    text: 'Largest allowances plus roles for teams that operate protection alongside developers.',
+    name: 'Scale',
+    currentName: 'Citadel Enterprise',
+    price: '€149',
+    domains: '10 protected domains',
+    bandwidth: '100 GB / month',
+    text: 'The largest self-serve allowance for multi-site protection and higher traffic.',
+    checkout: 'https://dash.stealthrdp.com/store/layer-7-ddos-protection/citadel-enterprise',
+    featured: false,
   },
+] as const;
+
+const protectionFeatures = [
+  'Cookie, JS & Interaction challenges',
+  'Custom challenge templates',
+  'Custom error pages',
+  'Lockdown mode',
+  'Citadel portal access',
 ] as const;
 
 export default function CitadelPage() {
@@ -88,32 +114,112 @@ export default function CitadelPage() {
         />
       ))}
 
-      <section className="sr-page-hero">
+      <section className="sr-page-hero srv-citadel-hero">
         <div className="sr-container">
-          <p className="sr-kicker">Citadel by StealthRDP</p>
+          <p className="sr-kicker">Layer 7 DDoS protection</p>
           <h1 className="sr-title">
-            Application-layer protection that sits <span>between Cloudflare and the origin.</span>
+            Stop HTTP floods <span>before they reach your origin.</span>
           </h1>
           <p className="sr-lede">
-            Cloudflare stays at the network edge. Citadel adds application-aware
-            HTTP/HTTPS controls in front of the origin: challenges, rate limits,
-            allowlists, and automatic escalation with recovery.
+            Meet <strong>Citadel</strong> — StealthRDP's Layer 7 DDoS protection for
+            websites and HTTP/HTTPS applications. It adds challenge modes, rate
+            limits, lockdown controls, attack visibility, and origin-aware protection
+            in front of your server.
           </p>
+          <div className="srv-citadel-hero-proof">
+            <span><strong>Citadel</strong> by StealthRDP</span>
+            <span>Starter plan <strong>€0 / month</strong></span>
+            <span>Protect up to <strong>10 domains</strong></span>
+          </div>
           <div className="sr-actions">
             <Button asChild size="lg">
-              <a href="https://citadel.stealthrdp.com">
-                Open the Citadel portal
+              <a href="#citadel-plans">
+                View protection plans
                 <ArrowRight size={16} aria-hidden="true" />
               </a>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <a href="https://citadel.stealthrdp.com/docs">Read the Citadel docs</a>
+              <a href="https://citadel.stealthrdp.com">Open Citadel portal</a>
             </Button>
           </div>
           <p className="sr-micro">
-            L7 HTTP/HTTPS only. Citadel does not replace edge network protection
-            and does not protect non-HTTP protocols.
+            Citadel protects Layer 7 HTTP/HTTPS traffic. It does not replace Layer 3/4
+            network mitigation and does not protect non-HTTP protocols.
           </p>
+        </div>
+      </section>
+
+      <section className="sr-section sr-section-border srv-citadel-pricing" id="citadel-plans" aria-label="Citadel protection plans">
+        <div className="sr-container">
+          <div className="sr-section-head">
+            <div>
+              <p className="sr-kicker">Citadel plans</p>
+              <h2 className="sr-section-title">Same protection controls. Choose the allowance.</h2>
+            </div>
+            <p>
+              Every current tier includes the core Citadel challenge, customization,
+              lockdown, and portal features. Choose by protected domains and monthly
+              bandwidth.
+            </p>
+          </div>
+
+          <div className="srv-citadel-plans">
+            {plans.map(plan => (
+              <Card
+                key={plan.name}
+                className="srv-citadel-plan"
+                data-featured={plan.featured ? 'true' : undefined}
+              >
+                <div className="srv-citadel-plan-head">
+                  <div>
+                    <span>{plan.featured ? 'Most popular' : 'Citadel'}</span>
+                    <h3>{plan.name}</h3>
+                  </div>
+                  <div className="srv-citadel-price">
+                    <strong>{plan.price}</strong>
+                    <small>/ month</small>
+                  </div>
+                </div>
+
+                <p className="srv-citadel-plan-copy">{plan.text}</p>
+
+                <dl className="srv-citadel-allowances">
+                  <div>
+                    <dt>Domains</dt>
+                    <dd>{plan.domains}</dd>
+                  </div>
+                  <div>
+                    <dt>Bandwidth</dt>
+                    <dd>{plan.bandwidth}</dd>
+                  </div>
+                </dl>
+
+                <ul className="srv-citadel-feature-list">
+                  {protectionFeatures.map(feature => <li key={feature}>{feature}</li>)}
+                </ul>
+
+                <Button asChild variant={plan.featured ? 'default' : 'outline'}>
+                  <a href={plan.checkout}>
+                    Choose {plan.name}
+                    <ArrowRight size={16} aria-hidden="true" />
+                  </a>
+                </Button>
+
+                <small className="srv-citadel-current-name">
+                  Current WHMCS name: {plan.currentName}
+                </small>
+              </Card>
+            ))}
+          </div>
+
+          <div className="srv3-section-action">
+            <Button asChild variant="ghost">
+              <a href="https://dash.stealthrdp.com/store/layer-7-ddos-protection">
+                View all Layer 7 DDoS plans
+                <ArrowRight size={16} aria-hidden="true" />
+              </a>
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -242,38 +348,6 @@ export default function CitadelPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border" aria-label="Citadel plans">
-        <div className="sr-container">
-          <div className="sr-section-head">
-            <div>
-              <p className="sr-kicker">Plans</p>
-              <h2 className="sr-section-title">Same protection. Different allowances.</h2>
-            </div>
-            <p>
-              Every plan runs the same core protection features. Plans differ in
-              protected domains and clean-bandwidth allowances. Current allowances
-              are published on the Citadel portal.
-            </p>
-          </div>
-          <div className="srv-citadel-plans grid gap-6 md:grid-cols-3">
-            {plans.map(plan => (
-              <Card key={plan.name} className="srv-citadel-plan gap-2 p-8">
-                <h3 className="text-heading-4 font-semibold text-body-text">{plan.name}</h3>
-                <p className="text-small text-body-muted">{plan.text}</p>
-              </Card>
-            ))}
-          </div>
-          <div className="srv3-section-action">
-            <Button asChild>
-              <a href="https://citadel.stealthrdp.com">
-                Compare allowances on the portal
-                <ArrowRight size={16} aria-hidden="true" />
-              </a>
-            </Button>
-          </div>
-        </div>
-      </section>
-
       <section className="sr-section sr-section-border" aria-label="Operational confidence">
         <div className="sr-container sr-copy-grid">
           <div>
@@ -309,19 +383,19 @@ export default function CitadelPage() {
         <div className="sr-container">
           <Card className="srv-site-final srv-citadel-final gap-8 rounded-lg p-8 md:grid md:grid-cols-[1fr_auto] md:items-center md:gap-12 md:p-12">
             <div className="grid gap-2">
-              <p className="sr-kicker">Citadel by StealthRDP</p>
+              <p className="sr-kicker">Layer 7 DDoS protection · Citadel</p>
               <h2 className="text-display-2 font-semibold text-body-text">
-                Keep the origin for real visitors.
+                Put Citadel in front of the origin.
               </h2>
               <p className="max-w-xl text-small text-body-muted">
-                Put the decision layer between Cloudflare and the origin, then
-                watch attacks become a dashboard event instead of an outage.
+                Start free or choose a larger allowance for more domains and traffic,
+                then manage protection from the Citadel portal.
               </p>
             </div>
             <div className="flex flex-col gap-2.5 md:min-w-48">
               <Button asChild size="lg">
-                <a href="https://citadel.stealthrdp.com">
-                  Open the Citadel portal
+                <a href="https://dash.stealthrdp.com/store/layer-7-ddos-protection">
+                  Choose a protection plan
                   <ArrowRight size={16} aria-hidden="true" />
                 </a>
               </Button>
