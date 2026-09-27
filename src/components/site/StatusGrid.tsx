@@ -36,10 +36,10 @@ function pillState(status: string): PillState {
 }
 
 function pillIcon(status: string) {
-  if (status === 'up') return <CheckCircle2 size={16} aria-hidden="true" />;
-  if (status === 'degraded') return <TriangleAlert size={16} aria-hidden="true" />;
-  if (status === 'down') return <XCircle size={16} aria-hidden="true" />;
-  return <CircleHelp size={16} aria-hidden="true" />;
+  if (status === 'up') return <CheckCircle2 size={16} weight="fill" aria-hidden="true" />;
+  if (status === 'degraded') return <TriangleAlert size={16} weight="fill" aria-hidden="true" />;
+  if (status === 'down') return <XCircle size={16} weight="fill" aria-hidden="true" />;
+  return <CircleHelp size={16} weight="fill" aria-hidden="true" />;
 }
 
 export function StatusGrid({ fallback }: { fallback: StatusPayload }) {
@@ -92,14 +92,14 @@ export function StatusGrid({ fallback }: { fallback: StatusPayload }) {
           <div className="flex flex-wrap gap-2">
             <Pill
               state={summary.operational > 0 ? 'ok' : 'unknown'}
-              icon={<CheckCircle2 size={16} aria-hidden="true" />}
+              icon={<CheckCircle2 size={16} weight="fill" aria-hidden="true" />}
             >
               <span>
                 <strong className="font-semibold text-body-text">{summary.operational}</strong>
                 {' operational'}
               </span>
             </Pill>
-            <Pill state="neutral" icon={<Activity size={16} aria-hidden="true" />}>
+            <Pill state="neutral" icon={<Activity size={16} weight="fill" aria-hidden="true" />}>
               <span>
                 <strong className="font-semibold text-body-text">{payload.monitors.length}</strong>
                 {' monitored'}
