@@ -63,7 +63,6 @@ const visibility = [
 const plans = [
   {
     name: 'Starter',
-    currentName: 'Citadel Starter',
     price: '€0',
     domains: '2 protected domains',
     bandwidth: '10 GB / month',
@@ -73,7 +72,6 @@ const plans = [
   },
   {
     name: 'Growth',
-    currentName: 'Citadel Business',
     price: '€49',
     domains: '5 protected domains',
     bandwidth: '50 GB / month',
@@ -83,7 +81,6 @@ const plans = [
   },
   {
     name: 'Scale',
-    currentName: 'Citadel Enterprise',
     price: '€149',
     domains: '10 protected domains',
     bandwidth: '100 GB / month',
@@ -204,10 +201,6 @@ export default function CitadelPage() {
                     <ArrowRight size={16} aria-hidden="true" />
                   </a>
                 </Button>
-
-                <small className="srv-citadel-current-name">
-                  Current WHMCS name: {plan.currentName}
-                </small>
               </Card>
             ))}
           </div>
