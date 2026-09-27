@@ -24,7 +24,6 @@ import {
   CardContent,
   CardFooter,
   CardHeader,
-  CardTitle,
 } from '@/components/ui/card';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
@@ -386,7 +385,7 @@ export default async function HomePage({ params }: Props) {
                 <strong>{testimonials[0]?.authorName}</strong>
                 <span>{testimonials[0]?.authorCompany || 'StealthRDP customer'}</span>
               </div>
-              <span className="srv-review-source">{reviewSource(testimonials[0])}</span>
+              <span className="srv-review-source">{reviewSource(testimonials[0]!)}</span>
             </div>
           </div>
 
