@@ -194,8 +194,6 @@ export default async function HomePage({ params }: Props) {
           </div>
 
           <div className="srv-home-hero-visual-stage">
-          <span className="srv-home-visual-depth srv-home-visual-depth-a" aria-hidden="true" />
-          <span className="srv-home-visual-depth srv-home-visual-depth-b" aria-hidden="true" />
           <Card className="srv-home-hero-visual srv-home-deploy-card gap-0 overflow-hidden py-0 shadow-sm">
             <CardHeader className="srv-home-deploy-head border-b border-border bg-muted/30 px-5 py-4">
               <div className="flex items-center justify-between gap-4">
