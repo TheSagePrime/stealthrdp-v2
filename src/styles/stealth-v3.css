@@ -7390,3 +7390,51 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
     height: 20px;
   }
 }
+
+
+/* Final generic icon contract: substantial filled icons, no rainbow outline system. */
+.srv-workload-option svg {
+  color: var(--text-dim) !important;
+  filter: none !important;
+}
+
+.srv-workload-option[data-selected="true"] svg {
+  color: var(--primary) !important;
+}
+
+.srv-workload-option:hover svg {
+  color: var(--text) !important;
+}
+
+.srv-workload-option[data-selected="true"]:hover svg {
+  color: var(--primary) !important;
+}
+
+.srv-infra-icon {
+  color: var(--primary) !important;
+  background: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+.srv-infra-item:hover .srv-infra-number {
+  color: var(--primary);
+  border-color: color-mix(in srgb, var(--primary) 28%, var(--border-divider));
+  background: color-mix(in srgb, var(--primary) 4%, transparent);
+}
+
+.srv-infra-item:hover .srv-infra-line {
+  background: var(--primary);
+}
+
+.srv-product-node-icon,
+.srv-page-plans .sr-byo-visual svg {
+  filter: none !important;
+}
+
+/* Real brand marks remain real marks; no decorative container effect is added. */
+.srv-page-plans .srv-plan-os-mark {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
