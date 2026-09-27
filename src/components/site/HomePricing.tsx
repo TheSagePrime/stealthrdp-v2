@@ -40,11 +40,11 @@ const cycleLabel: Record<BillingCycle, string> = {
 };
 
 const workloads = [
-  { id: 'remote', label: 'Remote desktop', target: 'Bronze', icon: Desktop },
-  { id: 'web', label: 'Web hosting', target: 'Silver', icon: GlobeHemisphereWest },
-  { id: 'automation', label: 'Automation & bots', target: 'Gold', icon: Robot },
-  { id: 'trading', label: 'Trading', target: 'Gold', icon: ChartLineUp },
-  { id: 'storage', label: 'Storage & backups', target: 'Silver', icon: HardDrive },
+  { id: 'remote', label: 'Remote desktop', target: 'Bronze', icon: Desktop, tone: 'blue' },
+  { id: 'web', label: 'Web hosting', target: 'Silver', icon: GlobeHemisphereWest, tone: 'cyan' },
+  { id: 'automation', label: 'Automation & bots', target: 'Gold', icon: Robot, tone: 'violet' },
+  { id: 'trading', label: 'Trading', target: 'Gold', icon: ChartLineUp, tone: 'amber' },
+  { id: 'storage', label: 'Storage & backups', target: 'Silver', icon: HardDrive, tone: 'green' },
 ] as const;
 
 type Workload = (typeof workloads)[number]['id'];
@@ -99,7 +99,7 @@ export function HomePricing() {
     <div className="flex w-full flex-col gap-5">
       <div className="srv-plan-configurator">
         <div className="srv-configurator-top">
-          <div className="srv-configurator-group">
+          <div className="srv-configurator-group" data-tone="cyan">
             <div className="srv-configurator-label">
               <GlobeHemisphereWest aria-hidden="true" />
               <span>Region</span>
@@ -121,7 +121,7 @@ export function HomePricing() {
             </div>
           </div>
 
-          <div className="srv-configurator-group">
+          <div className="srv-configurator-group" data-tone="violet">
             <div className="srv-configurator-label">
               <TerminalWindow aria-hidden="true" />
               <span>Operating system</span>
@@ -146,7 +146,7 @@ export function HomePricing() {
             </div>
           </div>
 
-          <div className="srv-configurator-group srv-configurator-billing">
+          <div className="srv-configurator-group srv-configurator-billing" data-tone="amber">
             <div className="srv-configurator-label">
               <CalendarDots aria-hidden="true" />
               <span>Billing cycle</span>
@@ -183,6 +183,7 @@ export function HomePricing() {
                     key={item.id}
                     type="button"
                     className="srv-workload-option"
+                    data-tone={item.tone}
                     data-selected={selected}
                     aria-pressed={selected}
                     onClick={() => setWorkload(item.id)}
