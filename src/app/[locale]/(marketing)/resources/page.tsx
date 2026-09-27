@@ -15,21 +15,29 @@ const destinations = [
   {
     title: 'Guides',
     href: '/blog',
+    label: 'Learn',
+    action: 'Browse guides',
     description: 'VPS use cases, security, performance, infrastructure decisions, backups, and practical server operations.',
   },
   {
     title: 'Help Center',
     href: '/docs',
+    label: 'Solve',
+    action: 'Open help center',
     description: 'Setup instructions, troubleshooting, networking, Windows access, panels, licensing, and policies.',
   },
   {
     title: 'Common Questions',
     href: '/faq',
+    label: 'Quick answers',
+    action: 'Browse questions',
     description: 'Quick answers about plans, billing, setup, operating systems, refunds, and support.',
   },
   {
     title: 'Service Status',
     href: '/status',
+    label: 'Check',
+    action: 'View status',
     description: 'Public infrastructure health and current service availability.',
   },
 ] as const;
@@ -70,29 +78,30 @@ export default function ResourcesPage() {
             </div>
           </header>
 
-          <section className="srv-docs-collection">
-            <div className="srv-docs-collection-head">
+          <section className="srv-resource-hub">
+            <div className="srv-docs-collection-head srv-resource-hub-head">
               <div>
-                <h2>Browse resources</h2>
-                <p>Choose the kind of answer you need. Search in the top bar works across all of them.</p>
+                <h2>What do you need?</h2>
+                <p>Start with the outcome. Everything stays searchable from the bar above.</p>
               </div>
-              <span>{destinations.length}</span>
             </div>
 
-            <ol>
+            <div className="srv-resource-hub-grid">
               {destinations.map((item, index) => (
-                <li key={item.href}>
-                  <Link href={item.href}>
-                    <span className="srv-docs-entry-number">{String(index + 1).padStart(2, '0')}</span>
-                    <span className="srv-docs-entry-copy">
-                      <strong>{item.title}</strong>
-                      <small>{item.description}</small>
-                    </span>
-                    <span className="srv-docs-entry-arrow" aria-hidden="true">→</span>
-                  </Link>
-                </li>
+                <Link className="srv-resource-hub-card" href={item.href} key={item.href}>
+                  <span className="srv-resource-hub-index">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="srv-resource-hub-copy">
+                    <small>{item.label}</small>
+                    <strong>{item.title}</strong>
+                    <span>{item.description}</span>
+                  </span>
+                  <span className="srv-resource-hub-action">
+                    {item.action}
+                    <span aria-hidden="true">→</span>
+                  </span>
+                </Link>
               ))}
-            </ol>
+            </div>
           </section>
         </main>
 

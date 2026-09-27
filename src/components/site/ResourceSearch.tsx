@@ -1,7 +1,8 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
+import { Search } from 'lucide-react';
 
 export type ResourceSearchItem = {
   title: string;
@@ -18,6 +19,7 @@ export function ResourceSearch({
   placeholder?: string;
 }) {
   const [query, setQuery] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
   const needle = query.trim().toLowerCase();
 
   const matches = useMemo(() => {
@@ -30,12 +32,35 @@ export function ResourceSearch({
       .slice(0, 8);
   }, [items, needle]);
 
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      const isTyping = target?.tagName === 'INPUT'
+        || target?.tagName === 'TEXTAREA'
+        || target?.isContentEditable;
+
+      if (event.key === '/' && !isTyping) {
+        event.preventDefault();
+        inputRef.current?.focus();
+      }
+
+      if (event.key === 'Escape' && document.activeElement === inputRef.current) {
+        setQuery('');
+        inputRef.current?.blur();
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
+
   return (
     <div className="srv-resource-search">
       <label htmlFor="resource-search" className="sr-visually-hidden">Search resources</label>
       <div className="srv-resource-search-field">
-        <span aria-hidden="true">⌕</span>
+        <Search aria-hidden="true" className="srv-resource-search-icon" />
         <input
+          ref={inputRef}
           id="resource-search"
           type="search"
           value={query}
@@ -43,7 +68,7 @@ export function ResourceSearch({
           placeholder={placeholder}
           autoComplete="off"
         />
-        <kbd>Search</kbd>
+        <kbd aria-hidden="true">/</kbd>
       </div>
 
       {needle.length >= 2 && (
