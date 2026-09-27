@@ -5604,3 +5604,11 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
     transform: none;
   }
 }
+
+
+.srv-review-source[data-source="discord"],
+.srv-review-source-badge[data-source="discord"] {
+  color: #5865f2;
+  border-color: rgb(88 101 242 / 0.22);
+  background: rgb(88 101 242 / 0.06);
+}
