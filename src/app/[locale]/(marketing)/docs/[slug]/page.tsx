@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { DocBody, docHeadings } from '@/components/site/DocBody';
 import { HelpSidebar } from '@/components/site/HelpSidebar';
@@ -89,6 +90,22 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
               <a href="https://dash.stealthrdp.com/submitticket.php">Need help? ↗</a>
             </div>
           </header>
+
+          {article.illustration ? (
+            <figure className="mb-9 overflow-hidden rounded-xl border border-border">
+              <Image
+                src={article.illustration.src}
+                alt={article.illustration.alt}
+                width={article.illustration.width}
+                height={article.illustration.height}
+                sizes="(max-width: 760px) 100vw, 760px"
+                className="block h-auto w-full"
+              />
+              <figcaption className="border-t border-border px-4 py-3 text-xs text-muted-foreground">
+                {article.illustration.caption}
+              </figcaption>
+            </figure>
+          ) : null}
 
           <DocBody content={article.content} title={article.title} />
 
