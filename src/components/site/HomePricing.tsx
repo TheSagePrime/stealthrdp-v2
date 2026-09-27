@@ -3,13 +3,11 @@
 /* Homepage pricing configurator: interaction/state here, visual language in stealth-v3.css. */
 import { useMemo, useState } from 'react';
 import {
-  CalendarDots,
   ChartLineUp,
   Desktop,
   GlobeHemisphereWest,
   HardDrive,
   Robot,
-  TerminalWindow,
 } from '@phosphor-icons/react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -48,7 +46,6 @@ const workloads = [
 ] as const;
 
 type Workload = (typeof workloads)[number]['id'];
-type OsChoice = 'any' | 'windows' | 'linux';
 
 const format = (value: number) => Number.isInteger(value) ? String(value) : value.toFixed(2);
 
@@ -66,7 +63,6 @@ function previewWindow(regionPlans: Plan[], target: string) {
 export function HomePricing() {
   const [region, setRegion] = useState<'USA' | 'EU'>('USA');
   const [cycle, setCycle] = useState<BillingCycle>('monthly');
-  const [os, setOs] = useState<OsChoice>('any');
   const [workload, setWorkload] = useState<Workload>('remote');
 
   const selectedWorkload = workloads.find(item => item.id === workload) ?? workloads[0];
@@ -74,15 +70,10 @@ export function HomePricing() {
   const visible = useMemo(() => {
     const filtered = plans
       .filter(plan => plan.location === region)
-      .filter(plan => {
-        if (os === 'windows') return plan.source.os !== 'linux-only';
-        if (os === 'linux') return true;
-        return true;
-      })
       .sort((a, b) => a.pricing.monthly.amount - b.pricing.monthly.amount);
 
     return previewWindow(filtered, selectedWorkload.target);
-  }, [region, os, selectedWorkload.target]);
+  }, [region, selectedWorkload.target]);
 
   const recommendedName = useMemo(() => {
     const exact = visible.find(plan => tierName(plan) === selectedWorkload.target && plan.source.availability !== 'out-of-stock');
@@ -98,12 +89,8 @@ export function HomePricing() {
   return (
     <div className="flex w-full flex-col gap-5">
       <div className="srv-plan-configurator">
-        <div className="srv-configurator-top">
-          <div className="srv-configurator-group" data-tone="cyan">
-            <div className="srv-configurator-label">
-              <GlobeHemisphereWest aria-hidden="true" />
-              <span>Region</span>
-            </div>
+        <div className="srv-configurator-top srv-configurator-top-compact">
+          <div className="srv-configurator-group srv-configurator-region">
             <div className="srv-selector" role="group" aria-label="Deployment region">
               {(['USA', 'EU'] as const).map(item => (
                 <button
@@ -121,36 +108,7 @@ export function HomePricing() {
             </div>
           </div>
 
-          <div className="srv-configurator-group" data-tone="violet">
-            <div className="srv-configurator-label">
-              <TerminalWindow aria-hidden="true" />
-              <span>Operating system</span>
-            </div>
-            <div className="srv-selector" role="group" aria-label="Operating system">
-              {([
-                ['any', 'Any OS'],
-                ['windows', 'Windows'],
-                ['linux', 'Linux'],
-              ] as const).map(([value, label]) => (
-                <button
-                  key={value}
-                  type="button"
-                  className="srv-selector-option"
-                  data-selected={os === value}
-                  aria-pressed={os === value}
-                  onClick={() => setOs(value)}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="srv-configurator-group srv-configurator-billing" data-tone="amber">
-            <div className="srv-configurator-label">
-              <CalendarDots aria-hidden="true" />
-              <span>Billing cycle</span>
-            </div>
+          <div className="srv-configurator-group srv-configurator-billing">
             <div className="srv-billing-rail" role="group" aria-label="Billing cycle">
               {cycles.map(item => (
                 <button
@@ -188,7 +146,7 @@ export function HomePricing() {
                     aria-pressed={selected}
                     onClick={() => setWorkload(item.id)}
                   >
-                    <Icon aria-hidden="true" />
+                    <Icon aria-hidden="true" weight="duotone" />
                     <span>{item.label}</span>
                   </button>
                 );
@@ -217,8 +175,6 @@ export function HomePricing() {
 
             <div className="srv-summary-meta">
               <span>{region}</span>
-              <span>·</span>
-              <span>{os === 'any' ? 'Windows or Linux' : os === 'windows' ? 'Windows' : 'Linux'}</span>
               <span>·</span>
               <span>{cycleLabel[cycle]}</span>
             </div>
@@ -278,11 +234,6 @@ export function HomePricing() {
       <div className="flex flex-wrap justify-center gap-3">
         <Button asChild variant="outline">
           <a href="/plans">View all plans</a>
-        </Button>
-        <Button asChild variant="ghost">
-          <a href={os === 'windows' ? '/windows-vps' : '/linux-vps'}>
-            Browse {os === 'windows' ? 'Windows' : 'Linux'} VPS
-          </a>
         </Button>
       </div>
     </div>
