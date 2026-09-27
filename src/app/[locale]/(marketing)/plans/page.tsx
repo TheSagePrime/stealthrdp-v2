@@ -180,7 +180,7 @@ export default function PlansPage() {
             <p>Choose your own CPU, RAM, storage, location, and billing cycle in the server configurator.</p>
           </div>
           <div className="sr-byo-visual" aria-hidden="true">
-            <Settings2 size={16} />
+            <Settings2 size={18} weight="fill" />
             <span>CPU · RAM · STORAGE · REGION</span>
           </div>
           <Button asChild size="lg">
