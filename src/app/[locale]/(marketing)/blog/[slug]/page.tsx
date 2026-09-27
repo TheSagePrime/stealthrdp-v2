@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { ArticleJsonLd, ArticlePublicationMeta } from '@/components/seo/Article';
+import { ArticleJsonLd, ArticlePublicationMeta, ArticleSources } from '@/components/seo/Article';
 import { TrustedArticleBody } from '@/components/site/TrustedArticleBody';
 import { getSeoConfig } from '@/libs/seo/config';
 import { createArticleMetadata } from '@/libs/seo/articles';
@@ -40,6 +40,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
       </header>
       <ArticleJsonLd article={publication} config={config} />
       <TrustedArticleBody html={article.html} />
+      <ArticleSources sources={publication.sources ?? []} />
     </article>
   );
 }
