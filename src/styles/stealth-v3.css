@@ -9702,3 +9702,120 @@ a.srv-help-tree-heading:hover {
     top: 88px;
   }
 }
+
+
+/* ==========================================================================
+   Homepage pricing controls
+   Separate compact surfaces aligned exactly to the pricing-card cluster.
+   ========================================================================== */
+
+.srv-pricing-controls {
+  display: flex;
+  width: 100%;
+  max-width: 1220px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-inline: auto;
+}
+
+.srv-pricing-control-card {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+  border-radius: 13px;
+  background: color-mix(in srgb, var(--card) 80%, var(--background));
+  padding: 4px;
+  box-shadow:
+    0 8px 22px color-mix(in srgb, var(--foreground) 4%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 42%, transparent);
+}
+
+.srv-pricing-controls .srv-selector,
+.srv-pricing-controls .srv-billing-rail {
+  width: fit-content !important;
+  min-height: 0 !important;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+}
+
+.srv-pricing-controls .srv-selector-option,
+.srv-pricing-controls .srv-billing-option {
+  flex: 0 0 auto;
+  min-width: 0;
+  min-height: 36px;
+  padding-inline: 13px;
+}
+
+.srv-pricing-controls .srv-billing-option {
+  padding-inline: 14px;
+}
+
+.srv-pricing-controls .srv-billing-option[data-selected="true"],
+.srv-pricing-controls .srv-selector-option[data-selected="true"] {
+  transform: none;
+  box-shadow: none;
+}
+
+.srv-pricing-billing {
+  margin-left: auto;
+}
+
+@media (min-width: 1536px) {
+  .srv-pricing-controls {
+    max-width: 1272px;
+  }
+}
+
+@media (max-width: 1279px) {
+  .srv-pricing-controls {
+    max-width: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .srv-pricing-controls {
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .srv-pricing-control-card {
+    padding: 3px;
+  }
+
+  .srv-pricing-billing {
+    max-width: calc(100% - 128px);
+    overflow-x: auto;
+    margin-left: auto;
+    scrollbar-width: none;
+  }
+
+  .srv-pricing-billing::-webkit-scrollbar {
+    display: none;
+  }
+
+  .srv-pricing-controls .srv-selector-option,
+  .srv-pricing-controls .srv-billing-option {
+    min-height: 34px;
+    padding-inline: 11px;
+    font-size: .75rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .srv-pricing-controls {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .srv-pricing-billing {
+    width: 100%;
+    max-width: 100%;
+    justify-self: stretch;
+  }
+}
