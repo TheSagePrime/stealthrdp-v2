@@ -18,10 +18,10 @@ const columns = [
   {
     title: 'Resources',
     links: [
-      ['Docs', '/docs'],
-      ['Blog', '/blog'],
-      ['Minecraft VPS guide', '/vps-hosting-minecraft'],
-      ['FAQ', '/faq'],
+      ['Resources home', '/resources'],
+      ['Guides', '/blog'],
+      ['Help Center', '/docs'],
+      ['Common questions', '/faq'],
       ['Server status', '/status'],
     ],
   },
