@@ -11334,10 +11334,11 @@ a.srv-help-tree-heading:hover {
 
   /* Resource / Help / Guide / Citadel shell */
   .srv-docs-product .srv-help-topbar-inner {
-    grid-template-columns: 190px minmax(0, 1fr);
-    gap: 20px;
+    grid-template-columns: 122px minmax(0, 1fr);
+    gap: 18px;
   }
 
+  .srv-docs-product .srv-help-brand span,
   .srv-docs-product .srv-help-topbar-actions {
     display: none !important;
   }
