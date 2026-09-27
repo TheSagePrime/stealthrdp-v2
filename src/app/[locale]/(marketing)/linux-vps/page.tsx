@@ -47,14 +47,12 @@ const distros = [
 
 /* Nominative brand marks for distribution families the table below lists. */
 const osBrands = [
-  { src: '/brand/ubuntu.svg', alt: 'Ubuntu logo', width: 28, height: 28, className: 'h-7 w-auto' },
-  { src: '/brand/debian.svg', alt: 'Debian logo', width: 23, height: 28, className: 'h-7 w-auto' },
-  { src: '/brand/centos.svg', alt: 'CentOS logo', width: 28, height: 28, className: 'h-7 w-auto' },
-  { src: '/brand/almalinux.svg', alt: 'AlmaLinux logo', width: 29, height: 28, className: 'h-7 w-auto' },
-  { src: '/brand/fedora.svg', alt: 'Fedora logo', width: 28, height: 28, className: 'h-7 w-auto' },
-  // Tux is a portrait mark with less ink than the flat distro badges, so it needs one
-  // step more height to carry the same optical weight next to them.
-  { src: '/brand/linux.svg', alt: 'Linux logo (Tux)', width: 28, height: 32, className: 'h-8 w-auto' },
+  { src: '/brand/ubuntu.svg', alt: 'Ubuntu logo', label: 'Ubuntu', width: 28, height: 28 },
+  { src: '/brand/debian.svg', alt: 'Debian logo', label: 'Debian', width: 23, height: 28 },
+  { src: '/brand/centos.svg', alt: 'CentOS logo', label: 'CentOS', width: 28, height: 28 },
+  { src: '/brand/almalinux.svg', alt: 'AlmaLinux logo', label: 'AlmaLinux', width: 29, height: 28 },
+  { src: '/brand/fedora.svg', alt: 'Fedora logo', label: 'Fedora', width: 28, height: 28 },
+  { src: '/brand/linux.svg', alt: 'Linux logo (Tux)', label: 'Linux', width: 28, height: 32 },
 ];
 
 const resourceFit = [
@@ -85,7 +83,7 @@ const cardLinkClass = 'inline-flex min-h-11 items-center gap-2 text-small font-s
 
 export default function LinuxVpsPage() {
   return (
-    <>
+    <div className="srv-page srv-page-os srv-page-linux">
       <section className="sr-page-hero sr-os-page-hero">
         <div className="sr-container sr-os-hero-grid">
           <div>
@@ -111,7 +109,7 @@ export default function LinuxVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section" id="linux-plans">
+      <section className="sr-section srv-os-pricing-section" id="linux-plans">
         <div className="sr-container">
           <div className="sr-section-head">
             <div><p className="sr-kicker">Current VPS catalog</p><h2 className="sr-section-title">Choose your resource level</h2></div>
@@ -121,7 +119,7 @@ export default function LinuxVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border">
+      <section className="sr-section sr-section-border srv-os-story-section">
         <div className="sr-container sr-copy-grid">
           <div><p className="sr-kicker">Next step</p><h2 className="sr-section-title">Choose the plan first. Select Windows or Linux in checkout.</h2></div>
           <div className="sr-prose-block">
@@ -135,7 +133,7 @@ export default function LinuxVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border">
+      <section className="sr-section sr-section-border srv-os-story-section">
         <div className="sr-container sr-copy-grid">
           <div><p className="sr-kicker">Linux VPS guide</p><h2 className="sr-section-title">If you searched for cheap Linux VPS</h2></div>
           <div className="sr-prose-block">
@@ -162,22 +160,24 @@ export default function LinuxVpsPage() {
             <p>Choose the operating-system family your stack needs, then confirm the exact image and version during checkout.</p>
           </div>
           <ul
-            className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-4"
+            className="srv-os-brand-cloud"
             aria-label="Linux distributions listed on this page"
           >
             {osBrands.map(brand => (
-              <li key={brand.src}>
-                <img
-                  src={brand.src}
-                  alt={brand.alt}
-                  width={brand.width}
-                  height={brand.height}
-                  className={brand.className}
-                />
+              <li key={brand.src} className="srv-os-brand-tile">
+                <span className="srv-os-brand-mark">
+                  <img
+                    src={brand.src}
+                    alt={brand.alt}
+                    width={brand.width}
+                    height={brand.height}
+                  />
+                </span>
+                <span>{brand.label}</span>
               </li>
             ))}
           </ul>
-          <Table>
+          <Table className="srv-os-table">
             <TableHeader>
               <TableRow>
                 <TableHead>Distribution</TableHead>
@@ -201,7 +201,7 @@ export default function LinuxVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border">
+      <section className="sr-section sr-section-border srv-os-environment-section">
         <div className="sr-container sr-copy-grid">
           <div><p className="sr-kicker">Control</p><h2 className="sr-section-title">Root access</h2></div>
           <div className="sr-prose-block">
@@ -210,26 +210,23 @@ export default function LinuxVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border">
+      <section className="sr-section sr-section-border srv-os-story-section">
         <div className="sr-container">
           <div className="sr-section-head">
             <div><p className="sr-kicker">Resource fit</p><h2 className="sr-section-title">Size the machine to the stack</h2></div>
             <p>Count what runs at the same time: OS, web server, app, database, jobs, files.</p>
           </div>
-          <ol className="grid list-none gap-0 p-0">
+          <ol className="srv-os-feature-rail grid list-none gap-0 p-0">
             {resourceFit.map(({ icon: Icon, number, title, text }) => (
               <li
                 key={number}
-                className="
-                  grid gap-3 border-t border-divider py-6 last:border-b
-                  sm:grid-cols-[auto_1fr] sm:items-start sm:gap-x-6
-                "
+                className="srv-os-feature-row"
               >
                 <div className="flex items-center gap-3">
                   <span className="text-micro font-bold text-body-dim tabular-nums">
                     {number}
                   </span>
-                  <span className="grid size-10 shrink-0 place-items-center rounded-md border border-border-soft bg-surface-2 text-primary">
+                  <span className="srv-os-feature-icon">
                     <Icon aria-hidden="true" className="size-5" />
                   </span>
                 </div>
@@ -243,15 +240,15 @@ export default function LinuxVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border">
+      <section className="sr-section sr-section-border srv-os-resource-section">
         <div className="sr-container">
           <div className="sr-section-head">
             <div><p className="sr-kicker">Regions</p><h2 className="sr-section-title">USA or EU</h2></div>
           </div>
-          <div className="grid gap-4 md:grid-cols-2">
-            <Card>
+          <div className="srv-os-region-split grid gap-4 md:grid-cols-2">
+            <Card className="srv-os-region-panel" data-region="usa">
               <CardHeader>
-                <span className="grid size-11 place-items-center rounded-md border border-divider bg-surface-1 text-primary">
+                <span className="srv-os-region-icon">
                   <MapPin aria-hidden="true" className="size-5" />
                 </span>
                 <Badge variant="outline" className="w-fit text-body-muted">USA</Badge>
@@ -268,9 +265,9 @@ export default function LinuxVpsPage() {
                 </Link>
               </CardFooter>
             </Card>
-            <Card>
+            <Card className="srv-os-region-panel" data-region="eu">
               <CardHeader>
-                <span className="grid size-11 place-items-center rounded-md border border-divider bg-surface-1 text-primary">
+                <span className="srv-os-region-icon">
                   <MapPin aria-hidden="true" className="size-5" />
                 </span>
                 <Badge variant="outline" className="w-fit text-body-muted">EU</Badge>
@@ -291,7 +288,7 @@ export default function LinuxVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border">
+      <section className="sr-section sr-section-border srv-os-region-section">
         <div className="sr-container sr-copy-grid">
           <div><p className="sr-kicker">Before you order</p><h2 className="sr-section-title">After payment</h2></div>
           <div className="sr-prose-block">
@@ -300,7 +297,7 @@ export default function LinuxVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border">
+      <section className="sr-section sr-section-border srv-os-story-section">
         <div className="sr-container sr-copy-grid">
           <div><p className="sr-kicker">Support and limits</p><h2 className="sr-section-title">Support and limits</h2></div>
           <div className="sr-prose-block">
@@ -315,13 +312,13 @@ export default function LinuxVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border">
+      <section className="sr-section sr-section-border srv-os-order-section">
         <div className="sr-container">
           <div className="sr-section-head">
             <div><p className="sr-kicker">Order steps</p><h2 className="sr-section-title">Order a Linux VPS</h2></div>
             <p>Move from your requirements to checkout.</p>
           </div>
-          <ol className="grid list-none gap-0 p-0">
+          <ol className="srv-os-order-rail grid list-none gap-0 p-0">
             {orderSteps.map(({ number, title, text }) => (
               <li
                 key={number}
@@ -346,7 +343,7 @@ export default function LinuxVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border">
+      <section className="sr-section sr-section-border srv-os-faq-section">
         <div className="sr-container">
           <div className="sr-section-head">
             <div><p className="sr-kicker">Common questions</p><h2 className="sr-section-title">Linux VPS questions</h2></div>
@@ -359,7 +356,7 @@ export default function LinuxVpsPage() {
               </AccordionItem>
             ))}
           </Accordion>
-          <div className="sr-cta-inline">
+          <div className="sr-cta-inline srv-os-switcher">
             <div><span className="sr-location-code">Choose another environment</span><h3>Need Windows instead?</h3><p>For familiar Windows software and remote Windows desktop or server access, see Windows VPS hosting.</p></div>
             <Button asChild variant="outline"><Link href="/windows-vps">Windows VPS hosting <ArrowRight size={16} /></Link></Button>
           </div>
@@ -367,7 +364,7 @@ export default function LinuxVpsPage() {
       </section>
 
       <section className="sr-section">
-        <div className="sr-container sr-cta sr-cta-premium">
+        <div className="sr-container sr-cta sr-cta-premium srv-site-final srv-os-final">
           <div><p className="sr-kicker">Linux VPS plans</p><h2>Compare Linux VPS plans</h2><p>Check the current plan, region, and displayed price, then confirm Linux and the exact image in checkout.</p></div>
           <div className="sr-actions">
             <Button asChild size="lg"><Link href="/plans#linux-vps">Compare Linux VPS plans <ArrowRight size={16} /></Link></Button>
@@ -375,6 +372,6 @@ export default function LinuxVpsPage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
