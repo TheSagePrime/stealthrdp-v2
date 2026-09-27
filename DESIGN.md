@@ -96,8 +96,12 @@ Never use status colours as the brand identity.
 
 ## Typography
 
-Use a modern sans-serif system for display and body hierarchy.
-Use JetBrains Mono only for commands, IP-like values, technical measurements, and code.
+Use **IBM Plex Sans** for all public display, body, navigation, button, pricing, documentation, blog, and utility text.
+Use **JetBrains Mono** only for commands, code, IP-like values, server/spec measurements, and genuinely technical identifiers.
+
+Approved text weights are **400 / 500 / 600 / 700** only. Create hierarchy with scale, spacing, colour, and these four weights — not with extra font families or synthetic intermediate weights.
+
+The public site must not introduce a separate serif/display family. `--font-display` and `--font-body` intentionally resolve to the same IBM Plex Sans family.
 
 Avoid terminal-style labels across normal marketing copy, excessive uppercase microcopy, numbered clauses as the main identity, and multiple unrelated type treatments in one section.
 

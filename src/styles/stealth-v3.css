@@ -42,7 +42,7 @@ body {
   margin: 0 0 16px;
   color:var(--primary);
   font-size: 0.75rem;
-  font-weight: 750;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -53,7 +53,7 @@ body {
 .srv3-infra-copy h2,
 .srv3-final-cta h2 {
   font-family: var(--font-body);
-  font-weight: 760;
+  font-weight: 700;
   letter-spacing: -0.045em;
   text-wrap: balance;
 }
@@ -186,7 +186,7 @@ body {
   padding: 10px 12px;
   color:var(--text-muted);
   font-size: 0.875rem;
-  font-weight: 650;
+  font-weight: 600;
   transition: color 160ms ease, background-color 160ms ease;
 }
 
@@ -209,7 +209,7 @@ body {
   color: var(--text-muted);
   font: inherit;
   font-size: 0.875rem;
-  font-weight: 650;
+  font-weight: 600;
   cursor: pointer;
 }
 
@@ -248,7 +248,7 @@ body {
   padding: 10px 12px;
   color: var(--text-muted);
   font-size: 0.875rem;
-  font-weight: 650;
+  font-weight: 600;
   white-space: nowrap;
 }
 
@@ -318,7 +318,7 @@ body {
   padding: 12px;
   color:var(--text-muted);
   font-size: 0.875rem;
-  font-weight: 650;
+  font-weight: 600;
 }
 
 .srv3-mobile-nav nav a:hover {
@@ -389,7 +389,7 @@ body {
   margin: 0;
   font-family: var(--font-body);
   font-size: clamp(3.8rem, 6.7vw, 7.4rem);
-  font-weight: 780;
+  font-weight: 700;
   line-height: 0.9;
   letter-spacing: -0.065em;
 }
@@ -589,7 +589,7 @@ body {
   margin-right: 4px;
   color:var(--text-dim);
   font-size: 0.75rem;
-  font-weight: 750;
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -1404,7 +1404,7 @@ body {
 .srv3-hero-copy h1 {
   max-width: 680px;
   font-size: clamp(3.7rem, 5.75vw, 6.2rem);
-  font-weight: 760;
+  font-weight: 700;
   line-height: 0.95;
   letter-spacing: -0.058em;
 }
@@ -1451,7 +1451,7 @@ body {
 .srv3-hero-price > div > span {
   color:var(--text-dim);
   font-size: 0.625rem;
-  font-weight: 650;
+  font-weight: 600;
 }
 
 .srv3-hero-price strong {
@@ -1521,7 +1521,7 @@ body {
 .srv3-rack-brand {
   color:var(--text);
   font-size: 0.75rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.09em;
 }
 
@@ -1623,7 +1623,7 @@ body {
 .srv3-rack-plan-price {
   color: var(--text);
   font-size: 0.8125rem;
-  font-weight: 800;
+  font-weight: 700;
   white-space: nowrap;
 }
 
@@ -2097,7 +2097,7 @@ body {
   padding: 10px 10px;
   color:var(--text-dim);
   font-size: 0.75rem;
-  font-weight: 650;
+  font-weight: 600;
   transition: background-color 160ms ease, color 160ms ease;
 }
 
@@ -2109,7 +2109,7 @@ body {
   background: transparent;
   color:var(--text-dim);
   font-size: 0.75rem;
-  font-weight: 650;
+  font-weight: 600;
   text-align: left;
   cursor: pointer;
   transition: background-color 160ms ease, color 160ms ease;
@@ -2413,7 +2413,7 @@ body {
   align-items: center;
   gap: 8px;
   color: var(--text);
-  font-weight: 650;
+  font-weight: 600;
 }
 
 .sr-ledger-hint {
@@ -2669,7 +2669,7 @@ body {
   gap: 8px;
   color: var(--text);
   font-size: 1rem;
-  font-weight: 650;
+  font-weight: 600;
   letter-spacing: -0.015em;
 }
 
@@ -2735,7 +2735,7 @@ body {
   align-items: center;
   color: var(--primary);
   font-size: 0.8125rem;
-  font-weight: 650;
+  font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
@@ -2743,7 +2743,7 @@ body {
 .sr-ledger-summary {
   margin-bottom: 12px;
   color: var(--text);
-  font-weight: 650;
+  font-weight: 600;
 }
 
 /* Support route at the end of a documentation article. */
@@ -2802,7 +2802,7 @@ body {
 .srv3-hero-os > span {
   color: var(--text-dim);
   font-size: 0.6875rem;
-  font-weight: 750;
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -2956,7 +2956,7 @@ body {
   max-width: 620px;
   margin: 0;
   font-size: clamp(2rem, 3vw, 2.75rem);
-  font-weight: 760;
+  font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.04em;
 }
@@ -3183,7 +3183,7 @@ main:has(.srv3-final-section) + .srv3-footer .srv3-footer-top {
 .srv3-workload-line > span {
   color: var(--text-dim);
   font-size: 0.6875rem;
-  font-weight: 750;
+  font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -3309,7 +3309,7 @@ main:has(.srv3-final-section) + .srv3-footer .srv3-footer-top {
   gap: 8px;
   color: var(--text-muted);
   font-size: 0.8125rem;
-  font-weight: 650;
+  font-weight: 600;
   transition: color 160ms ease;
 }
 
@@ -4230,7 +4230,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   gap: 7px;
   color: var(--muted-foreground);
   font-size: 0.6875rem;
-  font-weight: 760;
+  font-weight: 700;
   letter-spacing: 0.11em;
   text-transform: uppercase;
 }
@@ -4265,7 +4265,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   color: var(--muted-foreground);
   font: inherit;
   font-size: 0.8125rem;
-  font-weight: 650;
+  font-weight: 600;
   cursor: pointer;
   transition:
     color 160ms ease,
@@ -4356,7 +4356,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 .srv-workload-label {
   color: var(--muted-foreground);
   font-size: 0.6875rem;
-  font-weight: 760;
+  font-weight: 700;
   letter-spacing: 0.11em;
   text-transform: uppercase;
 }
@@ -4379,7 +4379,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   color: var(--muted-foreground);
   font: inherit;
   font-size: 0.8125rem;
-  font-weight: 650;
+  font-weight: 600;
   cursor: pointer;
   transition:
     color 160ms ease,
@@ -4422,7 +4422,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   gap: 8px;
   color: var(--muted-foreground);
   font-size: 0.6875rem;
-  font-weight: 650;
+  font-weight: 600;
 }
 
 .srv-summary-live {
@@ -4462,13 +4462,13 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 .srv-summary-main > div:first-child > span {
   color: var(--muted-foreground);
   font-size: 0.6875rem;
-  font-weight: 650;
+  font-weight: 600;
 }
 
 .srv-summary-main > div:first-child > strong {
   color: var(--foreground);
   font-size: 1rem;
-  font-weight: 760;
+  font-weight: 700;
 }
 
 .srv-summary-price {
@@ -4481,7 +4481,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 .srv-summary-price strong {
   color: var(--foreground);
   font-size: 1.45rem;
-  font-weight: 780;
+  font-weight: 700;
   letter-spacing: -0.04em;
 }
 
@@ -4613,7 +4613,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   margin: 0;
   color: var(--foreground);
   font-size: clamp(2rem, 3vw, 3.15rem);
-  font-weight: 760;
+  font-weight: 700;
   line-height: 1.02;
   letter-spacing: -0.045em;
 }
@@ -4750,7 +4750,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   margin: 0;
   color: var(--foreground);
   font-size: 1rem;
-  font-weight: 720;
+  font-weight: 700;
   letter-spacing: -0.02em;
 }
 
@@ -4803,7 +4803,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   margin: 0;
   color: var(--foreground);
   font-size: clamp(2.05rem, 3vw, 3.2rem);
-  font-weight: 760;
+  font-weight: 700;
   line-height: 1.03;
   letter-spacing: -0.045em;
 }
@@ -4900,7 +4900,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 .srv-product-node-kicker {
   color: var(--primary);
   font-size: 0.6875rem;
-  font-weight: 760;
+  font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -4996,7 +4996,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   right: 8px;
   color: color-mix(in srgb, var(--primary) 11%, transparent);
   font-size: 8rem;
-  font-family: Georgia, serif;
+  font-family: var(--font-body);
   line-height: 1;
   pointer-events: none;
 }
@@ -5012,7 +5012,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   margin: 8px 0 0;
   color: var(--foreground);
   font-size: clamp(2rem, 3vw, 3rem);
-  font-weight: 760;
+  font-weight: 700;
   line-height: 1.02;
   letter-spacing: -0.045em;
 }
@@ -5229,7 +5229,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   gap: 7px;
   color: var(--primary);
   font-size: 0.6875rem;
-  font-weight: 760;
+  font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -5244,7 +5244,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   margin: 0;
   color: var(--foreground);
   font-size: clamp(2rem, 3vw, 3rem);
-  font-weight: 760;
+  font-weight: 700;
   line-height: 1.03;
   letter-spacing: -0.045em;
 }
@@ -5275,7 +5275,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 .srv-final-trust strong {
   color: var(--foreground);
   font-size: 1rem;
-  font-weight: 760;
+  font-weight: 700;
 }
 
 .srv-final-trust small {
@@ -5297,7 +5297,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   gap: 7px;
   color: var(--muted-foreground);
   font-size: 0.75rem;
-  font-weight: 650;
+  font-weight: 600;
   transition: color 160ms ease;
 }
 
@@ -5818,7 +5818,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   color:var(--primary);
   font-family:var(--font-mono);
   font-size:.6875rem;
-  font-weight:750;
+  font-weight: 700;
 }
 .srv-page-plans .srv-plan-included-item:nth-child(2) [data-slot="card-header"]::before { color:#06b6d4; }
 .srv-page-plans .srv-plan-included-item:nth-child(3) [data-slot="card-header"]::before { color:#8b5cf6; }
@@ -6147,7 +6147,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 
 .srv-page-plans .sr-pick-card-name {
   font-size: 1.05rem;
-  font-weight: 760;
+  font-weight: 700;
   letter-spacing: -0.025em;
 }
 
@@ -6165,7 +6165,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 
 .srv-page-plans .sr-pick-card-amount {
   font-size: 2rem;
-  font-weight: 780;
+  font-weight: 700;
   letter-spacing: -.045em;
 }
 
@@ -6199,7 +6199,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 
 .srv-page-plans .sr-pick-spec dd {
   text-align: right;
-  font-weight: 650;
+  font-weight: 600;
 }
 
 .srv-page-plans .sr-pick-card-action {

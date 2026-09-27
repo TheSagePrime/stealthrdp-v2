@@ -103,8 +103,8 @@
   color: var(--text-muted);
 }
 
-/* Review R4: the display serif is reserved for the hero headline and the
-   closing action. Every other heading is IBM Plex Sans 600. */
+/* One-family public type system: display and body both resolve to IBM Plex Sans.
+   Weight and scale create hierarchy; JetBrains Mono is technical-only. */
 .sr-section-title {
   margin: 0;
   font-family: var(--font-body);

@@ -135,7 +135,7 @@
 }
 .sr-byo-visual span {
   margin-top: 0.5rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-mono);
   font-size: 0.625rem;
 }
 .sr-comparison-wrap {
@@ -189,7 +189,7 @@
   border-radius: var(--radius-lg);
   background: var(--sr-surface);
   padding: 1.25rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-mono);
 }
 .sr-os-terminal-head {
   display: flex;
@@ -199,7 +199,7 @@
   padding-bottom: 0.75rem;
   color: var(--foreground);
   font-family: var(--font-body);
-  font-weight: 800;
+  font-weight: 700;
 }
 .sr-os-terminal-head svg {
   width: 1rem;
@@ -266,7 +266,7 @@
 }
 .sr-version-grid article > span {
   color: var(--accent);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-mono);
   font-size: 0.6875rem;
 }
 .sr-version-grid h3 {
@@ -316,7 +316,7 @@
 }
 .sr-step-grid article > span {
   color: var(--accent);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-mono);
   font-size: 0.6875rem;
 }
 .sr-order-grid svg {
@@ -647,7 +647,7 @@
 }
 .sr-byo-visual span {
   margin-top: .5rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-mono);
   font-size: 0.625rem;
 }
 .sr-comparison-wrap {
@@ -697,7 +697,7 @@
   background: var(--bg);
   box-shadow: 0 12px 32px rgb(0 0 0 / 45%);
   padding: 1rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-mono);
 }
 .sr-os-terminal-head {
   display: flex;
@@ -706,7 +706,7 @@
   border-bottom: 1px solid var(--border-divider);
   padding-bottom: 0.75rem;
   font-family: var(--font-body);
-  font-weight: 800;
+  font-weight: 700;
 }
 .sr-os-terminal-head svg {
   width: 1rem;
@@ -769,7 +769,7 @@
 }
 .sr-step-grid article > span {
   color: var(--primary);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-mono);
   font-size: 0.6875rem;
 }
 .sr-about-stats strong {
@@ -928,7 +928,7 @@
   padding: 1rem 1rem;
   color: var(--text);
   font-size: 0.875rem;
-  font-weight: 750;
+  font-weight: 700;
 }
 .sr-faq-list summary::-webkit-details-marker {
   display: none;
@@ -987,7 +987,7 @@
   margin-top: 1rem;
   color: var(--primary);
   font-size: 0.625rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: .1em;
   text-transform: uppercase;
 }
@@ -1043,9 +1043,9 @@
   border-right: 1px solid var(--border-divider);
   padding-top: 1.25rem;
   color: var(--accent-press);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 .sr-blog-card-body {
   display: flex;
@@ -1075,7 +1075,7 @@
   padding-top: 1rem;
   color: var(--accent-press);
   font-size: 0.75rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 .sr-article-shell {
   width: min(980px, calc(100% - 2.5rem));
@@ -1176,7 +1176,7 @@
 }
 .seo-article-citation {
   color: var(--accent-press);
-  font-weight: 650;
+  font-weight: 600;
   text-decoration: underline;
 }
 .sr-richtext blockquote {
@@ -1200,7 +1200,7 @@
   background: var(--surface-2);
   padding: 0.125em 0.25em;
   color: var(--text);
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-family: var(--font-mono);
   font-size: 0.875em;
 }
 .sr-richtext pre code {
@@ -1239,7 +1239,7 @@
   cursor: pointer;
   padding: 0.75rem 1rem;
   color: var(--text);
-  font-weight: 800;
+  font-weight: 700;
 }
 .seo-article-sources ol {
   margin: 0;
@@ -1331,7 +1331,7 @@
 }
 .sr-status-name {
   font-size: 0.8125rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 .sr-status-card-head .sr-muted {
   margin: 0.125rem 0 0;
@@ -1340,7 +1340,7 @@
 .sr-status-value {
   color: var(--text-muted);
   font-size: 0.6875rem;
-  font-weight: 800;
+  font-weight: 700;
 }
 .sr-status-value[data-state="up"] {
   color: var(--sr-status-success);

@@ -128,5 +128,22 @@
       "component",
       "element"
     ]
+  },
+  "typography": {
+    "sansFamily": "IBM Plex Sans",
+    "monoFamily": "JetBrains Mono",
+    "displayUsesSans": true,
+    "allowedWeights": [
+      400,
+      500,
+      600,
+      700
+    ],
+    "monoUse": [
+      "commands",
+      "code",
+      "technical identifiers",
+      "server and specification measurements"
+    ]
   }
 }
