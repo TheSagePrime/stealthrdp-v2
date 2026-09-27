@@ -11328,3 +11328,125 @@ a.srv-help-tree-heading:hover {
     transform: none;
   }
 }
+
+
+/* ==========================================================================
+   Hero motion v6 — calm content change only.
+   Everything in the hero is static except the single rotating noun.
+   No blur, no translation, no whole-section entrance.
+   ========================================================================== */
+
+/* Explicitly neutralize every older hero entrance rule. */
+.srv-home-hero-badge,
+.srv-home-hero-message,
+.srv-home-hero-title,
+.srv-home-hero-lede,
+.srv-home-hero-actions,
+.srv-home-hero-meta,
+.srv-home-hero-proof,
+.srv-home-hero-visual-stage,
+.srv-home-hero-visual,
+.srv-home-deploy-card,
+.srv-home-deploy-head,
+.srv-home-deploy-command,
+.srv-home-deploy-steps,
+.srv-home-deploy-step,
+.srv-home-deploy-ready,
+.srv-home-deploy-metrics,
+.srv-home-deploy-metric {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+  animation: none !important;
+}
+
+.srv-home-hero::before,
+.srv-home-hero::after {
+  animation: none !important;
+}
+
+/* Only this word slot changes. */
+.srv-home-word-slot {
+  position: relative;
+  display: inline-grid;
+  min-width: 9.9ch;
+  overflow: visible;
+  vertical-align: -.06em;
+  white-space: nowrap;
+}
+
+.srv-home-word-slot::after {
+  content: none !important;
+}
+
+.srv-home-word-layer {
+  display: inline-block;
+  grid-area: 1 / 1;
+  filter: none !important;
+  transform: none !important;
+  text-shadow: none !important;
+  letter-spacing: inherit !important;
+  will-change: opacity, color;
+}
+
+/* Resting state: one word, fully stable. */
+.srv-home-word-current {
+  opacity: 1;
+  color: inherit;
+}
+
+.srv-home-word-next {
+  opacity: 0;
+  color: var(--primary);
+}
+
+/* One long, gentle dissolve. No movement and no blur. */
+.srv-home-word-slot[data-phase="transition"] .srv-home-word-current {
+  opacity: 0;
+  transition:
+    opacity 1250ms cubic-bezier(.22, .61, .36, 1),
+    color 1250ms cubic-bezier(.22, .61, .36, 1);
+}
+
+.srv-home-word-slot[data-phase="transition"] .srv-home-word-next {
+  opacity: 1;
+  color: inherit;
+  transition:
+    opacity 1250ms cubic-bezier(.22, .61, .36, 1),
+    color 1250ms cubic-bezier(.22, .61, .36, 1);
+}
+
+/* After the crossfade, reset the layers invisibly with no reverse animation. */
+.srv-home-word-slot[data-phase="settle"] .srv-home-word-current {
+  opacity: 1;
+  color: inherit;
+  transition: none !important;
+}
+
+.srv-home-word-slot[data-phase="settle"] .srv-home-word-next {
+  opacity: 0;
+  color: var(--primary);
+  transition: none !important;
+}
+
+.srv-home-word-slot[data-phase="idle"] .srv-home-word-current,
+.srv-home-word-slot[data-phase="idle"] .srv-home-word-next {
+  transition: none !important;
+}
+
+@media (max-width: 640px) {
+  .srv-home-word-slot {
+    min-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv-home-word-next {
+    display: none;
+  }
+
+  .srv-home-word-current {
+    opacity: 1 !important;
+    color: inherit !important;
+  }
+}
