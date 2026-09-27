@@ -6,11 +6,6 @@ import { List as Menu } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
-const productLinks = [
-  ['VPS plans', '/plans'],
-  ['Citadel protection', '/citadel'],
-] as const;
-
 const resourceLinks = [
   ['Resources home', '/resources'],
   ['Guides', '/blog'],
@@ -19,7 +14,7 @@ const resourceLinks = [
 ] as const;
 
 export function SiteHeader() {
-  const [open, setOpen] = useState<'products' | 'resources' | null>(null);
+  const [open, setOpen] = useState<'resources' | null>(null);
 
   const closeOnEscape = (event: React.KeyboardEvent) => {
     if (event.key === 'Escape') {
@@ -27,7 +22,7 @@ export function SiteHeader() {
     }
   };
 
-  const groupProps = (name: 'products' | 'resources') => ({
+  const groupProps = (name: 'resources') => ({
     'data-open': open === name,
     onMouseEnter: () => setOpen(name),
     onMouseLeave: () => setOpen(null),
@@ -38,7 +33,7 @@ export function SiteHeader() {
     },
   });
 
-  const buttonProps = (name: 'products' | 'resources', menuId: string) => ({
+  const buttonProps = (name: 'resources', menuId: string) => ({
     'aria-expanded': open === name,
     'aria-controls': menuId,
     onClick: () => setOpen(open === name ? null : name),
@@ -58,23 +53,8 @@ export function SiteHeader() {
         </Link>
 
         <nav className="srv3-nav" aria-label="Main navigation" onKeyDown={closeOnEscape}>
-          <div className="srv3-nav-group" {...groupProps('products')}>
-            <button type="button" className="srv3-nav-label" {...buttonProps('products', 'nav-menu-products')}>
-              Products
-            </button>
-            <ul className="srv3-nav-menu" id="nav-menu-products" aria-label="Products">
-              {productLinks.map(([label, href]) => (
-                <li key={href}>
-                  <Link href={href} onClick={() => setOpen(null)}>{label}</Link>
-                </li>
-              ))}
-              <li>
-                <a href="https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps">
-                  Build your own VPS
-                </a>
-              </li>
-            </ul>
-          </div>
+          <Link href="/plans">VPS Plans</Link>
+          <Link href="/citadel">DDoS Protection</Link>
           <div className="srv3-nav-group" {...groupProps('resources')}>
             <button type="button" className="srv3-nav-label" {...buttonProps('resources', 'nav-menu-resources')}>
               Resources
@@ -108,7 +88,7 @@ export function SiteHeader() {
           </summary>
           <nav aria-label="Mobile navigation">
             <Link href="/plans">VPS plans</Link>
-            <Link href="/citadel">Citadel protection</Link>
+            <Link href="/citadel">DDoS Protection</Link>
             <a href="https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps">Build your own VPS</a>
             <Link href="/resources">Resources</Link>
             <Link href="/blog">Guides</Link>
