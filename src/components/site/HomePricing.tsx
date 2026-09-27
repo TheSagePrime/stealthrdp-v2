@@ -1,11 +1,20 @@
 'use client';
 
-/* State/data wiring only. Visual controls/cards come from shadcn + Launch UI. */
+/* Homepage pricing configurator: interaction/state here, visual language in stealth-v3.css. */
 import { useMemo, useState } from 'react';
+import {
+  CalendarDots,
+  ChartLineUp,
+  Cpu,
+  Desktop,
+  GlobeHemisphereWest,
+  HardDrive,
+  Lightning,
+  Robot,
+  TerminalWindow,
+} from '@phosphor-icons/react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ButtonGroup } from '@/components/ui/button-group';
-import { Card, CardContent } from '@/components/ui/card';
 import { PricingColumn } from '@/components/launchui/pricing-column';
 import {
   checkoutUrl,
@@ -33,11 +42,11 @@ const cycleLabel: Record<BillingCycle, string> = {
 };
 
 const workloads = [
-  { id: 'remote', label: 'Remote desktop', target: 'Bronze' },
-  { id: 'web', label: 'Web hosting', target: 'Silver' },
-  { id: 'automation', label: 'Automation & bots', target: 'Gold' },
-  { id: 'trading', label: 'Trading', target: 'Gold' },
-  { id: 'storage', label: 'Storage & backups', target: 'Silver' },
+  { id: 'remote', label: 'Remote desktop', target: 'Bronze', icon: Desktop },
+  { id: 'web', label: 'Web hosting', target: 'Silver', icon: GlobeHemisphereWest },
+  { id: 'automation', label: 'Automation & bots', target: 'Gold', icon: Robot },
+  { id: 'trading', label: 'Trading', target: 'Gold', icon: ChartLineUp },
+  { id: 'storage', label: 'Storage & backups', target: 'Silver', icon: HardDrive },
 ] as const;
 
 type Workload = (typeof workloads)[number]['id'];
@@ -84,91 +93,138 @@ export function HomePricing() {
     return firstAvailable?.name ?? visible[0]?.name;
   }, [visible, selectedWorkload.target]);
 
+  const recommendedPlan = visible.find(plan => plan.name === recommendedName) ?? visible[0];
+  const recommendedPrice = recommendedPlan?.pricing[cycle];
+  const availableCount = visible.filter(plan => plan.source.availability !== 'out-of-stock').length;
+
   return (
     <div className="flex w-full flex-col gap-5">
-      <Card>
-        <CardContent className="grid gap-5 p-5 md:p-6 xl:grid-cols-[auto_auto_minmax(520px,1fr)] xl:items-end xl:gap-8">
-          <div className="flex flex-col gap-2">
-            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Region</span>
-            <ButtonGroup aria-label="Deployment region">
+      <div className="srv-plan-configurator">
+        <div className="srv-configurator-top">
+          <div className="srv-configurator-group">
+            <div className="srv-configurator-label">
+              <GlobeHemisphereWest aria-hidden="true" />
+              <span>Region</span>
+            </div>
+            <div className="srv-selector" role="group" aria-label="Deployment region">
               {(['USA', 'EU'] as const).map(item => (
-                <Button
+                <button
                   key={item}
                   type="button"
-                  size="sm"
-                  variant={region === item ? 'default' : 'outline'}
+                  className="srv-selector-option"
+                  data-selected={region === item}
                   aria-pressed={region === item}
                   onClick={() => setRegion(item)}
                 >
+                  <span className="srv-selector-dot" aria-hidden="true" />
                   {item}
-                </Button>
+                </button>
               ))}
-            </ButtonGroup>
+            </div>
           </div>
 
-          <div className="flex flex-col gap-2">
-            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Operating system</span>
-            <ButtonGroup aria-label="Operating system">
+          <div className="srv-configurator-group">
+            <div className="srv-configurator-label">
+              <TerminalWindow aria-hidden="true" />
+              <span>Operating system</span>
+            </div>
+            <div className="srv-selector" role="group" aria-label="Operating system">
               {([
                 ['any', 'Any OS'],
                 ['windows', 'Windows'],
                 ['linux', 'Linux'],
               ] as const).map(([value, label]) => (
-                <Button
+                <button
                   key={value}
                   type="button"
-                  size="sm"
-                  variant={os === value ? 'default' : 'outline'}
+                  className="srv-selector-option"
+                  data-selected={os === value}
                   aria-pressed={os === value}
                   onClick={() => setOs(value)}
                 >
                   {label}
-                </Button>
+                </button>
               ))}
-            </ButtonGroup>
+            </div>
           </div>
 
-          <div className="flex min-w-0 flex-col gap-2">
-            <span className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">Billing cycle</span>
-            <ButtonGroup aria-label="Billing cycle" className="flex w-full flex-wrap xl:flex-nowrap">
+          <div className="srv-configurator-group srv-configurator-billing">
+            <div className="srv-configurator-label">
+              <CalendarDots aria-hidden="true" />
+              <span>Billing cycle</span>
+            </div>
+            <div className="srv-billing-rail" role="group" aria-label="Billing cycle">
               {cycles.map(item => (
-                <Button
+                <button
                   key={item}
                   type="button"
-                  size="sm"
-                  variant={cycle === item ? 'default' : 'outline'}
+                  className="srv-billing-option"
+                  data-selected={cycle === item}
                   aria-pressed={cycle === item}
                   onClick={() => setCycle(item)}
-                  className="min-w-[96px] flex-1"
                 >
                   {cycleLabel[item]}
-                </Button>
+                </button>
               ))}
-            </ButtonGroup>
+            </div>
           </div>
-        </CardContent>
-      </Card>
+        </div>
 
-      <div className="flex flex-wrap gap-2" aria-label="Choose a workload">
-        {workloads.map(item => (
-          <Button
-            key={item.id}
-            type="button"
-            size="sm"
-            variant={workload === item.id ? 'default' : 'outline'}
-            aria-pressed={workload === item.id}
-            onClick={() => setWorkload(item.id)}
-          >
-            {item.label}
-          </Button>
-        ))}
-      </div>
+        <div className="srv-configurator-divider" />
 
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm text-muted-foreground">
-          Best fit for <strong className="font-semibold text-foreground">{selectedWorkload.label}</strong> · {region} · {os === 'any' ? 'Windows or Linux' : os === 'windows' ? 'Windows' : 'Linux'}
-        </p>
-        <Badge variant="outline">{visible.length} plans in preview</Badge>
+        <div className="srv-configurator-bottom">
+          <div className="srv-workload-control">
+            <span className="srv-workload-label">Workload</span>
+            <div className="srv-workload-list" aria-label="Choose a workload">
+              {workloads.map(item => {
+                const Icon = item.icon;
+                const selected = workload === item.id;
+
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    className="srv-workload-option"
+                    data-selected={selected}
+                    aria-pressed={selected}
+                    onClick={() => setWorkload(item.id)}
+                  >
+                    <Icon aria-hidden="true" />
+                    <span>{item.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="srv-configurator-summary" aria-live="polite">
+            <div className="srv-summary-status">
+              <span className="srv-summary-live" aria-hidden="true" />
+              <span>{availableCount} of {visible.length} available</span>
+            </div>
+
+            <div className="srv-summary-main">
+              <div>
+                <span>Best fit</span>
+                <strong>{recommendedPlan ? tierName(recommendedPlan) : selectedWorkload.target}</strong>
+              </div>
+              {recommendedPrice ? (
+                <div className="srv-summary-price">
+                  <strong>€{format(recommendedPrice.amount)}</strong>
+                  <span>{recommendedPrice.suffix}</span>
+                </div>
+              ) : null}
+            </div>
+
+            <div className="srv-summary-meta">
+              <span>{region}</span>
+              <span>·</span>
+              <span>{os === 'any' ? 'Windows or Linux' : os === 'windows' ? 'Windows' : 'Linux'}</span>
+              <span>·</span>
+              <span>{cycleLabel[cycle]}</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="srv-home-pricing-grid grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
