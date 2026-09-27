@@ -105,6 +105,31 @@ export function SiteFooter() {
               </div>
             ))}
           </nav>
+
+          <nav className="srv3-footer-mobile-links" aria-label="Footer navigation">
+            {columns.map(column => (
+              <details key={column.title}>
+                <summary>
+                  <span>{column.title}</span>
+                  <span className="srv3-footer-mobile-toggle" aria-hidden="true">+</span>
+                </summary>
+                <ul>
+                  {column.links.map(([label, href]) => (
+                    <li key={href}>
+                      {href.startsWith('http') ? (
+                        <a href={href}>
+                          <span>{label}</span>
+                          <ArrowUpRight size={13} aria-hidden="true" />
+                        </a>
+                      ) : (
+                        <Link href={href}>{label}</Link>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            ))}
+          </nav>
         </div>
 
         <div className="srv3-footer-bottom">
