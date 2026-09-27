@@ -46,7 +46,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   const next = currentIndex >= 0 && currentIndex < ordered.length - 1 ? ordered[currentIndex + 1] : undefined;
   const related = article.relatedSlugs
     .map(relatedSlug => helpDocsArticles.find(item => item.slug === relatedSlug))
-    .filter((item): item is (typeof docsArticles)[number] => Boolean(item))
+    .filter((item): item is (typeof helpDocsArticles)[number] => Boolean(item))
     .slice(0, 3);
 
   return (

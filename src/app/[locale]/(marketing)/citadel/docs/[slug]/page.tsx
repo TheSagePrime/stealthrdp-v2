@@ -29,8 +29,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!article) return {};
 
   return createPageMetadata({
-    path: \`/citadel/docs/\${slug}\`,
-    title: \`\${article.title} — Citadel Docs\`,
+    path: `/citadel/docs/${slug}`,
+    title: `${article.title} — Citadel Docs`,
     description: article.summary,
     ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
   });
@@ -76,7 +76,7 @@ export default async function CitadelDocPage({ params }: { params: Promise<{ slu
             <span>/</span>
             {collection ? (
               <>
-                <Link href={\`/citadel/docs#\${collection.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}\`}>
+                <Link href={`/citadel/docs#${collection.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`}>
                   {collection.title.replace(/^Citadel:\s*/, '')}
                 </Link>
                 <span>/</span>

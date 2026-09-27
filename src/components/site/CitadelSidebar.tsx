@@ -32,8 +32,8 @@ export function CitadelSidebar({
             <a
               className="srv-help-tree-heading"
               href={activeSlug
-                ? \`/citadel/docs#\${helpCollectionId(collection.title)}\`
-                : \`#\${helpCollectionId(collection.title)}\`}
+                ? `/citadel/docs#${helpCollectionId(collection.title)}`
+                : `#${helpCollectionId(collection.title)}`}
             >
               {collection.title.replace(/^Citadel:\s*/, '')}
             </a>
