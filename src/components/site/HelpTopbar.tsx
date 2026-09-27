@@ -35,6 +35,9 @@ export function HelpTopbar({ active = 'help' }: { active?: ResourceArea }) {
       title: article.title,
       href: `/docs/${docPublicSlug(article)}`,
       description: article.summary,
+      searchText: article.slug.startsWith('citadel-')
+        ? `Citadel Layer 7 DDoS protection ${article.content}`
+        : undefined,
       kind: 'Help' as const,
     })),
     ...faqs.map(item => ({
