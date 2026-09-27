@@ -7,7 +7,7 @@ const CODE_PREFIXES = ['sudo ', 'winrm ', 'yum ', 'bash ', 'wget '];
 const HEADING_3 = /^###\s+/;
 const HEADING_2 = /^##\s+/;
 const HEADING_1 = /^#\s+/;
-const RULE = /^=+$|^-+$/;
+const RULE = /^(?:={3,}|(?:-\s*){3,}|(?:\*\s*){3,}|(?:_\s*){3,})$/;
 const STEP = /^\d+\.\s+/;
 // The docs content marks bullets with '-', '*' and '~'. All three are bullets;
 // the old renderer printed the marker literally for the tilde.
