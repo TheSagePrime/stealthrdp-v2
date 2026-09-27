@@ -8,8 +8,6 @@ import { Button } from '@/components/ui/button';
 
 const productLinks = [
   ['VPS plans', '/plans'],
-  ['Windows VPS', '/windows-vps'],
-  ['Linux VPS', '/linux-vps'],
   ['Citadel protection', '/citadel'],
 ] as const;
 
@@ -111,8 +109,6 @@ export function SiteHeader() {
           </summary>
           <nav aria-label="Mobile navigation">
             <Link href="/plans">VPS plans</Link>
-            <Link href="/windows-vps">Windows VPS</Link>
-            <Link href="/linux-vps">Linux VPS</Link>
             <Link href="/citadel">Citadel protection</Link>
             <a href="https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps">Build your own VPS</a>
             <Link href="/docs">Docs</Link>
