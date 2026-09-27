@@ -17,6 +17,7 @@ import { SiAlpinelinux, SiFreebsd, SiRockylinux } from '@icons-pack/react-simple
 
 import { Section } from '@/components/launchui/section';
 import { HomePricing } from '@/components/site/HomePricing';
+import { HeroWordRotator } from '@/components/site/home/HeroWordRotator';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -134,23 +135,14 @@ export default async function HomePage({ params }: Props) {
       ))}
 
       <Section className="srv-home-hero py-14 sm:py-18 lg:py-20">
-        <span className="srv-home-hero-scan" aria-hidden="true" />
         <div className="srv-home-hero-layout mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
           <div className="srv-home-hero-copy flex flex-col items-start gap-6">
             <Badge variant="outline" className="srv-home-hero-badge">Windows & Linux VPS · Instant setup</Badge>
 
             <div className="srv-home-hero-message grid gap-5">
               <h1 className="srv-home-hero-title max-w-4xl text-5xl font-semibold leading-none tracking-tight text-balance sm:text-6xl lg:text-7xl">
-                <span className="srv-home-kinetic-row srv-home-kinetic-row-base">
-                  <span className="srv-home-kinetic-mask"><span>Your</span></span>
-                  <span className="srv-home-kinetic-mask"><span>server.</span></span>
-                </span>
-                <span className="srv-home-kinetic-row srv-home-kinetic-row-accent text-primary">
-                  <span className="srv-home-kinetic-mask"><span>Live</span></span>
-                  <span className="srv-home-kinetic-mask"><span>in</span></span>
-                  <span className="srv-home-kinetic-mask"><span>60</span></span>
-                  <span className="srv-home-kinetic-mask"><span>seconds.</span></span>
-                </span>
+                <span className="block">Your <HeroWordRotator /></span>
+                <span className="block text-primary">Live in 60 seconds.</span>
               </h1>
               <p className="srv-home-hero-lede max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
                 High-performance remote desktop and VPS infrastructure without the complexity.
