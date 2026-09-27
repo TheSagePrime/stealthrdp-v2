@@ -5,7 +5,6 @@ import { ArticleJsonLd, ArticlePublicationMeta, ArticleSources } from '@/compone
 import { articleHeadings, TrustedArticleBody } from '@/components/site/TrustedArticleBody';
 import { ResourceNav } from '@/components/site/ResourceNav';
 import { ResourceToc } from '@/components/site/ResourceToc';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { getSeoConfig } from '@/libs/seo/config';
 import { createArticleMetadata } from '@/libs/seo/articles';
