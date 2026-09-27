@@ -413,7 +413,7 @@ export default async function HomePage({ params }: Props) {
                     aria-hidden={clone || undefined}
                     key={String(clone)}
                   >
-                    {testimonials.slice(1, 6).map((item, index) => (
+                    {testimonials.slice(1).map((item, index) => (
                       <article
                         key={`${clone ? 'clone-' : ''}${item.id ?? item._id ?? index}`}
                         className="srv-review-chip"
