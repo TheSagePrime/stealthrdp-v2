@@ -135,7 +135,7 @@ export function ArticleIndex({
       </div>
 
       <ol className="
-        grid list-none gap-6 p-0
+        srv-article-list grid list-none gap-6 p-0
         md:grid-cols-2
       "
       >
@@ -144,7 +144,7 @@ export function ArticleIndex({
 
           return (
             <li key={article.slug} className="min-w-0">
-              <Card className="h-full">
+              <Card className="srv-article-entry h-full">
                 <CardHeader>
                   <div className="flex items-center justify-between gap-3">
                     <Badge

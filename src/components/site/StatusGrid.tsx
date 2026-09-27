@@ -77,8 +77,8 @@ export function StatusGrid({ fallback }: { fallback: StatusPayload }) {
   const allHealthy = summary.unavailable === 0 && summary.degraded === 0;
 
   return (
-    <div className="sr-status-panel">
-      <Card className="gap-4 py-5">
+    <div className="sr-status-panel srv-status-console">
+      <Card className="srv-status-summary-card gap-4 py-5">
         <CardContent className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div className="grid gap-1">
             <p className="sr-kicker">Current snapshot</p>
@@ -115,7 +115,7 @@ export function StatusGrid({ fallback }: { fallback: StatusPayload }) {
 
       <div className="sr-status-grid">
         {payload.monitors.map(monitor => (
-          <Card key={monitor.label}>
+          <Card key={monitor.label} className="srv-status-monitor" data-status={monitor.status}>
             <CardHeader className="grid-cols-[minmax(0,1fr)_auto] items-start gap-3">
               <div className="grid gap-1.5">
                 <CardTitle className="text-small text-body-text">{monitor.label}</CardTitle>

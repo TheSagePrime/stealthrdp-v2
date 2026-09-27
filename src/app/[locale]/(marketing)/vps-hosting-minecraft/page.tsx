@@ -22,7 +22,7 @@ export default function MinecraftPage() {
   if (!article || !publication) notFound();
   return (
     /* The guide body stays prose: a reading-width shell, not a card. */
-    <article className="mx-auto grid w-full max-w-3xl gap-8 px-5 pt-24 pb-28">
+    <article className="srv-page srv-page-article srv-page-minecraft mx-auto grid w-full max-w-3xl gap-8 px-5 pt-24 pb-28">
       <header className="grid gap-4">
         <p className="sr-kicker">{article.category}</p>
         <h1 className="text-display-1 tracking-tight text-balance">{article.title}</h1>

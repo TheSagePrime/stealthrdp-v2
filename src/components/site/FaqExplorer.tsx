@@ -134,7 +134,7 @@ export function FaqExplorer({ faqs }: { faqs: Faq[] }) {
         </div>
       </section>
 
-      <section className="sr-section">
+      <section className="sr-section srv-site-support">
         <div className="sr-container sr-copy-grid">
           <div>
             <p className="sr-kicker">Still need a hand?</p>
