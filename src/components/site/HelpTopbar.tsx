@@ -33,7 +33,7 @@ export function HelpTopbar({ active = 'help' }: { active?: ResourceArea }) {
     })),
     ...faqs.map(item => ({
       title: item.question,
-      href: `/faq#${item.category.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`,
+      href: `/faq#faq-${item._id}`,
       description: item.answer,
       kind: 'Question' as const,
     })),
