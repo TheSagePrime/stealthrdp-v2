@@ -18,7 +18,8 @@ const auditPublicRoutes = new Set([
 
 const isAuditablePublicRoute = (pathname: string): boolean => auditPublicRoutes.has(pathname)
   || pathname.startsWith('/blog/')
-  || pathname.startsWith('/docs/');
+  || pathname.startsWith('/docs/')
+  || pathname.startsWith('/citadel/docs/');
 
 function syntheticAuditEnvironment(): boolean {
   if (process.env.CI !== 'true' || process.env.SEO_AUDIT_LOCAL !== 'true') {
