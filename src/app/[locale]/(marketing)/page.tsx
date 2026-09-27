@@ -63,28 +63,24 @@ const infrastructure = [
     text: 'Fast disk I/O for applications, databases, automation, and active desktop workloads.',
     label: 'Performance',
     icon: HardDrive,
-    tone: 'cyan',
   },
   {
     title: 'Isolated virtual machines',
     text: 'Each server runs in its own VM with dedicated resources and full administrative access.',
     label: 'Isolation',
     icon: Cpu,
-    tone: 'violet',
   },
   {
     title: 'USA + Europe infrastructure',
     text: 'Choose the location closest to the workload with dedicated IPv4 included.',
     label: 'Reach',
     icon: GlobeHemisphereWest,
-    tone: 'blue',
   },
   {
     title: '24/7 monitoring',
     text: 'Production nodes are monitored continuously with public infrastructure status visibility.',
     label: 'Visibility',
     icon: ShieldCheck,
-    tone: 'green',
   },
 ];
 
@@ -288,8 +284,8 @@ export default async function HomePage({ params }: Props) {
           </div>
 
           <ol className="srv-infra-rail">
-            {infrastructure.map(({ title, text, label, icon: Icon, tone }, index) => (
-              <li key={title} className="srv-infra-item" data-tone={tone}>
+            {infrastructure.map(({ title, text, label, icon: Icon }, index) => (
+              <li key={title} className="srv-infra-item">
                 <span className="srv-infra-number">{String(index + 1).padStart(2, '0')}</span>
                 <span className="srv-infra-icon">
                   <Icon aria-hidden="true" weight="fill" />
