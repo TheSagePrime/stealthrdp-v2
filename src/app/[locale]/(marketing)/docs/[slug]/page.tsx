@@ -53,6 +53,13 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
     <div className="srv-page srv-page-doc-article srv-docs-product">
       <HelpTopbar />
 
+      <div className="sr-container srv-docs-mobile-wrap">
+        <details className="srv-docs-mobile-nav">
+          <summary>Browse Help Center</summary>
+          <HelpSidebar articles={docsArticles} activeSlug={article.slug} />
+        </details>
+      </div>
+
       <div className="sr-container srv-docs-grid srv-docs-article-grid">
         <aside className="srv-docs-sidebar">
           <HelpSidebar articles={docsArticles} activeSlug={article.slug} />
