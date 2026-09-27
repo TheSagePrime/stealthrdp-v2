@@ -171,7 +171,7 @@ export function HomePricing() {
         <Badge variant="outline">{visible.length} plans in preview</Badge>
       </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="srv-home-pricing-grid grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         {visible.map(plan => {
           const price = plan.pricing[cycle];
           const monthEquivalent = price.amount / months[cycle];
