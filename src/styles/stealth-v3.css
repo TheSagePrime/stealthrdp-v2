@@ -8695,8 +8695,11 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 }
 
 .srv-help-brand img {
+  display: block;
   width: 116px;
   height: auto;
+  filter: invert(1);
+  mix-blend-mode: multiply;
 }
 
 .srv-help-brand span {
