@@ -80,6 +80,8 @@ export default function ResourcesPage() {
               <Link href="/blog/vps-for-remote-desktop.html">Remote desktop guide</Link>
               <Link href="/docs/how-do-i-log-into-windows">Connect to Windows</Link>
               <Link href="/docs/windows-licensing">Windows licensing</Link>
+          <Link href="/docs/citadel-cloudflare-setup">Cloudflare and Citadel setup</Link>
+              <Link href="/docs/citadel-getting-started">Set up Citadel protection</Link>
               <Link href="/faq">Common questions</Link>
             </div>
           </header>
