@@ -292,7 +292,7 @@ export default async function HomePage({ params }: Props) {
               <li key={title} className="srv-infra-item" data-tone={tone}>
                 <span className="srv-infra-number">{String(index + 1).padStart(2, '0')}</span>
                 <span className="srv-infra-icon">
-                  <Icon aria-hidden="true" />
+                  <Icon aria-hidden="true" weight="fill" />
                 </span>
                 <div className="srv-infra-copy">
                   <div className="srv-infra-title-row">
@@ -335,7 +335,7 @@ export default async function HomePage({ params }: Props) {
           <div className="srv-product-flow" aria-label="StealthRDP product stack">
             <Link href="/plans" className="srv-product-node" data-tone="hosting">
               <span className="srv-product-node-icon">
-                <HardDrive aria-hidden="true" />
+                <HardDrive aria-hidden="true" weight="fill" />
               </span>
               <span className="srv-product-node-kicker">Hosting</span>
               <strong>Windows &amp; Linux VPS</strong>
@@ -354,7 +354,7 @@ export default async function HomePage({ params }: Props) {
 
             <Link href="/citadel" className="srv-product-node srv-product-node-protection" data-tone="protection">
               <span className="srv-product-node-icon">
-                <ShieldCheck aria-hidden="true" />
+                <ShieldCheck aria-hidden="true" weight="fill" />
               </span>
               <span className="srv-product-node-kicker">Protection</span>
               <strong>Citadel L7 HTTP/HTTPS</strong>
@@ -481,7 +481,7 @@ export default async function HomePage({ params }: Props) {
               </a>
             </Button>
             <a className="srv-final-sales" href="https://dash.stealthrdp.com/submitticket.php">
-              <Headset className="size-4" aria-hidden="true" />
+              <Headset className="size-4" weight="fill" aria-hidden="true" />
               Ask a pre-sales question
             </a>
           </div>
