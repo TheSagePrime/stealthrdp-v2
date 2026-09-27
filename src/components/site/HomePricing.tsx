@@ -38,11 +38,11 @@ const cycleLabel: Record<BillingCycle, string> = {
 };
 
 const workloads = [
-  { id: 'remote', label: 'Remote desktop', target: 'Bronze', icon: Desktop, tone: 'blue' },
-  { id: 'web', label: 'Web hosting', target: 'Silver', icon: GlobeHemisphereWest, tone: 'cyan' },
-  { id: 'automation', label: 'Automation & bots', target: 'Gold', icon: Robot, tone: 'violet' },
-  { id: 'trading', label: 'Trading', target: 'Gold', icon: ChartLineUp, tone: 'amber' },
-  { id: 'storage', label: 'Storage & backups', target: 'Silver', icon: HardDrive, tone: 'green' },
+  { id: 'remote', label: 'Remote desktop', target: 'Bronze', icon: Desktop },
+  { id: 'web', label: 'Web hosting', target: 'Silver', icon: GlobeHemisphereWest },
+  { id: 'automation', label: 'Automation & bots', target: 'Gold', icon: Robot },
+  { id: 'trading', label: 'Trading', target: 'Gold', icon: ChartLineUp },
+  { id: 'storage', label: 'Storage & backups', target: 'Silver', icon: HardDrive },
 ] as const;
 
 type Workload = (typeof workloads)[number]['id'];
@@ -141,7 +141,6 @@ export function HomePricing() {
                     key={item.id}
                     type="button"
                     className="srv-workload-option"
-                    data-tone={item.tone}
                     data-selected={selected}
                     aria-pressed={selected}
                     onClick={() => setWorkload(item.id)}
