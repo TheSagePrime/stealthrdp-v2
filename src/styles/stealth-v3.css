@@ -12458,3 +12458,109 @@ a.srv-help-tree-heading:hover {
     grid-column: 1 / -1;
   }
 }
+
+/* Mobile OS rail: keep the same continuous motion language as desktop. */
+@media (max-width: 760px) {
+  .srv-os-band {
+    overflow: hidden !important;
+  }
+
+  .srv-os-band-inner {
+    display: block !important;
+    min-height: 64px !important;
+    padding-block: 0 !important;
+  }
+
+  .srv-os-marquee {
+    width: 100% !important;
+    margin-inline: 0 !important;
+    overflow: hidden !important;
+    touch-action: pan-y;
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      black 7%,
+      black 93%,
+      transparent 100%
+    ) !important;
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0,
+      black 7%,
+      black 93%,
+      transparent 100%
+    ) !important;
+  }
+
+  .srv-os-marquee-track {
+    display: flex !important;
+    width: max-content !important;
+    transform: none;
+    will-change: transform;
+    animation: srv-os-marquee-right 38s linear infinite !important;
+  }
+
+  .srv-os-marquee-copy,
+  .srv-os-marquee-copy[data-clone="true"] {
+    display: flex !important;
+    min-width: max-content !important;
+    flex-wrap: nowrap !important;
+    align-items: center;
+    gap: 28px !important;
+    padding-right: 28px !important;
+  }
+
+  .srv-os-logo {
+    display: inline-flex !important;
+    min-width: max-content !important;
+    min-height: 64px;
+    flex: 0 0 auto !important;
+    grid-template-columns: none !important;
+    align-items: center;
+    justify-items: initial !important;
+    gap: 9px !important;
+    opacity: .76;
+    text-align: left !important;
+  }
+
+  .srv-os-logo img,
+  .srv-os-logo svg {
+    width: 22px !important;
+    height: 22px !important;
+    flex: 0 0 22px !important;
+  }
+
+  .srv-os-logo span {
+    max-width: none !important;
+    font-size: .75rem !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .srv-os-marquee:active .srv-os-marquee-track,
+  .srv-os-marquee:focus-within .srv-os-marquee-track {
+    animation-play-state: paused !important;
+  }
+}
+
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  .srv-os-marquee {
+    overflow-x: auto !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+    scrollbar-width: none;
+  }
+
+  .srv-os-marquee::-webkit-scrollbar {
+    display: none;
+  }
+
+  .srv-os-marquee-track {
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .srv-os-marquee-copy[data-clone="true"] {
+    display: none !important;
+  }
+}
