@@ -57,6 +57,7 @@ export type BlogArticle = {
   date: string;
   readingTime: number;
   image?: string;
+  sources?: { title: string; url: string; publisher?: string; accessedAt?: string }[];
   html: string;
 };
 
