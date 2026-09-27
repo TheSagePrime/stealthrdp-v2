@@ -8,11 +8,9 @@ const columns = [
   {
     title: 'Products',
     links: [
-      ['All VPS plans', '/plans'],
-      ['Windows VPS', '/windows-vps'],
-      ['Linux VPS', '/linux-vps'],
+      ['VPS plans', '/plans'],
+      ['DDoS protection', '/citadel'],
       ['Build your own VPS', 'https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps'],
-      ['Citadel protection', '/citadel'],
     ],
   },
   {
