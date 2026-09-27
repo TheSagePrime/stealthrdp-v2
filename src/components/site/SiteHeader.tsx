@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { List as Menu } from '@phosphor-icons/react/dist/ssr';
+import { List as Menu, WhatsappLogo } from '@phosphor-icons/react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
@@ -10,7 +10,6 @@ const resourceLinks = [
   ['Resources home', '/resources'],
   ['Guides', '/blog'],
   ['Help Center', '/docs'],
-  ['Server status', '/status'],
 ] as const;
 
 export function SiteHeader() {
@@ -55,6 +54,7 @@ export function SiteHeader() {
         <nav className="srv3-nav" aria-label="Main navigation" onKeyDown={closeOnEscape}>
           <Link href="/plans">VPS Plans</Link>
           <Link href="/citadel">DDoS Protection</Link>
+          <Link href="/status">Server Status</Link>
           <div className="srv3-nav-group" {...groupProps('resources')}>
             <button type="button" className="srv3-nav-label" {...buttonProps('resources', 'nav-menu-resources')}>
               Resources
@@ -71,6 +71,16 @@ export function SiteHeader() {
         </nav>
 
         <div className="srv3-header-actions">
+          <a
+            className="srv3-whatsapp-link"
+            href="https://wa.me/447441426993"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Chat with StealthRDP support on WhatsApp"
+          >
+            <WhatsappLogo size={16} weight="fill" aria-hidden="true" />
+            <span>WhatsApp</span>
+          </a>
           <a className="srv3-login" href="https://dash.stealthrdp.com/index.php?rp=/login">
             Client Area
           </a>
@@ -89,17 +99,29 @@ export function SiteHeader() {
           <nav aria-label="Mobile navigation">
             <Link href="/plans">VPS plans</Link>
             <Link href="/citadel">DDoS Protection</Link>
+            <Link href="/status">Server status</Link>
             <a href="https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps">Build your own VPS</a>
             <Link href="/resources">Resources</Link>
             <Link href="/blog">Guides</Link>
             <Link href="/docs">Help Center</Link>
-            <Link href="/status">Server status</Link>
+            <a href="https://wa.me/447441426993" target="_blank" rel="noopener noreferrer">WhatsApp support</a>
             <Link href="/about">About</Link>
             <a href="https://dash.stealthrdp.com/index.php?rp=/login">Client Area</a>
             <a href="https://dash.stealthrdp.com/submitticket.php">Support</a>
           </nav>
         </details>
       </div>
+
+      <a
+        className="srv-whatsapp-float"
+        href="https://wa.me/447441426993"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Open StealthRDP WhatsApp support"
+      >
+        <WhatsappLogo size={20} weight="fill" aria-hidden="true" />
+        <span>WhatsApp support</span>
+      </a>
     </header>
   );
 }

@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { CheckCircle, Pulse } from '@phosphor-icons/react/dist/ssr';
+import { Badge } from '@/components/ui/badge';
 import { StatusGrid } from '@/components/site/StatusGrid';
 import { createPageMetadata } from '@/libs/seo/metadata';
 import { uptime } from '@/lib/stealth/content';
@@ -21,23 +23,38 @@ export default function StatusPage() {
     })),
   };
 
+  const healthy = fallback.monitors.every(monitor => monitor.status === 'up');
+
   return (
-    <div className="srv-page srv-page-status">
-      <section className="sr-page-hero">
-        <div className="sr-container sr-page-hero-inner">
-          <div>
-            <p className="sr-kicker">Service status</p>
-            <h1 className="sr-title">Infrastructure <span>at a glance.</span></h1>
-            <p className="sr-lede">The page renders the last published safe snapshot immediately, then refreshes from StealthRDP’s public UptimeRobot status feed without exposing provider IDs or raw monitor targets.</p>
+    <div className="srv-page srv-page-status srv-status-v2">
+      <section className="srv-status-v2-hero">
+        <div className="sr-container srv-status-v2-hero-grid">
+          <div className="srv-status-v2-copy">
+            <Badge variant="outline" className="srv-status-v2-badge">
+              <Pulse size={14} weight="fill" aria-hidden="true" />
+              Live infrastructure status
+            </Badge>
+            <h1>Know what is healthy before you open a ticket.</h1>
+            <p>
+              Current availability and 90-day uptime for StealthRDP infrastructure,
+              refreshed from the public status feed when available.
+            </p>
           </div>
-          <div className="sr-page-hero-aside">
-            <span className="sr-live-dot" aria-hidden="true" />
-            <strong>Public health snapshot</strong>
-            <span>Live refresh when available</span>
+
+          <div className="srv-status-v2-headline" data-state={healthy ? 'ok' : 'attention'}>
+            <span className="srv-status-v2-headline-icon" aria-hidden="true">
+              <CheckCircle size={24} weight="fill" />
+            </span>
+            <div>
+              <small>Current state</small>
+              <strong>{healthy ? 'All monitored services operational' : 'Some services need attention'}</strong>
+              <span>{fallback.monitors.length} monitored services</span>
+            </div>
           </div>
         </div>
       </section>
-      <section className="sr-section">
+
+      <section className="srv-status-v2-body">
         <div className="sr-container">
           <StatusGrid fallback={fallback} />
         </div>
