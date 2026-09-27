@@ -5,11 +5,9 @@ import { useMemo, useState } from 'react';
 import {
   CalendarDots,
   ChartLineUp,
-  Cpu,
   Desktop,
   GlobeHemisphereWest,
   HardDrive,
-  Lightning,
   Robot,
   TerminalWindow,
 } from '@phosphor-icons/react';
