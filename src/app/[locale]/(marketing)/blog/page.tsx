@@ -2,6 +2,9 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { GuideSidebar } from '@/components/site/GuideSidebar';
 import { HelpTopbar } from '@/components/site/HelpTopbar';
+import { buildArticleIndexJsonLd } from '@/libs/seo/articles';
+import { getSeoConfig } from '@/libs/seo/config';
+import { serializeJsonLd } from '@/libs/seo/json-ld';
 import { createPageMetadata } from '@/libs/seo/metadata';
 import { articlePath, blogArticles } from '@/lib/stealth/content';
 
@@ -13,11 +16,18 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default function BlogPage() {
+  const config = getSeoConfig();
+  const articleIndexJsonLd = buildArticleIndexJsonLd(config);
   const categories = Array.from(new Set(blogArticles.map(article => article.category)));
 
   return (
     <div className="srv-page srv-page-blog srv-docs-product">
       <HelpTopbar active="guides" />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleIndexJsonLd) }}
+      />
 
       <div className="sr-container srv-docs-mobile-wrap">
         <details className="srv-docs-mobile-nav">
