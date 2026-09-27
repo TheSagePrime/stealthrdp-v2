@@ -23,6 +23,13 @@ export default function DocsPage() {
     <div className="srv-page srv-page-docs srv-docs-product">
       <HelpTopbar />
 
+      <div className="sr-container srv-docs-mobile-wrap">
+        <details className="srv-docs-mobile-nav">
+          <summary>Browse Help Center</summary>
+          <HelpSidebar articles={docsArticles} />
+        </details>
+      </div>
+
       <div className="sr-container srv-docs-grid">
         <aside className="srv-docs-sidebar">
           <HelpSidebar articles={docsArticles} />
