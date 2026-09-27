@@ -483,7 +483,8 @@ export default async function HomePage({ params }: Props) {
           <div className="srv-review-stream-wrap">
             <div className="srv-review-stream-heading">
               <p>Independent and first-party feedback</p>
-              <span>Hover to pause</span>
+              <span className="srv-review-desktop-hint">Hover to pause</span>
+              <span className="srv-review-mobile-hint">Swipe to browse →</span>
             </div>
 
             <div className="srv-review-marquee" aria-label="More customer testimonials">

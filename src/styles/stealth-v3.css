@@ -11877,3 +11877,170 @@ a.srv-help-tree-heading:hover {
     height: 40px;
   }
 }
+
+/* Mobile homepage refinement: simplify the hero, expose OS choices, and make
+   reviews touch-native instead of carrying desktop-only behavior to phones. */
+.srv-review-mobile-hint {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  /* The deploy visual is useful desktop proof, but adds unnecessary height and
+     a code-heavy second column on a phone. Keep the buying message first. */
+  .srv-home-hero-visual-stage {
+    display: none !important;
+  }
+
+  .srv-home-hero-layout {
+    gap: 0 !important;
+  }
+
+  /* Give proof metrics enough breathing room on narrow phones. */
+  .srv-home-hero-proof {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .srv-home-hero-proof > div {
+    min-height: 76px;
+    display: grid;
+    align-content: center;
+  }
+
+  .srv-home-hero-proof > div:nth-child(2) {
+    border-right: 0 !important;
+  }
+
+  .srv-home-hero-proof > div:nth-child(3) {
+    grid-column: 1 / -1;
+    border-top: 1px solid var(--border) !important;
+    text-align: center;
+  }
+
+  /* Show every supported OS on phones rather than cropping an auto-marquee. */
+  .srv-os-band {
+    overflow: visible !important;
+  }
+
+  .srv-os-band-inner {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    padding-block: 16px !important;
+  }
+
+  .srv-os-band-label {
+    min-height: 0 !important;
+    border-right: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .srv-os-marquee {
+    margin-inline: 0 !important;
+    overflow: visible !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+  }
+
+  .srv-os-marquee-track {
+    display: block !important;
+    width: 100% !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .srv-os-marquee-copy {
+    display: flex !important;
+    min-width: 0 !important;
+    flex-wrap: wrap;
+    gap: 10px 14px !important;
+    padding-right: 0 !important;
+  }
+
+  .srv-os-marquee-copy[data-clone="true"] {
+    display: none !important;
+  }
+
+  .srv-os-logo {
+    min-height: 36px;
+    flex: 1 1 calc(50% - 8px);
+    min-width: 132px;
+    opacity: .82;
+  }
+
+  .srv-os-logo img,
+  .srv-os-logo svg {
+    width: 22px;
+    height: 22px;
+    flex-basis: 22px;
+  }
+
+  /* Mobile reviews are user-controlled: no auto-motion and no hover-only cue. */
+  .srv-review-desktop-hint {
+    display: none !important;
+  }
+
+  .srv-review-mobile-hint {
+    display: inline !important;
+    white-space: nowrap;
+  }
+
+  .srv-home-reviews .srv-review-marquee {
+    overflow-x: auto !important;
+    overflow-y: visible;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+    padding: 8px 18px 12px 0 !important;
+  }
+
+  .srv-home-reviews .srv-review-marquee::-webkit-scrollbar {
+    display: none;
+  }
+
+  .srv-review-track {
+    width: max-content !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .srv-review-set[data-clone="true"] {
+    display: none !important;
+  }
+
+  .srv-review-set {
+    gap: 12px !important;
+    padding-right: 0 !important;
+  }
+
+  .srv-review-chip {
+    width: min(82vw, 300px) !important;
+    min-height: 210px;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .srv-home-hero-proof {
+    grid-template-columns: 1fr !important;
+  }
+
+  .srv-home-hero-proof > div {
+    grid-column: 1 !important;
+    border-right: 0 !important;
+    border-left: 0 !important;
+    border-top: 1px solid var(--border) !important;
+    text-align: left !important;
+  }
+
+  .srv-home-hero-proof > div:first-child {
+    border-top: 0 !important;
+  }
+
+  .srv-os-logo {
+    flex-basis: 100%;
+  }
+}
