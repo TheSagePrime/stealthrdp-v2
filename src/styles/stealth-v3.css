@@ -6112,3 +6112,146 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   .srv-page-status .srv-status-monitor,
   .srv-page-blog .srv-article-entry { transition:none; }
 }
+
+
+/* Plans page: use the same vertical pricing-card language as homepage. */
+.srv-page-plans .sr-pick-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 320px));
+  justify-content: center;
+  gap: 22px;
+}
+
+.srv-page-plans .sr-pick-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "head"
+    "os"
+    "price"
+    "specs"
+    "action"
+    "stock";
+  align-content: start;
+  gap: 14px;
+  width: 100%;
+  min-height: 100%;
+  padding: 22px;
+  border-radius: 16px;
+}
+
+.srv-page-plans .sr-pick-card-head {
+  min-height: 42px;
+  align-items: flex-start;
+}
+
+.srv-page-plans .sr-pick-card-name {
+  font-size: 1.05rem;
+  font-weight: 760;
+  letter-spacing: -0.025em;
+}
+
+.srv-page-plans .sr-pick-card-os {
+  margin-top: -8px;
+  font-size: .6875rem;
+}
+
+.srv-page-plans .sr-pick-card-price {
+  gap: 4px;
+  margin: 2px 0 0;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-divider);
+}
+
+.srv-page-plans .sr-pick-card-amount {
+  font-size: 2rem;
+  font-weight: 780;
+  letter-spacing: -.045em;
+}
+
+.srv-page-plans .sr-pick-card-period {
+  line-height: 1.45;
+}
+
+.srv-page-plans .sr-pick-specs {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.srv-page-plans .sr-pick-spec {
+  display: flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid color-mix(in srgb, var(--border-divider) 78%, transparent);
+  font-size: .75rem;
+}
+
+.srv-page-plans .sr-pick-spec dt {
+  flex: 0 0 auto;
+  color: var(--text-dim);
+}
+
+.srv-page-plans .sr-pick-spec dd {
+  text-align: right;
+  font-weight: 650;
+}
+
+.srv-page-plans .sr-pick-card-action {
+  align-self: end;
+  margin-top: 4px;
+}
+
+.srv-page-plans .sr-pick-card-buy {
+  width: 100%;
+}
+
+.srv-page-plans .sr-pick-stock {
+  margin: -4px 0 0;
+  text-align: left;
+  font-size: .6875rem;
+}
+
+.srv-page-plans .sr-pick-card[data-popular="true"] {
+  position: relative;
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border-divider));
+  background:
+    radial-gradient(circle at 90% 0%, color-mix(in srgb, var(--primary) 7%, transparent), transparent 13rem),
+    var(--surface-1);
+  box-shadow:
+    0 12px 34px color-mix(in srgb, var(--primary) 7%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+.srv-page-plans .sr-compare-details {
+  margin-top: 4px;
+}
+
+@media (min-width: 1480px) {
+  .srv-page-plans .sr-pick-cards {
+    grid-template-columns: repeat(3, minmax(0, 330px));
+    gap: 26px;
+  }
+}
+
+@media (max-width: 1080px) {
+  .srv-page-plans .sr-pick-cards {
+    grid-template-columns: repeat(2, minmax(0, 320px));
+  }
+}
+
+@media (max-width: 700px) {
+  .srv-page-plans .sr-pick-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .srv-page-plans .sr-pick-card {
+    max-width: 430px;
+    margin-inline: auto;
+  }
+}
