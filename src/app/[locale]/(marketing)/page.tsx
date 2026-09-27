@@ -134,22 +134,22 @@ export default async function HomePage({ params }: Props) {
       ))}
 
       <Section className="srv-home-hero py-14 sm:py-18 lg:py-20">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
-          <div className="flex flex-col items-start gap-6">
-            <Badge variant="outline">Windows & Linux VPS · Instant setup</Badge>
+        <div className="srv-home-hero-layout mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+          <div className="srv-home-hero-copy flex flex-col items-start gap-6">
+            <Badge variant="outline" className="srv-home-hero-badge">Windows & Linux VPS · Instant setup</Badge>
 
             <div className="grid gap-5">
-              <h1 className="max-w-4xl text-5xl font-semibold leading-none tracking-tight text-balance sm:text-6xl lg:text-7xl">
-                Your server.
-                <span className="block text-primary">Live in 60 seconds.</span>
+              <h1 className="srv-home-hero-title max-w-4xl text-5xl font-semibold leading-none tracking-tight text-balance sm:text-6xl lg:text-7xl">
+                <span className="srv-home-hero-title-base">Your server.</span>
+                <span className="srv-home-hero-title-accent block text-primary">Live in 60 seconds.</span>
               </h1>
-              <p className="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
+              <p className="srv-home-hero-lede max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
                 High-performance remote desktop and VPS infrastructure without the complexity.
                 Enterprise hardware, full administrative access, and a 99.9% uptime SLA.
               </p>
             </div>
 
-            <div className="flex flex-wrap gap-3">
+            <div className="srv-home-hero-actions flex flex-wrap gap-3">
               <Button asChild size="lg">
                 <a href="#plans">
                   Choose your server
@@ -161,14 +161,14 @@ export default async function HomePage({ params }: Props) {
               </Button>
             </div>
 
-            <div className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
+            <div className="srv-home-hero-meta flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
               <span>Starting from <strong className="text-foreground">€4.59/month</strong></span>
               <span>7-day money-back</span>
               <span>No hidden fees</span>
               <span>Cancel anytime</span>
             </div>
 
-            <div className="grid w-full max-w-2xl grid-cols-3 overflow-hidden rounded-xl border border-border bg-card">
+            <div className="srv-home-hero-proof grid w-full max-w-2xl grid-cols-3 overflow-hidden rounded-xl border border-border bg-card">
               <div className="p-4 sm:p-5">
                 <strong className="block text-2xl font-semibold tracking-tight">10,000+</strong>
                 <span className="text-xs text-muted-foreground">Orders</span>
@@ -184,8 +184,9 @@ export default async function HomePage({ params }: Props) {
             </div>
           </div>
 
-          <Card className="gap-0 overflow-hidden py-0 shadow-sm">
-            <CardHeader className="border-b border-border bg-muted/30 px-5 py-4">
+          <div className="srv-home-deploy-stage">
+          <Card className="srv-home-deploy-card gap-0 overflow-hidden py-0 shadow-sm">
+            <CardHeader className="srv-home-deploy-head border-b border-border bg-muted/30 px-5 py-4">
               <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-2 text-sm font-semibold">
                   <Lightning className="size-4 text-primary" weight="fill" />
@@ -195,32 +196,32 @@ export default async function HomePage({ params }: Props) {
               </div>
             </CardHeader>
             <CardContent className="grid gap-4 px-5 py-5">
-              <pre className="max-w-full overflow-x-auto rounded-md border border-border bg-muted/30 p-4 font-mono text-sm leading-6">
+              <pre className="srv-home-deploy-command max-w-full overflow-x-auto rounded-md border border-border bg-muted/30 p-4 font-mono text-sm leading-6">
                 <code>$ stealth deploy --plan bronze-usa --region us-east</code>
               </pre>
 
-              <div className="grid gap-3 text-sm">
+              <div className="srv-home-deploy-steps grid gap-3 text-sm">
                 {[
                   'Reserving dedicated vCPU',
                   'Provisioning NVMe storage',
                   'Installing Windows Server 2022',
                   'Provisioning isolated VM',
                 ].map(item => (
-                  <div key={item} className="flex items-center gap-2 text-muted-foreground">
+                  <div key={item} className="srv-home-deploy-step flex items-center gap-2 text-muted-foreground">
                     <CheckCircle className="size-4 text-primary" weight="fill" />
                     <span>{item}</span>
                   </div>
                 ))}
               </div>
 
-              <div className="rounded-md border border-border bg-muted/20 p-4">
+              <div className="srv-home-deploy-ready rounded-md border border-border bg-muted/20 p-4">
                 <div className="flex items-center gap-2 text-sm font-semibold">
                   <CheckCircle className="size-4 text-status-ok" weight="fill" />
                   Windows Server 2022 ready in 60s
                 </div>
               </div>
             </CardContent>
-            <CardFooter className="grid grid-cols-4 gap-0 border-t border-border p-0">
+            <CardFooter className="srv-home-deploy-metrics grid grid-cols-4 gap-0 border-t border-border p-0">
               {[
                 ['2', 'vCPU'],
                 ['4 GB', 'RAM'],
@@ -229,7 +230,7 @@ export default async function HomePage({ params }: Props) {
               ].map(([value, label], index) => (
                 <div
                   key={label}
-                  className={`p-4 text-center ${index > 0 ? 'border-l border-border' : ''}`}
+                  className={`srv-home-deploy-metric p-4 text-center ${index > 0 ? 'border-l border-border' : ''}`}
                 >
                   <strong className="block text-sm font-semibold">{value}</strong>
                   <span className="text-xs text-muted-foreground">{label}</span>
@@ -237,6 +238,7 @@ export default async function HomePage({ params }: Props) {
               ))}
             </CardFooter>
           </Card>
+          </div>
         </div>
       </Section>
 
