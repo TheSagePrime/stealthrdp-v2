@@ -7,6 +7,7 @@ import '@/styles/global.css';
 import '@/styles/surfaces.css';
 import '@/styles/stealth.css';
 import '@/styles/stealth-v3.css';
+import '@/styles/stealth-docs-responsive.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.stealthrdp.com'),

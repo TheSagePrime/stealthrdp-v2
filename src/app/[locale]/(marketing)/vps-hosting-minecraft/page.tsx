@@ -59,7 +59,7 @@ export default function MinecraftPage() {
             <p>{article.excerpt}</p>
             <div className="srv-docs-article-meta">
               <ArticlePublicationMeta article={publication} />
-              <span>{article.readingTime} min read</span>
+              {article.readingTime ? <span>{article.readingTime} min read</span> : null}
             </div>
           </header>
 
