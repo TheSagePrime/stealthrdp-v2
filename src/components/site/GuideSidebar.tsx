@@ -40,6 +40,8 @@ export function GuideSidebar({ activeSlug }: { activeSlug?: string }) {
         <ul>
           <li><Link href="/docs">Help Center</Link></li>
           <li><Link href="/faq">Common questions</Link></li>
+          <li><Link href="/status">Service status</Link></li>
+          <li><a href="https://wa.me/447441426993">WhatsApp support ↗</a></li>
         </ul>
       </section>
     </nav>

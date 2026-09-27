@@ -35,6 +35,7 @@ export function ResourceSidebar() {
       <section className="srv-help-tree-group srv-help-tree-support">
         <span className="srv-help-tree-heading">Account</span>
         <ul>
+          <li><a href="https://wa.me/447441426993">WhatsApp support ↗</a></li>
           <li><a href="https://dash.stealthrdp.com/submitticket.php">Open support ticket ↗</a></li>
           <li><a href="https://dash.stealthrdp.com/clientarea.php">Client area ↗</a></li>
         </ul>

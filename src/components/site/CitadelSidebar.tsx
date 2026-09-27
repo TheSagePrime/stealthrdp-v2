@@ -59,6 +59,7 @@ export function CitadelSidebar({
         <ul>
           <li><Link href="/citadel">Citadel overview</Link></li>
           <li><Link href="/status">Service status</Link></li>
+          <li><a href="https://wa.me/447441426993">WhatsApp support ↗</a></li>
           <li><a href="https://dash.stealthrdp.com/submitticket.php">Open a support ticket ↗</a></li>
         </ul>
       </section>

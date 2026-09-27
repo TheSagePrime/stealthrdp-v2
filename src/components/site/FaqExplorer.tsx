@@ -52,6 +52,8 @@ function FaqTree({ faqs }: { faqs: Faq[] }) {
         <ul>
           <li><a href="/docs">Help Center</a></li>
           <li><a href="/blog">Guides</a></li>
+          <li><a href="/status">Service status</a></li>
+          <li><a href="https://wa.me/447441426993">WhatsApp support ↗</a></li>
           <li><a href="https://dash.stealthrdp.com/submitticket.php">Open support ticket ↗</a></li>
         </ul>
       </section>

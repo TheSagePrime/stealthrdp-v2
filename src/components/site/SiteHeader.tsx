@@ -2,7 +2,7 @@
 'use client';
 
 import { useState } from 'react';
-import { List as Menu, WhatsappLogo } from '@phosphor-icons/react';
+import { List as Menu, WhatsappLogo } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 
@@ -111,17 +111,6 @@ export function SiteHeader() {
           </nav>
         </details>
       </div>
-
-      <a
-        className="srv-whatsapp-float"
-        href="https://wa.me/447441426993"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Open StealthRDP WhatsApp support"
-      >
-        <WhatsappLogo size={20} weight="fill" aria-hidden="true" />
-        <span>WhatsApp support</span>
-      </a>
     </header>
   );
 }
