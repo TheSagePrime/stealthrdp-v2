@@ -1,10 +1,21 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { DocBody, docHeadings } from '@/components/site/DocBody';
-import { ResourceNav } from '@/components/site/ResourceNav';
+import { HelpSidebar } from '@/components/site/HelpSidebar';
+import { HelpTopbar } from '@/components/site/HelpTopbar';
 import { ResourceToc } from '@/components/site/ResourceToc';
 import { createPageMetadata } from '@/libs/seo/metadata';
-import { docPublicSlug, docsArticles, findDocByPublicSlug } from '@/lib/stealth/content';
+import {
+  helpArticleHref,
+  helpCollectionForArticle,
+  orderedHelpArticles,
+} from '@/lib/stealth/help-center';
+import {
+  docPublicSlug,
+  docsArticles,
+  findDocByPublicSlug,
+} from '@/lib/stealth/content';
 
 export function generateStaticParams() {
   return docsArticles.map(article => ({ slug: docPublicSlug(article) }));
@@ -26,40 +37,102 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   const { slug } = await params;
   const article = findDocByPublicSlug(slug);
   if (!article) notFound();
+
   const headings = docHeadings(article.content);
+  const collection = helpCollectionForArticle(article);
+  const ordered = orderedHelpArticles(docsArticles);
+  const currentIndex = ordered.findIndex(item => item.slug === article.slug);
+  const previous = currentIndex > 0 ? ordered[currentIndex - 1] : undefined;
+  const next = currentIndex >= 0 && currentIndex < ordered.length - 1 ? ordered[currentIndex + 1] : undefined;
+  const related = article.relatedSlugs
+    .map(relatedSlug => docsArticles.find(item => item.slug === relatedSlug))
+    .filter((item): item is (typeof docsArticles)[number] => Boolean(item))
+    .slice(0, 3);
 
   return (
-    <div className="srv-page srv-page-knowledge-article">
-      <div className="sr-container srv-knowledge-article-grid">
-        <aside className="srv-knowledge-left">
-          <ResourceNav active="help" />
+    <div className="srv-page srv-page-doc-article srv-docs-product">
+      <HelpTopbar />
+
+      <div className="sr-container srv-docs-grid srv-docs-article-grid">
+        <aside className="srv-docs-sidebar">
+          <HelpSidebar articles={docsArticles} activeSlug={article.slug} />
         </aside>
 
-        <article className="srv-page-article srv-page-doc-article sr-article-shell">
-          <header className="sr-article-header">
-            <p className="sr-kicker">Help Center · {article.category}</p>
+        <article className="srv-docs-article">
+          <nav className="srv-docs-breadcrumbs" aria-label="Breadcrumb">
+            <Link href="/docs">Help Center</Link>
+            <span>/</span>
+            {collection ? (
+              <>
+                <Link href={`/docs#${collection.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`}>
+                  {collection.title}
+                </Link>
+                <span>/</span>
+              </>
+            ) : null}
+            <span aria-current="page">{article.title}</span>
+          </nav>
+
+          <header className="srv-docs-article-head">
+            <p className="sr-kicker">{collection?.title ?? article.category}</p>
             <h1>{article.title}</h1>
-            <p className="sr-article-meta">Last updated: {article.date}</p>
-            <p className="sr-lede">{article.summary}</p>
-          </header>
-          <DocBody content={article.content} />
-          <footer className="sr-article-support srv-site-final">
-            <h2 className="sr-section-title">Still need a hand?</h2>
-            <p>
-              Account, billing, and server-specific requests are handled in the client
-              portal. For quick questions, message us on WhatsApp or email.
-            </p>
-            <div className="sr-inline-links">
-              <a href="https://dash.stealthrdp.com/submitticket.php">Contact support</a>
-              <a href="https://wa.me/447441426993">WhatsApp: +44 7441 426993</a>
-              <a href="/docs">Help Center</a>
+            <p>{article.summary}</p>
+            <div className="srv-docs-article-meta">
+              <span>Last updated {article.date}</span>
+              <a href="https://dash.stealthrdp.com/submitticket.php">Need help? ↗</a>
             </div>
+          </header>
+
+          <DocBody content={article.content} />
+
+          {related.length > 0 ? (
+            <section className="srv-docs-related" aria-labelledby="related-help-title">
+              <span className="srv-resource-nav-label">Related help</span>
+              <h2 id="related-help-title">Continue with a related task</h2>
+              <div>
+                {related.map(item => (
+                  <Link key={item.slug} href={helpArticleHref(item)}>
+                    <strong>{item.title}</strong>
+                    <small>{item.summary}</small>
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                ))}
+              </div>
+            </section>
+          ) : null}
+
+          <nav className="srv-docs-pagination" aria-label="Help article navigation">
+            {previous ? (
+              <Link href={helpArticleHref(previous)} rel="prev">
+                <span>Previous</span>
+                <strong>← {previous.title}</strong>
+              </Link>
+            ) : <span />}
+            {next ? (
+              <Link href={helpArticleHref(next)} rel="next">
+                <span>Next</span>
+                <strong>{next.title} →</strong>
+              </Link>
+            ) : <span />}
+          </nav>
+
+          <footer className="srv-docs-support-strip">
+            <div>
+              <strong>Still stuck?</strong>
+              <span>Send the server name, exact error, screenshot, and approximate time.</span>
+            </div>
+            <a href="https://dash.stealthrdp.com/submitticket.php">Open support ticket ↗</a>
           </footer>
         </article>
 
-        <div className="srv-knowledge-right">
+        <aside className="srv-docs-toc">
           <ResourceToc headings={headings} />
-        </div>
+          <div className="srv-docs-toc-links">
+            <span className="srv-resource-nav-label">Also useful</span>
+            <Link href="/faq">Common questions</Link>
+            <Link href="/status">Service status</Link>
+          </div>
+        </aside>
       </div>
     </div>
   );
