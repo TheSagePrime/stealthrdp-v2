@@ -67,7 +67,6 @@ export default function PlansPage() {
               <p className="sr-kicker">STANDARD PLANS</p>
               <h2 className="sr-section-title">Choose your resource level</h2>
             </div>
-            <p>Region and billing cycle update the plan cards below. Prices are shown as the total due today.</p>
           </div>
           <PricingExplorer showComparison />
         </div>
@@ -80,10 +79,6 @@ export default function PlansPage() {
               <p className="sr-kicker">01 / Choose an operating system</p>
               <h2 className="sr-section-title">Pick the VPS environment that fits your work.</h2>
             </div>
-            <p>
-              Windows and Linux VPS plans use the same resource comparison. Select the operating
-              system that matches your software, administration, and remote-access needs during checkout.
-            </p>
           </div>
 
           <div className="srv-plan-os-flow grid gap-4 lg:grid-cols-2">

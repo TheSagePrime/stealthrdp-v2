@@ -388,10 +388,6 @@ export function PricingExplorer({
         </p>
       </div>
 
-      <p className="sr-ledger-note sr-ledger-summary" data-plan-summary>
-        Showing {visible.length} {region} {visible.length === 1 ? 'plan' : 'plans'} · {priceHeader[cycle].toLowerCase()}
-      </p>
-
       <div className="sr-pick-cards">
         {visible.map(plan => (
           <PlanCard
@@ -403,28 +399,6 @@ export function PricingExplorer({
           />
         ))}
       </div>
-
-      {!compact ? (
-        <>
-          {(() => {
-            const available = inRegion.filter(plan => plan.source.availability !== 'out-of-stock');
-            const soldOut = inRegion.filter(plan => plan.source.availability === 'out-of-stock');
-            if (soldOut.length === 0) return null;
-            return (
-              <p className="sr-ledger-note" aria-live="polite">
-                {soldOut.map(plan => plan.name).join(', ')} {soldOut.length === 1 ? 'is' : 'are'} out of stock
-                {available.length > 0 ? ` — available in ${region} now: ${available.map(plan => plan.name).join(', ')}.` : '.'} Availability is confirmed at checkout.
-              </p>
-            );
-          })()}
-          <p className="sr-ledger-note">
-            All prices in EUR. Bandwidth is unlimited on a 250 Mbps port. The 1 Gbps upgrade costs €5.00 per month at checkout and activates manually within 12 hours.
-          </p>
-          <p className="sr-ledger-note">
-            Windows or Linux is selected during checkout. A Windows licence is not included — Evaluation image only; use your own eligible licence. <a href="/docs/windows-licensing">Windows licensing</a>
-          </p>
-        </>
-      ) : null}
 
       {showComparison ? (
         <>

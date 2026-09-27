@@ -113,7 +113,6 @@ export default function LinuxVpsPage() {
         <div className="sr-container">
           <div className="sr-section-head">
             <div><p className="sr-kicker">Current VPS catalog</p><h2 className="sr-section-title">Choose your resource level</h2></div>
-            <p>Compare the current displayed monthly price, CPU, RAM, NVMe storage, bandwidth, and region. Windows and Linux use this shared VPS catalog.</p>
           </div>
           <PricingExplorer />
         </div>
