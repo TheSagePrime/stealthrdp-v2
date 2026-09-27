@@ -101,7 +101,7 @@ export const defaultSeoConfig: SeoConfig = {
     ],
   },
   routes: {
-    publicMarketing: ['/', '/plans', '/windows-vps', '/linux-vps', '/citadel', '/status', '/resources', '/blog', '/faq', '/about', '/docs', '/privacy'],
+    publicMarketing: ['/', '/plans', '/windows-vps', '/linux-vps', '/citadel', '/citadel/docs', '/status', '/resources', '/blog', '/faq', '/about', '/docs', '/privacy'],
     publicUtility: [...noindexDocPaths],
     privatePages: [],
     privateApis: [],
