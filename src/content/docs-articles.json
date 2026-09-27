@@ -412,7 +412,14 @@
       "citadel-security",
       "citadel-allowlists"
     ],
-    "content": "## How traffic reaches your site\nVisitors reach Cloudflare through a proxied orange-cloud DNS record. Cloudflare forwards web traffic to Citadel, which checks requests before clean traffic reaches your origin server.\n## First-time setup\n1. In Citadel, add your root domain with the origin IP or hostname, port, and TLS-to-origin setting.\n2. Copy the Citadel ingress IP from the domain page.\n3. In Cloudflare DNS, point a proxied A record for the apex and each protected hostname to that IP.\n4. Set Cloudflare SSL/TLS to Full, or Full (strict) when the origin has a trusted certificate.\n5. Wait about a minute for Citadel to detect the connection, or select Check connection.\n6. Open Security and start with Auto (Balanced) challenge mode.\n7. Allowlist machine-facing paths such as `/api/` and webhooks before using human interaction challenges.\n## Check protection\nThe domain should show Active / Proxied. A grey-cloud DNS-only record bypasses Citadel and does not provide Layer 7 protection.\nSee [Cloudflare setup](/citadel/docs/cloudflare-setup) and [Security levels](/citadel/docs/challenge-levels)."
+    "content": "## How traffic reaches your site\nVisitors reach Cloudflare through a proxied orange-cloud DNS record. Cloudflare forwards web traffic to Citadel, which checks requests before clean traffic reaches your origin server.\n## First-time setup\n1. In Citadel, add your root domain with the origin IP or hostname, port, and TLS-to-origin setting.\n2. Copy the Citadel ingress IP from the domain page.\n3. In Cloudflare DNS, point a proxied A record for the apex and each protected hostname to that IP.\n4. Set Cloudflare SSL/TLS to Full, or Full (strict) when the origin has a trusted certificate.\n5. Wait about a minute for Citadel to detect the connection, or select Check connection.\n6. Open Security and start with Auto (Balanced) challenge mode.\n7. Allowlist machine-facing paths such as `/api/` and webhooks before using human interaction challenges.\n## Check protection\nThe domain should show Active / Proxied. A grey-cloud DNS-only record bypasses Citadel and does not provide Layer 7 protection.\nSee [Cloudflare setup](/citadel/docs/cloudflare-setup) and [Security levels](/citadel/docs/challenge-levels).",
+    "illustration": {
+      "src": "/citadel-docs/flow-cloudflare-citadel.svg",
+      "alt": "Cloudflare to Citadel to origin flow",
+      "caption": "Traffic path: visitor → Cloudflare (proxied) → Citadel → origin.",
+      "width": 960,
+      "height": 320
+    }
   },
   {
     "slug": "citadel-overview",
@@ -422,11 +429,19 @@
     "sourceUrl": "https://citadel.stealthrdp.com/docs/overview",
     "summary": "Read fleet health, live traffic, bandwidth, and domains needing setup.",
     "relatedSlugs": [
+      "citadel-getting-started",
       "citadel-domains",
       "citadel-analytics",
       "citadel-bandwidth"
     ],
-    "content": "## What the overview shows\nThe Citadel command center summarizes domains already synced and domains awaiting DNS, your service plan and remaining billing-period bandwidth, recent proxied and blocked requests, live traffic, and recent domains.\n## What to do next\n- For a domain awaiting DNS, open it and finish its orange-cloud A record.\n- For a domain under attack, open Security and review challenge and incident settings.\n- Use Analytics or Bandwidth when you need more history than the overview window shows.\nSee [Domain overview](/citadel/docs/domain-overview) and [Analytics](/citadel/docs/analytics)."
+    "content": "## What the overview shows\nThe Citadel command center summarizes domains already synced and domains awaiting DNS, your service plan and remaining billing-period bandwidth, recent proxied and blocked requests, live traffic, and recent domains.\n## What to do next\n- For a domain awaiting DNS, open it and finish its orange-cloud A record.\n- For a domain under attack, open Security and review challenge and incident settings.\n- Use Analytics or Bandwidth when you need more history than the overview window shows.\nSee [Domain overview](/citadel/docs/domain-overview) and [Analytics](/citadel/docs/analytics).",
+    "illustration": {
+      "src": "/citadel-docs/overview-panel.svg",
+      "alt": "Illustrative Citadel overview cards, traffic graph, and bandwidth ring",
+      "caption": "Illustrative overview with sample values. Live figures appear in the Citadel portal.",
+      "width": 960,
+      "height": 360
+    }
   },
   {
     "slug": "citadel-cloudflare-setup",
@@ -440,7 +455,14 @@
       "citadel-origin",
       "citadel-dns"
     ],
-    "content": "## Configure DNS and SSL\n1. Open your domain in Citadel and copy its ingress IP from the A record chip.\n2. In Cloudflare DNS, set the apex (`@`) and every hostname you want protected to that IP.\n3. Turn on Proxied (orange cloud) for each protected record.\n4. In Cloudflare SSL/TLS Overview, select Full or Full (strict) if the origin certificate is trusted.\n5. Return to Citadel. It checks awaiting domains about every minute; Check connection refreshes immediately.\n## Troubleshoot activation\nA grey-cloud record, the wrong ingress IP, or Flexible SSL can leave a domain awaiting DNS or cause browser errors. DNS-only records skip Citadel entirely. Mail, TXT, and other non-web records remain in Cloudflare.\nSee [DNS stays in Cloudflare](/citadel/docs/dns) and [Origin and hostnames](/citadel/docs/origin)."
+    "content": "## Configure DNS and SSL\n1. Open your domain in Citadel and copy its ingress IP from the A record chip.\n2. In Cloudflare DNS, set the apex (`@`) and every hostname you want protected to that IP.\n3. Turn on Proxied (orange cloud) for each protected record.\n4. In Cloudflare SSL/TLS Overview, select Full or Full (strict) if the origin certificate is trusted.\n5. Return to Citadel. It checks awaiting domains about every minute; Check connection refreshes immediately.\n## Troubleshoot activation\nA grey-cloud record, the wrong ingress IP, or Flexible SSL can leave a domain awaiting DNS or cause browser errors. DNS-only records skip Citadel entirely. Mail, TXT, and other non-web records remain in Cloudflare.\nSee [DNS stays in Cloudflare](/citadel/docs/dns) and [Origin and hostnames](/citadel/docs/origin).",
+    "illustration": {
+      "src": "/citadel-docs/flow-cloudflare-citadel.svg",
+      "alt": "Proxied Cloudflare DNS sends traffic to Citadel before the origin",
+      "caption": "Proxied A records point to Citadel. Grey-cloud records bypass protection.",
+      "width": 960,
+      "height": 320
+    }
   },
   {
     "slug": "citadel-domains",
@@ -454,7 +476,14 @@
       "citadel-cloudflare-setup",
       "citadel-domain-overview"
     ],
-    "content": "## Add a domain\n1. Enter the root domain, such as `example.com`.\n2. Enter the apex origin host, using a working IP address or hostname.\n3. Set the origin port, usually 443, and choose whether Citadel should use TLS to the origin.\n4. Select Add domain and complete the [Cloudflare setup](/citadel/docs/cloudflare-setup).\nCitadel checks awaiting domains automatically about every minute. Check connection is available for an immediate test. After the apex is healthy, add protected subdomains from the Origin page.\n## Manage existing domains\nUse the Domains list to search for a site or remove a domain you no longer protect."
+    "content": "## Add a domain\n1. Enter the root domain, such as `example.com`.\n2. Enter the apex origin host, using a working IP address or hostname.\n3. Set the origin port, usually 443, and choose whether Citadel should use TLS to the origin.\n4. Select Add domain and complete the [Cloudflare setup](/citadel/docs/cloudflare-setup).\nCitadel checks awaiting domains automatically about every minute. Check connection is available for an immediate test. After the apex is healthy, add protected subdomains from the Origin page.\n## Manage existing domains\nUse the Domains list to search for a site or remove a domain you no longer protect.",
+    "illustration": {
+      "src": "/citadel-docs/domains-list.svg",
+      "alt": "Citadel add-domain form with domain, origin host and port",
+      "caption": "Add the root domain with a working origin host and port.",
+      "width": 960,
+      "height": 280
+    }
   },
   {
     "slug": "citadel-domain-overview",
@@ -482,7 +511,14 @@
       "citadel-cloudflare-setup",
       "citadel-allowlists"
     ],
-    "content": "## Configure the backend\nThe origin is the real server Citadel sends clean traffic to. Set the apex host, port and TLS-to-origin option, then add protected subdomains. A subdomain can share the apex backend or override it.\n1. Confirm the apex origin URL reaches a working server.\n2. Add every hostname you want Citadel to protect.\n3. Give each hostname a proxied Cloudflare DNS record pointing at the Citadel ingress IP.\n4. Save, then use [Origin health](/citadel/docs/health) to test the connection.\n## API and SSO redirects\nIf the origin redirects HTTP to HTTPS, enable TLS-to-origin or use an HTTPS backend. This helps prevent POST requests to `/api/*` from being turned into 301 redirects."
+    "content": "## Configure the backend\nThe origin is the real server Citadel sends clean traffic to. Set the apex host, port and TLS-to-origin option, then add protected subdomains. A subdomain can share the apex backend or override it.\n1. Confirm the apex origin URL reaches a working server.\n2. Add every hostname you want Citadel to protect.\n3. Give each hostname a proxied Cloudflare DNS record pointing at the Citadel ingress IP.\n4. Save, then use [Origin health](/citadel/docs/health) to test the connection.\n## API and SSO redirects\nIf the origin redirects HTTP to HTTPS, enable TLS-to-origin or use an HTTPS backend. This helps prevent POST requests to `/api/*` from being turned into 301 redirects.",
+    "illustration": {
+      "src": "/citadel-docs/origin-setup.svg",
+      "alt": "Citadel origin host, port, TLS and subdomain settings",
+      "caption": "The origin settings determine where Citadel forwards clean traffic.",
+      "width": 960,
+      "height": 260
+    }
   },
   {
     "slug": "citadel-health",
@@ -523,7 +559,14 @@
       "citadel-branding",
       "citadel-cache"
     ],
-    "content": "## Set a challenge level\nOpen a domain's Security page, choose Off, Cookie, JS, Interaction, Auto or Lockdown, then select Save level. Existing browser sessions must verify again after a level change. Balanced and Strict protection profiles provide preset bundles.\n- Off applies no browser challenge while configured rate limits and blocklists can still apply.\n- Cookie and JS use lightweight browser checks.\n- Interaction requires a human click.\n- Auto escalates during an attack and heals when traffic calms.\n- Lockdown passes only allowlisted clients.\n## Protect machine clients\nAPIs and webhooks cannot complete a human click. Add specific [path, IP or User-Agent allowlists](/citadel/docs/allowlists), especially before using Interaction or Lockdown. Review rate limits, blocklists and incident controls on the same Security surface."
+    "content": "## Set a challenge level\nOpen a domain's Security page, choose Off, Cookie, JS, Interaction, Auto or Lockdown, then select Save level. Existing browser sessions must verify again after a level change. Balanced and Strict protection profiles provide preset bundles.\n- Off applies no browser challenge while configured rate limits and blocklists can still apply.\n- Cookie and JS use lightweight browser checks.\n- Interaction requires a human click.\n- Auto escalates during an attack and heals when traffic calms.\n- Lockdown passes only allowlisted clients.\n## Protect machine clients\nAPIs and webhooks cannot complete a human click. Add specific [path, IP or User-Agent allowlists](/citadel/docs/allowlists), especially before using Interaction or Lockdown. Review rate limits, blocklists and incident controls on the same Security surface.",
+    "illustration": {
+      "src": "/citadel-docs/security-challenge.svg",
+      "alt": "Citadel challenge-level selector",
+      "caption": "Save a challenge level and allowlist APIs that cannot complete human interaction.",
+      "width": 960,
+      "height": 280
+    }
   },
   {
     "slug": "citadel-challenge-levels",
@@ -564,7 +607,14 @@
       "citadel-security",
       "citadel-challenge-levels"
     ],
-    "content": "## Add a bypass\nOpen Security → Allowlist / bypass, add specific rules, then Save allowlist. Matching clients bypass challenges, including Lockdown, across the apex, `www`, and protected subdomains for that domain.\n## Path rules\nPaths must start with `/`. `/api/` matches `/api`, `/api/`, and descendants such as `/api/auth/google`. `/api` also matches descendants but not `/apiv2`. Keep rules specific because other security features can still depend on rule order.\n## IP and User-Agent rules\nEnter an exact IPv4/IPv6 address or CIDR, such as `203.0.113.0/24`. Behind trusted Cloudflare edges, Citadel uses the visitor or webhook source IP from `CF-Connecting-IP` or `X-Real-IP`; do not allowlist Cloudflare's shared IPs. User-Agent uses a substring match, such as `Stripe/` or `UptimeRobot`, and is easier to spoof than path or IP matching."
+    "content": "## Add a bypass\nOpen Security → Allowlist / bypass, add specific rules, then Save allowlist. Matching clients bypass challenges, including Lockdown, across the apex, `www`, and protected subdomains for that domain.\n## Path rules\nPaths must start with `/`. `/api/` matches `/api`, `/api/`, and descendants such as `/api/auth/google`. `/api` also matches descendants but not `/apiv2`. Keep rules specific because other security features can still depend on rule order.\n## IP and User-Agent rules\nEnter an exact IPv4/IPv6 address or CIDR, such as `203.0.113.0/24`. Behind trusted Cloudflare edges, Citadel uses the visitor or webhook source IP from `CF-Connecting-IP` or `X-Real-IP`; do not allowlist Cloudflare's shared IPs. User-Agent uses a substring match, such as `Stripe/` or `UptimeRobot`, and is easier to spoof than path or IP matching.",
+    "illustration": {
+      "src": "/citadel-docs/allowlist-paths.svg",
+      "alt": "Citadel allowlist paths, IPs and User-Agent controls",
+      "caption": "Path, IP and User-Agent bypass rules apply across protected hostnames.",
+      "width": 960,
+      "height": 300
+    }
   },
   {
     "slug": "citadel-cache",
@@ -588,8 +638,7 @@
     "summary": "Review domain attack events, decisions, and recent mitigation.",
     "relatedSlugs": [
       "citadel-security",
-      "citadel-analytics",
-      "citadel-logs"
+      "citadel-analytics"
     ],
     "content": "## Follow an incident\nOpen a domain's Insights page to see charts and the attack/event timeline. Attack started and ended events include duration where available. Recent challenge and block reasons explain how Citadel handled a spike.\nUse the Security shortcut to adjust a challenge level or allowlist. Compare the timeline with [Domain logs](/citadel/docs/logs) for request-level context and [Analytics](/citadel/docs/analytics) for fleet trends."
   },
@@ -605,7 +654,7 @@
       "citadel-security",
       "citadel-analytics"
     ],
-    "content": "## Log types and retention\n- Access entries include method, path, status, visitor IP, ASN, country, User-Agent, latency, bytes and request ID.\n- Security entries show challenges, blocks, rate limits and allowlisted bypasses.\n- Error entries show origin unavailability, timeouts and gateway failures 502, 503 or 504.\nLogs are retained for 15 days in S3-backed storage. Full request and response bodies are not stored in this view, and sensitive query values are redacted before storage.\n## Find a request\nOpen a domain's Logs page. Each page shows up to 200 rows; use Previous and Next for more. Filter by type, method or status, search for visitor IP, URL path, host or request ID, and sort oldest or newest first. Expand Show details for structured decision and visitor context. Older rows with empty detail objects are backfilled from their visible fields.\n## Geo and IP details\nASN prefers Cloudflare headers when present, otherwise lookup from visitor IP. Country prefers known ASN operational home country, then Cloudflare country; registration country is a last resort. New visitor IPs are indexed as traffic arrives, and opening older pages backfills those rows for later IP searches."
+    "content": "## Log types and retention\n- Access entries include method, path, status, visitor IP, ASN, country, User-Agent, latency, bytes and request ID.\n- Security entries show challenges, blocks, rate limits and allowlisted bypasses.\n- Error entries show origin unavailability, timeouts and gateway failures 502, 503 or 504.\nLogs are retained for 15 days in S3-backed storage. Full request and response bodies are not stored in this view, and sensitive query values are redacted before storage.\n## Find a request\nOpen a domain's Logs page. Each page shows up to 200 rows; use Previous and Next for more. Filter by type, method or status, search for visitor IP, URL path, host or request ID, and sort oldest or newest first. Expand Show details for structured decision and visitor context. Older rows with empty detail objects are backfilled from their visible fields.\n## Geo and IP details\nASN prefers `CF-ASN` or `CF-IPASNUM` when present; otherwise Citadel resolves the visitor IP through Team Cymru DNS. Country prefers a known ASN operational home country (for example AS135407 Transworld → Pakistan), then `CF-IPCountry`. Team Cymru's country code is a last resort because it can describe the registry country rather than visitor location. New visitor IPs are indexed as traffic arrives, and opening older pages backfills those rows for later IP searches."
   },
   {
     "slug": "citadel-analytics",
@@ -632,7 +681,14 @@
       "citadel-cache",
       "citadel-overview"
     ],
-    "content": "## Understand usage\nBandwidth counts clean traffic passed toward the origin against the plan quota. Live charts display outbound and inbound MB/s.\n## Set a speed limit\n1. Select the domain in the scope control.\n2. Add or edit a rule for an extension, path, subdomain, or domain.\n3. Set the MB/s value and per-connection mode where appropriate.\n4. Select Save speed limits.\nOnly one rule per type is supported. Edit an existing rule instead of stacking duplicates; remove a rule and save again to clear it. For example, cap `.zip` downloads at 5 MB/s per connection."
+    "content": "## Understand usage\nBandwidth counts clean traffic passed toward the origin against the plan quota. Live charts display outbound and inbound MB/s.\n## Set a speed limit\n1. Select the domain in the scope control.\n2. Add or edit a rule for an extension, path, subdomain, or domain.\n3. Set the MB/s value and per-connection mode where appropriate.\n4. Select Save speed limits.\nOnly one rule per type is supported. Edit an existing rule instead of stacking duplicates; remove a rule and save again to clear it. For example, cap `.zip` downloads at 5 MB/s per connection.",
+    "illustration": {
+      "src": "/citadel-docs/bandwidth-limits.svg",
+      "alt": "Citadel speed-limit rule for zip files",
+      "caption": "Illustrative 5 MB/s per-connection limit for matching downloads.",
+      "width": 960,
+      "height": 220
+    }
   },
   {
     "slug": "citadel-settings",

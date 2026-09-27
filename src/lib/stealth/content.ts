@@ -70,6 +70,13 @@ export type DocArticle = {
   content: string;
   relatedSlugs: string[];
   sourceUrl?: string;
+  illustration?: {
+    src: string;
+    alt: string;
+    caption: string;
+    width: number;
+    height: number;
+  };
 };
 
 export const billingCycles = plansJson.billingCycles;
