@@ -39,7 +39,7 @@ const windowsVersions = [
 
 /* Nominative brand marks for the operating system this page lists. */
 const osBrands = [
-  { src: '/brand/windows.svg', alt: 'Windows logo', width: 28, height: 28 },
+  { src: '/brand/windows.svg', alt: 'Windows logo', label: 'Windows Server', width: 28, height: 28 },
 ];
 
 const resourceFit = [
@@ -65,7 +65,7 @@ const cardLinkClass = 'inline-flex min-h-11 items-center gap-2 text-small font-s
 
 export default function WindowsVpsPage() {
   return (
-    <>
+    <div className="srv-page srv-page-os srv-page-windows">
       <section className="sr-page-hero sr-os-page-hero">
         <div className="sr-container sr-os-hero-grid">
           <div>
@@ -92,7 +92,7 @@ export default function WindowsVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section" id="windows-plans">
+      <section className="sr-section srv-os-pricing-section" id="windows-plans">
         <div className="sr-container">
           <div className="sr-section-head">
             <div>
@@ -105,7 +105,7 @@ export default function WindowsVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border">
+      <section className="sr-section sr-section-border srv-os-story-section">
         <div className="sr-container sr-copy-grid">
           <div>
             <p className="sr-kicker">Next step</p>
@@ -120,7 +120,7 @@ export default function WindowsVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border">
+      <section className="sr-section sr-section-border srv-os-story-section">
         <div className="sr-container sr-copy-grid">
           <div>
             <p className="sr-kicker">Windows VPS guide</p>
@@ -150,22 +150,24 @@ export default function WindowsVpsPage() {
             </p>
           </div>
           <ul
-            className="mb-6 flex flex-wrap items-center gap-x-6 gap-y-4"
+            className="srv-os-brand-cloud"
             aria-label="Operating system listed on this page"
           >
             {osBrands.map(brand => (
-              <li key={brand.src}>
-                <img
-                  src={brand.src}
-                  alt={brand.alt}
-                  width={brand.width}
-                  height={brand.height}
-                  className="h-7 w-auto"
-                />
+              <li key={brand.src} className="srv-os-brand-tile">
+                <span className="srv-os-brand-mark">
+                  <img
+                    src={brand.src}
+                    alt={brand.alt}
+                    width={brand.width}
+                    height={brand.height}
+                  />
+                </span>
+                <span>{brand.label}</span>
               </li>
             ))}
           </ul>
-          <Table>
+          <Table className="srv-os-table">
             <TableHeader>
               <TableRow>
                 <TableHead>Version</TableHead>
@@ -202,7 +204,7 @@ export default function WindowsVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border">
+      <section className="sr-section sr-section-border srv-os-environment-section">
         <div className="sr-container sr-copy-grid">
           <div>
             <p className="sr-kicker">Control</p>
@@ -215,7 +217,7 @@ export default function WindowsVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border">
+      <section className="sr-section sr-section-border srv-os-story-section">
         <div className="sr-container">
           <div className="sr-section-head">
             <div>
@@ -224,20 +226,17 @@ export default function WindowsVpsPage() {
             </div>
             <p>Count what runs at the same time: Windows, applications, users, files, and future additions.</p>
           </div>
-          <ol className="grid list-none gap-0 p-0">
+          <ol className="srv-os-feature-rail grid list-none gap-0 p-0">
             {resourceFit.map(({ icon: Icon, number, title, text }) => (
               <li
                 key={number}
-                className="
-                  grid gap-3 border-t border-divider py-6 last:border-b
-                  sm:grid-cols-[auto_1fr] sm:items-start sm:gap-x-6
-                "
+                className="srv-os-feature-row"
               >
                 <div className="flex items-center gap-3">
                   <span className="text-micro font-bold text-body-dim tabular-nums">
                     {number}
                   </span>
-                  <span className="grid size-10 shrink-0 place-items-center rounded-md border border-border-soft bg-surface-2 text-primary">
+                  <span className="srv-os-feature-icon">
                     <Icon aria-hidden="true" className="size-5" />
                   </span>
                 </div>
@@ -251,16 +250,16 @@ export default function WindowsVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border">
+      <section className="sr-section sr-section-border srv-os-resource-section">
         <div className="sr-container">
           <div className="sr-section-head">
             <div><p className="sr-kicker">Regions</p><h2 className="sr-section-title">USA or EU</h2></div>
             <p>Choose the region that fits your users, latency, and operating requirements.</p>
           </div>
-          <div className="grid gap-4 md:grid-cols-2">
-            <Card>
+          <div className="srv-os-region-split grid gap-4 md:grid-cols-2">
+            <Card className="srv-os-region-panel" data-region="usa">
               <CardHeader>
-                <span className="grid size-11 place-items-center rounded-md border border-divider bg-surface-1 text-primary">
+                <span className="srv-os-region-icon">
                   <MapPin aria-hidden="true" className="size-5" />
                 </span>
                 <Badge variant="outline" className="w-fit text-body-muted">USA</Badge>
@@ -277,9 +276,9 @@ export default function WindowsVpsPage() {
                 </Link>
               </CardFooter>
             </Card>
-            <Card>
+            <Card className="srv-os-region-panel" data-region="eu">
               <CardHeader>
-                <span className="grid size-11 place-items-center rounded-md border border-divider bg-surface-1 text-primary">
+                <span className="srv-os-region-icon">
                   <MapPin aria-hidden="true" className="size-5" />
                 </span>
                 <Badge variant="outline" className="w-fit text-body-muted">EU</Badge>
@@ -300,7 +299,7 @@ export default function WindowsVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border">
+      <section className="sr-section sr-section-border srv-os-region-section">
         <div className="sr-container sr-copy-grid">
           <div>
             <p className="sr-kicker">Before you order</p>
@@ -312,7 +311,7 @@ export default function WindowsVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border">
+      <section className="sr-section sr-section-border srv-os-story-section">
         <div className="sr-container sr-copy-grid">
           <div>
             <p className="sr-kicker">Support and limits</p>
@@ -330,7 +329,7 @@ export default function WindowsVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border">
+      <section className="sr-section sr-section-border srv-os-story-section">
         <div className="sr-container sr-copy-grid">
           <div>
             <p className="sr-kicker">Order steps</p>
@@ -351,7 +350,7 @@ export default function WindowsVpsPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border">
+      <section className="sr-section sr-section-border srv-os-faq-section">
         <div className="sr-container">
           <div className="sr-section-head">
             <div><p className="sr-kicker">Common questions</p><h2 className="sr-section-title">Windows VPS questions</h2></div>
@@ -364,7 +363,7 @@ export default function WindowsVpsPage() {
               </AccordionItem>
             ))}
           </Accordion>
-          <div className="sr-cta-inline">
+          <div className="sr-cta-inline srv-os-switcher">
             <div><span className="sr-location-code">Choose another environment</span><h3>Need Linux instead?</h3><p>For websites, applications, databases, or development stacks, see Linux VPS hosting.</p></div>
             <Button asChild variant="outline"><Link href="/linux-vps">Linux VPS hosting <ArrowRight size={16} /></Link></Button>
           </div>
@@ -372,7 +371,7 @@ export default function WindowsVpsPage() {
       </section>
 
       <section className="sr-section">
-        <div className="sr-container sr-cta sr-cta-premium">
+        <div className="sr-container sr-cta sr-cta-premium srv-site-final srv-os-final">
           <div><p className="sr-kicker">Windows VPS plans</p><h2>Compare Windows VPS plans</h2></div>
           <div className="sr-actions">
             <Button asChild size="lg"><Link href="/plans#windows-vps">Compare plans <ArrowRight size={16} /></Link></Button>
@@ -380,6 +379,6 @@ export default function WindowsVpsPage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
