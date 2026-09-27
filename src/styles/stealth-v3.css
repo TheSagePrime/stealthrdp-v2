@@ -5406,3 +5406,201 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
     transform: none;
   }
 }
+
+
+/* ==========================================================================
+   Homepage semantic icon color
+   Color lives in recognition cues; surfaces remain neutral.
+   ========================================================================== */
+
+.srv-configurator-group[data-tone="cyan"] .srv-configurator-label svg {
+  color: #06b6d4;
+  filter: drop-shadow(0 0 8px rgb(6 182 212 / 0.22));
+}
+
+.srv-configurator-group[data-tone="violet"] .srv-configurator-label svg {
+  color: #8b5cf6;
+  filter: drop-shadow(0 0 8px rgb(139 92 246 / 0.2));
+}
+
+.srv-configurator-group[data-tone="amber"] .srv-configurator-label svg {
+  color: #f59e0b;
+  filter: drop-shadow(0 0 8px rgb(245 158 11 / 0.18));
+}
+
+.srv-workload-option svg {
+  padding: 3px;
+  border-radius: 6px;
+  box-sizing: content-box;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.srv-workload-option[data-tone="blue"] svg {
+  color: #3b82f6;
+  background: rgb(59 130 246 / 0.09);
+}
+
+.srv-workload-option[data-tone="cyan"] svg {
+  color: #06b6d4;
+  background: rgb(6 182 212 / 0.09);
+}
+
+.srv-workload-option[data-tone="violet"] svg {
+  color: #8b5cf6;
+  background: rgb(139 92 246 / 0.09);
+}
+
+.srv-workload-option[data-tone="amber"] svg {
+  color: #f59e0b;
+  background: rgb(245 158 11 / 0.1);
+}
+
+.srv-workload-option[data-tone="green"] svg {
+  color: #22c55e;
+  background: rgb(34 197 94 / 0.09);
+}
+
+.srv-workload-option[data-selected="true"] svg {
+  box-shadow: 0 0 0 1px currentColor, 0 5px 14px color-mix(in srgb, currentColor 14%, transparent);
+}
+
+.srv-infra-icon {
+  border-radius: 10px;
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.srv-infra-item[data-tone="cyan"] .srv-infra-icon {
+  color: #06b6d4;
+  background: rgb(6 182 212 / 0.09);
+}
+
+.srv-infra-item[data-tone="violet"] .srv-infra-icon {
+  color: #8b5cf6;
+  background: rgb(139 92 246 / 0.09);
+}
+
+.srv-infra-item[data-tone="blue"] .srv-infra-icon {
+  color: #3b82f6;
+  background: rgb(59 130 246 / 0.09);
+}
+
+.srv-infra-item[data-tone="green"] .srv-infra-icon {
+  color: #22c55e;
+  background: rgb(34 197 94 / 0.09);
+}
+
+.srv-infra-item:hover .srv-infra-icon {
+  transform: translateY(-1px) scale(1.04);
+  box-shadow: 0 8px 20px color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.srv-infra-item[data-tone="cyan"]:hover .srv-infra-line {
+  background: #06b6d4;
+}
+
+.srv-infra-item[data-tone="violet"]:hover .srv-infra-line {
+  background: #8b5cf6;
+}
+
+.srv-infra-item[data-tone="blue"]:hover .srv-infra-line {
+  background: #3b82f6;
+}
+
+.srv-infra-item[data-tone="green"]:hover .srv-infra-line {
+  background: #22c55e;
+}
+
+.srv-infra-item[data-tone="cyan"]:hover .srv-infra-number {
+  color: #06b6d4;
+  border-color: rgb(6 182 212 / 0.35);
+  background: rgb(6 182 212 / 0.06);
+}
+
+.srv-infra-item[data-tone="violet"]:hover .srv-infra-number {
+  color: #8b5cf6;
+  border-color: rgb(139 92 246 / 0.35);
+  background: rgb(139 92 246 / 0.06);
+}
+
+.srv-infra-item[data-tone="blue"]:hover .srv-infra-number {
+  color: #3b82f6;
+  border-color: rgb(59 130 246 / 0.35);
+  background: rgb(59 130 246 / 0.06);
+}
+
+.srv-infra-item[data-tone="green"]:hover .srv-infra-number {
+  color: #22c55e;
+  border-color: rgb(34 197 94 / 0.35);
+  background: rgb(34 197 94 / 0.06);
+}
+
+.srv-product-node[data-tone="hosting"] .srv-product-node-icon {
+  color: #3b82f6;
+  background:
+    linear-gradient(145deg, rgb(59 130 246 / 0.14), rgb(6 182 212 / 0.08));
+  box-shadow: inset 0 0 0 1px rgb(59 130 246 / 0.13);
+}
+
+.srv-product-node[data-tone="hosting"] .srv-product-node-kicker {
+  color: #3b82f6;
+}
+
+.srv-product-node[data-tone="protection"] .srv-product-node-icon {
+  color: #22c55e;
+  background:
+    linear-gradient(145deg, rgb(34 197 94 / 0.13), rgb(6 182 212 / 0.07));
+  box-shadow: inset 0 0 0 1px rgb(34 197 94 / 0.13);
+}
+
+.srv-product-node[data-tone="protection"] .srv-product-node-kicker {
+  color: #22c55e;
+}
+
+.srv-product-node[data-tone="hosting"]:hover .srv-product-node-icon {
+  box-shadow:
+    inset 0 0 0 1px rgb(59 130 246 / 0.22),
+    0 8px 24px rgb(59 130 246 / 0.12);
+}
+
+.srv-product-node[data-tone="protection"]:hover .srv-product-node-icon {
+  box-shadow:
+    inset 0 0 0 1px rgb(34 197 94 / 0.22),
+    0 8px 24px rgb(34 197 94 / 0.1);
+}
+
+.srv-review-source[data-source="trustpilot"],
+.srv-review-source-badge[data-source="trustpilot"] {
+  color: #00b67a;
+  border-color: rgb(0 182 122 / 0.24);
+  background: rgb(0 182 122 / 0.06);
+}
+
+.srv-review-source-badge[data-source="customer-testimonial"] {
+  color: #3b82f6;
+  border-color: rgb(59 130 246 / 0.2);
+  background: rgb(59 130 246 / 0.05);
+}
+
+.srv-review-source-badge[data-source="third-party-review"] {
+  color: #8b5cf6;
+  border-color: rgb(139 92 246 / 0.2);
+  background: rgb(139 92 246 / 0.05);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv-workload-option svg,
+  .srv-infra-icon {
+    transition: none;
+  }
+
+  .srv-infra-item:hover .srv-infra-icon {
+    transform: none;
+  }
+}
