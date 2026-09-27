@@ -66,5 +66,68 @@
     "sourceType": "third-party review",
     "sourceCompany": "StealthRDP",
     "authorName": "Trustpilot reviewer"
+  },
+  {
+    "id": "discord-vouch-white-devil-2023-05-20",
+    "quote": "best rdp bro",
+    "publishedOn": "May 20, 2023",
+    "sourceLabel": "Community feedback · Discord",
+    "sourceType": "community review",
+    "sourceCompany": "StealthRDP Discord",
+    "authorName": "WHITE DEVIL"
+  },
+  {
+    "id": "discord-vouch-bagga-bhaiyya-2023-07-02",
+    "quote": "Stealth RDP is the best.",
+    "publishedOn": "July 2, 2023",
+    "sourceLabel": "Community feedback · Discord",
+    "sourceType": "community review",
+    "sourceCompany": "StealthRDP Discord",
+    "authorName": "!Bagga Bhaiyya"
+  },
+  {
+    "id": "discord-vouch-bunny-2023-07-03",
+    "quote": "best rdp & fast customer service",
+    "publishedOn": "July 3, 2023",
+    "sourceLabel": "Community feedback · Discord",
+    "sourceType": "community review",
+    "sourceCompany": "StealthRDP Discord",
+    "authorName": "Bunny兔子"
+  },
+  {
+    "id": "discord-vouch-deleted-user-long-2023-07-03",
+    "quote": "I recently subscribed to Stealth RDP service and I must say, it exceeded my expectations! The connection was incredibly fast and stable, allowing me to seamlessly access my remote desktop from anywhere. The customer support was top-notch, promptly addressing any concerns I had. The pricing was also reasonable, offering great value for the features provided. I highly recommend this RDP service for anyone in need of reliable remote access.",
+    "publishedOn": "July 3, 2023",
+    "sourceLabel": "Community feedback · Discord",
+    "sourceType": "community review",
+    "sourceCompany": "StealthRDP Discord",
+    "authorName": "Discord member"
+  },
+  {
+    "id": "discord-vouch-jazz-op-2023-07-03",
+    "quote": "best support team ever !! must buy rdp service",
+    "publishedOn": "July 3, 2023",
+    "sourceLabel": "Community feedback · Discord",
+    "sourceType": "community review",
+    "sourceCompany": "StealthRDP Discord",
+    "authorName": "JAZZ OP"
+  },
+  {
+    "id": "discord-vouch-deleted-user-2023-07-04",
+    "quote": "Top-notch RDP service with exceptional performance, reliability, and user-friendly interface 😍",
+    "publishedOn": "July 4, 2023",
+    "sourceLabel": "Community feedback · Discord",
+    "sourceType": "community review",
+    "sourceCompany": "StealthRDP Discord",
+    "authorName": "Discord member"
+  },
+  {
+    "id": "discord-vouch-rahul-2024-01-04",
+    "quote": "Nice rdp 👍👍",
+    "publishedOn": "January 4, 2024",
+    "sourceLabel": "Community feedback · Discord",
+    "sourceType": "community review",
+    "sourceCompany": "StealthRDP Discord",
+    "authorName": "Rahul"
   }
 ]
