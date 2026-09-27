@@ -5,7 +5,7 @@ import { buildArticleSitemapEntries } from '@/libs/seo/articles';
 import { getSeoConfig } from '@/libs/seo/config';
 import { localizedPath } from '@/libs/seo/locale';
 import { canonicalUrlForPath } from '@/libs/seo/normalize';
-import { indexableDocPublicPaths } from '@/lib/stealth/content';
+import { citadelDocPublicPaths, indexableDocPublicPaths } from '@/lib/stealth/content';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const config = getSeoConfig();
@@ -16,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...config.routes.publicMarketing,
     ...(config.routes.dynamicPublic ?? []),
     ...indexableDocPublicPaths,
+    ...citadelDocPublicPaths,
   ];
   const routeEntries = routes.flatMap(route =>
     AllLocales.map(locale => ({

@@ -161,7 +161,7 @@ export default function CitadelPage() {
                 <a href="#citadel-plans">Choose protection <ArrowRight size={16} aria-hidden="true" /></a>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link href="/docs/citadel-getting-started">Read Citadel setup guide</Link>
+                <Link href="/citadel/docs/getting-started">Read Citadel setup guide</Link>
               </Button>
             </div>
             <div className="srv-citadel-v2-facts">

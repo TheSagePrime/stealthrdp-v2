@@ -9,7 +9,7 @@ export type ResourceSearchItem = {
   href: string;
   description: string;
   searchText?: string;
-  kind: 'Guide' | 'Help' | 'Question';
+  kind: 'Guide' | 'Help' | 'Citadel' | 'Question';
 };
 
 export function ResourceSearch({

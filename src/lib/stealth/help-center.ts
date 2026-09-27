@@ -60,6 +60,10 @@ export const helpCollections: HelpCollection[] = [
       '1737944110-termination-of-service',
     ],
   },
+
+];
+
+export const citadelCollections: HelpCollection[] = [
   {
     title: 'Citadel: Start here',
     description: 'Connect Cloudflare, understand protection, and activate your first site.',
@@ -130,6 +134,20 @@ export function helpCollectionForArticle(article: DocArticle): HelpCollection | 
 
 export function helpArticleHref(article: DocArticle): string {
   return `/docs/${docPublicSlug(article)}`;
+}
+
+export function citadelArticleHref(article: DocArticle): string {
+  return `/citadel/docs/${docPublicSlug(article).replace(/^citadel-/, '')}`;
+}
+
+export function citadelCollectionForArticle(article: DocArticle): HelpCollection | undefined {
+  return citadelCollections.find(collection => collection.slugs.includes(article.slug));
+}
+
+export function orderedCitadelArticles(articles: DocArticle[]): DocArticle[] {
+  const mapped = citadelCollections.flatMap(collection => articlesForCollection(collection, articles));
+  const mappedSlugs = new Set(mapped.map(article => article.slug));
+  return [...mapped, ...articles.filter(article => !mappedSlugs.has(article.slug))];
 }
 
 export function orderedHelpArticles(articles: DocArticle[]): DocArticle[] {

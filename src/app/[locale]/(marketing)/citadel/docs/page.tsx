@@ -1,62 +1,64 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { HelpSidebar } from '@/components/site/HelpSidebar';
+import { CitadelSidebar } from '@/components/site/CitadelSidebar';
 import { HelpTopbar } from '@/components/site/HelpTopbar';
 import { createPageMetadata } from '@/libs/seo/metadata';
 import {
   articlesForCollection,
-  helpArticleHref,
+  citadelArticleHref,
+  citadelCollections,
   helpCollectionId,
-  helpCollections,
 } from '@/lib/stealth/help-center';
-import { helpDocsArticles } from '@/lib/stealth/content';
+import { citadelDocsArticles } from '@/lib/stealth/content';
 
 export const metadata: Metadata = createPageMetadata({
-  path: '/docs',
-  title: 'Help Center — StealthRDP',
-  description: 'StealthRDP setup, troubleshooting, server management, networking, panels, policies, licensing, and support guidance.',
+  path: '/citadel/docs',
+  title: 'Citadel Docs — Layer 7 DDoS Protection',
+  description: 'Citadel documentation for setup, Cloudflare routing, domains, challenge levels, allowlists, cache, traffic analytics, bandwidth, alerts, billing, and support.',
   ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
-export default function DocsPage() {
+export default function CitadelDocsPage() {
   return (
-    <div className="srv-page srv-page-docs srv-docs-product">
-      <HelpTopbar />
+    <div className="srv-page srv-page-docs srv-page-citadel-docs srv-docs-product">
+      <HelpTopbar active="citadel" />
 
       <div className="sr-container srv-docs-mobile-wrap">
         <details className="srv-docs-mobile-nav">
-          <summary>Browse Help Center</summary>
-          <HelpSidebar articles={helpDocsArticles} />
+          <summary>Browse Citadel Docs</summary>
+          <CitadelSidebar articles={citadelDocsArticles} />
         </details>
       </div>
 
       <div className="sr-container srv-docs-grid">
         <aside className="srv-docs-sidebar">
-          <HelpSidebar articles={helpDocsArticles} />
+          <CitadelSidebar articles={citadelDocsArticles} />
         </aside>
 
         <main className="srv-docs-index">
           <header className="srv-docs-index-head">
             <div>
-              <p className="sr-kicker">Documentation</p>
-              <h1>Get from question to fix, faster.</h1>
+              <p className="sr-kicker">Citadel documentation</p>
+              <h1>Protect, tune, and operate Citadel.</h1>
               <p>
-                Practical setup and troubleshooting for StealthRDP servers, organized
-                around the task you are trying to complete.
+                Everything for Citadel lives here: first-time setup, Cloudflare routing,
+                protected domains, challenges, allowlists, caching, traffic visibility,
+                bandwidth, alerts, billing, and support.
               </p>
             </div>
 
             <div className="srv-docs-start-links">
-              <Link href="/docs/how-do-i-log-into-windows">Connect to Windows RDP</Link>
-              <Link href="/docs/how-to-rebuild-a-server">Rebuild a server</Link>
-              <Link href="/docs/windows-licensing">Windows licensing</Link>
-              <Link href="/faq">Common questions</Link>
+              <Link href="/citadel/docs/getting-started">Getting started</Link>
+              <Link href="/citadel/docs/cloudflare-setup">Cloudflare setup</Link>
+              <Link href="/citadel/docs/challenge-levels">Challenge levels</Link>
+              <Link href="/citadel/docs/allowlists">Allowlists</Link>
+              <Link href="/citadel/docs/logs">Request logs</Link>
             </div>
           </header>
 
           <div className="srv-docs-collections">
-            {helpCollections.map(collection => {
-              const articles = articlesForCollection(collection, helpDocsArticles);
+            {citadelCollections.map(collection => {
+              const articles = articlesForCollection(collection, citadelDocsArticles);
               if (articles.length === 0) return null;
 
               return (
@@ -67,7 +69,7 @@ export default function DocsPage() {
                 >
                   <div className="srv-docs-collection-head">
                     <div>
-                      <h2>{collection.title}</h2>
+                      <h2>{collection.title.replace(/^Citadel:\s*/, '')}</h2>
                       <p>{collection.description}</p>
                     </div>
                     <span>{articles.length}</span>
@@ -76,7 +78,7 @@ export default function DocsPage() {
                   <ol>
                     {articles.map((article, index) => (
                       <li key={article.slug}>
-                        <Link href={helpArticleHref(article)}>
+                        <Link href={citadelArticleHref(article)}>
                           <span className="srv-docs-entry-number">{String(index + 1).padStart(2, '0')}</span>
                           <span className="srv-docs-entry-copy">
                             <strong>{article.title}</strong>
@@ -94,17 +96,16 @@ export default function DocsPage() {
         </main>
 
         <aside className="srv-docs-index-aside">
-          <span className="srv-resource-nav-label">Need help now?</span>
-          <p>Server-specific and account-specific issues are handled through support.</p>
-          <a href="https://dash.stealthrdp.com/submitticket.php">Open support ticket ↗</a>
-          <Link href="/status">Check service status</Link>
+          <span className="srv-resource-nav-label">Citadel</span>
+          <p>Layer 7 DDoS protection, request controls, and protected-origin operations.</p>
+          <Link href="/citadel">Product overview</Link>
+          <Link href="/status">Service status</Link>
 
           <span className="srv-docs-aside-divider" />
 
-          <span className="srv-resource-nav-label">Learn more</span>
-          <Link href="/blog">VPS Guides</Link>
-          <Link href="/citadel/docs">Citadel Docs</Link>
-          <Link href="/resources">All resources</Link>
+          <span className="srv-resource-nav-label">Need help?</span>
+          <a href="https://dash.stealthrdp.com/submitticket.php">Open support ticket ↗</a>
+          <Link href="/docs">VPS Help Center</Link>
         </aside>
       </div>
     </div>

@@ -26,7 +26,7 @@ export function ResourceSidebar() {
         <span className="srv-help-tree-heading">Get help</span>
         <ul>
           <li><Link href="/docs">Help Center</Link></li>
-          <li><Link href="/docs/citadel-getting-started">Citadel protection setup</Link></li>
+          <li><Link href="/citadel/docs">Citadel Docs</Link></li>
           <li><Link href="/faq">Common questions</Link></li>
           <li><Link href="/status">Service status</Link></li>
         </ul>
