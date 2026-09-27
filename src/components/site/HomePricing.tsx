@@ -50,10 +50,10 @@ function tierName(plan: Plan) {
 }
 
 function previewWindow(regionPlans: Plan[], target: string) {
-  if (regionPlans.length <= 3) return regionPlans;
+  if (regionPlans.length <= 4) return regionPlans;
   const targetIndex = Math.max(0, regionPlans.findIndex(plan => tierName(plan) === target));
-  const start = Math.min(Math.max(targetIndex - 1, 0), Math.max(regionPlans.length - 3, 0));
-  return regionPlans.slice(start, start + 3);
+  const start = Math.min(Math.max(targetIndex - 1, 0), Math.max(regionPlans.length - 4, 0));
+  return regionPlans.slice(start, start + 4);
 }
 
 export function HomePricing() {
@@ -171,7 +171,7 @@ export function HomePricing() {
         <Badge variant="outline">{visible.length} plans in preview</Badge>
       </div>
 
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-3 xl:gap-6">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
         {visible.map(plan => {
           const price = plan.pricing[cycle];
           const monthEquivalent = price.amount / months[cycle];
@@ -182,6 +182,7 @@ export function HomePricing() {
           return (
             <PricingColumn
               key={plan.name}
+              className="srv-home-pricing-card"
               name={plan.name}
               description={osLabel}
               featured={featured}
