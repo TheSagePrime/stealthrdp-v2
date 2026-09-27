@@ -116,9 +116,11 @@ export function FaqExplorer({ faqs }: { faqs: Faq[] }) {
 
                   <Accordion>
                     {items.map(item => (
-                      <AccordionItem key={item._id} title={item.question} titleHeadingLevel={3}>
-                        <Answer text={item.answer} />
-                      </AccordionItem>
+                      <div key={item._id} id={`faq-${item._id}`} className="srv-faq-anchor">
+                        <AccordionItem title={item.question} titleHeadingLevel={3}>
+                          <Answer text={item.answer} />
+                        </AccordionItem>
+                      </div>
                     ))}
                   </Accordion>
                 </section>
