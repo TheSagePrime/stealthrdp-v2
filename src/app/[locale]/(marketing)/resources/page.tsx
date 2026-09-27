@@ -1,5 +1,11 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import {
+  Activity,
+  BookOpenText,
+  Lifebuoy,
+  Question,
+} from '@phosphor-icons/react/dist/ssr';
 import { HelpTopbar } from '@/components/site/HelpTopbar';
 import { ResourceSidebar } from '@/components/site/ResourceSidebar';
 import { createPageMetadata } from '@/libs/seo/metadata';
@@ -40,6 +46,13 @@ const destinations = [
     action: 'View status',
     description: 'Public infrastructure health and current service availability.',
   },
+] as const;
+
+const destinationIcons = [
+  <BookOpenText key="guides" size={18} weight="duotone" aria-hidden="true" />,
+  <Lifebuoy key="help" size={18} weight="duotone" aria-hidden="true" />,
+  <Question key="faq" size={18} weight="duotone" aria-hidden="true" />,
+  <Activity key="status" size={18} weight="duotone" aria-hidden="true" />,
 ] as const;
 
 export default function ResourcesPage() {
