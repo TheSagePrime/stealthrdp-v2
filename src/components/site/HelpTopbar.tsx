@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import {
-  BookOpenText,
-  Lifebuoy,
-  Question,
-  SquaresFour,
+  Cpu,
+  GlobeHemisphereWest,
+  Headset,
+  Lightning,
 } from '@phosphor-icons/react/dist/ssr';
 import { ResourceSearch, type ResourceSearchItem } from '@/components/site/ResourceSearch';
 import {
@@ -16,12 +16,12 @@ import {
 
 export type ResourceArea = 'resources' | 'guides' | 'help' | 'faq';
 
-const tabs = [
-  { label: 'Resources', href: '/resources', key: 'resources', icon: <SquaresFour size={14} aria-hidden="true" /> },
-  { label: 'Guides', href: '/blog', key: 'guides', icon: <BookOpenText size={14} aria-hidden="true" /> },
-  { label: 'Help Center', href: '/docs', key: 'help', icon: <Lifebuoy size={14} aria-hidden="true" /> },
-  { label: 'Common Questions', href: '/faq', key: 'faq', icon: <Question size={14} aria-hidden="true" /> },
-] as const;
+const tabs: { label: string; href: string; key: ResourceArea }[] = [
+  { label: 'Resources', href: '/resources', key: 'resources' },
+  { label: 'Guides', href: '/blog', key: 'guides' },
+  { label: 'Help Center', href: '/docs', key: 'help' },
+  { label: 'Common Questions', href: '/faq', key: 'faq' },
+];
 
 export function HelpTopbar({ active = 'help' }: { active?: ResourceArea }) {
   const items: ResourceSearchItem[] = [
@@ -80,7 +80,10 @@ export function HelpTopbar({ active = 'help' }: { active?: ResourceArea }) {
               data-active={isActive}
               aria-current={isActive ? 'page' : undefined}
             >
-              {tab.icon}
+              {tab.key === 'resources' ? <GlobeHemisphereWest size={14} aria-hidden="true" /> : null}
+              {tab.key === 'guides' ? <Cpu size={14} aria-hidden="true" /> : null}
+              {tab.key === 'help' ? <Headset size={14} aria-hidden="true" /> : null}
+              {tab.key === 'faq' ? <Lightning size={14} aria-hidden="true" /> : null}
               <span>{tab.label}</span>
             </Link>
           );

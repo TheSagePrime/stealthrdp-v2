@@ -10349,7 +10349,7 @@ a.srv-help-tree-heading:hover {
 
 
 
-/* Resources icon refinement: library icons, no custom interaction layer. */
+/* Resources wayfinding icons use the existing Phosphor UI icon set. */
 .srv-resource-tabs a {
   gap: 7px;
 }
@@ -10370,30 +10370,10 @@ a.srv-help-tree-heading:hover {
   height: 30px;
   align-items: center;
   justify-content: center;
-  align-self: start;
   border: 1px solid color-mix(in srgb, var(--primary) 14%, var(--border-divider));
   border-radius: 8px;
   background: color-mix(in srgb, var(--primary) 6%, var(--background));
   color: var(--primary);
-}
-
-.srv-resource-hub-copy-meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.srv-resource-hub-copy-meta small {
-  color: var(--text-faint);
-  font-size: .6875rem;
-  font-weight: 700;
-  letter-spacing: .07em;
-  text-transform: uppercase;
-}
-
-.srv-resource-hub-copy-meta .srv-resource-hub-index {
-  color: var(--text-faint);
 }
 
 @media (max-width: 520px) {
