@@ -11,7 +11,9 @@ import {
   ShieldCheck,
 } from '@phosphor-icons/react/dist/ssr';
 import { setRequestLocale } from 'next-intl/server';
+import Image from 'next/image';
 import Link from 'next/link';
+import { SiAlpinelinux, SiFreebsd, SiRockylinux } from '@icons-pack/react-simple-icons';
 
 import { Section } from '@/components/launchui/section';
 import { HomePricing } from '@/components/site/HomePricing';
@@ -43,6 +45,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
   });
 }
+
+const operatingSystems = [
+  { name: 'Windows Server', logo: '/brand/windows.svg' },
+  { name: 'Ubuntu', logo: '/brand/ubuntu.svg' },
+  { name: 'Debian', logo: '/brand/debian.svg' },
+  { name: 'Rocky Linux', icon: SiRockylinux },
+  { name: 'AlmaLinux', logo: '/brand/almalinux.svg' },
+  { name: 'CentOS', logo: '/brand/centos.svg' },
+  { name: 'Fedora', logo: '/brand/fedora.svg' },
+  { name: 'Alpine Linux', icon: SiAlpinelinux },
+  { name: 'FreeBSD', icon: SiFreebsd },
+] as const;
 
 const infrastructure = [
   {
@@ -198,8 +212,41 @@ export default async function HomePage({ params }: Props) {
         </div>
       </Section>
 
+      <section className="srv-os-band border-y border-border bg-card/35" aria-label="Supported operating systems">
+        <div className="srv-home-wide srv-os-band-inner">
+          <div className="srv-os-band-label">
+            <span>Works with your OS</span>
+          </div>
+
+          <div className="srv-os-marquee">
+            <span className="sr-visually-hidden">
+              Windows Server, Ubuntu, Debian, Rocky Linux, AlmaLinux, CentOS, Fedora, Alpine Linux, and FreeBSD
+            </span>
+            <div className="srv-os-marquee-track" aria-hidden="true">
+              {[false, true].map(clone => (
+                <div className="srv-os-marquee-copy" data-clone={clone ? 'true' : 'false'} key={String(clone)}>
+                  {operatingSystems.map(item => {
+                    const Icon = 'icon' in item ? item.icon : null;
+                    return (
+                      <div className="srv-os-logo" key={`${clone ? 'clone-' : ''}${item.name}`}>
+                        {'logo' in item ? (
+                          <Image src={item.logo} alt="" width={26} height={26} />
+                        ) : Icon ? (
+                          <Icon aria-hidden="true" />
+                        ) : null}
+                        <span>{item.name}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       <Section id="plans" className="py-12 sm:py-14 lg:py-16">
-        <div className="mx-auto flex max-w-7xl flex-col gap-7 sm:gap-8">
+        <div className="srv-home-wide flex flex-col gap-7 sm:gap-8">
           <div className="grid gap-5 lg:grid-cols-[minmax(0,1.15fr)_minmax(360px,0.65fr)] lg:items-end">
             <div className="grid max-w-4xl gap-4">
               <p className="text-xs font-semibold uppercase tracking-widest text-primary">
@@ -210,8 +257,8 @@ export default async function HomePage({ params }: Props) {
               </h2>
             </div>
             <p className="max-w-xl text-base leading-7 text-muted-foreground lg:justify-self-end">
-              Pick the workload, location, and billing cycle. The plan ladder keeps every tier
-              visible while live availability comes directly from the current catalogue.
+              Match the workload, operating system, location, and billing cycle without leaving
+              the homepage. Availability comes directly from the current plan data.
             </p>
           </div>
 
