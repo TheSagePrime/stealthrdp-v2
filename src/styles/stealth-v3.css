@@ -4035,3 +4035,117 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
     gap: 24px;
   }
 }
+
+
+/* ==========================================================================
+   Homepage composition contract
+   Components use natural max-widths; section atmosphere remains full-bleed.
+   ========================================================================== */
+
+.srv-home-wide {
+  max-width: 1320px;
+}
+
+.srv-home-infra .srv-home-wide,
+.srv-home-products-cluster,
+.srv-home-reviews .srv-home-wide {
+  max-width: 1220px;
+}
+
+.srv-home-feature-grid {
+  justify-content: center;
+}
+
+.srv-home-feature-card {
+  width: 100%;
+  max-width: 286px;
+}
+
+.srv-home-products-cluster {
+  justify-content: center;
+}
+
+.srv-home-product-grid {
+  align-content: stretch;
+  justify-content: center;
+}
+
+.srv-home-product-card {
+  width: 100%;
+  max-width: 350px;
+}
+
+.srv-home-review-heading {
+  width: min(100%, 1120px);
+  margin-inline: auto;
+}
+
+.srv-home-reviews .srv-review-marquee {
+  width: min(100%, 1220px);
+  max-width: 1220px;
+  margin-inline: auto;
+  padding-inline: 0;
+}
+
+.srv-home-final-card {
+  max-width: 1120px;
+}
+
+@media (min-width: 1280px) {
+  .srv-home-feature-grid {
+    grid-template-columns: repeat(4, minmax(0, 286px));
+    gap: 18px;
+  }
+
+  .srv-home-product-grid {
+    grid-template-columns: repeat(2, minmax(0, 350px));
+    gap: 18px;
+  }
+
+  .srv-home-products-cluster {
+    grid-template-columns: minmax(320px, 380px) auto;
+    gap: 18px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .srv-home-wide {
+    max-width: 1320px;
+  }
+
+  .srv-home-feature-grid {
+    gap: 22px;
+  }
+
+  .srv-home-products-cluster,
+  .srv-home-product-grid {
+    gap: 22px;
+  }
+}
+
+@media (max-width: 1279px) {
+  .srv-home-feature-grid {
+    grid-template-columns: repeat(2, minmax(0, 320px));
+  }
+
+  .srv-home-feature-card,
+  .srv-home-product-card {
+    max-width: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .srv-home-feature-grid,
+  .srv-home-product-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .srv-home-reviews .srv-review-marquee {
+    width: 100%;
+    max-width: none;
+  }
+
+  .srv-home-final-card {
+    max-width: none;
+  }
+}
