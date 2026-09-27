@@ -9509,3 +9509,196 @@ a.srv-help-tree-heading:hover {
     transition: none;
   }
 }
+
+
+/* ==========================================================================
+   Unified Resources application
+   Same shell for Resources, Guides, Help Center and Common Questions.
+   ========================================================================== */
+
+.srv-resource-tabs {
+  display: flex;
+  align-items: end;
+  gap: 28px;
+  min-height: 38px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.srv-resource-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.srv-resource-tabs a {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  border-bottom: 2px solid transparent;
+  color: var(--text-dim);
+  font-size: .6875rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.srv-resource-tabs a:hover {
+  color: var(--text);
+}
+
+.srv-resource-tabs a[data-active="true"] {
+  border-bottom-color: var(--primary);
+  color: var(--text);
+}
+
+.srv-resource-order-link {
+  border-radius: 8px;
+  background: var(--primary);
+  padding: 7px 10px !important;
+  color: var(--primary-foreground) !important;
+}
+
+.srv-resource-order-link:hover {
+  background: color-mix(in srgb, var(--primary) 90%, black);
+  color: var(--primary-foreground) !important;
+}
+
+/* Top bar is now two rows; every sticky resource element shares one offset. */
+.srv-docs-sidebar,
+.srv-docs-index-aside,
+.srv-docs-toc,
+.srv-knowledge-left,
+.srv-knowledge-right {
+  top: 118px !important;
+}
+
+.srv-docs-article .sr-richtext h2,
+.srv-docs-article .sr-richtext h3,
+.srv-docs-collection,
+.srv-faq-doc-group {
+  scroll-margin-top: 122px;
+}
+
+/* Every resource index uses the same compact content rhythm. */
+.srv-page-resources .srv-docs-index,
+.srv-page-blog .srv-docs-index,
+.srv-page-faq .srv-docs-index,
+.srv-page-docs .srv-docs-index {
+  max-width: 820px;
+}
+
+.srv-resources-index-head {
+  margin-bottom: 42px;
+}
+
+/* FAQ is documentation content now, not a separate landing-page design. */
+.srv-faq-doc-groups {
+  display: grid;
+  gap: 46px;
+}
+
+.srv-faq-doc-group {
+  min-width: 0;
+}
+
+.srv-faq-doc-group [data-slot="accordion"] {
+  border-top: 1px solid var(--border-divider);
+}
+
+.srv-faq-doc-group [data-slot="accordion-item"] {
+  border-bottom: 1px solid var(--border-divider);
+}
+
+.srv-faq-doc-group [data-slot="accordion-trigger"] {
+  min-height: 48px;
+  padding: 12px 2px;
+  color: var(--text);
+  font-size: .75rem;
+  font-weight: 600;
+}
+
+.srv-faq-doc-group [data-slot="accordion-content"] {
+  padding: 0 2px 16px;
+  color: var(--text-dim);
+  font-size: .6875rem;
+  line-height: 1.65;
+}
+
+.srv-faq-doc-group [data-slot="accordion-content"] p {
+  margin: 0;
+}
+
+.srv-faq-doc-group [data-slot="accordion-content"] a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Guide articles inherit the exact Help Center reading typography. */
+.srv-page-blog-article .srv-docs-article,
+.srv-page-minecraft .srv-docs-article {
+  max-width: 760px;
+}
+
+.srv-page-blog-article .seo-article-publication-meta,
+.srv-page-minecraft .seo-article-publication-meta {
+  display: contents;
+}
+
+/* The shared search is always available and visually identical. */
+.srv-docs-product .srv-resource-search-results {
+  z-index: 100;
+}
+
+@media (max-width: 1080px) {
+  .srv-resource-tabs {
+    gap: 22px;
+  }
+
+  .srv-docs-sidebar {
+    top: 118px !important;
+  }
+}
+
+@media (max-width: 780px) {
+  .srv-help-topbar {
+    position: sticky;
+  }
+
+  .srv-help-topbar-inner {
+    min-height: 54px;
+  }
+
+  .srv-resource-tabs {
+    min-height: 36px;
+    gap: 20px;
+  }
+
+  .srv-resource-tabs a {
+    min-height: 36px;
+    font-size: .625rem;
+  }
+
+  .srv-docs-mobile-wrap {
+    position: sticky;
+    top: 91px;
+    z-index: 40;
+    background: var(--background);
+  }
+
+  .srv-docs-grid {
+    padding-top: 22px;
+  }
+}
+
+@media (max-width: 520px) {
+  .srv-help-topbar-inner {
+    min-height: 52px;
+  }
+
+  .srv-resource-tabs {
+    gap: 18px;
+  }
+
+  .srv-docs-mobile-wrap {
+    top: 88px;
+  }
+}
