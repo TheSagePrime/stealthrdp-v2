@@ -48,7 +48,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   const related = article.relatedSlugs
     .map(relatedSlug => helpDocsArticles.find(item => item.slug === relatedSlug))
     .filter((item): item is (typeof helpDocsArticles)[number] => Boolean(item))
-    .slice(0, 3);
+    .slice(0, 4);
 
   return (
     <div className="srv-page srv-page-doc-article srv-docs-product">
