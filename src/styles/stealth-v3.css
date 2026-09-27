@@ -948,8 +948,8 @@ body {
 
 .srv3-socials a {
   display: grid;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   place-items: center;
   border-color: var(--border-divider);
   border-radius: 10px;
@@ -1038,13 +1038,28 @@ body {
 
 .srv3-footer-bottom {
   display: grid;
-  grid-template-columns: minmax(220px, 1fr) auto minmax(220px, 1fr);
-  gap: 28px;
-  align-items: center;
-  min-height: 72px;
+  gap: 0;
   border-top: 1px solid var(--border-divider);
   color: var(--text-dim);
   font-size: .6875rem;
+}
+
+.srv3-footer-bottom-main,
+.srv3-footer-bottom-note {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 28px;
+  align-items: center;
+}
+
+.srv3-footer-bottom-main {
+  min-height: 62px;
+}
+
+.srv3-footer-bottom-note {
+  min-height: 46px;
+  border-top: 1px solid color-mix(in srgb, var(--border-divider) 68%, transparent);
+  font-size: .625rem;
 }
 
 .srv3-footer-copyright {
@@ -1058,7 +1073,7 @@ body {
 
 .srv3-footer-legal {
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 18px;
   white-space: nowrap;
 }
@@ -6906,14 +6921,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   .srv3-footer-links {
     gap: 28px;
   }
-
-  .srv3-footer-bottom {
-    grid-template-columns: 1fr auto;
-  }
-
-  .srv3-footer-credit {
-    display: none;
-  }
 }
 
 @media (max-width: 760px) {
@@ -6934,21 +6941,30 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
     border-top: 1px solid var(--border-divider);
   }
 
-  .srv3-footer-bottom {
+  .srv3-footer-bottom-main,
+  .srv3-footer-bottom-note {
     grid-template-columns: 1fr;
-    gap: 12px;
-    padding: 20px 0;
+    gap: 10px;
+    align-items: start;
   }
 
-  .srv3-footer-copyright,
-  .srv3-footer-legal {
-    justify-self: start;
+  .srv3-footer-bottom-main {
+    padding: 18px 0;
+  }
+
+  .srv3-footer-bottom-note {
+    padding: 14px 0;
   }
 
   .srv3-footer-legal {
     flex-wrap: wrap;
     justify-content: flex-start;
     white-space: normal;
+  }
+
+  .srv3-footer-credit {
+    justify-self: start;
+    text-align: left;
   }
 }
 
