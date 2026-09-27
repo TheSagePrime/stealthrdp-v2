@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="300" viewBox="0 0 960 300" role="img">
+  <rect width="960" height="300" rx="24" fill="#0b1220"/>
+  <text x="40" y="48" fill="#e2e8f0" font-family="Segoe UI,sans-serif" font-size="20" font-weight="700">Allowlist / bypass</text>
+  <text x="40" y="84" fill="#94a3b8" font-family="Segoe UI,sans-serif" font-size="13">Allowlist paths</text>
+  <rect x="40" y="96" width="400" height="100" rx="12" fill="rgba(255,255,255,0.04)" stroke="rgba(34,211,238,0.35)"/>
+  <text x="60" y="140" fill="#67e8f9" font-family="ui-monospace,monospace" font-size="18">/api/</text>
+  <text x="60" y="170" fill="#94a3b8" font-family="Segoe UI,sans-serif" font-size="13">matches /api and /api/*</text>
+  <rect x="480" y="96" width="440" height="100" rx="12" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.08)"/>
+  <text x="500" y="140" fill="#e2e8f0" font-family="Segoe UI,sans-serif" font-size="15">IPs - exact or CIDR</text>
+  <text x="500" y="170" fill="#94a3b8" font-family="Segoe UI,sans-serif" font-size="13">User-Agents - substring match</text>
+  <rect x="40" y="220" width="180" height="44" rx="12" fill="#2563eb"/>
+  <text x="130" y="248" text-anchor="middle" fill="#fff" font-family="Segoe UI,sans-serif" font-size="14" font-weight="600">Save allowlist</text>
+  <text x="240" y="248" fill="#94a3b8" font-family="Segoe UI,sans-serif" font-size="13">Applies to apex, www, and subdomains</text>
+</svg>
