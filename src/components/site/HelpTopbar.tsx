@@ -21,9 +21,14 @@ export function HelpTopbar() {
   return (
     <div className="srv-help-topbar">
       <div className="sr-container srv-help-topbar-inner">
-        <Link href="/docs" className="srv-help-brand">
+        <Link href="/docs" className="srv-help-brand" aria-label="StealthRDP Help Center">
+          <img
+            src="https://cdn.stealthrdp.com/images/new/6.png"
+            alt="StealthRDP"
+            width="700"
+            height="170"
+          />
           <span>Help Center</span>
-          <small>StealthRDP</small>
         </Link>
 
         <ResourceSearch
