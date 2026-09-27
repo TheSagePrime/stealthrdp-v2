@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from 'react';
 import { ArrowSquareOut, CaretDown } from '@phosphor-icons/react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { ButtonGroup } from '@/components/ui/button-group';
 import { Pill } from '@/components/ui/pill';
 import { Progress } from '@/components/ui/progress';
 import {
@@ -32,6 +31,14 @@ const priceHeader: Record<BillingCycle, string> = {
   semiannual: 'Price per 6 months',
   annual: 'Price per year',
   biannual: 'Price per 2 years',
+};
+
+const cycleLabel: Record<BillingCycle, string> = {
+  monthly: 'Monthly',
+  quarterly: 'Quarterly',
+  semiannual: '6-month',
+  annual: 'Annual',
+  biannual: '2-year',
 };
 
 const formatPrice = (amount: number) => Number.isInteger(amount) ? `${amount}` : amount.toFixed(2);
@@ -329,59 +336,51 @@ export function PricingExplorer({
 
   return (
     <div className="sr-pricing-explorer" data-compact={compact ? "true" : "false"}>
-      <div className="sr-control-stack">
-        <span className="sr-control-label">Deployment region</span>
-        <ButtonGroup className="sr-segmented-control" aria-label="Deployment region">
-          {(['USA', 'EU'] as const).map(item => (
-            <Button
-              key={item}
-              type="button"
-              size="sm"
-              variant={region === item ? 'default' : 'outline'}
-              aria-pressed={region === item}
-              onClick={() => setRegion(item)}
-            >
-              {item}
-            </Button>
-          ))}
-        </ButtonGroup>
-      </div>
+      <div className="srv-pricing-controls">
+        <div className="srv-pricing-control-card srv-pricing-region">
+          <div className="srv-selector" role="group" aria-label="Deployment region">
+            {(['USA', 'EU'] as const).map(item => (
+              <button
+                key={item}
+                type="button"
+                className="srv-selector-option"
+                data-selected={region === item}
+                aria-pressed={region === item}
+                onClick={() => setRegion(item)}
+              >
+                <span className="srv-selector-dot" aria-hidden="true" />
+                {item}
+              </button>
+            ))}
+          </div>
+        </div>
 
-      <div className="sr-control-stack sr-cycle-stack">
-        <span className="sr-control-label" id="sr-billing-label">Billing cycle</span>
-        <ul className="sr-cycle-strip" role="group" aria-labelledby="sr-billing-label">
-          {cycleOrder.map(item => {
-            const billing = billingCycles[item] as {
-              label: string;
-              discountLabel?: string;
-            };
-            const termPrice = ladderPlan?.pricing[item];
-            const selected = cycle === item;
-            const termLabel = termPrice?.suffix === '/2yr' ? '2-year' : termPrice?.suffix === '/6mo' ? '6-month' : billing.label;
+        <div className="srv-pricing-control-card srv-pricing-billing">
+          <div className="srv-billing-rail" role="group" aria-label="Billing cycle">
+            {cycleOrder.map(item => {
+              const termPrice = ladderPlan?.pricing[item];
 
-            return (
-              <li key={item}>
+              return (
                 <button
+                  key={item}
                   type="button"
-                  className="sr-term-option"
-                  data-selected={selected}
-                  aria-pressed={selected}
+                  className="srv-billing-option"
+                  data-selected={cycle === item}
+                  aria-pressed={cycle === item}
                   disabled={!termPrice}
                   aria-disabled={!termPrice}
                   onClick={() => setCycle(item)}
                 >
-                  <span className="sr-term-label">{termLabel}</span>
-                  {termPrice?.discountLabel ? (
-                    <Badge variant="outline" className="sr-term-save">{termPrice.discountLabel}</Badge>
-                  ) : null}
+                  {cycleLabel[item]}
                   <span className="sr-visually-hidden">
                     {termPrice ? `from €${formatPrice(termPrice.amount)} ${termPrice.periodLabel}, due today` : 'price at checkout'}
                   </span>
                 </button>
-              </li>
-            );
-          })}
-        </ul>
+              );
+            })}
+          </div>
+        </div>
+
         <p className="sr-visually-hidden" aria-live="polite">
           {highlighted && highlightedPrice
             ? `${highlighted.name}, ${billingCycles[cycle]?.label}: €${formatPrice(highlightedPrice.amount)} ${highlightedPrice.periodLabel}, due today`
