@@ -4,6 +4,7 @@ import {
   Cpu,
   Headset,
   Lightning,
+  Pulse,
   ShieldCheck,
 } from '@phosphor-icons/react/dist/ssr';
 import { HelpTopbar } from '@/components/site/HelpTopbar';
@@ -24,6 +25,7 @@ const destinations = [
     label: 'Learn',
     action: 'Browse guides',
     description: 'VPS use cases, security, performance, infrastructure decisions, backups, and practical server operations.',
+    icon: Cpu,
   },
   {
     title: 'Help Center',
@@ -31,6 +33,15 @@ const destinations = [
     label: 'Solve',
     action: 'Open help center',
     description: 'Setup instructions, troubleshooting, networking, Windows access, panels, licensing, and policies.',
+    icon: Headset,
+  },
+  {
+    title: 'Citadel Docs',
+    href: '/citadel/docs',
+    label: 'Protect',
+    action: 'Open Citadel docs',
+    description: 'Setup, Cloudflare routing, protected domains, challenges, allowlists, traffic visibility, alerts, and operations.',
+    icon: ShieldCheck,
   },
   {
     title: 'Common Questions',
@@ -38,6 +49,7 @@ const destinations = [
     label: 'Quick answers',
     action: 'Browse questions',
     description: 'Quick answers about plans, billing, setup, operating systems, refunds, and support.',
+    icon: Lightning,
   },
   {
     title: 'Service Status',
@@ -45,6 +57,7 @@ const destinations = [
     label: 'Check',
     action: 'View status',
     description: 'Public infrastructure health and current service availability.',
+    icon: Pulse,
   },
 ] as const;
 
@@ -94,13 +107,12 @@ export default function ResourcesPage() {
             </div>
 
             <div className="srv-resource-hub-grid">
-              {destinations.map((item, index) => (
+              {destinations.map((item, index) => {
+                const Icon = item.icon;
+                return (
                 <Link className="srv-resource-hub-card" href={item.href} key={item.href}>
                   <span className="srv-resource-hub-icon" aria-hidden="true">
-                    {index === 0 ? <Cpu size={18} weight="duotone" /> : null}
-                    {index === 1 ? <Headset size={18} weight="duotone" /> : null}
-                    {index === 2 ? <Lightning size={18} weight="duotone" /> : null}
-                    {index === 3 ? <ShieldCheck size={18} weight="duotone" /> : null}
+                    <Icon size={18} weight="duotone" />
                   </span>
                   <span className="srv-resource-hub-copy">
                     <span className="srv-resource-hub-copy-meta">
@@ -115,7 +127,8 @@ export default function ResourcesPage() {
                     <span aria-hidden="true">→</span>
                   </span>
                 </Link>
-              ))}
+                );
+              })}
             </div>
           </section>
         </main>
