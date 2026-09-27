@@ -6255,3 +6255,450 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
     margin-inline: auto;
   }
 }
+
+
+/* ==========================================================================
+   Windows / Linux product pages
+   Preserve the strong OS hero marks; modernize the rest of the experience.
+   ========================================================================== */
+
+.srv-page-os {
+  --srv-page-width: 1180px;
+}
+
+.srv-page-os .sr-os-page-hero {
+  background:
+    radial-gradient(circle at 82% 24%, color-mix(in srgb, var(--primary) 11%, transparent), transparent 25rem),
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-1) 62%, transparent), transparent);
+}
+
+.srv-page-os .sr-os-hero-grid {
+  gap: clamp(46px, 7vw, 88px);
+}
+
+.srv-page-os .srv3-os-visual {
+  transform: perspective(1100px) rotateY(-2deg) rotateX(1deg);
+  box-shadow:
+    0 24px 54px color-mix(in srgb, var(--foreground) 10%, transparent),
+    inset 0 1px 0 color-mix(in srgb, var(--background) 78%, transparent);
+}
+
+.srv-page-os .srv3-os-visual-icon {
+  position: relative;
+  overflow: hidden;
+  border-radius: 14px;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--surface-1) 98%, transparent), color-mix(in srgb, var(--primary) 9%, var(--surface-2)));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--background) 86%, transparent),
+    0 12px 24px color-mix(in srgb, var(--primary) 12%, transparent);
+}
+
+.srv-page-os .srv3-os-visual-icon::after {
+  content: "";
+  position: absolute;
+  inset: 1px 1px 52% 1px;
+  border-radius: 13px 13px 10px 10px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--background) 28%, transparent), transparent);
+  pointer-events: none;
+}
+
+/* Vertical plan cards on product pages, matching homepage/Plans. */
+.srv-page-os .sr-pick-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 320px));
+  justify-content: center;
+  gap: 22px;
+}
+
+.srv-page-os .sr-pick-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "head"
+    "os"
+    "price"
+    "specs"
+    "action"
+    "stock";
+  align-content: start;
+  gap: 14px;
+  width: 100%;
+  min-height: 100%;
+  padding: 22px;
+  border-radius: 16px;
+}
+
+.srv-page-os .sr-pick-card-head {
+  min-height: 42px;
+}
+
+.srv-page-os .sr-pick-card-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.srv-page-os .sr-pick-card-os {
+  margin-top: -8px;
+  font-size: .6875rem;
+}
+
+.srv-page-os .sr-pick-card-price {
+  gap: 4px;
+  margin: 2px 0 0;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-divider);
+}
+
+.srv-page-os .sr-pick-card-amount {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -.045em;
+}
+
+.srv-page-os .sr-pick-specs {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.srv-page-os .sr-pick-spec {
+  display: flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid color-mix(in srgb, var(--border-divider) 78%, transparent);
+  font-size: .75rem;
+}
+
+.srv-page-os .sr-pick-spec dt {
+  flex: 0 0 auto;
+}
+
+.srv-page-os .sr-pick-spec dd {
+  text-align: right;
+  font-weight: 600;
+}
+
+.srv-page-os .sr-pick-card-action {
+  align-self: end;
+  margin-top: 4px;
+}
+
+.srv-page-os .sr-pick-stock {
+  margin: -4px 0 0;
+  text-align: left;
+  font-size: .6875rem;
+}
+
+.srv-page-os .sr-pick-card[data-popular="true"] {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border-divider));
+  background:
+    radial-gradient(circle at 88% 0%, color-mix(in srgb, var(--primary) 7%, transparent), transparent 13rem),
+    var(--surface-1);
+  box-shadow:
+    0 12px 34px color-mix(in srgb, var(--primary) 7%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+/* Editorial bands keep long SEO pages from becoming repetitive. */
+.srv-page-os .srv-os-story-section {
+  padding-block: clamp(44px, 5vw, 64px);
+}
+
+.srv-page-os .srv-os-story-section .sr-copy-grid {
+  max-width: 1020px;
+  margin-inline: auto;
+}
+
+.srv-page-os .srv-os-story-section:nth-of-type(even) .sr-copy-grid {
+  grid-template-columns: minmax(0, 1.25fr) minmax(250px, .75fr);
+}
+
+.srv-page-os .srv-os-story-section:nth-of-type(even) .sr-copy-grid > :first-child {
+  order: 2;
+}
+
+/* Real OS/distribution logos in dimensional recognition tiles. */
+.srv-os-brand-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 28px;
+  padding: 0;
+  list-style: none;
+}
+
+.srv-os-brand-tile {
+  position: relative;
+  display: grid;
+  min-width: 128px;
+  grid-template-columns: 42px auto;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border-divider);
+  border-radius: 14px;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--surface-1) 98%, transparent), color-mix(in srgb, var(--surface-2) 88%, transparent));
+  padding: 10px 14px 10px 10px;
+  color: var(--foreground);
+  font-size: .75rem;
+  font-weight: 600;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--background) 82%, transparent),
+    0 9px 22px color-mix(in srgb, var(--foreground) 5%, transparent);
+}
+
+.srv-os-brand-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 52% 0;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--background) 18%, transparent), transparent);
+  pointer-events: none;
+}
+
+.srv-os-brand-mark {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--surface-1) 90%, transparent);
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--border-divider) 70%, transparent),
+    0 6px 14px color-mix(in srgb, var(--foreground) 7%, transparent);
+}
+
+.srv-os-brand-mark img {
+  width: 27px;
+  height: 27px;
+  object-fit: contain;
+}
+
+.srv-page-linux .srv-os-brand-tile:last-child .srv-os-brand-mark img {
+  width: 25px;
+  height: 30px;
+}
+
+/* Environment tables are clean data surfaces, not cards. */
+.srv-page-os .srv-os-table {
+  overflow: hidden;
+  border-block: 1px solid var(--border-divider);
+}
+
+.srv-page-os .srv-os-table thead {
+  background: color-mix(in srgb, var(--surface-2) 68%, transparent);
+}
+
+.srv-page-os .srv-os-table tbody tr {
+  transition: background-color 160ms ease;
+}
+
+.srv-page-os .srv-os-table tbody tr:hover {
+  background: color-mix(in srgb, var(--primary) 3%, transparent);
+}
+
+/* Clean dimensional technical glyph tiles. */
+.srv-os-feature-rail {
+  max-width: 940px;
+  margin-left: auto;
+}
+
+.srv-os-feature-row {
+  display: grid;
+  grid-template-columns: 118px minmax(0, 1fr);
+  gap: 22px;
+  align-items: center;
+  min-height: 110px;
+  border-top: 1px solid var(--border-divider);
+  padding: 18px 8px;
+  transition: transform 180ms ease, background-color 180ms ease;
+}
+
+.srv-os-feature-row:last-child {
+  border-bottom: 1px solid var(--border-divider);
+}
+
+.srv-os-feature-row:hover {
+  transform: translateX(5px);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--primary) 5%, transparent), transparent 70%);
+}
+
+.srv-os-feature-row > div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.srv-os-feature-icon,
+.srv-os-region-icon {
+  position: relative;
+  display: grid;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 auto;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--primary) 20%, var(--border-divider));
+  border-radius: 13px;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--surface-1) 96%, transparent), color-mix(in srgb, var(--primary) 9%, var(--surface-2)));
+  color: var(--primary);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--background) 88%, transparent),
+    0 10px 22px color-mix(in srgb, var(--primary) 11%, transparent);
+  transform: perspective(220px) rotateX(3deg) rotateY(-3deg);
+}
+
+.srv-os-feature-icon::after,
+.srv-os-region-icon::after {
+  content: "";
+  position: absolute;
+  inset: 1px 1px 54% 1px;
+  border-radius: 12px 12px 8px 8px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--background) 26%, transparent), transparent);
+  pointer-events: none;
+}
+
+.srv-os-feature-icon svg,
+.srv-os-region-icon svg {
+  position: relative;
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+}
+
+.srv-os-feature-row:nth-child(2) .srv-os-feature-icon {
+  border-color: color-mix(in srgb, var(--accent) 20%, var(--border-divider));
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--surface-1) 96%, transparent), color-mix(in srgb, var(--accent) 9%, var(--surface-2)));
+  color: var(--accent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--background) 88%, transparent),
+    0 10px 22px color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.srv-os-feature-row:nth-child(3) .srv-os-feature-icon {
+  color: color-mix(in srgb, var(--primary) 62%, var(--foreground));
+}
+
+/* Regions share one split surface instead of two unrelated cards. */
+.srv-os-region-split {
+  gap: 0 !important;
+  border-block: 1px solid var(--border-divider);
+}
+
+.srv-os-region-panel {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.srv-os-region-panel + .srv-os-region-panel {
+  border-left: 1px solid var(--border-divider) !important;
+}
+
+.srv-os-region-panel [data-slot="card-header"] {
+  padding: 28px 30px 12px;
+}
+
+.srv-os-region-panel [data-slot="card-footer"] {
+  padding: 10px 30px 28px;
+}
+
+.srv-os-region-panel[data-region="eu"] .srv-os-region-icon {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 20%, var(--border-divider));
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--surface-1) 96%, transparent), color-mix(in srgb, var(--accent) 9%, var(--surface-2)));
+}
+
+/* Order, FAQ and closing rhythm. */
+.srv-os-order-rail {
+  max-width: 900px;
+  margin-left: auto;
+}
+
+.srv-os-order-rail li {
+  transition: transform 180ms ease, background-color 180ms ease;
+}
+
+.srv-os-order-rail li:hover {
+  transform: translateX(5px);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--primary) 4%, transparent), transparent 70%);
+}
+
+.srv-page-os .srv-os-switcher {
+  margin-top: 34px;
+  border: 0 !important;
+  border-block: 1px solid var(--border-divider) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding: 22px 0;
+}
+
+.srv-page-os .srv-os-final {
+  border-radius: 0 !important;
+}
+
+@media (max-width: 1080px) {
+  .srv-page-os .sr-pick-cards {
+    grid-template-columns: repeat(2, minmax(0, 320px));
+  }
+
+  .srv-page-os .srv-os-story-section:nth-of-type(even) .sr-copy-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .srv-page-os .srv-os-story-section:nth-of-type(even) .sr-copy-grid > :first-child {
+    order: initial;
+  }
+}
+
+@media (max-width: 720px) {
+  .srv-page-os .srv3-os-visual {
+    transform: none;
+  }
+
+  .srv-page-os .sr-pick-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .srv-page-os .sr-pick-card {
+    max-width: 430px;
+    margin-inline: auto;
+  }
+
+  .srv-os-feature-row {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .srv-os-region-panel + .srv-os-region-panel {
+    border-left: 0 !important;
+    border-top: 1px solid var(--border-divider) !important;
+  }
+
+  .srv-os-brand-tile {
+    min-width: 0;
+    flex: 1 1 150px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv-page-os .srv3-os-visual,
+  .srv-os-feature-row,
+  .srv-os-order-rail li {
+    transform: none;
+    transition: none;
+  }
+}
