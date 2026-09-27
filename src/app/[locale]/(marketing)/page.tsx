@@ -17,7 +17,7 @@ import { SiAlpinelinux, SiFreebsd, SiRockylinux } from '@icons-pack/react-simple
 
 import { Section } from '@/components/launchui/section';
 import { HomePricing } from '@/components/site/HomePricing';
-import { HeroWordRotator } from '@/components/site/home/HeroWordRotator';
+import { ChromaticTextReveal } from '@/components/motion/chromatic-text-reveal';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -141,7 +141,23 @@ export default async function HomePage({ params }: Props) {
 
             <div className="srv-home-hero-message grid gap-5">
               <h1 className="srv-home-hero-title max-w-4xl text-5xl font-semibold leading-none tracking-tight text-balance sm:text-6xl lg:text-7xl">
-                <span className="block">Your <HeroWordRotator /></span>
+                <span className="block">
+                  <ChromaticTextReveal
+                    prefix="Your"
+                    words={['server.', 'Windows VPS.', 'Linux VPS.']}
+                    colors={[
+                      'var(--primary)',
+                      'color-mix(in srgb, var(--primary) 66%, white)',
+                      'var(--primary)',
+                    ]}
+                    foregroundColor="var(--foreground)"
+                    duration={1.8}
+                    pauseDuration={4.2}
+                    startOnView={false}
+                    once={false}
+                    animateInitial={false}
+                  />
+                </span>
                 <span className="block text-primary">Live in 60 seconds.</span>
               </h1>
               <p className="srv-home-hero-lede max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
