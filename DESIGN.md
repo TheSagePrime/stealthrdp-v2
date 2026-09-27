@@ -111,7 +111,7 @@ Prefer purpose-built infrastructure illustrations, server/rack/network compositi
 
 For recognizable platforms and operating systems, use the **real approved brand mark** when available (for example Windows, Linux/Tux, Ubuntu, Debian, CentOS, AlmaLinux, Fedora). Do not replace a recognizable logo with a generic outline icon.
 
-Outside the dedicated Windows/Linux product visuals, generic feature icons must be **clean standalone duotone or solid technical glyphs**. Do not put them inside neon/glowing boxes, glass tiles, halos, faux-3D bevels, or decorative icon backgrounds. Restrained semantic colour is allowed when it improves recognition, but the icon itself—not an effect around it—must carry the visual meaning.
+Outside the dedicated Windows/Linux product visuals, generic feature icons must be **substantial filled/solid or carefully chosen duotone technical glyphs**. Thin outline icons are not the default for feature/product communication. Do not put icons inside neon/glowing boxes, glass tiles, halos, faux-3D bevels, or decorative icon backgrounds. Generic icons use a coherent neutral/primary colour system; reserve green/amber/red for genuine semantic states such as protection, success, warning, or failure.
 
 Avoid childish illustrations, random flat icon packs, mixed icon styles, or decorative icons that compete with the content.
 
