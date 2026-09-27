@@ -236,7 +236,7 @@ export default async function HomePage({ params }: Props) {
                         {'logo' in item ? (
                           <Image src={item.logo} alt="" width={26} height={26} />
                         ) : Icon ? (
-                          <Icon aria-hidden="true" weight="duotone" />
+                          <Icon aria-hidden="true" />
                         ) : null}
                         <span>{item.name}</span>
                       </div>
@@ -335,7 +335,7 @@ export default async function HomePage({ params }: Props) {
           <div className="srv-product-flow" aria-label="StealthRDP product stack">
             <Link href="/plans" className="srv-product-node" data-tone="hosting">
               <span className="srv-product-node-icon">
-                <HardDrive aria-hidden="true" weight="duotone" />
+                <HardDrive aria-hidden="true" />
               </span>
               <span className="srv-product-node-kicker">Hosting</span>
               <strong>Windows &amp; Linux VPS</strong>
@@ -354,7 +354,7 @@ export default async function HomePage({ params }: Props) {
 
             <Link href="/citadel" className="srv-product-node srv-product-node-protection" data-tone="protection">
               <span className="srv-product-node-icon">
-                <ShieldCheck aria-hidden="true" weight="duotone" />
+                <ShieldCheck aria-hidden="true" />
               </span>
               <span className="srv-product-node-kicker">Protection</span>
               <strong>Citadel L7 HTTP/HTTPS</strong>
