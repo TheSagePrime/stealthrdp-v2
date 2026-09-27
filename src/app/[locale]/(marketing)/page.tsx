@@ -290,7 +290,7 @@ export default async function HomePage({ params }: Props) {
             </div>
           </div>
 
-          <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-4">
+          <div className="srv-home-feature-grid grid gap-3 md:grid-cols-2 xl:grid-cols-4">
             {infrastructure.map(({ title, text, label, icon: Icon }, index) => (
               <Card key={title} className="srv-home-feature-card gap-3 p-5">
                 <CardHeader className="p-0">
@@ -314,7 +314,7 @@ export default async function HomePage({ params }: Props) {
       </Section>
 
       <Section className="srv-home-products py-10 sm:py-12 lg:py-14">
-        <div className="srv-home-wide grid gap-4 lg:grid-cols-[0.78fr_1.22fr] lg:items-stretch">
+        <div className="srv-home-products-cluster srv-home-wide grid gap-4 lg:grid-cols-[minmax(320px,380px)_auto] lg:items-stretch lg:justify-center">
           <div className="flex flex-col justify-between gap-6 rounded-xl border border-border bg-card p-6 lg:p-7">
             <div className="grid gap-4">
               <p className="text-xs font-semibold uppercase tracking-widest text-primary">
@@ -338,7 +338,7 @@ export default async function HomePage({ params }: Props) {
             </div>
           </div>
 
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="srv-home-product-grid grid gap-4 sm:grid-cols-2">
             <Card className="srv-home-product-card gap-4 p-6">
               <CardHeader className="p-0">
                 <Badge variant="outline" className="w-fit">Hosting</Badge>
@@ -382,7 +382,7 @@ export default async function HomePage({ params }: Props) {
 
       <Section className="srv-home-reviews border-y border-border bg-card/30 py-10 sm:py-12 lg:py-14">
         <div className="srv-home-wide flex flex-col gap-7">
-          <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.5fr)] lg:items-end">
+          <div className="srv-home-review-heading grid gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(320px,0.5fr)] lg:items-end">
             <div className="grid gap-3">
               <p className="text-xs font-semibold uppercase tracking-widest text-primary">
                 Customer proof
@@ -451,7 +451,7 @@ export default async function HomePage({ params }: Props) {
       </Section>
 
       <Section className="srv-home-final-section py-8 sm:py-10 lg:py-12">
-        <Card className="srv-home-wide gap-6 p-6 sm:p-8 lg:grid lg:grid-cols-[1fr_auto] lg:items-center">
+        <Card className="srv-home-final-card srv-home-wide gap-6 p-6 sm:p-8 lg:grid lg:grid-cols-[1fr_auto] lg:items-center">
           <div className="grid gap-4">
             <Badge variant="outline" className="w-fit">Backed by 10,000+ orders</Badge>
             <h2 className="max-w-3xl text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
