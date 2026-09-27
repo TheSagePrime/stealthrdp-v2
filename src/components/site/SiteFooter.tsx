@@ -3,7 +3,6 @@ import { SiDiscord, SiInstagram, SiTelegram, SiX } from '@icons-pack/react-simpl
 import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 
 const columns = [
   {
@@ -50,10 +49,10 @@ const socials = [
 export function SiteFooter() {
   return (
     <footer className="srv3-footer">
-      <div className="sr-container">
-        <div className="srv3-footer-top">
+      <div className="sr-container srv3-footer-shell">
+        <div className="srv3-footer-main">
           <div className="srv3-footer-brand">
-            <Link className="srv3-logo" href="/" aria-label="StealthRDP home">
+            <Link className="srv3-logo srv3-footer-logo" href="/" aria-label="StealthRDP home">
               <img
                 src="https://cdn.stealthrdp.com/images/new/6.png"
                 alt="StealthRDP"
@@ -62,17 +61,23 @@ export function SiteFooter() {
                 loading="lazy"
               />
             </Link>
-            <p>
+
+            <p className="srv3-footer-description">
               Windows and Linux VPS infrastructure with USA and EU regions,
               NVMe storage and full administrative access.
             </p>
-            <ul className="srv3-socials">
+
+            <div className="srv3-footer-proof" aria-label="StealthRDP service highlights">
+              <span><strong>USA + EU</strong> regions</span>
+              <span><strong>24/7</strong> support</span>
+            </div>
+
+            <ul className="srv3-socials" aria-label="StealthRDP social links">
               {socials.map(([label, href, Mark]) => (
                 <li key={label}>
-                  <Button asChild variant="outline" size="sm">
-                    <a href={href} target="_blank" rel="noreferrer">
+                  <Button asChild variant="outline" size="icon-sm">
+                    <a href={href} target="_blank" rel="noreferrer" aria-label={label} title={label}>
                       <Mark size={16} aria-hidden="true" />
-                      {label}
                     </a>
                   </Button>
                 </li>
@@ -80,17 +85,17 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          <div className="srv3-footer-links">
+          <nav className="srv3-footer-links" aria-label="Footer navigation">
             {columns.map(column => (
-              <div key={column.title}>
+              <div className="srv3-footer-column" key={column.title}>
                 <h2>{column.title}</h2>
                 <ul>
                   {column.links.map(([label, href]) => (
                     <li key={href}>
                       {href.startsWith('http') ? (
                         <a href={href}>
-                          {label}
-                          <ArrowUpRight size={16} aria-hidden="true" />
+                          <span>{label}</span>
+                          <ArrowUpRight size={14} aria-hidden="true" />
                         </a>
                       ) : (
                         <Link href={href}>{label}</Link>
@@ -100,15 +105,17 @@ export function SiteFooter() {
                 </ul>
               </div>
             ))}
-          </div>
+          </nav>
         </div>
 
-        <Separator className="mt-12" />
-
         <div className="srv3-footer-bottom">
-          <span>© 2026 StealthRDP. All rights reserved.</span>
-          <span>Billing and account management are handled in the StealthRDP client area.</span>
-          <span>Tux artwork by Larry Ewing, CC BY-SA 3.0.</span>
+          <span className="srv3-footer-copyright">© 2026 StealthRDP. All rights reserved.</span>
+          <div className="srv3-footer-legal">
+            <Link href="/privacy">Privacy</Link>
+            <Link href="/docs/use-of-service">Use of service</Link>
+            <Link href="/docs/windows-licensing">Windows licensing</Link>
+          </div>
+          <span className="srv3-footer-credit">Tux artwork by Larry Ewing, CC BY-SA 3.0.</span>
         </div>
       </div>
     </footer>
