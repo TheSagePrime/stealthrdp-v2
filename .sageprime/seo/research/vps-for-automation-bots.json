@@ -1,0 +1,70 @@
+{
+  "artifact_type": "page_research_package",
+  "version": 1,
+  "identity": {
+    "project": "stealthrdp",
+    "canonical_domain": "www.stealthrdp.com",
+    "country": "US",
+    "locale": "en-US",
+    "open_seo": {
+      "project_id": "stealthrdp",
+      "location_code": 2840,
+      "language_code": "en"
+    }
+  },
+  "status": "approved",
+  "asset_type": "article",
+  "target_query": "vps for automation",
+  "secondary_queries": [],
+  "target_reader": "Developers and operators who need scripts, bots or workflow services to run independently of a local computer.",
+  "intent": "Informational/commercial investigation: decide when persistent VPS hosting fits automation and how to size it.",
+  "serp_evidence": [
+    {
+      "kind": "serp",
+      "reference": "https://www.bluehost.com/blog/vps-for-automation-workflows/",
+      "note": "Automation VPS guide",
+      "project_id": "stealthrdp",
+      "country": "US",
+      "locale": "en-US",
+      "retrieved_at": "2026-09-27"
+    },
+    {
+      "kind": "serp",
+      "reference": "https://cybernews.com/vps/best-vps-for-automation/",
+      "note": "Automation VPS comparison intent",
+      "project_id": "stealthrdp",
+      "country": "US",
+      "locale": "en-US",
+      "retrieved_at": "2026-09-27"
+    }
+  ],
+  "competing_pages": [
+    "https://www.bluehost.com/blog/vps-for-automation-workflows/",
+    "https://cybernews.com/vps/best-vps-for-automation/"
+  ],
+  "existing_results_do_well": [
+    "Cover persistent processes, root access, Docker and common automation tooling.",
+    "Discuss CPU/RAM needs."
+  ],
+  "existing_results_miss": [
+    "Distinguish server uptime from job success.",
+    "Clear restart/state design guidance without pretending one resource number fits all.",
+    "Explicit acceptable-use/abuse boundary."
+  ],
+  "related_questions": [],
+  "unique_value": "A practical infrastructure guide centered on persistence, concurrency, restart design, OS fit, observability and acceptable-use boundaries.",
+  "required_facts_evidence": [
+    ".sageprime/project-truth/manifest.json",
+    "src/content/plans.json"
+  ],
+  "internal_link_opportunities": [
+    "/plans",
+    "/blog/designing-automated-high-availability-vps.html",
+    "/blog/8-signs-you-need-to-upgrade-your-vps-resources.html"
+  ],
+  "commercial_connection": "The plan comparison is relevant only after the reader identifies runtime/concurrency/resource needs.",
+  "conversion_path": "/plans",
+  "cannibalization": "Distinct from high-availability and upgrade-signal articles.",
+  "existence_question": "Why should vps-for-automation-bots exist when search already has competing results?",
+  "existence_decision": "produce"
+}
