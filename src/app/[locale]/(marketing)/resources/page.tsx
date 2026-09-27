@@ -39,6 +39,13 @@ export default function ResourcesPage() {
     <div className="srv-page srv-page-resources srv-docs-product">
       <HelpTopbar active="resources" />
 
+      <div className="sr-container srv-docs-mobile-wrap">
+        <details className="srv-docs-mobile-nav">
+          <summary>Browse Resources</summary>
+          <ResourceSidebar />
+        </details>
+      </div>
+
       <div className="sr-container srv-docs-grid">
         <aside className="srv-docs-sidebar">
           <ResourceSidebar />
