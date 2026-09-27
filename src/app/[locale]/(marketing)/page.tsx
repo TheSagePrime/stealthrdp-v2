@@ -143,6 +143,7 @@ export default async function HomePage({ params }: Props) {
               <h1 className="srv-home-hero-title max-w-4xl text-5xl font-semibold leading-none tracking-tight text-balance sm:text-6xl lg:text-7xl">
                 <span className="block">
                   <ChromaticTextReveal
+                    className="srv-home-chromatic-title"
                     prefix="Your"
                     words={['server.', 'Windows VPS.', 'Linux VPS.']}
                     colors={[

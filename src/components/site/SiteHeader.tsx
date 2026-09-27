@@ -93,6 +93,17 @@ export function SiteHeader() {
           </Button>
         </div>
 
+        <a
+          className="srv3-mobile-whatsapp"
+          href="https://wa.me/447441426993"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Chat with StealthRDP support on WhatsApp"
+        >
+          <WhatsappLogo size={18} weight="fill" aria-hidden="true" />
+          <span className="sr-visually-hidden">WhatsApp support</span>
+        </a>
+
         <details className="srv3-mobile-nav">
           <summary>
             <Menu size={16} aria-hidden="true" />
