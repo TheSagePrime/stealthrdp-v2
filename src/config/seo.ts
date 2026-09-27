@@ -24,7 +24,7 @@ const publications: ArticleRegistryConfig['publications'] = (blogData as BlogSee
   h1: article.title,
   description: article.excerpt,
   datePublished: article.date,
-  author: { name: article.author || 'StealthRDP Team', type: 'Organization' },
+  author: { name: 'StealthRDP Team', type: 'Organization' },
   locale: 'en',
   country: 'US',
   indexPolicy: 'index, follow',

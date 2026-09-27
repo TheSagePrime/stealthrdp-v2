@@ -38,7 +38,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
   const article = findDocByPublicSlug(slug);
   if (!article) notFound();
 
-  const headings = docHeadings(article.content);
+  const headings = docHeadings(article.content, article.title);
   const collection = helpCollectionForArticle(article);
   const ordered = orderedHelpArticles(docsArticles);
   const currentIndex = ordered.findIndex(item => item.slug === article.slug);
@@ -90,7 +90,7 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
             </div>
           </header>
 
-          <DocBody content={article.content} />
+          <DocBody content={article.content} title={article.title} />
 
           {related.length > 0 ? (
             <section className="srv-docs-related" aria-labelledby="related-help-title">

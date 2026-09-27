@@ -52,8 +52,44 @@ function inline(text: string): ReactNode[] {
  * Group the source lines into semantic blocks, so lists become real lists and
  * commands become a code block instead of styled paragraphs.
  */
-function parse(content: string): Block[] {
+function normalizeLegacyHeader(content: string, title?: string): string {
+  if (!title) return content;
+
+  const lines = content.split(/\r?\n/);
+  const normalizedTitle = title.trim().toLowerCase();
+  let cursor = 0;
+
+  const skipBlank = () => {
+    while (cursor < lines.length && !lines[cursor]?.trim()) cursor += 1;
+  };
+
+  skipBlank();
+
+  // Imported Help Center snapshots contain the article title twice, followed by
+  // a Setext H1 underline. The page shell already owns the only visible H1.
+  for (let pass = 0; pass < 2; pass += 1) {
+    if ((lines[cursor]?.trim().toLowerCase() ?? '') === normalizedTitle) {
+      cursor += 1;
+      skipBlank();
+    }
+  }
+
+  if (/^=+$/.test(lines[cursor]?.trim() ?? '')) {
+    cursor += 1;
+    skipBlank();
+  }
+
+  if (/^last updated(?: on)?\b/i.test(lines[cursor]?.trim() ?? '')) {
+    cursor += 1;
+    skipBlank();
+  }
+
+  return lines.slice(cursor).join('\n');
+}
+
+function parse(content: string, title?: string): Block[] {
   const blocks: Block[] = [];
+  const normalizedContent = normalizeLegacyHeader(content, title);
   let code: string[] = [];
   let list: { ordered: boolean; items: string[] } | null = null;
 
@@ -70,7 +106,7 @@ function parse(content: string): Block[] {
     }
   };
 
-  for (const raw of content.split(/\r?\n/)) {
+  for (const raw of normalizedContent.split(/\r?\n/)) {
     const trimmed = raw.trim();
     if (!trimmed) {
       // A blank line inside a run of list items must not split the list,
@@ -123,9 +159,9 @@ function parse(content: string): Block[] {
   return blocks;
 }
 
-export function docHeadings(content: string): ResourceHeading[] {
+export function docHeadings(content: string, title?: string): ResourceHeading[] {
   const seen = new Map<string, number>();
-  return parse(content)
+  return parse(content, title)
     .filter((block): block is Extract<Block, { kind: 'heading' }> => block.kind === 'heading')
     .map(block => {
       const base = slugifyHeading(block.text) || 'section';
@@ -139,13 +175,13 @@ export function docHeadings(content: string): ResourceHeading[] {
     });
 }
 
-export function DocBody({ content }: { content: string }) {
-  const headings = docHeadings(content);
+export function DocBody({ content, title }: { content: string; title?: string }) {
+  const headings = docHeadings(content, title);
   let headingIndex = 0;
 
   return (
     <div className="sr-richtext">
-      {parse(content).map((block, index) => {
+      {parse(content, title).map((block, index) => {
         if (block.kind === 'heading') {
           const heading = headings[headingIndex++];
           return block.level === 2

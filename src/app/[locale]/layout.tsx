@@ -11,7 +11,7 @@ import '@/styles/stealth-v3.css';
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.stealthrdp.com'),
   applicationName: 'StealthRDP',
-  authors: [{ name: 'StealthRDP' }],
+  authors: [{ name: 'StealthRDP Team' }],
   manifest: '/site.webmanifest',
   verification: { other: { 'msvalidate.01': 'BC1193DFC35353EA0CED70B0E5F25F09' } },
   icons: [{ rel: 'icon', type: 'image/svg+xml', url: '/favicon.svg' }],

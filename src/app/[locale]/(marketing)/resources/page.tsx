@@ -1,6 +1,21 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import {
+  Activity,
+  ArrowRight,
+  BookOpenText,
+  Lifebuoy,
+  Question,
+} from '@phosphor-icons/react/dist/ssr';
 import { HelpTopbar } from '@/components/site/HelpTopbar';
+import { Badge } from '@/components/ui/badge';
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { ResourceSidebar } from '@/components/site/ResourceSidebar';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
@@ -16,6 +31,7 @@ const destinations = [
     title: 'Guides',
     href: '/blog',
     label: 'Learn',
+    icon: BookOpenText,
     action: 'Browse guides',
     description: 'VPS use cases, security, performance, infrastructure decisions, backups, and practical server operations.',
   },
@@ -23,6 +39,7 @@ const destinations = [
     title: 'Help Center',
     href: '/docs',
     label: 'Solve',
+    icon: Lifebuoy,
     action: 'Open help center',
     description: 'Setup instructions, troubleshooting, networking, Windows access, panels, licensing, and policies.',
   },
@@ -30,6 +47,7 @@ const destinations = [
     title: 'Common Questions',
     href: '/faq',
     label: 'Quick answers',
+    icon: Question,
     action: 'Browse questions',
     description: 'Quick answers about plans, billing, setup, operating systems, refunds, and support.',
   },
@@ -37,6 +55,7 @@ const destinations = [
     title: 'Service Status',
     href: '/status',
     label: 'Check',
+    icon: Activity,
     action: 'View status',
     description: 'Public infrastructure health and current service availability.',
   },
@@ -87,20 +106,33 @@ export default function ResourcesPage() {
             </div>
 
             <div className="srv-resource-hub-grid">
-              {destinations.map((item, index) => (
-                <Link className="srv-resource-hub-card" href={item.href} key={item.href}>
-                  <span className="srv-resource-hub-index">{String(index + 1).padStart(2, '0')}</span>
-                  <span className="srv-resource-hub-copy">
-                    <small>{item.label}</small>
-                    <strong>{item.title}</strong>
-                    <span>{item.description}</span>
-                  </span>
-                  <span className="srv-resource-hub-action">
-                    {item.action}
-                    <span aria-hidden="true">→</span>
-                  </span>
-                </Link>
-              ))}
+              {destinations.map((item, index) => {
+                const Icon = item.icon;
+
+                return (
+                  <Link className="srv-resource-hub-link" href={item.href} key={item.href}>
+                    <Card className="srv-resource-hub-card">
+                      <CardHeader className="srv-resource-hub-card-head">
+                        <div className="srv-resource-hub-card-meta">
+                          <span className="srv-resource-hub-icon" aria-hidden="true">
+                            <Icon size={18} weight="duotone" />
+                          </span>
+                          <Badge variant="outline">{item.label}</Badge>
+                          <span className="srv-resource-hub-index">
+                            {String(index + 1).padStart(2, '0')}
+                          </span>
+                        </div>
+                        <CardTitle>{item.title}</CardTitle>
+                        <CardDescription>{item.description}</CardDescription>
+                      </CardHeader>
+                      <CardFooter className="srv-resource-hub-action">
+                        <span>{item.action}</span>
+                        <ArrowRight size={15} weight="bold" aria-hidden="true" />
+                      </CardFooter>
+                    </Card>
+                  </Link>
+                );
+              })}
             </div>
           </section>
         </main>

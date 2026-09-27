@@ -10347,3 +10347,216 @@ a.srv-help-tree-heading:hover {
 }
 
 
+
+
+/* ==========================================================================
+   Resources visual refinement — shadcn surfaces + Phosphor wayfinding icons.
+   ========================================================================== */
+
+.srv-resource-tabs a {
+  gap: 7px;
+}
+
+.srv-resource-tabs a svg {
+  flex: 0 0 auto;
+  color: var(--text-faint);
+  transition: color 140ms ease;
+}
+
+.srv-resource-tabs a:hover svg,
+.srv-resource-tabs a[data-active="true"] svg {
+  color: var(--primary);
+}
+
+.srv-resource-hub-link {
+  display: block;
+  min-width: 0;
+  color: inherit;
+}
+
+.srv-resource-hub-card {
+  height: 100%;
+  min-height: 188px;
+  gap: 0;
+  overflow: hidden;
+  border-color: color-mix(in srgb, var(--border-divider) 92%, var(--primary));
+  border-radius: 14px;
+  background:
+    linear-gradient(
+      145deg,
+      color-mix(in srgb, var(--card) 96%, white) 0%,
+      color-mix(in srgb, var(--surface-1) 70%, var(--background)) 100%
+    );
+  padding-block: 0;
+  box-shadow:
+    0 1px 0 color-mix(in srgb, white 72%, transparent) inset,
+    0 10px 30px color-mix(in srgb, var(--foreground) 3%, transparent);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.srv-resource-hub-link:hover .srv-resource-hub-card {
+  border-color: color-mix(in srgb, var(--primary) 30%, var(--border-divider));
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, white 76%, transparent) inset,
+    0 16px 38px color-mix(in srgb, var(--foreground) 6%, transparent);
+}
+
+.srv-resource-hub-card-head {
+  gap: 9px;
+  padding: 20px 20px 14px;
+}
+
+.srv-resource-hub-card-meta {
+  display: grid;
+  grid-template-columns: 34px auto 1fr;
+  gap: 9px;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.srv-resource-hub-icon {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid color-mix(in srgb, var(--primary) 13%, var(--border-divider));
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--primary) 6%, var(--background));
+  color: var(--primary);
+}
+
+.srv-resource-hub-card [data-slot="badge"] {
+  justify-self: start;
+  min-height: 24px;
+  border-color: var(--border-divider);
+  background: color-mix(in srgb, var(--background) 76%, transparent);
+  color: var(--text-dim);
+  font-size: .65625rem;
+  font-weight: 700;
+  letter-spacing: .035em;
+}
+
+.srv-resource-hub-index {
+  justify-self: end;
+  color: var(--text-faint);
+  font-family: var(--font-mono);
+  font-size: .625rem;
+  font-weight: 700;
+}
+
+.srv-resource-hub-card [data-slot="card-title"] {
+  color: var(--text);
+  font-size: 1.0625rem;
+  line-height: 1.3;
+  letter-spacing: -.018em;
+}
+
+.srv-resource-hub-card [data-slot="card-description"] {
+  max-width: 34rem;
+  color: var(--text-dim);
+  font-size: .78125rem;
+  line-height: 1.58;
+}
+
+.srv-resource-hub-action {
+  justify-content: space-between;
+  min-height: 46px;
+  margin-top: auto;
+  border-top: 1px solid var(--border-divider);
+  padding: 0 20px;
+  color: var(--text-dim);
+  font-size: .75rem;
+  font-weight: 650;
+}
+
+.srv-resource-hub-action svg {
+  color: var(--text-faint);
+  transition: color 150ms ease, transform 150ms ease;
+}
+
+.srv-resource-hub-link:hover .srv-resource-hub-action {
+  color: var(--primary);
+}
+
+.srv-resource-hub-link:hover .srv-resource-hub-action svg {
+  color: var(--primary);
+  transform: translateX(2px);
+}
+
+.srv-docs-index-head {
+  border-bottom-color: color-mix(in srgb, var(--border-divider) 88%, transparent);
+}
+
+.srv-docs-sidebar {
+  border-right: 1px solid color-mix(in srgb, var(--border-divider) 74%, transparent);
+  padding-right: 18px;
+}
+
+.srv-help-tree-group li a {
+  border-radius: 7px;
+}
+
+.srv-help-tree-group li a[data-active="true"] {
+  border-left-color: transparent;
+  box-shadow: inset 2px 0 0 var(--primary);
+}
+
+.srv-docs-index-aside {
+  border-left-color: color-mix(in srgb, var(--border-divider) 84%, transparent);
+}
+
+@media (max-width: 1080px) {
+  .srv-docs-sidebar {
+    padding-right: 14px;
+  }
+}
+
+@media (max-width: 780px) {
+  .srv-resource-tabs a {
+    gap: 6px;
+  }
+
+  .srv-resource-tabs a svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .srv-resource-hub-card {
+    min-height: 164px;
+  }
+}
+
+@media (max-width: 520px) {
+  .srv-resource-tabs a svg {
+    display: none;
+  }
+
+  .srv-resource-hub-card {
+    min-height: 0;
+  }
+
+  .srv-resource-hub-card-head {
+    padding: 17px 17px 13px;
+  }
+
+  .srv-resource-hub-action {
+    padding-inline: 17px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv-resource-hub-card,
+  .srv-resource-hub-action svg {
+    transition: none;
+  }
+
+  .srv-resource-hub-link:hover .srv-resource-hub-card,
+  .srv-resource-hub-link:hover .srv-resource-hub-action svg {
+    transform: none;
+  }
+}
