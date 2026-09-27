@@ -177,7 +177,7 @@ test.describe('responsive public-site audit', () => {
       }
 
       if (result.docsProduct) {
-        const shouldUseMobileDocs = viewport.width <= 780;
+        const shouldUseMobileDocs = viewport.width <= 1040;
         if (result.docsMobile !== shouldUseMobileDocs) {
           issues.push({
             route,
@@ -205,7 +205,7 @@ test.describe('responsive public-site audit', () => {
           });
         }
 
-        const shouldShowResourceActions = viewport.width > 780;
+        const shouldShowResourceActions = viewport.width > 1040;
         if (result.resourceActions !== shouldShowResourceActions) {
           issues.push({
             route,

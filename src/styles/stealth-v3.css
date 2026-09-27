@@ -11286,3 +11286,158 @@ a.srv-help-tree-heading:hover {
     transform: none !important;
   }
 }
+
+
+/* ==========================================================================
+   Responsive shell contract — one breakpoint model across the whole site.
+   Marketing and resource/article shells switch modes at the same 1040px edge.
+   This prevents a 1024px device from showing a mobile marketing header while
+   Help/Guides/Citadel still render their desktop sidebars.
+   ========================================================================== */
+
+.srv-docs-product .srv-docs-grid > *,
+.srv-docs-product .srv-docs-article,
+.srv-docs-product .srv-docs-index,
+.srv-docs-product .srv-help-topbar-inner > * {
+  min-width: 0;
+}
+
+.srv-docs-product .srv-docs-article {
+  overflow-wrap: anywhere;
+}
+
+.srv-docs-product .srv-docs-article img,
+.srv-docs-product .srv-docs-article video,
+.srv-docs-product .srv-docs-article canvas,
+.srv-docs-product .srv-docs-article svg,
+.srv-docs-product .srv-docs-article figure {
+  max-width: 100%;
+  height: auto;
+}
+
+.srv-docs-product .srv-docs-article pre,
+.srv-docs-product .srv-docs-article table {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+@media (max-width: 1040px) {
+  /* Main marketing shell */
+  .srv3-nav,
+  .srv3-header-actions {
+    display: none !important;
+  }
+
+  .srv3-mobile-nav {
+    display: block !important;
+  }
+
+  /* Resource / Help / Guide / Citadel shell */
+  .srv-docs-product .srv-help-topbar-inner {
+    grid-template-columns: 190px minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  .srv-docs-product .srv-help-topbar-actions {
+    display: none !important;
+  }
+
+  .srv-docs-product .srv-resource-tabs {
+    padding-left: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .srv-docs-product .srv-docs-mobile-wrap {
+    display: block !important;
+    position: sticky;
+    top: 110px;
+    z-index: 40;
+    background: var(--background);
+  }
+
+  .srv-docs-product .srv-docs-grid,
+  .srv-docs-product .srv-docs-article-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 0 !important;
+    padding-top: 24px;
+  }
+
+  .srv-docs-product .srv-docs-sidebar,
+  .srv-docs-product .srv-docs-index-aside,
+  .srv-docs-product .srv-docs-toc {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1041px) {
+  /* Main marketing shell */
+  .srv3-mobile-nav {
+    display: none !important;
+  }
+
+  .srv3-nav,
+  .srv3-header-actions {
+    display: flex !important;
+  }
+
+  /* Resource / Help / Guide / Citadel shell */
+  .srv-docs-product .srv-help-topbar-actions {
+    display: flex !important;
+  }
+
+  .srv-docs-product .srv-docs-mobile-wrap {
+    display: none !important;
+  }
+
+  .srv-docs-product .srv-docs-sidebar {
+    display: block !important;
+  }
+}
+
+/* At compact desktop width keep the reading column and left navigation only. */
+@media (min-width: 1041px) and (max-width: 1080px) {
+  .srv-docs-product .srv-docs-index-aside,
+  .srv-docs-product .srv-docs-toc {
+    display: none !important;
+  }
+}
+
+/* Full desktop restores the optional third rail. */
+@media (min-width: 1081px) {
+  .srv-docs-product .srv-docs-index-aside,
+  .srv-docs-product .srv-docs-toc {
+    display: grid !important;
+  }
+}
+
+@media (max-width: 780px) {
+  .srv-docs-product .srv-help-topbar-inner {
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .srv-docs-product .srv-help-brand span {
+    display: none;
+  }
+
+  .srv-docs-product .srv-docs-mobile-wrap {
+    top: 91px;
+  }
+}
+
+@media (max-width: 520px) {
+  .srv-docs-product .srv-help-topbar-inner {
+    grid-template-columns: 84px minmax(0, 1fr);
+    gap: 10px;
+  }
+
+  .srv-docs-product .srv-docs-mobile-wrap {
+    top: 88px;
+  }
+
+  .srv-docs-product .srv-docs-article figure {
+    margin-inline: 0;
+  }
+}
