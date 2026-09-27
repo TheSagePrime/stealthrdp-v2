@@ -107,6 +107,7 @@ export function FaqExplorer({ faqs }: { faqs: Faq[] }) {
               visibleGroups.map(group => (
                 <section
                   className="sr-faq-group"
+                  id={group.category.toLowerCase().replace(/[^a-z0-9]+/g, '-')}
                   key={group.category}
                   ref={element => {
                     groupRefs.current[group.category] = element;
