@@ -10381,3 +10381,36 @@ a.srv-help-tree-heading:hover {
     display: none;
   }
 }
+
+
+/* Pricing controls follow the exact plan-card cluster boundaries on inner pricing pages.
+   Homepage remains on its four-card 1220/1272px composition. */
+.srv-page-plans .srv-pricing-controls,
+.srv-page-os .srv-pricing-controls {
+  width: min(100%, 1004px);
+  max-width: 1004px;
+  margin-inline: auto;
+}
+
+@media (min-width: 1480px) {
+  .srv-page-plans .srv-pricing-controls {
+    width: min(100%, 1042px);
+    max-width: 1042px;
+  }
+}
+
+@media (max-width: 1080px) {
+  .srv-page-plans .srv-pricing-controls,
+  .srv-page-os .srv-pricing-controls {
+    width: min(100%, 662px);
+    max-width: 662px;
+  }
+}
+
+@media (max-width: 720px) {
+  .srv-page-plans .srv-pricing-controls,
+  .srv-page-os .srv-pricing-controls {
+    width: min(100%, 430px);
+    max-width: 430px;
+  }
+}
