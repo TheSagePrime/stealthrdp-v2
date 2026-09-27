@@ -84,8 +84,8 @@ export const defaultSeoConfig: SeoConfig = {
   articles: {
     basePath: '/blog',
     feedPath: '/rss.xml',
-    feedTitle: 'StealthRDP Blog',
-    feedDescription: 'VPS, RDP, server management, monitoring, backup, and infrastructure guides from StealthRDP.',
+    feedTitle: 'StealthRDP Guides',
+    feedDescription: 'VPS use cases, server management, remote desktop, security, backup, and infrastructure guides from StealthRDP.',
     feedLanguage: 'en',
     defaultIndexPolicy: 'index, follow',
     publications,
@@ -101,7 +101,7 @@ export const defaultSeoConfig: SeoConfig = {
     ],
   },
   routes: {
-    publicMarketing: ['/', '/plans', '/windows-vps', '/linux-vps', '/citadel', '/status', '/blog', '/faq', '/about', '/docs', '/privacy'],
+    publicMarketing: ['/', '/plans', '/windows-vps', '/linux-vps', '/citadel', '/status', '/resources', '/blog', '/faq', '/about', '/docs', '/privacy'],
     publicUtility: [...noindexDocPaths],
     privatePages: [],
     privateApis: [],
