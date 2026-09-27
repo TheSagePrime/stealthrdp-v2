@@ -141,25 +141,31 @@ export default async function HomePage({ params }: Props) {
 
             <div className="srv-home-hero-message grid gap-5">
               <h1 className="srv-home-hero-title max-w-4xl text-5xl font-semibold leading-none tracking-tight text-balance sm:text-6xl lg:text-7xl">
-                <span className="block">
-                  <ChromaticTextReveal
-                    className="srv-home-chromatic-title"
-                    prefix="Your"
-                    words={['server.', 'Windows VPS.', 'Linux VPS.']}
-                    colors={[
-                      'var(--primary)',
-                      'color-mix(in srgb, var(--primary) 66%, white)',
-                      'var(--primary)',
-                    ]}
-                    foregroundColor="var(--foreground)"
-                    duration={1.8}
-                    pauseDuration={4.2}
-                    startOnView={false}
-                    once={false}
-                    animateInitial={false}
-                  />
+                <span className="srv-home-title-mobile">
+                  Windows &amp; Linux VPS.
+                  <strong>Live in 60 seconds.</strong>
                 </span>
-                <span className="block text-primary">Live in 60 seconds.</span>
+                <span className="srv-home-title-desktop">
+                  <span className="block">
+                    <ChromaticTextReveal
+                      className="srv-home-chromatic-title"
+                      prefix="Your"
+                      words={['server.', 'Windows VPS.', 'Linux VPS.']}
+                      colors={[
+                        'var(--primary)',
+                        'color-mix(in srgb, var(--primary) 66%, white)',
+                        'var(--primary)',
+                      ]}
+                      foregroundColor="var(--foreground)"
+                      duration={1.8}
+                      pauseDuration={4.2}
+                      startOnView={false}
+                      once={false}
+                      animateInitial={false}
+                    />
+                  </span>
+                  <span className="block text-primary">Live in 60 seconds.</span>
+                </span>
               </h1>
               <p className="srv-home-hero-lede max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
                 High-performance remote desktop and VPS infrastructure without the complexity.
@@ -262,10 +268,6 @@ export default async function HomePage({ params }: Props) {
 
       <section className="srv-os-band border-y border-border bg-card/35" aria-label="Supported operating systems">
         <div className="srv-home-wide srv-os-band-inner">
-          <div className="srv-os-band-label">
-            <span>Works with your OS</span>
-          </div>
-
           <div className="srv-os-marquee">
             <span className="sr-visually-hidden">
               Windows Server, Ubuntu, Debian, Rocky Linux, AlmaLinux, CentOS, Fedora, Alpine Linux, and FreeBSD

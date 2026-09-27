@@ -12044,3 +12044,417 @@ a.srv-help-tree-heading:hover {
     flex-basis: 100%;
   }
 }
+
+/* ==========================================================================
+   Adaptive mobile homepage — same data/components, phone-specific composition.
+   Desktop remains unchanged. Mobile prioritizes scanability, touch targets and
+   short vertical paths instead of shrinking desktop UI.
+   ========================================================================== */
+
+.srv-home-title-mobile,
+.srv-mobile-plan-card {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .srv-home-title-desktop,
+  .srv-home-pricing-card-desktop {
+    display: none !important;
+  }
+
+  .srv-home-title-mobile,
+  .srv-mobile-plan-card {
+    display: block;
+  }
+
+  .srv-home-hero {
+    padding-block: 34px 30px !important;
+  }
+
+  .srv-home-hero-copy {
+    gap: 18px !important;
+  }
+
+  .srv-home-hero-badge {
+    max-width: 100%;
+    padding-inline: 10px;
+    font-size: .6875rem;
+  }
+
+  .srv-home-hero-message {
+    gap: 14px !important;
+  }
+
+  .srv-home-hero-title {
+    width: 100%;
+    max-width: 100% !important;
+    font-size: clamp(2.55rem, 11.4vw, 3.15rem) !important;
+    line-height: .96 !important;
+    letter-spacing: -.045em !important;
+  }
+
+  .srv-home-title-mobile {
+    max-width: 10.8ch;
+  }
+
+  .srv-home-title-mobile strong {
+    display: block;
+    margin-top: 4px;
+    color: var(--primary);
+    font: inherit;
+  }
+
+  .srv-home-hero-lede {
+    max-width: 33rem !important;
+    font-size: .9375rem !important;
+    line-height: 1.62 !important;
+  }
+
+  .srv-home-hero-actions {
+    gap: 8px !important;
+    margin-top: 2px;
+  }
+
+  .srv-home-hero-actions [data-slot="button"] {
+    min-height: 48px;
+  }
+
+  .srv-home-hero-meta {
+    display: grid !important;
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 14px !important;
+    font-size: .75rem !important;
+    line-height: 1.4;
+  }
+
+  .srv-home-hero-meta span {
+    min-width: 0;
+  }
+
+  /* Compact proof strip instead of a tall 2+1 card. */
+  .srv-home-hero-proof {
+    display: grid !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    border-radius: 12px !important;
+  }
+
+  .srv-home-hero-proof > div,
+  .srv-home-hero-proof > div:nth-child(2),
+  .srv-home-hero-proof > div:nth-child(3) {
+    min-height: 72px;
+    grid-column: auto !important;
+    border-top: 0 !important;
+    border-right: 0 !important;
+    padding: 12px 8px !important;
+    text-align: center !important;
+  }
+
+  .srv-home-hero-proof > div + div {
+    border-left: 1px solid var(--border) !important;
+  }
+
+  .srv-home-hero-proof strong {
+    font-size: 1.05rem !important;
+  }
+
+  .srv-home-hero-proof span {
+    margin-top: 2px;
+    font-size: .625rem !important;
+    line-height: 1.25;
+  }
+
+  /* No visible "Works with your OS" heading. The logos become a compact
+     three-column capability grid on phones. */
+  .srv-os-band {
+    overflow: visible !important;
+  }
+
+  .srv-os-band-inner {
+    display: block !important;
+    min-height: 0 !important;
+    padding-block: 18px !important;
+  }
+
+  .srv-os-marquee {
+    margin-inline: 0 !important;
+    overflow: visible !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+  }
+
+  .srv-os-marquee-track {
+    display: block !important;
+    width: 100% !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .srv-os-marquee-copy {
+    display: grid !important;
+    min-width: 0 !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px 8px !important;
+    padding-right: 0 !important;
+  }
+
+  .srv-os-marquee-copy[data-clone="true"] {
+    display: none !important;
+  }
+
+  .srv-os-logo {
+    display: grid !important;
+    min-width: 0 !important;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 6px !important;
+    opacity: .84;
+    text-align: center;
+  }
+
+  .srv-os-logo img,
+  .srv-os-logo svg {
+    width: 23px !important;
+    height: 23px !important;
+    flex-basis: 23px !important;
+  }
+
+  .srv-os-logo span {
+    max-width: 100%;
+    font-size: .625rem !important;
+    line-height: 1.25;
+    white-space: normal !important;
+  }
+
+  /* Tighten the transition into pricing. */
+  .srv-home-plans {
+    padding-block: 42px !important;
+  }
+
+  .srv-home-plans .srv-home-wide {
+    gap: 22px !important;
+  }
+
+  .srv-home-plans h2 {
+    max-width: 13ch;
+    font-size: 2rem !important;
+    line-height: 1.05 !important;
+  }
+
+  .srv-home-plans .srv-home-wide > div:first-child > p {
+    font-size: .875rem !important;
+    line-height: 1.6 !important;
+  }
+
+  .srv-pricing-controls {
+    gap: 8px !important;
+  }
+
+  .srv-pricing-control-card {
+    border-radius: 12px !important;
+  }
+
+  .srv-pricing-billing {
+    overflow-x: auto !important;
+    scrollbar-width: none;
+  }
+
+  .srv-pricing-billing::-webkit-scrollbar {
+    display: none;
+  }
+
+  .srv-pricing-controls .srv-billing-rail {
+    width: max-content !important;
+    min-width: 100%;
+  }
+
+  .srv-pricing-controls .srv-billing-option {
+    min-height: 42px;
+    padding-inline: 14px;
+    white-space: nowrap;
+  }
+
+  .srv-home-pricing-grid {
+    gap: 12px !important;
+  }
+
+  .srv-home-pricing-item {
+    min-width: 0;
+  }
+
+  /* Purpose-built phone plan card: price + 3 key specs + expandable detail. */
+  .srv-mobile-plan-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--card);
+    padding: 18px;
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--foreground) 5%, transparent);
+  }
+
+  .srv-mobile-plan-card[data-featured="true"] {
+    border-color: color-mix(in srgb, var(--primary) 42%, var(--border));
+    box-shadow: 0 10px 28px color-mix(in srgb, var(--primary) 9%, transparent);
+  }
+
+  .srv-mobile-plan-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .srv-mobile-plan-title-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .srv-mobile-plan-title-row h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.2;
+  }
+
+  .srv-mobile-plan-head p {
+    margin: 5px 0 0;
+    color: var(--muted-foreground);
+    font-size: .75rem;
+  }
+
+  .srv-mobile-stock {
+    flex: 0 0 auto;
+    color: var(--muted-foreground);
+    font-size: .6875rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .srv-mobile-stock.is-available {
+    color: var(--status-ok, #15803d);
+  }
+
+  .srv-mobile-plan-price {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-top: 20px;
+  }
+
+  .srv-mobile-plan-price strong {
+    font-size: 2rem;
+    line-height: 1;
+    letter-spacing: -.04em;
+  }
+
+  .srv-mobile-plan-price span {
+    color: var(--muted-foreground);
+    font-size: .875rem;
+    font-weight: 600;
+  }
+
+  .srv-mobile-plan-note {
+    margin: 6px 0 0;
+    color: var(--muted-foreground);
+    font-size: .6875rem;
+  }
+
+  .srv-mobile-plan-specs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin: 18px 0 0;
+  }
+
+  .srv-mobile-plan-specs > div {
+    min-width: 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--muted) 54%, transparent);
+    padding: 10px;
+  }
+
+  .srv-mobile-plan-specs dt {
+    color: var(--muted-foreground);
+    font-size: .625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+
+  .srv-mobile-plan-specs dd {
+    margin: 4px 0 0;
+    overflow-wrap: anywhere;
+    font-size: .75rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .srv-mobile-plan-more {
+    margin-top: 12px;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+  }
+
+  .srv-mobile-plan-more summary {
+    cursor: pointer;
+    color: var(--muted-foreground);
+    font-size: .75rem;
+    font-weight: 700;
+  }
+
+  .srv-mobile-plan-more ul {
+    display: grid;
+    gap: 5px;
+    margin: 10px 0 0;
+    padding-left: 18px;
+    color: var(--muted-foreground);
+    font-size: .75rem;
+  }
+
+  .srv-mobile-plan-cta {
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  /* Existing lower sections already work well; just bring spacing into the
+     same compact rhythm as the rebuilt top half. */
+  .srv-home-usecases,
+  .srv-home-infra,
+  .srv-home-products,
+  .srv-home-reviews {
+    padding-block: 44px !important;
+  }
+
+  .srv-home-final-section {
+    padding-block: 28px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .srv-home-hero-title {
+    font-size: clamp(2.35rem, 10.8vw, 2.8rem) !important;
+  }
+
+  .srv-home-hero-proof > div {
+    padding-inline: 6px !important;
+  }
+
+  .srv-home-hero-proof strong {
+    font-size: .95rem !important;
+  }
+
+  .srv-os-marquee-copy {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .srv-mobile-plan-specs {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .srv-mobile-plan-specs > div:last-child {
+    grid-column: 1 / -1;
+  }
+}
