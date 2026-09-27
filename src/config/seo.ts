@@ -13,6 +13,7 @@ type BlogSeed = {
   author: string;
   date: string;
   image?: string;
+  sources?: { title: string; url: string; publisher?: string; accessedAt?: string }[];
 };
 
 const publications: ArticleRegistryConfig['publications'] = (blogData as BlogSeed[]).map(article => ({
@@ -28,6 +29,7 @@ const publications: ArticleRegistryConfig['publications'] = (blogData as BlogSee
   country: 'US',
   indexPolicy: 'index, follow',
   image: article.image,
+  sources: article.sources,
 }));
 
 export type SeoConfig = {
