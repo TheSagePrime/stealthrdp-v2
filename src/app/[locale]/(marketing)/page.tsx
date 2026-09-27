@@ -89,6 +89,7 @@ const infrastructure = [
 ];
 
 function reviewSource(item: (typeof testimonials)[number]) {
+  if (item.sourceLabel?.includes('Discord') || item.sourceType === 'community review') return 'Discord';
   if (!item.sourceUrl) return 'Customer testimonial';
   return item.sourceUrl.includes('trustpilot.com') ? 'Trustpilot' : 'Third-party review';
 }
