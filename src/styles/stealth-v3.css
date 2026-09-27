@@ -9822,3 +9822,67 @@ a.srv-help-tree-heading:hover {
     justify-self: stretch;
   }
 }
+
+
+/* ==========================================================================
+   Canonical public typography hierarchy
+   One semantic scale across the public site. The homepage hero H1 is the only
+   intentional display-size exception; everything else follows role, not route.
+   ========================================================================== */
+
+.sr-site {
+  font-family: var(--font-body);
+}
+
+/* Page titles: one calm, confident size on every non-home route. */
+.srv-page.srv-page h1 {
+  font-family: var(--font-body);
+  font-size: var(--text-page-title);
+  font-weight: 700;
+  line-height: var(--text-page-title--line-height);
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+
+/* Marketing section headings: consistent across About, Plans, OS and Citadel. */
+.srv-page:not(.srv-docs-product):not(.srv-page-legal) section h2,
+.srv-home-plans h2,
+.srv-home-usecases h2,
+.srv-home-infra h2,
+.srv-home-products h2,
+.srv-home-reviews h2,
+.srv-home-final-section h2 {
+  font-family: var(--font-body);
+  font-size: var(--text-section-title);
+  font-weight: 700;
+  line-height: var(--text-section-title--line-height);
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+
+/* Documentation, legal and resource collection headings belong to reading UI,
+   so they intentionally sit one step below marketing section headings. */
+.srv-page-legal h2,
+.srv-docs-product .srv-docs-collection-head h2,
+.srv-docs-product .srv-docs-related h2,
+.srv-docs-article .sr-richtext h2 {
+  font-family: var(--font-body);
+  font-size: var(--text-subsection-title);
+  font-weight: 600;
+  line-height: var(--text-subsection-title--line-height);
+  letter-spacing: -.015em;
+  text-wrap: balance;
+}
+
+/* H3/card titles stay readable without competing with the page narrative. */
+.srv-page:not(.srv-docs-product) section h3,
+.srv-docs-article .sr-richtext h3,
+.srv-page-legal h3 {
+  font-family: var(--font-body);
+  font-size: var(--text-card-title);
+  font-weight: 600;
+  line-height: var(--text-card-title--line-height);
+  letter-spacing: -.01em;
+}
+
+/* Keep the homepage hero expressive. Its H1 is deliberately not normalized. */

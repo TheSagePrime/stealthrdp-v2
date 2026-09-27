@@ -87,6 +87,16 @@
   --text-mono-sm: 0.8125rem;
   --text-mono-sm--line-height: 1.5;
 
+  /* semantic public hierarchy — route styles consume these instead of inventing scales */
+  --text-page-title: var(--text-display-2);
+  --text-page-title--line-height: var(--text-display-2--line-height);
+  --text-section-title: var(--text-display-3);
+  --text-section-title--line-height: var(--text-display-3--line-height);
+  --text-subsection-title: var(--text-heading-4);
+  --text-subsection-title--line-height: var(--text-heading-4--line-height);
+  --text-card-title: var(--text-body-lg);
+  --text-card-title--line-height: 1.35;
+
   /* two-tier spacing scale — DESIGN.md section 5 */
   --spacing: 4px;
   --spacing-product-1: 4px;
@@ -270,6 +280,20 @@
     font-size: var(--text-body);
     line-height: var(--text-body--line-height);
     margin: 0;
+  }
+
+  button,
+  input,
+  textarea,
+  select {
+    font: inherit;
+  }
+
+  code,
+  pre,
+  kbd,
+  samp {
+    font-family: var(--font-mono);
   }
 
   /* Accessibility: one visible focus treatment for the whole product. */

@@ -103,6 +103,17 @@ Approved text weights are **400 / 500 / 600 / 700** only. Create hierarchy with 
 
 The public site must not introduce a separate serif/display family. `--font-display` and `--font-body` intentionally resolve to the same IBM Plex Sans family.
 
+Use one semantic heading hierarchy across the entire public website:
+- Homepage hero H1 is the only expressive size exception.
+- Every other page H1 uses `--text-page-title`.
+- Marketing section H2 uses `--text-section-title`.
+- Documentation, legal, resource-group and article H2 uses `--text-subsection-title`.
+- H3/card titles use `--text-card-title`.
+- Body copy should normally remain at 16px; secondary/supporting copy may use 14px; micro labels should not go below 12px unless they are purely technical metadata.
+- Route-specific heading clamps are not a new design language. Prefer the semantic tokens above and document any true exception.
+
+This hierarchy is intentionally moderate: the page title establishes orientation, section titles guide scanning, and smaller content headings preserve reading flow without making every section compete for attention.
+
 Avoid terminal-style labels across normal marketing copy, excessive uppercase microcopy, numbered clauses as the main identity, and multiple unrelated type treatments in one section.
 
 ## Visual imagery

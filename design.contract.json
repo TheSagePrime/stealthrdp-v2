@@ -144,6 +144,14 @@
       "code",
       "technical identifiers",
       "server and specification measurements"
-    ]
+    ],
+    "semanticScale": {
+      "pageTitle": "--text-page-title",
+      "sectionTitle": "--text-section-title",
+      "subsectionTitle": "--text-subsection-title",
+      "cardTitle": "--text-card-title"
+    },
+    "homeHeroH1MayOverrideScale": true,
+    "routeSpecificHeadingScalesDiscouraged": true
   }
 }
