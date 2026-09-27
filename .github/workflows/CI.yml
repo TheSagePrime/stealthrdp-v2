@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, redesign/homepage-production-parity]
   pull_request:
     branches: [main]
 
