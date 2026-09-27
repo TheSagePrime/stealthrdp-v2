@@ -3,6 +3,7 @@
 import { useMemo, useRef, useState } from 'react';
 import { Accordion, AccordionItem } from '@/components/ui/accordion';
 import { Badge } from '@/components/ui/badge';
+import { ResourceNav } from '@/components/site/ResourceNav';
 import type { Faq } from '@/lib/stealth/content';
 
 const LICENSING_PHRASE = 'Windows licensing page in Docs';
@@ -54,8 +55,10 @@ export function FaqExplorer({ faqs }: { faqs: Faq[] }) {
     <>
       <section className="sr-section">
         <div className="sr-container sr-faq-layout">
-          <aside className="sr-faq-nav" aria-label="FAQ categories">
-            <span className="sr-control-label">Browse topics</span>
+          <aside className="sr-faq-nav srv-help-sidebar" aria-label="FAQ categories">
+            <ResourceNav active="faq" />
+            <div className="srv-help-collections">
+            <span className="srv-resource-nav-label">Browse topics</span>
             <label className="sr-visually-hidden" htmlFor="faq-search">Search questions</label>
             <input
               id="faq-search"
@@ -86,6 +89,7 @@ export function FaqExplorer({ faqs }: { faqs: Faq[] }) {
                 </button>
               );
             })}
+            </div>
           </aside>
 
           <div className="sr-faq-groups" id="faq-results" tabIndex={-1}>
