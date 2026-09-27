@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="280" viewBox="0 0 960 280" role="img">
+  <rect width="960" height="280" rx="24" fill="#0b1220"/>
+  <text x="40" y="48" fill="#e2e8f0" font-family="Segoe UI,sans-serif" font-size="20" font-weight="700">Add domain</text>
+  <rect x="40" y="72" width="420" height="48" rx="12" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="56" y="102" fill="#64748b" font-family="Segoe UI,sans-serif" font-size="14">example.com</text>
+  <rect x="480" y="72" width="300" height="48" rx="12" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="496" y="102" fill="#64748b" font-family="Segoe UI,sans-serif" font-size="14">203.0.113.10</text>
+  <rect x="800" y="72" width="80" height="48" rx="12" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)"/>
+  <text x="840" y="102" text-anchor="middle" fill="#e2e8f0" font-family="Segoe UI,sans-serif" font-size="14">443</text>
+  <rect x="40" y="148" width="200" height="44" rx="12" fill="#2563eb"/>
+  <text x="140" y="176" text-anchor="middle" fill="#fff" font-family="Segoe UI,sans-serif" font-size="14" font-weight="600">Add domain</text>
+  <text x="40" y="230" fill="#94a3b8" font-family="Segoe UI,sans-serif" font-size="13">Then point a proxied Cloudflare A record at the Citadel ingress IP.</text>
+</svg>
