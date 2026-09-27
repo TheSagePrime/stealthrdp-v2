@@ -31,7 +31,7 @@ const destinations = [
     title: 'Guides',
     href: '/blog',
     label: 'Learn',
-    icon: BookOpenText,
+    icon: <BookOpenText size={18} weight="duotone" aria-hidden="true" />,
     action: 'Browse guides',
     description: 'VPS use cases, security, performance, infrastructure decisions, backups, and practical server operations.',
   },
@@ -39,7 +39,7 @@ const destinations = [
     title: 'Help Center',
     href: '/docs',
     label: 'Solve',
-    icon: Lifebuoy,
+    icon: <Lifebuoy size={18} weight="duotone" aria-hidden="true" />,
     action: 'Open help center',
     description: 'Setup instructions, troubleshooting, networking, Windows access, panels, licensing, and policies.',
   },
@@ -47,7 +47,7 @@ const destinations = [
     title: 'Common Questions',
     href: '/faq',
     label: 'Quick answers',
-    icon: Question,
+    icon: <Question size={18} weight="duotone" aria-hidden="true" />,
     action: 'Browse questions',
     description: 'Quick answers about plans, billing, setup, operating systems, refunds, and support.',
   },
@@ -55,7 +55,7 @@ const destinations = [
     title: 'Service Status',
     href: '/status',
     label: 'Check',
-    icon: Activity,
+    icon: <Activity size={18} weight="duotone" aria-hidden="true" />,
     action: 'View status',
     description: 'Public infrastructure health and current service availability.',
   },
@@ -106,16 +106,13 @@ export default function ResourcesPage() {
             </div>
 
             <div className="srv-resource-hub-grid">
-              {destinations.map((item, index) => {
-                const Icon = item.icon;
-
-                return (
+              {destinations.map((item, index) => (
                   <Link className="srv-resource-hub-link" href={item.href} key={item.href}>
                     <Card className="srv-resource-hub-card">
                       <CardHeader className="srv-resource-hub-card-head">
                         <div className="srv-resource-hub-card-meta">
                           <span className="srv-resource-hub-icon" aria-hidden="true">
-                            <Icon size={18} weight="duotone" />
+                            {item.icon}
                           </span>
                           <Badge variant="outline">{item.label}</Badge>
                           <span className="srv-resource-hub-index">
@@ -131,8 +128,7 @@ export default function ResourcesPage() {
                       </CardFooter>
                     </Card>
                   </Link>
-                );
-              })}
+              ))}
             </div>
           </section>
         </main>

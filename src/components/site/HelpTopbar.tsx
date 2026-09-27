@@ -17,10 +17,10 @@ import {
 export type ResourceArea = 'resources' | 'guides' | 'help' | 'faq';
 
 const tabs = [
-  { label: 'Resources', href: '/resources', key: 'resources', icon: SquaresFour },
-  { label: 'Guides', href: '/blog', key: 'guides', icon: BookOpenText },
-  { label: 'Help Center', href: '/docs', key: 'help', icon: Lifebuoy },
-  { label: 'Common Questions', href: '/faq', key: 'faq', icon: Question },
+  { label: 'Resources', href: '/resources', key: 'resources', icon: <SquaresFour size={14} aria-hidden="true" /> },
+  { label: 'Guides', href: '/blog', key: 'guides', icon: <BookOpenText size={14} aria-hidden="true" /> },
+  { label: 'Help Center', href: '/docs', key: 'help', icon: <Lifebuoy size={14} aria-hidden="true" /> },
+  { label: 'Common Questions', href: '/faq', key: 'faq', icon: <Question size={14} aria-hidden="true" /> },
 ] as const;
 
 export function HelpTopbar({ active = 'help' }: { active?: ResourceArea }) {
@@ -72,7 +72,6 @@ export function HelpTopbar({ active = 'help' }: { active?: ResourceArea }) {
 
       <nav className="sr-container srv-resource-tabs" aria-label="Resource sections">
         {tabs.map(tab => {
-          const Icon = tab.icon;
           const isActive = active === tab.key;
 
           return (
@@ -82,7 +81,7 @@ export function HelpTopbar({ active = 'help' }: { active?: ResourceArea }) {
               data-active={isActive}
               aria-current={isActive ? 'page' : undefined}
             >
-              <Icon size={14} weight={isActive ? 'fill' : 'regular'} aria-hidden="true" />
+              {tab.icon}
               <span>{tab.label}</span>
             </Link>
           );
