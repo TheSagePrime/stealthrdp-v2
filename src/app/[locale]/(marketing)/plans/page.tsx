@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { ArrowRight, SlidersHorizontal as Settings2 } from '@phosphor-icons/react/dist/ssr';
+import Image from 'next/image';
 import Link from 'next/link';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
 import { Badge } from '@/components/ui/badge';
@@ -89,7 +90,7 @@ export default function PlansPage() {
             <Card id="windows-vps" className="srv-plan-os-option srv-plan-os-windows">
               <CardHeader>
                 <span className="srv-plan-os-mark" aria-hidden="true">
-                  <img src="/brand/windows.svg" alt="" width="34" height="34" />
+                  <Image src="/brand/windows.svg" alt="" width={34} height={34} />
                 </span>
                 <Badge variant="outline" className="w-fit text-body-muted">Windows VPS</Badge>
                 <CardTitle className="text-heading-4 text-body-text">
@@ -121,7 +122,7 @@ export default function PlansPage() {
             <Card id="linux-vps" className="srv-plan-os-option srv-plan-os-linux">
               <CardHeader>
                 <span className="srv-plan-os-mark srv-plan-os-mark-linux" aria-hidden="true">
-                  <img src="/brand/linux.svg" alt="" width="34" height="40" />
+                  <Image src="/brand/linux.svg" alt="" width={34} height={40} />
                 </span>
                 <Badge variant="outline" className="w-fit text-body-muted">Linux VPS</Badge>
                 <CardTitle className="text-heading-4 text-body-text">
