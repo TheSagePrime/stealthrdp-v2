@@ -19,7 +19,7 @@ export function HelpSidebar({
       <div className="srv-help-tree-home">
         <Link href="/docs" data-active={!activeSlug}>
           <strong>Help Center</strong>
-          <small>Setup, troubleshooting and policies</small>
+          <small>VPS and Citadel setup, troubleshooting and policies</small>
         </Link>
       </div>
 
