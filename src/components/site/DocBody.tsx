@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { ResourceHeading } from '@/components/site/ResourceToc';
 import { CodeBlock } from '@/components/ui/code-block';
 
 const CODE_INDENT = /^ {4}/;
@@ -20,6 +21,17 @@ type Block =
   | { kind: 'paragraph'; text: string }
   | { kind: 'list'; ordered: boolean; items: string[] }
   | { kind: 'code'; lines: string[] };
+
+function slugifyHeading(value: string): string {
+  return value
+    .replace(/\*\*/g, '')
+    .replace(EMPHASIS, '$1')
+    .replace(/\[[^\]]+\]\([^)]+\)/g, match => match.replace(/^\[|\]\([^)]+\)$/g, ''))
+    .replace(/\`/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
 
 function inline(text: string): ReactNode[] {
   const cleaned = text.replace(/\*\*/g, '').replace(EMPHASIS, '$1');
@@ -111,14 +123,34 @@ function parse(content: string): Block[] {
   return blocks;
 }
 
+export function docHeadings(content: string): ResourceHeading[] {
+  const seen = new Map<string, number>();
+  return parse(content)
+    .filter((block): block is Extract<Block, { kind: 'heading' }> => block.kind === 'heading')
+    .map(block => {
+      const base = slugifyHeading(block.text) || 'section';
+      const count = seen.get(base) ?? 0;
+      seen.set(base, count + 1);
+      return {
+        id: count === 0 ? base : `${base}-${count + 1}`,
+        text: block.text.replace(/\*\*/g, '').replace(EMPHASIS, '$1'),
+        level: block.level,
+      };
+    });
+}
+
 export function DocBody({ content }: { content: string }) {
+  const headings = docHeadings(content);
+  let headingIndex = 0;
+
   return (
     <div className="sr-richtext">
       {parse(content).map((block, index) => {
         if (block.kind === 'heading') {
+          const heading = headings[headingIndex++];
           return block.level === 2
-            ? <h2 key={index}>{inline(block.text)}</h2>
-            : <h3 key={index}>{inline(block.text)}</h3>;
+            ? <h2 key={index} id={heading?.id}>{inline(block.text)}</h2>
+            : <h3 key={index} id={heading?.id}>{inline(block.text)}</h3>;
         }
         if (block.kind === 'list') {
           const items = block.items.map((item, itemIndex) => <li key={itemIndex}>{inline(item)}</li>);
