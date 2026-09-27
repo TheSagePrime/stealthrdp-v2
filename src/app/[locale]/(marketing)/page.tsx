@@ -376,8 +376,9 @@ export default async function HomePage({ params }: Props) {
             </p>
             <h2>Run the workload. Protect the origin.</h2>
             <p>
-              Hosting and protection are two parts of the same stack. Start with the machine,
-              add Citadel when the origin needs another defensive layer.
+              Hosting and Layer 7 DDoS protection are two parts of the same stack. Start with
+              the machine, then add Citadel when HTTP/HTTPS attack traffic needs to be filtered
+              before it reaches the origin.
             </p>
             <div className="srv-products-actions">
               <Button asChild>
@@ -385,7 +386,7 @@ export default async function HomePage({ params }: Props) {
               </Button>
               <Button asChild variant="ghost">
                 <Link href="/citadel">
-                  Explore Citadel
+                  Explore DDoS protection
                   <ArrowRight className="size-4" aria-hidden="true" />
                 </Link>
               </Button>
@@ -416,11 +417,11 @@ export default async function HomePage({ params }: Props) {
               <span className="srv-product-node-icon">
                 <ShieldCheck aria-hidden="true" weight="fill" />
               </span>
-              <span className="srv-product-node-kicker">Protection</span>
-              <strong>Citadel L7 HTTP/HTTPS</strong>
-              <small>Challenges · Rate limits · Allowlists · Origin health</small>
+              <span className="srv-product-node-kicker">Layer 7 DDoS protection</span>
+              <strong>Citadel by StealthRDP</strong>
+              <small>HTTP/HTTPS challenges · Rate limits · Lockdown · Origin health</small>
               <span className="srv-product-node-link">
-                View Citadel
+                View protection
                 <ArrowRight aria-hidden="true" />
               </span>
             </Link>
