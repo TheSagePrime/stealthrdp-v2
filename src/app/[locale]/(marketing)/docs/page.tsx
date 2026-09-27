@@ -14,7 +14,7 @@ import { docsArticles } from '@/lib/stealth/content';
 export const metadata: Metadata = createPageMetadata({
   path: '/docs',
   title: 'Help Center — StealthRDP',
-  description: 'StealthRDP setup, troubleshooting, server management, networking, panels, policies, licensing, and common support guidance.',
+  description: 'StealthRDP and Citadel setup, troubleshooting, server management, networking, DDoS protection, policies, and support guidance.',
   ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
@@ -41,8 +41,8 @@ export default function DocsPage() {
               <p className="sr-kicker">Documentation</p>
               <h1>Get from question to fix, faster.</h1>
               <p>
-                Practical setup and troubleshooting for StealthRDP servers, organized
-                around the task you are trying to complete.
+                Practical setup and troubleshooting for StealthRDP servers and Citadel
+                protection, organized around the task you are trying to complete.
               </p>
             </div>
 
@@ -50,6 +50,7 @@ export default function DocsPage() {
               <Link href="/docs/how-do-i-log-into-windows">Connect to Windows RDP</Link>
               <Link href="/docs/how-to-rebuild-a-server">Rebuild a server</Link>
               <Link href="/docs/windows-licensing">Windows licensing</Link>
+              <Link href="/docs/citadel-getting-started">Set up Citadel protection</Link>
               <Link href="/faq">Common questions</Link>
             </div>
           </header>
