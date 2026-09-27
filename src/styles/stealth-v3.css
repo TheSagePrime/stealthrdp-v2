@@ -3903,3 +3903,115 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
     padding: 24px;
   }
 }
+
+
+/* Homepage section atmosphere ---------------------------------------------
+   Keep content comfortably inset, but make the viewport gutters feel like
+   intentional parts of the page rather than empty leftover space.
+   ------------------------------------------------------------------------- */
+
+.srv-home-plans {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-block: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  background:
+    radial-gradient(
+      circle at 8% 18%,
+      color-mix(in srgb, var(--primary) 7%, transparent),
+      transparent 24rem
+    ),
+    radial-gradient(
+      circle at 92% 76%,
+      color-mix(in srgb, var(--primary) 6%, transparent),
+      transparent 28rem
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--card) 26%, transparent),
+      color-mix(in srgb, var(--background) 94%, transparent)
+    );
+}
+
+.srv-home-plans::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(
+      to right,
+      color-mix(in srgb, var(--primary) 6%, transparent) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--primary) 4%, transparent) 1px,
+      transparent 1px
+    );
+  background-size: 64px 64px;
+  opacity: 0.28;
+  mask-image: linear-gradient(
+    90deg,
+    rgba(0,0,0,.8) 0%,
+    rgba(0,0,0,.24) 18%,
+    rgba(0,0,0,.08) 50%,
+    rgba(0,0,0,.24) 82%,
+    rgba(0,0,0,.8) 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    rgba(0,0,0,.8) 0%,
+    rgba(0,0,0,.24) 18%,
+    rgba(0,0,0,.08) 50%,
+    rgba(0,0,0,.24) 82%,
+    rgba(0,0,0,.8) 100%
+  );
+}
+
+.srv-home-plans::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--foreground) 3%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--foreground) 3%, transparent);
+}
+
+.srv-home-plans > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Slightly soften other homepage transitions so sections feel connected. */
+.srv-home-infra,
+.srv-home-products,
+.srv-home-reviews,
+.srv-home-final-section {
+  position: relative;
+}
+
+.srv-home-infra::before,
+.srv-home-reviews::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: -1px;
+  height: 96px;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--primary) 3%, transparent),
+    transparent
+  );
+}
+
+@media (max-width: 760px) {
+  .srv-home-plans::before {
+    background-size: 48px 48px;
+    opacity: 0.2;
+  }
+}
