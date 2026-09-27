@@ -10790,3 +10790,82 @@ a.srv-help-tree-heading:hover {
     transition: none !important;
   }
 }
+
+
+/* ==========================================================================
+   Hero motion v5 — calm crossfade, no jump scares.
+   The page remains completely stable. Only the noun changes, with the old
+   and new words overlapping during a long eased dissolve so there is never a
+   blank frame or sudden pop.
+   ========================================================================== */
+
+.srv-home-word-slot {
+  min-width: 9.9ch;
+  overflow: visible;
+}
+
+.srv-home-word-slot::after {
+  content: none !important;
+}
+
+.srv-home-word-layer {
+  display: inline-block;
+  grid-area: 1 / 1;
+  color: inherit;
+  transform-origin: 0 50%;
+  will-change: opacity, filter, transform;
+  transition:
+    opacity 920ms cubic-bezier(.4, 0, .2, 1),
+    filter 920ms cubic-bezier(.4, 0, .2, 1),
+    transform 920ms cubic-bezier(.4, 0, .2, 1),
+    text-shadow 920ms cubic-bezier(.4, 0, .2, 1);
+}
+
+.srv-home-word-current {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate3d(0, 0, 0);
+  text-shadow: none;
+}
+
+.srv-home-word-next {
+  opacity: 0;
+  filter: blur(3px);
+  transform: translate3d(5px, 0, 0);
+  text-shadow: 0 0 16px color-mix(in srgb, var(--primary) 0%, transparent);
+}
+
+.srv-home-word-slot[data-transitioning="true"] .srv-home-word-current {
+  opacity: 0;
+  filter: blur(2px);
+  transform: translate3d(-4px, 0, 0);
+}
+
+.srv-home-word-slot[data-transitioning="true"] .srv-home-word-next {
+  opacity: 1;
+  filter: blur(0);
+  transform: translate3d(0, 0, 0);
+  text-shadow: 0 0 16px color-mix(in srgb, var(--primary) 10%, transparent);
+}
+
+@media (max-width: 640px) {
+  .srv-home-word-slot {
+    min-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv-home-word-layer {
+    transition: none !important;
+  }
+
+  .srv-home-word-next {
+    display: none;
+  }
+
+  .srv-home-word-current {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+}

@@ -3,42 +3,40 @@
 import { useEffect, useRef, useState } from 'react';
 
 const WORDS = ['server.', 'Windows VPS.', 'Linux VPS.'] as const;
-type Phase = 'idle' | 'out' | 'in';
 
 export function HeroWordRotator() {
   const [index, setIndex] = useState(0);
-  const [phase, setPhase] = useState<Phase>('idle');
-  const swapTimer = useRef<number | null>(null);
+  const [transitioning, setTransitioning] = useState(false);
   const settleTimer = useRef<number | null>(null);
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
 
     const interval = window.setInterval(() => {
-      setPhase('out');
+      setTransitioning(true);
 
-      swapTimer.current = window.setTimeout(() => {
+      settleTimer.current = window.setTimeout(() => {
         setIndex(current => (current + 1) % WORDS.length);
-        setPhase('in');
-
-        settleTimer.current = window.setTimeout(() => {
-          setPhase('idle');
-        }, 520);
-      }, 230);
-    }, 3400);
+        setTransitioning(false);
+      }, 1050);
+    }, 5200);
 
     return () => {
       window.clearInterval(interval);
-      if (swapTimer.current !== null) window.clearTimeout(swapTimer.current);
       if (settleTimer.current !== null) window.clearTimeout(settleTimer.current);
     };
   }, []);
 
+  const nextIndex = (index + 1) % WORDS.length;
+
   return (
-    <span className="srv-home-word-slot" data-phase={phase}>
+    <span className="srv-home-word-slot" data-transitioning={transitioning ? 'true' : 'false'}>
       <span className="sr-visually-hidden">server.</span>
-      <span className="srv-home-word-value" aria-hidden="true">
+      <span className="srv-home-word-layer srv-home-word-current" aria-hidden="true">
         {WORDS[index]}
+      </span>
+      <span className="srv-home-word-layer srv-home-word-next" aria-hidden="true">
+        {WORDS[nextIndex]}
       </span>
     </span>
   );
