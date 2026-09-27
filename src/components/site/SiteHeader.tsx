@@ -10,6 +10,8 @@ const resourceLinks = [
   ['Resources home', '/resources'],
   ['Guides', '/blog'],
   ['Help Center', '/docs'],
+  ['Citadel Docs', '/citadel/docs'],
+  ['Common Questions', '/faq'],
 ] as const;
 
 export function SiteHeader() {
@@ -104,6 +106,8 @@ export function SiteHeader() {
             <Link href="/resources">Resources</Link>
             <Link href="/blog">Guides</Link>
             <Link href="/docs">Help Center</Link>
+            <Link href="/citadel/docs">Citadel Docs</Link>
+            <Link href="/faq">Common questions</Link>
             <a href="https://wa.me/447441426993" target="_blank" rel="noopener noreferrer">WhatsApp support</a>
             <Link href="/about">About</Link>
             <a href="https://dash.stealthrdp.com/index.php?rp=/login">Client Area</a>

@@ -70,7 +70,7 @@ export function HelpTopbar({ active = 'help' }: { active?: ResourceArea }) {
 
         <ResourceSearch
           items={items}
-          placeholder="Search guides, help and questions…"
+          placeholder="Search guides, help, Citadel and questions…"
         />
 
         <div className="srv-help-topbar-actions">

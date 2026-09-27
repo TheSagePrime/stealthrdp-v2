@@ -19,6 +19,7 @@ const columns = [
       ['Resources home', '/resources'],
       ['Guides', '/blog'],
       ['Help Center', '/docs'],
+      ['Citadel Docs', '/citadel/docs'],
       ['Common questions', '/faq'],
       ['Server status', '/status'],
     ],
