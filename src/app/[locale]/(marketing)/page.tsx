@@ -281,7 +281,7 @@ export default async function HomePage({ params }: Props) {
                 Choose your server
               </p>
               <h2 className="text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
-                One VPS product. Choose the resources.
+                Choose the resources your workload needs.
               </h2>
             </div>
             <p className="max-w-xl text-base leading-7 text-muted-foreground lg:justify-self-end">
@@ -302,8 +302,8 @@ export default async function HomePage({ params }: Props) {
             </p>
             <h2>What can you run on a VPS?</h2>
             <p>
-              The server product stays the same. These guides explain how the requirements change
-              with the workload, what to size for, and where a VPS is or is not the right fit.
+              Explore practical guides for remote desktop, web hosting, automation, trading,
+              backups, and more — with sizing and setup considerations for each workload.
             </p>
             <Link href="/blog" className="srv-inline-link">
               Browse all VPS guides
@@ -522,9 +522,9 @@ export default async function HomePage({ params }: Props) {
               <Lightning weight="fill" aria-hidden="true" />
               Backed by 10,000+ orders
             </span>
-            <h2>Ready to stop wasting time on server management?</h2>
+            <h2>Ready to deploy your next VPS?</h2>
             <p>
-              Deploy in about 60 seconds, choose Windows or Linux, and focus on the work that matters.
+              Choose your region, resources, and operating system, then get your server online in about 60 seconds.
             </p>
           </div>
 
