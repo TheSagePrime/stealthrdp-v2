@@ -8745,7 +8745,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 
 .srv-help-topbar-actions a {
   color: var(--text-dim);
-  font-size: .6875rem;
+  font-size: .75rem;
   font-weight: 600;
 }
 
@@ -8797,14 +8797,14 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 
 .srv-help-tree-home > a strong {
   color: inherit;
-  font-size: .75rem;
+  font-size: .8125rem;
   font-weight: 700;
 }
 
 .srv-help-tree-home > a small {
   color: var(--text-faint);
-  font-size: .5625rem;
-  line-height: 1.35;
+  font-size: .625rem;
+  line-height: 1.4;
 }
 
 .srv-help-tree-home > a:hover,
@@ -8820,7 +8820,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 
 .srv-help-tree-heading {
   color: var(--text-faint);
-  font-size: .5625rem;
+  font-size: .625rem;
   font-weight: 700;
   letter-spacing: .075em;
   line-height: 1.35;
@@ -8846,8 +8846,8 @@ a.srv-help-tree-heading:hover {
   border-left: 2px solid transparent;
   border-radius: 0 7px 7px 0;
   color: var(--text-dim);
-  font-size: .6875rem;
-  line-height: 1.35;
+  font-size: .75rem;
+  line-height: 1.4;
   transition:
     color 140ms ease,
     background-color 140ms ease,
@@ -8897,7 +8897,7 @@ a.srv-help-tree-heading:hover {
   max-width: 650px;
   margin: 0;
   color: var(--text);
-  font-size: clamp(2.25rem, 4.2vw, 3.8rem);
+  font-size: clamp(2rem, 3.25vw, 3rem);
   font-weight: 700;
   line-height: 1;
   letter-spacing: -.045em;
@@ -8907,7 +8907,7 @@ a.srv-help-tree-heading:hover {
   max-width: 620px;
   margin: 0;
   color: var(--text-dim);
-  font-size: .8125rem;
+  font-size: .875rem;
   line-height: 1.65;
 }
 
@@ -8918,11 +8918,11 @@ a.srv-help-tree-heading:hover {
 
 .srv-docs-start-links a {
   display: flex;
-  min-height: 40px;
+  min-height: 42px;
   align-items: center;
   border-bottom: 1px solid var(--border-divider);
   color: var(--text-dim);
-  font-size: .6875rem;
+  font-size: .75rem;
   font-weight: 600;
 }
 
@@ -8950,7 +8950,7 @@ a.srv-help-tree-heading:hover {
 .srv-docs-collection-head h2 {
   margin: 0;
   color: var(--text);
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: -.02em;
 }
@@ -8959,7 +8959,7 @@ a.srv-help-tree-heading:hover {
   max-width: 590px;
   margin: 5px 0 0;
   color: var(--text-dim);
-  font-size: .6875rem;
+  font-size: .75rem;
   line-height: 1.55;
 }
 
@@ -9001,7 +9001,7 @@ a.srv-help-tree-heading:hover {
 .srv-docs-entry-number {
   color: var(--primary);
   font-family: var(--font-mono);
-  font-size: .5625rem;
+  font-size: .625rem;
   font-weight: 700;
 }
 
@@ -9012,7 +9012,7 @@ a.srv-help-tree-heading:hover {
 
 .srv-docs-entry-copy strong {
   color: var(--text);
-  font-size: .75rem;
+  font-size: .8125rem;
   font-weight: 600;
 }
 
@@ -9021,7 +9021,7 @@ a.srv-help-tree-heading:hover {
   overflow: hidden;
   max-width: 640px;
   color: var(--text-dim);
-  font-size: .625rem;
+  font-size: .6875rem;
   line-height: 1.45;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -9046,14 +9046,14 @@ a.srv-help-tree-heading:hover {
 .srv-docs-index-aside p {
   margin: 0 0 5px;
   color: var(--text-dim);
-  font-size: .625rem;
+  font-size: .6875rem;
   line-height: 1.5;
 }
 
 .srv-docs-index-aside a {
-  padding: 4px 0;
+  padding: 5px 0;
   color: var(--text-dim);
-  font-size: .625rem;
+  font-size: .6875rem;
   font-weight: 600;
 }
 
@@ -9109,7 +9109,7 @@ a.srv-help-tree-heading:hover {
   max-width: 730px;
   margin: 0;
   color: var(--text);
-  font-size: clamp(2rem, 3.6vw, 3.25rem);
+  font-size: clamp(1.875rem, 3vw, 2.75rem);
   font-weight: 700;
   line-height: 1.04;
   letter-spacing: -.04em;
@@ -9149,7 +9149,7 @@ a.srv-help-tree-heading:hover {
   padding-top: 22px;
   border-top: 1px solid var(--border-divider);
   color: var(--text);
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   line-height: 1.22;
   letter-spacing: -.025em;
 }
@@ -9534,11 +9534,11 @@ a.srv-help-tree-heading:hover {
 
 .srv-resource-tabs a {
   display: inline-flex;
-  min-height: 38px;
+  min-height: 40px;
   align-items: center;
   border-bottom: 2px solid transparent;
   color: var(--text-dim);
-  font-size: .6875rem;
+  font-size: .75rem;
   font-weight: 600;
   white-space: nowrap;
 }
