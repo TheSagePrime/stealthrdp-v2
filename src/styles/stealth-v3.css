@@ -4015,3 +4015,23 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
     opacity: 0.2;
   }
 }
+
+
+/* Four-up pricing should read as a deliberate cluster, not stretched columns. */
+.srv-home-pricing-grid {
+  justify-content: center;
+}
+
+@media (min-width: 1280px) {
+  .srv-home-pricing-grid {
+    grid-template-columns: repeat(4, minmax(0, 290px));
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .srv-home-pricing-grid {
+    grid-template-columns: repeat(4, minmax(0, 300px));
+    gap: 24px;
+  }
+}
