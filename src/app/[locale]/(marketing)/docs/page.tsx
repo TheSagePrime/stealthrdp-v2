@@ -1,18 +1,15 @@
 import type { Metadata } from 'next';
-import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
-import { Badge } from '@/components/ui/badge';
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { ResourceNav } from '@/components/site/ResourceNav';
-import { ResourceSearch, type ResourceSearchItem } from '@/components/site/ResourceSearch';
+import { HelpSidebar } from '@/components/site/HelpSidebar';
+import { HelpTopbar } from '@/components/site/HelpTopbar';
 import { createPageMetadata } from '@/libs/seo/metadata';
-import { docPublicSlug, docsArticles, faqs } from '@/lib/stealth/content';
+import {
+  articlesForCollection,
+  helpArticleHref,
+  helpCollectionId,
+  helpCollections,
+} from '@/lib/stealth/help-center';
+import { docsArticles } from '@/lib/stealth/content';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/docs',
@@ -22,106 +19,86 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default function DocsPage() {
-  const categories = Array.from(new Set(docsArticles.map(article => article.category)));
-  const searchItems: ResourceSearchItem[] = [
-    ...docsArticles.map(article => ({
-      title: article.title,
-      href: `/docs/${docPublicSlug(article)}`,
-      description: article.summary,
-      kind: 'Help' as const,
-    })),
-    ...faqs.map(item => ({
-      title: item.question,
-      href: '/faq',
-      description: item.answer,
-      kind: 'Question' as const,
-    })),
-  ];
-
   return (
-    <div className="srv-page srv-page-docs srv-knowledge-page">
-      <section className="srv-resource-hero">
-        <div className="sr-container">
-          <p className="sr-kicker">Help Center</p>
-          <h1>Find the task. <span>Fix the server.</span></h1>
-          <p>
-            Setup instructions, troubleshooting, networking, server management,
-            panels, policies, and quick answers from one support system.
-          </p>
-          <ResourceSearch
-            items={searchItems}
-            placeholder="Search setup, troubleshooting, licensing, billing…"
-          />
-        </div>
-      </section>
+    <div className="srv-page srv-page-docs srv-docs-product">
+      <HelpTopbar />
 
-      <section className="sr-section srv-resource-body">
-        <div className="sr-container srv-knowledge-doc-grid">
-          <aside className="srv-help-sidebar">
-            <ResourceNav active="help" />
-            <div className="srv-help-collections" aria-label="Help Center collections">
-              <span className="srv-resource-nav-label">Collections</span>
-              {categories.map(category => (
-                <a key={category} href={`#${category.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}>
-                  {category}
-                </a>
-              ))}
+      <div className="sr-container srv-docs-grid">
+        <aside className="srv-docs-sidebar">
+          <HelpSidebar articles={docsArticles} />
+        </aside>
+
+        <main className="srv-docs-index">
+          <header className="srv-docs-index-head">
+            <div>
+              <p className="sr-kicker">Documentation</p>
+              <h1>Get from question to fix, faster.</h1>
+              <p>
+                Practical setup and troubleshooting for StealthRDP servers, organized
+                around the task you are trying to complete.
+              </p>
             </div>
-          </aside>
 
-          <main className="sr-library-groups srv-knowledge-main">
-            {categories.map((category) => {
-              const articles = docsArticles.filter(article => article.category === category);
-              const id = category.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+            <div className="srv-docs-start-links">
+              <Link href="/docs/how-do-i-log-into-windows">Connect to Windows RDP</Link>
+              <Link href="/docs/how-to-rebuild-a-server">Rebuild a server</Link>
+              <Link href="/docs/windows-licensing">Windows licensing</Link>
+              <Link href="/faq">Common questions</Link>
+            </div>
+          </header>
+
+          <div className="srv-docs-collections">
+            {helpCollections.map(collection => {
+              const articles = articlesForCollection(collection, docsArticles);
+              if (articles.length === 0) return null;
 
               return (
-                <section className="sr-library-group" id={id} key={category}>
-                  <div className="sr-collection-head">
-                    <h2>{category}</h2>
-                    <Badge variant="outline">{articles.length} guides</Badge>
+                <section
+                  className="srv-docs-collection"
+                  id={helpCollectionId(collection.title)}
+                  key={collection.title}
+                >
+                  <div className="srv-docs-collection-head">
+                    <div>
+                      <h2>{collection.title}</h2>
+                      <p>{collection.description}</p>
+                    </div>
+                    <span>{articles.length}</span>
                   </div>
 
-                  <div className="sr-doc-grid">
-                    {articles.map((article) => {
-                      const href = `/docs/${docPublicSlug(article)}`;
-
-                      return (
-                        <Card key={article.slug} className="srv-doc-entry">
-                          <CardHeader>
-                            <CardTitle className="text-heading-4 text-body-text">
-                              <Link href={href}>
-                                <h3>{article.title}</h3>
-                              </Link>
-                            </CardTitle>
-                            <CardDescription className="text-small text-body-muted">
-                              {article.summary}
-                            </CardDescription>
-                          </CardHeader>
-                          <CardFooter>
-                            <Link href={href}>
-                              Read help article
-                              <ArrowRight aria-hidden="true" className="size-4" />
-                            </Link>
-                          </CardFooter>
-                        </Card>
-                      );
-                    })}
-                  </div>
+                  <ol>
+                    {articles.map((article, index) => (
+                      <li key={article.slug}>
+                        <Link href={helpArticleHref(article)}>
+                          <span className="srv-docs-entry-number">{String(index + 1).padStart(2, '0')}</span>
+                          <span className="srv-docs-entry-copy">
+                            <strong>{article.title}</strong>
+                            <small>{article.summary}</small>
+                          </span>
+                          <span className="srv-docs-entry-arrow" aria-hidden="true">→</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ol>
                 </section>
               );
             })}
-          </main>
+          </div>
+        </main>
 
-          <aside className="srv-resource-aside">
-            <span className="srv-resource-nav-label">Quick help</span>
-            <Link href="/faq">Common questions</Link>
-            <Link href="/docs/windows-licensing">Windows licensing</Link>
-            <Link href="/docs/use-of-service">Use of service</Link>
-            <Link href="/status">Service status</Link>
-            <a href="https://dash.stealthrdp.com/submitticket.php">Contact support ↗</a>
-          </aside>
-        </div>
-      </section>
+        <aside className="srv-docs-index-aside">
+          <span className="srv-resource-nav-label">Need help now?</span>
+          <p>Server-specific and account-specific issues are handled through support.</p>
+          <a href="https://dash.stealthrdp.com/submitticket.php">Open support ticket ↗</a>
+          <Link href="/status">Check service status</Link>
+
+          <span className="srv-docs-aside-divider" />
+
+          <span className="srv-resource-nav-label">Learn more</span>
+          <Link href="/blog">VPS Guides</Link>
+          <Link href="/resources">All resources</Link>
+        </aside>
+      </div>
     </div>
   );
 }
