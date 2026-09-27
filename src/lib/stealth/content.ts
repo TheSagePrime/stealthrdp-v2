@@ -79,6 +79,8 @@ export const testimonials = testimonialsJson as Testimonial[];
 export const reviews = reviewsJson as Testimonial[];
 export const blogArticles = blogJson as BlogArticle[];
 export const docsArticles = docsJson as DocArticle[];
+export const citadelDocsArticles = docsArticles.filter(article => article.slug.startsWith('citadel-'));
+export const helpDocsArticles = docsArticles.filter(article => !article.slug.startsWith('citadel-'));
 export const uptime = uptimeJson;
 
 const docsPublicSlugs: Record<string, string> = {
@@ -111,11 +113,20 @@ export function docPublicSlug(article: DocArticle): string {
   return docsPublicSlugs[article.slug] ?? article.slug.replace(/^\d+-/, '');
 }
 
-export const docPublicPaths = docsArticles.map(article => `/docs/${docPublicSlug(article)}`);
+export const docPublicPaths = helpDocsArticles.map(article => `/docs/${docPublicSlug(article)}`);
+export const citadelDocPublicPaths = citadelDocsArticles.map(
+  article => `/citadel/docs/${docPublicSlug(article).replace(/^citadel-/, '')}`,
+);
 export const indexableDocPublicPaths = docPublicPaths.filter(path => !isNoindexDocPath(path));
 
 export function findDocByPublicSlug(slug: string): DocArticle | undefined {
-  return docsArticles.find(article => docPublicSlug(article) === slug);
+  return helpDocsArticles.find(article => docPublicSlug(article) === slug);
+}
+
+export function findCitadelDocByPublicSlug(slug: string): DocArticle | undefined {
+  return citadelDocsArticles.find(
+    article => docPublicSlug(article).replace(/^citadel-/, '') === slug,
+  );
 }
 
 export function findBlog(slug: string): BlogArticle | undefined {

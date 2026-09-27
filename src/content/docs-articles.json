@@ -398,5 +398,266 @@
       "1737944563-how-to-re_activate-and-extend-your-180_day-windows-trial"
     ],
     "content": "Windows licensing\n\nWindows licensing\n=================\n\nLast updated on Sep 16, 2026\n\nStealthRDP does not provide Microsoft Windows licences, SPLA licences, RDS licences, activation keys, or licensing services, even if requested.\n\n## What this means\n\n1.  StealthRDP provides the server. StealthRDP does not provide the Microsoft licence.\n\n2.  Microsoft Windows licensing is not included and is not supplied by StealthRDP.\n\n3.  Where Windows Server Evaluation is used, it is Evaluation software. It is not a permanently licensed Windows installation.\n\n4.  Evaluation software is intended for evaluation and testing. It is not licensed for continued or production use without appropriate Microsoft licensing.\n\n5.  Customers using Windows are responsible for obtaining and maintaining any Microsoft licences required for their intended use.\n\n6.  StealthRDP does not obtain, supply, or determine Microsoft licensing for a customer.\n\n## Evaluation software\n\nWindows Server Evaluation may be provided for evaluation and testing where it is currently available. It must be treated as Evaluation software, not as a permanently licensed Windows installation. Rearming or extending an evaluation period does not convert Evaluation software into a licensed production edition. See [How to Extend the Windows Server 180-Day Evaluation Period](/docs/how-to-re-activate-and-extend-your-180-day-windows-trial).\n\n## Customer-owned Microsoft licences\n\nCustomers may use their own eligible Microsoft licences where permitted by Microsoft's applicable licensing terms. Customers are responsible for determining whether their licence is valid for their intended hosted deployment. Eligibility can depend on the customer's licensing agreement, licence type, Software Assurance or subscription status, and deployment environment. StealthRDP does not determine that eligibility and does not guarantee that a particular licence will work.\n\n## Related terms\n\nThis page forms part of the StealthRDP terms. See also [Use of service](/docs/use-of-service) and [User Responsibilities](/docs/user-responsibilities).\n"
+  },
+  {
+    "slug": "citadel-getting-started",
+    "title": "Getting started with Citadel",
+    "category": "Citadel: Start here",
+    "date": "Sep 27, 2026",
+    "sourceUrl": "https://citadel.stealthrdp.com/docs/getting-started",
+    "summary": "Protect a website with Cloudflare, Citadel and your origin.",
+    "relatedSlugs": [
+      "citadel-cloudflare-setup",
+      "citadel-domains",
+      "citadel-security",
+      "citadel-allowlists"
+    ],
+    "content": "## How traffic reaches your site\nVisitors reach Cloudflare through a proxied orange-cloud DNS record. Cloudflare forwards web traffic to Citadel, which checks requests before clean traffic reaches your origin server.\n## First-time setup\n1. In Citadel, add your root domain with the origin IP or hostname, port, and TLS-to-origin setting.\n2. Copy the Citadel ingress IP from the domain page.\n3. In Cloudflare DNS, point a proxied A record for the apex and each protected hostname to that IP.\n4. Set Cloudflare SSL/TLS to Full, or Full (strict) when the origin has a trusted certificate.\n5. Wait about a minute for Citadel to detect the connection, or select Check connection.\n6. Open Security and start with Auto (Balanced) challenge mode.\n7. Allowlist machine-facing paths such as `/api/` and webhooks before using human interaction challenges.\n## Check protection\nThe domain should show Active / Proxied. A grey-cloud DNS-only record bypasses Citadel and does not provide Layer 7 protection.\nSee [Cloudflare setup](/citadel/docs/cloudflare-setup) and [Security levels](/citadel/docs/challenge-levels)."
+  },
+  {
+    "slug": "citadel-overview",
+    "title": "Citadel protection overview",
+    "category": "Citadel: Start here",
+    "date": "Sep 27, 2026",
+    "sourceUrl": "https://citadel.stealthrdp.com/docs/overview",
+    "summary": "Read fleet health, live traffic, bandwidth, and domains needing setup.",
+    "relatedSlugs": [
+      "citadel-domains",
+      "citadel-analytics",
+      "citadel-bandwidth"
+    ],
+    "content": "## What the overview shows\nThe Citadel command center summarizes domains already synced and domains awaiting DNS, your service plan and remaining billing-period bandwidth, recent proxied and blocked requests, live traffic, and recent domains.\n## What to do next\n- For a domain awaiting DNS, open it and finish its orange-cloud A record.\n- For a domain under attack, open Security and review challenge and incident settings.\n- Use Analytics or Bandwidth when you need more history than the overview window shows.\nSee [Domain overview](/citadel/docs/domain-overview) and [Analytics](/citadel/docs/analytics)."
+  },
+  {
+    "slug": "citadel-cloudflare-setup",
+    "title": "Set up Cloudflare for Citadel",
+    "category": "Citadel: Start here",
+    "date": "Sep 27, 2026",
+    "sourceUrl": "https://citadel.stealthrdp.com/docs/cloudflare-setup",
+    "summary": "Point orange-cloud A records at Citadel without moving your DNS zone.",
+    "relatedSlugs": [
+      "citadel-domain-overview",
+      "citadel-origin",
+      "citadel-dns"
+    ],
+    "content": "## Configure DNS and SSL\n1. Open your domain in Citadel and copy its ingress IP from the A record chip.\n2. In Cloudflare DNS, set the apex (`@`) and every hostname you want protected to that IP.\n3. Turn on Proxied (orange cloud) for each protected record.\n4. In Cloudflare SSL/TLS Overview, select Full or Full (strict) if the origin certificate is trusted.\n5. Return to Citadel. It checks awaiting domains about every minute; Check connection refreshes immediately.\n## Troubleshoot activation\nA grey-cloud record, the wrong ingress IP, or Flexible SSL can leave a domain awaiting DNS or cause browser errors. DNS-only records skip Citadel entirely. Mail, TXT, and other non-web records remain in Cloudflare.\nSee [DNS stays in Cloudflare](/citadel/docs/dns) and [Origin and hostnames](/citadel/docs/origin)."
+  },
+  {
+    "slug": "citadel-domains",
+    "title": "Manage Citadel domains",
+    "category": "Citadel: Domains",
+    "date": "Sep 27, 2026",
+    "sourceUrl": "https://citadel.stealthrdp.com/docs/domains",
+    "summary": "Add domains, find them, check connections, and remove protection.",
+    "relatedSlugs": [
+      "citadel-getting-started",
+      "citadel-cloudflare-setup",
+      "citadel-domain-overview"
+    ],
+    "content": "## Add a domain\n1. Enter the root domain, such as `example.com`.\n2. Enter the apex origin host, using a working IP address or hostname.\n3. Set the origin port, usually 443, and choose whether Citadel should use TLS to the origin.\n4. Select Add domain and complete the [Cloudflare setup](/citadel/docs/cloudflare-setup).\nCitadel checks awaiting domains automatically about every minute. Check connection is available for an immediate test. After the apex is healthy, add protected subdomains from the Origin page.\n## Manage existing domains\nUse the Domains list to search for a site or remove a domain you no longer protect."
+  },
+  {
+    "slug": "citadel-domain-overview",
+    "title": "Understand a Citadel domain's status",
+    "category": "Citadel: Domains",
+    "date": "Sep 27, 2026",
+    "sourceUrl": "https://citadel.stealthrdp.com/docs/domain-overview",
+    "summary": "Find the ingress IP and confirm that protection is active.",
+    "relatedSlugs": [
+      "citadel-cloudflare-setup",
+      "citadel-origin",
+      "citadel-security"
+    ],
+    "content": "## Connection status\nA domain starts in awaiting DNS. Copy the Citadel ingress IP into a proxied Cloudflare A record. Citadel automatically checks the connection about every minute, or you can select Check connection.\nOnce a protected hostname routes through Citadel, the status becomes Active. A proxied subdomain can satisfy this check even if the apex is not proxied.\n## Next steps\nThe domain overview links to Origin, Health, Security, Cache, and Insights. Use Origin to verify the backend and Health to test reachability."
+  },
+  {
+    "slug": "citadel-origin",
+    "title": "Configure Citadel origins and hostnames",
+    "category": "Citadel: Domains",
+    "date": "Sep 27, 2026",
+    "sourceUrl": "https://citadel.stealthrdp.com/docs/origin",
+    "summary": "Set the backend host, port, and TLS for apex and subdomains.",
+    "relatedSlugs": [
+      "citadel-health",
+      "citadel-cloudflare-setup",
+      "citadel-allowlists"
+    ],
+    "content": "## Configure the backend\nThe origin is the real server Citadel sends clean traffic to. Set the apex host, port and TLS-to-origin option, then add protected subdomains. A subdomain can share the apex backend or override it.\n1. Confirm the apex origin URL reaches a working server.\n2. Add every hostname you want Citadel to protect.\n3. Give each hostname a proxied Cloudflare DNS record pointing at the Citadel ingress IP.\n4. Save, then use [Origin health](/citadel/docs/health) to test the connection.\n## API and SSO redirects\nIf the origin redirects HTTP to HTTPS, enable TLS-to-origin or use an HTTPS backend. This helps prevent POST requests to `/api/*` from being turned into 301 redirects."
+  },
+  {
+    "slug": "citadel-health",
+    "title": "Check Citadel origin health",
+    "category": "Citadel: Domains",
+    "date": "Sep 27, 2026",
+    "sourceUrl": "https://citadel.stealthrdp.com/docs/health",
+    "summary": "Diagnose latency, failed probes, and intermittent gateway errors.",
+    "relatedSlugs": [
+      "citadel-origin",
+      "citadel-security"
+    ],
+    "content": "## Run a health check\nOpen the domain and select Health. Review the latest probe's latency, status and error text, or run a new probe after changing Origin settings.\n## When a probe fails\nCheck the origin IP or hostname, port, TLS setting, and firewall rules that must allow Citadel egress. Save corrections on Origin, then re-check Health. Visitor-facing 502 errors may indicate an unreachable origin.\nOrigin-health monitoring does not silently change a fixed challenge level to Interaction. Security keeps the level you saved."
+  },
+  {
+    "slug": "citadel-dns",
+    "title": "Citadel DNS stays in Cloudflare",
+    "category": "Citadel: Domains",
+    "date": "Sep 27, 2026",
+    "sourceUrl": "https://citadel.stealthrdp.com/docs/dns",
+    "summary": "Keep Cloudflare nameservers and point protected web records at Citadel.",
+    "relatedSlugs": [
+      "citadel-cloudflare-setup",
+      "citadel-domain-overview"
+    ],
+    "content": "## A-record mode\nCitadel does not host your DNS zone. Manage DNS in Cloudflare and point proxied orange-cloud web records to the Citadel ingress IP.\n- Do not grey-cloud hostnames you expect Citadel to protect.\n- Apex and `www` can both point to the same ingress IP.\n- Mail, TXT, and other non-web records can stay as they are.\nSee [Cloudflare setup](/citadel/docs/cloudflare-setup)."
+  },
+  {
+    "slug": "citadel-security",
+    "title": "Configure Citadel security",
+    "category": "Citadel: Protection",
+    "date": "Sep 27, 2026",
+    "sourceUrl": "https://citadel.stealthrdp.com/docs/security",
+    "summary": "Choose challenge levels and review allowlists, blocklists, and rate limits.",
+    "relatedSlugs": [
+      "citadel-allowlists",
+      "citadel-challenge-levels",
+      "citadel-branding",
+      "citadel-cache"
+    ],
+    "content": "## Set a challenge level\nOpen a domain's Security page, choose Off, Cookie, JS, Interaction, Auto or Lockdown, then select Save level. Existing browser sessions must verify again after a level change. Balanced and Strict protection profiles provide preset bundles.\n- Off applies no browser challenge while configured rate limits and blocklists can still apply.\n- Cookie and JS use lightweight browser checks.\n- Interaction requires a human click.\n- Auto escalates during an attack and heals when traffic calms.\n- Lockdown passes only allowlisted clients.\n## Protect machine clients\nAPIs and webhooks cannot complete a human click. Add specific [path, IP or User-Agent allowlists](/citadel/docs/allowlists), especially before using Interaction or Lockdown. Review rate limits, blocklists and incident controls on the same Security surface."
+  },
+  {
+    "slug": "citadel-challenge-levels",
+    "title": "Citadel challenge levels explained",
+    "category": "Citadel: Protection",
+    "date": "Sep 27, 2026",
+    "sourceUrl": "https://citadel.stealthrdp.com/docs/challenge-levels",
+    "summary": "Choose Off, Cookie, JS, Interaction, Auto, or Lockdown for the situation.",
+    "relatedSlugs": [
+      "citadel-security",
+      "citadel-allowlists",
+      "citadel-branding"
+    ],
+    "content": "## Choose the right level\n- Start public websites on Auto (Balanced). It begins at a calmer baseline and escalates under attack.\n- Use Interaction during active abuse when Auto is insufficient, and allowlist APIs first.\n- Use Lockdown only for emergencies; pair it with specific IP or path allowlists for administrators and integrations.\n- Off can suit a private app already gated elsewhere; proxy logs and configured rate limits still apply.\nCookie and JS are lighter browser checks between Off and Interaction.\n## Recovery behavior\nAfter a proxy restart, Auto heals an elevated level to its calm baseline. Fixed saved levels, including Interaction, remain as configured. Higher friction can interrupt APIs and headless monitors without allowlists."
+  },
+  {
+    "slug": "citadel-branding",
+    "title": "Brand Citadel challenge and error pages",
+    "category": "Citadel: Protection",
+    "date": "Sep 27, 2026",
+    "sourceUrl": "https://citadel.stealthrdp.com/docs/branding",
+    "summary": "Customize visual HTML shells while Citadel supplies the mitigation controls.",
+    "relatedSlugs": [
+      "citadel-security",
+      "citadel-challenge-levels",
+      "citadel-allowlists"
+    ],
+    "content": "## Customizable pages\nCitadel supports visual shells for JS challenge, Interaction, Lockdown, blocked 403, rate-limited 429, and origin/gateway errors 502, 503 and 504. Cookie challenge silently sets a pass cookie and redirects, so it has no branded page. A normal application 500 from a working origin is left as the application returned it.\n## Save a shell\n1. Open the domain's Branding page and select a page type.\n2. Paste HTML or insert the sample shell. Optional markers are `{{BRAND}}` and `{{MESSAGE}}`.\n3. Select Save custom shell. The status changes to Custom.\n4. Use Restore this default or Restore all defaults to return to Citadel's stock pages.\nCitadel injects its real proof-of-work, human button, and status controls before `</body>`. Do not add your own verification form or post solutions outside `/__l7/`. External `javascript:` attribute URLs are stripped on save. Keep shells below approximately 150 KB; inline CSS and HTTPS images are supported. Branding does not change proof-of-work difficulty or verification endpoints."
+  },
+  {
+    "slug": "citadel-allowlists",
+    "title": "Configure Citadel allowlists",
+    "category": "Citadel: Protection",
+    "date": "Sep 27, 2026",
+    "sourceUrl": "https://citadel.stealthrdp.com/docs/allowlists",
+    "summary": "Bypass challenges for trusted paths, IPs, and user agents on every hostname.",
+    "relatedSlugs": [
+      "citadel-security",
+      "citadel-challenge-levels"
+    ],
+    "content": "## Add a bypass\nOpen Security → Allowlist / bypass, add specific rules, then Save allowlist. Matching clients bypass challenges, including Lockdown, across the apex, `www`, and protected subdomains for that domain.\n## Path rules\nPaths must start with `/`. `/api/` matches `/api`, `/api/`, and descendants such as `/api/auth/google`. `/api` also matches descendants but not `/apiv2`. Keep rules specific because other security features can still depend on rule order.\n## IP and User-Agent rules\nEnter an exact IPv4/IPv6 address or CIDR, such as `203.0.113.0/24`. Behind trusted Cloudflare edges, Citadel uses the visitor or webhook source IP from `CF-Connecting-IP` or `X-Real-IP`; do not allowlist Cloudflare's shared IPs. User-Agent uses a substring match, such as `Stripe/` or `UptimeRobot`, and is easier to spoof than path or IP matching."
+  },
+  {
+    "slug": "citadel-cache",
+    "title": "Use Citadel cache and purge",
+    "category": "Citadel: Protection",
+    "date": "Sep 27, 2026",
+    "sourceUrl": "https://citadel.stealthrdp.com/docs/cache",
+    "summary": "Cache eligible static responses and bypass dynamic paths.",
+    "relatedSlugs": [
+      "citadel-bandwidth",
+      "citadel-security"
+    ],
+    "content": "## Configure cache\n1. Open the domain's Cache page and enable caching.\n2. Select eligible extensions such as CSS, JavaScript, images or fonts.\n3. Add bypass prefixes for dynamic routes such as `/api/` and `/admin/`.\n4. Save cache settings.\nThe cache reduces repeated origin work for eligible static responses. After a release that changes static assets, use Purge all or Purge path as needed.\nOutbound visitor speed caps are configured in [Bandwidth](/citadel/docs/bandwidth), not Cache."
+  },
+  {
+    "slug": "citadel-insights",
+    "title": "Read Citadel insights and attack timeline",
+    "category": "Citadel: Protection",
+    "date": "Sep 27, 2026",
+    "sourceUrl": "https://citadel.stealthrdp.com/docs/insights",
+    "summary": "Review domain attack events, decisions, and recent mitigation.",
+    "relatedSlugs": [
+      "citadel-security",
+      "citadel-analytics",
+      "citadel-logs"
+    ],
+    "content": "## Follow an incident\nOpen a domain's Insights page to see charts and the attack/event timeline. Attack started and ended events include duration where available. Recent challenge and block reasons explain how Citadel handled a spike.\nUse the Security shortcut to adjust a challenge level or allowlist. Compare the timeline with [Domain logs](/citadel/docs/logs) for request-level context and [Analytics](/citadel/docs/analytics) for fleet trends."
+  },
+  {
+    "slug": "citadel-logs",
+    "title": "Search Citadel domain logs",
+    "category": "Citadel: Traffic",
+    "date": "Sep 27, 2026",
+    "sourceUrl": "https://citadel.stealthrdp.com/docs/logs",
+    "summary": "Troubleshoot 15 days of access, security and origin-error history.",
+    "relatedSlugs": [
+      "citadel-insights",
+      "citadel-security",
+      "citadel-analytics"
+    ],
+    "content": "## Log types and retention\n- Access entries include method, path, status, visitor IP, ASN, country, User-Agent, latency, bytes and request ID.\n- Security entries show challenges, blocks, rate limits and allowlisted bypasses.\n- Error entries show origin unavailability, timeouts and gateway failures 502, 503 or 504.\nLogs are retained for 15 days in S3-backed storage. Full request and response bodies are not stored in this view, and sensitive query values are redacted before storage.\n## Find a request\nOpen a domain's Logs page. Each page shows up to 200 rows; use Previous and Next for more. Filter by type, method or status, search for visitor IP, URL path, host or request ID, and sort oldest or newest first. Expand Show details for structured decision and visitor context. Older rows with empty detail objects are backfilled from their visible fields.\n## Geo and IP details\nASN prefers Cloudflare headers when present, otherwise lookup from visitor IP. Country prefers known ASN operational home country, then Cloudflare country; registration country is a last resort. New visitor IPs are indexed as traffic arrives, and opening older pages backfills those rows for later IP searches."
+  },
+  {
+    "slug": "citadel-analytics",
+    "title": "Use Citadel analytics",
+    "category": "Citadel: Traffic",
+    "date": "Sep 27, 2026",
+    "sourceUrl": "https://citadel.stealthrdp.com/docs/analytics",
+    "summary": "Compare fleet-wide edge, proxied and blocked request trends.",
+    "relatedSlugs": [
+      "citadel-overview",
+      "citadel-insights",
+      "citadel-bandwidth"
+    ],
+    "content": "## Inspect traffic\nSelect a time range on Analytics and compare Edge, Proxy and Blocked series for spikes. Analytics is the fleet view. If one site dominates, open it from Domains and use its Insights and Logs for an incident-level explanation.\nThe [Protection overview](/citadel/docs/overview) gives a shorter live window. [Bandwidth](/citadel/docs/bandwidth) covers transfer and speed limits."
+  },
+  {
+    "slug": "citadel-bandwidth",
+    "title": "Track Citadel bandwidth and speed limits",
+    "category": "Citadel: Traffic",
+    "date": "Sep 27, 2026",
+    "sourceUrl": "https://citadel.stealthrdp.com/docs/bandwidth",
+    "summary": "Review clean-traffic quota, live transfer, and per-domain outbound caps.",
+    "relatedSlugs": [
+      "citadel-cache",
+      "citadel-overview"
+    ],
+    "content": "## Understand usage\nBandwidth counts clean traffic passed toward the origin against the plan quota. Live charts display outbound and inbound MB/s.\n## Set a speed limit\n1. Select the domain in the scope control.\n2. Add or edit a rule for an extension, path, subdomain, or domain.\n3. Set the MB/s value and per-connection mode where appropriate.\n4. Select Save speed limits.\nOnly one rule per type is supported. Edit an existing rule instead of stacking duplicates; remove a rule and save again to clear it. For example, cap `.zip` downloads at 5 MB/s per connection."
+  },
+  {
+    "slug": "citadel-settings",
+    "title": "Manage Citadel settings, team and alerts",
+    "category": "Citadel: Account",
+    "date": "Sep 27, 2026",
+    "sourceUrl": "https://citadel.stealthrdp.com/docs/settings",
+    "summary": "Set organization options, team roles, email alerts and webhooks.",
+    "relatedSlugs": [
+      "citadel-billing-support",
+      "citadel-getting-started"
+    ],
+    "content": "## Organization and team\nReview plan entitlements in Settings. Invite teammates with the role they need. Verify your email if prompted, because security mail requires a verified address.\n## Notifications\nChoose email events such as attack start or end and awaiting DNS. Add a webhook URL for attack or lockdown events, then send a test delivery to verify it reaches your endpoint.\nFor invoices, renewals or a human ticket, use [billing and support](/citadel/docs/billing-support)."
+  },
+  {
+    "slug": "citadel-billing-support",
+    "title": "Citadel billing and human support",
+    "category": "Citadel: Account",
+    "date": "Sep 27, 2026",
+    "sourceUrl": "https://citadel.stealthrdp.com/docs/billing-support",
+    "summary": "Find invoices, renewals, and ticket support in the StealthRDP client area.",
+    "relatedSlugs": [
+      "citadel-settings",
+      "citadel-getting-started"
+    ],
+    "content": "## Where to go\nCitadel Help covers product setup and operation. Use the [StealthRDP client area](https://dash.stealthrdp.com/clientarea.php) for plans, invoices and renewals.\nFor a human response, [submit a support ticket](https://dash.stealthrdp.com/submitticket.php?step=2&deptid=5) or email `support@stealthrdp.com`.\nIf you are still setting up protection, start with [Getting started with Citadel](/citadel/docs/getting-started)."
   }
 ]

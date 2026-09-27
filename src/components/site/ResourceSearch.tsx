@@ -8,7 +8,8 @@ export type ResourceSearchItem = {
   title: string;
   href: string;
   description: string;
-  kind: 'Guide' | 'Help' | 'Question';
+  searchText?: string;
+  kind: 'Guide' | 'Help' | 'Citadel' | 'Question';
 };
 
 export function ResourceSearch({
@@ -28,6 +29,7 @@ export function ResourceSearch({
       .filter(item =>
         item.title.toLowerCase().includes(needle)
         || item.description.toLowerCase().includes(needle)
+        || item.searchText?.toLowerCase().includes(needle)
         || item.kind.toLowerCase().includes(needle))
       .slice(0, 8);
   }, [items, needle]);

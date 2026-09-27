@@ -60,6 +60,59 @@ export const helpCollections: HelpCollection[] = [
       '1737944110-termination-of-service',
     ],
   },
+
+];
+
+export const citadelCollections: HelpCollection[] = [
+  {
+    title: 'Citadel: Start here',
+    description: 'Connect Cloudflare, understand protection, and activate your first site.',
+    slugs: [
+      'citadel-getting-started',
+      'citadel-overview',
+      'citadel-cloudflare-setup',
+    ],
+  },
+  {
+    title: 'Citadel: Domains',
+    description: 'Manage protected hostnames, origins, DNS, and health.',
+    slugs: [
+      'citadel-domains',
+      'citadel-domain-overview',
+      'citadel-origin',
+      'citadel-health',
+      'citadel-dns',
+    ],
+  },
+  {
+    title: 'Citadel: Protection',
+    description: 'Choose challenge levels, bypasses, branding, caching, and incident controls.',
+    slugs: [
+      'citadel-security',
+      'citadel-challenge-levels',
+      'citadel-branding',
+      'citadel-allowlists',
+      'citadel-cache',
+      'citadel-insights',
+    ],
+  },
+  {
+    title: 'Citadel: Traffic',
+    description: 'Investigate request logs, analytics, bandwidth, and speed limits.',
+    slugs: [
+      'citadel-logs',
+      'citadel-analytics',
+      'citadel-bandwidth',
+    ],
+  },
+  {
+    title: 'Citadel: Account',
+    description: 'Manage your team, alerts, billing, and support.',
+    slugs: [
+      'citadel-settings',
+      'citadel-billing-support',
+    ],
+  },
 ];
 
 export function helpCollectionId(title: string): string {
@@ -81,6 +134,20 @@ export function helpCollectionForArticle(article: DocArticle): HelpCollection | 
 
 export function helpArticleHref(article: DocArticle): string {
   return `/docs/${docPublicSlug(article)}`;
+}
+
+export function citadelArticleHref(article: DocArticle): string {
+  return `/citadel/docs/${docPublicSlug(article).replace(/^citadel-/, '')}`;
+}
+
+export function citadelCollectionForArticle(article: DocArticle): HelpCollection | undefined {
+  return citadelCollections.find(collection => collection.slugs.includes(article.slug));
+}
+
+export function orderedCitadelArticles(articles: DocArticle[]): DocArticle[] {
+  const mapped = citadelCollections.flatMap(collection => articlesForCollection(collection, articles));
+  const mappedSlugs = new Set(mapped.map(article => article.slug));
+  return [...mapped, ...articles.filter(article => !mappedSlugs.has(article.slug))];
 }
 
 export function orderedHelpArticles(articles: DocArticle[]): DocArticle[] {

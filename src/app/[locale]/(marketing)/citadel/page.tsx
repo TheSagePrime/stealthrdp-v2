@@ -100,8 +100,8 @@ const threats = [
 const controls = [
   {
     icon: Target,
-    title: 'Per-path challenge policy',
-    text: 'Use Off, Cookie, JS, Interaction, Auto or Lockdown where the application actually needs it.',
+    title: 'Challenge levels and path bypasses',
+    text: 'Choose a domain challenge level, then bypass specific API and webhook paths that cannot complete browser challenges.',
   },
   {
     icon: Funnel,
@@ -161,7 +161,7 @@ export default function CitadelPage() {
                 <a href="#citadel-plans">Choose protection <ArrowRight size={16} aria-hidden="true" /></a>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <a href="https://citadel.stealthrdp.com/docs">Read Citadel docs</a>
+                <Link href="/citadel/docs/getting-started">Read Citadel setup guide</Link>
               </Button>
             </div>
             <div className="srv-citadel-v2-facts">
@@ -203,7 +203,7 @@ export default function CitadelPage() {
             </CardContent>
             <CardFooter>
               <span>Product interface concept</span>
-              <span>Live API-ready</span>
+              <span>Illustrative request flow</span>
             </CardFooter>
           </Card>
         </div>
@@ -215,8 +215,8 @@ export default function CitadelPage() {
             <div>
               <AlertTitle>Citadel protects the application layer.</AlertTitle>
               <AlertDescription>
-                It is designed for Layer 7 HTTP/HTTPS traffic. Network-layer Layer 3/4
-                mitigation remains a separate job at the edge.
+                It is designed for Layer 7 HTTP/HTTPS traffic. Protected hostnames need
+                proxied Cloudflare DNS records; network-layer mitigation remains a separate edge task.
               </AlertDescription>
             </div>
           </Alert>
@@ -242,8 +242,8 @@ export default function CitadelPage() {
                 icon: Cloud,
                 step: '01',
                 title: 'Edge',
-                tag: 'Network perimeter',
-                text: 'DNS and network-edge defenses absorb what they are built to stop before application inspection.',
+                tag: 'Cloudflare orange cloud',
+                text: 'A proxied Cloudflare DNS record forwards protected web traffic to Citadel. DNS-only records bypass this protection.',
               },
               {
                 icon: ShieldCheck,

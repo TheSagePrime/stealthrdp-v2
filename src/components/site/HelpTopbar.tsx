@@ -4,22 +4,25 @@ import {
   GlobeHemisphereWest,
   Headset,
   Lightning,
+  ShieldCheck,
 } from '@phosphor-icons/react/dist/ssr';
 import { ResourceSearch, type ResourceSearchItem } from '@/components/site/ResourceSearch';
 import {
   articlePath,
   blogArticles,
+  citadelDocsArticles,
   docPublicSlug,
-  docsArticles,
+  helpDocsArticles,
   faqs,
 } from '@/lib/stealth/content';
 
-export type ResourceArea = 'resources' | 'guides' | 'help' | 'faq';
+export type ResourceArea = 'resources' | 'guides' | 'help' | 'citadel' | 'faq';
 
 const tabs: { label: string; href: string; key: ResourceArea }[] = [
   { label: 'Resources', href: '/resources', key: 'resources' },
   { label: 'Guides', href: '/blog', key: 'guides' },
   { label: 'Help Center', href: '/docs', key: 'help' },
+  { label: 'Citadel Docs', href: '/citadel/docs', key: 'citadel' },
   { label: 'Common Questions', href: '/faq', key: 'faq' },
 ];
 
@@ -31,11 +34,18 @@ export function HelpTopbar({ active = 'help' }: { active?: ResourceArea }) {
       description: article.excerpt,
       kind: 'Guide' as const,
     })),
-    ...docsArticles.map(article => ({
+    ...helpDocsArticles.map(article => ({
       title: article.title,
       href: `/docs/${docPublicSlug(article)}`,
       description: article.summary,
       kind: 'Help' as const,
+    })),
+    ...citadelDocsArticles.map(article => ({
+      title: article.title,
+      href: `/citadel/docs/${docPublicSlug(article).replace(/^citadel-/, '')}`,
+      description: article.summary,
+      searchText: `Citadel Layer 7 DDoS protection ${article.content}`,
+      kind: 'Citadel' as const,
     })),
     ...faqs.map(item => ({
       title: item.question,
@@ -83,6 +93,7 @@ export function HelpTopbar({ active = 'help' }: { active?: ResourceArea }) {
               {tab.key === 'resources' ? <GlobeHemisphereWest size={14} aria-hidden="true" /> : null}
               {tab.key === 'guides' ? <Cpu size={14} aria-hidden="true" /> : null}
               {tab.key === 'help' ? <Headset size={14} aria-hidden="true" /> : null}
+              {tab.key === 'citadel' ? <ShieldCheck size={14} aria-hidden="true" /> : null}
               {tab.key === 'faq' ? <Lightning size={14} aria-hidden="true" /> : null}
               <span>{tab.label}</span>
             </Link>
