@@ -60,6 +60,55 @@ export const helpCollections: HelpCollection[] = [
       '1737944110-termination-of-service',
     ],
   },
+  {
+    title: 'Citadel: Start here',
+    description: 'Connect Cloudflare, understand protection, and activate your first site.',
+    slugs: [
+      'citadel-getting-started',
+      'citadel-overview',
+      'citadel-cloudflare-setup',
+    ],
+  },
+  {
+    title: 'Citadel: Domains',
+    description: 'Manage protected hostnames, origins, DNS, and health.',
+    slugs: [
+      'citadel-domains',
+      'citadel-domain-overview',
+      'citadel-origin',
+      'citadel-health',
+      'citadel-dns',
+    ],
+  },
+  {
+    title: 'Citadel: Protection',
+    description: 'Choose challenge levels, bypasses, branding, caching, and incident controls.',
+    slugs: [
+      'citadel-security',
+      'citadel-challenge-levels',
+      'citadel-branding',
+      'citadel-allowlists',
+      'citadel-cache',
+      'citadel-insights',
+    ],
+  },
+  {
+    title: 'Citadel: Traffic',
+    description: 'Investigate request logs, analytics, bandwidth, and speed limits.',
+    slugs: [
+      'citadel-logs',
+      'citadel-analytics',
+      'citadel-bandwidth',
+    ],
+  },
+  {
+    title: 'Citadel: Account',
+    description: 'Manage your team, alerts, billing, and support.',
+    slugs: [
+      'citadel-settings',
+      'citadel-billing-support',
+    ],
+  },
 ];
 
 export function helpCollectionId(title: string): string {
