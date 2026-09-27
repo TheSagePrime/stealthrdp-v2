@@ -28,7 +28,7 @@ const proof = [
 
 export default function AboutPage() {
   return (
-    <>
+    <div className="srv-page srv-page-about">
       <section className="sr-page-hero">
         <div className="sr-container">
           <p className="sr-kicker">Who we are</p>
@@ -59,12 +59,12 @@ export default function AboutPage() {
               <h2 className="sr-section-title">Why people choose us</h2>
             </div>
           </div>
-          <div className="srv3-about-reasons">
+          <div className="srv-about-reasons">
             {reasons.map(({ title, text }, index) => (
               <Card
                 key={title}
                 className={cn(
-                  'sm:min-h-48',
+                  'srv-about-reason sm:min-h-48',
                   index === 0 && 'bg-surface-2 lg:row-span-2 lg:min-h-96',
                 )}
               >
@@ -91,7 +91,7 @@ export default function AboutPage() {
             <p>10,000+ orders and counting for remote work, web hosting, trading infrastructure, and always-on automation. Every new server is backed by our 99.9% uptime SLA and a 7-day money-back guarantee.</p>
           </div>
 
-          <Card>
+          <Card className="srv-about-stats-strip">
             <CardContent>
               <dl className="grid gap-x-12 gap-y-6 sm:grid-cols-3">
                 {proof.map(({ value, label }) => (
@@ -107,7 +107,7 @@ export default function AboutPage() {
       </section>
 
       <section className="sr-section">
-        <div className="sr-container sr-cta sr-cta-premium">
+        <div className="sr-container sr-cta sr-cta-premium srv-site-final">
           <div>
             <p className="sr-kicker">Questions about our infrastructure?</p>
             <h2>Talk to our team.</h2>
@@ -126,6 +126,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

@@ -34,7 +34,7 @@ const cardLinkClass = 'inline-flex min-h-11 items-center gap-2 text-small font-s
 
 export default function PlansPage() {
   return (
-    <>
+    <div className="srv-page srv-page-plans">
       <section className="sr-page-hero">
         <div className="sr-container">
           <p className="sr-kicker">Windows and Linux VPS</p>
@@ -85,8 +85,8 @@ export default function PlansPage() {
             </p>
           </div>
 
-          <div className="grid gap-4 lg:grid-cols-2">
-            <Card id="windows-vps">
+          <div className="srv-plan-os-flow grid gap-4 lg:grid-cols-2">
+            <Card id="windows-vps" className="srv-plan-os-option srv-plan-os-windows">
               <CardHeader>
                 <span className="grid size-11 place-items-center rounded-md border border-border-soft bg-surface-2 text-primary">
                   <Monitor aria-hidden="true" className="size-5" />
@@ -118,7 +118,7 @@ export default function PlansPage() {
               </CardFooter>
             </Card>
 
-            <Card id="linux-vps">
+            <Card id="linux-vps" className="srv-plan-os-option srv-plan-os-linux">
               <CardHeader>
                 <span className="grid size-11 place-items-center rounded-md border border-border-soft bg-surface-2 text-primary">
                   <Terminal aria-hidden="true" className="size-5" />
@@ -154,9 +154,9 @@ export default function PlansPage() {
             </div>
             <p>Choose a plan by resource level. These service basics stay with every server.</p>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="srv-plan-included grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {included.map(({ title, text }) => (
-              <Card key={title}>
+              <Card key={title} className="srv-plan-included-item">
                 <CardHeader>
                   <CardTitle className="text-heading-4 text-body-text">
                     <h3>{title}</h3>
@@ -172,7 +172,7 @@ export default function PlansPage() {
       </section>
 
       <section className="sr-section sr-section-border">
-        <div className="sr-container sr-byo-panel">
+        <div className="sr-container sr-byo-panel srv-site-final">
           <div>
             <p className="sr-kicker">For workloads between the lines</p>
             <h2>Build a server around your exact brief.</h2>
@@ -191,6 +191,6 @@ export default function PlansPage() {
         </div>
       </section>
 
-    </>
+    </div>
   );
 }

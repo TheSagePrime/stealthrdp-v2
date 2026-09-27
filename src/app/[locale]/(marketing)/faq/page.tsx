@@ -13,7 +13,7 @@ export const metadata: Metadata = createPageMetadata({
 
 export default function FaqPage() {
   return (
-    <>
+    <div className="srv-page srv-page-faq">
       <section className="sr-page-hero">
         <div className="sr-container sr-page-hero-inner">
           <div>
@@ -34,6 +34,6 @@ export default function FaqPage() {
       </section>
 
       <FaqExplorer faqs={faqs} />
-    </>
+    </div>
   );
 }

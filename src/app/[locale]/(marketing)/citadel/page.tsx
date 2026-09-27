@@ -79,7 +79,7 @@ export default function CitadelPage() {
   const jsonLd = buildPageJsonLd(getSeoConfig());
 
   return (
-    <>
+    <div className="srv-page srv-page-citadel">
       {jsonLd.map(block => (
         <script
           key={String(block['@type'])}
@@ -126,13 +126,13 @@ export default function CitadelPage() {
             </div>
             <p>Every request flows through the same three stages, in order.</p>
           </div>
-          <ol className="grid gap-6 md:grid-cols-3">
+          <ol className="srv-citadel-flow grid gap-6 md:grid-cols-3">
             {[
               { step: '01', title: 'Cloudflare', text: 'Network edge and DNS layer. Absorbs what the edge is built for.' },
               { step: '02', title: 'Citadel decision layer', text: 'Application-aware checks: challenges, rates, lists, caching, and escalation.' },
               { step: '03', title: 'Cache, then origin', text: 'Per-domain caching absorbs repeats; clean requests reach the origin.' },
             ].map(item => (
-              <Card key={item.step} className="gap-2 p-8">
+              <Card key={item.step} className="srv-citadel-stage gap-2 p-8">
                 <span className="text-micro font-bold text-body-dim tabular-nums">
                   {item.step}
                 </span>
@@ -174,7 +174,7 @@ export default function CitadelPage() {
             </div>
             <p>Sessions move up and back down the ladder from observed behavior — nobody babysits a dashboard mid-attack.</p>
           </div>
-          <ol className="grid list-none gap-0 p-0">
+          <ol className="srv-citadel-ladder grid list-none gap-0 p-0">
             {escalation.map((step, index) => (
               <li
                 key={step}
@@ -193,9 +193,9 @@ export default function CitadelPage() {
               <h2 className="sr-section-title">Pick the strength per path</h2>
             </div>
           </div>
-          <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <ul className="srv-citadel-levels grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {challengeLevels.map(level => (
-              <Card key={level.name} className="gap-2 p-6">
+              <Card key={level.name} className="srv-citadel-level gap-2 p-6">
                 <h3 className="text-heading-4 font-semibold text-body-text">{level.name}</h3>
                 <p className="text-small text-body-muted">{level.text}</p>
               </Card>
@@ -212,9 +212,9 @@ export default function CitadelPage() {
               <h2 className="sr-section-title">Explicit rules instead of mystery blocks</h2>
             </div>
           </div>
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="srv-citadel-controls grid gap-6 md:grid-cols-2">
             {controlGroups.map(group => (
-              <Card key={group.title} className="gap-2 p-8">
+              <Card key={group.title} className="srv-citadel-control gap-2 p-8">
                 <h3 className="text-heading-4 font-semibold text-body-text">{group.title}</h3>
                 <p className="text-small text-body-muted">{group.text}</p>
               </Card>
@@ -231,9 +231,9 @@ export default function CitadelPage() {
               <h2 className="sr-section-title">See what was stopped and what it cost</h2>
             </div>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="srv-citadel-visibility grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {visibility.map(item => (
-              <Card key={item.title} className="gap-2 p-6">
+              <Card key={item.title} className="srv-citadel-visibility-item gap-2 p-6">
                 <h3 className="text-heading-4 font-semibold text-body-text">{item.title}</h3>
                 <p className="text-small text-body-muted">{item.text}</p>
               </Card>
@@ -255,9 +255,9 @@ export default function CitadelPage() {
               are published on the Citadel portal.
             </p>
           </div>
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="srv-citadel-plans grid gap-6 md:grid-cols-3">
             {plans.map(plan => (
-              <Card key={plan.name} className="gap-2 p-8">
+              <Card key={plan.name} className="srv-citadel-plan gap-2 p-8">
                 <h3 className="text-heading-4 font-semibold text-body-text">{plan.name}</h3>
                 <p className="text-small text-body-muted">{plan.text}</p>
               </Card>
@@ -307,7 +307,7 @@ export default function CitadelPage() {
 
       <section className="sr-section srv3-final-section">
         <div className="sr-container">
-          <Card className="gap-8 rounded-lg p-8 md:grid md:grid-cols-[1fr_auto] md:items-center md:gap-12 md:p-12">
+          <Card className="srv-site-final srv-citadel-final gap-8 rounded-lg p-8 md:grid md:grid-cols-[1fr_auto] md:items-center md:gap-12 md:p-12">
             <div className="grid gap-2">
               <p className="sr-kicker">Citadel by StealthRDP</p>
               <h2 className="text-display-2 font-semibold text-body-text">
@@ -332,6 +332,6 @@ export default function CitadelPage() {
           </Card>
         </div>
       </section>
-    </>
+    </div>
   );
 }

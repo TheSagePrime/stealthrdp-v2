@@ -23,7 +23,7 @@ export default function DocsPage() {
   const categories = Array.from(new Set(docsArticles.map(article => article.category)));
 
   return (
-    <>
+    <div className="srv-page srv-page-docs">
       <section className="sr-page-hero">
         <div className="sr-container sr-page-hero-inner">
           <div>
@@ -71,7 +71,7 @@ export default function DocsPage() {
                       const href = `/docs/${docPublicSlug(article)}`;
 
                       return (
-                        <Card key={article.slug}>
+                        <Card key={article.slug} className="srv-doc-entry">
                           <CardHeader>
                             <Badge variant="outline" className="w-fit text-body-muted">
                               {article.category}
@@ -113,7 +113,7 @@ export default function DocsPage() {
         </div>
       </section>
 
-      <section className="sr-section sr-section-border">
+      <section className="sr-section sr-section-border srv-site-support">
         <div className="sr-container sr-copy-grid">
           <div>
             <p className="sr-kicker">Still need a hand?</p>
@@ -134,6 +134,6 @@ export default function DocsPage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
