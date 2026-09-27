@@ -3794,16 +3794,16 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   background-image:
     linear-gradient(
       to right,
-      color-mix(in srgb, var(--primary) 7%, transparent) 1px,
+      color-mix(in srgb, var(--primary) 13%, transparent) 1px,
       transparent 1px
     ),
     linear-gradient(
       to bottom,
-      color-mix(in srgb, var(--primary) 7%, transparent) 1px,
+      color-mix(in srgb, var(--primary) 13%, transparent) 1px,
       transparent 1px
     );
   background-size: 44px 44px;
-  opacity: 0.2;
+  opacity: 0.42;
   mask-image: radial-gradient(
     circle at 63% 44%,
     rgb(0 0 0 / 0.92) 0%,
@@ -3818,7 +3818,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
     rgb(0 0 0 / 0.16) 64%,
     transparent 84%
   );
-  animation: srv-home-grid-drift 32s linear infinite;
+  animation: srv-home-grid-drift 28s linear infinite;
   will-change: transform;
 }
 
