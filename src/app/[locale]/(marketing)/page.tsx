@@ -57,6 +57,34 @@ const operatingSystems = [
   { name: 'FreeBSD', icon: SiFreebsd },
 ] as const;
 
+const useCases = [
+  {
+    title: 'Remote desktop',
+    text: 'When a VPS works well as a remote workstation, what affects responsiveness, and how to size it.',
+    href: '/blog/vps-for-remote-desktop.html',
+  },
+  {
+    title: 'Web hosting',
+    text: 'When to move beyond shared hosting and how to size a VPS for the complete web stack.',
+    href: '/blog/vps-for-web-hosting.html',
+  },
+  {
+    title: 'Automation & bots',
+    text: 'How to choose resources for scripts, workers, webhook services, bots, and persistent automation.',
+    href: '/blog/vps-for-automation-bots.html',
+  },
+  {
+    title: 'Trading',
+    text: 'What a VPS can improve for trading software, what it cannot, and why endpoint location matters.',
+    href: '/blog/vps-for-trading.html',
+  },
+  {
+    title: 'Backups & storage',
+    text: 'How to evaluate a VPS as an offsite backup target, including retention, transfer, and restore planning.',
+    href: '/blog/vps-for-backups-storage.html',
+  },
+] as const;
+
 const infrastructure = [
   {
     title: 'NVMe SSD storage',
@@ -250,19 +278,55 @@ export default async function HomePage({ params }: Props) {
           <div className="grid gap-5 lg:grid-cols-[minmax(0,1.15fr)_minmax(360px,0.65fr)] lg:items-end">
             <div className="grid max-w-4xl gap-4">
               <p className="text-xs font-semibold uppercase tracking-widest text-primary">
-                Choose a workload
+                Choose your server
               </p>
               <h2 className="text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
-                Plans priced for the work.
+                One VPS product. Choose the resources.
               </h2>
             </div>
             <p className="max-w-xl text-base leading-7 text-muted-foreground lg:justify-self-end">
-              Match the workload, operating system, location, and billing cycle without leaving
-              the homepage. Availability comes directly from the current plan data.
+              Choose a region and billing cycle, then compare the current CPU, RAM, storage,
+              bandwidth, operating-system support, and availability.
             </p>
           </div>
 
           <HomePricing />
+        </div>
+      </Section>
+
+      <Section className="srv-home-usecases border-y border-border bg-card/20 py-10 sm:py-12 lg:py-14">
+        <div className="srv-home-wide srv-usecase-layout">
+          <div className="srv-usecase-intro">
+            <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+              VPS use cases
+            </p>
+            <h2>What can you run on a VPS?</h2>
+            <p>
+              The server product stays the same. These guides explain how the requirements change
+              with the workload, what to size for, and where a VPS is or is not the right fit.
+            </p>
+            <Link href="/blog" className="srv-inline-link">
+              Browse all VPS guides
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
+          </div>
+
+          <ol className="srv-usecase-rail">
+            {useCases.map((item, index) => (
+              <li key={item.href}>
+                <Link href={item.href} className="srv-usecase-row">
+                  <span className="srv-usecase-number">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="srv-usecase-copy">
+                    <strong>{item.title}</strong>
+                    <small>{item.text}</small>
+                  </span>
+                  <span className="srv-usecase-arrow" aria-hidden="true">
+                    <ArrowRight />
+                  </span>
+                </Link>
+              </li>
+            ))}
+          </ol>
         </div>
       </Section>
 
