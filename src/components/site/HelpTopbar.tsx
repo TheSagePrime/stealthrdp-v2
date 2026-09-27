@@ -1,10 +1,4 @@
 import Link from 'next/link';
-import {
-  BookOpenText,
-  Lifebuoy,
-  Question,
-  SquaresFour,
-} from '@phosphor-icons/react/dist/ssr';
 import { ResourceSearch, type ResourceSearchItem } from '@/components/site/ResourceSearch';
 import {
   articlePath,
@@ -16,12 +10,12 @@ import {
 
 export type ResourceArea = 'resources' | 'guides' | 'help' | 'faq';
 
-const tabs = [
-  { label: 'Resources', href: '/resources', key: 'resources', icon: <SquaresFour size={14} aria-hidden="true" /> },
-  { label: 'Guides', href: '/blog', key: 'guides', icon: <BookOpenText size={14} aria-hidden="true" /> },
-  { label: 'Help Center', href: '/docs', key: 'help', icon: <Lifebuoy size={14} aria-hidden="true" /> },
-  { label: 'Common Questions', href: '/faq', key: 'faq', icon: <Question size={14} aria-hidden="true" /> },
-] as const;
+const tabs: { label: string; href: string; key: ResourceArea }[] = [
+  { label: 'Resources', href: '/resources', key: 'resources' },
+  { label: 'Guides', href: '/blog', key: 'guides' },
+  { label: 'Help Center', href: '/docs', key: 'help' },
+  { label: 'Common Questions', href: '/faq', key: 'faq' },
+];
 
 export function HelpTopbar({ active = 'help' }: { active?: ResourceArea }) {
   const items: ResourceSearchItem[] = [
@@ -71,21 +65,11 @@ export function HelpTopbar({ active = 'help' }: { active?: ResourceArea }) {
       </div>
 
       <nav className="sr-container srv-resource-tabs" aria-label="Resource sections">
-        {tabs.map(tab => {
-          const isActive = active === tab.key;
-
-          return (
-            <Link
-              key={tab.key}
-              href={tab.href}
-              data-active={isActive}
-              aria-current={isActive ? 'page' : undefined}
-            >
-              {tab.icon}
-              <span>{tab.label}</span>
-            </Link>
-          );
-        })}
+        {tabs.map(tab => (
+          <Link key={tab.key} href={tab.href} data-active={active === tab.key}>
+            {tab.label}
+          </Link>
+        ))}
       </nav>
     </div>
   );
