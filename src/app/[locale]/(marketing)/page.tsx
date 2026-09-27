@@ -63,24 +63,28 @@ const infrastructure = [
     text: 'Fast disk I/O for applications, databases, automation, and active desktop workloads.',
     label: 'Performance',
     icon: HardDrive,
+    tone: 'cyan',
   },
   {
     title: 'Isolated virtual machines',
     text: 'Each server runs in its own VM with dedicated resources and full administrative access.',
     label: 'Isolation',
     icon: Cpu,
+    tone: 'violet',
   },
   {
     title: 'USA + Europe infrastructure',
     text: 'Choose the location closest to the workload with dedicated IPv4 included.',
     label: 'Reach',
     icon: GlobeHemisphereWest,
+    tone: 'blue',
   },
   {
     title: '24/7 monitoring',
     text: 'Production nodes are monitored continuously with public infrastructure status visibility.',
     label: 'Visibility',
     icon: ShieldCheck,
+    tone: 'green',
   },
 ];
 
@@ -283,8 +287,8 @@ export default async function HomePage({ params }: Props) {
           </div>
 
           <ol className="srv-infra-rail">
-            {infrastructure.map(({ title, text, label, icon: Icon }, index) => (
-              <li key={title} className="srv-infra-item">
+            {infrastructure.map(({ title, text, label, icon: Icon, tone }, index) => (
+              <li key={title} className="srv-infra-item" data-tone={tone}>
                 <span className="srv-infra-number">{String(index + 1).padStart(2, '0')}</span>
                 <span className="srv-infra-icon">
                   <Icon aria-hidden="true" />
@@ -328,7 +332,7 @@ export default async function HomePage({ params }: Props) {
           </div>
 
           <div className="srv-product-flow" aria-label="StealthRDP product stack">
-            <Link href="/plans" className="srv-product-node">
+            <Link href="/plans" className="srv-product-node" data-tone="hosting">
               <span className="srv-product-node-icon">
                 <HardDrive aria-hidden="true" />
               </span>
@@ -347,7 +351,7 @@ export default async function HomePage({ params }: Props) {
               <span />
             </div>
 
-            <Link href="/citadel" className="srv-product-node srv-product-node-protection">
+            <Link href="/citadel" className="srv-product-node srv-product-node-protection" data-tone="protection">
               <span className="srv-product-node-icon">
                 <ShieldCheck aria-hidden="true" />
               </span>
@@ -385,7 +389,12 @@ export default async function HomePage({ params }: Props) {
                 <strong>{testimonials[0]?.authorName}</strong>
                 <span>{testimonials[0]?.authorCompany || 'StealthRDP customer'}</span>
               </div>
-              <span className="srv-review-source">{reviewSource(testimonials[0]!)}</span>
+              <span
+                className="srv-review-source"
+                data-source={reviewSource(testimonials[0]!).toLowerCase().replaceAll(' ', '-')}
+              >
+                {reviewSource(testimonials[0]!)}
+              </span>
             </div>
           </div>
 
@@ -410,7 +419,13 @@ export default async function HomePage({ params }: Props) {
                         className="srv-review-chip"
                       >
                         <div className="srv-review-chip-top">
-                          <Badge variant="outline">{reviewSource(item)}</Badge>
+                          <Badge
+                            variant="outline"
+                            className="srv-review-source-badge"
+                            data-source={reviewSource(item).toLowerCase().replaceAll(' ', '-')}
+                          >
+                            {reviewSource(item)}
+                          </Badge>
                           {item.sourceUrl ? (
                             <a
                               href={item.sourceUrl}
