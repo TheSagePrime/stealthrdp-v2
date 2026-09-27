@@ -5,9 +5,9 @@ import { FaqExplorer } from '@/components/site/FaqExplorer';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/faq',
-  title: 'FAQ — StealthRDP',
+  title: 'Common Questions — StealthRDP Help Center',
   description:
-    'Frequently asked questions about StealthRDP VPS hosting: setup, operating systems, upgrades, refunds, and more.',
+    'Quick answers from the StealthRDP Help Center about VPS plans, setup, operating systems, upgrades, refunds, billing, and support.',
   ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
@@ -17,13 +17,13 @@ export default function FaqPage() {
       <section className="sr-page-hero">
         <div className="sr-container sr-page-hero-inner">
           <div>
-            <p className="sr-kicker">FAQ</p>
+            <p className="sr-kicker">Help Center · Common Questions</p>
             <h1 className="sr-title">
-              Answers before you <span>deploy.</span>
+              Quick answers, <span>without the digging.</span>
             </h1>
             <p className="sr-lede">
-              Plans, setup, billing, security, and support — search or browse by
-              topic below.
+              Plans, setup, billing, security, and support. Browse by topic or search
+              the questions below.
             </p>
           </div>
 
