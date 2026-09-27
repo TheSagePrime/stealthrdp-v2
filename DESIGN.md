@@ -109,6 +109,10 @@ Avoid terminal-style labels across normal marketing copy, excessive uppercase mi
 
 Prefer purpose-built infrastructure illustrations, server/rack/network compositions, real product screenshots when useful, truthful datacenter/location imagery, and restrained abstract brand atmosphere.
 
+For recognizable platforms and operating systems, use the **real approved brand mark** when available (for example Windows, Linux/Tux, Ubuntu, Debian, CentOS, AlmaLinux, Fedora). Do not replace a recognizable logo with a generic outline icon.
+
+Generic feature icons must use one consistent premium treatment: clean technical glyphs inside restrained dimensional/beveled tiles. Avoid childish illustrations, random flat 2D icon packs, mixed icon styles, or decorative icons that compete with the content.
+
 Avoid generic floating glass cards, orbit rings around fake dashboards, fake live telemetry, decorative terminal windows, and stock-photo filler.
 
 ## Pricing
