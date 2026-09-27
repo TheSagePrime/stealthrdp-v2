@@ -95,9 +95,17 @@ export default function ResourcesPage() {
             <div className="srv-resource-hub-grid">
               {destinations.map((item, index) => (
                 <Link className="srv-resource-hub-card" href={item.href} key={item.href}>
-                  <span className="srv-resource-hub-index">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="srv-resource-hub-icon" aria-hidden="true">
+                    {index === 0 ? <Cpu size={18} weight="duotone" /> : null}
+                    {index === 1 ? <Headset size={18} weight="duotone" /> : null}
+                    {index === 2 ? <Lightning size={18} weight="duotone" /> : null}
+                    {index === 3 ? <ShieldCheck size={18} weight="duotone" /> : null}
+                  </span>
                   <span className="srv-resource-hub-copy">
-                    <small>{item.label}</small>
+                    <span className="srv-resource-hub-copy-meta">
+                      <small>{item.label}</small>
+                      <span className="srv-resource-hub-index">{String(index + 1).padStart(2, '0')}</span>
+                    </span>
                     <strong>{item.title}</strong>
                     <span>{item.description}</span>
                   </span>
