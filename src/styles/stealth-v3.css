@@ -16200,3 +16200,58 @@ a.srv-help-tree-heading:hover {
     width: 148px !important;
   }
 }
+
+/* Floating WhatsApp support — match the refined hero UI ------------------ */
+.srv-whatsapp-float {
+  right: 24px !important;
+  bottom: 24px !important;
+  min-height: 42px !important;
+  gap: 8px !important;
+  border: 1px solid rgba(32, 49, 76, .13) !important;
+  border-radius: 13px !important;
+  background: rgba(255,255,255,.94) !important;
+  padding: 0 12px !important;
+  color: #20314c !important;
+  font-size: .72rem !important;
+  font-weight: 750 !important;
+  box-shadow:
+    0 12px 30px -24px rgba(32,49,76,.45),
+    0 2px 8px rgba(32,49,76,.04) !important;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease !important;
+}
+
+.srv-whatsapp-float svg {
+  width: 17px !important;
+  height: 17px !important;
+  color: #16a34a !important;
+}
+
+.srv-whatsapp-float:hover {
+  transform: translateY(-2px) !important;
+  border-color: rgba(22,163,74,.26) !important;
+  background: #fff !important;
+  box-shadow:
+    0 16px 34px -24px rgba(32,49,76,.52),
+    0 4px 12px rgba(32,49,76,.06) !important;
+}
+
+@media (max-width: 1040px) {
+  .srv-whatsapp-float {
+    right: 16px !important;
+    bottom: 16px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .srv-whatsapp-float {
+    width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    border-radius: 12px !important;
+    padding: 0 !important;
+  }
+}
