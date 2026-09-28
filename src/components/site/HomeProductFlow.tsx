@@ -1,134 +1,170 @@
 'use client';
 
-// Composition follows UI Layouts' Animated Beam "multiple output" example:
-// one source -> platform -> multiple destinations.
-import { Globe2, Server, ShieldCheck } from 'lucide-react';
-import { useRef } from 'react';
+// Uses Joly UI's Animated Beam "microservices architecture" composition.
+// We only map its nodes to StealthRDP's actual product categories.
+import {
+  Activity,
+  Globe2,
+  Monitor,
+  Network,
+  ShieldCheck,
+  TerminalSquare,
+} from 'lucide-react';
+import React from 'react';
 
-import { AnimatedBeam } from '@/components/ui/animated-beam';
+import {
+  AnimatedBeam,
+  BeamContainer,
+  BeamNode,
+} from '@/components/ui/animated-beam';
 
 export function HomeProductFlow() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const sourceRef = useRef<HTMLDivElement>(null);
-  const platformRef = useRef<HTMLDivElement>(null);
-  const vpsRef = useRef<HTMLDivElement>(null);
-  const citadelRef = useRef<HTMLDivElement>(null);
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const internetRef = React.useRef<HTMLDivElement>(null);
+  const platformRef = React.useRef<HTMLDivElement>(null);
+  const windowsRef = React.useRef<HTMLDivElement>(null);
+  const linuxRef = React.useRef<HTMLDivElement>(null);
+  const citadelRef = React.useRef<HTMLDivElement>(null);
+  const workloadRef = React.useRef<HTMLDivElement>(null);
 
   return (
-    <div
+    <BeamContainer
       ref={containerRef}
-      className="relative min-h-[390px] w-full overflow-hidden rounded-2xl border border-border bg-card/80 shadow-sm"
-      aria-label="StealthRDP product flow from your workload to VPS compute or Citadel protection"
+      className="srv-product-beam mx-auto flex min-h-[390px] w-full items-center justify-center gap-8 overflow-hidden px-5 py-8"
+      aria-label="StealthRDP infrastructure: internet traffic connects through the platform to Windows VPS, Linux VPS, and Citadel protection"
     >
-      <div className="absolute inset-x-0 top-0 border-b border-border bg-muted/30 px-5 py-3">
-        <div className="flex items-center justify-between gap-4">
-          <span className="text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-            StealthRDP infrastructure
-          </span>
-          <span className="text-xs text-muted-foreground">Compute + protection</span>
+      <div className="flex flex-col items-center gap-2">
+        <BeamNode
+          ref={internetRef}
+          className="size-14 border-2 border-primary/20 bg-primary/5"
+        >
+          <Globe2 className="size-6 text-primary" aria-hidden="true" />
+        </BeamNode>
+        <span className="srv-product-beam-label">Internet</span>
+      </div>
+
+      <div className="flex flex-col items-center gap-2">
+        <BeamNode
+          ref={platformRef}
+          className="size-16 border-2 border-primary/30 bg-primary/10 shadow-[0_0_34px_-15px_var(--primary)]"
+        >
+          <Network className="size-8 text-primary" aria-hidden="true" />
+        </BeamNode>
+        <span className="srv-product-beam-label">StealthRDP</span>
+      </div>
+
+      <div className="flex flex-col gap-7">
+        <div className="flex items-center gap-3">
+          <BeamNode
+            ref={windowsRef}
+            className="size-12 border-2 border-blue-500/20 bg-blue-500/5"
+          >
+            <Monitor className="size-5 text-blue-600" aria-hidden="true" />
+          </BeamNode>
+          <span className="srv-product-beam-service">Windows VPS</span>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <BeamNode
+            ref={linuxRef}
+            className="size-12 border-2 border-cyan-500/20 bg-cyan-500/5"
+          >
+            <TerminalSquare className="size-5 text-cyan-600" aria-hidden="true" />
+          </BeamNode>
+          <span className="srv-product-beam-service">Linux VPS</span>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <BeamNode
+            ref={citadelRef}
+            className="size-12 border-2 border-emerald-500/20 bg-emerald-500/5"
+          >
+            <ShieldCheck className="size-5 text-emerald-600" aria-hidden="true" />
+          </BeamNode>
+          <span className="srv-product-beam-service">Citadel L7</span>
         </div>
       </div>
 
-      <div className="relative z-10 grid min-h-[390px] grid-cols-[minmax(110px,0.8fr)_minmax(130px,0.95fr)_minmax(160px,1.15fr)] items-center gap-7 px-7 pb-7 pt-16">
-        <div
-          ref={sourceRef}
-          className="flex min-h-24 flex-col items-center justify-center gap-2 rounded-xl border border-border bg-background/95 px-4 py-4 text-center shadow-sm"
+      <div className="flex flex-col items-center gap-2">
+        <BeamNode
+          ref={workloadRef}
+          className="size-14 border-2 border-slate-500/20 bg-slate-500/5"
         >
-          <Globe2 className="size-6 text-primary" aria-hidden="true" />
-          <div>
-            <strong className="block text-sm font-semibold">Your workload</strong>
-            <span className="mt-1 block text-[11px] leading-4 text-muted-foreground">
-              Apps · desktops · domains
-            </span>
-          </div>
-        </div>
-
-        <div
-          ref={platformRef}
-          className="flex min-h-28 flex-col items-center justify-center rounded-2xl border border-primary/30 bg-background px-4 py-5 text-center shadow-[0_12px_36px_-24px_var(--primary)]"
-        >
-          <img
-            src="https://cdn.stealthrdp.com/images/new/6.png"
-            alt=""
-            width="700"
-            height="170"
-            className="h-auto w-[118px]"
-          />
-          <span className="mt-3 text-[11px] font-medium text-muted-foreground">
-            Infrastructure platform
-          </span>
-        </div>
-
-        <div className="grid gap-4">
-          <div
-            ref={vpsRef}
-            className="flex min-h-28 items-center gap-3 rounded-xl border border-border bg-background/95 px-4 py-4 shadow-sm"
-          >
-            <span className="grid size-10 shrink-0 place-items-center rounded-lg border border-border bg-muted/50">
-              <Server className="size-5 text-primary" aria-hidden="true" />
-            </span>
-            <div className="min-w-0">
-              <strong className="block text-sm font-semibold">VPS</strong>
-              <span className="mt-1 block text-[11px] leading-4 text-muted-foreground">
-                Windows + Linux compute
-              </span>
-            </div>
-          </div>
-
-          <div
-            ref={citadelRef}
-            className="flex min-h-28 items-center gap-3 rounded-xl border border-border bg-background/95 px-4 py-4 shadow-sm"
-          >
-            <span className="grid size-10 shrink-0 place-items-center rounded-lg border border-border bg-muted/50">
-              <ShieldCheck className="size-5 text-primary" aria-hidden="true" />
-            </span>
-            <div className="min-w-0">
-              <strong className="block text-sm font-semibold">Citadel</strong>
-              <span className="mt-1 block text-[11px] leading-4 text-muted-foreground">
-                Layer 7 traffic protection
-              </span>
-            </div>
-          </div>
-        </div>
+          <Activity className="size-6 text-foreground" aria-hidden="true" />
+        </BeamNode>
+        <span className="srv-product-beam-label">Your workload</span>
       </div>
 
       <AnimatedBeam
         containerRef={containerRef}
-        fromRef={sourceRef}
+        fromRef={internetRef}
         toRef={platformRef}
-        duration={4}
-        dotted
-        dotSpacing={6}
-        pathColor="var(--border)"
-        gradientStartColor="var(--primary)"
+        duration={3.2}
+        gradientStartColor="#2845d6"
         gradientStopColor="#00F0FF"
+      />
+
+      <AnimatedBeam
+        containerRef={containerRef}
+        fromRef={platformRef}
+        toRef={windowsRef}
+        duration={3.4}
+        delay={0.15}
+        curvature={-0.28}
+        gradientStartColor="#2845d6"
+        gradientStopColor="#3b82f6"
       />
       <AnimatedBeam
         containerRef={containerRef}
         fromRef={platformRef}
-        toRef={vpsRef}
-        curvature={-58}
-        duration={4.6}
-        delay={0.2}
-        dotted
-        dotSpacing={6}
-        pathColor="var(--border)"
-        gradientStartColor="var(--primary)"
-        gradientStopColor="#00F0FF"
+        toRef={linuxRef}
+        duration={3.4}
+        delay={0.3}
+        curvature={0}
+        gradientStartColor="#2845d6"
+        gradientStopColor="#06b6d4"
       />
       <AnimatedBeam
         containerRef={containerRef}
         fromRef={platformRef}
         toRef={citadelRef}
-        curvature={58}
-        duration={4.6}
+        duration={3.4}
         delay={0.45}
-        dotted
-        dotSpacing={6}
-        pathColor="var(--border)"
-        gradientStartColor="var(--primary)"
-        gradientStopColor="#00F0FF"
+        curvature={0.28}
+        gradientStartColor="#2845d6"
+        gradientStopColor="#22D46B"
       />
-    </div>
+
+      <AnimatedBeam
+        containerRef={containerRef}
+        fromRef={windowsRef}
+        toRef={workloadRef}
+        duration={3.5}
+        delay={0.8}
+        curvature={0.28}
+        gradientStartColor="#3b82f6"
+        gradientStopColor="#64748b"
+      />
+      <AnimatedBeam
+        containerRef={containerRef}
+        fromRef={linuxRef}
+        toRef={workloadRef}
+        duration={3.5}
+        delay={0.95}
+        curvature={0}
+        gradientStartColor="#06b6d4"
+        gradientStopColor="#64748b"
+      />
+      <AnimatedBeam
+        containerRef={containerRef}
+        fromRef={citadelRef}
+        toRef={workloadRef}
+        duration={3.5}
+        delay={1.1}
+        curvature={-0.28}
+        gradientStartColor="#22D46B"
+        gradientStopColor="#64748b"
+      />
+    </BeamContainer>
   );
 }
