@@ -1,109 +1,81 @@
 'use client';
 
-// Library component: UI Layouts "Animated Beam"
-// Source: ui-layouts/uilayouts — apps/ui-layout/components/ui/animated-beam.tsx
-// Kept as the motion primitive; StealthRDP only supplies the surrounding content.
-import { cn } from '@/lib/utils';
-import { motion } from 'motion/react';
-import { type RefObject, useEffect, useId, useState } from 'react';
+// Joly UI Animated Beam primitive.
+// Source: https://github.com/Johuniq/jolyui
+import * as React from 'react';
 
-export interface AnimatedBeamProps {
-  className?: string;
-  containerRef: RefObject<HTMLElement | null>;
-  fromRef: RefObject<HTMLElement | null>;
-  toRef: RefObject<HTMLElement | null>;
+import { cn } from '@/lib/utils';
+
+interface AnimatedBeamProps {
+  containerRef: React.RefObject<HTMLElement | null>;
+  fromRef: React.RefObject<HTMLElement | null>;
+  toRef: React.RefObject<HTMLElement | null>;
   curvature?: number;
+  duration?: number;
+  delay?: number;
   reverse?: boolean;
-  pathColor?: string;
   pathWidth?: number;
-  pathOpacity?: number;
   gradientStartColor?: string;
   gradientStopColor?: string;
-  delay?: number;
-  duration?: number;
   startXOffset?: number;
   startYOffset?: number;
   endXOffset?: number;
   endYOffset?: number;
-  dotted?: boolean;
-  dotSpacing?: number;
+  className?: string;
 }
 
-export function AnimatedBeam({
-  className,
+const AnimatedBeam = ({
   containerRef,
   fromRef,
   toRef,
   curvature = 0,
-  reverse = false,
-  duration = 5,
+  duration = 2,
   delay = 0,
-  pathColor = 'gray',
+  reverse = false,
   pathWidth = 2,
-  pathOpacity = 0.2,
-  gradientStartColor = '#4d40ff',
-  gradientStopColor = '#4043ff',
+  gradientStartColor = '#18181b',
+  gradientStopColor = '#18181b',
   startXOffset = 0,
   startYOffset = 0,
   endXOffset = 0,
   endYOffset = 0,
-  dotted = false,
-  dotSpacing = 6,
-}: AnimatedBeamProps) {
-  const id = useId();
-  const [pathD, setPathD] = useState('');
-  const [svgDimensions, setSvgDimensions] = useState({ width: 0, height: 0 });
-  const strokeDasharray = dotted ? `${dotSpacing} ${dotSpacing}` : 'none';
+  className,
+}: AnimatedBeamProps) => {
+  const [pathD, setPathD] = React.useState('');
+  const [svgDimensions, setSvgDimensions] = React.useState({
+    width: 0,
+    height: 0,
+  });
+  const uniqueId = React.useId();
 
-  const gradientCoordinates = reverse
-    ? {
-        x1: ['90%', '-10%'],
-        x2: ['100%', '0%'],
-        y1: ['0%', '0%'],
-        y2: ['0%', '0%'],
-      }
-    : {
-        x1: ['10%', '110%'],
-        x2: ['0%', '100%'],
-        y1: ['0%', '0%'],
-        y2: ['0%', '0%'],
-      };
+  const updatePath = React.useCallback(() => {
+    if (!containerRef.current || !fromRef.current || !toRef.current) return;
 
-  useEffect(() => {
-    const updatePath = () => {
-      if (containerRef.current && fromRef.current && toRef.current) {
-        const containerRect = containerRef.current.getBoundingClientRect();
-        const rectA = fromRef.current.getBoundingClientRect();
-        const rectB = toRef.current.getBoundingClientRect();
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const fromRect = fromRef.current.getBoundingClientRect();
+    const toRect = toRef.current.getBoundingClientRect();
 
-        const svgWidth = containerRect.width;
-        const svgHeight = containerRect.height;
-        setSvgDimensions({ width: svgWidth, height: svgHeight });
+    const startX =
+      fromRect.left - containerRect.left + fromRect.width / 2 + startXOffset;
+    const startY =
+      fromRect.top - containerRect.top + fromRect.height / 2 + startYOffset;
+    const endX =
+      toRect.left - containerRect.left + toRect.width / 2 + endXOffset;
+    const endY =
+      toRect.top - containerRect.top + toRect.height / 2 + endYOffset;
 
-        const startX = rectA.left - containerRect.left + rectA.width / 2 + startXOffset;
-        const startY = rectA.top - containerRect.top + rectA.height / 2 + startYOffset;
-        const endX = rectB.left - containerRect.left + rectB.width / 2 + endXOffset;
-        const endY = rectB.top - containerRect.top + rectB.height / 2 + endYOffset;
+    const midX = (startX + endX) / 2;
+    const midY = (startY + endY) / 2;
+    const dx = endX - startX;
+    const dy = endY - startY;
+    const controlX = midX - dy * curvature;
+    const controlY = midY + dx * curvature;
 
-        const controlY = startY - curvature;
-        const d = `M ${startX},${startY} Q ${(startX + endX) / 2},${controlY} ${endX},${endY}`;
-        setPathD(d);
-      }
-    };
-
-    const resizeObserver = new ResizeObserver(() => {
-      updatePath();
+    setPathD(`M ${startX},${startY} Q ${controlX},${controlY} ${endX},${endY}`);
+    setSvgDimensions({
+      width: containerRect.width,
+      height: containerRect.height,
     });
-
-    if (containerRef.current) {
-      resizeObserver.observe(containerRef.current);
-    }
-
-    updatePath();
-
-    return () => {
-      resizeObserver.disconnect();
-    };
   }, [
     containerRef,
     fromRef,
@@ -115,73 +87,142 @@ export function AnimatedBeam({
     endYOffset,
   ]);
 
+  React.useEffect(() => {
+    updatePath();
+
+    const resizeObserver = new ResizeObserver(updatePath);
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
+
+    window.addEventListener('resize', updatePath);
+
+    return () => {
+      resizeObserver.disconnect();
+      window.removeEventListener('resize', updatePath);
+    };
+  }, [updatePath, containerRef]);
+
   return (
     <svg
-      fill="none"
+      className={cn('pointer-events-none absolute left-0 top-0 h-full w-full', className)}
       width={svgDimensions.width}
       height={svgDimensions.height}
-      xmlns="http://www.w3.org/2000/svg"
-      className={cn('pointer-events-none absolute left-0 top-0 transform-gpu stroke-2', className)}
       viewBox={`0 0 ${svgDimensions.width} ${svgDimensions.height}`}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
+      <defs>
+        <linearGradient
+          id={`beam-gradient-bg-${uniqueId}`}
+          gradientUnits="userSpaceOnUse"
+          x1="0%"
+          y1="0%"
+          x2="100%"
+          y2="0%"
+        >
+          <stop offset="0%" stopColor={gradientStartColor} stopOpacity="0.1" />
+          <stop offset="50%" stopColor={gradientStartColor} stopOpacity="0.2" />
+          <stop offset="100%" stopColor={gradientStopColor} stopOpacity="0.1" />
+        </linearGradient>
+
+        <linearGradient
+          id={`beam-gradient-${uniqueId}`}
+          gradientUnits="userSpaceOnUse"
+          x1="0%"
+          y1="0%"
+          x2="100%"
+          y2="0%"
+        >
+          <stop offset="0%" stopColor={gradientStartColor} stopOpacity="0" />
+          <stop offset="5%" stopColor={gradientStartColor} stopOpacity="1" />
+          <stop offset="50%" stopColor={gradientStopColor} stopOpacity="1" />
+          <stop offset="95%" stopColor={gradientStopColor} stopOpacity="1" />
+          <stop offset="100%" stopColor={gradientStopColor} stopOpacity="0" />
+        </linearGradient>
+
+        <filter
+          id={`beam-glow-${uniqueId}`}
+          x="-50%"
+          y="-50%"
+          width="200%"
+          height="200%"
+        >
+          <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
+          <feMerge>
+            <feMergeNode in="blur" />
+            <feMergeNode in="SourceGraphic" />
+          </feMerge>
+        </filter>
+      </defs>
+
       <path
         d={pathD}
-        stroke={pathColor}
+        stroke={`url(#beam-gradient-bg-${uniqueId})`}
         strokeWidth={pathWidth}
-        strokeOpacity={pathOpacity}
         strokeLinecap="round"
-        strokeDasharray={strokeDasharray}
+        fill="none"
       />
-      <motion.path
+
+      <path
         d={pathD}
-        stroke={`url(#${id})`}
+        stroke={`url(#beam-gradient-${uniqueId})`}
+        strokeWidth={pathWidth}
         strokeLinecap="round"
-        strokeDasharray={strokeDasharray}
-        initial={{
-          strokeWidth: pathWidth,
-          strokeOpacity: 0,
-        }}
-        animate={{
-          strokeWidth: pathWidth * 1.5,
-          strokeOpacity: 1,
-        }}
-        transition={{
-          duration: 2,
-          delay,
+        fill="none"
+        filter={`url(#beam-glow-${uniqueId})`}
+        className="animated-beam-path"
+        style={{
+          strokeDasharray: '20 1000',
+          strokeDashoffset: reverse ? '-1000' : '1000',
+          animation: `beam-dash ${duration}s linear infinite`,
+          animationDelay: `${delay}s`,
+          animationDirection: reverse ? 'reverse' : 'normal',
         }}
       />
-      <defs>
-        <motion.linearGradient
-          className="transform-gpu"
-          id={id}
-          gradientUnits="userSpaceOnUse"
-          initial={{
-            x1: '0%',
-            x2: '0%',
-            y1: '0%',
-            y2: '0%',
-          }}
-          animate={{
-            x1: gradientCoordinates.x1,
-            x2: gradientCoordinates.x2,
-            y1: gradientCoordinates.y1,
-            y2: gradientCoordinates.y2,
-          }}
-          transition={{
-            delay,
-            duration,
-            ease: [0.16, 1, 0.3, 1],
-            repeat: Number.POSITIVE_INFINITY,
-            repeatDelay: 0,
-          }}
-        >
-          <stop stopColor={gradientStartColor} stopOpacity="0" />
-          <stop stopColor={gradientStartColor} />
-          <stop offset="32.5%" stopColor={gradientStopColor} />
-          <stop offset="100%" stopColor={gradientStopColor} stopOpacity="0" />
-        </motion.linearGradient>
-      </defs>
     </svg>
   );
+};
+
+interface BeamContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
 }
+
+const BeamContainer = React.forwardRef<HTMLDivElement, BeamContainerProps>(
+  ({ children, className, ...props }, ref) => (
+    <div ref={ref} className={cn('relative', className)} {...props}>
+      {children}
+    </div>
+  ),
+);
+BeamContainer.displayName = 'BeamContainer';
+
+interface BeamNodeProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
+}
+
+const BeamNode = React.forwardRef<HTMLDivElement, BeamNodeProps>(
+  ({ children, className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={cn(
+        'relative z-10 flex items-center justify-center rounded-xl border bg-background p-3 shadow-sm',
+        className,
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  ),
+);
+BeamNode.displayName = 'BeamNode';
+
+export {
+  AnimatedBeam,
+  BeamContainer,
+  BeamNode,
+  type AnimatedBeamProps,
+  type BeamContainerProps,
+  type BeamNodeProps,
+};
