@@ -145,17 +145,17 @@ export function VpsMotionShowcase() {
         </div>
       </div>
 
-      <motion.div
-        ref={serverRef}
-        className="srv-vps-motion-server-wrap"
-        animate={{ y: [0, -5, 0] }}
-        transition={{
-          duration: 6,
-          ease: 'easeInOut',
-          repeat: Number.POSITIVE_INFINITY,
-        }}
-      >
-        <div className="srv-vps-motion-server" aria-hidden="true">
+      <div ref={serverRef} className="srv-vps-motion-server-wrap">
+        <motion.div
+          className="srv-vps-motion-server-float"
+          animate={{ y: [0, -5, 0] }}
+          transition={{
+            duration: 6,
+            ease: 'easeInOut',
+            repeat: Number.POSITIVE_INFINITY,
+          }}
+        >
+          <div className="srv-vps-motion-server" aria-hidden="true">
           <div className="srv-vps-motion-server-top">
             <AnimatePresence mode="wait" initial={false}>
               <motion.img
@@ -186,23 +186,24 @@ export function VpsMotionShowcase() {
           </div>
         </div>
 
-        <div className="srv-vps-motion-server-label">
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={mode}
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.2 }}
-            >
-              <strong>{mode === 'windows' ? 'Windows VPS' : 'Linux VPS'}</strong>
-              <span>
-                {mode === 'windows' ? 'NVMe · Admin access' : 'NVMe · Root access'}
-              </span>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </motion.div>
+          <div className="srv-vps-motion-server-label">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={mode}
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.2 }}
+              >
+                <strong>{mode === 'windows' ? 'Windows VPS' : 'Linux VPS'}</strong>
+                <span>
+                  {mode === 'windows' ? 'NVMe · Admin access' : 'NVMe · Root access'}
+                </span>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </motion.div>
+      </div>
 
       <div className="srv-vps-motion-features" aria-label="VPS features">
         {features.map((feature, index) => {
@@ -305,6 +306,8 @@ export function VpsMotionShowcase() {
           pathColor="#9fc3e7"
           pathOpacity={0.12}
           pathWidth={0.85}
+          startXOffset={62}
+          endXOffset={-4}
           dotted
           dotSpacing={8}
           gradientStartColor="#2845d6"
