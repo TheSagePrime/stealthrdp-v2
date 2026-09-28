@@ -64,7 +64,7 @@ export function ChromaticTextReveal({
   foregroundColor = "var(--foreground)",
   duration = 1.2,
   delay = 0,
-  pauseDuration = 0.4,
+  pauseDuration = 0.8,
   loop = true,
   startOnView = true,
   once = true,
