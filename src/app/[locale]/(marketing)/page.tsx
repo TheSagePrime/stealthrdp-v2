@@ -2,12 +2,10 @@ import type { Metadata } from 'next';
 import {
   ArrowRight,
   ArrowUpRight,
-  CheckCircle,
   Cpu,
   GlobeHemisphereWest,
   HardDrive,
   Headset,
-  Lightning,
   ShieldCheck,
 } from '@phosphor-icons/react/dist/ssr';
 import { setRequestLocale } from 'next-intl/server';
@@ -17,15 +15,10 @@ import { SiAlpinelinux, SiFreebsd, SiRockylinux } from '@icons-pack/react-simple
 
 import { Section } from '@/components/launchui/section';
 import { HomePricing } from '@/components/site/HomePricing';
+import { HomeProductFlow } from '@/components/site/HomeProductFlow';
 import { ChromaticTextReveal } from '@/components/motion/chromatic-text-reveal';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from '@/components/ui/card';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
 import { createPageMetadata } from '@/libs/seo/metadata';
@@ -158,7 +151,7 @@ export default async function HomePage({ params }: Props) {
                       ]}
                       foregroundColor="var(--foreground)"
                       duration={1.8}
-                      pauseDuration={4.2}
+                      pauseDuration={2.1}
                       startOnView={false}
                       once={false}
                       animateInitial={false}
@@ -209,59 +202,7 @@ export default async function HomePage({ params }: Props) {
           </div>
 
           <div className="srv-home-hero-visual-stage">
-          <Card className="srv-home-hero-visual srv-home-deploy-card gap-0 overflow-hidden py-0 shadow-sm">
-            <CardHeader className="srv-home-deploy-head border-b border-border bg-muted/30 px-5 py-4">
-              <div className="flex items-center justify-between gap-4">
-                <div className="flex items-center gap-2 text-sm font-semibold">
-                  <Lightning className="size-4 text-primary" weight="fill" />
-                  stealth deploy
-                </div>
-                <Badge variant="outline">60s setup</Badge>
-              </div>
-            </CardHeader>
-            <CardContent className="grid gap-4 px-5 py-5">
-              <pre className="srv-home-deploy-command max-w-full overflow-x-auto rounded-md border border-border bg-muted/30 p-4 font-mono text-sm leading-6">
-                <code>$ stealth deploy --plan bronze-usa --region us-east</code>
-              </pre>
-
-              <div className="srv-home-deploy-steps grid gap-3 text-sm">
-                {[
-                  'Reserving dedicated vCPU',
-                  'Provisioning NVMe storage',
-                  'Installing Windows Server 2022',
-                  'Provisioning isolated VM',
-                ].map(item => (
-                  <div key={item} className="srv-home-deploy-step flex items-center gap-2 text-muted-foreground">
-                    <CheckCircle className="size-4 text-primary" weight="fill" />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="srv-home-deploy-ready rounded-md border border-border bg-muted/20 p-4">
-                <div className="flex items-center gap-2 text-sm font-semibold">
-                  <CheckCircle className="size-4 text-status-ok" weight="fill" />
-                  Windows Server 2022 ready in 60s
-                </div>
-              </div>
-            </CardContent>
-            <CardFooter className="srv-home-deploy-metrics grid grid-cols-4 gap-0 border-t border-border p-0">
-              {[
-                ['2', 'vCPU'],
-                ['4 GB', 'RAM'],
-                ['60 GB', 'NVMe'],
-                ['250', 'Mbps'],
-              ].map(([value, label], index) => (
-                <div
-                  key={label}
-                  className={`srv-home-deploy-metric p-4 text-center ${index > 0 ? 'border-l border-border' : ''}`}
-                >
-                  <strong className="block text-sm font-semibold">{value}</strong>
-                  <span className="text-xs text-muted-foreground">{label}</span>
-                </div>
-              ))}
-            </CardFooter>
-          </Card>
+            <HomeProductFlow />
           </div>
         </div>
       </Section>
