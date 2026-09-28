@@ -12749,3 +12749,47 @@ a.srv-help-tree-heading:hover {
     column-gap: 10px;
   }
 }
+
+/* Joly UI Animated Beam hero visual -------------------------------------- */
+@keyframes beam-dash {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: -1000;
+  }
+}
+
+.animated-beam-path {
+  will-change: stroke-dashoffset;
+}
+
+.srv-product-beam {
+  min-width: 0;
+  isolation: isolate;
+}
+
+.srv-product-beam-label,
+.srv-product-beam-service {
+  position: relative;
+  z-index: 10;
+  color: var(--text-dim);
+  font-size: .625rem;
+  font-weight: 700;
+  letter-spacing: .09em;
+  line-height: 1.25;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.srv-product-beam-service {
+  color: var(--text);
+  font-size: .6875rem;
+  letter-spacing: .045em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-beam-path {
+    animation: none !important;
+  }
+}
