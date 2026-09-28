@@ -13,7 +13,6 @@ import {
   Server,
   ShieldCheck,
   Smartphone,
-  Terminal,
   X,
 } from 'lucide-react';
 import React from 'react';
@@ -46,13 +45,13 @@ function MiniStatus({
   children,
   tone = 'green',
 }: {
-  icon: React.ComponentType<{ className?: string; 'aria-hidden'?: boolean }>;
+  icon: React.ComponentType<{ className?: string }>;
   children: React.ReactNode;
   tone?: 'green' | 'red' | 'blue';
 }) {
   return (
     <span className="srv-cinematic-status" data-tone={tone}>
-      <Icon className="size-3.5" aria-hidden="true" />
+      <Icon className="size-3.5" />
       {children}
     </span>
   );
