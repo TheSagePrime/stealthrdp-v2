@@ -1,12 +1,10 @@
 'use client';
 
-// Minimal infrastructure illustration using:
-// - UI Layouts Animated Beam for the moving network paths
-// - Joly UI Orbiting Circles for a single global-network orbit
-// - Joly UI dotted world-map asset as subtle geographic context
-// Citadel remains isolated to the HTTP/S application path.
+// Structured infrastructure flow based on the approved product diagram.
+// Motion paths use UI Layouts Animated Beam.
+// Citadel is shown only for HTTP/S application traffic and is not implied
+// to protect the VPS RDP/admin path.
 import {
-  Cloud,
   Globe2,
   Monitor,
   ShieldCheck,
@@ -19,12 +17,8 @@ import {
   AnimatedBeam,
   BeamContainer,
 } from '@/components/ui/animated-beam';
-import {
-  OrbitingCircles,
-  OrbitingCirclesContainer,
-} from '@/components/ui/orbiting-circle';
 
-function FlowLabel({
+function NodeLabel({
   title,
   meta,
 }: {
@@ -32,198 +26,191 @@ function FlowLabel({
   meta: string;
 }) {
   return (
-    <div className="srv-hero-net-label">
+    <div className="srv-route-label">
       <strong>{title}</strong>
       <span>{meta}</span>
     </div>
   );
 }
 
+function EdgeLabel({ className, children }: { className: string; children: React.ReactNode }) {
+  return <span className={`srv-route-edge-label ${className}`}>{children}</span>;
+}
+
 export function HomeProductFlow() {
   const sceneRef = React.useRef<HTMLDivElement>(null);
-  const usersRef = React.useRef<HTMLDivElement>(null);
-  const globeRef = React.useRef<HTMLDivElement>(null);
+  const adminRef = React.useRef<HTMLDivElement>(null);
+  const visitorsRef = React.useRef<HTMLDivElement>(null);
+  const internetRef = React.useRef<HTMLDivElement>(null);
   const vpsRef = React.useRef<HTMLDivElement>(null);
-  const cloudflareRef = React.useRef<HTMLDivElement>(null);
   const citadelRef = React.useRef<HTMLDivElement>(null);
   const originRef = React.useRef<HTMLDivElement>(null);
+  const blockedRef = React.useRef<HTMLDivElement>(null);
 
   return (
     <BeamContainer
       ref={sceneRef}
-      className="srv-hero-net srv-hero-net-simple"
-      aria-label="StealthRDP infrastructure illustration. VPS compute and Citadel Layer 7 protection are separate product flows."
+      className="srv-route-scene"
+      aria-label="StealthRDP product flow: RDP and admin traffic connects to the VPS, while web requests can optionally pass through Citadel Layer 7 protection before reaching the website or app origin."
     >
       <img
         src="/vendor/joly/map-dark.svg"
         alt=""
         aria-hidden="true"
-        className="srv-hero-net-map"
+        className="srv-route-map"
       />
 
-      <div className="srv-hero-net-users" ref={usersRef}>
-        <div className="srv-hero-net-devices" aria-hidden="true">
+      <div className="srv-route-source srv-route-admin" ref={adminRef}>
+        <div className="srv-route-source-icon" aria-hidden="true">
+          <Monitor />
+        </div>
+        <NodeLabel title="You · RDP / admin" meta="Server access" />
+      </div>
+
+      <div className="srv-route-source srv-route-visitors" ref={visitorsRef}>
+        <div className="srv-route-source-icons" aria-hidden="true">
           <Monitor />
           <Smartphone />
         </div>
-        <FlowLabel title="Users" meta="Connect globally" />
+        <NodeLabel title="Website visitors" meta="HTTP / HTTPS" />
       </div>
 
-      <div className="srv-hero-net-globe-wrap">
-        <OrbitingCirclesContainer
-          ref={globeRef}
-          className="srv-hero-net-globe"
-          pathRadii={[68]}
-        >
-          <div className="srv-hero-net-globe-core" aria-hidden="true">
-            <img src="/vendor/joly/map-dark.svg" alt="" />
-            <Globe2 />
-          </div>
-
-          <OrbitingCircles radius={68} duration={22} delay={4} iconSize={7}>
-            <span className="srv-hero-net-orbit-dot" />
-          </OrbitingCircles>
-        </OrbitingCirclesContainer>
-        <FlowLabel title="Global network" meta="Low-latency routes" />
+      <div className="srv-route-internet" ref={internetRef}>
+        <div className="srv-route-internet-mark" aria-hidden="true">
+          <img src="/vendor/joly/map-dark.svg" alt="" />
+          <Globe2 />
+        </div>
+        <NodeLabel title="Internet" meta="Public network" />
       </div>
 
-      <div className="srv-hero-net-vps srv-hero-net-vps-simple" ref={vpsRef}>
-        <div className="srv-hero-net-rack" aria-hidden="true">
-          <div className="srv-hero-net-rack-top">
-            <span />
-            <span />
-          </div>
-          <div className="srv-hero-net-rack-row">
-            <b />
+      <div className="srv-route-vps" ref={vpsRef}>
+        <div className="srv-route-rack" aria-hidden="true">
+          <div className="srv-route-rack-head">
             <i />
             <i />
           </div>
-          <div className="srv-hero-net-rack-row">
-            <b />
-            <i />
-            <i />
-          </div>
-          <div className="srv-hero-net-rack-row">
-            <b />
-            <i />
-            <i />
-          </div>
+          <div className="srv-route-rack-row"><b /><i /><i /></div>
+          <div className="srv-route-rack-row"><b /><i /><i /></div>
+          <div className="srv-route-rack-row"><b /><i /><i /></div>
         </div>
 
-        <div className="srv-hero-net-vps-copy">
-          <FlowLabel title="StealthRDP VPS" meta="Windows + Linux compute" />
-          <div className="srv-hero-net-os" aria-label="Windows and Linux">
-            <span>
-              <img src="/brand/windows.svg" alt="" />
-              Windows
-            </span>
-            <span>
-              <img src="/brand/ubuntu.svg" alt="" />
-              Linux
-            </span>
+        <div className="srv-route-vps-copy">
+          <NodeLabel title="StealthRDP VPS" meta="Windows or Linux" />
+          <div className="srv-route-os" aria-label="Windows and Linux">
+            <span><img src="/brand/windows.svg" alt="" />Windows</span>
+            <span><img src="/brand/ubuntu.svg" alt="" />Linux</span>
           </div>
         </div>
       </div>
 
-      <div className="srv-hero-net-cloudflare" ref={cloudflareRef}>
-        <Cloud aria-hidden="true" />
-        <FlowLabel title="Cloudflare" meta="DNS + proxy" />
-      </div>
-
-      <div className="srv-hero-net-citadel srv-hero-net-citadel-simple" ref={citadelRef}>
-        <div className="srv-hero-net-shield" aria-hidden="true">
+      <div className="srv-route-citadel" ref={citadelRef}>
+        <div className="srv-route-shield" aria-hidden="true">
           <ShieldCheck />
         </div>
-        <FlowLabel title="Citadel L7" meta="Filter · challenge · protect" />
-        <div className="srv-hero-net-threat-line">
-          <X aria-hidden="true" />
-          Bots · HTTP floods · abusive requests blocked
-        </div>
+        <NodeLabel title="Citadel L7" meta="Optional web protection" />
       </div>
 
-      <div className="srv-hero-net-origin" ref={originRef}>
-        <div className="srv-hero-net-browser" aria-hidden="true">
-          <div className="srv-hero-net-browser-top">
-            <i />
-            <i />
-            <i />
-          </div>
-          <div className="srv-hero-net-browser-body">
-            <b />
-            <span />
-            <span />
-          </div>
+      <div className="srv-route-origin" ref={originRef}>
+        <div className="srv-route-browser" aria-hidden="true">
+          <div className="srv-route-browser-bar"><i /><i /><i /></div>
+          <div className="srv-route-browser-body"><b /><span /><span /></div>
         </div>
-        <FlowLabel title="Website / app" meta="Clean HTTP/S traffic" />
+        <NodeLabel title="Website / app origin" meta="Allowed HTTP/S traffic" />
       </div>
+
+      <div className="srv-route-blocked" ref={blockedRef}>
+        <div className="srv-route-blocked-mark" aria-hidden="true">
+          <X />
+        </div>
+        <NodeLabel title="Suspicious requests stopped" meta="Challenge or block" />
+      </div>
+
+      <EdgeLabel className="srv-route-edge-rdp">RDP / admin</EdgeLabel>
+      <EdgeLabel className="srv-route-edge-web">Web requests</EdgeLabel>
+      <EdgeLabel className="srv-route-edge-allowed">Allowed</EdgeLabel>
+      <EdgeLabel className="srv-route-edge-blocked">Challenge or block</EdgeLabel>
 
       <AnimatedBeam
         containerRef={sceneRef}
-        fromRef={usersRef}
-        toRef={globeRef}
+        fromRef={adminRef}
+        toRef={internetRef}
         curvature={8}
-        duration={6.5}
-        pathColor="#9bc7f5"
+        duration={6.2}
+        pathColor="#9cb9dd"
         pathOpacity={0.2}
-        pathWidth={1.15}
+        pathWidth={1.05}
         gradientStartColor="#2845d6"
         gradientStopColor="#00a8ff"
       />
 
       <AnimatedBeam
         containerRef={sceneRef}
-        fromRef={globeRef}
+        fromRef={visitorsRef}
+        toRef={internetRef}
+        curvature={-8}
+        delay={0.6}
+        duration={6.4}
+        pathColor="#9cb9dd"
+        pathOpacity={0.2}
+        pathWidth={1.05}
+        gradientStartColor="#2845d6"
+        gradientStopColor="#00a8ff"
+      />
+
+      <AnimatedBeam
+        containerRef={sceneRef}
+        fromRef={internetRef}
         toRef={vpsRef}
-        curvature={34}
-        delay={0.35}
-        duration={5.9}
-        pathColor="#8db8e8"
+        curvature={24}
+        delay={0.25}
+        duration={5.7}
+        pathColor="#89a9d6"
         pathOpacity={0.18}
-        pathWidth={1.35}
+        pathWidth={1.2}
         gradientStartColor="#00a8ff"
         gradientStopColor="#2845d6"
       />
 
       <AnimatedBeam
         containerRef={sceneRef}
-        fromRef={globeRef}
-        toRef={cloudflareRef}
-        curvature={-32}
-        delay={0.75}
-        duration={6.4}
-        pathColor="#9ec7eb"
-        pathOpacity={0.14}
-        pathWidth={1}
-        gradientStartColor="#00a8ff"
-        gradientStopColor="#5c8df6"
-      />
-
-      <AnimatedBeam
-        containerRef={sceneRef}
-        fromRef={cloudflareRef}
+        fromRef={internetRef}
         toRef={citadelRef}
-        curvature={-4}
-        delay={0.2}
-        duration={5.4}
-        pathColor="#a7c7e8"
+        curvature={-22}
+        delay={0.55}
+        duration={5.8}
+        pathColor="#89a9d6"
         pathOpacity={0.18}
-        pathWidth={1.25}
-        gradientStartColor="#5c8df6"
-        gradientStopColor="#00a8ff"
+        pathWidth={1.2}
+        gradientStartColor="#00a8ff"
+        gradientStopColor="#4f7ef7"
       />
 
       <AnimatedBeam
         containerRef={sceneRef}
         fromRef={citadelRef}
         toRef={originRef}
-        curvature={10}
-        delay={0.45}
+        curvature={18}
+        delay={0.2}
         duration={5.2}
-        pathColor="#9ec7eb"
+        pathColor="#9cb9dd"
         pathOpacity={0.18}
-        pathWidth={1.3}
-        gradientStartColor="#00a8ff"
-        gradientStopColor="#2845d6"
+        pathWidth={1.15}
+        gradientStartColor="#4f7ef7"
+        gradientStopColor="#00a8ff"
+      />
+
+      <AnimatedBeam
+        containerRef={sceneRef}
+        fromRef={citadelRef}
+        toRef={blockedRef}
+        curvature={-18}
+        delay={0.85}
+        duration={5.5}
+        pathColor="#d7a1a1"
+        pathOpacity={0.2}
+        pathWidth={1.05}
+        gradientStartColor="#d65050"
+        gradientStopColor="#b64747"
       />
     </BeamContainer>
   );
