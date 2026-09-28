@@ -1,8 +1,9 @@
 'use client';
 
-// Freeform infrastructure scene built from Joly UI's Animated Beam / BeamNode
-// primitives plus Joly UI's dotted world-map asset.
-// Citadel is intentionally shown only in the HTTP/S application path.
+// Hero network scene built from UI Layouts Animated Beam + Joly UI world-map asset.
+// The two product paths are deliberately separate:
+// 1) VPS compute: Users -> Global network -> StealthRDP VPS.
+// 2) Citadel L7: Web traffic -> Cloudflare -> Citadel -> Website/App.
 import {
   Bot,
   Cloud,
@@ -11,7 +12,6 @@ import {
   Server,
   ShieldCheck,
   Smartphone,
-  X,
 } from 'lucide-react';
 import React from 'react';
 
@@ -21,245 +21,231 @@ import {
   BeamNode,
 } from '@/components/ui/animated-beam';
 
-function SceneLabel({
+function Label({
   title,
   meta,
   tone = 'default',
 }: {
   title: string;
   meta?: string;
-  tone?: 'default' | 'green' | 'red';
+  tone?: 'default' | 'cyan' | 'green';
 }) {
   return (
-    <div className="srv-cinematic-label">
+    <div className="srv-flow-label">
       <strong data-tone={tone}>{title}</strong>
       {meta ? <span>{meta}</span> : null}
     </div>
   );
 }
 
-function MiniStatus({
-  icon: Icon,
-  children,
-  tone = 'green',
-}: {
-  icon: React.ComponentType<{ className?: string }>;
-  children: React.ReactNode;
-  tone?: 'green' | 'red' | 'blue';
-}) {
-  return (
-    <span className="srv-cinematic-status" data-tone={tone}>
-      <Icon className="size-3.5" />
-      {children}
-    </span>
-  );
-}
-
 export function HomeProductFlow() {
   const sceneRef = React.useRef<HTMLDivElement>(null);
 
-  const browserRef = React.useRef<HTMLDivElement>(null);
-  const mobileRef = React.useRef<HTMLDivElement>(null);
+  const usersRef = React.useRef<HTMLDivElement>(null);
+  const globeRef = React.useRef<HTMLDivElement>(null);
+  const vpsRef = React.useRef<HTMLDivElement>(null);
+
   const cloudflareRef = React.useRef<HTMLDivElement>(null);
   const citadelRef = React.useRef<HTMLDivElement>(null);
   const originRef = React.useRef<HTMLDivElement>(null);
 
-  const remoteRef = React.useRef<HTMLDivElement>(null);
-  const vpsRef = React.useRef<HTMLDivElement>(null);
-  const windowsRef = React.useRef<HTMLDivElement>(null);
-  const linuxRef = React.useRef<HTMLDivElement>(null);
-
   return (
     <BeamContainer
       ref={sceneRef}
-      className="srv-cinematic-scene"
-      aria-label="StealthRDP infrastructure visual: HTTP and HTTPS traffic passes through Cloudflare and Citadel before the web origin, while VPS compute remains a separate path"
+      className="srv-flow-scene"
+      aria-label="StealthRDP infrastructure flow with VPS compute separate from Citadel Layer 7 web protection"
     >
       <img
-        className="srv-cinematic-map"
         src="/vendor/joly/map-dark.svg"
         alt=""
         aria-hidden="true"
+        className="srv-flow-world-map"
       />
 
-      <div className="srv-cinematic-grid" aria-hidden="true" />
+      <div className="srv-flow-grid" aria-hidden="true" />
+      <div className="srv-flow-haze srv-flow-haze-one" aria-hidden="true" />
+      <div className="srv-flow-haze srv-flow-haze-two" aria-hidden="true" />
 
-      <div className="srv-cinematic-kicker">
-        <span>VPS hosting</span>
+      <div className="srv-flow-eyebrow">
+        <span>Global network</span>
+        <i />
+        <span>VPS compute</span>
         <i />
         <span>Citadel L7</span>
-        <i />
-        <span>Global access</span>
       </div>
 
-      <div className="srv-cinematic-lane-title srv-cinematic-lane-web">
-        <span className="srv-cinematic-dot" data-tone="green" />
-        Protected web traffic
-      </div>
-
-      <div className="srv-cinematic-lane-title srv-cinematic-lane-vps">
-        <span className="srv-cinematic-dot" data-tone="blue" />
-        VPS compute
-      </div>
-
-      <div className="srv-cinematic-endpoint srv-cinematic-browser">
-        <BeamNode ref={browserRef} className="srv-cinematic-node srv-cinematic-node-client">
+      <div className="srv-flow-users">
+        <BeamNode ref={usersRef} className="srv-flow-node srv-flow-node-users">
           <Monitor className="size-5" aria-hidden="true" />
+          <Smartphone className="size-4" aria-hidden="true" />
         </BeamNode>
-        <SceneLabel title="Browsers" meta="HTTP / HTTPS" />
+        <Label title="Users / visitors" meta="Connect from anywhere" />
       </div>
 
-      <div className="srv-cinematic-endpoint srv-cinematic-mobile">
-        <BeamNode ref={mobileRef} className="srv-cinematic-node srv-cinematic-node-client">
-          <Smartphone className="size-5" aria-hidden="true" />
+      <div className="srv-flow-globe">
+        <BeamNode ref={globeRef} className="srv-flow-node srv-flow-node-globe">
+          <img
+            src="/vendor/joly/map-dark.svg"
+            alt=""
+            aria-hidden="true"
+            className="srv-flow-globe-map"
+          />
+          <Globe2 className="srv-flow-globe-icon" aria-hidden="true" />
         </BeamNode>
-        <SceneLabel title="Web apps" meta="HTTPS requests" />
+        <Label title="Global network" meta="Low-latency access" tone="cyan" />
       </div>
 
-      <div className="srv-cinematic-endpoint srv-cinematic-cloudflare">
-        <BeamNode ref={cloudflareRef} className="srv-cinematic-node srv-cinematic-node-cloud">
+      <div className="srv-flow-vps">
+        <BeamNode ref={vpsRef} className="srv-flow-node srv-flow-node-vps">
+          <div className="srv-flow-server-stack" aria-hidden="true">
+            <span><b /><i /><i /></span>
+            <span><b /><i /><i /></span>
+            <span><b /><i /><i /></span>
+          </div>
+          <Server className="srv-flow-vps-icon" aria-hidden="true" />
+        </BeamNode>
+        <div className="srv-flow-vps-copy">
+          <Label title="StealthRDP VPS" meta="Windows + Linux compute" tone="cyan" />
+          <div className="srv-flow-os-pills">
+            <span><img src="/brand/windows.svg" alt="" /> Windows</span>
+            <span><img src="/brand/ubuntu.svg" alt="" /> Linux</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="srv-flow-cloudflare">
+        <BeamNode
+          ref={cloudflareRef}
+          className="srv-flow-node srv-flow-node-cloudflare"
+        >
           <Cloud className="size-6" aria-hidden="true" />
         </BeamNode>
-        <SceneLabel title="Cloudflare" meta="DNS + proxy" />
+        <Label title="Cloudflare" meta="DNS + proxy" />
       </div>
 
-      <div className="srv-cinematic-citadel">
-        <div className="srv-cinematic-shield-rings" aria-hidden="true">
+      <div className="srv-flow-citadel">
+        <div className="srv-flow-shield-layers" aria-hidden="true">
           <span />
           <span />
         </div>
-        <BeamNode ref={citadelRef} className="srv-cinematic-node srv-cinematic-node-citadel">
-          <ShieldCheck className="size-10" aria-hidden="true" />
+        <BeamNode ref={citadelRef} className="srv-flow-node srv-flow-node-citadel">
+          <ShieldCheck className="size-9" aria-hidden="true" />
         </BeamNode>
-        <div className="srv-cinematic-citadel-copy">
-          <strong>Citadel</strong>
-          <span>Layer 7 · HTTP/S</span>
-        </div>
-        <div className="srv-cinematic-citadel-status">
-          <MiniStatus icon={ShieldCheck}>Inspect + filter</MiniStatus>
-          <MiniStatus icon={Bot} tone="red">Bots blocked</MiniStatus>
+        <Label title="Citadel L7" meta="Filter · challenge · protect" tone="green" />
+        <div className="srv-flow-threats">
+          <span><Bot className="size-3" /> Bots</span>
+          <span>HTTP floods</span>
+          <span>Abusive requests</span>
         </div>
       </div>
 
-      <div className="srv-cinematic-endpoint srv-cinematic-origin">
-        <BeamNode ref={originRef} className="srv-cinematic-node srv-cinematic-node-origin">
-          <Server className="size-7" aria-hidden="true" />
+      <div className="srv-flow-origin">
+        <BeamNode ref={originRef} className="srv-flow-node srv-flow-node-origin">
+          <div className="srv-flow-browser-window" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+            <b />
+            <i />
+            <i />
+          </div>
         </BeamNode>
-        <SceneLabel title="Web origin" meta="Clean requests" tone="green" />
+        <Label title="Website / app" meta="Clean HTTP/S traffic" tone="green" />
       </div>
 
-      <div className="srv-cinematic-blocked srv-cinematic-blocked-one">
-        <X className="size-3" aria-hidden="true" />
-        Malicious HTTP
-      </div>
-      <div className="srv-cinematic-blocked srv-cinematic-blocked-two">
-        <Bot className="size-3" aria-hidden="true" />
-        Bot request
-      </div>
-
-      <div className="srv-cinematic-vps-divider" aria-hidden="true" />
-
-      <div className="srv-cinematic-endpoint srv-cinematic-remote">
-        <BeamNode ref={remoteRef} className="srv-cinematic-node srv-cinematic-node-client">
-          <Globe2 className="size-5" aria-hidden="true" />
-        </BeamNode>
-        <SceneLabel title="You" meta="Remote access" />
-      </div>
-
-      <div className="srv-cinematic-vps-core">
-        <BeamNode ref={vpsRef} className="srv-cinematic-node srv-cinematic-node-vps">
-          <Server className="size-8" aria-hidden="true" />
-        </BeamNode>
-        <SceneLabel title="StealthRDP VPS" meta="Full admin access" tone="green" />
-      </div>
-
-      <div className="srv-cinematic-os srv-cinematic-windows">
-        <BeamNode ref={windowsRef} className="srv-cinematic-node srv-cinematic-node-os">
-          <img src="/brand/windows.svg" alt="" width="22" height="22" />
-        </BeamNode>
-        <SceneLabel title="Windows" meta="Server editions" />
-      </div>
-
-      <div className="srv-cinematic-os srv-cinematic-linux">
-        <BeamNode ref={linuxRef} className="srv-cinematic-node srv-cinematic-node-os">
-          <img src="/brand/ubuntu.svg" alt="" width="22" height="22" />
-        </BeamNode>
-        <SceneLabel title="Linux" meta="Ubuntu + more" />
-      </div>
-
-      <div className="srv-cinematic-live">
+      <div className="srv-flow-lane srv-flow-lane-compute">
         <span />
-        Infrastructure online
+        VPS COMPUTE
+      </div>
+      <div className="srv-flow-lane srv-flow-lane-web">
+        <span />
+        WEB PROTECTION
       </div>
 
       <AnimatedBeam
         containerRef={sceneRef}
-        fromRef={browserRef}
-        toRef={cloudflareRef}
-        duration={5.2}
-        curvature={-0.08}
-        gradientStartColor="#22d3ee"
-        gradientStopColor="#3b82f6"
+        fromRef={usersRef}
+        toRef={globeRef}
+        curvature={30}
+        duration={6.2}
+        pathWidth={1.3}
+        pathOpacity={0.16}
+        gradientStartColor="#38bdf8"
+        gradientStopColor="#00F0FF"
       />
       <AnimatedBeam
         containerRef={sceneRef}
-        fromRef={mobileRef}
-        toRef={cloudflareRef}
-        duration={5.6}
-        delay={0.7}
-        curvature={0.08}
-        gradientStartColor="#22d3ee"
+        fromRef={usersRef}
+        toRef={globeRef}
+        curvature={-22}
+        delay={1.2}
+        duration={7}
+        pathWidth={0.9}
+        pathOpacity={0.1}
+        gradientStartColor="#60a5fa"
+        gradientStopColor="#22d3ee"
+      />
+
+      <AnimatedBeam
+        containerRef={sceneRef}
+        fromRef={globeRef}
+        toRef={vpsRef}
+        curvature={54}
+        delay={0.4}
+        duration={5.8}
+        pathWidth={1.7}
+        pathOpacity={0.2}
+        gradientStartColor="#00F0FF"
+        gradientStopColor="#2845d6"
+      />
+      <AnimatedBeam
+        containerRef={sceneRef}
+        fromRef={globeRef}
+        toRef={vpsRef}
+        curvature={18}
+        delay={1.4}
+        duration={6.8}
+        pathWidth={0.9}
+        pathOpacity={0.09}
+        gradientStartColor="#38bdf8"
         gradientStopColor="#3b82f6"
+      />
+
+      <AnimatedBeam
+        containerRef={sceneRef}
+        fromRef={globeRef}
+        toRef={cloudflareRef}
+        curvature={-50}
+        delay={0.75}
+        duration={6.4}
+        pathWidth={1.2}
+        pathOpacity={0.14}
+        gradientStartColor="#38bdf8"
+        gradientStopColor="#60a5fa"
       />
       <AnimatedBeam
         containerRef={sceneRef}
         fromRef={cloudflareRef}
         toRef={citadelRef}
-        duration={4.8}
-        delay={0.3}
-        pathWidth={1.8}
-        gradientStartColor="#3b82f6"
+        curvature={8}
+        delay={0.2}
+        duration={5.3}
+        pathWidth={1.7}
+        pathOpacity={0.17}
+        gradientStartColor="#60a5fa"
         gradientStopColor="#22D46B"
       />
       <AnimatedBeam
         containerRef={sceneRef}
         fromRef={citadelRef}
         toRef={originRef}
-        duration={4.8}
-        delay={0.55}
-        pathWidth={2}
+        curvature={-18}
+        delay={0.5}
+        duration={5.1}
+        pathWidth={1.9}
+        pathOpacity={0.18}
         gradientStartColor="#22D46B"
         gradientStopColor="#00F0FF"
-      />
-
-      <AnimatedBeam
-        containerRef={sceneRef}
-        fromRef={remoteRef}
-        toRef={vpsRef}
-        duration={5.6}
-        delay={0.35}
-        gradientStartColor="#38bdf8"
-        gradientStopColor="#2845d6"
-      />
-      <AnimatedBeam
-        containerRef={sceneRef}
-        fromRef={vpsRef}
-        toRef={windowsRef}
-        duration={5.8}
-        delay={0.75}
-        curvature={-0.18}
-        gradientStartColor="#2845d6"
-        gradientStopColor="#3b82f6"
-      />
-      <AnimatedBeam
-        containerRef={sceneRef}
-        fromRef={vpsRef}
-        toRef={linuxRef}
-        duration={5.8}
-        delay={1.05}
-        curvature={0.18}
-        gradientStartColor="#2845d6"
-        gradientStopColor="#22d3ee"
       />
     </BeamContainer>
   );
