@@ -16,6 +16,7 @@ import { SiAlpinelinux, SiFreebsd, SiRockylinux } from '@icons-pack/react-simple
 
 import { Section } from '@/components/launchui/section';
 import { HomePricing } from '@/components/site/HomePricing';
+import { VpsMotionShowcase } from '@/components/site/VpsMotionShowcase';
 import { ChromaticTextReveal } from '@/components/motion/chromatic-text-reveal';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -201,6 +202,9 @@ export default async function HomePage({ params }: Props) {
             </div>
           </div>
 
+          <div className="srv-vps-showcase-stage">
+            <VpsMotionShowcase />
+          </div>
         </div>
       </Section>
 
