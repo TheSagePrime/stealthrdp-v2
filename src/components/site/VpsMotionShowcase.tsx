@@ -34,7 +34,7 @@ export function VpsMotionShowcase({ className = '', productBaseUrl = '', reduceM
     const updateVisibility = () => setPageVisible(document.visibilityState === 'visible');
     updateVisibility();
     document.addEventListener('visibilitychange', updateVisibility);
-    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.25 });
+    const observer = new IntersectionObserver(([entry]) => setInView(entry?.isIntersecting ?? false), { threshold: 0.25 });
     if (rootRef.current) observer.observe(rootRef.current);
     return () => {
       query.removeEventListener('change', update);
