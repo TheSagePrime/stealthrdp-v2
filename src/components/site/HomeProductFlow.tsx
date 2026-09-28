@@ -1,15 +1,14 @@
 'use client';
 
-// Transparent hero illustration using:
-// - UI Layouts Animated Beam for motion paths
-// - Joly UI Orbiting Circles for the network node
-// - Joly UI dotted world-map asset for geographic context
+// Minimal infrastructure illustration using:
+// - UI Layouts Animated Beam for the moving network paths
+// - Joly UI Orbiting Circles for a single global-network orbit
+// - Joly UI dotted world-map asset as subtle geographic context
 // Citadel remains isolated to the HTTP/S application path.
 import {
   Cloud,
   Globe2,
   Monitor,
-  Server,
   ShieldCheck,
   Smartphone,
   X,
@@ -52,8 +51,8 @@ export function HomeProductFlow() {
   return (
     <BeamContainer
       ref={sceneRef}
-      className="srv-hero-net"
-      aria-label="StealthRDP infrastructure illustration. VPS compute and Citadel Layer 7 protection are shown as separate product flows."
+      className="srv-hero-net srv-hero-net-simple"
+      aria-label="StealthRDP infrastructure illustration. VPS compute and Citadel Layer 7 protection are separate product flows."
     >
       <img
         src="/vendor/joly/map-dark.svg"
@@ -74,42 +73,40 @@ export function HomeProductFlow() {
         <OrbitingCirclesContainer
           ref={globeRef}
           className="srv-hero-net-globe"
-          pathRadii={[56, 78]}
+          pathRadii={[68]}
         >
           <div className="srv-hero-net-globe-core" aria-hidden="true">
             <img src="/vendor/joly/map-dark.svg" alt="" />
             <Globe2 />
           </div>
 
-          <OrbitingCircles radius={56} duration={16} delay={2} iconSize={7}>
-            <span className="srv-hero-net-orbit-dot" />
-          </OrbitingCircles>
-          <OrbitingCircles
-            radius={78}
-            duration={24}
-            delay={5}
-            reverse
-            iconSize={8}
-          >
-            <span className="srv-hero-net-orbit-dot srv-hero-net-orbit-dot-soft" />
-          </OrbitingCircles>
-          <OrbitingCircles radius={78} duration={24} delay={14} iconSize={6}>
+          <OrbitingCircles radius={68} duration={22} delay={4} iconSize={7}>
             <span className="srv-hero-net-orbit-dot" />
           </OrbitingCircles>
         </OrbitingCirclesContainer>
         <FlowLabel title="Global network" meta="Low-latency routes" />
       </div>
 
-      <div className="srv-hero-net-vps" ref={vpsRef}>
-        <div className="srv-hero-net-server" aria-hidden="true">
-          <div className="srv-hero-net-server-plane srv-hero-net-server-back">
-            <Server />
+      <div className="srv-hero-net-vps srv-hero-net-vps-simple" ref={vpsRef}>
+        <div className="srv-hero-net-rack" aria-hidden="true">
+          <div className="srv-hero-net-rack-top">
+            <span />
+            <span />
           </div>
-          <div className="srv-hero-net-server-plane srv-hero-net-server-mid">
-            <Server />
+          <div className="srv-hero-net-rack-row">
+            <b />
+            <i />
+            <i />
           </div>
-          <div className="srv-hero-net-server-plane srv-hero-net-server-front">
-            <Server />
+          <div className="srv-hero-net-rack-row">
+            <b />
+            <i />
+            <i />
+          </div>
+          <div className="srv-hero-net-rack-row">
+            <b />
+            <i />
+            <i />
           </div>
         </div>
 
@@ -133,18 +130,14 @@ export function HomeProductFlow() {
         <FlowLabel title="Cloudflare" meta="DNS + proxy" />
       </div>
 
-      <div className="srv-hero-net-citadel" ref={citadelRef}>
-        <div className="srv-hero-net-shields" aria-hidden="true">
-          <ShieldCheck />
-          <ShieldCheck />
+      <div className="srv-hero-net-citadel srv-hero-net-citadel-simple" ref={citadelRef}>
+        <div className="srv-hero-net-shield" aria-hidden="true">
           <ShieldCheck />
         </div>
         <FlowLabel title="Citadel L7" meta="Filter · challenge · protect" />
-
-        <div className="srv-hero-net-threats" aria-label="Examples of blocked Layer 7 traffic">
-          <span><X /> Bots</span>
-          <span><X /> HTTP floods</span>
-          <span><X /> Abusive requests</span>
+        <div className="srv-hero-net-threat-line">
+          <X aria-hidden="true" />
+          Bots · HTTP floods · abusive requests blocked
         </div>
       </div>
 
@@ -164,107 +157,72 @@ export function HomeProductFlow() {
         <FlowLabel title="Website / app" meta="Clean HTTP/S traffic" />
       </div>
 
-      <div className="srv-hero-net-caption srv-hero-net-caption-vps">
-        VPS COMPUTE
-      </div>
-      <div className="srv-hero-net-caption srv-hero-net-caption-web">
-        WEB PROTECTION
-      </div>
-
       <AnimatedBeam
         containerRef={sceneRef}
         fromRef={usersRef}
         toRef={globeRef}
-        curvature={18}
-        duration={6.4}
+        curvature={8}
+        duration={6.5}
         pathColor="#9bc7f5"
-        pathOpacity={0.22}
-        pathWidth={1.2}
+        pathOpacity={0.2}
+        pathWidth={1.15}
         gradientStartColor="#2845d6"
         gradientStopColor="#00a8ff"
       />
-      <AnimatedBeam
-        containerRef={sceneRef}
-        fromRef={usersRef}
-        toRef={globeRef}
-        curvature={-20}
-        delay={1.4}
-        duration={7.4}
-        pathColor="#b9d9f7"
-        pathOpacity={0.14}
-        pathWidth={0.8}
-        dotted
-        dotSpacing={8}
-        gradientStartColor="#4f7ef7"
-        gradientStopColor="#00b8d9"
-      />
 
       <AnimatedBeam
         containerRef={sceneRef}
         fromRef={globeRef}
         toRef={vpsRef}
-        curvature={46}
+        curvature={34}
         delay={0.35}
-        duration={5.8}
+        duration={5.9}
         pathColor="#8db8e8"
         pathOpacity={0.18}
-        pathWidth={1.4}
+        pathWidth={1.35}
         gradientStartColor="#00a8ff"
         gradientStopColor="#2845d6"
-      />
-      <AnimatedBeam
-        containerRef={sceneRef}
-        fromRef={globeRef}
-        toRef={vpsRef}
-        curvature={12}
-        delay={1.6}
-        duration={6.8}
-        pathColor="#bed7ef"
-        pathOpacity={0.12}
-        pathWidth={0.8}
-        dotted
-        dotSpacing={9}
-        gradientStartColor="#22a7f0"
-        gradientStopColor="#5478ff"
       />
 
       <AnimatedBeam
         containerRef={sceneRef}
         fromRef={globeRef}
         toRef={cloudflareRef}
-        curvature={-42}
-        delay={0.8}
-        duration={6.6}
+        curvature={-32}
+        delay={0.75}
+        duration={6.4}
         pathColor="#9ec7eb"
-        pathOpacity={0.15}
+        pathOpacity={0.14}
         pathWidth={1}
         gradientStartColor="#00a8ff"
         gradientStopColor="#5c8df6"
       />
+
       <AnimatedBeam
         containerRef={sceneRef}
         fromRef={cloudflareRef}
         toRef={citadelRef}
-        curvature={-6}
+        curvature={-4}
         delay={0.2}
         duration={5.4}
         pathColor="#a7c7e8"
         pathOpacity={0.18}
-        pathWidth={1.3}
+        pathWidth={1.25}
         gradientStartColor="#5c8df6"
-        gradientStopColor="#00b8d9"
+        gradientStopColor="#00a8ff"
       />
+
       <AnimatedBeam
         containerRef={sceneRef}
         fromRef={citadelRef}
         toRef={originRef}
-        curvature={12}
+        curvature={10}
         delay={0.45}
         duration={5.2}
         pathColor="#9ec7eb"
         pathOpacity={0.18}
-        pathWidth={1.4}
-        gradientStartColor="#00b8d9"
+        pathWidth={1.3}
+        gradientStartColor="#00a8ff"
         gradientStopColor="#2845d6"
       />
     </BeamContainer>
