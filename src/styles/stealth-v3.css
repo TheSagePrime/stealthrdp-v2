@@ -14964,3 +14964,111 @@ a.srv-help-tree-heading:hover {
     font-size: 7px;
   }
 }
+
+/* Homepage infra diagram v7: safe bounds + clearer route spacing --------- */
+@media (min-width: 1100px) {
+  .srv-home-hero-visual-stage {
+    width: calc(100% - 30px) !important;
+    margin: 0 30px 0 0 !important;
+    transform: translateX(-8px);
+  }
+}
+
+.srv-route-scene {
+  width: 100%;
+  min-height: 500px;
+}
+
+/* Keep all terminal nodes comfortably inside the illustration column. */
+.srv-route-vps {
+  left: 53% !important;
+  top: 10% !important;
+}
+
+.srv-route-origin {
+  right: 4% !important;
+  top: 33% !important;
+}
+
+.srv-route-citadel {
+  left: 55% !important;
+  top: 57% !important;
+}
+
+.srv-route-blocked {
+  right: 3.5% !important;
+  top: 79% !important;
+}
+
+/* Give the upper RDP lane a clean strip between Internet and the VPS. */
+.srv-route-edge-rdp {
+  left: 43% !important;
+  top: 20% !important;
+}
+
+/* Separate the lower web route into three readable horizontal beats. */
+.srv-route-edge-web {
+  left: 42% !important;
+  top: 54% !important;
+}
+
+.srv-route-edge-allowed {
+  right: 20% !important;
+  top: 38% !important;
+}
+
+.srv-route-edge-blocked {
+  right: 17% !important;
+  top: 70% !important;
+}
+
+/* Slightly reduce the endpoint labels so their text never collides. */
+.srv-route-origin .srv-route-label,
+.srv-route-blocked .srv-route-label {
+  max-width: 132px;
+}
+
+.srv-route-origin .srv-route-label span,
+.srv-route-blocked .srv-route-label span {
+  white-space: normal;
+}
+
+@media (max-width: 1180px) and (min-width: 761px) {
+  .srv-home-hero-visual-stage {
+    width: calc(100% - 18px) !important;
+    margin: 0 18px 0 0 !important;
+    transform: none;
+  }
+
+  .srv-route-vps {
+    left: 51% !important;
+  }
+
+  .srv-route-citadel {
+    left: 53% !important;
+  }
+
+  .srv-route-origin {
+    right: 2% !important;
+  }
+
+  .srv-route-blocked {
+    right: 2% !important;
+  }
+
+  .srv-route-edge-rdp {
+    left: 41% !important;
+  }
+
+  .srv-route-edge-web {
+    left: 40% !important;
+  }
+
+  .srv-route-edge-allowed {
+    right: 17% !important;
+  }
+
+  .srv-route-edge-blocked {
+    right: 14% !important;
+  }
+}
