@@ -1,10 +1,8 @@
 'use client';
 
-// Cinematic infrastructure scene composed from Joly UI's Animated Beam / BeamNode
+// Freeform infrastructure scene built from Joly UI's Animated Beam / BeamNode
 // primitives plus Joly UI's dotted world-map asset.
-// Sources:
-// - https://github.com/Johuniq/jolyui/tree/main/docs/registry/default/ui/animated-beam.tsx
-// - https://github.com/Johuniq/jolyui/blob/main/docs/public/map-dark.svg
+// Citadel is intentionally shown only in the HTTP/S application path.
 import {
   Bot,
   Cloud,
@@ -62,7 +60,6 @@ export function HomeProductFlow() {
 
   const browserRef = React.useRef<HTMLDivElement>(null);
   const mobileRef = React.useRef<HTMLDivElement>(null);
-  const apiRef = React.useRef<HTMLDivElement>(null);
   const cloudflareRef = React.useRef<HTMLDivElement>(null);
   const citadelRef = React.useRef<HTMLDivElement>(null);
   const originRef = React.useRef<HTMLDivElement>(null);
@@ -76,7 +73,7 @@ export function HomeProductFlow() {
     <BeamContainer
       ref={sceneRef}
       className="srv-cinematic-scene"
-      aria-label="StealthRDP infrastructure visual showing Citadel protecting HTTP and HTTPS web traffic separately from VPS compute"
+      aria-label="StealthRDP infrastructure visual: HTTP and HTTPS traffic passes through Cloudflare and Citadel before the web origin, while VPS compute remains a separate path"
     >
       <img
         className="srv-cinematic-map"
@@ -86,8 +83,6 @@ export function HomeProductFlow() {
       />
 
       <div className="srv-cinematic-grid" aria-hidden="true" />
-      <div className="srv-cinematic-glow srv-cinematic-glow-blue" aria-hidden="true" />
-      <div className="srv-cinematic-glow srv-cinematic-glow-green" aria-hidden="true" />
 
       <div className="srv-cinematic-kicker">
         <span>VPS hosting</span>
@@ -99,7 +94,7 @@ export function HomeProductFlow() {
 
       <div className="srv-cinematic-lane-title srv-cinematic-lane-web">
         <span className="srv-cinematic-dot" data-tone="green" />
-        Web application traffic
+        Protected web traffic
       </div>
 
       <div className="srv-cinematic-lane-title srv-cinematic-lane-vps">
@@ -121,13 +116,6 @@ export function HomeProductFlow() {
         <SceneLabel title="Web apps" meta="HTTPS requests" />
       </div>
 
-      <div className="srv-cinematic-endpoint srv-cinematic-api">
-        <BeamNode ref={apiRef} className="srv-cinematic-node srv-cinematic-node-client">
-          <Globe2 className="size-5" aria-hidden="true" />
-        </BeamNode>
-        <SceneLabel title="Public web" meta="Global traffic" />
-      </div>
-
       <div className="srv-cinematic-endpoint srv-cinematic-cloudflare">
         <BeamNode ref={cloudflareRef} className="srv-cinematic-node srv-cinematic-node-cloud">
           <Cloud className="size-6" aria-hidden="true" />
@@ -137,7 +125,6 @@ export function HomeProductFlow() {
 
       <div className="srv-cinematic-citadel">
         <div className="srv-cinematic-shield-rings" aria-hidden="true">
-          <span />
           <span />
           <span />
         </div>
@@ -209,8 +196,8 @@ export function HomeProductFlow() {
         containerRef={sceneRef}
         fromRef={browserRef}
         toRef={cloudflareRef}
-        duration={3.4}
-        curvature={-0.12}
+        duration={5.2}
+        curvature={-0.08}
         gradientStartColor="#22d3ee"
         gradientStopColor="#3b82f6"
       />
@@ -218,49 +205,29 @@ export function HomeProductFlow() {
         containerRef={sceneRef}
         fromRef={mobileRef}
         toRef={cloudflareRef}
-        duration={3.6}
-        delay={0.25}
-        curvature={0}
+        duration={5.6}
+        delay={0.7}
+        curvature={0.08}
         gradientStartColor="#22d3ee"
         gradientStopColor="#3b82f6"
       />
-      <AnimatedBeam
-        containerRef={sceneRef}
-        fromRef={apiRef}
-        toRef={cloudflareRef}
-        duration={3.8}
-        delay={0.5}
-        curvature={0.12}
-        gradientStartColor="#22d3ee"
-        gradientStopColor="#3b82f6"
-      />
-
       <AnimatedBeam
         containerRef={sceneRef}
         fromRef={cloudflareRef}
         toRef={citadelRef}
-        duration={3}
-        delay={0.15}
+        duration={4.8}
+        delay={0.3}
+        pathWidth={1.8}
         gradientStartColor="#3b82f6"
         gradientStopColor="#22D46B"
       />
       <AnimatedBeam
         containerRef={sceneRef}
-        fromRef={cloudflareRef}
-        toRef={citadelRef}
-        duration={3.4}
-        delay={1.15}
-        pathWidth={1.5}
-        gradientStartColor="#ef4444"
-        gradientStopColor="#ef4444"
-      />
-      <AnimatedBeam
-        containerRef={sceneRef}
         fromRef={citadelRef}
         toRef={originRef}
-        duration={3}
-        delay={0.4}
-        pathWidth={2.4}
+        duration={4.8}
+        delay={0.55}
+        pathWidth={2}
         gradientStartColor="#22D46B"
         gradientStopColor="#00F0FF"
       />
@@ -269,8 +236,8 @@ export function HomeProductFlow() {
         containerRef={sceneRef}
         fromRef={remoteRef}
         toRef={vpsRef}
-        duration={3.5}
-        delay={0.2}
+        duration={5.6}
+        delay={0.35}
         gradientStartColor="#38bdf8"
         gradientStopColor="#2845d6"
       />
@@ -278,9 +245,9 @@ export function HomeProductFlow() {
         containerRef={sceneRef}
         fromRef={vpsRef}
         toRef={windowsRef}
-        duration={3.6}
-        delay={0.45}
-        curvature={-0.2}
+        duration={5.8}
+        delay={0.75}
+        curvature={-0.18}
         gradientStartColor="#2845d6"
         gradientStopColor="#3b82f6"
       />
@@ -288,9 +255,9 @@ export function HomeProductFlow() {
         containerRef={sceneRef}
         fromRef={vpsRef}
         toRef={linuxRef}
-        duration={3.6}
-        delay={0.7}
-        curvature={0.2}
+        duration={5.8}
+        delay={1.05}
+        curvature={0.18}
         gradientStartColor="#2845d6"
         gradientStopColor="#22d3ee"
       />

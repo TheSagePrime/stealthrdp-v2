@@ -142,19 +142,6 @@ const AnimatedBeam = ({
           <stop offset="100%" stopColor={gradientStopColor} stopOpacity="0" />
         </linearGradient>
 
-        <filter
-          id={`beam-glow-${uniqueId}`}
-          x="-50%"
-          y="-50%"
-          width="200%"
-          height="200%"
-        >
-          <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur" />
-          <feMerge>
-            <feMergeNode in="blur" />
-            <feMergeNode in="SourceGraphic" />
-          </feMerge>
-        </filter>
       </defs>
 
       <path
@@ -171,10 +158,9 @@ const AnimatedBeam = ({
         strokeWidth={pathWidth}
         strokeLinecap="round"
         fill="none"
-        filter={`url(#beam-glow-${uniqueId})`}
         className="animated-beam-path"
         style={{
-          strokeDasharray: '20 1000',
+          strokeDasharray: '110 1000',
           strokeDashoffset: reverse ? '-1000' : '1000',
           animation: `beam-dash ${duration}s linear infinite`,
           animationDelay: `${delay}s`,
