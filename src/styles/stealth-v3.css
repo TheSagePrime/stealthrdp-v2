@@ -13930,3 +13930,459 @@ a.srv-help-tree-heading:hover {
     animation: none !important;
   }
 }
+
+/* Homepage infra illustration v4: transparent, mixed components ---------- */
+@keyframes srv-joly-orbit {
+  from {
+    transform: rotate(0deg) translateX(var(--radius)) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(var(--radius)) rotate(-360deg);
+  }
+}
+
+.orbiting-container {
+  position: relative;
+}
+
+.orbiting-circle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: calc(var(--icon-size) / -2);
+  margin-top: calc(var(--icon-size) / -2);
+  animation: srv-joly-orbit var(--duration) linear infinite;
+  animation-delay: var(--delay);
+  will-change: transform;
+}
+
+.srv-hero-net {
+  position: relative;
+  min-height: 500px;
+  overflow: visible;
+  color: var(--foreground);
+}
+
+.srv-hero-net-map {
+  position: absolute;
+  z-index: 0;
+  left: -16%;
+  top: 12%;
+  width: 66%;
+  max-width: none;
+  opacity: .075;
+  pointer-events: none;
+  filter: saturate(.55) contrast(.95);
+  mix-blend-mode: multiply;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 50%, #000 24%, rgba(0,0,0,.8) 52%, transparent 80%);
+  mask-image: radial-gradient(ellipse at 50% 50%, #000 24%, rgba(0,0,0,.8) 52%, transparent 80%);
+}
+
+.srv-hero-net-users,
+.srv-hero-net-globe-wrap,
+.srv-hero-net-vps,
+.srv-hero-net-cloudflare,
+.srv-hero-net-citadel,
+.srv-hero-net-origin {
+  position: absolute;
+  z-index: 6;
+}
+
+.srv-hero-net-users {
+  left: 0;
+  top: 43%;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.srv-hero-net-devices {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  color: #2845d6;
+}
+
+.srv-hero-net-devices svg:first-child {
+  width: 30px;
+  height: 30px;
+}
+
+.srv-hero-net-devices svg:last-child {
+  width: 19px;
+  height: 19px;
+  transform: translateY(-1px);
+}
+
+.srv-hero-net-globe-wrap {
+  left: 19%;
+  top: 32%;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+}
+
+.srv-hero-net-globe {
+  width: 176px;
+  height: 176px;
+  color: #6ea4e8;
+}
+
+.srv-hero-net-globe-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 94px;
+  height: 94px;
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(40, 69, 214, .24);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .62);
+  box-shadow:
+    0 18px 40px -30px rgba(40, 69, 214, .7),
+    inset 0 0 0 8px rgba(40, 69, 214, .025);
+}
+
+.srv-hero-net-globe-core img {
+  position: absolute;
+  inset: 0 auto auto 50%;
+  width: 155%;
+  max-width: none;
+  transform: translate(-50%, 7%);
+  opacity: .16;
+  filter: saturate(.55);
+}
+
+.srv-hero-net-globe-core > svg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  transform: translate(-50%, -50%);
+  color: #2845d6;
+}
+
+.srv-hero-net-orbit-dot {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background: #00a8ff;
+  box-shadow: 0 0 0 4px rgba(0,168,255,.08), 0 0 10px rgba(0,168,255,.45);
+}
+
+.srv-hero-net-orbit-dot-soft {
+  background: #2845d6;
+  box-shadow: 0 0 0 4px rgba(40,69,214,.07);
+}
+
+.srv-hero-net-vps {
+  left: 53%;
+  top: 12%;
+  display: flex;
+  align-items: center;
+  gap: 17px;
+}
+
+.srv-hero-net-server {
+  position: relative;
+  width: 116px;
+  height: 126px;
+  perspective: 650px;
+}
+
+.srv-hero-net-server-plane {
+  position: absolute;
+  left: 12px;
+  width: 88px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(40,69,214,.18);
+  border-radius: 13px;
+  background: rgba(255,255,255,.68);
+  box-shadow: 0 16px 26px -24px rgba(40,69,214,.75);
+  transform: rotateX(56deg) rotateZ(-7deg);
+}
+
+.srv-hero-net-server-plane svg {
+  width: 31px;
+  height: 31px;
+  color: #2845d6;
+}
+
+.srv-hero-net-server-back {
+  top: 7px;
+  opacity: .45;
+}
+
+.srv-hero-net-server-mid {
+  top: 29px;
+  opacity: .7;
+}
+
+.srv-hero-net-server-front {
+  top: 52px;
+  border-color: rgba(0,168,255,.28);
+  opacity: 1;
+}
+
+.srv-hero-net-vps-copy {
+  display: grid;
+  gap: 8px;
+}
+
+.srv-hero-net-os {
+  display: flex;
+  gap: 12px;
+}
+
+.srv-hero-net-os span {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #53647e;
+  font-size: 8px;
+  font-weight: 750;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+
+.srv-hero-net-os img {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
+
+.srv-hero-net-cloudflare {
+  left: 45%;
+  bottom: 15%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.srv-hero-net-cloudflare > svg {
+  width: 38px;
+  height: 38px;
+  color: #4f7ef7;
+  stroke-width: 1.5;
+}
+
+.srv-hero-net-citadel {
+  left: 67%;
+  bottom: 6%;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
+
+.srv-hero-net-shields {
+  position: relative;
+  width: 96px;
+  height: 104px;
+}
+
+.srv-hero-net-shields svg {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 72px;
+  height: 72px;
+  transform: translate(-50%, -50%);
+  color: #2845d6;
+  fill: rgba(40, 69, 214, .025);
+  stroke-width: 1.45;
+}
+
+.srv-hero-net-shields svg:nth-child(1) {
+  transform: translate(-66%, -50%) scale(.93);
+  opacity: .18;
+}
+
+.srv-hero-net-shields svg:nth-child(2) {
+  transform: translate(-50%, -50%) scale(1.08);
+  opacity: .34;
+}
+
+.srv-hero-net-shields svg:nth-child(3) {
+  color: #00a8ff;
+  filter: drop-shadow(0 9px 16px rgba(0,168,255,.12));
+}
+
+.srv-hero-net-threats {
+  display: flex;
+  gap: 8px;
+  transform: translateY(-2px);
+}
+
+.srv-hero-net-threats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  color: #b64747;
+  font-size: 7px;
+  font-weight: 750;
+  letter-spacing: .055em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.srv-hero-net-threats svg {
+  width: 10px;
+  height: 10px;
+  stroke-width: 2;
+}
+
+.srv-hero-net-origin {
+  right: -2%;
+  bottom: 14%;
+  display: grid;
+  justify-items: center;
+  gap: 9px;
+}
+
+.srv-hero-net-browser {
+  width: 112px;
+  height: 84px;
+  overflow: hidden;
+  border: 1px solid rgba(40,69,214,.24);
+  border-radius: 14px;
+  background: rgba(255,255,255,.5);
+  box-shadow: 0 18px 34px -30px rgba(40,69,214,.65);
+}
+
+.srv-hero-net-browser-top {
+  height: 18px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 8px;
+  border-bottom: 1px solid rgba(40,69,214,.12);
+}
+
+.srv-hero-net-browser-top i {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: #77a3e7;
+}
+
+.srv-hero-net-browser-body {
+  position: relative;
+  height: calc(100% - 18px);
+}
+
+.srv-hero-net-browser-body b {
+  position: absolute;
+  left: 12px;
+  top: 13px;
+  width: 38px;
+  height: 31px;
+  border-radius: 7px;
+  background: linear-gradient(135deg, rgba(0,168,255,.19), rgba(40,69,214,.08));
+  border: 1px solid rgba(0,168,255,.15);
+}
+
+.srv-hero-net-browser-body span {
+  position: absolute;
+  right: 12px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(76,99,133,.26);
+}
+
+.srv-hero-net-browser-body span:nth-of-type(1) {
+  top: 18px;
+  width: 37px;
+}
+
+.srv-hero-net-browser-body span:nth-of-type(2) {
+  top: 29px;
+  width: 27px;
+}
+
+.srv-hero-net-label {
+  display: grid;
+  gap: 2px;
+}
+
+.srv-hero-net-label strong {
+  color: #20314c;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .055em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.srv-hero-net-label span {
+  color: #71819a;
+  font-size: 9px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.srv-hero-net-caption {
+  position: absolute;
+  z-index: 5;
+  color: #8290a6;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: .16em;
+}
+
+.srv-hero-net-caption-vps {
+  left: 52%;
+  top: 6%;
+}
+
+.srv-hero-net-caption-web {
+  left: 45%;
+  bottom: 31%;
+}
+
+@media (min-width: 1100px) {
+  .srv-home-hero-visual-stage {
+    width: calc(100% + 104px);
+    margin-right: -104px;
+    margin-left: -10px;
+  }
+}
+
+@media (max-width: 1180px) and (min-width: 761px) {
+  .srv-home-hero-visual-stage {
+    width: 100%;
+    margin: 0;
+  }
+
+  .srv-hero-net {
+    min-height: 455px;
+  }
+
+  .srv-hero-net-origin {
+    right: 0;
+  }
+
+  .srv-hero-net-label span {
+    display: none;
+  }
+
+  .srv-hero-net-threats span:nth-child(3) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbiting-circle {
+    animation: none !important;
+  }
+}
