@@ -8,7 +8,6 @@ import {
   Fingerprint,
   Funnel,
   Gauge,
-  Globe,
   Lock,
   Pulse,
   ShieldCheck,
@@ -27,6 +26,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { CitadelTelemetryPreview } from '@/components/site/CitadelTelemetryPreview';
+import { CitadelMotionScene } from '@/components/site/CitadelMotionScene';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
 import { createPageMetadata } from '@/libs/seo/metadata';
@@ -171,41 +171,7 @@ export default function CitadelPage() {
             </div>
           </div>
 
-          <Card className="srv-citadel-v2-hero-console">
-            <CardHeader>
-              <div>
-                <span className="srv-citadel-v2-live"><i /> Protected</span>
-                <CardTitle>shop.example.com</CardTitle>
-              </div>
-              <Badge variant="outline">Balanced</Badge>
-            </CardHeader>
-            <CardContent>
-              <div className="srv-citadel-v2-request">
-                <Globe size={18} aria-hidden="true" />
-                <span>Internet</span>
-                <ArrowRight size={15} aria-hidden="true" />
-                <Cloud size={18} aria-hidden="true" />
-                <span>Edge</span>
-                <ArrowRight size={15} aria-hidden="true" />
-                <ShieldCheck size={18} weight="fill" aria-hidden="true" />
-                <strong>Citadel</strong>
-                <ArrowRight size={15} aria-hidden="true" />
-                <Database size={18} aria-hidden="true" />
-                <span>Origin</span>
-              </div>
-
-              <div className="srv-citadel-v2-hero-events">
-                <div><span>GET /</span><Badge variant="outline">Allow</Badge></div>
-                <div><span>POST /login</span><Badge variant="outline">Interaction</Badge></div>
-                <div><span>GET /api/auth</span><Badge variant="outline">Rate limited</Badge></div>
-                <div><span>GET /health</span><Badge variant="outline">Allowlisted</Badge></div>
-              </div>
-            </CardContent>
-            <CardFooter>
-              <span>Product interface concept</span>
-              <span>Illustrative request flow</span>
-            </CardFooter>
-          </Card>
+          <CitadelMotionScene />
         </div>
       </section>
 
