@@ -8,7 +8,7 @@ import {
   Monitor,
   Network,
   ShieldCheck,
-  TerminalSquare,
+  Terminal,
 } from 'lucide-react';
 import React from 'react';
 
@@ -69,7 +69,7 @@ export function HomeProductFlow() {
             ref={linuxRef}
             className="size-12 border-2 border-cyan-500/20 bg-cyan-500/5"
           >
-            <TerminalSquare className="size-5 text-cyan-600" aria-hidden="true" />
+            <Terminal className="size-5 text-cyan-600" aria-hidden="true" />
           </BeamNode>
           <span className="srv-product-beam-service">Linux VPS</span>
         </div>
