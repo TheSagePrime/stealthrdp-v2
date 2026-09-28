@@ -16,7 +16,6 @@ import { SiAlpinelinux, SiFreebsd, SiRockylinux } from '@icons-pack/react-simple
 
 import { Section } from '@/components/launchui/section';
 import { HomePricing } from '@/components/site/HomePricing';
-import { HomeProductFlow } from '@/components/site/HomeProductFlow';
 import { ChromaticTextReveal } from '@/components/motion/chromatic-text-reveal';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -129,7 +128,7 @@ export default async function HomePage({ params }: Props) {
       ))}
 
       <Section className="srv-home-hero py-14 sm:py-18 lg:py-20">
-        <div className="srv-home-hero-layout mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
+        <div className="srv-home-hero-layout mx-auto max-w-7xl">
           <div className="srv-home-hero-copy flex flex-col items-start gap-6">
             <Badge variant="outline" className="srv-home-hero-badge">Windows & Linux VPS · Instant setup</Badge>
 
@@ -202,9 +201,6 @@ export default async function HomePage({ params }: Props) {
             </div>
           </div>
 
-          <div className="srv-home-hero-visual-stage">
-            <HomeProductFlow />
-          </div>
         </div>
       </Section>
 
