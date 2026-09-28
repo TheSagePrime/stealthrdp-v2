@@ -6,6 +6,7 @@ import {
   GlobeHemisphereWest,
   HardDrive,
   Headset,
+  Lightning,
   ShieldCheck,
 } from '@phosphor-icons/react/dist/ssr';
 import { setRequestLocale } from 'next-intl/server';
