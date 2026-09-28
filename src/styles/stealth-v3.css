@@ -16255,3 +16255,24 @@ a.srv-help-tree-heading:hover {
     padding: 0 !important;
   }
 }
+
+
+/* Product separation: VPS and Citadel are independent products. ----------- */
+.srv-product-flow {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+
+.srv-product-node:first-child,
+.srv-product-node:last-child {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+
+@media (max-width: 720px) {
+  .srv-product-flow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+}

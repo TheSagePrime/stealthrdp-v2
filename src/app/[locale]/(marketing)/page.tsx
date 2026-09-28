@@ -338,11 +338,11 @@ export default async function HomePage({ params }: Props) {
             <p className="text-xs font-semibold uppercase tracking-widest text-primary">
               StealthRDP products
             </p>
-            <h2>Run the workload. Protect the origin.</h2>
+            <h2>Choose the product your workload needs.</h2>
             <p>
-              Hosting and Layer 7 DDoS protection are two parts of the same stack. Start with
-              the machine, then add Citadel when HTTP/HTTPS attack traffic needs to be filtered
-              before it reaches the origin.
+              Deploy a Windows or Linux VPS for compute, or route an existing HTTP/HTTPS
+              application through Citadel for Layer 7 protection. They are separate products
+              and can be used independently.
             </p>
             <div className="srv-products-actions">
               <Button asChild>
@@ -357,7 +357,7 @@ export default async function HomePage({ params }: Props) {
             </div>
           </div>
 
-          <div className="srv-product-flow" aria-label="StealthRDP product stack">
+          <div className="srv-product-flow" aria-label="StealthRDP products">
             <Link href="/plans" className="srv-product-node" data-tone="hosting">
               <span className="srv-product-node-icon">
                 <HardDrive aria-hidden="true" weight="fill" />
@@ -370,12 +370,6 @@ export default async function HomePage({ params }: Props) {
                 <ArrowRight aria-hidden="true" />
               </span>
             </Link>
-
-            <div className="srv-product-connector" aria-hidden="true">
-              <span />
-              <em>add protection</em>
-              <span />
-            </div>
 
             <Link href="/citadel" className="srv-product-node srv-product-node-protection" data-tone="protection">
               <span className="srv-product-node-icon">
