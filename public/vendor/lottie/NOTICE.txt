@@ -1,0 +1,29 @@
+Third-party motion assets used by the StealthRDP homepage preview.
+
+1) Lottie Web player
+Source: https://github.com/airbnb/lottie-web
+File: build/player/lottie_light.min.js
+License: MIT
+Copyright (c) 2015 Bodymovin
+
+2) Globe Lottie animation
+Source: https://github.com/csivitu/Gravitas
+File: lottie/globe.json
+License: MIT
+Copyright (c) 2020 Computer Society of India - VIT University
+
+3) Server Lottie animation
+Source: https://github.com/2002Bishwajeet/no_signal
+File: assets/lottieassets/server.json
+License: MIT
+Copyright (c) [2022] [Bishwajeet Parhi]
+
+MIT License permission notice:
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to inclusion of the applicable copyright and permission notices.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.
