@@ -31,13 +31,6 @@ type Feature = {
   meta: string;
 };
 
-const sharedFeatures: Feature[] = [
-  { icon: Cpu, title: 'High performance', meta: 'Modern server CPUs' },
-  { icon: Database, title: 'NVMe storage', meta: 'Fast local storage' },
-  { icon: Network, title: 'High bandwidth', meta: 'Global connectivity' },
-  { icon: MapPin, title: 'Multiple locations', meta: 'USA · Europe' },
-];
-
 const modeFeature: Record<VpsMode, Feature> = {
   windows: {
     icon: Monitor,
@@ -64,12 +57,12 @@ export function VpsMotionShowcase() {
   const featureFourRef = React.useRef<HTMLSpanElement>(null);
   const featureFiveRef = React.useRef<HTMLSpanElement>(null);
 
-  const features = [
-    sharedFeatures[0],
-    sharedFeatures[1],
-    sharedFeatures[2],
+  const features: Feature[] = [
+    { icon: Cpu, title: 'High performance', meta: 'Modern server CPUs' },
+    { icon: Database, title: 'NVMe storage', meta: 'Fast local storage' },
+    { icon: Network, title: 'High bandwidth', meta: 'Global connectivity' },
     modeFeature[mode],
-    sharedFeatures[3],
+    { icon: MapPin, title: 'Multiple locations', meta: 'USA · Europe' },
   ];
   const featureRefs = [
     featureOneRef,
