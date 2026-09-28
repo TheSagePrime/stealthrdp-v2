@@ -1,6 +1,7 @@
 'use client';
 
 import { ArrowClockwise, ArrowUpRight, Check, CheckCircle, Cpu, GlobeHemisphereWest, HardDrives, Key, Lightning, Monitor, TerminalWindow } from '@phosphor-icons/react';
+import { SiteFeatureMark } from '@/components/site/SiteFeatureMark';
 import { useEffect, useId, useRef, useState } from 'react';
 import styles from './VpsMotionShowcase.module.css';
 
@@ -82,11 +83,11 @@ export function VpsMotionShowcase({ className = '', productBaseUrl = '', reduceM
         </div>
 
         <div className={`${styles.annotation} ${styles.compute}`}>
-          <Cpu size={24} weight="duotone" aria-hidden="true" />
+          <SiteFeatureMark tone="brand" size="sm" className={styles.annotationMark}><Cpu size={20} weight="duotone" aria-hidden="true" /></SiteFeatureMark>
           <div><strong>Dedicated resources</strong><span>Room to do more.</span></div>
         </div>
         <div className={`${styles.annotation} ${styles.storage}`}>
-          <HardDrives size={24} weight="duotone" aria-hidden="true" />
+          <SiteFeatureMark tone="accent" size="sm" className={styles.annotationMark}><HardDrives size={20} weight="duotone" aria-hidden="true" /></SiteFeatureMark>
           <div><strong>NVMe storage</strong><span>Built for speed.</span></div>
         </div>
 
