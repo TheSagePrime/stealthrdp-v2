@@ -3,7 +3,6 @@
 import {
   Cpu,
   Database,
-  Globe2,
   MapPin,
   Monitor,
   Network,
@@ -19,6 +18,10 @@ import {
   BeamContainer,
 } from '@/components/ui/animated-beam';
 import { LottieAnimation } from '@/components/ui/lottie-animation';
+import {
+  OrbitingCircles,
+  OrbitingCirclesContainer,
+} from '@/components/ui/orbiting-circle';
 
 type VpsMode = 'windows' | 'linux';
 
@@ -73,7 +76,7 @@ export function VpsMotionShowcase() {
   return (
     <BeamContainer
       ref={sceneRef}
-      className="srv-vps-motion srv-vps-motion-lottie"
+      className="srv-vps-motion srv-vps-motion-refined"
       aria-label="Animated StealthRDP VPS network showing access from your device through the global network to a Windows or Linux VPS."
     >
       <img
@@ -113,50 +116,63 @@ export function VpsMotionShowcase() {
         </div>
       </div>
 
-      <div className="srv-vps-lottie-globe-wrap">
-        <div ref={globeRef} className="srv-vps-lottie-globe-anchor">
-          <LottieAnimation
-            src="/vendor/lottie/globe.json"
-            className="srv-vps-lottie-globe"
-            speed={0.62}
-          />
-          <span className="srv-vps-lottie-orbit srv-vps-lottie-orbit-a" aria-hidden="true" />
-          <span className="srv-vps-lottie-orbit srv-vps-lottie-orbit-b" aria-hidden="true" />
-          <span className="srv-vps-lottie-node srv-vps-lottie-node-a" aria-hidden="true" />
-          <span className="srv-vps-lottie-node srv-vps-lottie-node-b" aria-hidden="true" />
-        </div>
+      <div className="srv-vps-refined-globe-wrap">
+        <OrbitingCirclesContainer
+          ref={globeRef}
+          className="srv-vps-refined-globe"
+          pathRadii={[76, 102]}
+        >
+          <div className="srv-vps-refined-globe-core" aria-hidden="true">
+            <img src="/vendor/joly/map-dark.svg" alt="" />
+          </div>
+
+          <OrbitingCircles radius={76} duration={20} delay={2} iconSize={7}>
+            <span className="srv-vps-refined-dot" />
+          </OrbitingCircles>
+          <OrbitingCircles
+            radius={102}
+            duration={28}
+            delay={10}
+            reverse
+            iconSize={6}
+          >
+            <span className="srv-vps-refined-dot srv-vps-refined-dot-secondary" />
+          </OrbitingCircles>
+        </OrbitingCirclesContainer>
+
         <div className="srv-vps-motion-globe-label">
           <strong>Global network</strong>
           <span>Low latency · High speed</span>
         </div>
       </div>
 
-      <div className="srv-vps-lottie-server-wrap">
-        <div ref={serverRef} className="srv-vps-lottie-server-anchor">
+      <div className="srv-vps-refined-server-wrap">
+        <div ref={serverRef} className="srv-vps-refined-server-anchor">
           <motion.div
-            className="srv-vps-lottie-server-float"
-            animate={{ y: [0, -5, 0] }}
+            className="srv-vps-refined-server-float"
+            animate={{ y: [0, -4, 0] }}
             transition={{
-              duration: 6.5,
+              duration: 6.4,
               ease: 'easeInOut',
               repeat: Number.POSITIVE_INFINITY,
             }}
           >
             <LottieAnimation
               src="/vendor/lottie/server.json"
-              className="srv-vps-lottie-server"
-              speed={0.78}
+              className="srv-vps-refined-server"
+              speed={0.72}
             />
-            <div className="srv-vps-lottie-os-mark">
+
+            <div className="srv-vps-refined-os-mark">
               <AnimatePresence mode="wait" initial={false}>
                 <motion.img
                   key={mode}
                   src={mode === 'windows' ? '/brand/windows.svg' : '/brand/ubuntu.svg'}
                   alt=""
-                  initial={{ opacity: 0, scale: 0.82, rotate: -5 }}
-                  animate={{ opacity: 1, scale: 1, rotate: 0 }}
-                  exit={{ opacity: 0, scale: 0.82, rotate: 5 }}
-                  transition={{ duration: 0.2 }}
+                  initial={{ opacity: 0, scale: 0.86 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.86 }}
+                  transition={{ duration: 0.18 }}
                 />
               </AnimatePresence>
             </div>
@@ -209,32 +225,29 @@ export function VpsMotionShowcase() {
         })}
       </div>
 
-      <div className="srv-vps-lottie-globe-fallback" aria-hidden="true">
-        <Globe2 />
-      </div>
-
       <AnimatedBeam
         containerRef={sceneRef}
         fromRef={userRef}
         toRef={globeRef}
-        curvature={28}
-        duration={6.8}
+        curvature={24}
+        duration={6.6}
         pathColor="#8fb9e8"
-        pathOpacity={0.18}
+        pathOpacity={0.2}
         pathWidth={1.15}
         gradientStartColor="#2845d6"
         gradientStopColor="#00a8ff"
       />
+
       <AnimatedBeam
         containerRef={sceneRef}
         fromRef={globeRef}
         toRef={serverRef}
-        curvature={35}
-        delay={0.3}
-        duration={6.2}
+        curvature={34}
+        delay={0.25}
+        duration={6}
         pathColor="#87b8e9"
-        pathOpacity={0.2}
-        pathWidth={1.45}
+        pathOpacity={0.22}
+        pathWidth={1.4}
         gradientStartColor="#00a8ff"
         gradientStopColor="#2845d6"
       />
@@ -245,13 +258,13 @@ export function VpsMotionShowcase() {
           containerRef={sceneRef}
           fromRef={serverRef}
           toRef={featureRef}
-          curvature={(index - 2) * 15}
-          delay={0.35 + index * 0.2}
-          duration={7 + index * 0.3}
+          curvature={(index - 2) * 13}
+          delay={0.3 + index * 0.2}
+          duration={6.8 + index * 0.28}
           pathColor="#9fc3e7"
-          pathOpacity={0.11}
+          pathOpacity={0.12}
           pathWidth={0.8}
-          startXOffset={92}
+          startXOffset={78}
           endXOffset={-4}
           dotted
           dotSpacing={9}
