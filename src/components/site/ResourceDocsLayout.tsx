@@ -1,11 +1,13 @@
 import type { ReactNode } from 'react';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
-import { resourcePageTree } from '@/lib/stealth/resource-tree';
+import { guidePageTree, productDocsPageTree } from '@/lib/stealth/resource-tree';
 
-export function ResourceDocsLayout({ children }: { children: ReactNode }) {
+type ResourceTree = typeof guidePageTree | typeof productDocsPageTree;
+
+export function ResourceDocsLayout({ children, tree }: { children: ReactNode; tree: ResourceTree }) {
   return (
     <DocsLayout
-      tree={resourcePageTree}
+      tree={tree}
       nav={{ enabled: false }}
       searchToggle={{ enabled: false }}
       themeSwitch={{ enabled: false }}
