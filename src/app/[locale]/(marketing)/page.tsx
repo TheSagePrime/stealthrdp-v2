@@ -11,7 +11,7 @@ import { setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
 
 import CTA from '@/components/launchui/cta';
-import Hero from '@/components/launchui/hero';
+import { HomeHero } from '@/components/site/HomeHero';
 import Items from '@/components/launchui/items';
 import { Section } from '@/components/launchui/section';
 import Stats from '@/components/launchui/stats';
@@ -106,40 +106,7 @@ export default async function HomePage({ params }: Props) {
         />
       ))}
 
-      <Hero
-        className="pb-12 sm:pb-16"
-        badge={(
-          <Badge variant="outline" className="px-3 py-1.5">
-            Windows & Linux VPS · USA + Europe
-          </Badge>
-        )}
-        title={(
-          <>
-            Your server.
-            <span className="block text-primary">Live in 60 seconds.</span>
-          </>
-        )}
-        description="High-performance VPS infrastructure without the usual complexity. Choose the resources, region, and billing term — then deploy."
-        buttons={[
-          {
-            href: '#plans',
-            text: 'Choose your server',
-            variant: 'default',
-            iconRight: <ArrowRight className="size-4" aria-hidden="true" />,
-          },
-          {
-            href: 'https://dash.stealthrdp.com/submitticket.php',
-            text: 'Talk to sales',
-            variant: 'outline',
-          },
-        ]}
-        meta={(
-          <span>
-            From <strong className="font-semibold text-foreground">€4.59/mo</strong>
-            {' · '}Dedicated IPv4 · NVMe storage · 250 Mbps
-          </span>
-        )}
-      />
+      <HomeHero />
 
       <Stats
         className="border-y border-border bg-card/40 py-10 sm:py-12"
