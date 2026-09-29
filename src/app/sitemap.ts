@@ -12,11 +12,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const site = resolveSeoSite(config);
   /* dynamicPublic holds indexable one-off marketing pages (the Minecraft guide),
      so it belongs in the sitemap beside the fixed marketing routes. */
+  const redirectSources = new Set((config.url.legacyRedirects ?? []).map(item => item.from));
   const routes = [
     ...config.routes.publicMarketing,
     ...(config.routes.dynamicPublic ?? []),
     ...indexableDocPublicPaths,
-  ];
+  ].filter(route => !redirectSources.has(route));
   const routeEntries = routes.flatMap(route =>
     AllLocales.map(locale => ({
       url: canonicalUrlForPath(localizedPath(route, locale, config), site, config),
