@@ -9,11 +9,12 @@ export type ResolvedSiteUrl = {
 };
 
 const DEV_FALLBACK = 'http://localhost:3000';
+const PRODUCTION_FALLBACK = 'https://www.stealthrdp.com';
 
 /**
  * Resolves the canonical site origin from SITE_URL.
  * Development, test, and preview may fall back to localhost.
- * Production requires an explicit SITE_URL.
+ * Production falls back to the canonical StealthRDP origin when SITE_URL is absent.
  */
 export function resolveSiteUrl(
   env: NodeJS.Dict<string> = process.env,
@@ -23,10 +24,7 @@ export function resolveSiteUrl(
   const production = isProductionDeployEnv(deployEnv);
 
   if (!raw) {
-    if (production) {
-      throw new Error('SITE_URL is required in production');
-    }
-    return parseSiteUrl(DEV_FALLBACK);
+    return parseSiteUrl(production ? PRODUCTION_FALLBACK : DEV_FALLBACK, { production });
   }
 
   return parseSiteUrl(raw, { production });

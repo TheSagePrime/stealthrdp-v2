@@ -2,12 +2,12 @@ import { describe, expect, it } from 'vitest';
 import { resolveDeployEnv } from './env';
 
 describe('resolveDeployEnv', () => {
-  it('prefers APP_ENV over Vercel and Node values', () => {
+  it('prefers Vercel environment over APP_ENV when Vercel supplies one', () => {
     expect(resolveDeployEnv({
       APP_ENV: 'preview',
       VERCEL_ENV: 'production',
       NODE_ENV: 'development',
-    })).toBe('preview');
+    })).toBe('production');
   });
 
   it('falls back to development', () => {

@@ -25,13 +25,20 @@ function folder(name: string, entries: Entry[]) {
   };
 }
 
-const guides = blogArticles
+const guides = [
+  {
+    category: 'Remote Desktop',
+    title: 'RDP VPS Hosting: How to Choose a Remote Desktop VPS',
+    url: '/rdp-vps',
+  },
+  ...blogArticles
   .filter(article => article.slug !== 'vps-hosting-minecraft')
   .map(article => ({
     category: article.category,
     title: article.title,
     url: articlePath(article),
-  }));
+  })),
+];
 
 const docs = helpDocsArticles.map(article => ({
   category: article.category,

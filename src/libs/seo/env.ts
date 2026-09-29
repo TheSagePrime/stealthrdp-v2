@@ -2,12 +2,12 @@ export type DeployEnv = 'development' | 'test' | 'preview' | 'production';
 
 /**
  * Resolves one deploy environment for all SEO behavior.
- * Priority: APP_ENV → VERCEL_ENV → NODE_ENV → development.
+ * Priority: VERCEL_ENV → APP_ENV → NODE_ENV → development.
  */
 export function resolveDeployEnv(
   env: NodeJS.Dict<string> = process.env,
 ): DeployEnv {
-  const raw = env.APP_ENV || env.VERCEL_ENV || env.NODE_ENV || 'development';
+  const raw = env.VERCEL_ENV || env.APP_ENV || env.NODE_ENV || 'development';
   const value = raw.trim().toLowerCase();
 
   if (value === 'production' || value === 'prod') {

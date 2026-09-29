@@ -1,5 +1,4 @@
 import { sql } from 'drizzle-orm';
-import { db } from '@/libs/DB';
 
 export type ReadinessResponse = {
   status: 'ready' | 'not_ready';
@@ -8,7 +7,13 @@ export type ReadinessResponse = {
   };
 };
 
-const defaultProbe = () => db.execute(sql`select 1`);
+const defaultProbe = async () => {
+  if (!process.env.DATABASE_URL) {
+    throw new Error('DATABASE_URL is not configured');
+  }
+  const { db } = await import('@/libs/DB');
+  return db.execute(sql`select 1`);
+};
 let cached: { response: ReadinessResponse; expiresAt: number } | undefined;
 let inFlight: Promise<ReadinessResponse> | undefined;
 

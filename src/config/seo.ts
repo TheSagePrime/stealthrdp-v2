@@ -105,6 +105,6 @@ export const defaultSeoConfig: SeoConfig = {
     publicUtility: [...noindexDocPaths],
     privatePages: [],
     privateApis: [],
-    dynamicPublic: ['/vps-hosting-minecraft'],
+    dynamicPublic: ['/vps-hosting-minecraft', '/rdp-vps'],
   },
 };
