@@ -11,7 +11,7 @@ const osList = [
 ] as const;
 
 const deploySteps = [
-  'reserving dedicated vCPU',
+  'allocating virtual CPU capacity',
   'provisioning NVMe storage',
   'installing Windows Server 2022',
   'provisioning an isolated VM',
