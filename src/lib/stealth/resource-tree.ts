@@ -39,6 +39,23 @@ const docs = helpDocsArticles.map(article => ({
   url: `/docs/${docPublicSlug(article)}`,
 }));
 
+export const guidePageTree = {
+  name: 'VPS Guides',
+  children: [
+    { type: 'page' as const, name: 'All guides', url: '/blog' },
+    folder('Guides', guides),
+  ],
+};
+
+export const productDocsPageTree = {
+  name: 'Help Center',
+  children: [
+    { type: 'page' as const, name: 'Help Center home', url: '/docs' },
+    folder('Product documentation', docs),
+  ],
+};
+
+// Keep the combined tree available to resource hub views that need the full catalog.
 export const resourcePageTree = {
   name: 'StealthRDP resources',
   children: [
