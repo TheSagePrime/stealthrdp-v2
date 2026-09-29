@@ -3,7 +3,9 @@ import { RootProvider } from 'fumadocs-ui/provider/next';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import Script from 'next/script';
 import { routing } from '@/libs/I18nRouting';
+import { isProductionDeployEnv, resolveDeployEnv } from '@/libs/seo/env';
 import '@/styles/global.css';
 import '@/styles/surfaces.css';
 import '@/styles/stealth.css';
@@ -36,6 +38,7 @@ export default async function RootLayout(props: {
   const { locale } = await props.params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
+  const production = isProductionDeployEnv(resolveDeployEnv(process.env));
 
   return (
     <html lang={locale}>
@@ -45,6 +48,20 @@ export default async function RootLayout(props: {
             {props.children}
           </RootProvider>
         </NextIntlClientProvider>
+        {production ? (
+          <>
+            <Script id="stealthrdp-stape-gtm" strategy="afterInteractive">
+              {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s);j.async=true;j.src="https://sgtm.stealthrdp.com/2l3xebiqyzc.js?"+i;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','yw=Ch5ENj0vSDYwSUBGOjFcXhVHS19YRAEWXgkNFAgOERARHglfCg0I');`}
+            </Script>
+            <Script
+              id="stealthrdp-datafa"
+              src="https://datafa.st/js/script.js"
+              strategy="afterInteractive"
+              data-website-id="dfid_6O4WzLRhSgrGULypBOc8I"
+              data-domain="stealthrdp.com"
+            />
+          </>
+        ) : null}
       </body>
     </html>
   );
