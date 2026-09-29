@@ -16276,3 +16276,14 @@ a.srv-help-tree-heading:hover {
     gap: 14px;
   }
 }
+
+
+/* Citadel hero uses the source-branch composition: copy first, light flow below. */
+.srv-citadel-v2-hero-grid-solo {
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: 0 !important;
+}
+
+.srv-citadel-v2-hero-grid-solo .srv-citadel-v2-copy {
+  max-width: 820px;
+}

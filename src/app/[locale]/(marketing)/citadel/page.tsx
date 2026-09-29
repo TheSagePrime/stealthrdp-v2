@@ -26,7 +26,6 @@ import {
 } from '@/components/ui/card';
 import { CitadelTelemetryPreview } from '@/components/site/CitadelTelemetryPreview';
 import { CitadelFlow } from '@/components/site/citadel/CitadelFlow';
-import { CitadelMotionScene } from '@/components/site/CitadelMotionScene';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
 import { createPageMetadata } from '@/libs/seo/metadata';
@@ -144,7 +143,7 @@ export default function CitadelPage() {
       ))}
 
       <section className="srv-citadel-v2-hero">
-        <div className="sr-container srv-citadel-v2-hero-grid">
+        <div className="sr-container srv-citadel-v2-hero-grid srv-citadel-v2-hero-grid-solo">
           <div className="srv-citadel-v2-copy">
             <Badge variant="outline" className="srv-citadel-v2-eyebrow">
               <ShieldCheck size={14} weight="fill" aria-hidden="true" />
@@ -171,7 +170,6 @@ export default function CitadelPage() {
             </div>
           </div>
 
-          <CitadelMotionScene />
         </div>
       </section>
 
