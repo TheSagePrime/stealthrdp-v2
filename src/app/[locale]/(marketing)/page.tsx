@@ -16,8 +16,7 @@ import { SiAlpinelinux, SiFreebsd, SiRockylinux } from '@icons-pack/react-simple
 
 import { Section } from '@/components/launchui/section';
 import { HomePricing } from '@/components/site/HomePricing';
-import { VpsMotionShowcase } from '@/components/site/VpsMotionShowcase';
-import { ChromaticTextReveal } from '@/components/motion/chromatic-text-reveal';
+import { HomeHero } from '@/components/site/HomeHero';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { getSeoConfig } from '@/libs/seo/config';
@@ -128,85 +127,7 @@ export default async function HomePage({ params }: Props) {
         />
       ))}
 
-      <Section className="srv-home-hero py-14 sm:py-18 lg:py-20">
-        <div className="srv-home-hero-layout mx-auto max-w-7xl">
-          <div className="srv-home-hero-copy flex flex-col items-start gap-6">
-            <Badge variant="outline" className="srv-home-hero-badge">Windows & Linux VPS · Instant setup</Badge>
-
-            <div className="srv-home-hero-message grid gap-5">
-              <h1 className="srv-home-hero-title max-w-4xl text-5xl font-semibold leading-none tracking-tight text-balance sm:text-6xl lg:text-7xl">
-                <span className="srv-home-title-mobile">
-                  Windows &amp; Linux VPS.
-                  <strong>Live in 60 seconds.</strong>
-                </span>
-                <span className="srv-home-title-desktop">
-                  <span className="block">
-                    <ChromaticTextReveal
-                      className="srv-home-chromatic-title"
-                      prefix="Your"
-                      words={['server.', 'Windows VPS.', 'Linux VPS.']}
-                      colors={[
-                        'var(--primary)',
-                        'color-mix(in srgb, var(--primary) 66%, white)',
-                        'var(--primary)',
-                      ]}
-                      foregroundColor="var(--foreground)"
-                      duration={1.8}
-                      pauseDuration={2.1}
-                      startOnView={false}
-                      once={false}
-                      animateInitial={false}
-                    />
-                  </span>
-                  <span className="block text-primary">Live in 60 seconds.</span>
-                </span>
-              </h1>
-              <p className="srv-home-hero-lede max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
-                High-performance remote desktop and VPS infrastructure without the complexity.
-                Enterprise hardware, full administrative access, and a 99.9% uptime SLA.
-              </p>
-            </div>
-
-            <div className="srv-home-hero-actions flex flex-wrap gap-3">
-              <Button asChild size="lg">
-                <a href="#plans">
-                  Choose your server
-                  <ArrowRight className="size-4" aria-hidden="true" />
-                </a>
-              </Button>
-              <Button asChild size="lg" variant="outline">
-                <a href="https://dash.stealthrdp.com/submitticket.php">Ask a pre-sales question</a>
-              </Button>
-            </div>
-
-            <div className="srv-home-hero-meta flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted-foreground">
-              <span>Starting from <strong className="text-foreground">€4.59/month</strong></span>
-              <span>7-day money-back</span>
-              <span>No hidden fees</span>
-              <span>Cancel anytime</span>
-            </div>
-
-            <div className="srv-home-hero-proof grid w-full max-w-2xl grid-cols-3 overflow-hidden rounded-xl border border-border bg-card">
-              <div className="p-4 sm:p-5">
-                <strong className="block text-2xl font-semibold tracking-tight">10,000+</strong>
-                <span className="text-xs text-muted-foreground">Orders</span>
-              </div>
-              <div className="border-x border-border p-4 sm:p-5">
-                <strong className="block text-2xl font-semibold tracking-tight">60s</strong>
-                <span className="text-xs text-muted-foreground">Average deploy</span>
-              </div>
-              <div className="p-4 sm:p-5">
-                <strong className="block text-2xl font-semibold tracking-tight">99.9%</strong>
-                <span className="text-xs text-muted-foreground">Uptime SLA</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="srv-vps-showcase-stage">
-            <VpsMotionShowcase />
-          </div>
-        </div>
-      </Section>
+      <HomeHero />
 
       <section className="srv-os-band border-y border-border bg-card/35" aria-label="Supported operating systems">
         <div className="srv-home-wide srv-os-band-inner">
