@@ -33,7 +33,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
   const toc = articleHeadings(article.html).map(heading => ({
     title: heading.text,
     url: `#${heading.id}`,
-    depth: heading.level,
+    depth: heading.level ?? 2,
   }));
   const ordered = blogArticles.filter(item => item.slug !== 'vps-hosting-minecraft');
   const currentIndex = ordered.findIndex(item => item.slug === article.slug);

@@ -39,7 +39,7 @@ export default async function DocPageRoute({ params }: { params: Promise<{ slug:
   const toc = docHeadings(article.content, article.title).map(heading => ({
     title: heading.text,
     url: `#${heading.id}`,
-    depth: heading.level,
+    depth: heading.level ?? 2,
   }));
   const collection = helpCollectionForArticle(article);
   const ordered = orderedHelpArticles(helpDocsArticles);
