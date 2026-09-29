@@ -180,6 +180,11 @@
   --accent-hover: #1a2fae;
   --accent-press: #16279a;
   --accent-ink: #ffffff;
+  --citadel-canvas: #f5f8fd;
+  --citadel-surface: #ffffff;
+  --citadel-ink: #10182b;
+  --citadel-muted: #53647f;
+  --citadel-border: #dce6f3;
   --status-ok: #1d7f52;
   --status-warn: #8a5a06;
   --status-bad: #b3261e;

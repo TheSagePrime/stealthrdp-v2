@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
+import { CitadelFlow } from '@/components/site/citadel/CitadelFlow';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { getSeoConfig } from '@/libs/seo/config';
@@ -117,30 +118,21 @@ export default function CitadelPage() {
         </div>
       </section>
 
-      <section className="sr-section" aria-label="Citadel architecture">
+      <section className="sr-section" aria-labelledby="citadel-flow-title">
         <div className="sr-container">
           <div className="sr-section-head">
             <div>
-              <p className="sr-kicker">Architecture</p>
-              <h2 className="sr-section-title">One path: edge, decision layer, origin</h2>
+              <p className="sr-kicker">Request flow</p>
+              <h2 id="citadel-flow-title" className="sr-section-title">
+                Good traffic moves on. Bad traffic stops here.
+              </h2>
             </div>
-            <p>Every request flows through the same three stages, in order.</p>
+            <p>
+              Application-aware checks challenge suspicious requests before they
+              reach your origin, while legitimate visitors keep moving.
+            </p>
           </div>
-          <ol className="grid gap-6 md:grid-cols-3">
-            {[
-              { step: '01', title: 'Cloudflare', text: 'Network edge and DNS layer. Absorbs what the edge is built for.' },
-              { step: '02', title: 'Citadel decision layer', text: 'Application-aware checks: challenges, rates, lists, caching, and escalation.' },
-              { step: '03', title: 'Cache, then origin', text: 'Per-domain caching absorbs repeats; clean requests reach the origin.' },
-            ].map(item => (
-              <Card key={item.step} className="gap-2 p-8">
-                <span className="text-micro font-bold text-body-dim tabular-nums">
-                  {item.step}
-                </span>
-                <h3 className="text-heading-4 font-semibold text-body-text">{item.title}</h3>
-                <p className="text-small text-body-muted">{item.text}</p>
-              </Card>
-            ))}
-          </ol>
+          <CitadelFlow />
         </div>
       </section>
 
