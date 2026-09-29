@@ -12,3 +12,5 @@ shellEmulator: true
 trustPolicy: no-downgrade
 packages:
   - .
+overrides:
+  fast-uri: '>=3.1.7'

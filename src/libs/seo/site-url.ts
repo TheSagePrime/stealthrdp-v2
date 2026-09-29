@@ -43,7 +43,8 @@ export function parseSiteUrl(
     throw new Error(`SITE_URL is not a valid URL: ${value}`);
   }
 
-  if (parsed.username || Reflect.get(parsed, 'pass' + 'word')) {
+  // Reject any userinfo (user, user:secret, or :secret) before the host.
+  if (/^[a-z][a-z0-9+.-]*:\/\/[^/?#]*@/i.test(value.trim())) {
     throw new Error('SITE_URL must not include credentials');
   }
 

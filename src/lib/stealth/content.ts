@@ -1,9 +1,9 @@
-import plansJson from '@/content/plans.json';
-import faqsJson from '@/content/faqs.json';
-import testimonialsJson from '@/content/testimonials.json';
-import reviewsJson from '@/content/reviews.json';
 import blogJson from '@/content/blog-articles.json';
 import docsJson from '@/content/docs-articles.json';
+import faqsJson from '@/content/faqs.json';
+import plansJson from '@/content/plans.json';
+import reviewsJson from '@/content/reviews.json';
+import testimonialsJson from '@/content/testimonials.json';
 import uptimeJson from '@/content/uptime.json';
 import { isNoindexDocPath } from '@/lib/stealth/routes';
 
@@ -110,7 +110,7 @@ export function docPublicSlug(article: DocArticle): string {
   return docsPublicSlugs[article.slug] ?? article.slug.replace(/^\d+-/, '');
 }
 
-export const docPublicPaths = docsArticles.map(article => `/docs/${docPublicSlug(article)}`);
+const docPublicPaths = docsArticles.map(article => `/docs/${docPublicSlug(article)}`);
 export const indexableDocPublicPaths = docPublicPaths.filter(path => !isNoindexDocPath(path));
 
 export function findDocByPublicSlug(slug: string): DocArticle | undefined {
