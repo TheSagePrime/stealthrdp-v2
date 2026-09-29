@@ -32,7 +32,7 @@ export function HomeHero() {
     updateVisibility();
     query.addEventListener('change', updateMotion);
     document.addEventListener('visibilitychange', updateVisibility);
-    const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { threshold: 0.15 });
+    const observer = new IntersectionObserver(([entry]) => setInView(entry?.isIntersecting ?? false), { threshold: 0.15 });
     if (showcaseRef.current) observer.observe(showcaseRef.current);
     return () => {
       query.removeEventListener('change', updateMotion);
