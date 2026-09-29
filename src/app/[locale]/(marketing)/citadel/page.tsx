@@ -3,7 +3,6 @@ import {
   ArrowRight,
   BellRinging,
   Browser,
-  Cloud,
   Database,
   Fingerprint,
   Funnel,
@@ -26,6 +25,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { CitadelTelemetryPreview } from '@/components/site/CitadelTelemetryPreview';
+import { CitadelFlow } from '@/components/site/citadel/CitadelFlow';
 import { CitadelMotionScene } from '@/components/site/CitadelMotionScene';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
@@ -189,59 +189,20 @@ export default function CitadelPage() {
         </div>
       </section>
 
-      <section className="srv-citadel-v2-section">
+      <section className="srv-citadel-v2-section" aria-labelledby="citadel-flow-title">
         <div className="sr-container">
           <div className="srv-citadel-v2-heading">
             <div>
-              <p className="sr-kicker">Request path</p>
-              <h2>Three layers. One reason: keep expensive traffic away from the origin.</h2>
+              <p className="sr-kicker">Request flow</p>
+              <h2 id="citadel-flow-title">Good traffic moves on. Bad traffic stops here.</h2>
             </div>
             <p>
-              The architecture is easier to understand as a decision pipeline than a
-              wall of security features.
+              Application-aware checks challenge suspicious requests before they reach
+              your origin, while legitimate visitors keep moving.
             </p>
           </div>
 
-          <div className="srv-citadel-v2-layers">
-            {[
-              {
-                icon: Cloud,
-                step: '01',
-                title: 'Edge',
-                tag: 'Cloudflare orange cloud',
-                text: 'A proxied Cloudflare DNS record forwards protected web traffic to Citadel. DNS-only records bypass this protection.',
-              },
-              {
-                icon: ShieldCheck,
-                step: '02',
-                title: 'Citadel decision layer',
-                tag: 'Application aware',
-                text: 'Path, session, rate, lists and behavior signals decide whether a request passes or escalates.',
-              },
-              {
-                icon: Database,
-                step: '03',
-                title: 'Cache + origin',
-                tag: 'Protected compute',
-                text: 'Cache absorbs eligible repeats. Requests that survive policy reach the application behind Citadel.',
-              },
-            ].map(item => {
-              const Icon = item.icon;
-              return (
-                <Card key={item.step} className="srv-citadel-v2-layer">
-                  <CardHeader>
-                    <span className="srv-citadel-v2-layer-icon"><Icon size={20} weight="duotone" /></span>
-                    <span className="srv-citadel-v2-layer-step">{item.step}</span>
-                    <Badge variant="outline">{item.tag}</Badge>
-                  </CardHeader>
-                  <CardContent>
-                    <h3>{item.title}</h3>
-                    <p>{item.text}</p>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
+          <CitadelFlow />
         </div>
       </section>
 
