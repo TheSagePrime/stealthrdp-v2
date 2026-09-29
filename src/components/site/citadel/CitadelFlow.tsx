@@ -86,10 +86,10 @@ export function CitadelFlow() {
             </div>
             <div className={styles.citadelMark}>
               <Image
-                src="/brand/citadel-shield.png"
+                src="/brand/citadel-shield.svg"
                 alt=""
-                width={640}
-                height={640}
+                width={128}
+                height={144}
                 className={styles.shield}
               />
               <strong>Citadel</strong>
