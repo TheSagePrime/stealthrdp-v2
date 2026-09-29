@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { GuideSidebar } from '@/components/site/GuideSidebar';
-import { HelpTopbar } from '@/components/site/HelpTopbar';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { buildArticleIndexJsonLd } from '@/libs/seo/articles';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
@@ -21,94 +20,43 @@ export default function BlogPage() {
   const categories = Array.from(new Set(blogArticles.map(article => article.category)));
 
   return (
-    <div className="srv-page srv-page-blog srv-docs-product">
-      <HelpTopbar active="guides" />
-
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleIndexJsonLd) }}
       />
-
-      <div className="sr-container srv-docs-mobile-wrap">
-        <details className="srv-docs-mobile-nav">
-          <summary>Browse Guides</summary>
-          <GuideSidebar />
-        </details>
-      </div>
-
-      <div className="sr-container srv-docs-grid">
-        <aside className="srv-docs-sidebar">
-          <GuideSidebar />
-        </aside>
-
-        <main className="srv-docs-index">
-          <header className="srv-docs-index-head">
-            <div>
-              <p className="sr-kicker">Guides</p>
-              <h1>Understand the workload. Run it better.</h1>
-              <p>
-                VPS use cases, security, performance, backups, infrastructure decisions,
-                and practical operations — organized like documentation, not a blog feed.
-              </p>
-            </div>
-
-            <div className="srv-docs-start-links">
-              <Link href="/blog/vps-for-remote-desktop.html">Remote desktop</Link>
-              <Link href="/blog/vps-for-web-hosting.html">Web hosting</Link>
-              <Link href="/blog/vps-for-automation-bots.html">Automation &amp; bots</Link>
-              <Link href="/blog/vps-for-backups-storage.html">Backups &amp; storage</Link>
-            </div>
-          </header>
-
-          <div className="srv-docs-collections">
+      <DocsPage>
+        <DocsTitle>VPS Guides</DocsTitle>
+        <DocsDescription>
+          VPS use cases, security, performance, backups, infrastructure decisions, and practical operations.
+        </DocsDescription>
+        <DocsBody>
+          <div className="sr-docs-overview">
             {categories.map(category => {
               const articles = blogArticles.filter(article => article.category === category);
-
               return (
-                <section className="srv-docs-collection" key={category}>
-                  <div className="srv-docs-collection-head">
-                    <div>
-                      <h2>{category}</h2>
-                      <p>
-                        {category === 'VPS Use Cases'
-                          ? 'Choose and size a VPS for a specific workload.'
-                          : 'Practical guidance from the StealthRDP knowledge base.'}
-                      </p>
-                    </div>
-                    <span>{articles.length}</span>
+                <section className="sr-docs-collection" key={category}>
+                  <div className="sr-docs-collection-heading">
+                    <h2>{category}</h2>
+                    <span>{articles.length} {articles.length === 1 ? 'guide' : 'guides'}</span>
                   </div>
-
-                  <ol>
-                    {articles.map((article, index) => (
+                  <ul>
+                    {articles.map(article => (
                       <li key={article.slug}>
                         <Link href={articlePath(article)}>
-                          <span className="srv-docs-entry-number">{String(index + 1).padStart(2, '0')}</span>
-                          <span className="srv-docs-entry-copy">
-                            <strong>{article.title}</strong>
-                            <small>{article.excerpt}</small>
-                          </span>
-                          <span className="srv-docs-entry-arrow" aria-hidden="true">→</span>
+                          <span>{article.title}</span>
+                          <small>{article.excerpt}</small>
+                          <span aria-hidden="true">→</span>
                         </Link>
                       </li>
                     ))}
-                  </ol>
+                  </ul>
                 </section>
               );
             })}
           </div>
-        </main>
-
-        <aside className="srv-docs-index-aside">
-          <span className="srv-resource-nav-label">Use cases</span>
-          <Link href="/blog/vps-for-remote-desktop.html">Remote desktop</Link>
-          <Link href="/blog/vps-for-web-hosting.html">Web hosting</Link>
-          <Link href="/blog/vps-for-automation-bots.html">Automation &amp; bots</Link>
-          <Link href="/blog/vps-for-trading.html">Trading infrastructure</Link>
-          <Link href="/blog/vps-for-backups-storage.html">Backups &amp; storage</Link>
-          <span className="srv-docs-aside-divider" />
-          <Link href="/docs">Need setup help?</Link>
-        </aside>
-      </div>
-    </div>
+        </DocsBody>
+      </DocsPage>
+    </>
   );
 }

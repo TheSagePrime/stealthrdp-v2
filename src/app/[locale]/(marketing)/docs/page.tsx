@@ -1,12 +1,10 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { HelpSidebar } from '@/components/site/HelpSidebar';
-import { HelpTopbar } from '@/components/site/HelpTopbar';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { createPageMetadata } from '@/libs/seo/metadata';
 import {
   articlesForCollection,
   helpArticleHref,
-  helpCollectionId,
   helpCollections,
 } from '@/lib/stealth/help-center';
 import { helpDocsArticles } from '@/lib/stealth/content';
@@ -18,95 +16,44 @@ export const metadata: Metadata = createPageMetadata({
   ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
-export default function DocsPage() {
+export default function DocsPageRoute() {
   return (
-    <div className="srv-page srv-page-docs srv-docs-product">
-      <HelpTopbar />
+    <DocsPage>
+      <DocsTitle>StealthRDP Help Center</DocsTitle>
+      <DocsDescription>
+        Practical setup and troubleshooting for StealthRDP servers, organized around the task you are trying to complete.
+      </DocsDescription>
+      <DocsBody>
+        <div className="sr-docs-overview">
+          {helpCollections.map(collection => {
+            const articles = articlesForCollection(collection, helpDocsArticles);
+            if (articles.length === 0) return null;
 
-      <div className="sr-container srv-docs-mobile-wrap">
-        <details className="srv-docs-mobile-nav">
-          <summary>Browse Help Center</summary>
-          <HelpSidebar articles={helpDocsArticles} />
-        </details>
-      </div>
-
-      <div className="sr-container srv-docs-grid">
-        <aside className="srv-docs-sidebar">
-          <HelpSidebar articles={helpDocsArticles} />
-        </aside>
-
-        <main className="srv-docs-index">
-          <header className="srv-docs-index-head">
-            <div>
-              <p className="sr-kicker">Documentation</p>
-              <h1>Get from question to fix, faster.</h1>
-              <p>
-                Practical setup and troubleshooting for StealthRDP servers, organized
-                around the task you are trying to complete.
-              </p>
-            </div>
-
-            <div className="srv-docs-start-links">
-              <Link href="/docs/how-do-i-log-into-windows">Connect to Windows RDP</Link>
-              <Link href="/docs/how-to-rebuild-a-server">Rebuild a server</Link>
-              <Link href="/docs/windows-licensing">Windows licensing</Link>
-              <Link href="/faq">Common questions</Link>
-            </div>
-          </header>
-
-          <div className="srv-docs-collections">
-            {helpCollections.map(collection => {
-              const articles = articlesForCollection(collection, helpDocsArticles);
-              if (articles.length === 0) return null;
-
-              return (
-                <section
-                  className="srv-docs-collection"
-                  id={helpCollectionId(collection.title)}
-                  key={collection.title}
-                >
-                  <div className="srv-docs-collection-head">
-                    <div>
-                      <h2>{collection.title}</h2>
-                      <p>{collection.description}</p>
-                    </div>
-                    <span>{articles.length}</span>
+            return (
+              <section className="sr-docs-collection" key={collection.title}>
+                <div className="sr-docs-collection-heading">
+                  <div>
+                    <h2>{collection.title}</h2>
+                    <p>{collection.description}</p>
                   </div>
-
-                  <ol>
-                    {articles.map((article, index) => (
-                      <li key={article.slug}>
-                        <Link href={helpArticleHref(article)}>
-                          <span className="srv-docs-entry-number">{String(index + 1).padStart(2, '0')}</span>
-                          <span className="srv-docs-entry-copy">
-                            <strong>{article.title}</strong>
-                            <small>{article.summary}</small>
-                          </span>
-                          <span className="srv-docs-entry-arrow" aria-hidden="true">→</span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ol>
-                </section>
-              );
-            })}
-          </div>
-        </main>
-
-        <aside className="srv-docs-index-aside">
-          <span className="srv-resource-nav-label">Need help now?</span>
-          <p>Server-specific and account-specific issues are handled through support.</p>
-          <a href="https://dash.stealthrdp.com/submitticket.php">Open support ticket ↗</a>
-          <Link href="/status">Check service status</Link>
-
-          <span className="srv-docs-aside-divider" />
-
-          <span className="srv-resource-nav-label">Learn more</span>
-          <Link href="/blog">VPS Guides</Link>
-          <Link href="/citadel/docs">Citadel Docs</Link>
-          <Link href="/resources">All resources</Link>
-        </aside>
-      </div>
-    </div>
+                  <span>{articles.length} {articles.length === 1 ? 'guide' : 'guides'}</span>
+                </div>
+                <ul>
+                  {articles.map(article => (
+                    <li key={article.slug}>
+                      <Link href={helpArticleHref(article)}>
+                        <span>{article.title}</span>
+                        <small>{article.summary}</small>
+                        <span aria-hidden="true">→</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            );
+          })}
+        </div>
+      </DocsBody>
+    </DocsPage>
   );
 }

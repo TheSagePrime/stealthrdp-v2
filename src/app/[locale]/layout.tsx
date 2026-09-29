@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { RootProvider } from 'fumadocs-ui/provider/next';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -8,6 +9,7 @@ import '@/styles/surfaces.css';
 import '@/styles/stealth.css';
 import '@/styles/stealth-v3.css';
 import '@/styles/stealth-docs-responsive.css';
+import '@/styles/fumadocs.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.stealthrdp.com'),
@@ -38,7 +40,11 @@ export default async function RootLayout(props: {
   return (
     <html lang={locale}>
       <body>
-        <NextIntlClientProvider>{props.children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <RootProvider search={{ enabled: false }} theme={{ enabled: false, hotKey: false }}>
+            {props.children}
+          </RootProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

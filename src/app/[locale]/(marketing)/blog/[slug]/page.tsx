@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { ArticleJsonLd, ArticlePublicationMeta, ArticleSources } from '@/components/seo/Article';
-import { GuideSidebar } from '@/components/site/GuideSidebar';
-import { HelpTopbar } from '@/components/site/HelpTopbar';
-import { ResourceToc } from '@/components/site/ResourceToc';
 import { articleHeadings, TrustedArticleBody } from '@/components/site/TrustedArticleBody';
 import { createArticleMetadata } from '@/libs/seo/articles';
 import { getSeoConfig } from '@/libs/seo/config';
@@ -32,7 +30,11 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
   const publication = config.articles.publications.find(item => item.slug === articleSlug);
   if (!slug.endsWith('.html') || !article || !publication || articleSlug === 'vps-hosting-minecraft') notFound();
 
-  const headings = articleHeadings(article.html);
+  const toc = articleHeadings(article.html).map(heading => ({
+    title: heading.text,
+    url: `#${heading.id}`,
+    depth: heading.level,
+  }));
   const ordered = blogArticles.filter(item => item.slug !== 'vps-hosting-minecraft');
   const currentIndex = ordered.findIndex(item => item.slug === article.slug);
   const previous = currentIndex > 0 ? ordered[currentIndex - 1] : undefined;
@@ -42,41 +44,17 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
     .slice(0, 3);
 
   return (
-    <div className="srv-page srv-page-blog-article srv-docs-product">
-      <HelpTopbar active="guides" />
+    <>
+      <ArticleJsonLd article={publication} config={config} />
+      <DocsPage toc={toc} tableOfContent={{ style: 'clerk' }}>
+        <DocsTitle>{article.title}</DocsTitle>
+        <DocsDescription>{article.excerpt}</DocsDescription>
+        <div className="sr-docs-article-meta">
+          <ArticlePublicationMeta article={publication} />
+          <span>{article.readingTime} min read</span>
+        </div>
 
-      <div className="sr-container srv-docs-mobile-wrap">
-        <details className="srv-docs-mobile-nav">
-          <summary>Browse Guides</summary>
-          <GuideSidebar activeSlug={article.slug} />
-        </details>
-      </div>
-
-      <div className="sr-container srv-docs-grid srv-docs-article-grid">
-        <aside className="srv-docs-sidebar">
-          <GuideSidebar activeSlug={article.slug} />
-        </aside>
-
-        <article className="srv-docs-article">
-          <nav className="srv-docs-breadcrumbs" aria-label="Breadcrumb">
-            <Link href="/blog">Guides</Link>
-            <span>/</span>
-            <span>{article.category}</span>
-            <span>/</span>
-            <span aria-current="page">{article.title}</span>
-          </nav>
-
-          <header className="srv-docs-article-head">
-            <p className="sr-kicker">{article.category}</p>
-            <h1>{article.title}</h1>
-            <p>{article.excerpt}</p>
-            <div className="srv-docs-article-meta">
-              <ArticlePublicationMeta article={publication} />
-              <span>{article.readingTime} min read</span>
-            </div>
-          </header>
-
-          <ArticleJsonLd article={publication} config={config} />
+        <DocsBody>
           <TrustedArticleBody html={article.html} />
           <ArticleSources sources={publication.sources ?? []} />
 
@@ -110,17 +88,8 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
               </Link>
             ) : <span />}
           </nav>
-        </article>
-
-        <aside className="srv-docs-toc">
-          <ResourceToc headings={headings} />
-          <div className="srv-docs-toc-links">
-            <span className="srv-resource-nav-label">Also useful</span>
-            <Link href="/docs">Help Center</Link>
-            <Link href="/faq">Common questions</Link>
-          </div>
-        </aside>
-      </div>
-    </div>
+        </DocsBody>
+      </DocsPage>
+    </>
   );
 }

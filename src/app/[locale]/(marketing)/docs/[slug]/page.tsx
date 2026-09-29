@@ -1,10 +1,8 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { DocBody, docHeadings } from '@/components/site/DocBody';
-import { HelpSidebar } from '@/components/site/HelpSidebar';
-import { HelpTopbar } from '@/components/site/HelpTopbar';
-import { ResourceToc } from '@/components/site/ResourceToc';
 import { createPageMetadata } from '@/libs/seo/metadata';
 import {
   helpArticleHref,
@@ -33,12 +31,16 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   });
 }
 
-export default async function DocPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function DocPageRoute({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const article = findDocByPublicSlug(slug);
   if (!article) notFound();
 
-  const headings = docHeadings(article.content, article.title);
+  const toc = docHeadings(article.content, article.title).map(heading => ({
+    title: heading.text,
+    url: `#${heading.id}`,
+    depth: heading.level,
+  }));
   const collection = helpCollectionForArticle(article);
   const ordered = orderedHelpArticles(helpDocsArticles);
   const currentIndex = ordered.findIndex(item => item.slug === article.slug);
@@ -50,97 +52,57 @@ export default async function DocPage({ params }: { params: Promise<{ slug: stri
     .slice(0, 3);
 
   return (
-    <div className="srv-page srv-page-doc-article srv-docs-product">
-      <HelpTopbar />
+    <DocsPage toc={toc} tableOfContent={{ style: 'clerk' }}>
+      <DocsTitle>{article.title}</DocsTitle>
+      <DocsDescription>{article.summary}</DocsDescription>
+      <p className="sr-docs-updated">
+        Updated {article.date}{collection ? <> <span>·</span> {collection.title}</> : null}
+      </p>
 
-      <div className="sr-container srv-docs-mobile-wrap">
-        <details className="srv-docs-mobile-nav">
-          <summary>Browse Help Center</summary>
-          <HelpSidebar articles={helpDocsArticles} activeSlug={article.slug} />
-        </details>
-      </div>
+      <DocsBody>
+        <DocBody content={article.content} title={article.title} />
 
-      <div className="sr-container srv-docs-grid srv-docs-article-grid">
-        <aside className="srv-docs-sidebar">
-          <HelpSidebar articles={helpDocsArticles} activeSlug={article.slug} />
-        </aside>
-
-        <article className="srv-docs-article">
-          <nav className="srv-docs-breadcrumbs" aria-label="Breadcrumb">
-            <Link href="/docs">Help Center</Link>
-            <span>/</span>
-            {collection ? (
-              <>
-                <Link href={`/docs#${collection.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')}`}>
-                  {collection.title}
-                </Link>
-                <span>/</span>
-              </>
-            ) : null}
-            <span aria-current="page">{article.title}</span>
-          </nav>
-
-          <header className="srv-docs-article-head">
-            <p className="sr-kicker">{collection?.title ?? article.category}</p>
-            <h1>{article.title}</h1>
-            <p>{article.summary}</p>
-            <div className="srv-docs-article-meta">
-              <span>Last updated {article.date}</span>
-              <a href="https://dash.stealthrdp.com/submitticket.php">Need help? ↗</a>
-            </div>
-          </header>
-
-          <DocBody content={article.content} title={article.title} />
-
-          {related.length > 0 ? (
-            <section className="srv-docs-related" aria-labelledby="related-help-title">
-              <span className="srv-resource-nav-label">Related help</span>
-              <h2 id="related-help-title">Continue with a related task</h2>
-              <div>
-                {related.map(item => (
-                  <Link key={item.slug} href={helpArticleHref(item)}>
-                    <strong>{item.title}</strong>
-                    <small>{item.summary}</small>
-                    <span aria-hidden="true">→</span>
-                  </Link>
-                ))}
-              </div>
-            </section>
-          ) : null}
-
-          <nav className="srv-docs-pagination" aria-label="Help article navigation">
-            {previous ? (
-              <Link href={helpArticleHref(previous)} rel="prev">
-                <span>Previous</span>
-                <strong>← {previous.title}</strong>
-              </Link>
-            ) : <span />}
-            {next ? (
-              <Link href={helpArticleHref(next)} rel="next">
-                <span>Next</span>
-                <strong>{next.title} →</strong>
-              </Link>
-            ) : <span />}
-          </nav>
-
-          <footer className="srv-docs-support-strip">
+        {related.length > 0 ? (
+          <section className="srv-docs-related" aria-labelledby="related-help-title">
+            <span className="srv-resource-nav-label">Related help</span>
+            <h2 id="related-help-title">Continue with a related task</h2>
             <div>
-              <strong>Still stuck?</strong>
-              <span>Send the server name, exact error, screenshot, and approximate time.</span>
+              {related.map(item => (
+                <Link key={item.slug} href={helpArticleHref(item)}>
+                  <strong>{item.title}</strong>
+                  <small>{item.summary}</small>
+                  <span aria-hidden="true">→</span>
+                </Link>
+              ))}
             </div>
-            <a href="https://dash.stealthrdp.com/submitticket.php">Open support ticket ↗</a>
-          </footer>
-        </article>
+          </section>
+        ) : null}
 
-        <aside className="srv-docs-toc">
-          <ResourceToc headings={headings} />
-          <div className="srv-docs-toc-links">
-            <span className="srv-resource-nav-label">Also useful</span>
-            <Link href="/faq">Common questions</Link>
-            <Link href="/status">Service status</Link>
+        <nav className="srv-docs-pagination" aria-label="Help article navigation">
+          {previous ? (
+            <Link href={helpArticleHref(previous)} rel="prev">
+              <span>Previous</span>
+              <strong>← {previous.title}</strong>
+            </Link>
+          ) : <span />}
+          {next ? (
+            <Link href={helpArticleHref(next)} rel="next">
+              <span>Next</span>
+              <strong>{next.title} →</strong>
+            </Link>
+          ) : <span />}
+        </nav>
+
+        <footer className="sr-article-support">
+          <h2 className="sr-section-title">Still need a hand?</h2>
+          <p>Account, billing, and server-specific requests are handled in the client portal.</p>
+          <div className="sr-inline-links">
+            <a href="https://dash.stealthrdp.com/submitticket.php">Contact support</a>
+            <a href="https://wa.me/447441426993">WhatsApp: +44 7441 426993</a>
+            <a href="/docs">All documentation</a>
           </div>
-        </aside>
-      </div>
-    </div>
+        </footer>
+      </DocsBody>
+    </DocsPage>
   );
 }
