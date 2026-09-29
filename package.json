@@ -74,7 +74,9 @@
     "react-dom": "^19.2.7",
     "server-only": "0.0.1",
     "tailwind-merge": "^3.6.0",
-    "zod": "^4.4.3"
+    "zod": "^4.4.3",
+    "fumadocs-core": "^16.15.15",
+    "fumadocs-ui": "^16.15.15"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^9.0.0",

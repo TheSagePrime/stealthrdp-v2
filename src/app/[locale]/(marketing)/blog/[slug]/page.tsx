@@ -2,9 +2,11 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { ArticleJsonLd, ArticlePublicationMeta } from '@/components/seo/Article';
 import { TrustedArticleBody } from '@/components/site/TrustedArticleBody';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { getSeoConfig } from '@/libs/seo/config';
 import { createArticleMetadata } from '@/libs/seo/articles';
 import { blogArticles, findBlog } from '@/lib/stealth/content';
+import { getHtmlHeadings } from '@/lib/stealth/resource-headings';
 
 export function generateStaticParams() {
   return blogArticles.filter(article => article.slug !== 'vps-hosting-minecraft').map(article => ({ slug: `${article.slug}.html` }));
@@ -27,19 +29,18 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
   if (!slug.endsWith('.html') || !article || !publication || articleSlug === 'vps-hosting-minecraft') notFound();
 
   return (
-    <article className="sr-article-shell">
-      <header className="sr-article-header">
-        <p className="sr-kicker">{article.category}</p>
-        <h1>{article.title}</h1>
-        <ArticlePublicationMeta article={publication} />
-        <p className="sr-lede">{article.excerpt}</p>
-        <div className="sr-article-facts">
+    <>
+      <ArticleJsonLd article={publication} config={config} />
+      <DocsPage toc={getHtmlHeadings(article.html)} tableOfContent={{ style: 'clerk' }}>
+        <DocsTitle>{article.title}</DocsTitle>
+        <DocsDescription>{article.excerpt}</DocsDescription>
+        <div className="sr-docs-article-meta">
+          <ArticlePublicationMeta article={publication} />
           <span>{article.author}</span>
           <span>{article.readingTime} min read</span>
         </div>
-      </header>
-      <ArticleJsonLd article={publication} config={config} />
-      <TrustedArticleBody html={article.html} />
-    </article>
+        <DocsBody><TrustedArticleBody html={article.html} /></DocsBody>
+      </DocsPage>
+    </>
   );
 }

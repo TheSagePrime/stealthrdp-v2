@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { CodeBlock } from '@/components/ui/code-block';
+import { getMarkdownHeadings } from '@/lib/stealth/resource-headings';
 
 const CODE_INDENT = /^ {4}/;
 const CODE_PREFIXES = ['sudo ', 'winrm ', 'yum ', 'bash ', 'wget '];
@@ -8,15 +9,11 @@ const HEADING_2 = /^##\s+/;
 const HEADING_1 = /^#\s+/;
 const RULE = /^=+$|^-+$/;
 const STEP = /^\d+\.\s+/;
-// The docs content marks bullets with '-', '*' and '~'. All three are bullets;
-// the old renderer printed the marker literally for the tilde.
 const BULLET = /^[*\-~]\s+/;
-// Emphasis markers around whole words. The alphanumeric guards keep identifiers
-// such as open_lite_speed intact.
 const EMPHASIS = /(?<![A-Za-z0-9])_([^_\n]+)_(?![A-Za-z0-9])/g;
 
 type Block =
-  | { kind: 'heading'; level: 2 | 3; text: string }
+  | { kind: 'heading'; level: 2 | 3; text: string; id?: string }
   | { kind: 'paragraph'; text: string }
   | { kind: 'list'; ordered: boolean; items: string[] }
   | { kind: 'code'; lines: string[] };
@@ -26,22 +23,16 @@ function inline(text: string): ReactNode[] {
   const parts = cleaned.split(/(\[[^\]]+\]\([^)]+\)|`[^`]+`)/g).filter(Boolean);
   return parts.map((part, index) => {
     const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
-    if (link) {
-      return <a key={index} href={link[2]}>{link[1]}</a>;
-    }
-    if (part.startsWith('`') && part.endsWith('`')) {
-      return <code key={index}>{part.slice(1, -1)}</code>;
-    }
+    if (link) return <a key={index} href={link[2]}>{link[1]}</a>;
+    if (part.startsWith('`') && part.endsWith('`')) return <code key={index}>{part.slice(1, -1)}</code>;
     return <span key={index}>{part}</span>;
   });
 }
 
-/**
- * Group the source lines into semantic blocks, so lists become real lists and
- * commands become a code block instead of styled paragraphs.
- */
 function parse(content: string): Block[] {
   const blocks: Block[] = [];
+  const toc = getMarkdownHeadings(content);
+  let headingIndex = 0;
   let code: string[] = [];
   let list: { ordered: boolean; items: string[] } | null = null;
 
@@ -61,8 +52,6 @@ function parse(content: string): Block[] {
   for (const raw of content.split(/\r?\n/)) {
     const trimmed = raw.trim();
     if (!trimmed) {
-      // A blank line inside a run of list items must not split the list,
-      // otherwise every numbered step renders as "1." again.
       flushCode();
       continue;
     }
@@ -74,12 +63,12 @@ function parse(content: string): Block[] {
     flushCode();
     if (HEADING_3.test(trimmed)) {
       flushList();
-      blocks.push({ kind: 'heading', level: 3, text: trimmed.replace(HEADING_3, '') });
+      blocks.push({ kind: 'heading', level: 3, text: trimmed.replace(HEADING_3, ''), id: toc[headingIndex++]?.url.slice(1) });
       continue;
     }
     if (HEADING_2.test(trimmed)) {
       flushList();
-      blocks.push({ kind: 'heading', level: 2, text: trimmed.replace(HEADING_2, '') });
+      blocks.push({ kind: 'heading', level: 2, text: trimmed.replace(HEADING_2, ''), id: toc[headingIndex++]?.url.slice(1) });
       continue;
     }
     if (HEADING_1.test(trimmed) || RULE.test(trimmed)) {
@@ -107,7 +96,6 @@ function parse(content: string): Block[] {
   }
   flushCode();
   flushList();
-
   return blocks;
 }
 
@@ -117,18 +105,14 @@ export function DocBody({ content }: { content: string }) {
       {parse(content).map((block, index) => {
         if (block.kind === 'heading') {
           return block.level === 2
-            ? <h2 key={index}>{inline(block.text)}</h2>
-            : <h3 key={index}>{inline(block.text)}</h3>;
+            ? <h2 id={block.id} key={index}>{inline(block.text)}</h2>
+            : <h3 id={block.id} key={index}>{inline(block.text)}</h3>;
         }
         if (block.kind === 'list') {
           const items = block.items.map((item, itemIndex) => <li key={itemIndex}>{inline(item)}</li>);
-          return block.ordered
-            ? <ol key={index}>{items}</ol>
-            : <ul key={index}>{items}</ul>;
+          return block.ordered ? <ol key={index}>{items}</ol> : <ul key={index}>{items}</ul>;
         }
-        if (block.kind === 'code') {
-          return <CodeBlock key={index}><code>{block.lines.join('\n')}</code></CodeBlock>;
-        }
+        if (block.kind === 'code') return <CodeBlock key={index}><code>{block.lines.join('\n')}</code></CodeBlock>;
         return <p key={index}>{inline(block.text)}</p>;
       })}
     </div>
