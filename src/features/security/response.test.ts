@@ -11,10 +11,10 @@ describe('sensitive responses', () => {
   });
 
   it('marks redirects private and no-store', () => {
-    const response = sensitiveRedirect('https://polar.sh/example');
+    const response = sensitiveRedirect('https://example.com/redirect');
 
     expect(response.status).toBe(303);
-    expect(response.headers.get('location')).toBe('https://polar.sh/example');
+    expect(response.headers.get('location')).toBe('https://example.com/redirect');
     expect(response.headers.get('cache-control')).toBe('no-store, private');
     expect(response.headers.get('pragma')).toBe('no-cache');
   });

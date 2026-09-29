@@ -7,12 +7,13 @@ describe('runtime endpoints', () => {
   it('returns a stable health response', () => {
     expect(getHealthResponse()).toEqual({
       status: 'ok',
-      service: 'sage-prime-starter',
+      service: 'web-starter',
     });
   });
 
   it('serves the health endpoint', async () => {
     const response = health();
+
     expect(response.status).toBe(200);
     await expect(response.json()).resolves.toEqual(getHealthResponse());
   });
