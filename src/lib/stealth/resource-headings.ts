@@ -39,7 +39,7 @@ function nextId(value: string, seen: Map<string, number>): string {
 
 export function getMarkdownHeadings(content: string): ResourceHeading[] {
   const seen = new Map<string, number>();
-  return Array.from(content.matchAll(/^\s*(#{2,3})\s+(.+)\s*$/gm), ([, hashes, raw]) => {
+  return Array.from(content.matchAll(/^ {0,3}(#{2,3})\s+(.+)\s*$/gm), ([, hashes, raw]) => {
     const title = cleanText(raw);
     return { title, url: `#${nextId(title, seen)}`, depth: hashes.length };
   });
