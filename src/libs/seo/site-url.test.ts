@@ -11,4 +11,10 @@ describe('parseSiteUrl', () => {
   it('rejects HTTP in production', () => {
     expect(() => parseSiteUrl('http://example.com', { production: true })).toThrow(/localhost|HTTPS/);
   });
+
+  it('rejects credentials in the URL', () => {
+    for (const value of ['https://user@example.com', 'https://user:secret@example.com', 'https://:secret@example.com']) {
+      expect(() => parseSiteUrl(value)).toThrow(/credentials/);
+    }
+  });
 });

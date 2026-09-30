@@ -28,6 +28,20 @@ jobs:
     timeout-minutes: 10
     env:
       DATABASE_URL: postgresql://postgres:postgres@127.0.0.1:5432/sage_prime_starter
+    # The SEO post-build audit follows linked API routes; /api/ready needs a reachable database.
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: sage_prime_starter
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
 
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803

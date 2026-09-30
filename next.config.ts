@@ -5,18 +5,17 @@ import createNextIntlPlugin from 'next-intl/plugin';
 import './src/libs/Env';
 
 const csp = [
-  "default-src 'self'",
-  "base-uri 'self'",
-  "object-src 'none'",
-  "frame-ancestors 'none'",
-  "form-action 'self'",
-  "img-src 'self' data: blob: https:",
-  "font-src 'self' data: https:",
-  "style-src 'self' 'unsafe-inline'",
-  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''} https://*.clerk.com https://*.clerk.accounts.dev https://*.protect.clerk.com https://challenges.cloudflare.com`,
-  "connect-src 'self' https://clerk-telemetry.com https://*.clerk-telemetry.com https://*.clerk.com https://*.clerk.accounts.dev https://api.clerk.com https://*.protect.clerk.com:* https://api.stripe.com https://*.polar.sh https://*.sentry.io",
-  "frame-src 'self' https://challenges.cloudflare.com https://*.protect.clerk.com https://js.stripe.com https://*.js.stripe.com https://hooks.stripe.com https://*.polar.sh",
-  "worker-src 'self' blob:",
+  'default-src \'self\'',
+  'base-uri \'self\'',
+  'object-src \'none\'',
+  'frame-ancestors \'none\'',
+  'form-action \'self\'',
+  'img-src \'self\' data: blob: https:',
+  'font-src \'self\' data: https:',
+  'style-src \'self\' \'unsafe-inline\'',
+  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? ' \'unsafe-eval\'' : ''}`,
+  'connect-src \'self\' https://*.sentry.io',
+  'worker-src \'self\' blob:',
   ...(process.env.NODE_ENV === 'production' ? ['upgrade-insecure-requests'] : []),
 ].join('; ');
 
@@ -40,7 +39,7 @@ const baseConfig: NextConfig = {
       { key: 'X-Content-Type-Options', value: 'nosniff' },
       { key: 'X-Frame-Options', value: 'DENY' },
       ...(process.env.NODE_ENV === 'production'
-        ? [{ key: 'Strict-Transport-Security', value: 'max-age=31536000' }]
+        ? [{ key: 'Strict-Transport-Security', value: 'max-age=31536000; includeSubDomains' }]
         : []),
     ];
 
