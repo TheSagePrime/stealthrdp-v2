@@ -134,6 +134,35 @@ async function handleLocalSeoAudit(request: NextRequest): Promise<Response | nul
   });
 }
 
+const INTERNAL_LOCALE_REWRITE = 'x-internal-locale-rewrite';
+
+/**
+ * With one locale and no URL prefix, next-intl rewrites /plans to /en/plans and then
+ * redirects /en/plans back to /plans when Next.js runs this proxy again on the rewritten
+ * path. That is an endless redirect loop under `next start`. Do the rewrite here and mark
+ * it, so the second pass is served as-is while direct /en/... requests still redirect.
+ */
+function routeSingleLocale(request: NextRequest): NextResponse {
+  const prefix = `/${routing.defaultLocale}`;
+  const { pathname } = request.nextUrl;
+  const hasPrefix = pathname === prefix || pathname.startsWith(`${prefix}/`);
+
+  if (hasPrefix) {
+    if (request.headers.get(INTERNAL_LOCALE_REWRITE) === '1') {
+      return NextResponse.next();
+    }
+    const target = request.nextUrl.clone();
+    target.pathname = pathname.slice(prefix.length) || '/';
+    return NextResponse.redirect(target, 308);
+  }
+
+  const target = request.nextUrl.clone();
+  target.pathname = `${prefix}${pathname === '/' ? '' : pathname}`;
+  const headers = new Headers(request.headers);
+  headers.set(INTERNAL_LOCALE_REWRITE, '1');
+  return NextResponse.rewrite(target, { request: { headers } });
+}
+
 export default async function proxy(request: NextRequest) {
   const seoRedirect = seoNormalizeRedirect(request);
   if (seoRedirect) {
@@ -147,6 +176,10 @@ export default async function proxy(request: NextRequest) {
 
   if (request.nextUrl.pathname.startsWith('/api/')) {
     return NextResponse.next();
+  }
+
+  if (routing.locales.length === 1) {
+    return routeSingleLocale(request);
   }
 
   return handleI18nRouting(request);
