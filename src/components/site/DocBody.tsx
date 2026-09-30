@@ -1,5 +1,6 @@
+/* eslint-disable better-tailwindcss/no-unknown-classes, react-refresh/only-export-components */
 import type { ReactNode } from 'react';
-import type { ResourceHeading } from '@/components/site/ResourceToc';
+import type { ResourceHeading } from '@/components/site/TrustedArticleBody';
 import { CodeBlock } from '@/components/ui/code-block';
 
 const CODE_INDENT = /^ {4}/;
@@ -14,20 +15,20 @@ const STEP = /^\d+\.\s+/;
 const BULLET = /^[*\-~]\s+/;
 // Emphasis markers around whole words. The alphanumeric guards keep identifiers
 // such as open_lite_speed intact.
-const EMPHASIS = /(?<![A-Za-z0-9])_([^_\n]+)_(?![A-Za-z0-9])/g;
+const EMPHASIS = /(?<![A-Z0-9])_([^_\n]+)_(?![A-Z0-9])/gi;
 
-type Block =
-  | { kind: 'heading'; level: 2 | 3; text: string }
-  | { kind: 'paragraph'; text: string }
-  | { kind: 'list'; ordered: boolean; items: string[] }
-  | { kind: 'code'; lines: string[] };
+type Block
+  = | { kind: 'heading'; level: 2 | 3; text: string }
+    | { kind: 'paragraph'; text: string }
+    | { kind: 'list'; ordered: boolean; items: string[] }
+    | { kind: 'code'; lines: string[] };
 
 function slugifyHeading(value: string): string {
   return value
     .replace(/\*\*/g, '')
     .replace(EMPHASIS, '$1')
     .replace(/\[[^\]]+\]\([^)]+\)/g, match => match.replace(/^\[|\]\([^)]+\)$/g, ''))
-    .replace(/\`/g, '')
+    .replace(/`/g, '')
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
@@ -53,14 +54,18 @@ function inline(text: string): ReactNode[] {
  * commands become a code block instead of styled paragraphs.
  */
 function normalizeLegacyHeader(content: string, title?: string): string {
-  if (!title) return content;
+  if (!title) {
+    return content;
+  }
 
   const lines = content.split(/\r?\n/);
   const normalizedTitle = title.trim().toLowerCase();
   let cursor = 0;
 
   const skipBlank = () => {
-    while (cursor < lines.length && !lines[cursor]?.trim()) cursor += 1;
+    while (cursor < lines.length && !lines[cursor]?.trim()) {
+      cursor += 1;
+    }
   };
 
   skipBlank();
@@ -163,7 +168,7 @@ export function docHeadings(content: string, title?: string): ResourceHeading[] 
   const seen = new Map<string, number>();
   return parse(content, title)
     .filter((block): block is Extract<Block, { kind: 'heading' }> => block.kind === 'heading')
-    .map(block => {
+    .map((block) => {
       const base = slugifyHeading(block.text) || 'section';
       const count = seen.get(base) ?? 0;
       seen.set(base, count + 1);

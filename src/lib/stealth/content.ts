@@ -85,7 +85,7 @@ export const faqs = (faqsJson as Faq[]).filter(item => item.isPublished);
 export const testimonials = testimonialsJson as Testimonial[];
 export const reviews = reviewsJson as Testimonial[];
 export const blogArticles = blogJson as BlogArticle[];
-export const docsArticles = docsJson as DocArticle[];
+const docsArticles = docsJson as DocArticle[];
 export const citadelDocsArticles = docsArticles.filter(article => article.slug.startsWith('citadel-'));
 export const helpDocsArticles = docsArticles.filter(article => !article.slug.startsWith('citadel-'));
 export const uptime = uptimeJson;

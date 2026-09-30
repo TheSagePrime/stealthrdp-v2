@@ -1,8 +1,9 @@
+/* eslint-disable better-tailwindcss/no-unknown-classes */
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
-import Link from 'next/link';
 import { Search } from 'lucide-react';
+import Link from 'next/link';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 export type ResourceSearchItem = {
   title: string;
@@ -24,7 +25,9 @@ export function ResourceSearch({
   const needle = query.trim().toLowerCase();
 
   const matches = useMemo(() => {
-    if (needle.length < 2) return [];
+    if (needle.length < 2) {
+      return [];
+    }
     return items
       .filter(item =>
         item.title.toLowerCase().includes(needle)
@@ -57,10 +60,10 @@ export function ResourceSearch({
   }, []);
 
   return (
-    <div className="srv-resource-search">
+    <div className="sr-res-search">
       <label htmlFor="resource-search" className="sr-visually-hidden">Search resources</label>
-      <div className="srv-resource-search-field">
-        <Search aria-hidden="true" className="srv-resource-search-icon" />
+      <div className="sr-res-search-field">
+        <Search aria-hidden="true" className="sr-res-search-icon" />
         <input
           ref={inputRef}
           id="resource-search"
@@ -74,24 +77,26 @@ export function ResourceSearch({
       </div>
 
       {needle.length >= 2 && (
-        <div className="srv-resource-search-results" aria-live="polite">
-          {matches.length > 0 ? (
-            <ul>
-              {matches.map(item => (
-                <li key={item.href}>
-                  <Link href={item.href}>
-                    <span>
-                      <strong>{item.title}</strong>
-                      <small>{item.description}</small>
-                    </span>
-                    <em>{item.kind}</em>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p>No matching resources. Try a broader phrase.</p>
-          )}
+        <div className="sr-res-search-results" aria-live="polite">
+          {matches.length > 0
+            ? (
+                <ul>
+                  {matches.map(item => (
+                    <li key={item.href}>
+                      <Link href={item.href}>
+                        <span>
+                          <strong>{item.title}</strong>
+                          <small>{item.description}</small>
+                        </span>
+                        <em>{item.kind}</em>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )
+            : (
+                <p>No matching resources. Try a broader phrase.</p>
+              )}
         </div>
       )}
     </div>

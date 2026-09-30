@@ -1,5 +1,9 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes, react-refresh/only-export-components */
-import type { ResourceHeading } from '@/components/site/ResourceToc';
+export type ResourceHeading = {
+  id: string;
+  text: string;
+  level?: 2 | 3;
+};
 
 function headingText(value: string): string {
   return value

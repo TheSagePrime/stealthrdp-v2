@@ -19,7 +19,6 @@ const config: KnipConfig = {
     'src/components/launchui/*.tsx',
     'src/components/site/CitadelMotionScene.tsx',
     'src/components/site/HelpSidebar.tsx',
-    'src/components/site/ResourceNav.tsx',
     'src/components/site/VpsMotionShowcase.tsx',
     'src/components/site/home/*.tsx',
     'src/lib/ease.ts',

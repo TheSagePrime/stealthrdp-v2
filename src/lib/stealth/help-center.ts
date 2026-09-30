@@ -143,15 +143,3 @@ export function citadelArticleHref(article: DocArticle): string {
 export function citadelCollectionForArticle(article: DocArticle): HelpCollection | undefined {
   return citadelCollections.find(collection => collection.slugs.includes(article.slug));
 }
-
-export function orderedCitadelArticles(articles: DocArticle[]): DocArticle[] {
-  const mapped = citadelCollections.flatMap(collection => articlesForCollection(collection, articles));
-  const mappedSlugs = new Set(mapped.map(article => article.slug));
-  return [...mapped, ...articles.filter(article => !mappedSlugs.has(article.slug))];
-}
-
-export function orderedHelpArticles(articles: DocArticle[]): DocArticle[] {
-  const mapped = helpCollections.flatMap(collection => articlesForCollection(collection, articles));
-  const mappedSlugs = new Set(mapped.map(article => article.slug));
-  return [...mapped, ...articles.filter(article => !mappedSlugs.has(article.slug))];
-}

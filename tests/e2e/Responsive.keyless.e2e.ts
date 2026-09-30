@@ -1,3 +1,4 @@
+import { Buffer } from 'node:buffer';
 import { expect, test } from '@playwright/test';
 
 type ResponsiveIssue = {
@@ -9,7 +10,7 @@ type ResponsiveIssue = {
 
 function pathnamesFromSitemap(xml: string): string[] {
   const paths = [...xml.matchAll(/<loc>([^<]+)<\/loc>/gi)]
-    .map(match => {
+    .map((match) => {
       try {
         return new URL(match[1] ?? '').pathname || '/';
       } catch {
@@ -29,14 +30,20 @@ test.describe('responsive public-site audit', () => {
     test.setTimeout(8 * 60 * 1000);
 
     const sitemap = await request.get('/sitemap.xml');
+
     expect(sitemap.ok()).toBe(true);
 
     const routes = pathnamesFromSitemap(await sitemap.text());
+
     expect(routes.length).toBeGreaterThan(20);
 
     const viewport = page.viewportSize();
+
     expect(viewport).not.toBeNull();
-    if (!viewport) return;
+
+    if (!viewport) {
+      return;
+    }
 
     const issues: ResponsiveIssue[] = [];
 
@@ -59,7 +66,7 @@ test.describe('responsive public-site audit', () => {
           route,
           viewport,
           kind: 'http',
-          detail: 'status=' + (response?.status() ?? 'no-response'),
+          detail: `status=${response?.status() ?? 'no-response'}`,
         });
         continue;
       }
@@ -72,9 +79,13 @@ test.describe('responsive public-site audit', () => {
 
       const result = await page.evaluate(({ width }) => {
         const visible = (element: Element | null) => {
-          if (!(element instanceof HTMLElement)) return false;
+          if (!(element instanceof HTMLElement)) {
+            return false;
+          }
           const style = getComputedStyle(element);
-          if (style.display === 'none' || style.visibility === 'hidden') return false;
+          if (style.display === 'none' || style.visibility === 'hidden') {
+            return false;
+          }
           const rect = element.getBoundingClientRect();
           return rect.width > 0 && rect.height > 0;
         };
@@ -92,10 +103,14 @@ test.describe('responsive public-site audit', () => {
         const unsafeMedia = [
           ...document.querySelectorAll('img, video, canvas, table, pre, figure, svg'),
         ]
-          .filter(element => {
-            if (!visible(element)) return false;
+          .filter((element) => {
+            if (!visible(element)) {
+              return false;
+            }
             const rect = element.getBoundingClientRect();
-            if (rect.left >= -1 && rect.right <= width + 1) return false;
+            if (rect.left >= -1 && rect.right <= width + 1) {
+              return false;
+            }
 
             let ancestor = element.parentElement;
             while (ancestor) {
@@ -111,7 +126,7 @@ test.describe('responsive public-site audit', () => {
             return true;
           })
           .slice(0, 12)
-          .map(element => {
+          .map((element) => {
             const rect = element.getBoundingClientRect();
             return {
               tag: element.tagName.toLowerCase(),
@@ -122,13 +137,6 @@ test.describe('responsive public-site audit', () => {
             };
           });
 
-        const docsProduct = Boolean(document.querySelector('.srv-docs-product'));
-        const docsMobile = visible(document.querySelector('.srv-docs-mobile-wrap'));
-        const docsSidebar = visible(document.querySelector('.srv-docs-sidebar'));
-        const docsToc = visible(document.querySelector('.srv-docs-toc'));
-        const docsArticle = Boolean(document.querySelector('.srv-docs-article'));
-        const resourceActions = visible(document.querySelector('.srv-help-topbar-actions'));
-
         const siteMobileNav = visible(document.querySelector('.srv3-mobile-nav'));
         const siteDesktopNav = visible(document.querySelector('.srv3-nav'));
         const siteHeaderActions = visible(document.querySelector('.srv3-header-actions'));
@@ -137,12 +145,6 @@ test.describe('responsive public-site audit', () => {
           documentOverflow,
           brokenImages,
           unsafeMedia,
-          docsProduct,
-          docsMobile,
-          docsSidebar,
-          docsToc,
-          docsArticle,
-          resourceActions,
           siteMobileNav,
           siteDesktopNav,
           siteHeaderActions,
@@ -154,7 +156,7 @@ test.describe('responsive public-site audit', () => {
           route,
           viewport,
           kind: 'horizontal-overflow',
-          detail: result.documentOverflow + 'px beyond viewport',
+          detail: `${result.documentOverflow}px beyond viewport`,
         });
       }
 
@@ -176,70 +178,30 @@ test.describe('responsive public-site audit', () => {
         });
       }
 
-      if (result.docsProduct) {
-        const shouldUseMobileDocs = viewport.width <= 1040;
-        if (result.docsMobile !== shouldUseMobileDocs) {
-          issues.push({
-            route,
-            viewport,
-            kind: 'docs-mobile-shell',
-            detail: 'mobileNav=' + result.docsMobile + ', expected=' + shouldUseMobileDocs,
-          });
-        }
-        if (result.docsSidebar === shouldUseMobileDocs) {
-          issues.push({
-            route,
-            viewport,
-            kind: 'docs-sidebar-shell',
-            detail: 'desktopSidebar=' + result.docsSidebar + ', expected=' + !shouldUseMobileDocs,
-          });
-        }
-
-        const shouldShowToc = result.docsArticle && viewport.width > 1080;
-        if (result.docsToc !== shouldShowToc) {
-          issues.push({
-            route,
-            viewport,
-            kind: 'docs-toc-shell',
-            detail: 'toc=' + result.docsToc + ', expected=' + shouldShowToc,
-          });
-        }
-
-        const shouldShowResourceActions = viewport.width > 1040;
-        if (result.resourceActions !== shouldShowResourceActions) {
-          issues.push({
-            route,
-            viewport,
-            kind: 'resource-actions-shell',
-            detail: 'actions=' + result.resourceActions + ', expected=' + shouldShowResourceActions,
-          });
-        }
-      } else {
-        const shouldUseMobileHeader = viewport.width <= 1040;
-        if (result.siteMobileNav !== shouldUseMobileHeader) {
-          issues.push({
-            route,
-            viewport,
-            kind: 'site-mobile-header',
-            detail: 'mobileNav=' + result.siteMobileNav + ', expected=' + shouldUseMobileHeader,
-          });
-        }
-        if (result.siteDesktopNav === shouldUseMobileHeader) {
-          issues.push({
-            route,
-            viewport,
-            kind: 'site-desktop-header',
-            detail: 'desktopNav=' + result.siteDesktopNav + ', expected=' + !shouldUseMobileHeader,
-          });
-        }
-        if (result.siteHeaderActions === shouldUseMobileHeader) {
-          issues.push({
-            route,
-            viewport,
-            kind: 'site-header-actions',
-            detail: 'actions=' + result.siteHeaderActions + ', expected=' + !shouldUseMobileHeader,
-          });
-        }
+      const shouldUseMobileHeader = viewport.width <= 1040;
+      if (result.siteMobileNav !== shouldUseMobileHeader) {
+        issues.push({
+          route,
+          viewport,
+          kind: 'site-mobile-header',
+          detail: `mobileNav=${result.siteMobileNav}, expected=${shouldUseMobileHeader}`,
+        });
+      }
+      if (result.siteDesktopNav === shouldUseMobileHeader) {
+        issues.push({
+          route,
+          viewport,
+          kind: 'site-desktop-header',
+          detail: `desktopNav=${result.siteDesktopNav}, expected=${!shouldUseMobileHeader}`,
+        });
+      }
+      if (result.siteHeaderActions === shouldUseMobileHeader) {
+        issues.push({
+          route,
+          viewport,
+          kind: 'site-header-actions',
+          detail: `actions=${result.siteHeaderActions}, expected=${!shouldUseMobileHeader}`,
+        });
       }
     }
 
@@ -251,9 +213,9 @@ test.describe('responsive public-site audit', () => {
     expect(
       issues,
       issues.length
-        ? 'Responsive audit failures:\\n' + issues.map(issue => (
-            issue.route + ' [' + issue.kind + '] ' + issue.detail
-          )).join('\\n')
+        ? `Responsive audit failures:\\n${issues.map(issue => (
+          `${issue.route} [${issue.kind}] ${issue.detail}`
+        )).join('\\n')}`
         : 'Responsive audit passed',
     ).toEqual([]);
   });
