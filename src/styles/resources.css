@@ -343,8 +343,7 @@
   gap: 12px;
 }
 
-.sr-res-support-actions a,
-.sr-res-actions a {
+.sr-res-support-actions a {
   display: inline-flex;
   min-height: 44px;
   align-items: center;

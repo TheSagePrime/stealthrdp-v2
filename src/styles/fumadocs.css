@@ -84,6 +84,12 @@
   grid-row: 1 / span 2;
 }
 
+@media (min-width: 768px) and (max-width: 1023px) {
+  #nd-docs-layout {
+    --fd-sidebar-width: 14rem;
+  }
+}
+
 @media (max-width: 767px) {
   #nd-docs-layout {
     --fd-nav-height: 64px;
