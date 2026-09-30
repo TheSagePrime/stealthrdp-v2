@@ -1,3 +1,4 @@
+/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
 import { ArrowRight, Cpu, HardDrive, MapPin, Memory as MemoryStick } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
@@ -21,6 +22,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { getPlans } from '@/lib/stealth/live-plans';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
@@ -81,14 +83,22 @@ const orderSteps = [
 /* Token utilities for the card link rows, replacing the bespoke .sr-location-grid hook. */
 const cardLinkClass = 'inline-flex min-h-11 items-center gap-2 text-small font-semibold text-primary transition-colors hover:text-accent-hover';
 
-export default function LinuxVpsPage() {
+/* Stock is read live from WHMCS; see src/lib/stealth/live-plans.ts. Must be a literal: 6 hours. */
+export const revalidate = 21600;
+
+export default async function LinuxVpsPage() {
+  const plans = await getPlans();
+
   return (
     <div className="srv-page srv-page-os srv-page-linux">
       <section className="sr-page-hero sr-os-page-hero">
         <div className="sr-container sr-os-hero-grid">
           <div>
             <p className="sr-kicker">Linux VPS hosting</p>
-            <h1 className="sr-title">Linux VPS hosting with Root access and a distro <span>you can confirm.</span></h1>
+            <h1 className="sr-title">
+              Linux VPS hosting with Root access and a distro
+              <span>you can confirm.</span>
+            </h1>
             <p className="sr-lede">
               You need a Linux server you can administer as root. That can be Ubuntu, Debian, CentOS, or another listed image. You also need a price you can verify before you pay.
             </p>
@@ -96,7 +106,12 @@ export default function LinuxVpsPage() {
               StealthRDP sells Linux VPS plans in USA and EU regions. Compare the live catalog, then continue to the existing checkout.
             </p>
             <div className="sr-actions">
-              <Button asChild size="lg"><Link href="#linux-plans">Compare Linux VPS plans <ArrowRight size={16} /></Link></Button>
+              <Button asChild size="lg">
+                <Link href="#linux-plans">
+                  Compare Linux VPS plans
+                  <ArrowRight size={16} />
+                </Link>
+              </Button>
               <Button asChild size="lg" variant="outline"><Link href="#linux-distros">Linux distributions</Link></Button>
             </div>
           </div>
@@ -112,21 +127,36 @@ export default function LinuxVpsPage() {
       <section className="sr-section srv-os-pricing-section" id="linux-plans">
         <div className="sr-container">
           <div className="sr-section-head">
-            <div><p className="sr-kicker">Current VPS catalog</p><h2 className="sr-section-title">Choose your resource level</h2></div>
+            <div>
+              <p className="sr-kicker">Current VPS catalog</p>
+              <h2 className="sr-section-title">
+                Choose your resource level
+              </h2>
+            </div>
           </div>
-          <PricingExplorer />
+          <PricingExplorer plans={plans} />
         </div>
       </section>
 
       <section className="sr-section sr-section-border srv-os-story-section">
         <div className="sr-container sr-copy-grid">
-          <div><p className="sr-kicker">Next step</p><h2 className="sr-section-title">Choose the plan first. Select Windows or Linux in checkout.</h2></div>
+          <div>
+            <p className="sr-kicker">Next step</p>
+            <h2 className="sr-section-title">
+              Choose the plan first. Select Windows or Linux in checkout.
+            </h2>
+          </div>
           <div className="sr-prose-block">
             <p>
               The buyer chooses the resource plan and region on this page. The existing checkout then provides the operating-system selector before payment.
             </p>
             <div className="sr-actions">
-              <Button asChild><a href="/plans">Configure this VPS <ArrowRight size={16} /></a></Button>
+              <Button asChild>
+                <Link href="/plans">
+                  Configure this VPS
+                  <ArrowRight size={16} />
+                </Link>
+              </Button>
             </div>
           </div>
         </div>
@@ -134,7 +164,12 @@ export default function LinuxVpsPage() {
 
       <section className="sr-section sr-section-border srv-os-story-section">
         <div className="sr-container sr-copy-grid">
-          <div><p className="sr-kicker">Linux VPS guide</p><h2 className="sr-section-title">If you searched for cheap Linux VPS</h2></div>
+          <div>
+            <p className="sr-kicker">Linux VPS guide</p>
+            <h2 className="sr-section-title">
+              If you searched for cheap Linux VPS
+            </h2>
+          </div>
           <div className="sr-prose-block">
             <p>
               If you searched for cheap Linux VPS: “Cheap” here means see the current catalog, including Bronze at €9.50/month on the live plans page. It does not mean we are the cheapest provider on the internet. We do not claim that.
@@ -145,8 +180,14 @@ export default function LinuxVpsPage() {
               Confirm the live row before you order. Prices and stock can change.
             </p>
             <div className="sr-inline-links">
-              <Link href="/plans#linux-vps">Linux VPS catalog <ArrowRight size={16} /></Link>
-              <Link href="/plans#comparison">Plan comparison <ArrowRight size={16} /></Link>
+              <Link href="/plans#linux-vps">
+                Linux VPS catalog
+                <ArrowRight size={16} />
+              </Link>
+              <Link href="/plans#comparison">
+                Plan comparison
+                <ArrowRight size={16} />
+              </Link>
             </div>
           </div>
         </div>
@@ -155,7 +196,12 @@ export default function LinuxVpsPage() {
       <section className="sr-section sr-section-border" id="linux-distros">
         <div className="sr-container">
           <div className="sr-section-head">
-            <div><p className="sr-kicker">Environment</p><h2 className="sr-section-title">Linux distributions you can run</h2></div>
+            <div>
+              <p className="sr-kicker">Environment</p>
+              <h2 className="sr-section-title">
+                Linux distributions you can run
+              </h2>
+            </div>
             <p>Choose the operating-system family your stack needs, then confirm the exact image and version during checkout.</p>
           </div>
           <ul
@@ -195,16 +241,31 @@ export default function LinuxVpsPage() {
             </TableBody>
           </Table>
           <div className="sr-section-link">
-            <Link href="/docs/how-to-install-direct-admin-in-a-linux-server">How to install DirectAdmin in a Linux server <ArrowRight size={16} /></Link>
+            <Link href="/docs/how-to-install-direct-admin-in-a-linux-server">
+              How to install DirectAdmin in a Linux server
+              <ArrowRight size={16} />
+            </Link>
           </div>
         </div>
       </section>
 
-      <section className="sr-section sr-section-border srv-os-environment-section">
+      <section className="
+        sr-section sr-section-border srv-os-environment-section
+      "
+      >
         <div className="sr-container sr-copy-grid">
-          <div><p className="sr-kicker">Control</p><h2 className="sr-section-title">Root access</h2></div>
+          <div>
+            <p className="sr-kicker">Control</p>
+            <h2 className="sr-section-title">
+              Root access
+            </h2>
+          </div>
           <div className="sr-prose-block">
-            <p>VPS plans include full Root access. You administer the server. You keep backups. You stay inside the <Link href="/docs/use-of-service">Use of Service terms</Link>.</p>
+            <p>
+              VPS plans include full Root access. You administer the server. You keep backups. You stay inside the
+              <Link href="/docs/use-of-service">Use of Service terms</Link>
+              .
+            </p>
           </div>
         </div>
       </section>
@@ -212,7 +273,12 @@ export default function LinuxVpsPage() {
       <section className="sr-section sr-section-border srv-os-story-section">
         <div className="sr-container">
           <div className="sr-section-head">
-            <div><p className="sr-kicker">Resource fit</p><h2 className="sr-section-title">Size the machine to the stack</h2></div>
+            <div>
+              <p className="sr-kicker">Resource fit</p>
+              <h2 className="sr-section-title">
+                Size the machine to the stack
+              </h2>
+            </div>
             <p>Count what runs at the same time: OS, web server, app, database, jobs, files.</p>
           </div>
           <ol className="srv-os-feature-rail grid list-none gap-0 p-0">
@@ -222,7 +288,10 @@ export default function LinuxVpsPage() {
                 className="srv-os-feature-row"
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-micro font-bold text-body-dim tabular-nums">
+                  <span className="
+                    text-micro font-bold text-body-dim tabular-nums
+                  "
+                  >
                     {number}
                   </span>
                   <span className="srv-os-feature-icon">
@@ -242,9 +311,18 @@ export default function LinuxVpsPage() {
       <section className="sr-section sr-section-border srv-os-resource-section">
         <div className="sr-container">
           <div className="sr-section-head">
-            <div><p className="sr-kicker">Regions</p><h2 className="sr-section-title">USA or EU</h2></div>
+            <div>
+              <p className="sr-kicker">Regions</p>
+              <h2 className="sr-section-title">
+                USA or EU
+              </h2>
+            </div>
           </div>
-          <div className="srv-os-region-split grid gap-4 md:grid-cols-2">
+          <div className="
+            srv-os-region-split grid gap-4
+            md:grid-cols-2
+          "
+          >
             <Card className="srv-os-region-panel" data-region="usa">
               <CardHeader>
                 <span className="srv-os-region-icon">
@@ -260,7 +338,9 @@ export default function LinuxVpsPage() {
               </CardHeader>
               <CardFooter className="mt-auto">
                 <Link href="/plans" className={cardLinkClass}>
-                  View plans <ArrowRight aria-hidden="true" className="size-4" />
+                  View plans
+                  {' '}
+                  <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
               </CardFooter>
             </Card>
@@ -279,7 +359,9 @@ export default function LinuxVpsPage() {
               </CardHeader>
               <CardFooter className="mt-auto">
                 <Link href="/plans" className={cardLinkClass}>
-                  View plans <ArrowRight aria-hidden="true" className="size-4" />
+                  View plans
+                  {' '}
+                  <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
               </CardFooter>
             </Card>
@@ -289,7 +371,12 @@ export default function LinuxVpsPage() {
 
       <section className="sr-section sr-section-border srv-os-region-section">
         <div className="sr-container sr-copy-grid">
-          <div><p className="sr-kicker">Before you order</p><h2 className="sr-section-title">After payment</h2></div>
+          <div>
+            <p className="sr-kicker">Before you order</p>
+            <h2 className="sr-section-title">
+              After payment
+            </h2>
+          </div>
           <div className="sr-prose-block">
             <p>Standard Linux installations are typically activated within 5 minutes. Most services are activated within 5–10 minutes after payment confirmation. Credentials arrive by email after payment confirmation.</p>
           </div>
@@ -298,9 +385,20 @@ export default function LinuxVpsPage() {
 
       <section className="sr-section sr-section-border srv-os-story-section">
         <div className="sr-container sr-copy-grid">
-          <div><p className="sr-kicker">Support and limits</p><h2 className="sr-section-title">Support and limits</h2></div>
+          <div>
+            <p className="sr-kicker">Support and limits</p>
+            <h2 className="sr-section-title">
+              Support and limits
+            </h2>
+          </div>
           <div className="sr-prose-block">
-            <p>Support is available through <a href="https://wa.me/447441426993">WhatsApp</a>, the client-area ticket system, and support email. See the <Link href="/faq">FAQ</Link>.</p>
+            <p>
+              Support is available through
+              <a href="https://wa.me/447441426993">WhatsApp</a>
+              , the client-area ticket system, and support email. See the
+              <Link href="/faq">FAQ</Link>
+              .
+            </p>
             <ul>
               <li><a href="https://wa.me/447441426993">WhatsApp support</a></li>
               <li>Use the client-area ticket system for service support.</li>
@@ -314,7 +412,12 @@ export default function LinuxVpsPage() {
       <section className="sr-section sr-section-border srv-os-order-section">
         <div className="sr-container">
           <div className="sr-section-head">
-            <div><p className="sr-kicker">Order steps</p><h2 className="sr-section-title">Order a Linux VPS</h2></div>
+            <div>
+              <p className="sr-kicker">Order steps</p>
+              <h2 className="sr-section-title">
+                Order a Linux VPS
+              </h2>
+            </div>
             <p>Move from your requirements to checkout.</p>
           </div>
           <ol className="srv-os-order-rail grid list-none gap-0 p-0">
@@ -322,11 +425,15 @@ export default function LinuxVpsPage() {
               <li
                 key={number}
                 className="
-                  grid gap-3 border-t border-divider py-6 last:border-b
+                  grid gap-3 border-t border-divider py-6
+                  last:border-b
                   sm:grid-cols-[auto_1fr] sm:items-start sm:gap-x-6
                 "
               >
-                <span className="text-micro font-bold text-body-dim tabular-nums">
+                <span className="
+                  text-micro font-bold text-body-dim tabular-nums
+                "
+                >
                   {number}
                 </span>
                 <div className="grid gap-1.5">
@@ -337,7 +444,10 @@ export default function LinuxVpsPage() {
             ))}
           </ol>
           <div className="sr-section-link">
-            <Link href="/plans#linux-vps">Compare Linux VPS plans <ArrowRight size={16} /></Link>
+            <Link href="/plans#linux-vps">
+              Compare Linux VPS plans
+              <ArrowRight size={16} />
+            </Link>
           </div>
         </div>
       </section>
@@ -345,7 +455,12 @@ export default function LinuxVpsPage() {
       <section className="sr-section sr-section-border srv-os-faq-section">
         <div className="sr-container">
           <div className="sr-section-head">
-            <div><p className="sr-kicker">Common questions</p><h2 className="sr-section-title">Linux VPS questions</h2></div>
+            <div>
+              <p className="sr-kicker">Common questions</p>
+              <h2 className="sr-section-title">
+                Linux VPS questions
+              </h2>
+            </div>
             <p>Quick answers for price, Ubuntu, access, regions, and activation.</p>
           </div>
           <Accordion>
@@ -356,18 +471,39 @@ export default function LinuxVpsPage() {
             ))}
           </Accordion>
           <div className="sr-cta-inline srv-os-switcher">
-            <div><span className="sr-location-code">Choose another environment</span><h3>Need Windows instead?</h3><p>For familiar Windows software and remote Windows desktop or server access, see Windows VPS hosting.</p></div>
-            <Button asChild variant="outline"><Link href="/windows-vps">Windows VPS hosting <ArrowRight size={16} /></Link></Button>
+            <div>
+              <span className="sr-location-code">Choose another environment</span>
+              <h3>Need Windows instead?</h3>
+              <p>For familiar Windows software and remote Windows desktop or server access, see Windows VPS hosting.</p>
+            </div>
+            <Button asChild variant="outline">
+              <Link href="/windows-vps">
+                Windows VPS hosting
+                <ArrowRight size={16} />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
 
       <section className="sr-section">
-        <div className="sr-container sr-cta sr-cta-premium srv-site-final srv-os-final">
-          <div><p className="sr-kicker">Linux VPS plans</p><h2>Compare Linux VPS plans</h2><p>Check the current plan, region, and displayed price, then confirm Linux and the exact image in checkout.</p></div>
+        <div className="
+          sr-container sr-cta sr-cta-premium srv-site-final srv-os-final
+        "
+        >
+          <div>
+            <p className="sr-kicker">Linux VPS plans</p>
+            <h2>Compare Linux VPS plans</h2>
+            <p>Check the current plan, region, and displayed price, then confirm Linux and the exact image in checkout.</p>
+          </div>
           <div className="sr-actions">
-            <Button asChild size="lg"><Link href="/plans#linux-vps">Compare Linux VPS plans <ArrowRight size={16} /></Link></Button>
-            <Button asChild size="lg" variant="outline"><a href="/plans">Continue to checkout</a></Button>
+            <Button asChild size="lg">
+              <Link href="/plans#linux-vps">
+                Compare Linux VPS plans
+                <ArrowRight size={16} />
+              </Link>
+            </Button>
+            <Button asChild size="lg" variant="outline"><Link href="/plans">Continue to checkout</Link></Button>
           </div>
         </div>
       </section>

@@ -1,15 +1,17 @@
+/* eslint-disable better-tailwindcss/no-unknown-classes */
 'use client';
 
+import type { BillingCycle, Plan } from '@/lib/stealth/content';
+import Link from 'next/link';
 /* Homepage pricing configurator: interaction/state here, visual language in stealth-v3.css. */
 import { useMemo, useState } from 'react';
+import { PricingColumn } from '@/components/launchui/pricing-column';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { PricingColumn } from '@/components/launchui/pricing-column';
 import {
+
   checkoutUrl,
-  plans,
-  type BillingCycle,
-  type Plan,
+
 } from '@/lib/stealth/content';
 
 const cycles: BillingCycle[] = ['monthly', 'quarterly', 'semiannual', 'annual', 'biannual'];
@@ -36,7 +38,7 @@ function tierName(plan: Plan) {
   return plan.name.replace(/ USA| EU/g, '');
 }
 
-export function HomePricing() {
+export function HomePricing({ plans }: { plans: Plan[] }) {
   const [region, setRegion] = useState<'USA' | 'EU'>('USA');
   const [cycle, setCycle] = useState<BillingCycle>('monthly');
   const visible = useMemo(() => (
@@ -44,7 +46,7 @@ export function HomePricing() {
       .filter(plan => plan.location === region)
       .sort((a, b) => a.pricing.monthly.amount - b.pricing.monthly.amount)
       .slice(0, 4)
-  ), [region]);
+  ), [plans, region]);
 
   return (
     <div className="flex w-full flex-col gap-5">
@@ -85,8 +87,13 @@ export function HomePricing() {
         </div>
       </div>
 
-      <div className="srv-home-pricing-grid grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-        {visible.map(plan => {
+      <div className="
+        srv-home-pricing-grid grid grid-cols-1 gap-4
+        md:grid-cols-2
+        xl:grid-cols-4
+      "
+      >
+        {visible.map((plan) => {
           const price = plan.pricing[cycle];
           const monthEquivalent = price.amount / months[cycle];
           const osLabel = plan.source.os === 'linux-only' ? 'Linux only' : 'Windows + Linux';
@@ -101,12 +108,18 @@ export function HomePricing() {
                 description={osLabel}
                 featured={featured}
                 badge={featured ? <Badge variant="outline">Most popular</Badge> : null}
-                price={
+                price={(
                   <span>
-                    €{format(price.amount)}
-                    <span className="ml-1 text-base font-medium text-muted-foreground">{price.suffix}</span>
+                    €
+                    {format(price.amount)}
+                    <span className="
+                      ml-1 text-base font-medium text-muted-foreground
+                    "
+                    >
+                      {price.suffix}
+                    </span>
                   </span>
-                }
+                )}
                 priceNote={cycle === 'monthly'
                   ? 'Billed monthly'
                   : `€${monthEquivalent.toFixed(2)}/mo effective · due today`}
@@ -122,13 +135,16 @@ export function HomePricing() {
                   `${plan.specs.bandwidth} bandwidth`,
                   'Dedicated IPv4',
                 ]}
-                footer={
-                  <span className={available ? 'font-medium text-status-ok' : 'font-medium text-muted-foreground'}>
+                footer={(
+                  <span className={available
+                    ? 'font-medium text-status-ok'
+                    : `font-medium text-muted-foreground`}
+                  >
                     {plan.source.stock !== undefined
                       ? `${plan.source.stock} available`
                       : available ? 'In stock' : 'Out of stock'}
                   </span>
-                }
+                )}
               />
 
               <article className="srv-mobile-plan-card" data-featured={featured || undefined}>
@@ -140,7 +156,10 @@ export function HomePricing() {
                     </div>
                     <p>{osLabel}</p>
                   </div>
-                  <span className={available ? 'srv-mobile-stock is-available' : 'srv-mobile-stock'}>
+                  <span className={available
+                    ? 'srv-mobile-stock is-available'
+                    : `srv-mobile-stock`}
+                  >
                     {plan.source.stock !== undefined
                       ? `${plan.source.stock} left`
                       : available ? 'In stock' : 'Out of stock'}
@@ -148,7 +167,10 @@ export function HomePricing() {
                 </header>
 
                 <div className="srv-mobile-plan-price">
-                  <strong>€{format(price.amount)}</strong>
+                  <strong>
+                    €
+                    {format(price.amount)}
+                  </strong>
                   <span>{price.suffix}</span>
                 </div>
                 <p className="srv-mobile-plan-note">
@@ -158,9 +180,18 @@ export function HomePricing() {
                 </p>
 
                 <dl className="srv-mobile-plan-specs">
-                  <div><dt>CPU</dt><dd>{plan.specs.cpu}</dd></div>
-                  <div><dt>RAM</dt><dd>{plan.specs.ram}</dd></div>
-                  <div><dt>Storage</dt><dd>{plan.specs.storage}</dd></div>
+                  <div>
+                    <dt>CPU</dt>
+                    <dd>{plan.specs.cpu}</dd>
+                  </div>
+                  <div>
+                    <dt>RAM</dt>
+                    <dd>{plan.specs.ram}</dd>
+                  </div>
+                  <div>
+                    <dt>Storage</dt>
+                    <dd>{plan.specs.storage}</dd>
+                  </div>
                 </dl>
 
                 <details className="srv-mobile-plan-more">
@@ -169,18 +200,27 @@ export function HomePricing() {
                     <li>{plan.specs.cpu}</li>
                     <li>{plan.specs.ram}</li>
                     <li>{plan.specs.storage}</li>
-                    <li>{plan.specs.bandwidth} bandwidth</li>
+                    <li>
+                      {plan.specs.bandwidth}
+                      {' '}
+                      bandwidth
+                    </li>
                     <li>Dedicated IPv4</li>
                   </ul>
                 </details>
 
-                {available ? (
-                  <Button asChild size="lg" className="srv-mobile-plan-cta">
-                    <a href={checkoutUrl(plan, cycle)}>Choose {tierName(plan)}</a>
-                  </Button>
-                ) : (
-                  <Button size="lg" className="srv-mobile-plan-cta" disabled>Out of stock</Button>
-                )}
+                {available
+                  ? (
+                      <Button asChild size="lg" className="srv-mobile-plan-cta">
+                        <a href={checkoutUrl(plan, cycle)}>
+                          Choose
+                          {tierName(plan)}
+                        </a>
+                      </Button>
+                    )
+                  : (
+                      <Button size="lg" className="srv-mobile-plan-cta" disabled>Out of stock</Button>
+                    )}
               </article>
             </div>
           );
@@ -189,7 +229,7 @@ export function HomePricing() {
 
       <div className="flex flex-wrap justify-center gap-3">
         <Button asChild variant="outline">
-          <a href="/plans">View all plans</a>
+          <Link href="/plans">View all plans</Link>
         </Button>
       </div>
     </div>
