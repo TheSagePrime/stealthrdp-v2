@@ -1,11 +1,12 @@
+/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
+import Link from 'next/link';
+import { articlePath, blogArticles } from '@/lib/stealth/articles';
 import { buildArticleIndexJsonLd } from '@/libs/seo/articles';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
 import { createPageMetadata } from '@/libs/seo/metadata';
-import { articlePath, blogArticles } from '@/lib/stealth/content';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/blog',
@@ -32,13 +33,17 @@ export default function BlogPage() {
         </DocsDescription>
         <DocsBody>
           <div className="sr-docs-overview">
-            {categories.map(category => {
+            {categories.map((category) => {
               const articles = blogArticles.filter(article => article.category === category);
               return (
                 <section className="sr-docs-collection" key={category}>
                   <div className="sr-docs-collection-heading">
                     <h2>{category}</h2>
-                    <span>{articles.length} {articles.length === 1 ? 'guide' : 'guides'}</span>
+                    <span>
+                      {articles.length}
+                      {' '}
+                      {articles.length === 1 ? 'guide' : 'guides'}
+                    </span>
                   </div>
                   <ul>
                     {articles.map(article => (

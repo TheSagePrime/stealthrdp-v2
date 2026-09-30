@@ -1,21 +1,8 @@
 import type { BillingCycle } from './content';
 import { describe, expect, it } from 'vitest';
 import featuresJson from '../../content/features.json';
-import {
-  articlePath,
-
-  billingCycles,
-  blogArticles,
-  checkoutUrl,
-  citadelDocsArticles,
-  faqs,
-  helpDocsArticles,
-  indexableDocPublicPaths,
-  plans,
-  reviews,
-  testimonials,
-  uptime,
-} from './content';
+import { articlePath, blogArticles, citadelDocsArticles, helpDocsArticles, indexableDocPublicPaths } from './articles';
+import { billingCycles, checkoutUrl, faqs, plans, reviews, testimonials, uptime } from './content';
 import { noindexDocPaths } from './routes';
 
 const coreIndexablePaths = [

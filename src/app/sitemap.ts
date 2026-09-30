@@ -1,11 +1,11 @@
 import type { MetadataRoute } from 'next';
 import { AllLocales } from '@/config/i18n';
 import { resolveSeoSite } from '@/config/seo';
+import { citadelDocPublicPaths, indexableDocPublicPaths } from '@/lib/stealth/articles';
 import { buildArticleSitemapEntries } from '@/libs/seo/articles';
 import { getSeoConfig } from '@/libs/seo/config';
 import { localizedPath } from '@/libs/seo/locale';
 import { canonicalUrlForPath } from '@/libs/seo/normalize';
-import { citadelDocPublicPaths, indexableDocPublicPaths } from '@/lib/stealth/content';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const config = getSeoConfig();

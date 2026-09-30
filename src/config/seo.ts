@@ -2,21 +2,11 @@ import type { ArticleRegistryConfig } from '../libs/seo/articles';
 import type { DeployEnv } from '../libs/seo/env';
 import type { LegacyRedirect } from '../libs/seo/internal-links';
 import type { ResolvedSiteUrl } from '../libs/seo/site-url';
-import blogData from '../content/blog-articles.json';
+import { blogArticles } from '../lib/stealth/articles';
 import { noindexDocPaths } from '../lib/stealth/routes';
 import { parseSiteUrl, resolveSiteUrl } from '../libs/seo/site-url';
 
-type BlogSeed = {
-  slug: string;
-  title: string;
-  excerpt: string;
-  author: string;
-  date: string;
-  image?: string;
-  sources?: { title: string; url: string; publisher?: string; accessedAt?: string }[];
-};
-
-const publications: ArticleRegistryConfig['publications'] = (blogData as BlogSeed[]).map(article => ({
+const publications: ArticleRegistryConfig['publications'] = blogArticles.map(article => ({
   slug: article.slug,
   status: 'published',
   path: article.slug === 'vps-hosting-minecraft' ? '/vps-hosting-minecraft' : `/blog/${article.slug}.html`,
@@ -56,7 +46,9 @@ export type SeoConfig = {
 };
 
 export function resolveSeoSite(config: Pick<SeoConfig, 'siteUrl' | 'environment'>): ResolvedSiteUrl {
-  if (config.siteUrl.trim()) return parseSiteUrl(config.siteUrl, { production: config.environment.deployEnv === 'production' });
+  if (config.siteUrl.trim()) {
+    return parseSiteUrl(config.siteUrl, { production: config.environment.deployEnv === 'production' });
+  }
   return resolveSiteUrl(process.env, config.environment.deployEnv);
 }
 

@@ -2,14 +2,8 @@
 import type { ResourceSearchItem } from '@/components/site/ResourceSearch';
 import Link from 'next/link';
 import { ResourceSearch } from '@/components/site/ResourceSearch';
-import {
-  articlePath,
-  blogArticles,
-  citadelDocsArticles,
-  docPublicSlug,
-  faqs,
-  helpDocsArticles,
-} from '@/lib/stealth/content';
+import { articlePath, blogArticles, citadelDocsArticles, docPublicSlug, helpDocsArticles } from '@/lib/stealth/articles';
+import { faqs } from '@/lib/stealth/content';
 
 export type ResourceArea = 'resources' | 'guides' | 'help' | 'citadel' | 'faq';
 

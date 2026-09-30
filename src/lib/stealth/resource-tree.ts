@@ -1,4 +1,4 @@
-import { articlePath, blogArticles, citadelDocsArticles, docPublicSlug, helpDocsArticles } from '@/lib/stealth/content';
+import { articlePath, blogArticles, citadelDocsArticles, docPublicSlug, helpDocsArticles } from '@/lib/stealth/articles';
 import { articlesForCollection, citadelArticleHref, citadelCollections } from '@/lib/stealth/help-center';
 
 type Entry = { category: string; title: string; url: string };

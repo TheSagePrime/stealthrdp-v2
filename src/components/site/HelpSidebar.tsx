@@ -1,3 +1,5 @@
+/* eslint-disable better-tailwindcss/no-unknown-classes */
+import type { DocArticle } from '@/lib/stealth/articles';
 import Link from 'next/link';
 import {
   articlesForCollection,
@@ -5,7 +7,6 @@ import {
   helpCollectionId,
   helpCollections,
 } from '@/lib/stealth/help-center';
-import type { DocArticle } from '@/lib/stealth/content';
 
 export function HelpSidebar({
   articles,
@@ -23,9 +24,11 @@ export function HelpSidebar({
         </Link>
       </div>
 
-      {helpCollections.map(collection => {
+      {helpCollections.map((collection) => {
         const items = articlesForCollection(collection, articles);
-        if (items.length === 0) return null;
+        if (items.length === 0) {
+          return null;
+        }
 
         return (
           <section key={collection.title} className="srv-help-tree-group">

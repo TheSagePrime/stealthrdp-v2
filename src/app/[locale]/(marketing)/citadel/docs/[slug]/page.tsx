@@ -5,11 +5,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { DocBody, docHeadings } from '@/components/site/DocBody';
 import { RelatedArticles } from '@/components/site/RelatedArticles';
-import {
-  citadelDocsArticles,
-  docPublicSlug,
-  findCitadelDocByPublicSlug,
-} from '@/lib/stealth/content';
+import { citadelDocsArticles, docPublicSlug, findCitadelDocByPublicSlug } from '@/lib/stealth/articles';
 import { citadelArticleHref, citadelCollectionForArticle } from '@/lib/stealth/help-center';
 import { createPageMetadata } from '@/libs/seo/metadata';
 

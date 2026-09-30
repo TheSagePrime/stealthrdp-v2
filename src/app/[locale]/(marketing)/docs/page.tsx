@@ -1,13 +1,14 @@
+/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
-import { createPageMetadata } from '@/libs/seo/metadata';
+import Link from 'next/link';
+import { helpDocsArticles } from '@/lib/stealth/articles';
 import {
   articlesForCollection,
   helpArticleHref,
   helpCollections,
 } from '@/lib/stealth/help-center';
-import { helpDocsArticles } from '@/lib/stealth/content';
+import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/docs',
@@ -25,9 +26,11 @@ export default function DocsPageRoute() {
       </DocsDescription>
       <DocsBody>
         <div className="sr-docs-overview">
-          {helpCollections.map(collection => {
+          {helpCollections.map((collection) => {
             const articles = articlesForCollection(collection, helpDocsArticles);
-            if (articles.length === 0) return null;
+            if (articles.length === 0) {
+              return null;
+            }
 
             return (
               <section className="sr-docs-collection" key={collection.title}>
@@ -36,7 +39,11 @@ export default function DocsPageRoute() {
                     <h2>{collection.title}</h2>
                     <p>{collection.description}</p>
                   </div>
-                  <span>{articles.length} {articles.length === 1 ? 'guide' : 'guides'}</span>
+                  <span>
+                    {articles.length}
+                    {' '}
+                    {articles.length === 1 ? 'guide' : 'guides'}
+                  </span>
                 </div>
                 <ul>
                   {articles.map(article => (

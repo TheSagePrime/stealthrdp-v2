@@ -3,7 +3,8 @@ import type { Metadata } from 'next';
 import { DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { ArrowRight, BookOpen, LifeBuoy, MessageCircleQuestion, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
-import { blogArticles, citadelDocsArticles, faqs, helpDocsArticles } from '@/lib/stealth/content';
+import { blogArticles, citadelDocsArticles, helpDocsArticles } from '@/lib/stealth/articles';
+import { faqs } from '@/lib/stealth/content';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
