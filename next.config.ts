@@ -66,7 +66,7 @@ const baseConfig: NextConfig = {
       { key: 'X-Content-Type-Options', value: 'nosniff' },
       { key: 'X-Frame-Options', value: 'DENY' },
       ...(process.env.NODE_ENV === 'production'
-        ? [{ key: 'Strict-Transport-Security', value: 'max-age=31536000' }]
+        ? [{ key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains' }]
         : []),
       /* Non-production deploys (preview, staging, dev) must never be indexed, even by
          crawlers that ignore robots.txt. This uses the shared deploy-env resolver, so
