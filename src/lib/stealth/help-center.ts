@@ -1,5 +1,5 @@
-import type { DocArticle } from '@/lib/stealth/content';
-import { docPublicSlug } from '@/lib/stealth/content';
+import type { DocArticle } from '@/lib/stealth/articles';
+import { docPublicSlug } from '@/lib/stealth/articles';
 
 export type HelpCollection = {
   title: string;

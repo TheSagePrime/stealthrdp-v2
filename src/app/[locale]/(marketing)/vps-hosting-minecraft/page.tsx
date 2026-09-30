@@ -8,7 +8,7 @@ import { RelatedArticles } from '@/components/site/RelatedArticles';
 import { ResourceDocsLayout } from '@/components/site/ResourceDocsLayout';
 import { articleHeadings, TrustedArticleBody } from '@/components/site/TrustedArticleBody';
 import { Button } from '@/components/ui/button';
-import { articlePath, blogArticles, findBlog } from '@/lib/stealth/content';
+import { articlePath, blogArticles, findBlog } from '@/lib/stealth/articles';
 import { guidePageTree } from '@/lib/stealth/resource-tree';
 import { createArticleMetadata } from '@/libs/seo/articles';
 import { getSeoConfig } from '@/libs/seo/config';

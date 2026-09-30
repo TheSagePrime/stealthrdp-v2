@@ -7,83 +7,6 @@
   background: transparent;
 }
 
-.sr-docs-overview {
-  display: grid;
-  gap: 2.25rem;
-  padding-top: 1rem;
-}
-
-.sr-docs-collection-heading {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  border-bottom: 1px solid var(--border-divider);
-  padding-bottom: 0.75rem;
-}
-
-.sr-docs-collection-heading h2 {
-  margin: 0;
-  font-size: 1.2rem;
-  font-weight: 700;
-}
-
-.sr-docs-collection-heading > span {
-  color: var(--text-dim);
-  font-size: 0.8125rem;
-}
-
-.sr-docs-collection-heading > div > p {
-  margin: 0.25rem 0 0;
-  color: var(--text-dim);
-  font-size: 0.8125rem;
-}
-
-.sr-docs-collection ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.sr-docs-collection li {
-  border-bottom: 1px solid var(--border-divider);
-}
-
-.sr-docs-collection li a {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 0.25rem 1rem;
-  align-items: center;
-  border-radius: 0.5rem;
-  padding: 0.9rem 0.75rem;
-  color: var(--foreground);
-  text-decoration: none;
-  transition:
-    background-color 160ms ease,
-    color 160ms ease;
-}
-
-.sr-docs-collection li a:hover {
-  background: color-mix(in srgb, var(--primary) 5%, transparent);
-  color: var(--primary);
-}
-
-.sr-docs-collection li a > span:first-child {
-  font-weight: 650;
-}
-
-.sr-docs-collection li a > small {
-  grid-column: 1;
-  color: var(--text-dim);
-  font-size: 0.8125rem;
-  line-height: 1.45;
-}
-
-.sr-docs-collection li a > span:last-child {
-  grid-column: 2;
-  grid-row: 1 / span 2;
-}
-
 @media (min-width: 768px) and (max-width: 1023px) {
   #nd-docs-layout {
     --fd-sidebar-width: 14rem;
@@ -94,9 +17,5 @@
   #nd-docs-layout {
     --fd-nav-height: 64px;
     --fd-sidebar-width: 0px;
-  }
-
-  .sr-docs-overview {
-    gap: 1.75rem;
   }
 }

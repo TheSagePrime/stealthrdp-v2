@@ -4,11 +4,7 @@ import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layo
 import { notFound } from 'next/navigation';
 import { DocBody, docHeadings } from '@/components/site/DocBody';
 import { RelatedArticles } from '@/components/site/RelatedArticles';
-import {
-  docPublicSlug,
-  findDocByPublicSlug,
-  helpDocsArticles,
-} from '@/lib/stealth/content';
+import { docPublicSlug, findDocByPublicSlug, helpDocsArticles } from '@/lib/stealth/articles';
 import { helpArticleHref, helpCollectionForArticle } from '@/lib/stealth/help-center';
 import { createPageMetadata } from '@/libs/seo/metadata';
 

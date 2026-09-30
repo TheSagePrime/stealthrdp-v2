@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import { ArticleJsonLd, ArticlePublicationMeta, ArticleSources } from '@/components/seo/Article';
 import { RelatedArticles } from '@/components/site/RelatedArticles';
 import { articleHeadings, TrustedArticleBody } from '@/components/site/TrustedArticleBody';
-import { articlePath, blogArticles, findBlog } from '@/lib/stealth/content';
+import { articlePath, blogArticles, findBlog } from '@/lib/stealth/articles';
 import { createArticleMetadata } from '@/libs/seo/articles';
 import { getSeoConfig } from '@/libs/seo/config';
 

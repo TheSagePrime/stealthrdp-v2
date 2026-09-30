@@ -1,4 +1,4 @@
-import { articlePath, blogArticles, citadelDocsArticles, docPublicSlug, helpDocsArticles } from '@/lib/stealth/content';
+import { articlePath, blogArticles, citadelDocsArticles, docPublicSlug, helpDocsArticles } from '@/lib/stealth/articles';
 import { articlesForCollection, citadelArticleHref, citadelCollections } from '@/lib/stealth/help-center';
 
 type Entry = { category: string; title: string; url: string };
@@ -76,5 +76,16 @@ export const citadelPageTree = {
         })),
       }))
       .filter(group => group.children.length > 0),
+  ],
+};
+
+export const resourcesPageTree = {
+  name: 'Resources',
+  children: [
+    { type: 'page' as const, name: 'Resources home', url: '/resources' },
+    { type: 'page' as const, name: 'Guides', url: '/blog' },
+    { type: 'page' as const, name: 'Help Center', url: '/docs' },
+    { type: 'page' as const, name: 'Citadel Docs', url: '/citadel/docs' },
+    { type: 'page' as const, name: 'Common Questions', url: '/faq' },
   ],
 };

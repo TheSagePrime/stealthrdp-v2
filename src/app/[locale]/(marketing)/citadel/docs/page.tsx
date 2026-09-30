@@ -2,7 +2,7 @@
 import type { Metadata } from 'next';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import Link from 'next/link';
-import { citadelDocsArticles } from '@/lib/stealth/content';
+import { citadelDocsArticles } from '@/lib/stealth/articles';
 import {
   articlesForCollection,
   citadelArticleHref,

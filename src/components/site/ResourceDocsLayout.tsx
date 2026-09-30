@@ -1,10 +1,14 @@
 import type { ReactNode } from 'react';
 import type { ResourceArea } from '@/components/site/ResourcesBar';
-import type { citadelPageTree, guidePageTree, productDocsPageTree } from '@/lib/stealth/resource-tree';
+import type { citadelPageTree, guidePageTree, productDocsPageTree, resourcesPageTree } from '@/lib/stealth/resource-tree';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { ResourcesBar } from '@/components/site/ResourcesBar';
 
-type ResourceTree = typeof citadelPageTree | typeof guidePageTree | typeof productDocsPageTree;
+type ResourceTree
+  = | typeof citadelPageTree
+    | typeof guidePageTree
+    | typeof productDocsPageTree
+    | typeof resourcesPageTree;
 
 export function ResourceDocsLayout({
   area,

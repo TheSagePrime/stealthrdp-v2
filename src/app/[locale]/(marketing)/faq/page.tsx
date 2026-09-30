@@ -1,8 +1,8 @@
-/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
+import { DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { FaqExplorer } from '@/components/site/FaqExplorer';
-import { ResourcesBar } from '@/components/site/ResourcesBar';
 import { faqs } from '@/lib/stealth/content';
+import { faqCategoryId } from '@/lib/stealth/faq-topics';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
@@ -14,12 +14,20 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default function FaqPage() {
+  const toc = Array.from(new Set(faqs.map(item => item.category))).map(category => ({
+    title: category,
+    url: `#${faqCategoryId(category)}`,
+    depth: 2,
+  }));
+
   return (
-    <>
-      <ResourcesBar active="faq" />
-      <div className="srv-page srv-page-faq">
-        <FaqExplorer faqs={faqs} />
-      </div>
-    </>
+    <DocsPage toc={toc} tableOfContent={{ style: 'clerk' }}>
+      <DocsTitle>Common questions</DocsTitle>
+      <DocsDescription>
+        Plans, setup, billing, operating systems, security, refunds, and support.
+        Search from the resource bar above or jump to a topic.
+      </DocsDescription>
+      <FaqExplorer faqs={faqs} />
+    </DocsPage>
   );
 }

@@ -815,14 +815,6 @@
   gap: 12px;
 }
 
-
-
-
-
-
-
-
-
 .sr-stage-float {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
@@ -1209,7 +1201,8 @@
   border: 1px solid var(--border-divider);
   border-radius: var(--radius-lg);
   background: var(--surface-1);
-  /* The frame owns the inset: the table never lands flush on its own border. */ padding: 12px;
+  /* The frame owns the inset: the table never lands flush on its own border. */
+  padding: 12px;
   /* A column cut by the viewport edge must read as scrollable, not broken.
      The fade marks that more table exists to the right. */
   mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 28px), transparent 100%);
@@ -1441,52 +1434,6 @@
 /* --------------------------------------------------------------------------
    Home 7 — resources entry points
    -------------------------------------------------------------------------- */
-
-.sr-resources-list {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  border: 1px solid var(--border-divider);
-  border-radius: var(--radius-lg);
-  background: var(--surface-1);
-  overflow: hidden;
-}
-
-.sr-resources-list li {
-  border-inline-start: 1px solid var(--border-divider);
-}
-
-.sr-resources-list li:first-child {
-  border-inline-start: 0;
-}
-
-.sr-resources-list a {
-  display: grid;
-  gap: 8px;
-  min-height: 120px;
-  align-content: space-between;
-  padding: 24px;
-  transition: background-color var(--duration-focus) var(--ease-out-quint);
-}
-
-.sr-resources-list a:hover {
-  background: var(--surface-2);
-}
-
-.sr-resources-list svg {
-  width: 1rem;
-  height: 1rem;
-  color: var(--accent);
-}
-
-.sr-resources-list span {
-  color: var(--text);
-  font-size: var(--text-small);
-  font-weight: 600;
-}
 
 /* --------------------------------------------------------------------------
    Closing action
@@ -1844,14 +1791,6 @@
     gap: 8px 32px;
   }
 
-  .sr-resources-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .sr-resources-list li:nth-child(3) {
-    border-inline-start: 0;
-  }
-
   .sr-cta {
     grid-template-columns: minmax(0, 1fr);
     gap: 32px;
@@ -1997,19 +1936,8 @@
 
   .sr-plan-grid,
   .sr-review-grid,
-  .sr-resources-list,
   .sr-footer-grid {
     grid-template-columns: minmax(0, 1fr);
-  }
-
-  .sr-resources-list li,
-  .sr-resources-list li:nth-child(3) {
-    border-inline-start: 0;
-    border-top: 1px solid var(--border-divider);
-  }
-
-  .sr-resources-list li:first-child {
-    border-top: 0;
   }
 
   .sr-cta {
@@ -2044,7 +1972,6 @@
   .sr-social-links a,
   .sr-mobile-menu a,
   .sr-index-item a,
-  .sr-resources-list a,
   .sr-plan-card {
     transition: none;
   }
