@@ -1,7 +1,9 @@
+/* eslint-disable better-tailwindcss/no-unknown-classes, next/no-html-link-for-pages */
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import type { BillingCycle, Plan } from '@/lib/stealth/content';
 import { ArrowSquareOut, CaretDown } from '@phosphor-icons/react';
+import { useEffect, useMemo, useState } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ButtonGroup } from '@/components/ui/button-group';
@@ -16,11 +18,11 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import {
+
   billingCycles,
   checkoutUrl,
+
   plans,
-  type BillingCycle,
-  type Plan,
 } from '@/lib/stealth/content';
 
 const cycleOrder: BillingCycle[] = ['monthly', 'quarterly', 'semiannual', 'annual', 'biannual'];
@@ -37,7 +39,7 @@ const priceHeader: Record<BillingCycle, string> = {
 const formatPrice = (amount: number) => Number.isInteger(amount) ? `${amount}` : amount.toFixed(2);
 
 /** Read a comparable number out of a published spec string. */
-const specNumber = (value: string) => Number.parseInt(value.replace(/[^\d]/g, ''), 10) || 0;
+const specNumber = (value: string) => Number.parseInt(value.replace(/\D/g, ''), 10) || 0;
 
 const planSlug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
@@ -62,12 +64,16 @@ function SpecCell({
 
 /** Nearest in-stock plan in the same region, so a sold-out row still offers a way to buy now. */
 function alternativeFor(plan: Plan, candidates: Plan[]): Plan | null {
-  if (plan.source.availability !== 'out-of-stock') return null;
+  if (plan.source.availability !== 'out-of-stock') {
+    return null;
+  }
   const pool = candidates
     .filter(candidate => candidate.name !== plan.name)
     .filter(candidate => candidate.location === plan.location)
     .filter(candidate => candidate.source.availability !== 'out-of-stock');
-  if (pool.length === 0) return null;
+  if (pool.length === 0) {
+    return null;
+  }
   const ordered = [...pool].sort((a, b) => a.pricing.monthly.amount - b.pricing.monthly.amount);
   return ordered.find(candidate => candidate.pricing.monthly.amount >= plan.pricing.monthly.amount)
     ?? ordered[ordered.length - 1]
@@ -99,7 +105,9 @@ function PlanRow({
           <span className="sr-ledger-meta">{plan.description}</span>
         </span>
         <span className="sr-ledger-meta">
-          Region: {plan.location}
+          Region:
+          {' '}
+          {plan.location}
         </span>
       </th>
       <SpecCell
@@ -127,36 +135,46 @@ function PlanRow({
       <TableCell className="sr-ledger-price">
         {`€${formatPrice(price.amount)}${price.suffix}`}
         <span className="sr-ledger-meta">{`due today · ${price.periodLabel}`}</span>
-        {price.referenceAmount ? (
-          <span className="sr-ledger-was">{`standard €${formatPrice(price.referenceAmount)}`}</span>
-        ) : null}
+        {price.referenceAmount
+          ? (
+              <span className="sr-ledger-was">{`standard €${formatPrice(price.referenceAmount)}`}</span>
+            )
+          : null}
       </TableCell>
       <TableCell className="sr-ledger-action">
-        {available ? (
-          <Button asChild size="sm">
-            <a
-              href={checkoutUrl(plan, cycle)}
-              aria-label={`Buy ${plan.name} — leaves this site for the StealthRDP checkout at dash.stealthrdp.com`}
-            >
-              Order Now <ArrowSquareOut size={14} aria-hidden="true" />
-            </a>
-          </Button>
-        ) : (
-          <div className="sr-ledger-stack">
-            <Pill state="warn" icon={<span aria-hidden="true">!</span>}>
-              Out of stock
-            </Pill>
-            {alternative ? (
-              <a
-                className="sr-ledger-alt"
-                href={checkoutUrl(alternative, cycle)}
-                aria-label={`${plan.name} is out of stock — buy ${alternative.name} instead at dash.stealthrdp.com`}
-              >
-                See {alternative.name}
-              </a>
-            ) : null}
-          </div>
-        )}
+        {available
+          ? (
+              <Button asChild size="sm">
+                <a
+                  href={checkoutUrl(plan, cycle)}
+                  aria-label={`Buy ${plan.name} — leaves this site for the StealthRDP checkout at dash.stealthrdp.com`}
+                >
+                  Order Now
+                  {' '}
+                  <ArrowSquareOut size={14} aria-hidden="true" />
+                </a>
+              </Button>
+            )
+          : (
+              <div className="sr-ledger-stack">
+                <Pill state="warn" icon={<span aria-hidden="true">!</span>}>
+                  Out of stock
+                </Pill>
+                {alternative
+                  ? (
+                      <a
+                        className="sr-ledger-alt"
+                        href={checkoutUrl(alternative, cycle)}
+                        aria-label={`${plan.name} is out of stock — buy ${alternative.name} instead at dash.stealthrdp.com`}
+                      >
+                        See
+                        {' '}
+                        {alternative.name}
+                      </a>
+                    )
+                  : null}
+              </div>
+            )}
       </TableCell>
     </TableRow>
   );
@@ -171,9 +189,11 @@ const cycleMonths: Record<BillingCycle, number> = {
   biannual: 24,
 };
 
-/** One plan as a self-contained card mirroring the WHMCS store pattern:
+/**
+     One plan as a self-contained card mirroring the WHMCS store pattern:
     badge, price, OS, spec rows, live stock count, and its own action.
-    Sold-out plans render the same card with an honest stock state. */
+    Sold-out plans render the same card with an honest stock state.
+ */
 function PlanCard({
   plan,
   cycle,
@@ -207,9 +227,11 @@ function PlanCard({
       <p className="sr-pick-card-price">
         <span className="sr-pick-card-amount">
           {`€${formatPrice(price.amount)}${price.suffix}`}
-          {price.referenceAmount ? (
-            <span className="sr-pick-card-was">{` €${formatPrice(price.referenceAmount)}`}</span>
-          ) : null}
+          {price.referenceAmount
+            ? (
+                <span className="sr-pick-card-was">{` €${formatPrice(price.referenceAmount)}`}</span>
+              )
+            : null}
         </span>
         <span className="sr-pick-card-period">
           {`due today · ${price.periodLabel}`}
@@ -236,31 +258,39 @@ function PlanCard({
         </div>
       </dl>
       <div className="sr-pick-card-action">
-        {available ? (
-          <Button asChild className="sr-pick-card-buy">
-            <a
-              href={checkoutUrl(plan, cycle)}
-              aria-label={`Buy ${plan.name} — leaves this site for the StealthRDP checkout at dash.stealthrdp.com`}
-            >
-              Order Now <ArrowSquareOut size={14} aria-hidden="true" />
-            </a>
-          </Button>
-        ) : (
-          <div className="sr-ledger-stack">
-            <Pill state="warn" icon={<span aria-hidden="true">!</span>}>
-              Out of Stock
-            </Pill>
-            {alternative ? (
-              <a
-                className="sr-ledger-alt"
-                href={`#plan-${planSlug(alternative.name)}`}
-                aria-label={`${plan.name} is out of stock — see ${alternative.name} instead`}
-              >
-                See {alternative.name}
-              </a>
-            ) : null}
-          </div>
-        )}
+        {available
+          ? (
+              <Button asChild className="sr-pick-card-buy">
+                <a
+                  href={checkoutUrl(plan, cycle)}
+                  aria-label={`Buy ${plan.name} — leaves this site for the StealthRDP checkout at dash.stealthrdp.com`}
+                >
+                  Order Now
+                  {' '}
+                  <ArrowSquareOut size={14} aria-hidden="true" />
+                </a>
+              </Button>
+            )
+          : (
+              <div className="sr-ledger-stack">
+                <Pill state="warn" icon={<span aria-hidden="true">!</span>}>
+                  Out of Stock
+                </Pill>
+                {alternative
+                  ? (
+                      <a
+                        className="sr-ledger-alt"
+                        href={`#plan-${planSlug(alternative.name)}`}
+                        aria-label={`${plan.name} is out of stock — see ${alternative.name} instead`}
+                      >
+                        See
+                        {' '}
+                        {alternative.name}
+                      </a>
+                    )
+                  : null}
+              </div>
+            )}
       </div>
       <p className="sr-pick-stock" data-state={available ? 'in-stock' : 'out-of-stock'}>
         {stock !== undefined ? `${stock} Available` : (available ? 'In stock' : 'Out of stock')}
@@ -277,11 +307,15 @@ export function PricingExplorer({
   showComparison?: boolean;
 }) {
   const [region, setRegion] = useState<'USA' | 'EU'>(() => {
-    if (typeof window === 'undefined') return 'USA';
+    if (typeof window === 'undefined') {
+      return 'USA';
+    }
     return new URLSearchParams(window.location.search).get('region') === 'EU' ? 'EU' : 'USA';
   });
   const [cycle, setCycle] = useState<BillingCycle>(() => {
-    if (typeof window === 'undefined') return 'monthly';
+    if (typeof window === 'undefined') {
+      return 'monthly';
+    }
     const fromUrl = new URLSearchParams(window.location.search).get('cycle') as BillingCycle | null;
     return cycleOrder.includes(fromUrl as BillingCycle) ? (fromUrl as BillingCycle) : 'monthly';
   });
@@ -328,7 +362,7 @@ export function PricingExplorer({
   const highlightedPrice = highlighted?.pricing[cycle];
 
   return (
-    <div className="sr-pricing-explorer" data-compact={compact ? "true" : "false"}>
+    <div className="sr-pricing-explorer" data-compact={compact ? 'true' : 'false'}>
       <div className="sr-control-stack">
         <span className="sr-control-label">Deployment region</span>
         <ButtonGroup className="sr-segmented-control" aria-label="Deployment region">
@@ -349,8 +383,8 @@ export function PricingExplorer({
 
       <div className="sr-control-stack sr-cycle-stack">
         <span className="sr-control-label" id="sr-billing-label">Billing cycle</span>
-        <ul className="sr-cycle-strip" role="group" aria-labelledby="sr-billing-label">
-          {cycleOrder.map(item => {
+        <ul className="sr-cycle-strip" aria-labelledby="sr-billing-label">
+          {cycleOrder.map((item) => {
             const billing = billingCycles[item] as {
               label: string;
               discountLabel?: string;
@@ -371,9 +405,11 @@ export function PricingExplorer({
                   onClick={() => setCycle(item)}
                 >
                   <span className="sr-term-label">{termLabel}</span>
-                  {termPrice?.discountLabel ? (
-                    <Badge variant="outline" className="sr-term-save">{termPrice.discountLabel}</Badge>
-                  ) : null}
+                  {termPrice?.discountLabel
+                    ? (
+                        <Badge variant="outline" className="sr-term-save">{termPrice.discountLabel}</Badge>
+                      )
+                    : null}
                   <span className="sr-visually-hidden">
                     {termPrice ? `from €${formatPrice(termPrice.amount)} ${termPrice.periodLabel}, due today` : 'price at checkout'}
                   </span>
@@ -390,7 +426,17 @@ export function PricingExplorer({
       </div>
 
       <p className="sr-ledger-note sr-ledger-summary" data-plan-summary>
-        Showing {visible.length} {region} {visible.length === 1 ? 'plan' : 'plans'} · {priceHeader[cycle].toLowerCase()}
+        Showing
+        {' '}
+        {visible.length}
+        {' '}
+        {region}
+        {' '}
+        {visible.length === 1 ? 'plan' : 'plans'}
+        {' '}
+        ·
+        {' '}
+        {priceHeader[cycle].toLowerCase()}
       </p>
 
       <div className="sr-pick-cards">
@@ -405,76 +451,92 @@ export function PricingExplorer({
         ))}
       </div>
 
-      {!compact ? (
-        <>
-          {(() => {
-            const available = inRegion.filter(plan => plan.source.availability !== 'out-of-stock');
-            const soldOut = inRegion.filter(plan => plan.source.availability === 'out-of-stock');
-            if (soldOut.length === 0) return null;
-            return (
-              <p className="sr-ledger-note" aria-live="polite">
-                {soldOut.map(plan => plan.name).join(', ')} {soldOut.length === 1 ? 'is' : 'are'} out of stock
-                {available.length > 0 ? ` — available in ${region} now: ${available.map(plan => plan.name).join(', ')}.` : '.'} Availability is confirmed at checkout.
+      {!compact
+        ? (
+            <>
+              {(() => {
+                const available = inRegion.filter(plan => plan.source.availability !== 'out-of-stock');
+                const soldOut = inRegion.filter(plan => plan.source.availability === 'out-of-stock');
+                if (soldOut.length === 0) {
+                  return null;
+                }
+                return (
+                  <p className="sr-ledger-note" aria-live="polite">
+                    {soldOut.map(plan => plan.name).join(', ')}
+                    {' '}
+                    {soldOut.length === 1 ? 'is' : 'are'}
+                    {' '}
+                    out of stock
+                    {available.length > 0 ? ` — available in ${region} now: ${available.map(plan => plan.name).join(', ')}.` : '.'}
+                    {' '}
+                    Availability is confirmed at checkout.
+                  </p>
+                );
+              })()}
+              <p className="sr-ledger-note">
+                All prices in EUR. Bandwidth is unlimited on a 250 Mbps port. The 1 Gbps upgrade costs €5.00 per month at checkout and activates manually within 12 hours.
               </p>
-            );
-          })()}
-          <p className="sr-ledger-note">
-            All prices in EUR. Bandwidth is unlimited on a 250 Mbps port. The 1 Gbps upgrade costs €5.00 per month at checkout and activates manually within 12 hours.
-          </p>
-          <p className="sr-ledger-note">
-            Windows or Linux is selected during checkout. A Windows licence is not included — Evaluation image only; use your own eligible licence. <a href="/docs/windows-licensing">Windows licensing</a>
-          </p>
-        </>
-      ) : null}
+              <p className="sr-ledger-note">
+                Windows or Linux is selected during checkout. A Windows licence is not included — Evaluation image only; use your own eligible licence.
+                {' '}
+                <a href="/docs/windows-licensing">Windows licensing</a>
+              </p>
+            </>
+          )
+        : null}
 
-      {showComparison ? (
-        <>
-          <h2 className="sr-ledger-title">
-            See the difference in one view. <span className="sr-visually-hidden">VPS Features Comparison</span>
-          </h2>
-          <details className="sr-compare-details">
-            <summary className="sr-compare-summary">
-              <span className="sr-kicker">02 / Compare precisely</span>
-              <span className="sr-compare-label">
-                Compare all specs
-                <CaretDown size={14} aria-hidden="true" />
-              </span>
-            </summary>
-          <p className="sr-ledger-note">
-            Use this table for a quick resource check. Checkout confirms the current price and availability.
-          </p>
-          <span className="sr-ledger-hint">Swipe the table to compare every column.</span>
+      {showComparison
+        ? (
+            <>
+              <h2 className="sr-ledger-title">
+                See the difference in one view.
+                {' '}
+                <span className="sr-visually-hidden">VPS Features Comparison</span>
+              </h2>
+              <details className="sr-compare-details">
+                <summary className="sr-compare-summary">
+                  <span className="sr-kicker">02 / Compare precisely</span>
+                  <span className="sr-compare-label">
+                    Compare all specs
+                    <CaretDown size={14} aria-hidden="true" />
+                  </span>
+                </summary>
+                <p className="sr-ledger-note">
+                  Use this table for a quick resource check. Checkout confirms the current price and availability.
+                </p>
+                <span className="sr-ledger-hint">Swipe the table to compare every column.</span>
 
-          <div className="sr-ledger-scroll">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Plan</TableHead>
-                  <TableHead>CPU</TableHead>
-                  <TableHead>RAM</TableHead>
-                  <TableHead>Storage</TableHead>
-                  <TableHead>Bandwidth</TableHead>
-                  <TableHead>{priceHeader[cycle]}</TableHead>
-                  <TableHead><span className="sr-visually-hidden">Action</span></TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {visible.map(plan => (
-                  <PlanRow
-                    key={plan.name}
-                    plan={plan}
-                    cycle={cycle}
-                    showPopular={plan.name === popularName}
-                    maxima={maxima}
-                    alternative={alternativeFor(plan, plans)}
-                  />
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-          </details>
-        </>
-      ) : null}
+                <div className="sr-ledger-scroll">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Plan</TableHead>
+                        <TableHead>CPU</TableHead>
+                        <TableHead>RAM</TableHead>
+                        <TableHead>Storage</TableHead>
+                        <TableHead>Bandwidth</TableHead>
+                        <TableHead>{priceHeader[cycle]}</TableHead>
+                        <TableHead><span className="sr-visually-hidden">Action</span></TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {visible.map(plan => (
+                        <PlanRow
+                          key={plan.name}
+                          plan={plan}
+                          cycle={cycle}
+                          showPopular={plan.name === popularName}
+                          maxima={maxima}
+                          alternative={alternativeFor(plan, plans)}
+                        />
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              </details>
+            </>
+          )
+        : null}
     </div>
   );
 }

@@ -1,3 +1,4 @@
+/* eslint-disable better-tailwindcss/no-unknown-classes, next/no-html-link-for-pages */
 import type { Metadata } from 'next';
 import { ArrowRight, Cpu, HardDrive, Info, MapPin, Memory as MemoryStick, Scales as Scale } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
@@ -70,7 +71,10 @@ export default function WindowsVpsPage() {
         <div className="sr-container sr-os-hero-grid">
           <div>
             <p className="sr-kicker">Windows VPS hosting</p>
-            <h1 className="sr-title">Windows VPS hosting for work that <span>belongs on Windows.</span></h1>
+            <h1 className="sr-title">
+              Windows VPS hosting for work that
+              <span>belongs on Windows.</span>
+            </h1>
             <p className="sr-lede">
               Use remote Windows access for familiar software, administration, and business workflows.
               Choose your operating system, compare the resources, and order the configuration that fits the job.
@@ -79,7 +83,12 @@ export default function WindowsVpsPage() {
               StealthRDP sells Windows VPS plans in USA and EU regions. Compare the live catalog, then continue to the existing checkout.
             </p>
             <div className="sr-actions">
-              <Button asChild size="lg"><Link href="#windows-plans">Compare Windows VPS plans <ArrowRight size={16} /></Link></Button>
+              <Button asChild size="lg">
+                <Link href="#windows-plans">
+                  Compare Windows VPS plans
+                  <ArrowRight size={16} />
+                </Link>
+              </Button>
               <Button asChild size="lg" variant="outline"><Link href="#windows-versions">Windows versions</Link></Button>
             </div>
           </div>
@@ -114,7 +123,12 @@ export default function WindowsVpsPage() {
           <div className="sr-prose-block">
             <p>The buyer chooses the resource plan and region on this page. The existing checkout then provides the operating-system selector before payment.</p>
             <div className="sr-actions">
-              <Button asChild size="lg"><a href="/plans">Configure this VPS <ArrowRight size={16} /></a></Button>
+              <Button asChild size="lg">
+                <a href="/plans">
+                  Configure this VPS
+                  <ArrowRight size={16} />
+                </a>
+              </Button>
             </div>
           </div>
         </div>
@@ -130,8 +144,14 @@ export default function WindowsVpsPage() {
             <p>A Windows VPS gives you a remote Windows environment for software, testing, administration, and business workflows. It can also suit users who need access to a Windows desktop or server without keeping the machine on site.</p>
             <p>Start with the software and users. A plan that fits one application may not fit several concurrent sessions or a larger installation.</p>
             <div className="sr-inline-links">
-              <Link href="/plans#windows-vps">Windows VPS catalog <ArrowRight size={16} /></Link>
-              <Link href="/plans#comparison">Plan comparison <ArrowRight size={16} /></Link>
+              <Link href="/plans#windows-vps">
+                Windows VPS catalog
+                <ArrowRight size={16} />
+              </Link>
+              <Link href="/plans#comparison">
+                Plan comparison
+                <ArrowRight size={16} />
+              </Link>
             </div>
           </div>
         </div>
@@ -188,15 +208,26 @@ export default function WindowsVpsPage() {
             </TableBody>
           </Table>
           <div className="sr-inline-links">
-            <Link href="/docs/how-do-i-log-into-windows">How do I log into Windows? <ArrowRight size={16} /></Link>
+            <Link href="/docs/how-do-i-log-into-windows">
+              How do I log into Windows?
+              <ArrowRight size={16} />
+            </Link>
           </div>
           <div className="sr-disclosure">
             <Scale size={16} aria-hidden="true" />
             <p>
-              <strong>Windows licensing:</strong> StealthRDP provides the infrastructure only.
+              <strong>Windows licensing:</strong>
+              {' '}
+              StealthRDP provides the infrastructure only.
               Microsoft Windows licensing is not included and is not supplied by StealthRDP.
               Customers are responsible for their own licensing compliance.
-              {' '}<Link href="/docs/windows-licensing">Read the Windows licensing page.</Link>
+              {' '}
+              <Link
+                href="/docs/windows-licensing"
+                className="underline underline-offset-4"
+              >
+                Read the Windows licensing page.
+              </Link>
             </p>
           </div>
         </div>
@@ -210,7 +241,12 @@ export default function WindowsVpsPage() {
           </div>
           <div className="sr-prose-block">
             <p>VPS plans include full Windows Administrator access. That gives you control over the Windows environment and the software you install. You are responsible for regular backups of important data.</p>
-            <p>For the remote sign-in process, see <Link href="/docs/how-do-i-log-into-windows">How do I log into Windows?</Link> StealthRDP sends service credentials by email after payment confirmation.</p>
+            <p>
+              For the remote sign-in process, see
+              <Link href="/docs/how-do-i-log-into-windows">How do I log into Windows?</Link>
+              {' '}
+              StealthRDP sends service credentials by email after payment confirmation.
+            </p>
           </div>
         </div>
       </section>
@@ -229,15 +265,23 @@ export default function WindowsVpsPage() {
               <li
                 key={number}
                 className="
-                  grid gap-3 border-t border-divider py-6 last:border-b
+                  grid gap-3 border-t border-divider py-6
+                  last:border-b
                   sm:grid-cols-[auto_1fr] sm:items-start sm:gap-x-6
                 "
               >
                 <div className="flex items-center gap-3">
-                  <span className="text-micro font-bold text-body-dim tabular-nums">
+                  <span className="
+                    text-micro font-bold text-body-dim tabular-nums
+                  "
+                  >
                     {number}
                   </span>
-                  <span className="grid size-10 shrink-0 place-items-center rounded-md border border-border-soft bg-surface-2 text-primary">
+                  <span className="
+                    grid size-10 shrink-0 place-items-center rounded-md border
+                    border-border-soft bg-surface-2 text-primary
+                  "
+                  >
                     <Icon aria-hidden="true" className="size-5" />
                   </span>
                 </div>
@@ -254,13 +298,26 @@ export default function WindowsVpsPage() {
       <section className="sr-section sr-section-border">
         <div className="sr-container">
           <div className="sr-section-head">
-            <div><p className="sr-kicker">Regions</p><h2 className="sr-section-title">USA or EU</h2></div>
+            <div>
+              <p className="sr-kicker">Regions</p>
+              <h2 className="sr-section-title">
+                USA or EU
+              </h2>
+            </div>
             <p>Choose the region that fits your users, latency, and operating requirements.</p>
           </div>
-          <div className="grid gap-4 md:grid-cols-2">
+          <div className="
+            grid gap-4
+            md:grid-cols-2
+          "
+          >
             <Card>
               <CardHeader>
-                <span className="grid size-11 place-items-center rounded-md border border-divider bg-surface-1 text-primary">
+                <span className="
+                  grid size-11 place-items-center rounded-md border
+                  border-divider bg-surface-1 text-primary
+                "
+                >
                   <MapPin aria-hidden="true" className="size-5" />
                 </span>
                 <Badge variant="outline" className="w-fit text-body-muted">USA</Badge>
@@ -273,13 +330,19 @@ export default function WindowsVpsPage() {
               </CardHeader>
               <CardFooter className="mt-auto">
                 <Link href="/plans" className={cardLinkClass}>
-                  View plans <ArrowRight aria-hidden="true" className="size-4" />
+                  View plans
+                  {' '}
+                  <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
               </CardFooter>
             </Card>
             <Card>
               <CardHeader>
-                <span className="grid size-11 place-items-center rounded-md border border-divider bg-surface-1 text-primary">
+                <span className="
+                  grid size-11 place-items-center rounded-md border
+                  border-divider bg-surface-1 text-primary
+                "
+                >
                   <MapPin aria-hidden="true" className="size-5" />
                 </span>
                 <Badge variant="outline" className="w-fit text-body-muted">EU</Badge>
@@ -292,7 +355,9 @@ export default function WindowsVpsPage() {
               </CardHeader>
               <CardFooter className="mt-auto">
                 <Link href="/plans" className={cardLinkClass}>
-                  View plans <ArrowRight aria-hidden="true" className="size-4" />
+                  View plans
+                  {' '}
+                  <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
               </CardFooter>
             </Card>
@@ -319,7 +384,17 @@ export default function WindowsVpsPage() {
             <h2 className="sr-section-title">Support and limits</h2>
           </div>
           <div className="sr-prose-block">
-            <p>Support is available through WhatsApp, the client-area ticketing system, and support email. Review the <Link href="/faq">FAQ</Link> for support information, the <Link href="/docs/use-of-service">Use of Service terms</Link>, and the <Link href="/docs/windows-licensing">Windows licensing</Link> page before you order.</p>
+            <p>
+              Support is available through WhatsApp, the client-area ticketing system, and support email. Review the
+              <Link href="/faq">FAQ</Link>
+              {' '}
+              for support information, the
+              <Link href="/docs/use-of-service">Use of Service terms</Link>
+              , and the
+              <Link href="/docs/windows-licensing">Windows licensing</Link>
+              {' '}
+              page before you order.
+            </p>
             <ul>
               <li><a href="https://wa.me/447441426993">WhatsApp support</a></li>
               <li>Use the client-area ticket system for service support.</li>
@@ -345,7 +420,10 @@ export default function WindowsVpsPage() {
               <li>Review the live order details and price, then confirm the purchase through StealthRDP.</li>
             </ol>
             <div className="sr-inline-links">
-              <Link href="/plans#windows-vps">Compare Windows VPS plans <ArrowRight size={16} /></Link>
+              <Link href="/plans#windows-vps">
+                Compare Windows VPS plans
+                <ArrowRight size={16} />
+              </Link>
             </div>
           </div>
         </div>
@@ -354,7 +432,12 @@ export default function WindowsVpsPage() {
       <section className="sr-section sr-section-border">
         <div className="sr-container">
           <div className="sr-section-head">
-            <div><p className="sr-kicker">Common questions</p><h2 className="sr-section-title">Windows VPS questions</h2></div>
+            <div>
+              <p className="sr-kicker">Common questions</p>
+              <h2 className="sr-section-title">
+                Windows VPS questions
+              </h2>
+            </div>
             <p>Quick answers for software, access, activation, and support.</p>
           </div>
           <Accordion>
@@ -365,17 +448,34 @@ export default function WindowsVpsPage() {
             ))}
           </Accordion>
           <div className="sr-cta-inline">
-            <div><span className="sr-location-code">Choose another environment</span><h3>Need Linux instead?</h3><p>For websites, applications, databases, or development stacks, see Linux VPS hosting.</p></div>
-            <Button asChild variant="outline"><Link href="/linux-vps">Linux VPS hosting <ArrowRight size={16} /></Link></Button>
+            <div>
+              <span className="sr-location-code">Choose another environment</span>
+              <h3>Need Linux instead?</h3>
+              <p>For websites, applications, databases, or development stacks, see Linux VPS hosting.</p>
+            </div>
+            <Button asChild variant="outline">
+              <Link href="/linux-vps">
+                Linux VPS hosting
+                <ArrowRight size={16} />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
 
       <section className="sr-section">
         <div className="sr-container sr-cta sr-cta-premium">
-          <div><p className="sr-kicker">Windows VPS plans</p><h2>Compare Windows VPS plans</h2></div>
+          <div>
+            <p className="sr-kicker">Windows VPS plans</p>
+            <h2>Compare Windows VPS plans</h2>
+          </div>
           <div className="sr-actions">
-            <Button asChild size="lg"><Link href="/plans#windows-vps">Compare plans <ArrowRight size={16} /></Link></Button>
+            <Button asChild size="lg">
+              <Link href="/plans#windows-vps">
+                Compare plans
+                <ArrowRight size={16} />
+              </Link>
+            </Button>
             <Button asChild size="lg" variant="outline"><a href="/plans">Continue to checkout</a></Button>
           </div>
         </div>

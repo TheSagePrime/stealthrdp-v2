@@ -1,3 +1,4 @@
+/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
@@ -93,7 +94,9 @@ export default function CitadelPage() {
         <div className="sr-container">
           <p className="sr-kicker">Citadel by StealthRDP</p>
           <h1 className="sr-title">
-            Application-layer protection that sits <span>between Cloudflare and the origin.</span>
+            Application-layer protection that sits
+            {' '}
+            <span>between Cloudflare and the origin.</span>
           </h1>
           <p className="sr-lede">
             Cloudflare stays at the network edge. Citadel adds application-aware
@@ -170,9 +173,16 @@ export default function CitadelPage() {
             {escalation.map((step, index) => (
               <li
                 key={step}
-                className="grid gap-3 border-t border-divider py-6 last:border-b sm:grid-cols-[auto_1fr] sm:items-start sm:gap-x-6"
+                className="
+                  grid gap-3 border-t border-divider py-6
+                  last:border-b
+                  sm:grid-cols-[auto_1fr] sm:items-start sm:gap-x-6
+                "
               >
-                <span className="text-micro font-bold text-body-dim tabular-nums">
+                <span className="
+                  text-micro font-bold text-body-dim tabular-nums
+                "
+                >
                   {String(index + 1).padStart(2, '0')}
                 </span>
                 <p className="text-body text-body-text">{step}</p>
@@ -185,14 +195,19 @@ export default function CitadelPage() {
               <h2 className="sr-section-title">Pick the strength per path</h2>
             </div>
           </div>
-          <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="
+            grid gap-6
+            md:grid-cols-2
+            lg:grid-cols-3
+          "
+          >
             {challengeLevels.map(level => (
               <Card key={level.name} className="gap-2 p-6">
                 <h3 className="text-heading-4 font-semibold text-body-text">{level.name}</h3>
                 <p className="text-small text-body-muted">{level.text}</p>
               </Card>
             ))}
-          </ul>
+          </div>
         </div>
       </section>
 
@@ -204,7 +219,11 @@ export default function CitadelPage() {
               <h2 className="sr-section-title">Explicit rules instead of mystery blocks</h2>
             </div>
           </div>
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="
+            grid gap-6
+            md:grid-cols-2
+          "
+          >
             {controlGroups.map(group => (
               <Card key={group.title} className="gap-2 p-8">
                 <h3 className="text-heading-4 font-semibold text-body-text">{group.title}</h3>
@@ -223,7 +242,12 @@ export default function CitadelPage() {
               <h2 className="sr-section-title">See what was stopped and what it cost</h2>
             </div>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="
+            grid gap-6
+            sm:grid-cols-2
+            lg:grid-cols-4
+          "
+          >
             {visibility.map(item => (
               <Card key={item.title} className="gap-2 p-6">
                 <h3 className="text-heading-4 font-semibold text-body-text">{item.title}</h3>
@@ -247,7 +271,11 @@ export default function CitadelPage() {
               are published on the Citadel portal.
             </p>
           </div>
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className="
+            grid gap-6
+            md:grid-cols-3
+          "
+          >
             {plans.map(plan => (
               <Card key={plan.name} className="gap-2 p-8">
                 <h3 className="text-heading-4 font-semibold text-body-text">{plan.name}</h3>
@@ -299,7 +327,11 @@ export default function CitadelPage() {
 
       <section className="sr-section srv3-final-section">
         <div className="sr-container">
-          <Card className="gap-8 rounded-lg p-8 md:grid md:grid-cols-[1fr_auto] md:items-center md:gap-12 md:p-12">
+          <Card className="
+            gap-8 rounded-lg p-8
+            md:grid md:grid-cols-[1fr_auto] md:items-center md:gap-12 md:p-12
+          "
+          >
             <div className="grid gap-2">
               <p className="sr-kicker">Citadel by StealthRDP</p>
               <h2 className="text-display-2 font-semibold text-body-text">
@@ -310,7 +342,11 @@ export default function CitadelPage() {
                 watch attacks become a dashboard event instead of an outage.
               </p>
             </div>
-            <div className="flex flex-col gap-2.5 md:min-w-48">
+            <div className="
+              flex flex-col gap-2.5
+              md:min-w-48
+            "
+            >
               <Button asChild size="lg">
                 <a href="https://citadel.stealthrdp.com">
                   Open the Citadel portal

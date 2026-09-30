@@ -6,7 +6,7 @@ export function ResourceDocsLayout({ children }: { children: ReactNode }) {
   return (
     <DocsLayout
       tree={resourcePageTree}
-      nav={{ enabled: false }}
+      nav={{ enabled: false, title: <span className="sr-only">StealthRDP home</span> }}
       searchToggle={{ enabled: false }}
       themeSwitch={{ enabled: false }}
       sidebar={{ defaultOpenLevel: 1, prefetch: false }}
