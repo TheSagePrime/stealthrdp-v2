@@ -23,6 +23,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { getPlans } from '@/lib/stealth/live-plans';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
@@ -64,7 +65,12 @@ const questions = [
 /* Token utilities for the card link rows, replacing the bespoke .sr-location-grid hook. */
 const cardLinkClass = 'inline-flex min-h-11 items-center gap-2 text-small font-semibold text-primary transition-colors hover:text-accent-hover';
 
-export default function WindowsVpsPage() {
+/* Stock is read live from WHMCS; see src/lib/stealth/live-plans.ts. Must be a literal: 6 hours. */
+export const revalidate = 21600;
+
+export default async function WindowsVpsPage() {
+  const plans = await getPlans();
+
   return (
     <div className="srv-page srv-page-os srv-page-windows">
       <section className="sr-page-hero sr-os-page-hero">
@@ -109,7 +115,7 @@ export default function WindowsVpsPage() {
               <h2 className="sr-section-title">Choose your resource level</h2>
             </div>
           </div>
-          <PricingExplorer />
+          <PricingExplorer plans={plans} />
         </div>
       </section>
 

@@ -1,4 +1,6 @@
+/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
+import { SiAlpinelinux, SiFreebsd, SiRockylinux } from '@icons-pack/react-simple-icons';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -12,18 +14,18 @@ import {
 import { setRequestLocale } from 'next-intl/server';
 import Image from 'next/image';
 import Link from 'next/link';
-import { SiAlpinelinux, SiFreebsd, SiRockylinux } from '@icons-pack/react-simple-icons';
 
 import { Section } from '@/components/launchui/section';
-import { HomePricing } from '@/components/site/HomePricing';
 import { HomeHero } from '@/components/site/HomeHero';
+import { HomePricing } from '@/components/site/HomePricing';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { testimonials } from '@/lib/stealth/content';
+import { getPlans } from '@/lib/stealth/live-plans';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
 import { createPageMetadata } from '@/libs/seo/metadata';
 import { buildPageJsonLd } from '@/libs/seo/schema';
-import { testimonials } from '@/lib/stealth/content';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -107,14 +109,22 @@ const infrastructure = [
 ];
 
 function reviewSource(item: (typeof testimonials)[number]) {
-  if (item.sourceLabel?.includes('Discord') || item.sourceType === 'community review') return 'Discord';
-  if (!item.sourceUrl) return 'Customer testimonial';
+  if (item.sourceLabel?.includes('Discord') || item.sourceType === 'community review') {
+    return 'Discord';
+  }
+  if (!item.sourceUrl) {
+    return 'Customer testimonial';
+  }
   return item.sourceUrl.includes('trustpilot.com') ? 'Trustpilot' : 'Third-party review';
 }
+
+/* Stock is read live from WHMCS; see src/lib/stealth/live-plans.ts. Must be a literal: 6 hours. */
+export const revalidate = 21600;
 
 export default async function HomePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const plans = await getPlans();
   const jsonLd = buildPageJsonLd(getSeoConfig());
 
   return (
@@ -138,15 +148,19 @@ export default async function HomePage({ params }: Props) {
             <div className="srv-os-marquee-track" aria-hidden="true">
               {[false, true].map(clone => (
                 <div className="srv-os-marquee-copy" data-clone={clone ? 'true' : 'false'} key={String(clone)}>
-                  {operatingSystems.map(item => {
+                  {operatingSystems.map((item) => {
                     const Icon = 'icon' in item ? item.icon : null;
                     return (
                       <div className="srv-os-logo" key={`${clone ? 'clone-' : ''}${item.name}`}>
-                        {'logo' in item ? (
-                          <Image src={item.logo} alt="" width={26} height={26} />
-                        ) : Icon ? (
-                          <Icon aria-hidden="true" />
-                        ) : null}
+                        {'logo' in item
+                          ? (
+                              <Image src={item.logo} alt="" width={26} height={26} />
+                            )
+                          : Icon
+                            ? (
+                                <Icon aria-hidden="true" />
+                              )
+                            : null}
                         <span>{item.name}</span>
                       </div>
                     );
@@ -158,31 +172,65 @@ export default async function HomePage({ params }: Props) {
         </div>
       </section>
 
-      <Section id="plans" className="srv-home-plans py-12 sm:py-14 lg:py-16">
-        <div className="srv-home-wide flex flex-col gap-7 sm:gap-8">
-          <div className="grid gap-5 lg:grid-cols-[minmax(0,1.15fr)_minmax(360px,0.65fr)] lg:items-end">
+      <Section
+        id="plans"
+        className="
+          srv-home-plans py-12
+          sm:py-14
+          lg:py-16
+        "
+      >
+        <div className="
+          srv-home-wide flex flex-col gap-7
+          sm:gap-8
+        "
+        >
+          <div className="
+            grid gap-5
+            lg:grid-cols-[minmax(0,1.15fr)_minmax(360px,0.65fr)] lg:items-end
+          "
+          >
             <div className="grid max-w-4xl gap-4">
-              <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+              <p className="
+                text-xs font-semibold tracking-widest text-primary uppercase
+              "
+              >
                 Choose your server
               </p>
-              <h2 className="text-3xl font-semibold leading-tight tracking-tight sm:text-5xl">
+              <h2 className="
+                text-3xl/tight font-semibold tracking-tight
+                sm:text-5xl
+              "
+              >
                 Choose the resources your workload needs.
               </h2>
             </div>
-            <p className="max-w-xl text-base leading-7 text-muted-foreground lg:justify-self-end">
+            <p className="
+              max-w-xl text-base/7 text-muted-foreground
+              lg:justify-self-end
+            "
+            >
               Choose a region and billing cycle, then compare the current CPU, RAM, storage,
               bandwidth, operating-system support, and availability.
             </p>
           </div>
 
-          <HomePricing />
+          <HomePricing plans={plans} />
         </div>
       </Section>
 
-      <Section className="srv-home-usecases border-y border-border bg-card/20 py-10 sm:py-12 lg:py-14">
+      <Section className="
+        srv-home-usecases border-y border-border bg-card/20 py-10
+        sm:py-12
+        lg:py-14
+      "
+      >
         <div className="srv-home-wide srv-usecase-layout">
           <div className="srv-usecase-intro">
-            <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+            <p className="
+              text-xs font-semibold tracking-widest text-primary uppercase
+            "
+            >
               VPS use cases
             </p>
             <h2>What can you run on a VPS?</h2>
@@ -215,10 +263,18 @@ export default async function HomePage({ params }: Props) {
         </div>
       </Section>
 
-      <Section className="srv-home-infra border-y border-border bg-card/30 py-10 sm:py-12 lg:py-14">
+      <Section className="
+        srv-home-infra border-y border-border bg-card/30 py-10
+        sm:py-12
+        lg:py-14
+      "
+      >
         <div className="srv-home-wide srv-infra-layout">
           <div className="srv-infra-intro">
-            <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+            <p className="
+              text-xs font-semibold tracking-widest text-primary uppercase
+            "
+            >
               Core infrastructure
             </p>
             <h2>Infrastructure that doesn&apos;t flinch.</h2>
@@ -253,10 +309,18 @@ export default async function HomePage({ params }: Props) {
         </div>
       </Section>
 
-      <Section className="srv-home-products py-10 sm:py-12 lg:py-14">
+      <Section className="
+        srv-home-products py-10
+        sm:py-12
+        lg:py-14
+      "
+      >
         <div className="srv-home-products-story srv-home-wide">
           <div className="srv-products-copy">
-            <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+            <p className="
+              text-xs font-semibold tracking-widest text-primary uppercase
+            "
+            >
               StealthRDP products
             </p>
             <h2>Choose the product your workload needs.</h2>
@@ -292,7 +356,11 @@ export default async function HomePage({ params }: Props) {
               </span>
             </Link>
 
-            <Link href="/citadel" className="srv-product-node srv-product-node-protection" data-tone="protection">
+            <Link
+              href="/citadel"
+              className="srv-product-node srv-product-node-protection"
+              data-tone="protection"
+            >
               <span className="srv-product-node-icon">
                 <ShieldCheck aria-hidden="true" weight="fill" />
               </span>
@@ -308,12 +376,20 @@ export default async function HomePage({ params }: Props) {
         </div>
       </Section>
 
-      <Section className="srv-home-reviews border-y border-border bg-card/30 py-10 sm:py-12 lg:py-14">
+      <Section className="
+        srv-home-reviews border-y border-border bg-card/30 py-10
+        sm:py-12
+        lg:py-14
+      "
+      >
         <div className="srv-home-wide srv-review-layout">
           <div className="srv-review-featured">
             <div className="srv-review-featured-head">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-primary">
+                <p className="
+                  text-xs font-semibold tracking-widest text-primary uppercase
+                "
+                >
                   Customer proof
                 </p>
                 <h2>What customers say.</h2>
@@ -322,7 +398,9 @@ export default async function HomePage({ params }: Props) {
             </div>
 
             <blockquote>
-              “{testimonials[0]?.quote}”
+              “
+              {testimonials[0]?.quote}
+              ”
             </blockquote>
 
             <div className="srv-review-featured-author">
@@ -368,17 +446,19 @@ export default async function HomePage({ params }: Props) {
                           >
                             {reviewSource(item)}
                           </Badge>
-                          {item.sourceUrl ? (
-                            <a
-                              href={item.sourceUrl}
-                              target="_blank"
-                              rel="noreferrer"
-                              tabIndex={clone ? -1 : undefined}
-                              aria-label={clone ? undefined : `View source for review by ${item.authorName}`}
-                            >
-                              <ArrowUpRight aria-hidden="true" />
-                            </a>
-                          ) : null}
+                          {item.sourceUrl
+                            ? (
+                                <a
+                                  href={item.sourceUrl}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  tabIndex={clone ? -1 : undefined}
+                                  aria-label={clone ? undefined : `View source for review by ${item.authorName}`}
+                                >
+                                  <ArrowUpRight aria-hidden="true" />
+                                </a>
+                              )
+                            : null}
                         </div>
                         <blockquote>{item.quote}</blockquote>
                         <div className="srv-review-chip-author">
@@ -395,7 +475,12 @@ export default async function HomePage({ params }: Props) {
         </div>
       </Section>
 
-      <Section className="srv-home-final-section py-8 sm:py-10 lg:py-12">
+      <Section className="
+        srv-home-final-section py-8
+        sm:py-10
+        lg:py-12
+      "
+      >
         <div className="srv-home-final-banner srv-home-wide">
           <div className="srv-final-copy">
             <span className="srv-final-eyebrow">
@@ -409,9 +494,18 @@ export default async function HomePage({ params }: Props) {
           </div>
 
           <div className="srv-final-trust">
-            <span><strong>€4.59</strong><small>starting price</small></span>
-            <span><strong>7 days</strong><small>money-back</small></span>
-            <span><strong>24/7</strong><small>support</small></span>
+            <span>
+              <strong>€4.59</strong>
+              <small>starting price</small>
+            </span>
+            <span>
+              <strong>7 days</strong>
+              <small>money-back</small>
+            </span>
+            <span>
+              <strong>24/7</strong>
+              <small>support</small>
+            </span>
           </div>
 
           <div className="srv-final-actions">

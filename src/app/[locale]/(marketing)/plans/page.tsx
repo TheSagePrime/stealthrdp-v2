@@ -1,3 +1,4 @@
+/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
 import { ArrowRight, SlidersHorizontal as Settings2 } from '@phosphor-icons/react/dist/ssr';
 import Image from 'next/image';
@@ -13,6 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { getPlans } from '@/lib/stealth/live-plans';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
@@ -33,7 +35,12 @@ const included = [
 /* Token utilities for the card link rows, replacing the bespoke .sr-inline-links hook. */
 const cardLinkClass = 'inline-flex min-h-11 items-center gap-2 text-small font-semibold text-primary transition-colors hover:text-accent-hover';
 
-export default function PlansPage() {
+/* Stock is read live from WHMCS; see src/lib/stealth/live-plans.ts. Must be a literal: 6 hours. */
+export const revalidate = 21600;
+
+export default async function PlansPage() {
+  const plans = await getPlans();
+
   return (
     <div className="srv-page srv-page-plans">
       <section className="sr-page-hero">
@@ -68,7 +75,7 @@ export default function PlansPage() {
               <h2 className="sr-section-title">Choose your resource level</h2>
             </div>
           </div>
-          <PricingExplorer showComparison />
+          <PricingExplorer plans={plans} showComparison />
         </div>
       </section>
 
@@ -81,8 +88,15 @@ export default function PlansPage() {
             </div>
           </div>
 
-          <div className="srv-plan-os-flow grid gap-4 lg:grid-cols-2">
-            <Card id="windows-vps" className="srv-plan-os-option srv-plan-os-windows">
+          <div className="
+            srv-plan-os-flow grid gap-4
+            lg:grid-cols-2
+          "
+          >
+            <Card
+              id="windows-vps"
+              className="srv-plan-os-option srv-plan-os-windows"
+            >
               <CardHeader>
                 <span className="srv-plan-os-mark" aria-hidden="true">
                   <Image src="/brand/windows.svg" alt="" width={34} height={34} />
@@ -97,24 +111,38 @@ export default function PlansPage() {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="rounded-md border-l-2 border-primary bg-surface-2 px-4 py-3 text-small text-body-muted">
-                  <strong>Windows licensing:</strong> StealthRDP provides the infrastructure only.
+                <p className="
+                  rounded-md border-l-2 border-primary bg-surface-2 px-4 py-3
+                  text-small text-body-muted
+                "
+                >
+                  <strong>Windows licensing:</strong>
+                  {' '}
+                  StealthRDP provides the infrastructure only.
                   Microsoft Windows licensing is not included and is not supplied by StealthRDP.
-                  Customers using Windows are responsible for their own licensing compliance.{' '}
+                  Customers using Windows are responsible for their own licensing compliance.
+                  {' '}
                   <Link href="/docs/windows-licensing">Read the Windows licensing page.</Link>
                 </p>
               </CardContent>
               <CardFooter className="mt-auto flex-wrap gap-x-6 gap-y-2">
                 <Link href="/windows-vps" className={cardLinkClass}>
-                  Read the Windows VPS hosting guide <ArrowRight aria-hidden="true" className="size-4" />
+                  Read the Windows VPS hosting guide
+                  {' '}
+                  <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
                 <Link href="/plans#plan-grid" className={cardLinkClass}>
-                  Compare Windows VPS resources <ArrowRight aria-hidden="true" className="size-4" />
+                  Compare Windows VPS resources
+                  {' '}
+                  <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
               </CardFooter>
             </Card>
 
-            <Card id="linux-vps" className="srv-plan-os-option srv-plan-os-linux">
+            <Card
+              id="linux-vps"
+              className="srv-plan-os-option srv-plan-os-linux"
+            >
               <CardHeader>
                 <span className="srv-plan-os-mark srv-plan-os-mark-linux" aria-hidden="true">
                   <Image src="/brand/linux.svg" alt="" width={34} height={40} />
@@ -130,10 +158,14 @@ export default function PlansPage() {
               </CardHeader>
               <CardFooter className="mt-auto flex-wrap gap-x-6 gap-y-2">
                 <Link href="/linux-vps" className={cardLinkClass}>
-                  Read the Linux VPS hosting guide <ArrowRight aria-hidden="true" className="size-4" />
+                  Read the Linux VPS hosting guide
+                  {' '}
+                  <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
                 <Link href="/plans#plan-grid" className={cardLinkClass}>
-                  Compare Linux VPS resources <ArrowRight aria-hidden="true" className="size-4" />
+                  Compare Linux VPS resources
+                  {' '}
+                  <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
               </CardFooter>
             </Card>
@@ -150,7 +182,12 @@ export default function PlansPage() {
             </div>
             <p>Choose a plan by resource level. These service basics stay with every server.</p>
           </div>
-          <div className="srv-plan-included grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="
+            srv-plan-included grid gap-4
+            sm:grid-cols-2
+            lg:grid-cols-3
+          "
+          >
             {included.map(({ title, text }) => (
               <Card key={title} className="srv-plan-included-item">
                 <CardHeader>
