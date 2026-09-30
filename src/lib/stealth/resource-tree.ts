@@ -78,3 +78,14 @@ export const citadelPageTree = {
       .filter(group => group.children.length > 0),
   ],
 };
+
+export const resourcesPageTree = {
+  name: 'Resources',
+  children: [
+    { type: 'page' as const, name: 'Resources home', url: '/resources' },
+    { type: 'page' as const, name: 'Guides', url: '/blog' },
+    { type: 'page' as const, name: 'Help Center', url: '/docs' },
+    { type: 'page' as const, name: 'Citadel Docs', url: '/citadel/docs' },
+    { type: 'page' as const, name: 'Common Questions', url: '/faq' },
+  ],
+};

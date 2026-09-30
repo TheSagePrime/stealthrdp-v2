@@ -1,8 +1,8 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
+import { DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { ArrowRight, BookOpen, LifeBuoy, MessageCircleQuestion, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
-import { ResourcesBar } from '@/components/site/ResourcesBar';
 import { blogArticles, citadelDocsArticles, faqs, helpDocsArticles } from '@/lib/stealth/content';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
@@ -55,76 +55,55 @@ const popular = [
 
 export default function ResourcesPage() {
   return (
-    <>
-      <ResourcesBar active="resources" />
-      <div className="srv-page srv-page-resources">
-        <section className="sr-page-hero">
-          <div className="sr-container">
-            <p className="sr-kicker">Resources</p>
-            <h1 className="sr-title">Guides, help, and answers.</h1>
-            <p className="sr-lede">
-              One searchable place for VPS guides, setup help, troubleshooting, Citadel documentation,
-              and common questions.
-            </p>
-          </div>
-        </section>
+    <DocsPage>
+      <DocsTitle>Guides, help, and answers</DocsTitle>
+      <DocsDescription>
+        One searchable place for VPS guides, setup help, troubleshooting, Citadel documentation,
+        and common questions.
+      </DocsDescription>
 
-        <section className="sr-section" aria-labelledby="resources-browse">
-          <div className="sr-container">
-            <h2 className="sr-section-title" id="resources-browse">Browse by topic</h2>
-            <div className="sr-res-cards">
-              {destinations.map(({ title, href, count, description, icon: Icon }) => (
-                <Link className="sr-res-card" href={href} key={href}>
-                  <span className="sr-res-card-icon" aria-hidden="true"><Icon /></span>
-                  <h3>{title}</h3>
-                  <p>{description}</p>
-                  <span className="sr-res-card-foot">
-                    <span>{count}</span>
-                    <ArrowRight aria-hidden="true" />
-                  </span>
-                </Link>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="sr-section sr-section-border" aria-labelledby="resources-popular">
-          <div className="sr-container sr-res-split">
-            <div>
-              <h2 className="sr-section-title" id="resources-popular">Popular right now</h2>
-            </div>
-            <ul className="sr-res-links">
-              {popular.map(item => (
-                <li key={item.href}>
-                  <Link href={item.href}>
-                    <span>{item.title}</span>
-                    <small>{item.kind}</small>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        <section className="sr-section sr-section-border" aria-labelledby="resources-support">
-          <div className="sr-container sr-res-split">
-            <div>
-              <h2 className="sr-section-title" id="resources-support">Can&rsquo;t find it?</h2>
-            </div>
-            <div className="sr-res-support-body">
-              <p>
-                Account, billing, and server-specific requests are handled by support.
-                Check live infrastructure health on the status page.
-              </p>
-              <div className="sr-res-support-actions">
-                <a href="https://dash.stealthrdp.com/submitticket.php">Open a support ticket</a>
-                <a href="https://wa.me/447441426993">WhatsApp support</a>
-                <Link href="/status">Service status</Link>
-              </div>
-            </div>
-          </div>
-        </section>
+      <div className="sr-res-cards not-prose">
+        {destinations.map(({ title, href, count, description, icon: Icon }) => (
+          <Link className="sr-res-card" href={href} key={href}>
+            <span className="sr-res-card-icon" aria-hidden="true"><Icon /></span>
+            <h2>{title}</h2>
+            <p>{description}</p>
+            <span className="sr-res-card-foot">
+              <span>{count}</span>
+              <ArrowRight aria-hidden="true" />
+            </span>
+          </Link>
+        ))}
       </div>
-    </>
+
+      <section className="sr-res-block not-prose" aria-labelledby="resources-popular">
+        <h2 id="resources-popular">Popular right now</h2>
+        <ul className="sr-res-links">
+          {popular.map(item => (
+            <li key={item.href}>
+              <Link href={item.href}>
+                <span>{item.title}</span>
+                <small>{item.kind}</small>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <aside className="sr-res-support not-prose">
+        <div>
+          <h2>Can&rsquo;t find it?</h2>
+          <p>
+            Account, billing, and server-specific requests are handled by support.
+            Check live infrastructure health on the status page.
+          </p>
+        </div>
+        <div className="sr-res-support-actions">
+          <a href="https://dash.stealthrdp.com/submitticket.php">Open a support ticket</a>
+          <a href="https://wa.me/447441426993">WhatsApp support</a>
+          <Link href="/status">Service status</Link>
+        </div>
+      </aside>
+    </DocsPage>
   );
 }
