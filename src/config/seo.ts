@@ -3,6 +3,7 @@ import type { DeployEnv } from '../libs/seo/env';
 import type { LegacyRedirect } from '../libs/seo/internal-links';
 import type { ResolvedSiteUrl } from '../libs/seo/site-url';
 import blogData from '../content/blog-articles.json';
+import rdpGuide from '../content/rdp-vps-guide.json';
 import { noindexDocPaths } from '../lib/stealth/routes';
 import { parseSiteUrl, resolveSiteUrl } from '../libs/seo/site-url';
 
@@ -15,7 +16,7 @@ type BlogSeed = {
   image?: string;
 };
 
-const publications: ArticleRegistryConfig['publications'] = (blogData as BlogSeed[]).map(article => ({
+const blogPublications: ArticleRegistryConfig['publications'] = (blogData as BlogSeed[]).map(article => ({
   slug: article.slug,
   status: 'published',
   path: article.slug === 'vps-hosting-minecraft' ? '/vps-hosting-minecraft' : `/blog/${article.slug}.html`,
@@ -29,6 +30,24 @@ const publications: ArticleRegistryConfig['publications'] = (blogData as BlogSee
   indexPolicy: 'index, follow',
   image: article.image,
 }));
+
+// The RDP VPS buyer guide is a standalone page at /rdp-vps, not a /blog article.
+const publications: ArticleRegistryConfig['publications'] = [
+  ...blogPublications,
+  {
+    slug: rdpGuide.slug,
+    status: 'published',
+    path: '/rdp-vps',
+    title: rdpGuide.title,
+    h1: rdpGuide.h1,
+    description: rdpGuide.excerpt,
+    datePublished: rdpGuide.date,
+    author: { name: rdpGuide.author, type: 'Person', url: '/about' },
+    locale: 'en',
+    country: 'US',
+    indexPolicy: 'index, follow',
+  },
+];
 
 export type SeoConfig = {
   siteUrl: string;
@@ -54,7 +73,9 @@ export type SeoConfig = {
 };
 
 export function resolveSeoSite(config: Pick<SeoConfig, 'siteUrl' | 'environment'>): ResolvedSiteUrl {
-  if (config.siteUrl.trim()) return parseSiteUrl(config.siteUrl, { production: config.environment.deployEnv === 'production' });
+  if (config.siteUrl.trim()) {
+    return parseSiteUrl(config.siteUrl, { production: config.environment.deployEnv === 'production' });
+  }
   return resolveSiteUrl(process.env, config.environment.deployEnv);
 }
 
@@ -103,6 +124,6 @@ export const defaultSeoConfig: SeoConfig = {
     publicUtility: [...noindexDocPaths],
     privatePages: [],
     privateApis: [],
-    dynamicPublic: ['/vps-hosting-minecraft'],
+    dynamicPublic: ['/vps-hosting-minecraft', '/rdp-vps'],
   },
 };
