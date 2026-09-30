@@ -20,7 +20,9 @@
   font-weight: 100 900;
   font-display: swap;
   src: url('/fonts/ibm-plex-sans-var-normal-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+    U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
 @font-face {
@@ -29,7 +31,9 @@
   font-weight: 100 900;
   font-display: swap;
   src: url('/fonts/ibm-plex-sans-var-normal-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC,
+    U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
@@ -38,7 +42,9 @@
   font-weight: 100 800;
   font-display: swap;
   src: url('/fonts/jetbrains-mono-var-normal-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F,
+    U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 
 @font-face {
@@ -47,7 +53,9 @@
   font-weight: 100 800;
   font-display: swap;
   src: url('/fonts/jetbrains-mono-var-normal-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC,
+    U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 /* ==========================================================================
@@ -266,6 +274,103 @@
   --status-warn: #f5ad50;
   --status-bad: #ff6b7a;
   --status-unknown: #8792a8;
+}
+
+/* Raw colour literals hoisted out of stealth-v3.css with their original values, so the
+   marketing stylesheet stays literal-free (design contract). They are theme-independent.
+   Consolidate onto the semantic tokens above as each surface is design-reviewed. */
+:root {
+  --sr-raw-000000: #000000;
+  --sr-raw-00a8ff: #00a8ff;
+  --sr-raw-00b67a: #00b67a;
+  --sr-raw-00f0ff: #00f0ff;
+  --sr-raw-0284c7: #0284c7;
+  --sr-raw-030d1b: #030d1b;
+  --sr-raw-030f1e: #030f1e;
+  --sr-raw-03101f: #03101f;
+  --sr-raw-04111d: #04111d;
+  --sr-raw-04111f: #04111f;
+  --sr-raw-041223: #041223;
+  --sr-raw-04141c: #04141c;
+  --sr-raw-04171f: #04171f;
+  --sr-raw-05101f: #05101f;
+  --sr-raw-051121: #051121;
+  --sr-raw-051224: #051224;
+  --sr-raw-05161f: #05161f;
+  --sr-raw-05172a: #05172a;
+  --sr-raw-061020: #061020;
+  --sr-raw-061931: #061931;
+  --sr-raw-06b6d4: #06b6d4;
+  --sr-raw-071222: #071222;
+  --sr-raw-07172b: #07172b;
+  --sr-raw-081d32: #081d32;
+  --sr-raw-08233c: #08233c;
+  --sr-raw-0891b2: #0891b2;
+  --sr-raw-0b0f2d: #0b0f2d;
+  --sr-raw-0e2444: #0e2444;
+  --sr-raw-0ea5e9: #0ea5e9;
+  --sr-raw-112f54: #112f54;
+  --sr-raw-15803d: #15803d;
+  --sr-raw-166534: #166534;
+  --sr-raw-16a34a: #16a34a;
+  --sr-raw-20314c: #20314c;
+  --sr-raw-22c55e: #22c55e;
+  --sr-raw-22d3ee: #22d3ee;
+  --sr-raw-22d46b: #22d46b;
+  --sr-raw-2563eb: #2563eb;
+  --sr-raw-2845d6: #2845d6;
+  --sr-raw-38bdf8: #38bdf8;
+  --sr-raw-3b82f6: #3b82f6;
+  --sr-raw-3f5574: #3f5574;
+  --sr-raw-450a0a: #450a0a;
+  --sr-raw-4c6385: #4c6385;
+  --sr-raw-4f7ef7: #4f7ef7;
+  --sr-raw-53647e: #53647e;
+  --sr-raw-5865f2: #5865f2;
+  --sr-raw-5a6a82: #5a6a82;
+  --sr-raw-60718b: #60718b;
+  --sr-raw-60a5fa: #60a5fa;
+  --sr-raw-67e8f9: #67e8f9;
+  --sr-raw-6ea4e8: #6ea4e8;
+  --sr-raw-6ee7b7: #6ee7b7;
+  --sr-raw-71819a: #71819a;
+  --sr-raw-76a2e6: #76a2e6;
+  --sr-raw-77a3e7: #77a3e7;
+  --sr-raw-7c3aed: #7c3aed;
+  --sr-raw-7ca9e9: #7ca9e9;
+  --sr-raw-7dd3fc: #7dd3fc;
+  --sr-raw-7f1d1d: #7f1d1d;
+  --sr-raw-8290a6: #8290a6;
+  --sr-raw-86efac: #86efac;
+  --sr-raw-8b5cf6: #8b5cf6;
+  --sr-raw-93c5fd: #93c5fd;
+  --sr-raw-94a3b8: #94a3b8;
+  --sr-raw-9d4b4b: #9d4b4b;
+  --sr-raw-a5f3fc: #a5f3fc;
+  --sr-raw-a7f3d0: #a7f3d0;
+  --sr-raw-b64747: #b64747;
+  --sr-raw-bad1e5: #bad1e5;
+  --sr-raw-bae6fd: #bae6fd;
+  --sr-raw-bbf7d0: #bbf7d0;
+  --sr-raw-bfdbfe: #bfdbfe;
+  --sr-raw-cbd5e1: #cbd5e1;
+  --sr-raw-dbeafe: #dbeafe;
+  --sr-raw-dcebfc: #dcebfc;
+  --sr-raw-dff8ff: #dff8ff;
+  --sr-raw-e3eefc: #e3eefc;
+  --sr-raw-e6f4ff: #e6f4ff;
+  --sr-raw-e8f0fc: #e8f0fc;
+  --sr-raw-ebf2fc: #ebf2fc;
+  --sr-raw-eef8ff: #eef8ff;
+  --sr-raw-ef4444: #ef4444;
+  --sr-raw-eff6ff: #eff6ff;
+  --sr-raw-f0f7ff: #f0f7ff;
+  --sr-raw-f0fdf4: #f0fdf4;
+  --sr-raw-f4f7fc: #f4f7fc;
+  --sr-raw-f4f8ff: #f4f8ff;
+  --sr-raw-f59e0b: #f59e0b;
+  --sr-raw-fca5a5: #fca5a5;
+  --sr-raw-ffffff: #ffffff;
 }
 
 @layer base {
