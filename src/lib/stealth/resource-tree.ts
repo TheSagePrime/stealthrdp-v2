@@ -1,4 +1,5 @@
-import { articlePath, blogArticles, docPublicSlug, helpDocsArticles } from '@/lib/stealth/content';
+import { articlePath, blogArticles, citadelDocsArticles, docPublicSlug, helpDocsArticles } from '@/lib/stealth/content';
+import { articlesForCollection, citadelArticleHref, citadelCollections } from '@/lib/stealth/help-center';
 
 type Entry = { category: string; title: string; url: string };
 
@@ -31,13 +32,11 @@ const guides = [
     title: 'RDP VPS Hosting: How to Choose a Remote Desktop VPS',
     url: '/rdp-vps',
   },
-  ...blogArticles
-    .filter(article => article.slug !== 'vps-hosting-minecraft')
-    .map(article => ({
-      category: article.category,
-      title: article.title,
-      url: articlePath(article),
-    })),
+  ...blogArticles.map(article => ({
+    category: article.category,
+    title: article.title,
+    url: articlePath(article),
+  })),
 ];
 
 const docs = helpDocsArticles.map(article => ({
@@ -59,5 +58,23 @@ export const productDocsPageTree = {
   children: [
     { type: 'page' as const, name: 'Help Center home', url: '/docs' },
     folder('Product documentation', docs),
+  ],
+};
+
+export const citadelPageTree = {
+  name: 'Citadel Docs',
+  children: [
+    { type: 'page' as const, name: 'Citadel Docs home', url: '/citadel/docs' },
+    ...citadelCollections
+      .map(collection => ({
+        type: 'folder' as const,
+        name: collection.title.replace(/^Citadel:\s*/, ''),
+        children: articlesForCollection(collection, citadelDocsArticles).map(article => ({
+          type: 'page' as const,
+          name: article.title,
+          url: citadelArticleHref(article),
+        })),
+      }))
+      .filter(group => group.children.length > 0),
   ],
 };

@@ -1,8 +1,9 @@
+/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
 import { FaqExplorer } from '@/components/site/FaqExplorer';
-import { HelpTopbar } from '@/components/site/HelpTopbar';
-import { createPageMetadata } from '@/libs/seo/metadata';
+import { ResourcesBar } from '@/components/site/ResourcesBar';
 import { faqs } from '@/lib/stealth/content';
+import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/faq',
@@ -14,9 +15,11 @@ export const metadata: Metadata = createPageMetadata({
 
 export default function FaqPage() {
   return (
-    <div className="srv-page srv-page-faq srv-docs-product">
-      <HelpTopbar active="faq" />
-      <FaqExplorer faqs={faqs} />
-    </div>
+    <>
+      <ResourcesBar active="faq" />
+      <div className="srv-page srv-page-faq">
+        <FaqExplorer faqs={faqs} />
+      </div>
+    </>
   );
 }

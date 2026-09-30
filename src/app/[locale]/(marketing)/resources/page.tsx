@@ -1,14 +1,9 @@
+/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
+import { ArrowRight, BookOpen, LifeBuoy, MessageCircleQuestion, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
-import {
-  Cpu,
-  Headset,
-  Lightning,
-  Pulse,
-  ShieldCheck,
-} from '@phosphor-icons/react/dist/ssr';
-import { HelpTopbar } from '@/components/site/HelpTopbar';
-import { ResourceSidebar } from '@/components/site/ResourceSidebar';
+import { ResourcesBar } from '@/components/site/ResourcesBar';
+import { blogArticles, citadelDocsArticles, faqs, helpDocsArticles } from '@/lib/stealth/content';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
@@ -22,128 +17,114 @@ const destinations = [
   {
     title: 'Guides',
     href: '/blog',
-    label: 'Learn',
-    action: 'Browse guides',
-    description: 'VPS use cases, security, performance, infrastructure decisions, backups, and practical server operations.',
-    icon: Cpu,
+    count: `${blogArticles.length} guides`,
+    description: 'VPS use cases, security, performance, backups, and infrastructure decisions.',
+    icon: BookOpen,
   },
   {
     title: 'Help Center',
     href: '/docs',
-    label: 'Solve',
-    action: 'Open help center',
-    description: 'Setup instructions, troubleshooting, networking, Windows access, panels, licensing, and policies.',
-    icon: Headset,
+    count: `${helpDocsArticles.length} articles`,
+    description: 'Setup, troubleshooting, networking, Windows access, panels, licensing, and policies.',
+    icon: LifeBuoy,
   },
   {
     title: 'Citadel Docs',
     href: '/citadel/docs',
-    label: 'Protect',
-    action: 'Open Citadel docs',
-    description: 'Setup, Cloudflare routing, protected domains, challenges, allowlists, traffic visibility, alerts, and operations.',
+    count: `${citadelDocsArticles.length} articles`,
+    description: 'Cloudflare routing, protected domains, challenges, allowlists, and traffic visibility.',
     icon: ShieldCheck,
   },
   {
     title: 'Common Questions',
     href: '/faq',
-    label: 'Quick answers',
-    action: 'Browse questions',
+    count: `${faqs.length} answers`,
     description: 'Quick answers about plans, billing, setup, operating systems, refunds, and support.',
-    icon: Lightning,
+    icon: MessageCircleQuestion,
   },
-  {
-    title: 'Service Status',
-    href: '/status',
-    label: 'Check',
-    action: 'View status',
-    description: 'Public infrastructure health and current service availability.',
-    icon: Pulse,
-  },
+] as const;
+
+const popular = [
+  { title: 'VPS for remote desktop', href: '/blog/vps-for-remote-desktop.html', kind: 'Guide' },
+  { title: 'Connect to Windows', href: '/docs/how-do-i-log-into-windows', kind: 'Help' },
+  { title: 'Windows licensing', href: '/docs/windows-licensing', kind: 'Help' },
+  { title: 'Rebuild a server', href: '/docs/how-to-rebuild-a-server', kind: 'Help' },
+  { title: 'VPS for web hosting', href: '/blog/vps-for-web-hosting.html', kind: 'Guide' },
+  { title: 'Set up Citadel protection', href: '/citadel/docs/getting-started', kind: 'Citadel' },
 ] as const;
 
 export default function ResourcesPage() {
   return (
-    <div className="srv-page srv-page-resources srv-docs-product">
-      <HelpTopbar active="resources" />
+    <>
+      <ResourcesBar active="resources" />
+      <div className="srv-page srv-page-resources">
+        <section className="sr-page-hero">
+          <div className="sr-container">
+            <p className="sr-kicker">Resources</p>
+            <h1 className="sr-title">Guides, help, and answers.</h1>
+            <p className="sr-lede">
+              One searchable place for VPS guides, setup help, troubleshooting, Citadel documentation,
+              and common questions.
+            </p>
+          </div>
+        </section>
 
-      <div className="sr-container srv-docs-mobile-wrap">
-        <details className="srv-docs-mobile-nav">
-          <summary>Browse Resources</summary>
-          <ResourceSidebar />
-        </details>
-      </div>
-
-      <div className="sr-container srv-docs-grid">
-        <aside className="srv-docs-sidebar">
-          <ResourceSidebar />
-        </aside>
-
-        <main className="srv-docs-index">
-          <header className="srv-docs-index-head srv-resources-index-head">
-            <div>
-              <p className="sr-kicker">Resources</p>
-              <h1>Learn, solve, and keep moving.</h1>
-              <p>
-                One searchable knowledge system for VPS guides, setup help,
-                troubleshooting, common questions, and service information.
-              </p>
-            </div>
-
-            <div className="srv-docs-start-links">
-              <Link href="/blog/vps-for-remote-desktop.html">Remote desktop guide</Link>
-              <Link href="/docs/how-do-i-log-into-windows">Connect to Windows</Link>
-              <Link href="/docs/windows-licensing">Windows licensing</Link>
-              <Link href="/citadel/docs/getting-started">Set up Citadel protection</Link>
-              <Link href="/faq">Common questions</Link>
-            </div>
-          </header>
-
-          <section className="srv-resource-hub">
-            <div className="srv-docs-collection-head srv-resource-hub-head">
-              <div>
-                <h2>What do you need?</h2>
-                <p>Start with the outcome. Everything stays searchable from the bar above.</p>
-              </div>
-            </div>
-
-            <div className="srv-resource-hub-grid">
-              {destinations.map((item, index) => {
-                const Icon = item.icon;
-                return (
-                <Link className="srv-resource-hub-card" href={item.href} key={item.href}>
-                  <span className="srv-resource-hub-icon" aria-hidden="true">
-                    <Icon size={18} weight="duotone" />
-                  </span>
-                  <span className="srv-resource-hub-copy">
-                    <span className="srv-resource-hub-copy-meta">
-                      <small>{item.label}</small>
-                      <span className="srv-resource-hub-index">{String(index + 1).padStart(2, '0')}</span>
-                    </span>
-                    <strong>{item.title}</strong>
-                    <span>{item.description}</span>
-                  </span>
-                  <span className="srv-resource-hub-action">
-                    {item.action}
-                    <span aria-hidden="true">→</span>
+        <section className="sr-section" aria-labelledby="resources-browse">
+          <div className="sr-container">
+            <h2 className="sr-section-title" id="resources-browse">Browse by topic</h2>
+            <div className="sr-res-cards">
+              {destinations.map(({ title, href, count, description, icon: Icon }) => (
+                <Link className="sr-res-card" href={href} key={href}>
+                  <span className="sr-res-card-icon" aria-hidden="true"><Icon /></span>
+                  <h3>{title}</h3>
+                  <p>{description}</p>
+                  <span className="sr-res-card-foot">
+                    <span>{count}</span>
+                    <ArrowRight aria-hidden="true" />
                   </span>
                 </Link>
-                );
-              })}
+              ))}
             </div>
-          </section>
-        </main>
+          </div>
+        </section>
 
-        <aside className="srv-docs-index-aside">
-          <span className="srv-resource-nav-label">Popular</span>
-          <Link href="/blog/vps-for-remote-desktop.html">VPS for remote desktop</Link>
-          <Link href="/blog/vps-for-web-hosting.html">VPS for web hosting</Link>
-          <Link href="/docs/how-to-rebuild-a-server">Rebuild a server</Link>
-          <Link href="/docs/windows-licensing">Windows licensing</Link>
-          <Link href="/citadel/docs/cloudflare-setup">Cloudflare and Citadel setup</Link>
-          <span className="srv-docs-aside-divider" />
-          <a href="https://dash.stealthrdp.com/submitticket.php">Contact support ↗</a>
-        </aside>
+        <section className="sr-section sr-section-border" aria-labelledby="resources-popular">
+          <div className="sr-container sr-res-split">
+            <div>
+              <h2 className="sr-section-title" id="resources-popular">Popular right now</h2>
+            </div>
+            <ul className="sr-res-links">
+              {popular.map(item => (
+                <li key={item.href}>
+                  <Link href={item.href}>
+                    <span>{item.title}</span>
+                    <small>{item.kind}</small>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
+        <section className="sr-section sr-section-border" aria-labelledby="resources-support">
+          <div className="sr-container sr-res-split">
+            <div>
+              <h2 className="sr-section-title" id="resources-support">Can&rsquo;t find it?</h2>
+            </div>
+            <div className="sr-res-support-body">
+              <p>
+                Account, billing, and server-specific requests are handled by support.
+                Check live infrastructure health on the status page.
+              </p>
+              <div className="sr-res-support-actions">
+                <a href="https://dash.stealthrdp.com/submitticket.php">Open a support ticket</a>
+                <a href="https://wa.me/447441426993">WhatsApp support</a>
+                <Link href="/status">Service status</Link>
+              </div>
+            </div>
+          </div>
+        </section>
       </div>
-    </div>
+    </>
   );
 }
