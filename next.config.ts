@@ -2,22 +2,24 @@ import type { NextConfig } from 'next';
 import withBundleAnalyzer from '@next/bundle-analyzer';
 import { withSentryConfig } from '@sentry/nextjs';
 import createNextIntlPlugin from 'next-intl/plugin';
+import { v1LegacyRedirects } from './src/config/legacy-redirects';
+import { whmcsLegacyRedirects } from './src/config/legacy-redirects-whmcs';
 import { isProductionDeployEnv, resolveDeployEnv } from './src/libs/seo/env';
 import './src/libs/Env';
 
 const csp = [
-  "default-src 'self'",
-  "base-uri 'self'",
-  "object-src 'none'",
-  "frame-ancestors 'none'",
-  "form-action 'self'",
-  "img-src 'self' data: blob: https:",
-  "font-src 'self' data: https:",
-  "style-src 'self' 'unsafe-inline'",
-  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''}`,
-  "connect-src 'self' https://*.sentry.io",
-  "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com",
-  "worker-src 'self' blob:",
+  'default-src \'self\'',
+  'base-uri \'self\'',
+  'object-src \'none\'',
+  'frame-ancestors \'none\'',
+  'form-action \'self\'',
+  'img-src \'self\' data: blob: https:',
+  'font-src \'self\' data: https:',
+  'style-src \'self\' \'unsafe-inline\'',
+  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? ' \'unsafe-eval\'' : ''}`,
+  'connect-src \'self\' https://*.sentry.io',
+  'frame-src \'self\' https://www.youtube.com https://www.youtube-nocookie.com',
+  'worker-src \'self\' blob:',
   ...(process.env.NODE_ENV === 'production' ? ['upgrade-insecure-requests'] : []),
 ].join('; ');
 
@@ -46,11 +48,14 @@ const baseConfig: NextConfig = {
     browserToTerminal: process.env.BROWSER_TO_TERMINAL_ENABLED === 'true',
   },
   async redirects() {
-    return legacyRedirects.map(([source, destination]) => ({
-      source,
-      destination,
-      permanent: true,
-    }));
+    return [
+      ...[...legacyRedirects, ...v1LegacyRedirects].map(([source, destination]) => ({
+        source,
+        destination,
+        permanent: true,
+      })),
+      ...whmcsLegacyRedirects,
+    ];
   },
   async headers() {
     const headers = [
