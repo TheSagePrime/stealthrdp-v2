@@ -2,22 +2,23 @@ import type { NextConfig } from 'next';
 import withBundleAnalyzer from '@next/bundle-analyzer';
 import { withSentryConfig } from '@sentry/nextjs';
 import createNextIntlPlugin from 'next-intl/plugin';
+import { whmcsLegacyRedirects } from './src/config/legacy-redirects-whmcs';
 import { isProductionDeployEnv, resolveDeployEnv } from './src/libs/seo/env';
 import './src/libs/Env';
 
 const csp = [
-  "default-src 'self'",
-  "base-uri 'self'",
-  "object-src 'none'",
-  "frame-ancestors 'none'",
-  "form-action 'self'",
-  "img-src 'self' data: blob: https:",
-  "font-src 'self' data: https:",
-  "style-src 'self' 'unsafe-inline'",
-  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? " 'unsafe-eval'" : ''} https://sgtm.stealthrdp.com https://datafa.st https://www.googletagmanager.com https://*.googletagmanager.com`,
-  "connect-src 'self' https://*.sentry.io https://sgtm.stealthrdp.com https://datafa.st https://*.google-analytics.com https://*.analytics.google.com",
-  "frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com",
-  "worker-src 'self' blob:",
+  'default-src \'self\'',
+  'base-uri \'self\'',
+  'object-src \'none\'',
+  'frame-ancestors \'none\'',
+  'form-action \'self\'',
+  'img-src \'self\' data: blob: https:',
+  'font-src \'self\' data: https:',
+  'style-src \'self\' \'unsafe-inline\'',
+  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? ' \'unsafe-eval\'' : ''} https://sgtm.stealthrdp.com https://datafa.st https://www.googletagmanager.com https://*.googletagmanager.com`,
+  'connect-src \'self\' https://*.sentry.io https://sgtm.stealthrdp.com https://datafa.st https://*.google-analytics.com https://*.analytics.google.com',
+  'frame-src \'self\' https://www.youtube.com https://www.youtube-nocookie.com',
+  'worker-src \'self\' blob:',
   ...(process.env.NODE_ENV === 'production' ? ['upgrade-insecure-requests'] : []),
 ].join('; ');
 
@@ -40,7 +41,7 @@ const legacyRedirects = [
 // after search engines and external links have fully converged on the new URLs.
 const productionSeoRedirects = [
   ['/vps-hosting-minecraft/index.html', '/vps-hosting-minecraft'],
-  ['/blog/5-ways-to-optimize-your-rdp-performance-for-remote-work/', '/blog/5-ways-to-optimize-your-rdp-performance-for-remote-work.html'],
+  ['/blog/5-ways-to-optimize-your-rdp-performance-for-remote-work', '/blog/5-ways-to-optimize-your-rdp-performance-for-remote-work.html'],
   ['/blog/7-best-tools-for-server-uptime-monitoring-2025', '/blog/7-best-tools-for-server-uptime-monitoring-2025.html'],
   ['/blog/common-vps-hosting-issues-and-their-solutions', '/blog/common-vps-hosting-issues-and-their-solutions.html'],
   ['/blog/top-6-vps-management-tools-for-small-businesses', '/blog/top-6-vps-management-tools-for-small-businesses.html'],
@@ -111,11 +112,14 @@ const baseConfig: NextConfig = {
     browserToTerminal: process.env.BROWSER_TO_TERMINAL_ENABLED === 'true',
   },
   async redirects() {
-    return [...legacyRedirects, ...productionSeoRedirects].map(([source, destination]) => ({
-      source,
-      destination,
-      permanent: true,
-    }));
+    return [
+      ...[...legacyRedirects, ...productionSeoRedirects].map(([source, destination]) => ({
+        source,
+        destination,
+        permanent: true,
+      })),
+      ...whmcsLegacyRedirects,
+    ];
   },
   async headers() {
     const headers = [
@@ -126,7 +130,7 @@ const baseConfig: NextConfig = {
       { key: 'X-Content-Type-Options', value: 'nosniff' },
       { key: 'X-Frame-Options', value: 'DENY' },
       ...(process.env.NODE_ENV === 'production'
-        ? [{ key: 'Strict-Transport-Security', value: 'max-age=31536000' }]
+        ? [{ key: 'Strict-Transport-Security', value: 'max-age=63072000; includeSubDomains' }]
         : []),
       /* Non-production deploys (preview, staging, dev) must never be indexed, even by
          crawlers that ignore robots.txt. This uses the shared deploy-env resolver, so

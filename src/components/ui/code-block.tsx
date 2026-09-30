@@ -9,11 +9,12 @@ function CodeBlock({
   return (
     <pre
       data-slot="code-block"
+      tabIndex={0}
       className={cn(
         `
-          max-w-full overflow-x-auto overscroll-x-contain rounded-md
-          border border-divider bg-surface-1 p-4
-          font-mono text-mono-sm leading-relaxed text-body-text
+          max-w-full overflow-x-auto overscroll-x-contain rounded-md border
+          border-divider bg-surface-1 p-4 font-mono text-mono-sm/relaxed
+          text-body-text
         `,
         className,
       )}

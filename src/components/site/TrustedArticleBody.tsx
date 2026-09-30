@@ -1,3 +1,4 @@
+/* eslint-disable better-tailwindcss/no-unknown-classes, react-refresh/only-export-components */
 import type { ResourceHeading } from '@/components/site/ResourceToc';
 
 function headingText(value: string): string {
@@ -5,7 +6,7 @@ function headingText(value: string): string {
     .replace(/<[^>]+>/g, ' ')
     .replace(/&amp;/g, '&')
     .replace(/&quot;/g, '"')
-    .replace(/&#39;|&apos;/g, "'")
+    .replace(/&#39;|&apos;/g, '\'')
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
     .replace(/\s+/g, ' ')
@@ -28,7 +29,9 @@ export function articleHeadings(html: string): ResourceHeading[] {
     const attrs = match[2] ?? '';
     const body = match[3] ?? '';
     const text = headingText(body);
-    if (!text) continue;
+    if (!text) {
+      continue;
+    }
 
     const existing = attrs.match(/\bid=["']([^"']+)["']/i)?.[1];
     const base = existing || slugify(text) || 'section';
@@ -47,17 +50,29 @@ function withHeadingIds(html: string): string {
 
   return html.replace(/<h([23])([^>]*)>([\s\S]*?)<\/h\1>/gi, (full, level, attrs, body) => {
     const heading = headings[index++];
-    if (!heading) return full;
+    if (!heading) {
+      return full;
+    }
     const cleanAttrs = String(attrs).replace(/\s+id=["'][^"']+["']/i, '');
     return `<h${level}${cleanAttrs} id="${heading.id}">${body}</h${level}>`;
   });
+}
+
+// Article HTML is authored content. Add the small accessibility attributes it often
+// lacks: a title on embedded frames, and keyboard focus on code blocks that scroll.
+function withAccessibleEmbeds(html: string): string {
+  return html
+    .replace(/<iframe\b([^>]*)>/gi, (tag, attrs: string) =>
+      /\btitle\s*=/i.test(attrs) ? tag : `<iframe title="Embedded video"${attrs}>`)
+    .replace(/<pre\b([^>]*)>/gi, (tag, attrs: string) =>
+      /\btabindex\s*=/i.test(attrs) ? tag : `<pre tabindex="0"${attrs}>`);
 }
 
 export function TrustedArticleBody({ html }: { html: string }) {
   return (
     <div
       className="sr-richtext"
-      dangerouslySetInnerHTML={{ __html: withHeadingIds(html) }}
+      dangerouslySetInnerHTML={{ __html: withAccessibleEmbeds(withHeadingIds(html)) }}
     />
   );
 }

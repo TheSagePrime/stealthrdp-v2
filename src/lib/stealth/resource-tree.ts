@@ -32,12 +32,12 @@ const guides = [
     url: '/rdp-vps',
   },
   ...blogArticles
-  .filter(article => article.slug !== 'vps-hosting-minecraft')
-  .map(article => ({
-    category: article.category,
-    title: article.title,
-    url: articlePath(article),
-  })),
+    .filter(article => article.slug !== 'vps-hosting-minecraft')
+    .map(article => ({
+      category: article.category,
+      title: article.title,
+      url: articlePath(article),
+    })),
 ];
 
 const docs = helpDocsArticles.map(article => ({
@@ -58,16 +58,6 @@ export const productDocsPageTree = {
   name: 'Help Center',
   children: [
     { type: 'page' as const, name: 'Help Center home', url: '/docs' },
-    folder('Product documentation', docs),
-  ],
-};
-
-// Keep the combined tree available to resource hub views that need the full catalog.
-export const resourcePageTree = {
-  name: 'StealthRDP resources',
-  children: [
-    { type: 'page' as const, name: 'Documentation home', url: '/docs' },
-    folder('Guides', guides),
     folder('Product documentation', docs),
   ],
 };
