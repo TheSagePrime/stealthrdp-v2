@@ -1,5 +1,5 @@
-import fs from 'node:fs';
 import { spawnSync } from 'node:child_process';
+import fs from 'node:fs';
 
 function expectFailure(label, mutate, restore) {
   mutate();
@@ -30,14 +30,14 @@ try {
     () => {
       const pkg = JSON.parse(packageOriginal);
       pkg.dependencies = { ...pkg.dependencies, '@clerk/nextjs': '0.0.0-security-probe' };
-      fs.writeFileSync(packagePath, JSON.stringify(pkg, null, 2) + '\n');
+      fs.writeFileSync(packagePath, `${JSON.stringify(pkg, null, 2)}\n`);
     },
     () => fs.writeFileSync(packagePath, packageOriginal),
   );
 
   expectFailure(
     'backend DB import from public marketing surface',
-    () => fs.writeFileSync(marketingPath, marketingOriginal + "\nimport { db } from '@/libs/DB';\n"),
+    () => fs.writeFileSync(marketingPath, `${marketingOriginal}\nimport { db } from '@/libs/DB';\n`),
     () => fs.writeFileSync(marketingPath, marketingOriginal),
   );
 
@@ -49,7 +49,7 @@ try {
 
   expectFailure(
     'synthetic SEO audit enabled on real origins',
-    () => fs.writeFileSync(proxyPath, proxyOriginal.replace("return site.hostname.endsWith('.invalid');", 'return true;')),
+    () => fs.writeFileSync(proxyPath, proxyOriginal.replace(/return site\.hostname\.endsWith\('\.invalid'\)[^;]*;/, 'return true;')),
     () => fs.writeFileSync(proxyPath, proxyOriginal),
   );
 
@@ -66,4 +66,6 @@ try {
   fs.writeFileSync(dbPath, dbOriginal);
 }
 
-if (!process.exitCode) console.log('[security-self-test] all rejection probes passed');
+if (!process.exitCode) {
+  console.log('[security-self-test] all rejection probes passed');
+}
