@@ -1,0 +1,2051 @@
+/* ==========================================================================
+   StealthRDP legacy compatibility layer.
+
+   This file preserves migrated route classes while V3 is rolled out.
+   It is NOT the canonical visual direction. Do not copy its old composition
+   patterns into new work.
+
+   Canonical visual rules: DESIGN.md
+   Canonical V3 overrides: src/styles/stealth-v3.css
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Site root. Legacy role aliases keep the un-recomposed surfaces on one palette.
+   -------------------------------------------------------------------------- */
+
+.sr-site {
+  --sr-surface: var(--surface-1);
+  --sr-surface-strong: var(--surface-2);
+  --sr-gold-soft: var(--accent);
+  --sr-success: var(--status-ok);
+  --sr-status-success: var(--status-ok);
+  --sr-warning: var(--status-warn);
+  --sr-danger: var(--status-bad);
+
+  /* Named z-index scale — DESIGN.md section 8. No unnamed z-index values. */
+  --z-base: 0;
+  --z-raised: 10;
+  --z-header: 40;
+  --z-overlay: 60;
+  --z-modal: 80;
+
+  /* Motion — DESIGN.md section 7. Three jobs only. */
+  --duration-state: 120ms;
+  --duration-focus: 180ms;
+  --duration-entrance: 240ms;
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Elevation — DESIGN.md section 6. Two levels only. */
+  --elev-2-shadow: 0 12px 32px rgb(0 0 0 / 45%);
+
+  position: relative;
+  z-index: var(--z-base);
+  min-height: 100vh;
+  overflow-x: clip;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* --------------------------------------------------------------------------
+   Layout — DESIGN.md section 5
+   -------------------------------------------------------------------------- */
+
+.sr-container {
+  width: min(1200px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+.sr-section {
+  padding-block: 96px;
+}
+
+.sr-section-border {
+  border-top: 1px solid var(--border-divider);
+}
+
+.sr-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -2px;
+  border: 0;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   Type — DESIGN.md section 4
+   -------------------------------------------------------------------------- */
+
+.sr-kicker {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-micro);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: var(--text-micro--line-height);
+}
+
+.sr-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-display-1);
+  font-weight: 400;
+  line-height: var(--text-display-1--line-height);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.sr-title span {
+  display: block;
+  color: var(--text-muted);
+}
+
+/* Review R4: the display serif is reserved for the hero headline and the
+   closing action. Every other heading is IBM Plex Sans 600. */
+.sr-section-title {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-display-3);
+  font-weight: 600;
+  line-height: var(--text-display-3--line-height);
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+.sr-lede {
+  margin: 0;
+  max-width: 62ch;
+  color: var(--text-muted);
+  font-size: var(--text-body-lg);
+  line-height: var(--text-body-lg--line-height);
+}
+
+.sr-muted {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-small);
+}
+
+.sr-micro {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: var(--text-small);
+  line-height: var(--text-small--line-height);
+}
+
+.sr-section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: end;
+  gap: 24px 48px;
+  margin-bottom: 48px;
+}
+
+.sr-section-head > div {
+  display: grid;
+  gap: 12px;
+}
+
+.sr-section-head > p {
+  margin: 0;
+  max-width: 60ch;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+/* --------------------------------------------------------------------------
+   Inline links and section links
+   -------------------------------------------------------------------------- */
+
+.sr-section-link {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 32px;
+}
+
+.sr-section-link a,
+.sr-inline-links a,
+.sr-location-grid a,
+.sr-content-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: var(--accent);
+  font-size: var(--text-small);
+  font-weight: 600;
+  transition: color var(--duration-focus) var(--ease-out-quint);
+}
+
+.sr-section-link a:hover,
+.sr-inline-links a:hover,
+.sr-location-grid a:hover,
+.sr-content-card-link:hover {
+  color: var(--accent-hover);
+}
+
+.sr-section-link svg,
+.sr-inline-links svg,
+.sr-location-grid a svg,
+.sr-content-card-link svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.sr-inline-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin-top: 16px;
+}
+
+.sr-button-inverse {
+  border-color: var(--border-control);
+  background: transparent;
+  color: var(--text);
+}
+
+/* --------------------------------------------------------------------------
+   Chrome — topline, header, navigation
+   -------------------------------------------------------------------------- */
+
+.sr-topline {
+  border-bottom: 1px solid var(--border-divider);
+  background: var(--bg-elev);
+}
+
+.sr-topline-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 24px;
+  min-height: 40px;
+  padding-block: 4px;
+  color: var(--text-muted);
+  font-size: var(--text-micro);
+  letter-spacing: 0.02em;
+}
+
+.sr-topline-inner > span,
+.sr-topline-inner > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sr-topline-inner svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--accent);
+}
+
+.sr-topline-inner > a {
+  min-height: 32px;
+  color: var(--text-muted);
+  font-weight: 500;
+  transition: color var(--duration-focus) var(--ease-out-quint);
+}
+
+.sr-topline-inner > a:hover {
+  color: var(--text);
+}
+
+.sr-topline-center {
+  color: var(--text-dim);
+}
+
+.sr-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  border-bottom: 1px solid var(--border-divider);
+  background: var(--bg);
+}
+
+.sr-header-inner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 24px;
+  min-height: 72px;
+}
+
+.sr-logo {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.sr-logo img {
+  width: 152px;
+  height: auto;
+  display: block;
+}
+
+.sr-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.sr-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.sr-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  border-radius: var(--radius-md);
+  padding-inline: 12px;
+  color: var(--text-muted);
+  font-size: var(--text-small);
+  font-weight: 500;
+  transition:
+    color var(--duration-focus) var(--ease-out-quint),
+    background-color var(--duration-focus) var(--ease-out-quint);
+}
+
+.sr-nav a:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.sr-header-action {
+  justify-self: end;
+}
+
+/* Desktop has no trigger. The wrapper only holds the summary; the panel itself
+   is a child of .sr-header so the header positions it. */
+.sr-mobile-nav {
+  display: none;
+}
+
+.sr-mobile-nav summary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius-md);
+  color: var(--text);
+  cursor: pointer;
+  list-style: none;
+}
+
+.sr-mobile-nav summary::-webkit-details-marker {
+  display: none;
+}
+
+.sr-mobile-nav summary span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.sr-mobile-menu {
+  position: absolute;
+  inset-inline: 0;
+  top: 100%;
+  z-index: var(--z-overlay);
+  display: grid;
+  gap: 4px;
+  border-bottom: 1px solid var(--border-divider);
+  background: var(--bg-elev);
+  padding: 16px 24px 24px;
+  /* The closed panel keeps a real box at every width: its geometry stays
+     measurable against the header, and it never leaves the site's overflow
+     clip. visibility hides it from sight, from the tab order and from
+     assistive tech until the trigger opens it. */
+  visibility: hidden;
+}
+
+.sr-header:has(.sr-mobile-nav[open]) .sr-mobile-menu {
+  visibility: visible;
+}
+
+.sr-mobile-menu a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  border-radius: var(--radius-md);
+  padding-inline: 12px;
+  color: var(--text-muted);
+  font-size: var(--text-body);
+}
+
+.sr-mobile-menu a:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+/* --------------------------------------------------------------------------
+   Chrome — footer
+   -------------------------------------------------------------------------- */
+
+.sr-footer {
+  border-top: 1px solid var(--border-divider);
+  background: var(--bg-elev);
+  padding-block: 64px 32px;
+}
+
+.sr-footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) repeat(3, minmax(0, 1fr));
+  gap: 48px 32px;
+}
+
+.sr-footer-brand {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.sr-footer-brand img {
+  width: 152px;
+  height: auto;
+}
+
+.sr-footer-brand p {
+  margin: 0;
+  max-width: 40ch;
+  color: var(--text-muted);
+  font-size: var(--text-small);
+  line-height: 1.65;
+}
+
+.sr-footer h2 {
+  margin: 0 0 16px;
+  color: var(--text-dim);
+  font-size: var(--text-micro);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.sr-footer ul {
+  display: grid;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sr-footer li a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  color: var(--text-muted);
+  font-size: var(--text-small);
+  transition: color var(--duration-focus) var(--ease-out-quint);
+}
+
+.sr-footer li a:hover {
+  color: var(--accent);
+}
+
+.sr-footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-top: 48px;
+  border-top: 1px solid var(--border-divider);
+  padding-top: 24px;
+  color: var(--text-dim);
+  font-size: var(--text-micro);
+}
+
+.sr-social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sr-social-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-md);
+  padding-inline: 12px;
+  color: var(--text-muted);
+  font-size: var(--text-micro);
+  transition:
+    border-color var(--duration-focus) var(--ease-out-quint),
+    color var(--duration-focus) var(--ease-out-quint);
+}
+
+.sr-social-links a:hover {
+  border-color: var(--border-control);
+  color: var(--text);
+}
+
+.sr-social-links svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   Home 1 — hero. One claim, one primary action, one secondary, real proof.
+   -------------------------------------------------------------------------- */
+
+.sr-hero {
+  border-bottom: 1px solid var(--border-divider);
+  padding-block: 96px 64px;
+}
+
+.sr-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 64px;
+}
+
+.sr-hero-copy {
+  display: grid;
+  gap: 24px;
+  align-content: start;
+}
+
+.sr-kicker-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sr-live-dot {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--status-ok);
+}
+
+.sr-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.sr-hero-proof {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin-top: 8px;
+  border-top: 1px solid var(--border-divider);
+  padding-top: 24px;
+}
+
+.sr-hero-proof > div {
+  display: grid;
+  gap: 4px;
+  border-inline-start: 1px solid var(--border-divider);
+  padding-inline: 20px;
+}
+
+.sr-hero-proof > div:first-child {
+  border-inline-start: 0;
+  padding-inline-start: 0;
+}
+
+.sr-hero-proof strong {
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-hero-proof span {
+  color: var(--text-muted);
+  font-size: var(--text-micro);
+  line-height: var(--text-micro--line-height);
+}
+
+/* Hero stage: the frame around the session window. The window itself carries
+   elevation level 2 (DESIGN.md section 6), so the stage no longer draws a
+   second panel around it. */
+
+.sr-hero-stage {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+}
+
+.sr-server-icon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-md);
+  color: var(--accent);
+}
+
+.sr-server-icon svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.sr-server-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--border-divider);
+}
+
+.sr-server-metrics > div {
+  display: grid;
+  gap: 4px;
+  border-bottom: 1px solid var(--border-divider);
+  padding-block: 16px;
+}
+
+.sr-server-metrics > div:nth-child(odd) {
+  border-inline-end: 1px solid var(--border-divider);
+  padding-inline-end: 16px;
+}
+
+.sr-server-metrics > div:nth-child(even) {
+  padding-inline-start: 16px;
+}
+
+.sr-server-metrics span {
+  color: var(--text-muted);
+  font-size: var(--text-micro);
+  letter-spacing: 0.02em;
+}
+
+.sr-server-metrics strong {
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   Session preview — the hero's remote-session device (card t_48af6be8).
+   Chrome drawn in HTML and CSS: a title bar, a screen, and for the desktop
+   variant a bottom taskbar with a start affordance. No image, no operating
+   system mark, no third-party desktop-environment clone. Conventions only.
+   -------------------------------------------------------------------------- */
+
+/* A window mock is defined by its chrome and its elevation, not by a hairline
+   border: DESIGN.md section 6 gives elev-2 as surface-2 + shadow only. The 1px
+   border plus the 32px shadow read as generated chrome, so the border goes. */
+.sr-session {
+  display: grid;
+  border-radius: var(--radius-lg);
+  background: var(--surface-2);
+  box-shadow: var(--elev-2-shadow);
+  overflow: hidden;
+}
+
+.sr-session-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+  border-bottom: 1px solid var(--border-divider);
+  background: var(--surface-3);
+  padding: 8px 24px;
+}
+
+/* The plan plate doubles as the window's application mark. */
+.sr-session-bar .sr-server-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+}
+
+.sr-session-bar .sr-server-icon svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.sr-session-mark {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-sm);
+  color: var(--accent);
+}
+
+.sr-session-mark svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.sr-session-title {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  font-weight: 600;
+  line-height: var(--text-small--line-height);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The terminal variant titles the window with the documentation article the
+   transcript comes from, which is a longer string than a plan name. */
+.sr-session[data-variant='terminal'] .sr-session-title {
+  font-size: var(--text-small);
+}
+
+/* The screen is the recessed content plane of the window. */
+.sr-session-screen {
+  display: grid;
+  align-content: start;
+  gap: 20px;
+  background: var(--surface-1);
+  padding: 24px;
+}
+
+/* The screen is the top of the window now, not a card below a card head. */
+.sr-session-screen .sr-server-metrics {
+  border-top: 0;
+}
+
+/* Desktop convention: a bottom bar with a start affordance and a session tray.
+   The mark is decoration. It has no hover state, no transition, no pointer
+   events and no size change, because nothing behind it acts (rule 5). */
+.sr-session-taskbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 48px;
+  border-top: 1px solid var(--border-divider);
+  background: var(--surface-3);
+  padding: 8px 24px;
+}
+
+.sr-session-start {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+  place-items: center;
+  color: var(--accent);
+  pointer-events: none;
+}
+
+.sr-session-start svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.sr-session-taskbar .sr-activity-meta {
+  padding-block: 0;
+}
+
+/* Terminal variant: the documented commands, one per line. */
+
+.sr-session-screen-term {
+  gap: 0;
+}
+
+.sr-term-lines {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sr-term-line {
+  display: flex;
+  gap: 8px;
+  min-width: 0;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  line-height: var(--text-mono-sm--line-height);
+}
+
+.sr-term-prompt {
+  flex: 0 0 auto;
+  color: var(--accent);
+}
+
+.sr-term-command {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* The session tray. The rule was dropped in the rewrite, which ran the two
+   labels together as one string. Restored so the labels stay separate. */
+.sr-activity-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 16px;
+  padding-block: 16px;
+  color: var(--text-muted);
+  font-size: var(--text-micro);
+  letter-spacing: 0.02em;
+}
+
+.sr-server-activity {
+  display: grid;
+  gap: 12px;
+}
+
+
+
+
+
+
+
+
+
+.sr-stage-float {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid var(--border-divider);
+  padding-top: 16px;
+}
+
+.sr-stage-float svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--accent);
+}
+
+.sr-stage-float span {
+  display: grid;
+  gap: 2px;
+}
+
+.sr-stage-float strong {
+  color: var(--text);
+  font-size: var(--text-small);
+  font-weight: 600;
+}
+
+.sr-stage-float small {
+  color: var(--text-muted);
+  font-size: var(--text-micro);
+}
+
+/* --------------------------------------------------------------------------
+   Home — proof rail and operating-system strip
+   -------------------------------------------------------------------------- */
+
+.sr-proof-rail {
+  border-bottom: 1px solid var(--border-divider);
+  background: var(--bg-elev);
+}
+
+.sr-proof-rail-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 32px;
+  padding-block: 20px;
+}
+
+.sr-proof-rail-inner > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: var(--text-micro);
+  letter-spacing: 0.02em;
+}
+
+.sr-proof-rail-inner svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--accent);
+}
+
+.sr-os-strip {
+  border-bottom: 1px solid var(--border-divider);
+}
+
+.sr-os-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding-block: 24px;
+}
+
+.sr-os-label {
+  flex: 0 0 auto;
+  margin-inline-end: 8px;
+  color: var(--text-muted);
+  font-size: var(--text-micro);
+  letter-spacing: 0.02em;
+}
+
+.sr-os-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-full);
+  padding-inline: 12px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+}
+
+/* --------------------------------------------------------------------------
+   Home 2 — section index. Anchored links labelled with the site's own headings.
+   -------------------------------------------------------------------------- */
+
+/* Review R3: a quiet contents rail, not a competing hero device. */
+.sr-index {
+  border-bottom: 1px solid var(--border-divider);
+  background: transparent;
+}
+
+.sr-index-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 32px;
+  margin: 0;
+  padding: 8px 0;
+  list-style: none;
+}
+
+.sr-index-item {
+  min-width: 0;
+}
+
+.sr-index-item a {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0;
+  color: var(--text-muted);
+  font-size: var(--text-small);
+  transition: color var(--duration-focus) var(--ease-out-quint);
+}
+
+.sr-index-item a:hover {
+  background: transparent;
+  color: var(--text);
+}
+
+.sr-index-num {
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-index-label {
+  color: inherit;
+  font-size: var(--text-small);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* --------------------------------------------------------------------------
+   Status pill — icon and label always, colour never alone.
+   -------------------------------------------------------------------------- */
+
+.sr-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 32px;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-full);
+  padding-inline: 12px;
+  color: var(--text-muted);
+  font-size: var(--text-micro);
+  letter-spacing: 0.02em;
+}
+
+.sr-pill svg {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+}
+
+.sr-pill[data-state='ok'] svg {
+  color: var(--status-ok);
+}
+
+.sr-pill[data-state='warn'] svg {
+  color: var(--status-warn);
+}
+
+.sr-pill[data-state='bad'] svg {
+  color: var(--status-bad);
+}
+
+.sr-pill[data-state='unknown'] svg {
+  color: var(--status-unknown);
+}
+
+/* --------------------------------------------------------------------------
+   Home 3 — the numbered provisioning sequence.
+   -------------------------------------------------------------------------- */
+
+.sr-provision {
+  display: grid;
+  gap: 24px;
+}
+
+.sr-provision-list {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-lg);
+  background: var(--surface-1);
+  list-style: none;
+  overflow: hidden;
+}
+
+.sr-provision-step {
+  display: grid;
+  grid-template-columns: 40px 40px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  border-top: 1px solid var(--border-divider);
+  padding: 20px 24px;
+}
+
+.sr-provision-step:first-child {
+  border-top: 0;
+}
+
+.sr-provision-icon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-md);
+  color: var(--accent);
+}
+
+.sr-provision-icon svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.sr-provision-num {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-provision-body {
+  display: grid;
+  gap: 4px;
+}
+
+.sr-provision-body strong {
+  color: var(--text);
+  font-size: var(--text-body);
+  font-weight: 600;
+}
+
+.sr-provision-body span {
+  color: var(--text-muted);
+  font-size: var(--text-small);
+}
+
+.sr-provision-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+}
+
+.sr-provision-state svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--status-unknown);
+}
+
+/* Never a hardcoded green: the default is the unknown state. */
+.sr-provision-state[data-state='up'] svg {
+  color: var(--status-ok);
+}
+
+.sr-provision-state[data-state='degraded'] svg {
+  color: var(--status-warn);
+}
+
+.sr-provision-state[data-state='down'] svg {
+  color: var(--status-bad);
+}
+
+.sr-provision-ratio {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-provision-sep {
+  color: var(--text-muted);
+}
+
+/* The status device inside the hero card. Same list, compact cells, no frame. */
+.sr-status-device {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--border-divider);
+  padding-top: 16px;
+}
+
+.sr-status-device .sr-provision-list {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.sr-status-device .sr-provision-step {
+  grid-template-columns: 24px 32px minmax(0, 1fr);
+  gap: 6px 12px;
+  padding: 12px 0;
+}
+
+.sr-status-device .sr-provision-num {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.sr-status-device .sr-provision-icon {
+  grid-column: 2;
+  grid-row: 1;
+  width: 32px;
+  height: 32px;
+  border: 0;
+}
+
+.sr-status-device .sr-provision-body {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.sr-status-device .sr-provision-state {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.sr-provision-meta {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-md);
+  background: var(--bg-elev);
+}
+
+.sr-provision-meta > div {
+  display: grid;
+  gap: 4px;
+  border-inline-start: 1px solid var(--border-divider);
+  padding: 16px 20px;
+}
+
+.sr-provision-meta > div:first-child {
+  border-inline-start: 0;
+}
+
+.sr-provision-meta dt {
+  color: var(--text-muted);
+  font-size: var(--text-micro);
+  letter-spacing: 0.02em;
+}
+
+.sr-provision-meta dd {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   Home 4 — per-location data table
+   -------------------------------------------------------------------------- */
+
+.sr-region-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-lg);
+  background: var(--surface-1);
+  /* The frame owns the inset: the table never lands flush on its own border. */ padding: 12px;
+  /* A column cut by the viewport edge must read as scrollable, not broken.
+     The fade marks that more table exists to the right. */
+  mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 28px), transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 28px), transparent 100%);
+}
+
+.sr-region-table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+}
+
+.sr-region-table caption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.sr-region-table th,
+.sr-region-table td {
+  border-bottom: 1px solid var(--border-divider);
+  padding: 16px 24px;
+  text-align: start;
+  vertical-align: middle;
+}
+
+.sr-region-table thead th {
+  color: var(--text-muted);
+  font-size: var(--text-micro);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.sr-region-table thead th:first-child {
+  color: var(--text-dim);
+}
+
+.sr-region-table tbody th {
+  color: var(--text-muted);
+  font-size: var(--text-small);
+  font-weight: 400;
+}
+
+.sr-region-table td {
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-region-table tbody tr:last-child th,
+.sr-region-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.sr-region-head {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.sr-region-head svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--accent);
+}
+
+.sr-region-code {
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: 500;
+}
+
+/* --------------------------------------------------------------------------
+   Home 5 — infrastructure. Claim plus one measured property each.
+   -------------------------------------------------------------------------- */
+
+.sr-infra-section {
+  border-top: 1px solid var(--border-divider);
+}
+
+.sr-infra-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-self: start;
+  gap: 8px;
+  min-height: 32px;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-full);
+  padding-inline: 12px;
+  color: var(--text-muted);
+  font-size: var(--text-micro);
+}
+
+.sr-infra-badge svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--status-ok);
+}
+
+.sr-infra-list {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--border-divider);
+}
+
+.sr-infra-list article {
+  display: grid;
+  grid-template-columns: 40px 40px minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 20px;
+  border-bottom: 1px solid var(--border-divider);
+  padding-block: 24px;
+}
+
+.sr-feature-number {
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-feature-icon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-md);
+  color: var(--accent);
+}
+
+.sr-feature-icon svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.sr-infra-list h3 {
+  margin: 0 0 8px;
+  color: var(--text);
+  font-size: var(--text-heading-4);
+  font-weight: 600;
+  line-height: var(--text-heading-4--line-height);
+}
+
+.sr-infra-list p {
+  margin: 0;
+  max-width: 46ch;
+  color: var(--text-muted);
+  font-size: var(--text-small);
+  line-height: 1.65;
+}
+
+.sr-infra-value {
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  font-weight: 500;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   Home 3 — published customer feedback
+   -------------------------------------------------------------------------- */
+
+.sr-review-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.sr-feedback {
+  margin-top: 48px;
+}
+
+.sr-review {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+  padding: 24px;
+}
+
+.sr-review-mark {
+  color: var(--text-dim);
+  font-family: var(--font-body);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.sr-review blockquote {
+  margin: 0;
+  color: var(--text);
+  font-size: var(--text-small);
+  line-height: 1.65;
+}
+
+.sr-review footer {
+  display: grid;
+  gap: 2px;
+  border-top: 1px solid var(--border-divider);
+  padding-top: 16px;
+}
+
+.sr-review footer strong {
+  color: var(--text);
+  font-size: var(--text-small);
+  font-weight: 600;
+}
+
+.sr-review footer span {
+  color: var(--text-muted);
+  font-size: var(--text-micro);
+}
+
+/* --------------------------------------------------------------------------
+   Home 7 — resources entry points
+   -------------------------------------------------------------------------- */
+
+.sr-resources-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-lg);
+  background: var(--surface-1);
+  overflow: hidden;
+}
+
+.sr-resources-list li {
+  border-inline-start: 1px solid var(--border-divider);
+}
+
+.sr-resources-list li:first-child {
+  border-inline-start: 0;
+}
+
+.sr-resources-list a {
+  display: grid;
+  gap: 8px;
+  min-height: 120px;
+  align-content: space-between;
+  padding: 24px;
+  transition: background-color var(--duration-focus) var(--ease-out-quint);
+}
+
+.sr-resources-list a:hover {
+  background: var(--surface-2);
+}
+
+.sr-resources-list svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--accent);
+}
+
+.sr-resources-list span {
+  color: var(--text);
+  font-size: var(--text-small);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Closing action
+   -------------------------------------------------------------------------- */
+
+.sr-cta {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 48px;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-lg);
+  background: var(--surface-1);
+  padding: 48px;
+}
+
+.sr-cta h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-display-3);
+  font-weight: 400;
+  line-height: var(--text-display-3--line-height);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.sr-cta p {
+  margin: 16px 0 0;
+  max-width: 52ch;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.sr-cta .sr-kicker {
+  margin-bottom: 12px;
+}
+
+.sr-cta-premium .sr-actions {
+  justify-content: flex-end;
+  margin-top: 0;
+}
+
+.sr-cta-inline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+/* --------------------------------------------------------------------------
+   Plans — finder, comparison table and tier cards.
+   Comparison outranks atmosphere; the table sits above the cards.
+   -------------------------------------------------------------------------- */
+
+.sr-pricing-section {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.sr-pricing-explorer {
+  display: grid;
+  gap: 24px;
+}
+
+/* The finder is a band between two dividers, not a card: the controls inside
+   are bordered buttons, and a card frame around them nests a card in a card
+   (STEALTHRDP_DESIGN.md line 61). */
+.sr-plan-finder {
+  display: grid;
+  gap: 16px;
+  border-block: 1px solid var(--border-divider);
+  padding-block: 24px;
+}
+
+.sr-finder-block {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  align-items: center;
+  gap: 16px;
+}
+
+.sr-finder-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.sr-finder-note {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 16px;
+  margin: 0;
+  border-top: 1px solid var(--border-divider);
+  padding-top: 16px;
+  color: var(--text-muted);
+  font-size: var(--text-micro);
+}
+
+.sr-finder-note strong {
+  color: var(--text);
+  font-size: var(--text-small);
+}
+
+.sr-control-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+}
+
+.sr-control-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.sr-control-label {
+  margin-inline-end: 4px;
+  color: var(--text-muted);
+  font-size: var(--text-micro);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.sr-plan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.sr-plan-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-height: 100%;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+  padding: 24px;
+  transition: border-color var(--duration-focus) var(--ease-out-quint);
+}
+
+.sr-plan-card[data-popular='true'],
+.sr-plan-card[data-recommended='true'] {
+  border-color: var(--border-control);
+}
+
+.sr-plan-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sr-plan-name {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.sr-plan-desc {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  font-size: var(--text-small);
+  line-height: 1.5;
+}
+
+.sr-plan-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.sr-plan-price {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: var(--text-display-3);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.sr-plan-price small {
+  margin-inline-start: 4px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: var(--text-micro);
+  letter-spacing: 0;
+}
+
+.sr-plan-period {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  font-size: var(--text-micro);
+}
+
+.sr-plan-card [data-slot='separator'] {
+  background: var(--border-divider);
+}
+
+.sr-plan-specs {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.sr-plan-specs li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  border-top: 1px solid var(--border-divider);
+  padding-block: 12px;
+}
+
+.sr-plan-specs li span {
+  color: var(--text-muted);
+  font-size: var(--text-micro);
+  letter-spacing: 0.02em;
+}
+
+.sr-plan-specs li b {
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-plan-actions {
+  margin-top: auto;
+}
+
+.sr-plan-actions [data-slot='button'] {
+  width: 100%;
+}
+
+.sr-unavailable {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  font-size: var(--text-small);
+}
+
+.sr-unavailable svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--status-warn);
+}
+
+/* --------------------------------------------------------------------------
+   Generic data table
+   -------------------------------------------------------------------------- */
+
+.sr-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-lg);
+  background: var(--surface-1);
+  /* Same inset as the region frame: no cell sits on the frame's own edge. */
+  padding: 12px;
+  /* Same scroll affordance as the region table: the fade marks that the table
+     continues past the viewport edge. */
+  mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 28px), transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 28px), transparent 100%);
+}
+
+.sr-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+}
+
+.sr-table th,
+.sr-table td {
+  border-bottom: 1px solid var(--border-divider);
+  padding: 16px 20px;
+  text-align: start;
+  vertical-align: middle;
+}
+
+.sr-table thead th {
+  color: var(--text-muted);
+  font-size: var(--text-micro);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.sr-table tbody th {
+  color: var(--text);
+  font-size: var(--text-small);
+  font-weight: 600;
+}
+
+.sr-table td {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-table tbody tr:last-child th,
+.sr-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.sr-table-unavailable {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: var(--text-micro);
+}
+
+.sr-plan-row {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   Responsive — DESIGN.md section 5 (96px desktop / 64px mobile between sections)
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .sr-hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 48px;
+  }
+
+  .sr-index-list {
+    gap: 8px 32px;
+  }
+
+  .sr-resources-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sr-resources-list li:nth-child(3) {
+    border-inline-start: 0;
+  }
+
+  .sr-cta {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+    padding: 40px;
+  }
+
+  .sr-cta-premium .sr-actions {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 860px) {
+  .sr-nav {
+    display: none;
+  }
+
+  .sr-header-inner {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+  }
+
+  .sr-header-action {
+    display: none;
+  }
+
+  .sr-mobile-nav {
+    display: block;
+  }
+
+  .sr-section-head {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+
+  .sr-plan-grid,
+  .sr-review-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sr-provision-step {
+    grid-template-columns: 32px 32px minmax(0, 1fr);
+    gap: 12px;
+    padding: 16px 20px;
+  }
+
+  .sr-provision-icon {
+    width: 32px;
+    height: 32px;
+  }
+
+  .sr-provision-state {
+    grid-column: 3;
+  }
+
+  .sr-provision-meta {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sr-provision-meta > div {
+    border-inline-start: 0;
+    border-top: 1px solid var(--border-divider);
+    padding: 12px 20px;
+  }
+
+  .sr-provision-meta > div:first-child {
+    border-top: 0;
+  }
+
+  .sr-finder-block {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 8px;
+  }
+
+  /* Four children, four explicit cells: number and icon share the first row,
+     content and the measured value span the full width beneath them.
+     Implicit placement put the text block in the 32px number column, which
+     clipped every heading and paragraph. */
+  .sr-infra-list article {
+    grid-template-columns: 32px 40px minmax(0, 1fr);
+    gap: 8px 16px;
+  }
+
+  .sr-feature-number {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .sr-feature-icon {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .sr-infra-list article > div {
+    grid-column: 1 / -1;
+  }
+
+  .sr-infra-value {
+    grid-column: 1 / -1;
+    justify-self: start;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 640px) {
+  .sr-container {
+    width: calc(100% - 48px);
+  }
+
+  .sr-section {
+    padding-block: 64px;
+  }
+
+  .sr-hero {
+    padding-block: 64px 48px;
+  }
+
+  .sr-session-screen {
+    gap: 16px;
+    padding: 20px;
+  }
+
+  .sr-session-bar,
+  .sr-session-taskbar {
+    padding-inline: 20px;
+  }
+
+  .sr-hero-proof {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 0;
+  }
+
+  .sr-hero-proof > div:nth-child(odd) {
+    border-inline-start: 0;
+    padding-inline-start: 0;
+  }
+
+  .sr-index-list {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .sr-plan-grid,
+  .sr-review-grid,
+  .sr-resources-list,
+  .sr-footer-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sr-resources-list li,
+  .sr-resources-list li:nth-child(3) {
+    border-inline-start: 0;
+    border-top: 1px solid var(--border-divider);
+  }
+
+  .sr-resources-list li:first-child {
+    border-top: 0;
+  }
+
+  .sr-cta {
+    padding: 32px;
+  }
+
+  .sr-actions {
+    align-items: stretch;
+  }
+
+  .sr-actions > * {
+    flex: 1 1 auto;
+  }
+
+  .sr-footer {
+    padding-block: 48px 24px;
+  }
+
+  .sr-footer-bottom {
+    margin-top: 32px;
+  }
+}
+
+/* Motion is opt-in — DESIGN.md section 7. */
+@media (prefers-reduced-motion: reduce) {
+  .sr-section-link a,
+  .sr-inline-links a,
+  .sr-content-card-link,
+  .sr-nav a,
+  .sr-topline-inner > a,
+  .sr-footer li a,
+  .sr-social-links a,
+  .sr-mobile-menu a,
+  .sr-index-item a,
+  .sr-resources-list a,
+  .sr-plan-card {
+    transition: none;
+  }
+}

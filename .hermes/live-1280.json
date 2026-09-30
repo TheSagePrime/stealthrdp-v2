@@ -1,0 +1,303 @@
+{
+  "url": "http://localhost:3124/linux-vps",
+  "viewport": [
+    1280,
+    900
+  ],
+  "elementCount": 824,
+  "spacing": {
+    "2": 110,
+    "4": 122,
+    "6": 123,
+    "8": 207,
+    "10": 55,
+    "12": 146,
+    "14": 4,
+    "16": 319,
+    "18": 4,
+    "20": 146,
+    "24": 35,
+    "32": 7,
+    "40": 18,
+    "48": 8,
+    "64": 1,
+    "100": 6,
+    "128": 2,
+    "89.6": 21,
+    "76.8": 1,
+    "102.4": 1
+  },
+  "spacingSingletons": [
+    64,
+    76.8,
+    102.4
+  ],
+  "radii": {
+    "0": 663,
+    "12": 116,
+    "18": 9,
+    "999": 36
+  },
+  "type": {
+    "10": 1,
+    "11": 41,
+    "12": 107,
+    "13": 261,
+    "14": 67,
+    "16": 328,
+    "24": 6,
+    "34": 1,
+    "64": 2,
+    "46.72": 8,
+    "18.56": 1,
+    "23.68": 1
+  },
+  "lineHeights": {
+    "18": 17,
+    "24": 35,
+    "26.4": 276,
+    "21.45": 252,
+    "19.8": 75,
+    "23.1": 38,
+    "18.15": 23,
+    "15.4": 18
+  },
+  "shadowCount": 4,
+  "overflow": [],
+  "overflowIntentional": [],
+  "overflowContained": [
+    {
+      "sel": "thead > tr > th > span.sr-visually-hidden",
+      "over": 50,
+      "text": "Action"
+    }
+  ],
+  "clipped": [],
+  "alignmentEdges": {
+    "0": 13,
+    "32": 1,
+    "228": 1
+  },
+  "siblingVariance": [
+    {
+      "parent": "div.sr-site > header.srv3-header > div.sr-container > nav.srv3-nav",
+      "tag": "A",
+      "n": 5,
+      "heightSpread": 0,
+      "widthSpread": 65,
+      "heights": [
+        44,
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "parent": "div.sr-table-wrap > table.sr-table > thead > tr",
+      "tag": "TH",
+      "n": 7,
+      "heightSpread": 0,
+      "widthSpread": 259,
+      "heights": [
+        52,
+        52,
+        52,
+        52,
+        52,
+        52,
+        52
+      ]
+    },
+    {
+      "parent": "div.sr-table-wrap > table.sr-table > tbody > tr",
+      "tag": "TD",
+      "n": 6,
+      "heightSpread": 0,
+      "widthSpread": 123,
+      "heights": [
+        88,
+        88,
+        88,
+        88,
+        88,
+        88
+      ]
+    },
+    {
+      "parent": "div.sr-table-wrap > table.sr-table > tbody > tr",
+      "tag": "TD",
+      "n": 6,
+      "heightSpread": 0,
+      "widthSpread": 123,
+      "heights": [
+        82,
+        82,
+        82,
+        82,
+        82,
+        82
+      ]
+    },
+    {
+      "parent": "div.sr-table-wrap > table.sr-table > tbody > tr",
+      "tag": "TD",
+      "n": 6,
+      "heightSpread": 0,
+      "widthSpread": 123,
+      "heights": [
+        88,
+        88,
+        88,
+        88,
+        88,
+        88
+      ]
+    },
+    {
+      "parent": "div.sr-table-wrap > table.sr-table > tbody > tr",
+      "tag": "TD",
+      "n": 6,
+      "heightSpread": 0,
+      "widthSpread": 123,
+      "heights": [
+        82,
+        82,
+        82,
+        82,
+        82,
+        82
+      ]
+    },
+    {
+      "parent": "div.sr-table-wrap > table.sr-table > tbody > tr",
+      "tag": "TD",
+      "n": 6,
+      "heightSpread": 0,
+      "widthSpread": 123,
+      "heights": [
+        88,
+        88,
+        88,
+        88,
+        88,
+        88
+      ]
+    },
+    {
+      "parent": "div.sr-table-wrap > table.sr-table > tbody > tr",
+      "tag": "TD",
+      "n": 6,
+      "heightSpread": 0,
+      "widthSpread": 123,
+      "heights": [
+        81,
+        81,
+        81,
+        81,
+        81,
+        81
+      ]
+    },
+    {
+      "parent": "div.sr-table-wrap > table.sr-table > thead > tr",
+      "tag": "TH",
+      "n": 3,
+      "heightSpread": 0,
+      "widthSpread": 404,
+      "heights": [
+        52,
+        52,
+        52
+      ]
+    },
+    {
+      "parent": "tbody > tr > td > ul.flex",
+      "tag": "LI",
+      "n": 3,
+      "heightSpread": 0,
+      "widthSpread": 54,
+      "heights": [
+        27,
+        27,
+        27
+      ]
+    },
+    {
+      "parent": "div.sr-container > div.srv3-footer-top > div.srv3-footer-brand > ul.srv3-socials",
+      "tag": "LI",
+      "n": 4,
+      "heightSpread": 0,
+      "widthSpread": 60,
+      "heights": [
+        44,
+        44,
+        44,
+        44
+      ]
+    },
+    {
+      "parent": "div.sr-site > footer.srv3-footer > div.sr-container > div.srv3-footer-bottom",
+      "tag": "SPAN",
+      "n": 3,
+      "heightSpread": 0,
+      "widthSpread": 200,
+      "heights": [
+        18,
+        18,
+        18
+      ]
+    }
+  ],
+  "buttons": [
+    {
+      "sel": "div.sr-control-row > div.sr-control-stack > div.inline-flex > button.inline-flex",
+      "label": "USA",
+      "w": 52,
+      "h": 44,
+      "x": 45,
+      "y": 1114
+    },
+    {
+      "sel": "div.sr-control-row > div.sr-control-stack > div.inline-flex > button.inline-flex",
+      "label": "EU",
+      "w": 44,
+      "h": 44,
+      "x": 96,
+      "y": 1114
+    },
+    {
+      "sel": "div.sr-control-stack > ul.sr-term-ladder > li > button.sr-term-option",
+      "label": "Monthly\u20ac9.50per month\u20ac9.",
+      "w": 261,
+      "h": 118,
+      "x": 148,
+      "y": 1004
+    },
+    {
+      "sel": "div.sr-control-stack > ul.sr-term-ladder > li > button.sr-term-option",
+      "label": "Quarterly\u20ac9per month\u20ac27 ",
+      "w": 261,
+      "h": 155,
+      "x": 418,
+      "y": 1004
+    },
+    {
+      "sel": "div.sr-control-stack > ul.sr-term-ladder > li > button.sr-term-option",
+      "label": "Annual\u20ac8per month\u20ac96 bil",
+      "w": 261,
+      "h": 155,
+      "x": 689,
+      "y": 1004
+    },
+    {
+      "sel": "div.sr-control-stack > ul.sr-term-ladder > li > button.sr-term-option",
+      "label": "Biannual\u20ac7per month\u20ac168 ",
+      "w": 261,
+      "h": 155,
+      "x": 959,
+      "y": 1004
+    }
+  ],
+  "smallTargets": []
+}

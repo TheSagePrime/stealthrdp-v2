@@ -1,0 +1,1099 @@
+{
+ "checks": [
+  {
+   "need": "service header navigation",
+   "keywords": [
+    "service",
+    "header",
+    "navigation"
+   ],
+   "matches": 11,
+   "decision": "REUSE",
+   "top": [
+    {
+     "source": "shadcnblocks",
+     "name": "application-shell1",
+     "score": 2
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "data-table26",
+     "score": 2
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "incentives8",
+     "score": 2
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "list-panel-list-with-back-header",
+     "score": 2
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "navbar4",
+     "score": 2
+    }
+   ],
+   "known_files": [
+    "src/components/ActiveLink.tsx",
+    "src/components/Background.stories.tsx",
+    "src/components/Background.tsx",
+    "src/components/LocaleSwitcher.tsx",
+    "src/components/MenuToggle.test.tsx",
+    "src/components/MenuToggle.tsx",
+    "src/components/seo/Article.tsx",
+    "src/components/site/DocBody.tsx",
+    "src/components/site/OSHeroVisual.tsx",
+    "src/components/site/PricingExplorer.test.tsx",
+    "src/components/site/PricingExplorer.tsx",
+    "src/components/site/SiteFooter.tsx",
+    "src/components/site/SiteHeader.tsx",
+    "src/components/site/StatusGrid.tsx",
+    "src/components/site/TrustedArticleBody.tsx",
+    "src/components/site/home/AfterCheckout.tsx",
+    "src/components/site/home/HomeHero.tsx",
+    "src/components/site/home/Infrastructure.tsx",
+    "src/components/site/home/RegionTable.tsx",
+    "src/components/site/home/Resources.tsx",
+    "src/components/ui/VisualContract.visual.test.tsx",
+    "src/components/ui/accordion.tsx",
+    "src/components/ui/alert.tsx",
+    "src/components/ui/badge.stories.tsx",
+    "src/components/ui/badge.tsx",
+    "src/components/ui/breadcrumb.tsx",
+    "src/components/ui/button-group.tsx",
+    "src/components/ui/button.stories.tsx",
+    "src/components/ui/button.tsx",
+    "src/components/ui/card.tsx",
+    "src/components/ui/code-block.tsx",
+    "src/components/ui/dialog.tsx",
+    "src/components/ui/dropdown-menu.stories.tsx",
+    "src/components/ui/dropdown-menu.tsx",
+    "src/components/ui/kbd.tsx",
+    "src/components/ui/pill.tsx",
+    "src/components/ui/progress.tsx",
+    "src/components/ui/separator.tsx",
+    "src/components/ui/table.tsx",
+    "src/components/ui/tabs.tsx",
+    "src/components/ui/tooltip.tsx"
+   ],
+   "at": "2026-09-24T17:03:24"
+  },
+  {
+   "need": "VPS pricing controls and plan comparison",
+   "keywords": [
+    "vps",
+    "pricing",
+    "controls",
+    "plan"
+   ],
+   "matches": 1,
+   "decision": "REUSE",
+   "top": [
+    {
+     "source": "shadcnblocks",
+     "name": "pricing82",
+     "score": 3
+    }
+   ],
+   "known_files": [
+    "src/components/ActiveLink.tsx",
+    "src/components/Background.stories.tsx",
+    "src/components/Background.tsx",
+    "src/components/LocaleSwitcher.tsx",
+    "src/components/MenuToggle.test.tsx",
+    "src/components/MenuToggle.tsx",
+    "src/components/seo/Article.tsx",
+    "src/components/site/DocBody.tsx",
+    "src/components/site/OSHeroVisual.tsx",
+    "src/components/site/PricingExplorer.test.tsx",
+    "src/components/site/PricingExplorer.tsx",
+    "src/components/site/SiteFooter.tsx",
+    "src/components/site/SiteHeader.tsx",
+    "src/components/site/StatusGrid.tsx",
+    "src/components/site/TrustedArticleBody.tsx",
+    "src/components/site/home/AfterCheckout.tsx",
+    "src/components/site/home/HomeHero.tsx",
+    "src/components/site/home/Infrastructure.tsx",
+    "src/components/site/home/RegionTable.tsx",
+    "src/components/site/home/Resources.tsx",
+    "src/components/ui/VisualContract.visual.test.tsx",
+    "src/components/ui/accordion.tsx",
+    "src/components/ui/alert.tsx",
+    "src/components/ui/badge.stories.tsx",
+    "src/components/ui/badge.tsx",
+    "src/components/ui/breadcrumb.tsx",
+    "src/components/ui/button-group.tsx",
+    "src/components/ui/button.stories.tsx",
+    "src/components/ui/button.tsx",
+    "src/components/ui/card.tsx",
+    "src/components/ui/code-block.tsx",
+    "src/components/ui/dialog.tsx",
+    "src/components/ui/dropdown-menu.stories.tsx",
+    "src/components/ui/dropdown-menu.tsx",
+    "src/components/ui/kbd.tsx",
+    "src/components/ui/pill.tsx",
+    "src/components/ui/progress.tsx",
+    "src/components/ui/separator.tsx",
+    "src/components/ui/table.tsx",
+    "src/components/ui/tabs.tsx",
+    "src/components/ui/tooltip.tsx"
+   ],
+   "at": "2026-09-24T17:03:27"
+  },
+  {
+   "need": "plan comparison ledger with resource bars",
+   "keywords": [
+    "plan",
+    "comparison",
+    "ledger",
+    "resource"
+   ],
+   "matches": 8,
+   "decision": "REUSE",
+   "top": [
+    {
+     "source": "shadcnblocks",
+     "name": "pricing11",
+     "score": 2
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "pricing23",
+     "score": 2
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "pricing30",
+     "score": 2
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "pricing42",
+     "score": 2
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "pricing45",
+     "score": 2
+    }
+   ],
+   "known_files": [
+    "src/components/ActiveLink.tsx",
+    "src/components/Background.stories.tsx",
+    "src/components/Background.tsx",
+    "src/components/LocaleSwitcher.tsx",
+    "src/components/MenuToggle.test.tsx",
+    "src/components/MenuToggle.tsx",
+    "src/components/seo/Article.tsx",
+    "src/components/site/DocBody.tsx",
+    "src/components/site/OSHeroVisual.tsx",
+    "src/components/site/PricingExplorer.test.tsx",
+    "src/components/site/PricingExplorer.tsx",
+    "src/components/site/SiteFooter.tsx",
+    "src/components/site/SiteHeader.tsx",
+    "src/components/site/StatusGrid.tsx",
+    "src/components/site/TrustedArticleBody.tsx",
+    "src/components/site/home/AfterCheckout.tsx",
+    "src/components/site/home/HomeHero.tsx",
+    "src/components/site/home/Infrastructure.tsx",
+    "src/components/site/home/RegionTable.tsx",
+    "src/components/site/home/Resources.tsx",
+    "src/components/ui/VisualContract.visual.test.tsx",
+    "src/components/ui/accordion.tsx",
+    "src/components/ui/alert.tsx",
+    "src/components/ui/badge.stories.tsx",
+    "src/components/ui/badge.tsx",
+    "src/components/ui/breadcrumb.tsx",
+    "src/components/ui/button-group.tsx",
+    "src/components/ui/button.stories.tsx",
+    "src/components/ui/button.tsx",
+    "src/components/ui/card.tsx",
+    "src/components/ui/code-block.tsx",
+    "src/components/ui/dialog.tsx",
+    "src/components/ui/dropdown-menu.stories.tsx",
+    "src/components/ui/dropdown-menu.tsx",
+    "src/components/ui/kbd.tsx",
+    "src/components/ui/pill.tsx",
+    "src/components/ui/progress.tsx",
+    "src/components/ui/separator.tsx",
+    "src/components/ui/table.tsx",
+    "src/components/ui/tabs.tsx",
+    "src/components/ui/tooltip.tsx"
+   ],
+   "at": "2026-09-24T19:11:59"
+  },
+  {
+   "need": "operating system version matrix",
+   "keywords": [
+    "operating",
+    "system",
+    "version",
+    "matrix"
+   ],
+   "matches": 0,
+   "decision": "BUILD",
+   "top": [],
+   "known_files": [
+    "src/components/ActiveLink.tsx",
+    "src/components/Background.stories.tsx",
+    "src/components/Background.tsx",
+    "src/components/LocaleSwitcher.tsx",
+    "src/components/MenuToggle.test.tsx",
+    "src/components/MenuToggle.tsx",
+    "src/components/seo/Article.tsx",
+    "src/components/site/DocBody.tsx",
+    "src/components/site/OSHeroVisual.tsx",
+    "src/components/site/PricingExplorer.test.tsx",
+    "src/components/site/PricingExplorer.tsx",
+    "src/components/site/SiteFooter.tsx",
+    "src/components/site/SiteHeader.tsx",
+    "src/components/site/StatusGrid.tsx",
+    "src/components/site/TrustedArticleBody.tsx",
+    "src/components/site/home/AfterCheckout.tsx",
+    "src/components/site/home/HomeHero.tsx",
+    "src/components/site/home/Infrastructure.tsx",
+    "src/components/site/home/RegionTable.tsx",
+    "src/components/site/home/Resources.tsx",
+    "src/components/ui/VisualContract.visual.test.tsx",
+    "src/components/ui/accordion.tsx",
+    "src/components/ui/alert.tsx",
+    "src/components/ui/badge.stories.tsx",
+    "src/components/ui/badge.tsx",
+    "src/components/ui/breadcrumb.tsx",
+    "src/components/ui/button-group.tsx",
+    "src/components/ui/button.stories.tsx",
+    "src/components/ui/button.tsx",
+    "src/components/ui/card.tsx",
+    "src/components/ui/code-block.tsx",
+    "src/components/ui/dialog.tsx",
+    "src/components/ui/dropdown-menu.stories.tsx",
+    "src/components/ui/dropdown-menu.tsx",
+    "src/components/ui/kbd.tsx",
+    "src/components/ui/pill.tsx",
+    "src/components/ui/progress.tsx",
+    "src/components/ui/separator.tsx",
+    "src/components/ui/table.tsx",
+    "src/components/ui/tabs.tsx",
+    "src/components/ui/tooltip.tsx"
+   ],
+   "at": "2026-09-24T19:12:03"
+  },
+  {
+   "need": "billing cycle discount ladder",
+   "keywords": [
+    "billing",
+    "cycle",
+    "discount",
+    "ladder"
+   ],
+   "matches": 2,
+   "decision": "REUSE",
+   "top": [
+    {
+     "source": "reui",
+     "name": "solution-billing-5",
+     "score": 2
+    },
+    {
+     "source": "reui",
+     "name": "solution-billing-9",
+     "score": 2
+    }
+   ],
+   "known_files": [
+    "src/components/ActiveLink.tsx",
+    "src/components/Background.stories.tsx",
+    "src/components/Background.tsx",
+    "src/components/LocaleSwitcher.tsx",
+    "src/components/MenuToggle.test.tsx",
+    "src/components/MenuToggle.tsx",
+    "src/components/seo/Article.tsx",
+    "src/components/site/DocBody.tsx",
+    "src/components/site/OSHeroVisual.tsx",
+    "src/components/site/PricingExplorer.test.tsx",
+    "src/components/site/PricingExplorer.tsx",
+    "src/components/site/SiteFooter.tsx",
+    "src/components/site/SiteHeader.tsx",
+    "src/components/site/StatusGrid.tsx",
+    "src/components/site/TrustedArticleBody.tsx",
+    "src/components/site/home/AfterCheckout.tsx",
+    "src/components/site/home/HomeHero.tsx",
+    "src/components/site/home/Infrastructure.tsx",
+    "src/components/site/home/RegionTable.tsx",
+    "src/components/site/home/Resources.tsx",
+    "src/components/ui/VisualContract.visual.test.tsx",
+    "src/components/ui/accordion.tsx",
+    "src/components/ui/alert.tsx",
+    "src/components/ui/badge.stories.tsx",
+    "src/components/ui/badge.tsx",
+    "src/components/ui/breadcrumb.tsx",
+    "src/components/ui/button-group.tsx",
+    "src/components/ui/button.stories.tsx",
+    "src/components/ui/button.tsx",
+    "src/components/ui/card.tsx",
+    "src/components/ui/code-block.tsx",
+    "src/components/ui/dialog.tsx",
+    "src/components/ui/dropdown-menu.stories.tsx",
+    "src/components/ui/dropdown-menu.tsx",
+    "src/components/ui/kbd.tsx",
+    "src/components/ui/pill.tsx",
+    "src/components/ui/progress.tsx",
+    "src/components/ui/separator.tsx",
+    "src/components/ui/table.tsx",
+    "src/components/ui/tabs.tsx",
+    "src/components/ui/tooltip.tsx"
+   ],
+   "at": "2026-09-24T19:12:07"
+  },
+  {
+   "need": "status pill",
+   "keywords": [
+    "status",
+    "pill"
+   ],
+   "matches": 9,
+   "decision": "REUSE",
+   "top": [
+    {
+     "source": "assistant-ui",
+     "name": "elements-agent-status",
+     "score": 2
+    },
+    {
+     "source": "reui",
+     "name": "shop-hero-8",
+     "score": 2
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "banner25",
+     "score": 2
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "pill-pill-composition-1",
+     "score": 2
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "pill-pill-composition-2",
+     "score": 2
+    }
+   ],
+   "known_files": [
+    "src/components/ActiveLink.tsx",
+    "src/components/Background.stories.tsx",
+    "src/components/Background.tsx",
+    "src/components/LocaleSwitcher.tsx",
+    "src/components/MenuToggle.test.tsx",
+    "src/components/MenuToggle.tsx",
+    "src/components/seo/Article.tsx",
+    "src/components/site/DocBody.tsx",
+    "src/components/site/OSHeroVisual.tsx",
+    "src/components/site/PricingExplorer.test.tsx",
+    "src/components/site/PricingExplorer.tsx",
+    "src/components/site/SiteFooter.tsx",
+    "src/components/site/SiteHeader.tsx",
+    "src/components/site/StatusGrid.tsx",
+    "src/components/site/TrustedArticleBody.tsx",
+    "src/components/site/home/AfterCheckout.tsx",
+    "src/components/site/home/HomeHero.tsx",
+    "src/components/site/home/Infrastructure.tsx",
+    "src/components/site/home/RegionTable.tsx",
+    "src/components/site/home/Resources.tsx",
+    "src/components/ui/VisualContract.visual.test.tsx",
+    "src/components/ui/accordion.tsx",
+    "src/components/ui/alert.tsx",
+    "src/components/ui/badge.stories.tsx",
+    "src/components/ui/badge.tsx",
+    "src/components/ui/breadcrumb.tsx",
+    "src/components/ui/button-group.tsx",
+    "src/components/ui/button.stories.tsx",
+    "src/components/ui/button.tsx",
+    "src/components/ui/card.tsx",
+    "src/components/ui/code-block.tsx",
+    "src/components/ui/dialog.tsx",
+    "src/components/ui/dropdown-menu.stories.tsx",
+    "src/components/ui/dropdown-menu.tsx",
+    "src/components/ui/kbd.tsx",
+    "src/components/ui/pill.tsx",
+    "src/components/ui/progress.tsx",
+    "src/components/ui/separator.tsx",
+    "src/components/ui/table.tsx",
+    "src/components/ui/tabs.tsx",
+    "src/components/ui/tooltip.tsx"
+   ],
+   "at": "2026-09-24T19:12:11"
+  },
+  {
+   "need": "progress meter",
+   "keywords": [
+    "progress",
+    "meter"
+   ],
+   "matches": 2,
+   "decision": "REUSE",
+   "top": [
+    {
+     "source": "reui",
+     "name": "app-shell-3",
+     "score": 2
+    },
+    {
+     "source": "reui",
+     "name": "stats-4",
+     "score": 2
+    }
+   ],
+   "known_files": [
+    "src/components/ActiveLink.tsx",
+    "src/components/Background.stories.tsx",
+    "src/components/Background.tsx",
+    "src/components/LocaleSwitcher.tsx",
+    "src/components/MenuToggle.test.tsx",
+    "src/components/MenuToggle.tsx",
+    "src/components/seo/Article.tsx",
+    "src/components/site/DocBody.tsx",
+    "src/components/site/OSHeroVisual.tsx",
+    "src/components/site/PricingExplorer.test.tsx",
+    "src/components/site/PricingExplorer.tsx",
+    "src/components/site/SiteFooter.tsx",
+    "src/components/site/SiteHeader.tsx",
+    "src/components/site/StatusGrid.tsx",
+    "src/components/site/TrustedArticleBody.tsx",
+    "src/components/site/home/AfterCheckout.tsx",
+    "src/components/site/home/HomeHero.tsx",
+    "src/components/site/home/Infrastructure.tsx",
+    "src/components/site/home/RegionTable.tsx",
+    "src/components/site/home/Resources.tsx",
+    "src/components/ui/VisualContract.visual.test.tsx",
+    "src/components/ui/accordion.tsx",
+    "src/components/ui/alert.tsx",
+    "src/components/ui/badge.stories.tsx",
+    "src/components/ui/badge.tsx",
+    "src/components/ui/breadcrumb.tsx",
+    "src/components/ui/button-group.tsx",
+    "src/components/ui/button.stories.tsx",
+    "src/components/ui/button.tsx",
+    "src/components/ui/card.tsx",
+    "src/components/ui/code-block.tsx",
+    "src/components/ui/dialog.tsx",
+    "src/components/ui/dropdown-menu.stories.tsx",
+    "src/components/ui/dropdown-menu.tsx",
+    "src/components/ui/kbd.tsx",
+    "src/components/ui/pill.tsx",
+    "src/components/ui/progress.tsx",
+    "src/components/ui/separator.tsx",
+    "src/components/ui/table.tsx",
+    "src/components/ui/tabs.tsx",
+    "src/components/ui/tooltip.tsx"
+   ],
+   "at": "2026-09-24T19:12:15"
+  },
+  {
+   "need": "plan comparison table",
+   "keywords": [
+    "plan",
+    "comparison",
+    "table"
+   ],
+   "matches": 5,
+   "decision": "REUSE",
+   "top": [
+    {
+     "source": "shadcnblocks",
+     "name": "pricing23",
+     "score": 3
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "pricing42",
+     "score": 3
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "pricing45",
+     "score": 3
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "pricing9",
+     "score": 3
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "table-table-comparison-1",
+     "score": 3
+    }
+   ],
+   "known_files": [
+    "src/components/ActiveLink.tsx",
+    "src/components/Background.stories.tsx",
+    "src/components/Background.tsx",
+    "src/components/LocaleSwitcher.tsx",
+    "src/components/MenuToggle.test.tsx",
+    "src/components/MenuToggle.tsx",
+    "src/components/seo/Article.tsx",
+    "src/components/site/DocBody.tsx",
+    "src/components/site/OSHeroVisual.tsx",
+    "src/components/site/PricingExplorer.test.tsx",
+    "src/components/site/PricingExplorer.tsx",
+    "src/components/site/SiteFooter.tsx",
+    "src/components/site/SiteHeader.tsx",
+    "src/components/site/StatusGrid.tsx",
+    "src/components/site/TrustedArticleBody.tsx",
+    "src/components/site/home/AfterCheckout.tsx",
+    "src/components/site/home/HomeHero.tsx",
+    "src/components/site/home/Infrastructure.tsx",
+    "src/components/site/home/RegionTable.tsx",
+    "src/components/site/home/Resources.tsx",
+    "src/components/ui/VisualContract.visual.test.tsx",
+    "src/components/ui/accordion.tsx",
+    "src/components/ui/alert.tsx",
+    "src/components/ui/badge.stories.tsx",
+    "src/components/ui/badge.tsx",
+    "src/components/ui/breadcrumb.tsx",
+    "src/components/ui/button-group.tsx",
+    "src/components/ui/button.stories.tsx",
+    "src/components/ui/button.tsx",
+    "src/components/ui/card.tsx",
+    "src/components/ui/code-block.tsx",
+    "src/components/ui/dialog.tsx",
+    "src/components/ui/dropdown-menu.stories.tsx",
+    "src/components/ui/dropdown-menu.tsx",
+    "src/components/ui/kbd.tsx",
+    "src/components/ui/pill.tsx",
+    "src/components/ui/progress.tsx",
+    "src/components/ui/separator.tsx",
+    "src/components/ui/table.tsx",
+    "src/components/ui/tabs.tsx",
+    "src/components/ui/tooltip.tsx"
+   ],
+   "at": "2026-09-24T19:23:14"
+  },
+  {
+   "need": "resource meter bar",
+   "keywords": [
+    "resource",
+    "meter",
+    "bar"
+   ],
+   "matches": 10,
+   "decision": "REUSE",
+   "top": [
+    {
+     "source": "reui",
+     "name": "app-shell-1",
+     "score": 2
+    },
+    {
+     "source": "reui",
+     "name": "app-shell-3",
+     "score": 2
+    },
+    {
+     "source": "reui",
+     "name": "chart-14",
+     "score": 2
+    },
+    {
+     "source": "reui",
+     "name": "solution-billing-7",
+     "score": 2
+    },
+    {
+     "source": "reui",
+     "name": "stats-4",
+     "score": 2
+    }
+   ],
+   "known_files": [
+    "src/components/ActiveLink.tsx",
+    "src/components/Background.stories.tsx",
+    "src/components/Background.tsx",
+    "src/components/LocaleSwitcher.tsx",
+    "src/components/MenuToggle.test.tsx",
+    "src/components/MenuToggle.tsx",
+    "src/components/seo/Article.tsx",
+    "src/components/site/DocBody.tsx",
+    "src/components/site/OSHeroVisual.tsx",
+    "src/components/site/PricingExplorer.test.tsx",
+    "src/components/site/PricingExplorer.tsx",
+    "src/components/site/SiteFooter.tsx",
+    "src/components/site/SiteHeader.tsx",
+    "src/components/site/StatusGrid.tsx",
+    "src/components/site/TrustedArticleBody.tsx",
+    "src/components/site/home/AfterCheckout.tsx",
+    "src/components/site/home/HomeHero.tsx",
+    "src/components/site/home/Infrastructure.tsx",
+    "src/components/site/home/RegionTable.tsx",
+    "src/components/site/home/Resources.tsx",
+    "src/components/ui/VisualContract.visual.test.tsx",
+    "src/components/ui/accordion.tsx",
+    "src/components/ui/alert.tsx",
+    "src/components/ui/badge.stories.tsx",
+    "src/components/ui/badge.tsx",
+    "src/components/ui/breadcrumb.tsx",
+    "src/components/ui/button-group.tsx",
+    "src/components/ui/button.stories.tsx",
+    "src/components/ui/button.tsx",
+    "src/components/ui/card.tsx",
+    "src/components/ui/code-block.tsx",
+    "src/components/ui/dialog.tsx",
+    "src/components/ui/dropdown-menu.stories.tsx",
+    "src/components/ui/dropdown-menu.tsx",
+    "src/components/ui/kbd.tsx",
+    "src/components/ui/pill.tsx",
+    "src/components/ui/progress.tsx",
+    "src/components/ui/separator.tsx",
+    "src/components/ui/table.tsx",
+    "src/components/ui/tabs.tsx",
+    "src/components/ui/tooltip.tsx"
+   ],
+   "at": "2026-09-24T19:23:17"
+  },
+  {
+   "need": "billing term selector",
+   "keywords": [
+    "billing",
+    "term",
+    "selector"
+   ],
+   "matches": 1,
+   "decision": "REUSE",
+   "top": [
+    {
+     "source": "shadcnblocks",
+     "name": "choicebox-choicebox-composition-1",
+     "score": 2
+    }
+   ],
+   "known_files": [
+    "src/components/ActiveLink.tsx",
+    "src/components/Background.stories.tsx",
+    "src/components/Background.tsx",
+    "src/components/LocaleSwitcher.tsx",
+    "src/components/MenuToggle.test.tsx",
+    "src/components/MenuToggle.tsx",
+    "src/components/seo/Article.tsx",
+    "src/components/site/DocBody.tsx",
+    "src/components/site/OSHeroVisual.tsx",
+    "src/components/site/PricingExplorer.test.tsx",
+    "src/components/site/PricingExplorer.tsx",
+    "src/components/site/SiteFooter.tsx",
+    "src/components/site/SiteHeader.tsx",
+    "src/components/site/StatusGrid.tsx",
+    "src/components/site/TrustedArticleBody.tsx",
+    "src/components/site/home/AfterCheckout.tsx",
+    "src/components/site/home/HomeHero.tsx",
+    "src/components/site/home/Infrastructure.tsx",
+    "src/components/site/home/RegionTable.tsx",
+    "src/components/site/home/Resources.tsx",
+    "src/components/ui/VisualContract.visual.test.tsx",
+    "src/components/ui/accordion.tsx",
+    "src/components/ui/alert.tsx",
+    "src/components/ui/badge.stories.tsx",
+    "src/components/ui/badge.tsx",
+    "src/components/ui/breadcrumb.tsx",
+    "src/components/ui/button-group.tsx",
+    "src/components/ui/button.stories.tsx",
+    "src/components/ui/button.tsx",
+    "src/components/ui/card.tsx",
+    "src/components/ui/code-block.tsx",
+    "src/components/ui/dialog.tsx",
+    "src/components/ui/dropdown-menu.stories.tsx",
+    "src/components/ui/dropdown-menu.tsx",
+    "src/components/ui/kbd.tsx",
+    "src/components/ui/pill.tsx",
+    "src/components/ui/progress.tsx",
+    "src/components/ui/separator.tsx",
+    "src/components/ui/table.tsx",
+    "src/components/ui/tabs.tsx",
+    "src/components/ui/tooltip.tsx"
+   ],
+   "at": "2026-09-24T19:23:20"
+  },
+  {
+   "need": "operating system version matrix",
+   "keywords": [
+    "operating",
+    "system",
+    "version",
+    "matrix"
+   ],
+   "matches": 0,
+   "decision": "BUILD",
+   "top": [],
+   "known_files": [
+    "src/components/ActiveLink.tsx",
+    "src/components/Background.stories.tsx",
+    "src/components/Background.tsx",
+    "src/components/LocaleSwitcher.tsx",
+    "src/components/MenuToggle.test.tsx",
+    "src/components/MenuToggle.tsx",
+    "src/components/seo/Article.tsx",
+    "src/components/site/DocBody.tsx",
+    "src/components/site/OSHeroVisual.tsx",
+    "src/components/site/PricingExplorer.test.tsx",
+    "src/components/site/PricingExplorer.tsx",
+    "src/components/site/SiteFooter.tsx",
+    "src/components/site/SiteHeader.tsx",
+    "src/components/site/StatusGrid.tsx",
+    "src/components/site/TrustedArticleBody.tsx",
+    "src/components/site/home/AfterCheckout.tsx",
+    "src/components/site/home/HomeHero.tsx",
+    "src/components/site/home/Infrastructure.tsx",
+    "src/components/site/home/RegionTable.tsx",
+    "src/components/site/home/Resources.tsx",
+    "src/components/ui/VisualContract.visual.test.tsx",
+    "src/components/ui/accordion.tsx",
+    "src/components/ui/alert.tsx",
+    "src/components/ui/badge.stories.tsx",
+    "src/components/ui/badge.tsx",
+    "src/components/ui/breadcrumb.tsx",
+    "src/components/ui/button-group.tsx",
+    "src/components/ui/button.stories.tsx",
+    "src/components/ui/button.tsx",
+    "src/components/ui/card.tsx",
+    "src/components/ui/code-block.tsx",
+    "src/components/ui/dialog.tsx",
+    "src/components/ui/dropdown-menu.stories.tsx",
+    "src/components/ui/dropdown-menu.tsx",
+    "src/components/ui/kbd.tsx",
+    "src/components/ui/pill.tsx",
+    "src/components/ui/progress.tsx",
+    "src/components/ui/separator.tsx",
+    "src/components/ui/table.tsx",
+    "src/components/ui/tabs.tsx",
+    "src/components/ui/tooltip.tsx"
+   ],
+   "at": "2026-09-24T19:23:23"
+  },
+  {
+   "need": "brand logo row",
+   "keywords": [
+    "brand",
+    "logo",
+    "row"
+   ],
+   "matches": 5,
+   "decision": "REUSE",
+   "top": [
+    {
+     "source": "reui",
+     "name": "list-2",
+     "score": 3
+    },
+    {
+     "source": "reui",
+     "name": "list-8",
+     "score": 3
+    },
+    {
+     "source": "reui",
+     "name": "settings-14",
+     "score": 3
+    },
+    {
+     "source": "reui",
+     "name": "settings-4",
+     "score": 3
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "banner22",
+     "score": 3
+    }
+   ],
+   "known_files": [
+    "src/components/ActiveLink.tsx",
+    "src/components/Background.stories.tsx",
+    "src/components/Background.tsx",
+    "src/components/LocaleSwitcher.tsx",
+    "src/components/MenuToggle.test.tsx",
+    "src/components/MenuToggle.tsx",
+    "src/components/seo/Article.tsx",
+    "src/components/site/DocBody.tsx",
+    "src/components/site/OSHeroVisual.tsx",
+    "src/components/site/PricingExplorer.test.tsx",
+    "src/components/site/PricingExplorer.tsx",
+    "src/components/site/SiteFooter.tsx",
+    "src/components/site/SiteHeader.tsx",
+    "src/components/site/StatusGrid.tsx",
+    "src/components/site/TrustedArticleBody.tsx",
+    "src/components/site/home/AfterCheckout.tsx",
+    "src/components/site/home/HomeHero.tsx",
+    "src/components/site/home/Infrastructure.tsx",
+    "src/components/site/home/RegionTable.tsx",
+    "src/components/site/home/Resources.tsx",
+    "src/components/ui/VisualContract.visual.test.tsx",
+    "src/components/ui/accordion.tsx",
+    "src/components/ui/alert.tsx",
+    "src/components/ui/badge.stories.tsx",
+    "src/components/ui/badge.tsx",
+    "src/components/ui/breadcrumb.tsx",
+    "src/components/ui/button-group.tsx",
+    "src/components/ui/button.stories.tsx",
+    "src/components/ui/button.tsx",
+    "src/components/ui/card.tsx",
+    "src/components/ui/code-block.tsx",
+    "src/components/ui/dialog.tsx",
+    "src/components/ui/dropdown-menu.stories.tsx",
+    "src/components/ui/dropdown-menu.tsx",
+    "src/components/ui/kbd.tsx",
+    "src/components/ui/pill.tsx",
+    "src/components/ui/progress.tsx",
+    "src/components/ui/separator.tsx",
+    "src/components/ui/table.tsx",
+    "src/components/ui/tabs.tsx",
+    "src/components/ui/tooltip.tsx"
+   ],
+   "at": "2026-09-24T19:23:26"
+  },
+  {
+   "need": "status chip",
+   "keywords": [
+    "status",
+    "chip"
+   ],
+   "matches": 6,
+   "decision": "REUSE",
+   "top": [
+    {
+     "source": "assistant-ui",
+     "name": "agent-status",
+     "score": 2
+    },
+    {
+     "source": "reui",
+     "name": "hero-1",
+     "score": 2
+    },
+    {
+     "source": "reui",
+     "name": "sheet-9",
+     "score": 2
+    },
+    {
+     "source": "reui",
+     "name": "shop-hero-7",
+     "score": 2
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "feature237",
+     "score": 2
+    }
+   ],
+   "known_files": [
+    "src/components/ActiveLink.tsx",
+    "src/components/Background.stories.tsx",
+    "src/components/Background.tsx",
+    "src/components/LocaleSwitcher.tsx",
+    "src/components/MenuToggle.test.tsx",
+    "src/components/MenuToggle.tsx",
+    "src/components/seo/Article.tsx",
+    "src/components/site/DocBody.tsx",
+    "src/components/site/OSHeroVisual.tsx",
+    "src/components/site/PricingExplorer.test.tsx",
+    "src/components/site/PricingExplorer.tsx",
+    "src/components/site/SiteFooter.tsx",
+    "src/components/site/SiteHeader.tsx",
+    "src/components/site/StatusGrid.tsx",
+    "src/components/site/TrustedArticleBody.tsx",
+    "src/components/site/home/AfterCheckout.tsx",
+    "src/components/site/home/HomeHero.tsx",
+    "src/components/site/home/Infrastructure.tsx",
+    "src/components/site/home/RegionTable.tsx",
+    "src/components/site/home/Resources.tsx",
+    "src/components/ui/VisualContract.visual.test.tsx",
+    "src/components/ui/accordion.tsx",
+    "src/components/ui/alert.tsx",
+    "src/components/ui/badge.stories.tsx",
+    "src/components/ui/badge.tsx",
+    "src/components/ui/breadcrumb.tsx",
+    "src/components/ui/button-group.tsx",
+    "src/components/ui/button.stories.tsx",
+    "src/components/ui/button.tsx",
+    "src/components/ui/card.tsx",
+    "src/components/ui/code-block.tsx",
+    "src/components/ui/dialog.tsx",
+    "src/components/ui/dropdown-menu.stories.tsx",
+    "src/components/ui/dropdown-menu.tsx",
+    "src/components/ui/kbd.tsx",
+    "src/components/ui/pill.tsx",
+    "src/components/ui/progress.tsx",
+    "src/components/ui/separator.tsx",
+    "src/components/ui/table.tsx",
+    "src/components/ui/tabs.tsx",
+    "src/components/ui/tooltip.tsx"
+   ],
+   "at": "2026-09-24T19:23:29"
+  },
+  {
+   "need": "stock availability badge",
+   "keywords": [
+    "stock",
+    "availability",
+    "badge"
+   ],
+   "matches": 21,
+   "decision": "REUSE",
+   "top": [
+    {
+     "source": "reui",
+     "name": "c-table-11",
+     "score": 2
+    },
+    {
+     "source": "reui",
+     "name": "category-card-2",
+     "score": 2
+    },
+    {
+     "source": "reui",
+     "name": "product-card-3",
+     "score": 2
+    },
+    {
+     "source": "reui",
+     "name": "product-card-4",
+     "score": 2
+    },
+    {
+     "source": "reui",
+     "name": "product-card-5",
+     "score": 2
+    }
+   ],
+   "known_files": [
+    "src/components/ActiveLink.tsx",
+    "src/components/Background.stories.tsx",
+    "src/components/Background.tsx",
+    "src/components/LocaleSwitcher.tsx",
+    "src/components/MenuToggle.test.tsx",
+    "src/components/MenuToggle.tsx",
+    "src/components/seo/Article.tsx",
+    "src/components/site/DocBody.tsx",
+    "src/components/site/OSHeroVisual.tsx",
+    "src/components/site/PricingExplorer.test.tsx",
+    "src/components/site/PricingExplorer.tsx",
+    "src/components/site/SiteFooter.tsx",
+    "src/components/site/SiteHeader.tsx",
+    "src/components/site/StatusGrid.tsx",
+    "src/components/site/TrustedArticleBody.tsx",
+    "src/components/site/home/AfterCheckout.tsx",
+    "src/components/site/home/HomeHero.tsx",
+    "src/components/site/home/Infrastructure.tsx",
+    "src/components/site/home/RegionTable.tsx",
+    "src/components/site/home/Resources.tsx",
+    "src/components/ui/VisualContract.visual.test.tsx",
+    "src/components/ui/accordion.tsx",
+    "src/components/ui/alert.tsx",
+    "src/components/ui/badge.stories.tsx",
+    "src/components/ui/badge.tsx",
+    "src/components/ui/breadcrumb.tsx",
+    "src/components/ui/button-group.tsx",
+    "src/components/ui/button.stories.tsx",
+    "src/components/ui/button.tsx",
+    "src/components/ui/card.tsx",
+    "src/components/ui/code-block.tsx",
+    "src/components/ui/dialog.tsx",
+    "src/components/ui/dropdown-menu.stories.tsx",
+    "src/components/ui/dropdown-menu.tsx",
+    "src/components/ui/kbd.tsx",
+    "src/components/ui/pill.tsx",
+    "src/components/ui/progress.tsx",
+    "src/components/ui/separator.tsx",
+    "src/components/ui/table.tsx",
+    "src/components/ui/tabs.tsx",
+    "src/components/ui/tooltip.tsx"
+   ],
+   "at": "2026-09-24T19:23:31"
+  },
+  {
+   "need": "spec ledger row",
+   "keywords": [
+    "spec",
+    "ledger",
+    "row"
+   ],
+   "matches": 5,
+   "decision": "REUSE",
+   "top": [
+    {
+     "source": "reui",
+     "name": "app-shell-23",
+     "score": 2
+    },
+    {
+     "source": "reui",
+     "name": "solution-inventory-2",
+     "score": 2
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "bento36",
+     "score": 2
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "feature348",
+     "score": 2
+    },
+    {
+     "source": "shadcnblocks",
+     "name": "product-card22",
+     "score": 2
+    }
+   ],
+   "known_files": [
+    "src/components/ActiveLink.tsx",
+    "src/components/Background.stories.tsx",
+    "src/components/Background.tsx",
+    "src/components/LocaleSwitcher.tsx",
+    "src/components/MenuToggle.test.tsx",
+    "src/components/MenuToggle.tsx",
+    "src/components/seo/Article.tsx",
+    "src/components/site/DocBody.tsx",
+    "src/components/site/OSHeroVisual.tsx",
+    "src/components/site/PricingExplorer.test.tsx",
+    "src/components/site/PricingExplorer.tsx",
+    "src/components/site/SiteFooter.tsx",
+    "src/components/site/SiteHeader.tsx",
+    "src/components/site/StatusGrid.tsx",
+    "src/components/site/TrustedArticleBody.tsx",
+    "src/components/site/home/AfterCheckout.tsx",
+    "src/components/site/home/HomeHero.tsx",
+    "src/components/site/home/Infrastructure.tsx",
+    "src/components/site/home/RegionTable.tsx",
+    "src/components/site/home/Resources.tsx",
+    "src/components/ui/VisualContract.visual.test.tsx",
+    "src/components/ui/accordion.tsx",
+    "src/components/ui/alert.tsx",
+    "src/components/ui/badge.stories.tsx",
+    "src/components/ui/badge.tsx",
+    "src/components/ui/breadcrumb.tsx",
+    "src/components/ui/button-group.tsx",
+    "src/components/ui/button.stories.tsx",
+    "src/components/ui/button.tsx",
+    "src/components/ui/card.tsx",
+    "src/components/ui/code-block.tsx",
+    "src/components/ui/dialog.tsx",
+    "src/components/ui/dropdown-menu.stories.tsx",
+    "src/components/ui/dropdown-menu.tsx",
+    "src/components/ui/kbd.tsx",
+    "src/components/ui/pill.tsx",
+    "src/components/ui/progress.tsx",
+    "src/components/ui/separator.tsx",
+    "src/components/ui/table.tsx",
+    "src/components/ui/tabs.tsx",
+    "src/components/ui/tooltip.tsx"
+   ],
+   "at": "2026-09-24T19:23:34"
+  }
+ ]
+}

@@ -31,6 +31,10 @@ export function createPageMetadata(input: PageMetadataInput): Metadata {
   const canonical = canonicalUrlForPath(localized, site, config);
   const title = input.title ?? config.projectName;
   const description = input.description ?? config.description;
+  /* Per-route robots policy from the route class. Non-production environments stay
+     out of the index through robots.txt (disallow all) and the X-Robots-Tag header
+     set in next.config.ts — the built HTML keeps its production robots semantics so
+     the SEO post-build audit stays meaningful in preview builds. */
   const robots = robotsForClass(routeClass);
 
   if (routeClass === 'privatePage' || routeClass === 'privateApi') {

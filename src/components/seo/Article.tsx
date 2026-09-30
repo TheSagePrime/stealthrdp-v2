@@ -2,6 +2,14 @@
 import type { PropsWithChildren } from 'react';
 import type { SeoConfig } from '@/config/seo';
 import type { ArticlePublication, ArticleSource } from '@/libs/seo/articles';
+import { Badge } from '@/components/ui/badge';
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { resolveSeoSite } from '@/config/seo';
 import {
   articlePathFor,
@@ -114,18 +122,78 @@ export function ArticleIndex({
 
   return (
     <section className="seo-article-index" aria-labelledby="seo-article-index-title">
-      <h1 id="seo-article-index-title">{heading}</h1>
-      <ol>
-        {publications.map(article => (
-          <li key={article.slug}>
-            <a href={canonicalUrlForPath(articlePathFor(article, config), site, config)}>
-              <h2>{article.title}</h2>
-            </a>
-            <p>{article.description}</p>
-            <time dateTime={article.datePublished}>{formatPublicationDate(article.datePublished, article.locale)}</time>
-          </li>
-        ))}
+      <div className="sr-collection-head">
+        <div>
+          <p className="sr-kicker">Knowledge base</p>
+          <h2 id="seo-article-index-title">{heading}</h2>
+        </div>
+        <span>
+          {publications.length}
+          {' '}
+          articles
+        </span>
+      </div>
+
+      <ol className="
+        grid list-none gap-6 p-0
+        md:grid-cols-2
+      "
+      >
+        {publications.map((article, index) => {
+          const href = canonicalUrlForPath(articlePathFor(article, config), site, config);
+
+          return (
+            <li key={article.slug} className="min-w-0">
+              <Card className="h-full">
+                <CardHeader>
+                  <div className="flex items-center justify-between gap-3">
+                    <Badge
+                      variant="outline"
+                      className="text-body-muted tabular-nums"
+                    >
+                      {String(index + 1).padStart(2, '0')}
+                    </Badge>
+                    <time
+                      dateTime={article.datePublished}
+                      className="text-micro text-body-dim"
+                    >
+                      {formatPublicationDate(article.datePublished, article.locale)}
+                    </time>
+                  </div>
+                  <CardTitle className="text-heading-4 text-body-text">
+                    <a
+                      href={href}
+                      className="
+                        transition-colors
+                        hover:text-primary
+                      "
+                    >
+                      <h3>{article.title}</h3>
+                    </a>
+                  </CardTitle>
+                  <CardDescription className="text-small text-body-muted">
+                    {article.description}
+                  </CardDescription>
+                </CardHeader>
+
+                <CardFooter className="mt-auto">
+                  <a
+                    href={href}
+                    className="
+                      inline-flex min-h-11 items-center gap-2 text-small
+                      font-semibold text-primary transition-colors
+                      hover:text-accent-hover
+                    "
+                  >
+                    Read article →
+                  </a>
+                </CardFooter>
+              </Card>
+            </li>
+          );
+        })}
       </ol>
+
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: serializeJsonLd(jsonLd) }} />
     </section>
   );

@@ -1,21 +1,15 @@
 import { expect, takeSnapshot, test } from '@chromatic-com/playwright';
 
-test.describe('Web foundation visual testing', () => {
-  test('captures the public foundation homepage', async ({ page }, testInfo) => {
+test.describe('StealthRDP v2 visual testing', () => {
+  test('captures the homepage', async ({ page }, testInfo) => {
     await page.goto('/');
-    await expect(
-      page.getByRole('heading', {
-        level: 1,
-        name: 'Build useful websites people can discover.',
-      }),
-    ).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: /Your server/ })).toBeVisible();
     await takeSnapshot(page, testInfo);
   });
 
-  test('captures the localized foundation route', async ({ page }, testInfo) => {
-    await page.goto('/fr');
-    await expect(page.locator('html')).toHaveAttribute('lang', 'fr');
-    await expect(page.getByText('Web foundation manifest')).toBeVisible();
+  test('captures the plans page', async ({ page }, testInfo) => {
+    await page.goto('/plans');
+    await expect(page.getByRole('heading', { level: 1, name: /Pick the resources/ })).toBeVisible();
     await takeSnapshot(page, testInfo);
   });
 });

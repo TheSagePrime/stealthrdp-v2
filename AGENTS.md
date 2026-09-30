@@ -1,63 +1,46 @@
+# StealthRDP v2 agent contract
+
+Read `stack.contract.json`, `design.contract.json`, `security.contract.json`, `ARCHITECTURE.md`, `DESIGN_SYSTEM.md`, `SECURITY.md`, and `STEALTHRDP_DESIGN.md` before material changes.
+
+## Product boundary
+
+This repository is the public StealthRDP website. Do not add a replacement login, customer dashboard, organizations, tenant architecture, subscription billing, or checkout system. Those flows remain in WHMCS at `dash.stealthrdp.com`.
+
+## Product truth
+
+Use current verified public StealthRDP data before changing pricing, availability, specifications, licensing language, refund language, uptime claims, locations, or provisioning claims.
+
+Do not fabricate live status, reviews, scarcity, deadlines, or service guarantees.
+
+## Frontend
+
+Follow DESIGN.md as the single visual source of truth and DESIGN_SYSTEM.md for implementation rules.
+
+Build a modern commercial hosting website, not a control-room or dashboard aesthetic.
+Brand colour is allowed. Status colour remains semantic.
+Use the shared section/container/layout hierarchy and canonical spacing.
+Use shadcn/Radix for interactive primitives and custom StealthRDP components for marketing surfaces.
+Do not add another full UI kit.
+Do not revive the old terminal, orbit-ring, floating-dashboard or clause/index visual language.
+
+## SEO
+
+Preserve current public URL intent and the protected SEO pipeline. Preview must remain noindex. Do not casually rename indexed routes.
+
+## External systems
+
+WHMCS owns login, billing, checkout, client accounts, and tickets. Links to it are allowed; copying those systems into V2 is not.
+
+## Verification
+
+Run the repository architecture, security, types, lint, tests, Storybook, visual, and SEO build gates before handoff.
+
 <!-- BEGIN:nextjs-agent-rules -->
 
 # This is NOT the Next.js you know
 
-This version may contain APIs, conventions, and file structure newer than model training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing code and heed deprecation notices.
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
-
-## Sage Prime contracts
-
-Before changing application code, read:
-
-- `stack.contract.json`
-- `design.contract.json`
-- `security.contract.json`
-- `ARCHITECTURE.md`
-- `DESIGN_SYSTEM.md`
-- `SECURITY.md`
-- `skills/web-builder/SKILL.md`
-
-The repository contracts are authoritative. Do not weaken a checker just to make a change pass.
-
-### Canonical architecture
-
-Keep Next.js + React + strict TypeScript + Tailwind + shadcn/ui + Radix + Lucide + Neon PostgreSQL + Drizzle, with PGlite locally, pnpm packages, and Coolify-compatible deployment.
-
-The default web starter must remain free of mandatory authentication, tenant/organization models, SaaS dashboards, and billing providers.
-
-### Public-web purpose
-
-Optimize for public discovery, useful content, free tools, crawlability, internal linking, speed, structured data, and safe promotion of separate commercial products.
-
-Database capability is allowed and expected when useful; do not turn persistence into a SaaS identity model unless a child project explicitly requires that architecture.
-
-### Security and privacy
-
-Keep secrets server-only. Preserve privacy-safe observability defaults, CSP/security headers, DB TLS, bounded resource usage, dependency auditing, pinned GitHub Actions, and public-output privacy boundaries.
-
-### Frontend
-
-Reuse existing `src/components/ui` primitives. Use shared theme tokens, preserve responsive/accessibility behavior, and keep Storybook/visual regression coverage.
-
-### SEO
-
-SEO is protected. Preserve route classification, metadata/canonical helpers, robots/sitemap, article/RSS publishing helpers, project identity, research contracts, SEO styles, pre-build validation, and post-build audit.
-
-### Verification
-
-Before handoff run:
-
-```bash
-pnpm check:architecture
-pnpm test:contracts
-pnpm test:security
-pnpm typegen
-pnpm check:types
-pnpm check:oxlint
-pnpm check:format
-pnpm test
-pnpm storybook:test
-pnpm test:visual
-pnpm build
-```

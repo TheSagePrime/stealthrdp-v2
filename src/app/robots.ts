@@ -7,23 +7,14 @@ export default function robots(): MetadataRoute.Robots {
   const sitemap = `${config.siteUrl}/sitemap.xml`;
 
   if (!isProductionDeployEnv(config.environment.deployEnv)) {
-    return {
-      rules: {
-        userAgent: '*',
-        disallow: '/',
-      },
-      sitemap,
-    };
+    return { rules: { userAgent: '*', disallow: '/' }, sitemap };
   }
 
   return {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: [
-        ...config.routes.privatePages,
-        ...config.routes.privateApis,
-      ],
+      disallow: ['/api/'],
     },
     sitemap,
   };

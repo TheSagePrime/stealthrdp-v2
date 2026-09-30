@@ -2,38 +2,27 @@ import type { Metadata, Viewport } from 'next';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
+import { DocsRootProvider } from '@/components/site/DocsRootProvider';
 import { routing } from '@/libs/I18nRouting';
 import '@/styles/global.css';
-import '@/styles/foundation.css';
+import '@/styles/surfaces.css';
+import '@/styles/stealth.css';
+import '@/styles/stealth-v3.css';
+import '@/styles/fumadocs.css';
 
 export const metadata: Metadata = {
-  icons: [
-    {
-      rel: 'apple-touch-icon',
-      url: '/apple-touch-icon.png',
-    },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '32x32',
-      url: '/favicon-32x32.png',
-    },
-    {
-      rel: 'icon',
-      type: 'image/png',
-      sizes: '16x16',
-      url: '/favicon-16x16.png',
-    },
-    {
-      rel: 'icon',
-      url: '/favicon.ico',
-    },
-  ],
+  metadataBase: new URL('https://www.stealthrdp.com'),
+  applicationName: 'StealthRDP',
+  authors: [{ name: 'StealthRDP' }],
+  manifest: '/site.webmanifest',
+  verification: { other: { 'msvalidate.01': 'BC1193DFC35353EA0CED70B0E5F25F09' } },
+  icons: [{ rel: 'icon', type: 'image/svg+xml', url: '/favicon.svg' }],
 };
 
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
+  colorScheme: 'light',
 };
 
 export function generateStaticParams() {
@@ -45,17 +34,19 @@ export default async function RootLayout(props: {
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await props.params;
-
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
-
   setRequestLocale(locale);
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale}>
       <body>
-        <NextIntlClientProvider>{props.children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <DocsRootProvider search={{ enabled: false }} theme={{ enabled: false, hotKey: false }}>
+            {props.children}
+          </DocsRootProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

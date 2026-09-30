@@ -7,7 +7,7 @@ describe('runtime endpoints', () => {
   it('returns a stable health response', () => {
     expect(getHealthResponse()).toEqual({
       status: 'ok',
-      service: 'sage-prime-starter',
+      service: 'stealthrdp-v2',
     });
   });
 
