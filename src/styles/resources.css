@@ -557,7 +557,10 @@
 .sr-richtext td {
   border: 1px solid var(--border-divider);
   padding: 0.625rem 0.75rem;
+  /* Whole words only in tables; the table scrolls instead of splitting "Edition". */
+  overflow-wrap: normal;
   text-align: left;
+  vertical-align: top;
 }
 
 .sr-richtext th {
