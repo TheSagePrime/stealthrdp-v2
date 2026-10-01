@@ -123,6 +123,64 @@ function LevelDial() {
   );
 }
 
+type LogType = 'Access' | 'Security' | 'Error';
+
+/* Example rows that show what each log type records. */
+const logRows: Array<{ id: string; type: LogType; method: string; path: string; status: string; result: string; tone: Outcome['tone'] }> = [
+  { id: 'r-7f3a', type: 'Access', method: 'GET', path: '/pricing', status: '200', result: 'Proxied', tone: 'pass' },
+  { id: 'r-81c2', type: 'Security', method: 'POST', path: '/login', status: '403', result: 'Challenge failed', tone: 'stop' },
+  { id: 'r-9d04', type: 'Security', method: 'GET', path: '/search?q=[redacted]', status: '429', result: 'Rate limited', tone: 'stop' },
+  { id: 'r-a6e1', type: 'Security', method: 'POST', path: '/api/webhook', status: '200', result: 'Allowlisted bypass', tone: 'pass' },
+  { id: 'r-b257', type: 'Error', method: 'GET', path: '/checkout', status: '502', result: 'Origin unreachable', tone: 'stop' },
+  { id: 'r-c9f8', type: 'Error', method: 'GET', path: '/reports', status: '504', result: 'Origin timeout', tone: 'stop' },
+];
+
+function LogsTile() {
+  const [filter, setFilter] = useState<LogType | 'All'>('All');
+  const rows = logRows.filter(row => filter === 'All' || row.type === filter);
+
+  return (
+    <article className={styles.tile} data-span="full">
+      <header>
+        <h3>Access, security and error logs</h3>
+        <p>
+          Access entries with method, path, status, IP, ASN, country and latency. Security entries for
+          challenges, blocks, rate limits and bypasses. Error entries for origin 502, 503 and 504. Trace one
+          request by its ID. Kept for 15 days, with sensitive query values redacted.
+        </p>
+      </header>
+      <div className={styles.logTools}>
+        <span className={styles.search} aria-hidden="true">Search IP, path, host or request ID</span>
+        <div className={styles.filters} role="group" aria-label="Log type">
+          {(['All', 'Access', 'Security', 'Error'] as const).map(item => (
+            <button key={item} type="button" aria-pressed={filter === item} onClick={() => setFilter(item)}>
+              {item}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className={styles.logs} role="table" aria-label="Example log rows">
+        <div role="row">
+          <span role="columnheader">Request ID</span>
+          <span role="columnheader">Method</span>
+          <span role="columnheader">Path</span>
+          <span role="columnheader">Status</span>
+          <span role="columnheader">Result</span>
+        </div>
+        {rows.map(row => (
+          <div role="row" key={row.id}>
+            <code role="cell">{row.id}</code>
+            <code role="cell">{row.method}</code>
+            <code role="cell">{row.path}</code>
+            <code role="cell" data-tone={row.tone}>{row.status}</code>
+            <span role="cell">{row.result}</span>
+          </div>
+        ))}
+      </div>
+    </article>
+  );
+}
+
 export function CitadelControls() {
   return (
     <div className={styles.bento}>
@@ -204,34 +262,31 @@ export function CitadelControls() {
 
       <article className={styles.tile} data-span="wide">
         <header>
-          <h3>Request logs</h3>
-          <p>
-            Method, path, status, IP, ASN, country and latency for every request. Kept for 15 days, with
-            sensitive query values redacted.
-          </p>
+          <h3>Your own challenge and error pages</h3>
+          <p>Paste an HTML shell per page type. Citadel injects the real verification controls.</p>
         </header>
-        <div className={styles.logs} role="table" aria-label="Request log rows">
-          <div role="row">
-            <span role="columnheader">Method</span>
-            <span role="columnheader">Path</span>
-            <span role="columnheader">Status</span>
-            <span role="columnheader">Result</span>
+        <div className={styles.pages}>
+          <div>
+            <span>Challenge pages</span>
+            <ul>
+              <li>JS challenge</li>
+              <li>Interaction</li>
+              <li>Lockdown</li>
+            </ul>
           </div>
-          {[
-            ['GET', '/pricing', '200', 'Proxied', 'pass'],
-            ['POST', '/login', '403', 'Challenge failed', 'stop'],
-            ['GET', '/search?q=[redacted]', '429', 'Rate limited', 'stop'],
-            ['POST', '/api/webhook', '200', 'Allowlisted bypass', 'pass'],
-          ].map(([method, path, status, result, tone]) => (
-            <div role="row" key={`${method}${path}`}>
-              <code role="cell">{method}</code>
-              <code role="cell">{path}</code>
-              <code role="cell" data-tone={tone}>{status}</code>
-              <span role="cell">{result}</span>
-            </div>
-          ))}
+          <div>
+            <span>Error pages</span>
+            <ul>
+              <li>403 Blocked</li>
+              <li>429 Rate limited</li>
+              <li>502 · 503 · 504</li>
+            </ul>
+          </div>
         </div>
+        <pre className={styles.shell}><code>{'<h1>{{BRAND}}</h1>\n<p>{{MESSAGE}}</p>'}</code></pre>
       </article>
+
+      <LogsTile />
     </div>
   );
 }
