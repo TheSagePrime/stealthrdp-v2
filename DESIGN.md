@@ -163,7 +163,8 @@ Do not introduce heavy WebGL or scroll choreography.
 ## Shared site elements
 
 - Header: logo, navigation (VPS Plans, DDoS Protection, Server Status, Docs, About), WhatsApp,
-  Client Area, View plans. Below 1040px the links move into the Menu.
+  Log In, View plans. Below 1040px a Menu button holds the same five links, then Support and Log In,
+  then a View plans button. Both menus read one list (`mainLinks` in `SiteHeader.tsx`).
 - Floating WhatsApp button bottom-right (`.srv-whatsapp-float`). Keep content clear of it.
 - Consent banner bottom-left (`TrackingConsent`), shown only where consent is needed. Reject and
   Accept stay the same size.
