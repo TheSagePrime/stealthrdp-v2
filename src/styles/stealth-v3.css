@@ -3562,15 +3562,18 @@ main:has(.srv3-final-section) + .srv3-footer .srv3-footer-bottom {
   align-items: center;
   gap: 10px;
   color: var(--foreground);
-  opacity: 0.68;
   transition:
     opacity 160ms ease,
     transform 160ms ease;
 }
 
 .srv-os-logo:hover {
-  opacity: 0.95;
   transform: translateY(-1px);
+}
+
+.srv-os-logo:hover img,
+.srv-os-logo:hover svg {
+  opacity: 1;
 }
 
 .srv-os-logo img,
@@ -3579,6 +3582,8 @@ main:has(.srv3-final-section) + .srv3-footer .srv3-footer-bottom {
   height: 24px;
   flex: 0 0 24px;
   object-fit: contain;
+  /* Fade the logos only; the names keep full text contrast. */
+  opacity: 0.72;
 }
 
 .srv-os-logo span {
@@ -9224,7 +9229,6 @@ a.srv-help-tree-heading:hover {
     min-height: 36px;
     flex: 1 1 calc(50% - 8px);
     min-width: 132px;
-    opacity: 0.82;
   }
 
   .srv-os-logo img,
@@ -9471,7 +9475,6 @@ a.srv-help-tree-heading:hover {
     grid-template-columns: 1fr;
     justify-items: center;
     gap: 6px !important;
-    opacity: 0.84;
     text-align: center;
   }
 
