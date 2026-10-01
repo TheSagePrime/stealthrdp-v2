@@ -140,7 +140,7 @@ export default async function HomePage({ params }: Props) {
         />
       ))}
 
-      <HomeHero />
+      <HomeHero from={Math.min(...plans.map(plan => plan.pricing.monthly.amount))} />
 
       <section className="srv-os-band border-y border-border bg-card/35" aria-label="Supported operating systems">
         <div className="srv-home-wide srv-os-band-inner">

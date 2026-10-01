@@ -94,10 +94,11 @@ export function HomePricing({ plans }: { plans: Plan[] }) {
       "
       >
         {visible.map((plan) => {
+          /* The data can flag several plans; the badge goes to the first in view. */
           const price = plan.pricing[cycle];
           const monthEquivalent = price.amount / months[cycle];
           const osLabel = plan.source.os === 'linux-only' ? 'Linux only' : 'Windows + Linux';
-          const featured = plan.popular;
+          const featured = plan.name === visible.find(item => item.popular)?.name;
           const available = plan.source.availability !== 'out-of-stock';
 
           return (
