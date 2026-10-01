@@ -2,6 +2,7 @@
 import type { Metadata } from 'next';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import Link from 'next/link';
+import { ResourceTopics } from '@/components/site/ResourceTopics';
 import { citadelDocsArticles } from '@/lib/stealth/articles';
 import {
   articlesForCollection,
@@ -27,6 +28,18 @@ export default function CitadelDocsPage() {
         allowlists, caching, traffic visibility, bandwidth, alerts, and billing.
       </DocsDescription>
       <DocsBody>
+        <ResourceTopics
+          topics={citadelCollections
+            .map(collection => ({ collection, count: articlesForCollection(collection, citadelDocsArticles).length }))
+            .filter(item => item.count > 0)
+            .map(({ collection, count }) => ({
+              id: helpCollectionId(collection.title),
+              title: collection.title.replace(/^Citadel:\s*/, ''),
+              description: collection.description,
+              count,
+              unit: count === 1 ? 'article' : 'articles',
+            }))}
+        />
         <div className="sr-docs-overview">
           {citadelCollections.map((collection) => {
             const articles = articlesForCollection(collection, citadelDocsArticles);

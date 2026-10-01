@@ -2,7 +2,9 @@
 import type { Metadata } from 'next';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import Link from 'next/link';
+import { ResourceTopics } from '@/components/site/ResourceTopics';
 import { articlePath, blogArticles } from '@/lib/stealth/articles';
+import { helpCollectionId } from '@/lib/stealth/help-center';
 import { buildArticleIndexJsonLd } from '@/libs/seo/articles';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
@@ -32,11 +34,17 @@ export default function BlogPage() {
           VPS use cases, security, performance, backups, infrastructure decisions, and practical operations.
         </DocsDescription>
         <DocsBody>
+          <ResourceTopics
+            topics={categories.map((category) => {
+              const count = blogArticles.filter(article => article.category === category).length;
+              return { id: helpCollectionId(category), title: category, count, unit: count === 1 ? 'guide' : 'guides' };
+            })}
+          />
           <div className="sr-docs-overview">
             {categories.map((category) => {
               const articles = blogArticles.filter(article => article.category === category);
               return (
-                <section className="sr-docs-collection" key={category}>
+                <section className="sr-docs-collection" id={helpCollectionId(category)} key={category}>
                   <div className="sr-docs-collection-heading">
                     <h2>{category}</h2>
                     <span>

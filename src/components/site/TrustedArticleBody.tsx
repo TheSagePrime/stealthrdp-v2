@@ -1,4 +1,7 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes, react-refresh/only-export-components */
+import { withCopyableCode } from '@/components/site/code/code-block-markup';
+import { CodeCopyListener } from '@/components/site/code/CodeCopyListener';
+
 export type ResourceHeading = {
   id: string;
   text: string;
@@ -62,21 +65,23 @@ function withHeadingIds(html: string): string {
   });
 }
 
-// Article HTML is authored content. Add the small accessibility attributes it often
-// lacks: a title on embedded frames, and keyboard focus on code blocks that scroll.
+// Article HTML is authored content. Add the small accessibility attribute it often
+// lacks: a title on embedded frames. Code blocks get focus in withCopyableCode.
 function withAccessibleEmbeds(html: string): string {
   return html
     .replace(/<iframe\b([^>]*)>/gi, (tag, attrs: string) =>
       /\btitle\s*=/i.test(attrs) ? tag : `<iframe title="Embedded video"${attrs}>`)
-    .replace(/<pre\b([^>]*)>/gi, (tag, attrs: string) =>
-      /\btabindex\s*=/i.test(attrs) ? tag : `<pre tabindex="0"${attrs}>`);
+  ;
 }
 
 export function TrustedArticleBody({ html }: { html: string }) {
   return (
-    <div
-      className="sr-richtext"
-      dangerouslySetInnerHTML={{ __html: withAccessibleEmbeds(withHeadingIds(html)) }}
-    />
+    <>
+      <div
+        className="sr-richtext"
+        dangerouslySetInnerHTML={{ __html: withCopyableCode(withAccessibleEmbeds(withHeadingIds(html))) }}
+      />
+      <CodeCopyListener />
+    </>
   );
 }

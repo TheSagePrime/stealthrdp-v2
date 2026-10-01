@@ -33,7 +33,9 @@ To begin, you need to run commands with administrator privileges. Here's how:
 
 Once PowerShell is open with administrative privileges, enter the following command to re-arm the evaluation period:
 
-    slmgr -rearm
+```powershell
+slmgr -rearm
+```
 
 This command resets the 180-day evaluation timer where Microsoft permits rearming on the installed Evaluation edition.
 
@@ -47,7 +49,9 @@ To complete the process, reboot your computer for the changes to take effect. A 
 
 After rebooting, you can check the remaining evaluation period and rearm count by using the following command in PowerShell:
 
-    slmgr -dlv
+```powershell
+slmgr -dlv
+```
 
 This command displays detailed evaluation status, including the number of re-arms remaining and how much time is left on the evaluation period.
 
@@ -57,7 +61,9 @@ This step is not part of extending the evaluation period. StealthRDP does not pr
 
 StealthRDP does not supply licence keys. The following Microsoft command is shown only as a technical reference:
 
-    slmgr -ato
+```powershell
+slmgr -ato
+```
 
 This Microsoft command attempts activation. It does not mean StealthRDP provided a licence.
 
