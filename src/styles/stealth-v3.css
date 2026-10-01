@@ -3376,7 +3376,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   width: 100%;
   min-height: 100%;
   padding: 22px;
-  border-radius: 16px;
+  border-radius: var(--radius-plan-card);
 }
 
 .srv-page-plans .sr-pick-card-head {
@@ -3550,7 +3550,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   width: 100%;
   min-height: 100%;
   padding: 22px;
-  border-radius: 16px;
+  border-radius: var(--radius-plan-card);
 }
 
 .srv-page-os .sr-pick-card-head {
@@ -4796,7 +4796,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 .srv-citadel-v2-plan {
   gap: 0;
   overflow: hidden;
-  border-radius: 14px;
+  border-radius: var(--radius-plan-card-compact);
   padding-block: 0;
 }
 
@@ -5517,7 +5517,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   /* Purpose-built phone plan card: price + 3 key specs + expandable detail. */
   .srv-mobile-plan-card {
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: var(--radius-plan-card);
     background: var(--card);
     padding: 18px;
     box-shadow: 0 8px 24px color-mix(in srgb, var(--foreground) 5%, transparent);

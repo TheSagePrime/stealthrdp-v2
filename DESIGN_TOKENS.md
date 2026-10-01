@@ -132,8 +132,10 @@ Reuse an existing section class or one of these values. Do not invent a new rhyt
 | `--radius-md` (`--radius`) | 12px | buttons, inputs, small cards |
 | `--radius-lg` / `--radius-xl` | 18px | cards, panels, banners |
 | `--radius-full` | 999px | pills, round buttons |
+| `--radius-plan-card` | 16px | frozen plan cards only |
+| `--radius-plan-card-compact` | 14px | frozen Citadel plan cards only |
 
-Known exception: plan cards use 16px/14px. They are frozen (see `DESIGN.md`).
+Known exception: plan cards use 16px (`--radius-plan-card`) and 14px (`--radius-plan-card-compact`). They are frozen (see `DESIGN.md`).
 
 ## Layout
 

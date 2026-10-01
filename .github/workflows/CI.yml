@@ -241,6 +241,7 @@ jobs:
             .vitest-attachments/**
             vitest-test-results/**
           if-no-files-found: ignore
+          include-hidden-files: true
           retention-days: 1
 
   keyless-e2e:
