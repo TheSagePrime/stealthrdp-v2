@@ -6,6 +6,15 @@ import { whmcsLegacyRedirects } from './src/config/legacy-redirects-whmcs';
 import { isProductionDeployEnv, resolveDeployEnv } from './src/libs/seo/env';
 import './src/libs/Env';
 
+/* Hosts that the tags in the server-side GTM container (sgtm.stealthrdp.com) load:
+   Google Ads conversion and remarketing, the Meta pixel and the Yandex verification template.
+   The Google list follows developers.google.com/tag-platform/security/guides/csp. */
+const tagHosts = {
+  script: 'https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://connect.facebook.net https://cdn.jsdelivr.net/gh/yandex/',
+  connect: 'https://analytics.google.com https://*.g.doubleclick.net https://ad.doubleclick.net https://www.google.com https://www.googleadservices.com https://*.googletagmanager.com https://www.facebook.com https://connect.facebook.net',
+  frame: 'https://sgtm.stealthrdp.com https://td.doubleclick.net https://www.googletagmanager.com',
+};
+
 const csp = [
   'default-src \'self\'',
   'base-uri \'self\'',
@@ -15,9 +24,9 @@ const csp = [
   'img-src \'self\' data: blob: https:',
   'font-src \'self\' data: https:',
   'style-src \'self\' \'unsafe-inline\'',
-  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? ' \'unsafe-eval\'' : ''} https://sgtm.stealthrdp.com https://datafa.st https://www.googletagmanager.com https://*.googletagmanager.com`,
-  'connect-src \'self\' https://*.sentry.io https://sgtm.stealthrdp.com https://datafa.st https://*.google-analytics.com https://*.analytics.google.com',
-  'frame-src \'self\' https://www.youtube.com https://www.youtube-nocookie.com',
+  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? ' \'unsafe-eval\'' : ''} https://sgtm.stealthrdp.com https://datafa.st https://www.googletagmanager.com https://*.googletagmanager.com ${tagHosts.script}`,
+  `connect-src 'self' https://*.sentry.io https://sgtm.stealthrdp.com https://datafa.st https://*.google-analytics.com https://*.analytics.google.com ${tagHosts.connect}`,
+  `frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com ${tagHosts.frame}`,
   'worker-src \'self\' blob:',
   ...(process.env.NODE_ENV === 'production' ? ['upgrade-insecure-requests'] : []),
 ].join('; ');
