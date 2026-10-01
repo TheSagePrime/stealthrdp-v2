@@ -148,7 +148,10 @@ Plans page:
 - keep checkout actions obvious.
 
 Plan cards are frozen. Do not change the style of plan cards (`.sr-pick-card`, the homepage pricing
-cards) anywhere on the site without the owner's approval. Their 16px/14px radii are a known exception
+cards) anywhere on the site without the owner's approval.
+On phones (640px and narrower) the owner approved a compact layout in October 2026: name and price on
+one row, specs as a 2 x 2 grid, Order Now, then OS and stock on one line (last blocks of
+`stealth-v3.css`). Their 16px/14px radii are a known exception
 to the radius scale (`marketing-palette.test.ts` reports them and waits on the owner).
 
 Checkout buttons say **Order Now** and link to WHMCS through `checkoutUrl()`.
