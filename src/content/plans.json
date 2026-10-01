@@ -423,7 +423,7 @@
       "specs": {
         "cpu": "2 Core",
         "ram": "2 GB",
-        "storage": "15 GB SSD",
+        "storage": "15 GB NVMe",
         "bandwidth": "Unlimited"
       },
       "purchaseUrl": "https://dash.stealthrdp.com/index.php?rp=/store/eu/starter-eu&billingcycle=monthly",
