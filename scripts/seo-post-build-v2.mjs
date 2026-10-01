@@ -26,7 +26,10 @@ const deployEnv = resolveDeployEnv(process.env);
 const config = { ...defaultSeoConfig, environment: { deployEnv } };
 const site = resolveSiteUrl(process.env, deployEnv);
 config.siteUrl = site.origin;
-const crawlOrigin = 'http://127.0.0.1:3123';
+/* The bind address itself: on Vercel's build machine Next.js labels internal
+   rewrites with this host, and any other host makes it proxy the rewrite
+   to itself over https (500 on every page). */
+const crawlOrigin = 'http://0.0.0.0:3123';
 const titleRoutes = new Map();
 
 const normalizedPath = value => normalizePathname(value || '/', config.url.trailingSlash);
@@ -588,15 +591,20 @@ function waitForServer(url, timeoutMs = 45000) {
   });
 }
 
+const serverLog = [];
+
 async function withServer(fn) {
   /* Same bind address as the Dockerfile (HOSTNAME=0.0.0.0), so forwarded
      requests behave as they do behind Traefik. */
   const child = spawn('pnpm', ['exec', 'next', 'start', '-p', '3123', '-H', '0.0.0.0'], {
     cwd: root,
     env: { ...process.env, PATH: `${root}/node_modules/.bin:${process.env.PATH || ''}` },
-    stdio: 'ignore',
+    stdio: ['ignore', 'pipe', 'pipe'],
     detached: true,
   });
+  /* Keep the server log so a failed hosted build can show why pages errored. */
+  child.stdout.on('data', chunk => serverLog.push(String(chunk)));
+  child.stderr.on('data', chunk => serverLog.push(String(chunk)));
   try {
     await waitForServer(`${crawlOrigin}/`);
     await fn();
@@ -646,6 +654,15 @@ checkDuplicateTitles();
 const report = reporter.write(root);
 if (report.failCount) {
   console.error(`SEO post-build failed with ${report.failCount} issue(s). See reports/seo-audit.txt`);
+  /* Hosted builds (Vercel, Coolify) keep only the log, not reports/, so show the first failures. */
+  const failures = readFileSync(path.join(root, 'reports/seo-audit.txt'), 'utf8')
+    .split('\n')
+    .filter(line => line.startsWith('[FAIL]'));
+  console.error(failures.slice(0, 20).join('\n'));
+  if (serverLog.length) {
+    console.error('--- audit server log (last 40 lines) ---');
+    console.error(serverLog.join('').split('\n').slice(-40).join('\n'));
+  }
   process.exit(1);
 }
 console.log(`SEO post-build passed with ${report.warnCount} warning(s).`);
