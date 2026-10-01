@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return createPageMetadata({
     path: '/',
     locale,
-    title: 'StealthRDP — Windows & Linux VPS Hosting',
+    title: 'StealthRDP — Windows RDP & Linux VPS Hosting',
     description:
       'Deploy Windows or Linux VPS hosting with NVMe storage, full administrative access, USA and EU locations, and flexible billing.',
     ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
@@ -517,7 +517,7 @@ export default async function HomePage({ params }: Props) {
             </span>
             <span>
               <strong>7 days</strong>
-              <small>money-back</small>
+              <small>refund as credit</small>
             </span>
             <span>
               <strong>24/7</strong>

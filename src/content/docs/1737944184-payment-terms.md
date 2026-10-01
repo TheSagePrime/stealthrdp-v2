@@ -2,7 +2,7 @@
 order: 9
 title: Payment Terms
 category: Terms and policies
-date: Mar 13, 2025
+date: Oct 01, 2026
 sourceTitle: Payment Terms
 sourceUrl: https://docs.stealthrdp.com/hc/stealth-rdp-docs/articles/1737944184-payment-terms
 migration:
@@ -28,7 +28,7 @@ Last updated on Mar 13, 2025
     
 4.  Payment Obligations: Full upfront payment is required. Delayed payment may lead to service suspension or termination.
     
-5.  Non-Refundable: Payments to StealthRDP are non-refundable. In exceptional cases of internal issues leading to service downtime, compensations or refunds may be issued equitably, but these do not cover personal damages. Services are to be provided within 24 hours of payment; should service delivery exceed this timeframe, customers are eligible to request a refund. This refund option is invalidated once the service is utilized. Refunds are granted only once per service and are not applicable after 24 hours of service usage or for dissatisfaction-related cancellations. Importantly, any refunds processed will be credited back exclusively to the customer's site wallet with StealthRDP. Direct cryptocurrency refunds are strictly prohibited and will not be provided under any circumstances.
+5.  Refunds: A new service can be refunded within 7 days of payment. Refunds are issued only as account credit to the customer's site wallet with StealthRDP; they are not paid back to the original payment method, and direct cryptocurrency refunds are not provided under any circumstances. After 7 days, payments to StealthRDP are non-refundable. In exceptional cases of internal issues leading to service downtime, compensations or refunds may be issued equitably as account credit, but these do not cover personal damages. Services are to be provided within 24 hours of payment; should service delivery exceed this timeframe, customers are eligible to request a refund. Refunds are granted only once per service.
     
 6.  Transaction Confirmations: Service activation follows the minimum required confirmations for the respective cryptocurrency, which can vary in time. StealthRDP is not responsible for blockchain delays.
     
