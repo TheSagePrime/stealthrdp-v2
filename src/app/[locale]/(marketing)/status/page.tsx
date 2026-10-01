@@ -1,10 +1,13 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
 import { Pulse } from '@phosphor-icons/react/dist/ssr';
-import { StatusGrid } from '@/components/site/StatusGrid';
+import { StatusBoard } from '@/components/site/status/StatusBoard';
 import { Badge } from '@/components/ui/badge';
-import { uptime } from '@/lib/stealth/content';
+import { getUptimeReport } from '@/lib/stealth/uptime';
 import { createPageMetadata } from '@/libs/seo/metadata';
+
+// UptimeRobot data, rebuilt at most every 5 minutes.
+export const revalidate = 300;
 
 export const metadata: Metadata = createPageMetadata({
   path: '/status',
@@ -13,31 +16,22 @@ export const metadata: Metadata = createPageMetadata({
   ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
-export default function StatusPage() {
-  const fallback = {
-    stat: uptime.stat,
-    checkedAt: null,
-    monitors: uptime.monitors.map(monitor => ({
-      label: monitor.label,
-      region: monitor.region,
-      status: monitor.status,
-      uptimeRatio: monitor.uptimeRatio,
-    })),
-  };
+export default async function StatusPage() {
+  const report = await getUptimeReport();
 
   return (
     <div className="srv-page srv-page-status srv-status-v2">
-      <StatusGrid fallback={fallback}>
+      <StatusBoard report={report}>
         <Badge variant="outline" className="srv-status-v2-badge">
           <Pulse size={14} weight="fill" aria-hidden="true" />
           Live infrastructure status
         </Badge>
         <h1>Know what is healthy before you open a ticket.</h1>
         <p>
-          Current availability and 90-day uptime for StealthRDP infrastructure,
-          refreshed from the public status feed when available.
+          Current state, daily uptime for the last 90 days and recent incidents for every
+          StealthRDP server and platform service, read from our UptimeRobot monitors.
         </p>
-      </StatusGrid>
+      </StatusBoard>
     </div>
   );
 }

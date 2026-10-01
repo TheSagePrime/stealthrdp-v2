@@ -133,10 +133,16 @@ Use permanent (308) redirects. Never redirect to a page that redirects again.
 
 ## 9. Add or change a status monitor
 
-1. The live list comes from the UptimeRobot public status page (`src/app/api/uptime/route.ts`).
-2. Refresh the fallback snapshot in `src/content/uptime.json` with the real values and date.
-3. A new region: add its group in `src/components/site/status/status-groups.ts`
-   (`groupOrder` and `groupName()`).
+1. Add or rename the monitor in UptimeRobot. `/status` and `/api/uptime` show every monitor of the
+   account, with its UptimeRobot name, within 5 minutes. No code change is needed.
+2. Names decide the group (`groupFor()` in `src/lib/stealth/uptime.ts`): `USA …` goes to USA servers,
+   `EU …` or a name with `NL` to Europe servers, everything else to Platform. A new region needs a
+   new group there and in `groupOrder`.
+3. The data comes from the UptimeRobot API with `UPTIMEROBOT_API_KEY` (Vercel, production only, use a
+   read-only key). Without the key (preview, local) it comes from the public status page, which has no
+   response times and only the latest incident per service.
+4. Refresh `src/content/uptime.json` (the last fallback) from the public feed now and then. Copy the
+   values; never invent them.
 
 ## 10. Add a tracking tool or a new outside host
 
