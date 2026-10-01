@@ -97,6 +97,7 @@ export default async function LinuxVpsPage() {
             <p className="sr-kicker">Linux VPS hosting</p>
             <h1 className="sr-title">
               Linux VPS hosting with Root access and a distro
+              {' '}
               <span>you can confirm.</span>
             </h1>
             <p className="sr-lede">
@@ -263,6 +264,7 @@ export default async function LinuxVpsPage() {
           <div className="sr-prose-block">
             <p>
               VPS plans include full Root access. You administer the server. You keep backups. You stay inside the
+              {' '}
               <Link href="/docs/use-of-service">Use of Service terms</Link>
               .
             </p>
@@ -394,8 +396,10 @@ export default async function LinuxVpsPage() {
           <div className="sr-prose-block">
             <p>
               Support is available through
+              {' '}
               <a href="https://wa.me/447441426993">WhatsApp</a>
               , the client-area ticket system, and support email. See the
+              {' '}
               <Link href="/faq">FAQ</Link>
               .
             </p>

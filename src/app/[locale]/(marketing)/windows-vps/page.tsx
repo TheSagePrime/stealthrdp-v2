@@ -79,6 +79,7 @@ export default async function WindowsVpsPage() {
             <p className="sr-kicker">Windows VPS hosting</p>
             <h1 className="sr-title">
               Windows VPS hosting for work that
+              {' '}
               <span>belongs on Windows.</span>
             </h1>
             <p className="sr-lede">
@@ -253,6 +254,7 @@ export default async function WindowsVpsPage() {
             <p>VPS plans include full Windows Administrator access. That gives you control over the Windows environment and the software you install. You are responsible for regular backups of important data.</p>
             <p>
               For the remote sign-in process, see
+              {' '}
               <Link href="/docs/how-do-i-log-into-windows">How do I log into Windows?</Link>
               {' '}
               StealthRDP sends service credentials by email after payment confirmation.
@@ -380,11 +382,14 @@ export default async function WindowsVpsPage() {
           <div className="sr-prose-block">
             <p>
               Support is available through WhatsApp, the client-area ticketing system, and support email. Review the
+              {' '}
               <Link href="/faq">FAQ</Link>
               {' '}
               for support information, the
+              {' '}
               <Link href="/docs/use-of-service">Use of Service terms</Link>
               , and the
+              {' '}
               <Link href="/docs/windows-licensing">Windows licensing</Link>
               {' '}
               page before you order.
