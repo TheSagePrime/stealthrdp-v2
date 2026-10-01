@@ -112,7 +112,7 @@ const infrastructure = [
 
 function reviewSource(item: (typeof testimonials)[number]) {
   if (item.sourceLabel?.includes('Discord') || item.sourceType === 'community review') {
-    return 'Discord';
+    return 'Discord review';
   }
   if (!item.sourceUrl) {
     return 'Customer testimonial';

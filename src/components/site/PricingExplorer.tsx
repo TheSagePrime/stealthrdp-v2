@@ -153,7 +153,7 @@ function PlanRow({
               <Button asChild size="sm">
                 <a
                   href={checkoutUrl(plan, cycle)}
-                  aria-label={`Buy ${plan.name} — leaves this site for the StealthRDP checkout at dash.stealthrdp.com`}
+                  aria-label={`Order Now: ${plan.name} — opens the StealthRDP checkout at dash.stealthrdp.com`}
                 >
                   Order Now
                   {' '}
@@ -269,7 +269,7 @@ function PlanCard({
               <Button asChild className="sr-pick-card-buy">
                 <a
                   href={checkoutUrl(plan, cycle)}
-                  aria-label={`Buy ${plan.name} — leaves this site for the StealthRDP checkout at dash.stealthrdp.com`}
+                  aria-label={`Order Now: ${plan.name} — opens the StealthRDP checkout at dash.stealthrdp.com`}
                 >
                   Order Now
                   {' '}

@@ -34,10 +34,6 @@ const cycleLabel: Record<BillingCycle, string> = {
 
 const format = (value: number) => Number.isInteger(value) ? String(value) : value.toFixed(2);
 
-function tierName(plan: Plan) {
-  return plan.name.replace(/ USA| EU/g, '');
-}
-
 export function HomePricing({ plans }: { plans: Plan[] }) {
   const [region, setRegion] = useState<'USA' | 'EU'>('USA');
   const [cycle, setCycle] = useState<BillingCycle>('monthly');
@@ -125,7 +121,7 @@ export function HomePricing({ plans }: { plans: Plan[] }) {
                   ? 'Billed monthly'
                   : `€${monthEquivalent.toFixed(2)}/mo effective · due today`}
                 cta={{
-                  label: available ? `Choose ${tierName(plan)}` : 'Out of stock',
+                  label: available ? 'Order Now' : 'Out of stock',
                   href: available ? checkoutUrl(plan, cycle) : undefined,
                   disabled: !available,
                 }}
@@ -213,9 +209,8 @@ export function HomePricing({ plans }: { plans: Plan[] }) {
                 {available
                   ? (
                       <Button asChild size="lg" className="srv-mobile-plan-cta">
-                        <a href={checkoutUrl(plan, cycle)}>
-                          Choose
-                          {tierName(plan)}
+                        <a href={checkoutUrl(plan, cycle)} aria-label={`Order Now: ${plan.name}`}>
+                          Order Now
                         </a>
                       </Button>
                     )
