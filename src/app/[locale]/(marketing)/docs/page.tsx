@@ -2,10 +2,12 @@
 import type { Metadata } from 'next';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import Link from 'next/link';
+import { ResourceTopics } from '@/components/site/ResourceTopics';
 import { helpDocsArticles } from '@/lib/stealth/articles';
 import {
   articlesForCollection,
   helpArticleHref,
+  helpCollectionId,
   helpCollections,
 } from '@/lib/stealth/help-center';
 import { createPageMetadata } from '@/libs/seo/metadata';
@@ -25,6 +27,18 @@ export default function DocsPageRoute() {
         Practical setup and troubleshooting for StealthRDP servers, organized around the task you are trying to complete.
       </DocsDescription>
       <DocsBody>
+        <ResourceTopics
+          topics={helpCollections
+            .map(collection => ({ collection, count: articlesForCollection(collection, helpDocsArticles).length }))
+            .filter(item => item.count > 0)
+            .map(({ collection, count }) => ({
+              id: helpCollectionId(collection.title),
+              title: collection.title,
+              description: collection.description,
+              count,
+              unit: count === 1 ? 'guide' : 'guides',
+            }))}
+        />
         <div className="sr-docs-overview">
           {helpCollections.map((collection) => {
             const articles = articlesForCollection(collection, helpDocsArticles);
@@ -33,7 +47,7 @@ export default function DocsPageRoute() {
             }
 
             return (
-              <section className="sr-docs-collection" key={collection.title}>
+              <section className="sr-docs-collection" id={helpCollectionId(collection.title)} key={collection.title}>
                 <div className="sr-docs-collection-heading">
                   <div>
                     <h2>{collection.title}</h2>

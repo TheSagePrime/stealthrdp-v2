@@ -52,7 +52,11 @@ Verify that the server IP address and operating system is correct. Also make sur
 
 Log in as root to your server, download the installation script, and run it:
 
-bash <(curl -Ss https://www.directadmin.com/setup.sh || wget -O - https://www.directadmin.com/setup.sh) auto The auto method will be best for most people. It automatically installs everything for you, including the CSF firewall. It can also be called without the'auto' option, which requires input but allows for customization. Important: The hostname should not be the same as the primary domain name. e.g. gary.com is not a good hostname, where server.gary.com is. Having the same host/main domain name will cause e-mail and FTP problems. Also, please make sure the hostname resolves once you set up DNS.
+```bash
+bash <(curl -Ss https://www.directadmin.com/setup.sh || wget -O - https://www.directadmin.com/setup.sh) auto
+```
+
+The auto method will be best for most people. It automatically installs everything for you, including the CSF firewall. It can also be called without the'auto' option, which requires input but allows for customization. Important: The hostname should not be the same as the primary domain name. e.g. gary.com is not a good hostname, where server.gary.com is. Having the same host/main domain name will cause e-mail and FTP problems. Also, please make sure the hostname resolves once you set up DNS.
 
 **Accessing the Control Panel**
 

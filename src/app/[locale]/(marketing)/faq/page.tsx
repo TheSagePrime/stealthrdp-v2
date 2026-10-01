@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { FaqExplorer } from '@/components/site/FaqExplorer';
+import { ResourceTopics } from '@/components/site/ResourceTopics';
 import { faqs } from '@/lib/stealth/content';
 import { faqCategoryId } from '@/lib/stealth/faq-topics';
 import { faqJsonLd } from '@/lib/stealth/structured-data';
@@ -29,6 +30,13 @@ export default function FaqPage() {
         Plans, setup, billing, operating systems, security, refunds, and support.
         Search from the resource bar above or jump to a topic.
       </DocsDescription>
+      <ResourceTopics
+        label="FAQ topics"
+        topics={toc.map((item) => {
+          const count = faqs.filter(faq => `#${faqCategoryId(faq.category)}` === item.url).length;
+          return { id: item.url.slice(1), title: item.title, count, unit: count === 1 ? 'answer' : 'answers' };
+        })}
+      />
       <FaqExplorer faqs={faqs} />
       <ProductionJsonLd data={faqJsonLd(faqs)} />
     </DocsPage>

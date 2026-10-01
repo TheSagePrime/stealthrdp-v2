@@ -35,9 +35,10 @@ Follow these steps to configure WinRM and resolve the .NET Framework installatio
 
 1.  In the Command Prompt window, type the following command and press **Enter**:
     
-    Copy
-    
-        winrm get winrm/config
+
+```cmd
+winrm get winrm/config
+```
         
     
 2.  This command will display the current configuration of WinRM. Look for any errors or misconfigurations in the output.
@@ -47,9 +48,10 @@ Follow these steps to configure WinRM and resolve the .NET Framework installatio
 
 If the output indicates that WinRM isn’t configured properly, you can quickly configure it by running the following command:
 
-Copy
 
-    winrm quickconfig
+```cmd
+winrm quickconfig
+```
     
 
 *   This command will set up WinRM with default settings, including enabling the WinRM service and creating a firewall exception.
@@ -61,9 +63,10 @@ Copy
 
 1.  After configuring WinRM, verify that it’s running by executing the following command:
     
-    Copy
-    
-        winrm enumerate winrm/config/listener
+
+```cmd
+winrm enumerate winrm/config/listener
+```
         
     
 2.  This command should return details about the WinRM listener. If it doesn’t, there may still be an issue with the configuration.

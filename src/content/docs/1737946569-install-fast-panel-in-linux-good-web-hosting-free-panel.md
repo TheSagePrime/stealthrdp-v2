@@ -35,17 +35,23 @@ Please note that the panel can only be installed on a freshly installed operatin
 
 **Step 2. If wget utility is not installed on your server, execute the following commands in order to get it: Debian/Ubuntu:**
 
+```bash
 apt-get update; apt-get install wget
+```
 
 **CentOS:**
 
+```bash
 yum makecache; yum install wget
+```
 
 **Step 3.**
 
 Initiate FASTPANEL® installation by running the following command:
 
-wget http://repo.fastpanel.direct/install\_fastpanel.sh -O - | bash -
+```bash
+wget http://repo.fastpanel.direct/install_fastpanel.sh -O - | bash -
+```
 
 **Step 4.**
 
