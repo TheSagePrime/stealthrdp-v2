@@ -1,5 +1,5 @@
 # StealthRDP V2 preview image.
-FROM node:22-bookworm-slim AS dependencies
+FROM node:24-bookworm-slim AS dependencies
 
 ENV COREPACK_HOME=/corepack
 WORKDIR /app
@@ -9,7 +9,7 @@ RUN corepack enable && corepack prepare pnpm@10.34.5 --activate
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 
-FROM node:22-bookworm-slim AS builder
+FROM node:24-bookworm-slim AS builder
 
 ENV COREPACK_HOME=/corepack \
     NODE_ENV=production \
@@ -30,7 +30,7 @@ COPY . .
 
 RUN pnpm build
 
-FROM node:22-bookworm-slim AS runner
+FROM node:24-bookworm-slim AS runner
 
 ENV NODE_ENV=production \
     PORT=8080 \
