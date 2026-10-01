@@ -121,10 +121,17 @@ function leakCheck(route, label, value) {
   }
 }
 
+/* Requests reach the app the way Coolify's Traefik sends them: plain http to the
+   container, with the public host and protocol in forwarded headers. */
+const forwardedHeaders = {
+  'x-forwarded-host': new URL(site.origin).host,
+  'x-forwarded-proto': site.protocol.replace(':', ''),
+};
+
 async function fetchRaw(url, redirect = 'manual') {
   const response = await fetch(url, {
     redirect,
-    headers: { 'user-agent': 'sage-prime-seo-audit' },
+    headers: { 'user-agent': 'sage-prime-seo-audit', ...forwardedHeaders },
   });
   return {
     response,
@@ -582,7 +589,9 @@ function waitForServer(url, timeoutMs = 45000) {
 }
 
 async function withServer(fn) {
-  const child = spawn('pnpm', ['exec', 'next', 'start', '-p', '3123', '-H', '127.0.0.1'], {
+  /* Same bind address as the Dockerfile (HOSTNAME=0.0.0.0), so forwarded
+     requests behave as they do behind Traefik. */
+  const child = spawn('pnpm', ['exec', 'next', 'start', '-p', '3123', '-H', '0.0.0.0'], {
     cwd: root,
     env: { ...process.env, PATH: `${root}/node_modules/.bin:${process.env.PATH || ''}` },
     stdio: 'ignore',
