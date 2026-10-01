@@ -3,10 +3,13 @@ import type { Metadata } from 'next';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { DocBody, docHeadings } from '@/components/site/DocBody';
 import { RelatedArticles } from '@/components/site/RelatedArticles';
 import { citadelDocsArticles, docPublicSlug, findCitadelDocByPublicSlug } from '@/lib/stealth/articles';
 import { citadelArticleHref, citadelCollectionForArticle } from '@/lib/stealth/help-center';
+import { techArticleJsonLd } from '@/lib/stealth/structured-data';
+import { getSeoConfig } from '@/libs/seo/config';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export function generateStaticParams() {
@@ -50,6 +53,16 @@ export default async function CitadelDocPage({ params }: { params: Promise<{ slu
 
   return (
     <DocsPage toc={toc} tableOfContent={{ style: 'clerk' }}>
+      <ProductionJsonLd
+        data={techArticleJsonLd({
+          siteUrl: getSeoConfig().siteUrl,
+          path: `/citadel/docs/${slug}`,
+          title: article.title,
+          description: article.summary,
+          date: article.date,
+          section: { name: 'Citadel Docs', path: '/citadel/docs' },
+        })}
+      />
       <DocsTitle>{article.title}</DocsTitle>
       <DocsDescription>{article.summary}</DocsDescription>
       <div className="sr-docs-article-meta">

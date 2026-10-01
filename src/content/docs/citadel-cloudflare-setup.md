@@ -4,7 +4,7 @@ title: Set up Cloudflare for Citadel
 category: "Citadel: Start here"
 date: Sep 27, 2026
 sourceUrl: https://citadel.stealthrdp.com/docs/cloudflare-setup
-summary: Point orange-cloud A records at Citadel without moving your DNS zone.
+summary: "Point proxied (orange cloud) Cloudflare A records at the Citadel ingress IP, set SSL/TLS to Full, and fix domains that stay awaiting DNS."
 relatedSlugs:
   - citadel-domain-overview
   - citadel-origin

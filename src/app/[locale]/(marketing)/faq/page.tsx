@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 import { DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
+import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { FaqExplorer } from '@/components/site/FaqExplorer';
 import { faqs } from '@/lib/stealth/content';
 import { faqCategoryId } from '@/lib/stealth/faq-topics';
+import { faqJsonLd } from '@/lib/stealth/structured-data';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
@@ -28,6 +30,7 @@ export default function FaqPage() {
         Search from the resource bar above or jump to a topic.
       </DocsDescription>
       <FaqExplorer faqs={faqs} />
+      <ProductionJsonLd data={faqJsonLd(faqs)} />
     </DocsPage>
   );
 }

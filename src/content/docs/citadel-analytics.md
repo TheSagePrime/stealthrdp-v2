@@ -4,7 +4,7 @@ title: Use Citadel analytics
 category: "Citadel: Traffic"
 date: Sep 27, 2026
 sourceUrl: https://citadel.stealthrdp.com/docs/analytics
-summary: Compare fleet-wide edge, proxied and blocked request trends.
+summary: "Compare edge, proxied and blocked request trends across all Citadel domains, spot traffic spikes, and drill into one site with Insights and Logs."
 relatedSlugs:
   - citadel-overview
   - citadel-insights

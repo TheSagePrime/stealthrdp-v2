@@ -10,7 +10,7 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: "1. General Use:"
+summary: "StealthRDP use of service terms: permitted lawful use, prohibited activities such as spam, phishing, scanning and DDoS, abuse handling and bandwidth policy."
 relatedSlugs: []
 ---
 Use of service

@@ -16,12 +16,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 import { Section } from '@/components/launchui/section';
+import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { HomeHero } from '@/components/site/HomeHero';
 import { HomePricing } from '@/components/site/HomePricing';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { testimonials } from '@/lib/stealth/content';
 import { getPlans } from '@/lib/stealth/live-plans';
+import { homeJsonLd } from '@/lib/stealth/structured-data';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
 import { createPageMetadata } from '@/libs/seo/metadata';
@@ -129,6 +131,7 @@ export default async function HomePage({ params }: Props) {
 
   return (
     <>
+      <ProductionJsonLd data={homeJsonLd(getSeoConfig().siteUrl, plans)} />
       {jsonLd.map(block => (
         <script
           key={String(block['@type'])}

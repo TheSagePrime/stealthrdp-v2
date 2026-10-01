@@ -4,7 +4,7 @@ title: Read Citadel insights and attack timeline
 category: "Citadel: Protection"
 date: Sep 27, 2026
 sourceUrl: https://citadel.stealthrdp.com/docs/insights
-summary: Review domain attack events, decisions, and recent mitigation.
+summary: "Follow an attack on one domain: charts, the attack and event timeline, and the challenge and block reasons behind Citadel's recent decisions."
 relatedSlugs:
   - citadel-security
   - citadel-analytics

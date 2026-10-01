@@ -10,7 +10,7 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: "Follow these steps to rebuild your StealthRDP server efficiently:"
+summary: "Rebuild a StealthRDP server from the client area: choose a name and OS, wait 3-5 minutes, then connect with Remote Desktop (Windows) or SSH."
 relatedSlugs: []
 ---
 How to Rebuild a Server

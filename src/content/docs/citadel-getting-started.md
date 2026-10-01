@@ -4,7 +4,7 @@ title: Getting started with Citadel
 category: "Citadel: Start here"
 date: Sep 27, 2026
 sourceUrl: https://citadel.stealthrdp.com/docs/getting-started
-summary: Protect a website with Cloudflare, Citadel and your origin.
+summary: "Set up Citadel step by step: add your domain and origin, point proxied Cloudflare DNS records at the ingress IP, set SSL to Full, and pick a challenge mode."
 relatedSlugs:
   - citadel-cloudflare-setup
   - citadel-domains

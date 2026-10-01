@@ -4,7 +4,7 @@ title: Check Citadel origin health
 category: "Citadel: Domains"
 date: Sep 27, 2026
 sourceUrl: https://citadel.stealthrdp.com/docs/health
-summary: Diagnose latency, failed probes, and intermittent gateway errors.
+summary: "Run Citadel origin health probes to diagnose latency, failed checks and 502 errors, then fix origin host, port, TLS or firewall settings and re-test."
 relatedSlugs:
   - citadel-origin
   - citadel-security

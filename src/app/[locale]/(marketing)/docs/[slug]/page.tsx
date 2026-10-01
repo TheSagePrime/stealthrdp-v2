@@ -2,10 +2,13 @@
 import type { Metadata } from 'next';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { notFound } from 'next/navigation';
+import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { DocBody, docHeadings } from '@/components/site/DocBody';
 import { RelatedArticles } from '@/components/site/RelatedArticles';
 import { docPublicSlug, findDocByPublicSlug, helpDocsArticles } from '@/lib/stealth/articles';
 import { helpArticleHref, helpCollectionForArticle } from '@/lib/stealth/help-center';
+import { techArticleJsonLd } from '@/lib/stealth/structured-data';
+import { getSeoConfig } from '@/libs/seo/config';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export function generateStaticParams() {
@@ -46,6 +49,16 @@ export default async function DocPageRoute({ params }: { params: Promise<{ slug:
 
   return (
     <DocsPage toc={toc} tableOfContent={{ style: 'clerk' }}>
+      <ProductionJsonLd
+        data={techArticleJsonLd({
+          siteUrl: getSeoConfig().siteUrl,
+          path: `/docs/${slug}`,
+          title: article.title,
+          description: article.summary,
+          date: article.date,
+          section: { name: 'Help Center', path: '/docs' },
+        })}
+      />
       <DocsTitle>{article.title}</DocsTitle>
       <DocsDescription>{article.summary}</DocsDescription>
       <div className="sr-docs-article-meta">

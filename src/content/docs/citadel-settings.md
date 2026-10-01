@@ -4,7 +4,7 @@ title: Manage Citadel settings, team and alerts
 category: "Citadel: Account"
 date: Sep 27, 2026
 sourceUrl: https://citadel.stealthrdp.com/docs/settings
-summary: Set organization options, team roles, email alerts and webhooks.
+summary: "Manage Citadel organization settings: plan entitlements, team invites and roles, email alerts for attack and DNS events, and test webhook deliveries."
 relatedSlugs:
   - citadel-billing-support
   - citadel-getting-started

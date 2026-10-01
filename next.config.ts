@@ -140,7 +140,19 @@ const baseConfig: NextConfig = {
         : [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }]),
     ];
 
-    return [{ source: '/:path*', headers }];
+    /* Production only: point AI agents at llms.txt, and tell caches that "/" also answers
+       Accept: text/markdown (see src/proxy.ts). */
+    const homeHeaders = isProductionDeployEnv(resolveDeployEnv(process.env))
+      ? [{
+          source: '/',
+          headers: [
+            { key: 'Link', value: '</llms.txt>; rel="describedby"; type="text/markdown"' },
+            { key: 'Vary', value: 'Accept' },
+          ],
+        }]
+      : [];
+
+    return [{ source: '/:path*', headers }, ...homeHeaders];
   },
   outputFileTracingIncludes: {
     '/': ['./migrations/**/*'],

@@ -4,7 +4,7 @@ title: Configure Citadel origins and hostnames
 category: "Citadel: Domains"
 date: Sep 27, 2026
 sourceUrl: https://citadel.stealthrdp.com/docs/origin
-summary: Set the backend host, port, and TLS for apex and subdomains.
+summary: "Configure the backend Citadel forwards clean traffic to: apex host, port and TLS-to-origin, plus protected subdomains that share or override it."
 relatedSlugs:
   - citadel-health
   - citadel-cloudflare-setup

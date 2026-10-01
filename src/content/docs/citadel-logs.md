@@ -4,7 +4,7 @@ title: Search Citadel domain logs
 category: "Citadel: Traffic"
 date: Sep 27, 2026
 sourceUrl: https://citadel.stealthrdp.com/docs/logs
-summary: Troubleshoot 15 days of access, security and origin-error history.
+summary: "Search 15 days of Citadel access, security and origin-error logs by IP, path, host or request ID, with filters, sorting and ASN and country details."
 relatedSlugs:
   - citadel-insights
   - citadel-security

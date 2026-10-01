@@ -1,14 +1,16 @@
+/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
 import { CheckCircle, Pulse } from '@phosphor-icons/react/dist/ssr';
-import { Badge } from '@/components/ui/badge';
 import { StatusGrid } from '@/components/site/StatusGrid';
-import { createPageMetadata } from '@/libs/seo/metadata';
+import { Badge } from '@/components/ui/badge';
 import { uptime } from '@/lib/stealth/content';
+import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/status',
   title: 'Server Status — StealthRDP',
   description: 'Live StealthRDP service status, current availability, and 90-day uptime history for protected service components.',
+  ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
 export default function StatusPage() {
@@ -48,7 +50,11 @@ export default function StatusPage() {
             <div>
               <small>Current state</small>
               <strong>{healthy ? 'All monitored services operational' : 'Some services need attention'}</strong>
-              <span>{fallback.monitors.length} monitored services</span>
+              <span>
+                {fallback.monitors.length}
+                {' '}
+                monitored services
+              </span>
             </div>
           </div>
         </div>

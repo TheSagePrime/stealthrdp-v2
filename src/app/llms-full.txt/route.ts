@@ -1,10 +1,16 @@
 import { resourceEntries } from '@/lib/stealth/resource-index';
 import { getSeoConfig } from '@/libs/seo/config';
+import { isProductionDeployEnv, resolveDeployEnv } from '@/libs/seo/env';
 
 export const dynamic = 'force-static';
 
-/* The full text of every indexable guide, help article, Citadel doc and common question. */
+/* The full text of every indexable guide, help article, Citadel doc and common question.
+   Production only, like llms.txt. */
 export function GET() {
+  if (!isProductionDeployEnv(resolveDeployEnv())) {
+    return new Response('Not found', { status: 404 });
+  }
+
   const { siteUrl } = getSeoConfig();
   const body = resourceEntries()
     .filter(entry => entry.indexable)

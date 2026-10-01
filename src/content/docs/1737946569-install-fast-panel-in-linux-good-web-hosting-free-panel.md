@@ -10,7 +10,7 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: Introduction
+summary: "Install FASTPANEL on a fresh Debian, Ubuntu or CentOS 7 server over SSH, then open the control panel on port 8888 to manage sites, mail and databases."
 relatedSlugs: []
 ---
 Install Fast Panel in Linux (Good Web Hosting Free Panel)
