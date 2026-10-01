@@ -1,9 +1,12 @@
+/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
+import { AboutMap } from '@/components/site/about/AboutMap';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { cn } from '@/utils/Helpers';
+import { getPlans } from '@/lib/stealth/live-plans';
 import { createPageMetadata } from '@/libs/seo/metadata';
+import { cn } from '@/utils/Helpers';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/about',
@@ -26,16 +29,26 @@ const proof = [
   { value: '99.9%', label: 'Uptime SLA' },
 ];
 
-export default function AboutPage() {
+export const revalidate = 21600;
+
+export default async function AboutPage() {
+  const plans = await getPlans();
+
   return (
     <div className="srv-page srv-page-about">
       <section className="sr-page-hero">
-        <div className="sr-container">
-          <p className="sr-kicker">Who we are</p>
-          <h1 className="sr-title">Built for people who need servers that <span>just work.</span></h1>
-          <p className="sr-lede">
-            StealthRDP exists to remove the friction from remote infrastructure — deploy in 60 seconds, get full control, and never worry about the hardware again.
-          </p>
+        <div className="sr-container sr-os-hero-grid">
+          <div>
+            <p className="sr-kicker">Who we are</p>
+            <h1 className="sr-title">
+              Built for people who need servers that
+              <span>just work.</span>
+            </h1>
+            <p className="sr-lede">
+              StealthRDP exists to remove the friction from remote infrastructure — deploy in 60 seconds, get full control, and never worry about the hardware again.
+            </p>
+          </div>
+          <AboutMap plans={plans} />
         </div>
       </section>
 
@@ -64,8 +77,14 @@ export default function AboutPage() {
               <Card
                 key={title}
                 className={cn(
-                  'srv-about-reason sm:min-h-48',
-                  index === 0 && 'bg-surface-2 lg:row-span-2 lg:min-h-96',
+                  `
+                    srv-about-reason
+                    sm:min-h-48
+                  `,
+                  index === 0 && `
+                    bg-surface-2
+                    lg:row-span-2 lg:min-h-96
+                  `,
                 )}
               >
                 <CardHeader>
@@ -93,7 +112,11 @@ export default function AboutPage() {
 
           <Card className="srv-about-stats-strip">
             <CardContent>
-              <dl className="grid gap-x-12 gap-y-6 sm:grid-cols-3">
+              <dl className="
+                grid gap-x-12 gap-y-6
+                sm:grid-cols-3
+              "
+              >
                 {proof.map(({ value, label }) => (
                   <div key={label} className="grid content-start gap-1">
                     <dt className="text-heading-4 text-body-text">{value}</dt>
