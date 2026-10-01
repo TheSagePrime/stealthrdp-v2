@@ -48,6 +48,18 @@ uses them.
 
 Always pair a status colour with a word or icon (for example the `Pill` component: "Operational").
 
+### Uptime bars (`/status` only)
+
+The day bars use the colours UptimeRobot uses on its own status pages, so the two pages match.
+Use them for the bars and their legend only — never for text, buttons or brand.
+
+| Token | Value | Day uptime |
+|---|---|---|
+| `--uptime-up` | `#3bd671` | 100% (at 50% opacity: 99% to 100%) |
+| `--uptime-degraded` | `#f29030` | 95% to 99% |
+| `--uptime-down` | `#df484a` | under 95% |
+| `--uptime-none` | `#687790` | no records (before the monitor existed, or paused) |
+
 ### Citadel product surfaces
 
 | Token | Value |
