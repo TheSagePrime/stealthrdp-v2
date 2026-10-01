@@ -646,6 +646,11 @@ checkDuplicateTitles();
 const report = reporter.write(root);
 if (report.failCount) {
   console.error(`SEO post-build failed with ${report.failCount} issue(s). See reports/seo-audit.txt`);
+  /* Hosted builds (Vercel, Coolify) keep only the log, not reports/, so show the first failures. */
+  const failures = readFileSync(path.join(root, 'reports/seo-audit.txt'), 'utf8')
+    .split('\n')
+    .filter(line => line.startsWith('[FAIL]'));
+  console.error(failures.slice(0, 20).join('\n'));
   process.exit(1);
 }
 console.log(`SEO post-build passed with ${report.warnCount} warning(s).`);
