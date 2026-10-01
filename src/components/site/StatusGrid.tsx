@@ -5,14 +5,12 @@ import type { ReactNode } from 'react';
 import type { PillState } from '@/components/ui/pill';
 import {
   CheckCircle,
-  ClockCountdown,
-  Pulse,
   Question,
   Warning,
   XCircle,
 } from '@phosphor-icons/react';
 import { useEffect, useMemo, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Pill } from '@/components/ui/pill';
 import { groupName, groupOrder } from './status/status-groups';
 import { StatusFleet } from './status/StatusFleet';
@@ -172,45 +170,6 @@ export function StatusGrid({ fallback, children }: { fallback: StatusPayload; ch
 
       <section className="srv-status-v2-body">
         <div className="sr-container srv-status-v2-console">
-          <div className="srv-status-v2-metrics">
-            <Card className="srv-status-v2-metric">
-              <CardHeader>
-                <span className="srv-status-v2-metric-icon"><CheckCircle size={18} weight="fill" /></span>
-                <CardTitle>Operational</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <strong>
-                  {summary.operational}
-                  /
-                  {payload.monitors.length}
-                </strong>
-                <span>monitored services</span>
-              </CardContent>
-            </Card>
-
-            <Card className="srv-status-v2-metric">
-              <CardHeader>
-                <span className="srv-status-v2-metric-icon"><Pulse size={18} weight="fill" /></span>
-                <CardTitle>90-day average</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <strong>{summary.average === null ? '—' : `${summary.average.toFixed(3)}%`}</strong>
-                <span>across reported monitors</span>
-              </CardContent>
-            </Card>
-
-            <Card className="srv-status-v2-metric">
-              <CardHeader>
-                <span className="srv-status-v2-metric-icon"><ClockCountdown size={18} weight="fill" /></span>
-                <CardTitle>Data source</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <strong>{live ? 'Live' : 'Snapshot'}</strong>
-                <span>{live ? 'public feed connected' : 'safe fallback active'}</span>
-              </CardContent>
-            </Card>
-          </div>
-
           <Card className="srv-status-v2-table-card">
             <table className="srv-status-v2-table">
               <caption>Service details</caption>
