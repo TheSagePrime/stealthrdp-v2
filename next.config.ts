@@ -7,10 +7,11 @@ import { isProductionDeployEnv, resolveDeployEnv } from './src/libs/seo/env';
 import './src/libs/Env';
 
 /* Hosts that the tags in the server-side GTM container (sgtm.stealthrdp.com) load:
-   Google Ads conversion and remarketing, the Meta pixel and the Yandex verification template.
+   Google Ads conversion and remarketing, the Meta pixel (with its Conversions API parameter
+   builder) and the Yandex verification template.
    The Google list follows developers.google.com/tag-platform/security/guides/csp. */
 const tagHosts = {
-  script: 'https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://connect.facebook.net https://cdn.jsdelivr.net/gh/yandex/',
+  script: 'https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://connect.facebook.net https://capi-automation.s3.us-east-2.amazonaws.com/public/client_js/ https://cdn.jsdelivr.net/gh/yandex/',
   connect: 'https://analytics.google.com https://*.g.doubleclick.net https://ad.doubleclick.net https://www.google.com https://www.googleadservices.com https://*.googletagmanager.com https://www.facebook.com https://connect.facebook.net',
   frame: 'https://sgtm.stealthrdp.com https://td.doubleclick.net https://www.googletagmanager.com',
 };
