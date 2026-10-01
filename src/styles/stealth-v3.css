@@ -6260,7 +6260,8 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 }
 
 .srv-page-os .sr-os-hero-grid {
-  gap: clamp(46px, 7vw, 88px);
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(32px, 4vw, 56px);
 }
 
 .srv-page-os .srv3-os-visual {
