@@ -926,3 +926,10 @@
 .sr-docs-collection {
   scroll-margin-top: 96px;
 }
+
+.sr-res-support-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
