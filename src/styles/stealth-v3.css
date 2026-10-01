@@ -6359,3 +6359,153 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
     display: inline;
   }
 }
+
+/* ==========================================================================
+   Compact plan cards on phones (owner-approved, Oct 2026).
+   Plans, Windows and Linux pages: name and price on one row, the billing note
+   under it, the four specs as a 2 x 2 grid, Order Now, then OS and stock on
+   one line. Homepage phone card: tighter spacing, three specs in one row.
+   Last in the file so it wins over the earlier mobile overrides.
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .srv-page-plans .sr-pick-cards,
+  .srv-page-os .sr-pick-cards {
+    gap: 10px !important;
+  }
+
+  .srv-page-plans .sr-pick-card,
+  .srv-page-os .sr-pick-card {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    grid-template-areas:
+      'head amount'
+      'period period'
+      'specs specs'
+      'action action'
+      'os stock' !important;
+    align-items: center;
+    gap: 10px 12px !important;
+    min-height: 0 !important;
+    padding: 14px 16px !important;
+  }
+
+  .srv-page-plans .sr-pick-card-head,
+  .srv-page-os .sr-pick-card-head {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 0;
+    row-gap: 4px;
+  }
+
+  .srv-page-plans .sr-pick-card-name,
+  .srv-page-os .sr-pick-card-name {
+    white-space: nowrap;
+  }
+
+  .srv-page-plans .sr-pick-card-was,
+  .srv-page-os .sr-pick-card-was {
+    display: block;
+    text-align: right;
+  }
+
+  .srv-page-plans .sr-pick-card-price,
+  .srv-page-os .sr-pick-card-price {
+    display: contents;
+  }
+
+  .srv-page-plans .sr-pick-card-amount,
+  .srv-page-os .sr-pick-card-amount {
+    grid-area: amount;
+    font-size: 1.375rem;
+    text-align: right;
+  }
+
+  .srv-page-plans .sr-pick-card-period,
+  .srv-page-os .sr-pick-card-period {
+    grid-area: period;
+    margin-top: -6px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-divider);
+  }
+
+  .srv-page-plans .sr-pick-specs,
+  .srv-page-os .sr-pick-specs {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px 12px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+  }
+
+  .srv-page-plans .sr-pick-spec,
+  .srv-page-os .sr-pick-spec {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 1px;
+    min-height: 0;
+    border-bottom: 0;
+    font-size: 0.875rem;
+  }
+
+  .srv-page-plans .sr-pick-spec dt,
+  .srv-page-os .sr-pick-spec dt {
+    font-size: 0.6875rem;
+  }
+
+  .srv-page-plans .sr-pick-spec dd,
+  .srv-page-os .sr-pick-spec dd {
+    text-align: left;
+  }
+
+  .srv-page-plans .sr-pick-card-action,
+  .srv-page-os .sr-pick-card-action {
+    margin: 0;
+  }
+
+  .srv-page-plans .sr-pick-card-os,
+  .srv-page-os .sr-pick-card-os {
+    margin: 0;
+  }
+
+  .srv-page-plans .sr-pick-stock,
+  .srv-page-os .sr-pick-stock {
+    margin: 0;
+    text-align: right;
+  }
+
+  .srv-mobile-plan-card {
+    padding: 14px 16px;
+  }
+
+  .srv-mobile-plan-price {
+    margin-top: 10px;
+  }
+
+  .srv-mobile-plan-price strong {
+    font-size: 1.625rem;
+  }
+
+  .srv-mobile-plan-specs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 12px;
+  }
+
+  .srv-mobile-plan-specs > div {
+    padding: 8px;
+  }
+
+  .srv-mobile-plan-specs > div:last-child {
+    grid-column: auto;
+  }
+
+  .srv-mobile-plan-more {
+    margin-top: 10px;
+    padding-top: 8px;
+  }
+
+  .srv-mobile-plan-cta {
+    margin-top: 12px;
+  }
+}
