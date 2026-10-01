@@ -70,10 +70,10 @@ function cubicLength(p0: Point, p1: Point, p2: Point, p3: Point) {
  */
 const layouts = {
   wide: {
-    viewBox: '0 0 640 470',
-    core: [352, 222] as Point,
+    viewBox: '0 0 680 470',
+    core: [362, 222] as Point,
     radius: 56,
-    origin: [526, 222] as Point,
+    origin: [522, 222] as Point,
     source: (index: number): Point => [150, [56, 164, 280, 388][index]!],
   },
   tall: {
@@ -301,7 +301,7 @@ function Scene({ name, prefix }: { name: LayoutName; prefix: string }) {
           return (
             <g key={lane.name}>
               <Ripple lane={lane} at={shape.coreAt} center={core} from={radius} to={radius + 30} tone="pass" />
-              <Ripple lane={lane} at={PASS_TRAVEL} center={origin} from={4} to={22} tone="pass" />
+              <Ripple lane={lane} at={PASS_TRAVEL} center={wide ? [origin[0] + 23, origin[1]] : [origin[0], origin[1] + 22]} from={15} to={30} tone="pass" />
             </g>
           );
         }
@@ -386,15 +386,28 @@ function Scene({ name, prefix }: { name: LayoutName; prefix: string }) {
             );
       })}
 
-      {/* Origin */}
-      <g transform={wide ? `translate(${origin[0]} ${origin[1] - 44})` : `translate(${origin[0] - 66} ${origin[1]})`}>
-        <rect width={wide ? 112 : 132} height="88" rx="18" className={styles.origin} />
-        <rect x="14" y="14" width="30" height="30" rx="9" className={styles.originTile} />
-        <Browser x={20} y={20} size={18} weight="duotone" className={styles.originIcon} />
-        <text x="14" y="62" className={styles.name}>Your origin</text>
-        <circle cx="18" cy="75" r="3.5" className={styles.okDot} />
-        <text x="27" y="79" className={styles.note}>Clean only</text>
-      </g>
+      {/* Origin: mirrors the sources; the beam lands on its icon. */}
+      {wide
+        ? (
+            <g transform={`translate(${origin[0]} ${origin[1]})`}>
+              <rect x="0" y="-23" width="150" height="46" rx="23" className={styles.origin} />
+              <circle cx="23" cy="0" r="15" className={styles.originTile} />
+              <Browser x={14} y={-9} size={18} weight="duotone" className={styles.originIcon} />
+              <text x="46" y="-3" className={styles.name}>Your origin</text>
+              <circle cx="50" cy="10" r="3" className={styles.okDot} />
+              <text x="58" y="14" className={styles.note}>Clean traffic</text>
+            </g>
+          )
+        : (
+            <g transform={`translate(${origin[0]} ${origin[1] + 22})`}>
+              <circle r="22" className={styles.origin} />
+              <circle r="15" className={styles.originTile} />
+              <Browser x={-9} y={-9} size={18} weight="duotone" className={styles.originIcon} />
+              <text y="44" textAnchor="middle" className={styles.name}>Your origin</text>
+              <circle cx="-38" cy="56" r="3" className={styles.okDot} />
+              <text x="-30" y="60" className={styles.note}>Clean traffic</text>
+            </g>
+          )}
     </svg>
   );
 }
