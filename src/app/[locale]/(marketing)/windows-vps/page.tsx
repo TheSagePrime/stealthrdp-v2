@@ -2,11 +2,14 @@
 import type { Metadata } from 'next';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
+import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { OsFaq, OsJourney, OsRegions, OsResources, OsSupport, WindowsVersions } from '@/components/site/os/OsSections';
 import { OsSession } from '@/components/site/os/OsSession';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
 import { Button } from '@/components/ui/button';
 import { getPlans } from '@/lib/stealth/live-plans';
+import { osPageJsonLd } from '@/lib/stealth/structured-data';
+import { getSeoConfig } from '@/libs/seo/config';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
@@ -38,6 +41,16 @@ export default async function WindowsVpsPage() {
 
   return (
     <div className="srv-page srv-page-os srv-page-windows">
+      <ProductionJsonLd
+        data={osPageJsonLd({
+          siteUrl: getSeoConfig().siteUrl,
+          path: '/windows-vps',
+          name: 'Windows VPS hosting',
+          description: 'Windows VPS hosting with full Administrator access, Windows Server 2019, 2022 and 2025, NVMe storage, and USA or EU regions.',
+          plans,
+          questions,
+        })}
+      />
       <section className="sr-page-hero sr-os-page-hero">
         <div className="sr-container sr-os-hero-grid">
           <div>

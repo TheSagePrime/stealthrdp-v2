@@ -42,6 +42,7 @@ export default async function AboutPage() {
             <p className="sr-kicker">Who we are</p>
             <h1 className="sr-title">
               Built for people who need servers that
+              {' '}
               <span>just work.</span>
             </h1>
             <p className="sr-lede">

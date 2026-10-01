@@ -2,11 +2,14 @@
 import type { Metadata } from 'next';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
+import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { LinuxDistros, OsFaq, OsJourney, OsRegions, OsResources, OsSupport } from '@/components/site/os/OsSections';
 import { OsSession } from '@/components/site/os/OsSession';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
 import { Button } from '@/components/ui/button';
 import { getPlans } from '@/lib/stealth/live-plans';
+import { osPageJsonLd } from '@/lib/stealth/structured-data';
+import { getSeoConfig } from '@/libs/seo/config';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
@@ -52,6 +55,16 @@ export default async function LinuxVpsPage() {
 
   return (
     <div className="srv-page srv-page-os srv-page-linux">
+      <ProductionJsonLd
+        data={osPageJsonLd({
+          siteUrl: getSeoConfig().siteUrl,
+          path: '/linux-vps',
+          name: 'Linux VPS hosting',
+          description: 'Linux VPS hosting with full Root access, a wide choice of distributions, NVMe storage, and USA or EU regions.',
+          plans,
+          questions: liveQuestions,
+        })}
+      />
       <section className="sr-page-hero sr-os-page-hero">
         <div className="sr-container sr-os-hero-grid">
           <div>
