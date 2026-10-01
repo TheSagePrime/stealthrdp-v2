@@ -1,0 +1,453 @@
+.card {
+  --edge: var(--citadel-ink);
+  --blocked: var(--status-bad);
+  --proxy: var(--primary);
+
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--citadel-border);
+  border-radius: var(--radius-lg);
+  background: var(--citadel-surface);
+  box-shadow: 0 24px 60px -34px color-mix(in srgb, var(--citadel-ink) 28%, transparent);
+  color: var(--citadel-ink);
+}
+
+.head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  border-bottom: 1px solid var(--citadel-border);
+  padding: 18px 24px;
+}
+
+.head > div {
+  display: grid;
+  gap: 2px;
+}
+
+.head strong {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.head > div span {
+  color: var(--citadel-muted);
+  font-size: 0.8125rem;
+}
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 0;
+  padding: 0;
+  color: var(--citadel-muted);
+  font-size: 0.8125rem;
+  list-style: none;
+}
+
+.legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.legend li::before {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  content: '';
+}
+
+.legend li[data-series='edge']::before {
+  height: 2px;
+  border-radius: 0;
+  background: var(--edge);
+}
+
+.legend li[data-series='blocked']::before {
+  background: color-mix(in srgb, var(--blocked) 30%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--blocked) 45%, transparent);
+}
+
+.legend li[data-series='proxy']::before {
+  background: var(--proxy);
+}
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 260px;
+}
+
+.charts {
+  position: relative;
+  padding: 44px 24px 34px 24px;
+}
+
+/* Event labels above the plot, each anchored to its marker line. */
+.events {
+  position: absolute;
+  inset: 14px 24px auto;
+  height: 22px;
+}
+
+.events span {
+  position: absolute;
+  top: 0;
+  max-width: 150px;
+  overflow: hidden;
+  border-left: 2px solid var(--primary);
+  padding-left: 6px;
+  color: var(--citadel-ink);
+  font-size: 0.6875rem;
+  font-weight: 650;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.events span:nth-child(1) {
+  border-left-color: var(--status-bad);
+}
+
+.events span:nth-child(3) {
+  transform: translateX(-100%);
+  border-right: 2px solid var(--status-bad);
+  border-left: 0;
+  padding-right: 6px;
+  padding-left: 0;
+  text-align: right;
+}
+
+.events span:nth-child(2),
+.events span:nth-child(4) {
+  top: 13px;
+}
+
+.plot {
+  position: relative;
+  display: grid;
+  gap: 18px;
+  cursor: crosshair;
+  touch-action: pan-y;
+}
+
+.panel {
+  position: relative;
+  border-bottom: 1px solid var(--citadel-border);
+  background-image: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--citadel-border) 70%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 100% 50%;
+}
+
+.panel[data-panel='edge'] {
+  height: 220px;
+}
+
+.panel[data-panel='origin'] {
+  height: 96px;
+}
+
+.panel svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.panelLabel {
+  position: absolute;
+  z-index: 1;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--citadel-surface) 88%, transparent);
+  padding: 1px 6px;
+  bottom: calc(100% + 4px);
+  left: 0;
+  color: var(--citadel-muted);
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+
+.panel[data-panel='edge'] .panelLabel {
+  bottom: auto;
+  top: 8px;
+  left: 8px;
+}
+
+.panel[data-panel='origin'] .panelLabel {
+  bottom: auto;
+  top: 6px;
+  left: 8px;
+}
+
+.axis {
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  transform: translateY(-50%);
+  border-radius: 999px;
+  background: var(--citadel-surface);
+  padding: 0 5px;
+  color: var(--citadel-muted);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+}
+
+.axis[data-at='top'] {
+  top: 0;
+}
+
+.axis[data-at='mid'] {
+  top: 50%;
+}
+
+.blockedFill {
+  fill: color-mix(in srgb, var(--blocked) 16%, transparent);
+}
+
+.proxyFill {
+  fill: color-mix(in srgb, var(--proxy) 22%, transparent);
+}
+
+.edgeLine,
+.proxyLine {
+  fill: none;
+  stroke-linejoin: round;
+  stroke-width: 1.75;
+  vector-effect: non-scaling-stroke;
+}
+
+.edgeLine {
+  stroke: var(--edge);
+}
+
+.proxyLine {
+  stroke: var(--proxy);
+}
+
+.marker,
+.crosshair {
+  position: absolute;
+  z-index: 1;
+  top: -6px;
+  bottom: 0;
+  width: 0;
+  border-left: 1px dashed color-mix(in srgb, var(--citadel-muted) 55%, transparent);
+  pointer-events: none;
+}
+
+.crosshair {
+  z-index: 2;
+  border-left: 1px solid var(--citadel-ink);
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 3;
+  top: 34px;
+  display: grid;
+  min-width: 148px;
+  gap: 3px;
+  transform: translateX(10px);
+  border: 1px solid var(--citadel-border);
+  border-radius: var(--radius-sm);
+  background: var(--citadel-surface);
+  padding: 10px 12px;
+  box-shadow: 0 14px 30px -14px color-mix(in srgb, var(--citadel-ink) 35%, transparent);
+  font-size: 0.75rem;
+  pointer-events: none;
+}
+
+.tooltip[data-flip] {
+  transform: translateX(calc(-100% - 10px));
+}
+
+.tooltip strong {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.tooltip span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--citadel-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.tooltip span::before {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  content: '';
+}
+
+.tooltip span[data-series='edge']::before {
+  background: var(--edge);
+}
+
+.tooltip span[data-series='blocked']::before {
+  background: color-mix(in srgb, var(--blocked) 45%, transparent);
+}
+
+.tooltip span[data-series='proxy']::before {
+  background: var(--proxy);
+}
+
+.ticks {
+  position: relative;
+  height: 16px;
+  margin-top: 8px;
+}
+
+.ticks span {
+  position: absolute;
+  transform: translateX(-50%);
+  color: var(--citadel-muted);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+}
+
+.ticks span:first-child {
+  transform: none;
+}
+
+.ticks span:last-child {
+  transform: translateX(-100%);
+}
+
+/* Derived stats ------------------------------------------------------------ */
+
+.stats {
+  display: grid;
+  margin: 0;
+  border-left: 1px solid var(--citadel-border);
+  background: var(--citadel-canvas);
+}
+
+.stats > div {
+  display: grid;
+  align-content: center;
+  gap: 4px;
+  border-top: 1px solid var(--citadel-border);
+  padding: 18px 24px;
+}
+
+.stats > div:first-child {
+  border-top: 0;
+}
+
+.stats dt {
+  color: var(--citadel-muted);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+}
+
+.stats dd {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.stats > div:nth-child(2) dd,
+.stats > div:nth-child(4) dd {
+  color: var(--primary);
+}
+
+.stats small {
+  color: var(--citadel-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.caption {
+  border-top: 1px solid var(--citadel-border);
+  padding: 12px 24px;
+  color: var(--citadel-muted);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 1040px) {
+  .body {
+    grid-template-columns: 1fr;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-top: 1px solid var(--citadel-border);
+    border-left: 0;
+  }
+
+  .stats > div {
+    border-top: 0;
+    border-left: 1px solid var(--citadel-border);
+  }
+
+  .stats > div:nth-child(odd) {
+    border-left: 0;
+  }
+
+  .stats > div:nth-child(n + 3) {
+    border-top: 1px solid var(--citadel-border);
+  }
+}
+
+@media (max-width: 640px) {
+  .head,
+  .caption {
+    padding-inline: 16px;
+  }
+
+  .charts {
+    padding: 52px 16px 30px;
+  }
+
+  .events {
+    inset-inline: 16px;
+  }
+
+  .events span:nth-child(2),
+  .events span:nth-child(4) {
+    display: none;
+  }
+
+  .events span:nth-child(3) {
+    top: 13px;
+  }
+
+  .events span {
+    max-width: 120px;
+  }
+
+  .panel[data-panel='edge'] {
+    height: 170px;
+  }
+
+  .ticks span:nth-child(even) {
+    display: none;
+  }
+
+  .stats > div {
+    padding: 14px 16px;
+  }
+
+  .stats dd {
+    font-size: 1.5rem;
+  }
+}

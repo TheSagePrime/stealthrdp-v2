@@ -17,7 +17,6 @@ const config: KnipConfig = {
     'src/utils/Helpers.ts',
     // Homepage and motion components kept from earlier redesigns. Not routed now.
     'src/components/launchui/*.tsx',
-    'src/components/site/CitadelMotionScene.tsx',
     'src/components/site/HelpSidebar.tsx',
     'src/components/site/VpsMotionShowcase.tsx',
     'src/components/site/home/*.tsx',
