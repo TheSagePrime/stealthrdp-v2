@@ -33,7 +33,7 @@ const included = [
   { title: 'Full admin access', text: 'Control your server from day one' },
   { title: 'NVMe SSD storage', text: 'Fast disk for everyday workloads' },
   { title: 'Isolated VMs', text: 'Separate virtual machines per server' },
-  { title: 'Fast activation', text: 'Typically within 5 minutes of payment' },
+  { title: 'Fast activation', text: 'Typically within 60 seconds of payment' },
   { title: '24/7 support', text: 'Help when you need it' },
 ];
 

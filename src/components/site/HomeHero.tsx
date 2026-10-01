@@ -86,7 +86,7 @@ export function HomeHero({ from }: { from: number }) {
             <span>Live in 60 seconds.</span>
           </h1>
           <p className={styles.lede}>
-            {`High-performance ${mode === 'windows' ? 'remote desktop' : 'Linux server'} infrastructure without the complexity. Enterprise hardware, full administrative access, and a 99.9% uptime SLA.`}
+            {`High-performance ${mode === 'windows' ? 'remote desktop' : 'Linux server'} infrastructure without the complexity. Enterprise hardware, full administrative access, and 24/7 uptime monitoring.`}
           </p>
           <div className={styles.actions}>
             <Link className={styles.primaryButton} href="#plans">

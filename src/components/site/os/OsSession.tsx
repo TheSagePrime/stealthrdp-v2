@@ -27,7 +27,7 @@ const content: Record<Kind, { client: string; session: string; access: string; i
       { label: 'Windows Server 2022', logo: '/brand/windows.svg' },
       { label: 'Windows Server 2025', logo: '/brand/windows.svg' },
     ],
-    facts: ['Typically live in 5 min', 'Dedicated IPv4', 'Unlimited bandwidth'],
+    facts: ['Live in about 60 seconds', 'Dedicated IPv4', 'Unlimited bandwidth'],
   },
   linux: {
     client: 'SSH client',
@@ -40,7 +40,7 @@ const content: Record<Kind, { client: string; session: string; access: string; i
       { label: 'Fedora 44', logo: '/brand/fedora.svg' },
       { label: 'CentOS Stream 9', logo: '/brand/centos.svg' },
     ],
-    facts: ['Typically live in 5 min', 'Dedicated IPv4', 'Unlimited bandwidth'],
+    facts: ['Live in about 60 seconds', 'Dedicated IPv4', 'Unlimited bandwidth'],
   },
   plans: {
     client: 'Remote Desktop',
@@ -50,7 +50,7 @@ const content: Record<Kind, { client: string; session: string; access: string; i
       { label: 'Windows Server', logo: '/brand/windows.svg' },
       { label: 'Linux', logo: '/brand/linux.svg', client: 'SSH client', session: 'SSH session', access: 'root' },
     ],
-    facts: ['Typically live in 5 min', 'Dedicated IPv4', 'Unlimited bandwidth'],
+    facts: ['Live in about 60 seconds', 'Dedicated IPv4', 'Unlimited bandwidth'],
   },
 };
 

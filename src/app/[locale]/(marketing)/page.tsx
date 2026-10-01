@@ -411,12 +411,26 @@ export default async function HomePage({ params }: Props) {
                 <strong>{testimonials[0]?.authorName}</strong>
                 <span>{testimonials[0]?.authorCompany || 'StealthRDP customer'}</span>
               </div>
-              <span
-                className="srv-review-source"
-                data-source={reviewSource(testimonials[0]!).toLowerCase().replaceAll(' ', '-')}
-              >
-                {reviewSource(testimonials[0]!)}
-              </span>
+              {testimonials[0]?.sourceUrl
+                ? (
+                    <a
+                      className="srv-review-source"
+                      href={testimonials[0].sourceUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      data-source={reviewSource(testimonials[0]).toLowerCase().replaceAll(' ', '-')}
+                    >
+                      {`View on ${reviewSource(testimonials[0])}`}
+                    </a>
+                  )
+                : (
+                    <span
+                      className="srv-review-source"
+                      data-source={reviewSource(testimonials[0]!).toLowerCase().replaceAll(' ', '-')}
+                    >
+                      {reviewSource(testimonials[0]!)}
+                    </span>
+                  )}
             </div>
           </div>
 
