@@ -2736,7 +2736,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   position: relative;
   min-height: 36px;
   border: 0;
-  border-radius: 9px;
+  border-radius: var(--radius-sm);
   background: transparent;
   padding: 0 13px;
   color: var(--muted-foreground);
@@ -3542,7 +3542,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   .srv-product-node:first-child,
   .srv-product-node:last-child {
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: var(--radius-lg);
   }
 
   .srv-product-node {
@@ -5142,7 +5142,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   display: grid;
   gap: 2px;
   padding: 9px 10px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   color: var(--text-dim);
 }
 
@@ -5195,7 +5195,7 @@ a.srv-help-tree-heading:hover {
   min-height: 32px;
   padding: 7px 9px;
   border-left: 2px solid transparent;
-  border-radius: 0 7px 7px 0;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   color: var(--text-dim);
   font-size: 0.75rem;
   line-height: 1.4;
@@ -5266,7 +5266,7 @@ a.srv-help-tree-heading:hover {
   width: fit-content;
   min-width: 0;
   border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
-  border-radius: 13px;
+  border-radius: var(--radius-md);
   background: color-mix(in srgb, var(--card) 80%, var(--background));
   padding: 4px;
   box-shadow:
@@ -5279,7 +5279,7 @@ a.srv-help-tree-heading:hover {
   width: fit-content !important;
   min-height: 0 !important;
   border: 0;
-  border-radius: 9px;
+  border-radius: var(--radius-sm);
   background: transparent;
   padding: 0;
   box-shadow: none;
@@ -5432,7 +5432,7 @@ a.srv-help-tree-heading:hover {
 .srv-help-tree-home > a {
   gap: 4px;
   padding: 11px 12px;
-  border-radius: 9px;
+  border-radius: var(--radius-sm);
 }
 
 .srv-help-tree-home > a strong {
@@ -5639,7 +5639,7 @@ a.srv-help-tree-heading:hover {
   width: 30px;
   height: 30px;
   place-items: center;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   background: color-mix(in srgb, var(--primary) 7%, transparent);
   color: var(--primary);
 }
@@ -5696,7 +5696,7 @@ a.srv-help-tree-heading:hover {
   display: inline-flex;
   align-items: center;
   border: 1px solid var(--border-divider);
-  border-radius: 9px;
+  border-radius: var(--radius-sm);
   padding: 0 12px;
   color: var(--text);
   font-size: 0.75rem;
@@ -5938,7 +5938,7 @@ a.srv-help-tree-heading:hover {
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 42px;
   align-items: center;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   background:
     radial-gradient(circle at 90% 10%, color-mix(in srgb, var(--primary) 12%, transparent), transparent 18rem),
     var(--surface-1);
@@ -6889,7 +6889,7 @@ a.srv-help-tree-heading:hover {
     height: 36px !important;
     min-width: 36px !important;
     min-height: 36px !important;
-    border-radius: 9px !important;
+    border-radius: var(--radius-sm) !important;
   }
 
   /* Desktop columns are replaced with collapsed mobile groups. */
@@ -7116,7 +7116,7 @@ a.srv-help-tree-heading:hover {
   min-height: 42px !important;
   gap: 8px !important;
   border: 1px solid color-mix(in srgb, var(--sr-raw-20314c) 13%, transparent) !important;
-  border-radius: 13px !important;
+  border-radius: var(--radius-md) !important;
   background: color-mix(in srgb, var(--sr-raw-ffffff) 94%, transparent) !important;
   padding: 0 12px !important;
   color: var(--sr-raw-20314c) !important;
