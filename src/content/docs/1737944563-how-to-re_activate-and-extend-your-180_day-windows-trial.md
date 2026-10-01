@@ -1,6 +1,6 @@
 ---
 order: 1
-title: How to Extend the Windows Server 180-Day Evaluation Period
+title: 'Windows Server Rearm: Extend the Evaluation'
 category: Windows
 date: Jan 28, 2025
 sourceTitle: How to Re-activate and Extend Your 180-Day Windows Trial
@@ -10,15 +10,14 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: Rearm the Windows Server evaluation period with slmgr -rearm, then check remaining time with slmgr -dlv.
+summary: Use slmgr /rearm to reset the Windows Server 180-day evaluation, check the rearm count with slmgr /dlv, and see what happens when it expires.
 relatedSlugs: []
 ---
-How to Extend the Windows Server 180-Day Evaluation Period
+Windows Server Rearm: Extend the Evaluation
 
-How to Extend the Windows Server 180-Day Evaluation Period
-===========================================================
+Last updated on Oct 1, 2026
 
-Last updated on Jan 28, 2025
+Windows Server evaluation editions run for 180 days. You can reset that timer with the `slmgr -rearm` command a limited number of times. This guide shows the commands, how to check the rearm count, and what happens when the evaluation expires.
 
 ## Step 1: Open PowerShell as Administrator
 
@@ -37,6 +36,8 @@ Once PowerShell is open with administrative privileges, enter the following comm
 slmgr -rearm
 ```
 
+`slmgr /rearm` is the same command. Windows accepts both the dash and the slash form.
+
 This command resets the 180-day evaluation timer where Microsoft permits rearming on the installed Evaluation edition.
 
 Note: Rearming resets the evaluation activation timer where supported by Microsoft. It does not convert an Evaluation edition into a licensed production edition.
@@ -54,6 +55,17 @@ slmgr -dlv
 ```
 
 This command displays detailed evaluation status, including the number of re-arms remaining and how much time is left on the evaluation period.
+
+In the output, read two lines:
+
+- **Remaining Windows rearm count** shows how many more times you can run `slmgr -rearm`. When it reaches 0, the evaluation cannot be extended again.
+- **Timebased activation expiration** shows how much evaluation time is left.
+
+## What happens when the Windows Server evaluation expires?
+
+When the evaluation period ends and no rearm is left, Windows Server shows activation warnings and the server can stop on its own. If your server stops at random times, check the evaluation status first with `slmgr -dlv`. The [server stops randomly](/docs/server-stops-randomly) article covers this case.
+
+To keep a server in production, use an appropriate Microsoft licence instead of rearming. See [Windows licensing](/docs/windows-licensing).
 
 ## Step 5: Optional — Activate only with a valid license key
 
