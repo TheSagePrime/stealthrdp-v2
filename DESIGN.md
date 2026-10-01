@@ -1,6 +1,7 @@
 # StealthRDP Visual Direction
 
-Status: canonical visual source of truth
+Status: canonical visual source of truth. Exact colours, type, spacing, radii, shadows and
+component patterns: `DESIGN_TOKENS.md`.
 Applies to: public StealthRDP website
 
 References:
@@ -60,7 +61,7 @@ Homepage order (current, `src/app/[locale]/(marketing)/page.tsx`):
 - Content max width: 1240px.
 - Desktop gutter: 32px minimum.
 - Tablet gutter: 20px. Mobile gutter: 16px. (`.sr-container` in `stealth-v3.css`.)
-- Marketing section rhythm: 72–112px depending on viewport.
+- Marketing section rhythm: about 48–104px depending on viewport (exact values in `DESIGN_TOKENS.md`).
 - Reading width: approximately 680–760px.
 - Hero text must dominate its visual.
 - Use asymmetry selectively to create hierarchy.
@@ -69,7 +70,8 @@ Homepage order (current, `src/app/[locale]/(marketing)/page.tsx`):
 ## Components
 
 Use shadcn/ui + Radix as the canonical interactive foundation.
-Use Lucide for interface icons.
+Use Phosphor for interface and feature icons, Simple Icons or the vendor SVG for brand marks.
+Lucide is legacy: do not use it for new work (`stack.contract.json`).
 Build custom StealthRDP marketing components for hero, plans, infrastructure, locations, trust and conversion surfaces.
 
 Do not add another general-purpose UI kit.

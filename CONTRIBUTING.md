@@ -151,7 +151,7 @@ Use permanent (308) redirects. Never redirect to a page that redirects again.
 
 ## 11. Change the look of something
 
-1. Read [DESIGN.md](DESIGN.md) and [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md).
+1. Read [DESIGN.md](DESIGN.md), [DESIGN_TOKENS.md](DESIGN_TOKENS.md) and [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md).
 2. Use tokens from `src/styles/global.css` (colours, radii, type sizes). No hard-coded colours outside
    that file — the design contract check fails on them.
 3. Component styles go in a CSS module next to the component (`Thing.module.css`). Shared marketing

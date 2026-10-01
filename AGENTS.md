@@ -9,7 +9,8 @@ by a person or an AI agent. When a rule here and your own habit disagree, the ru
 2. [CONTRIBUTING.md](CONTRIBUTING.md) — the recipe for your change.
 3. [PRODUCT_FACTS.md](PRODUCT_FACTS.md) — before you write any claim about the product.
 4. [ARCHITECTURE.md](ARCHITECTURE.md) — before you touch routing, data, SEO or deployment.
-5. [DESIGN.md](DESIGN.md) and [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md) — before you change how anything looks.
+5. [DESIGN.md](DESIGN.md), [DESIGN_TOKENS.md](DESIGN_TOKENS.md) and [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md) — before you
+   change how anything looks.
 6. [SECURITY.md](SECURITY.md) — before you touch headers, CSP, tracking, secrets or APIs.
 7. The contracts `stack.contract.json`, `design.contract.json`, `security.contract.json`.
 

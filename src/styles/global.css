@@ -172,8 +172,8 @@
 }
 
 /* ==========================================================================
-   :root — light counterpart. The public site renders dark (.dark on <html>);
-   this block keeps the shadcn visual contract honest in light mode.
+   :root — the live palette. The public site renders light only (colorScheme 'light');
+   the .dark block below is kept for primitives. Reference: DESIGN_TOKENS.md.
    ========================================================================== */
 
 :root {

@@ -14,7 +14,7 @@ and tickets stay in WHMCS at `dash.stealthrdp.com`.
 | Add or edit a page, guide, help article, FAQ, plan or redirect | [CONTRIBUTING.md](CONTRIBUTING.md) — step-by-step recipes |
 | Write a claim about the product (price, speed, refund, support…) | [PRODUCT_FACTS.md](PRODUCT_FACTS.md) — the only approved facts |
 | Understand how the site works | [ARCHITECTURE.md](ARCHITECTURE.md) |
-| Change how something looks | [DESIGN.md](DESIGN.md), then [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md) |
+| Change how something looks | [DESIGN.md](DESIGN.md) (direction), [DESIGN_TOKENS.md](DESIGN_TOKENS.md) (colours, type, spacing, components), [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md) (implementation rules) |
 | Touch headers, CSP, tracking, secrets | [SECURITY.md](SECURITY.md) |
 
 ## Environments

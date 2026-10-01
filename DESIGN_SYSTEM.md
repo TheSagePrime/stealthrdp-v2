@@ -8,7 +8,7 @@ Primary:
 - Tailwind CSS
 - shadcn/ui
 - Radix UI
-- Lucide
+- Phosphor icons (primary), Simple Icons for brand marks; Lucide is legacy
 - CVA
 
 Do not mix in MUI, Chakra, Ant Design, Bootstrap, React Icons, Font Awesome, or another full UI kit.
@@ -50,6 +50,8 @@ New component styles go in a CSS module. Use tokens (`var(--primary)`, `var(--ra
 literal colours. Plan-card styles are frozen (see `DESIGN.md`).
 
 ## Tokens
+
+The full token and pattern reference with values is `DESIGN_TOKENS.md`.
 
 All product colours use tokens from src/styles/global.css.
 Brand colour is allowed.
