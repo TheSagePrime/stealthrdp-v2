@@ -63,7 +63,7 @@ const layouts = {
     core: [362, 222] as Point,
     radius: 56,
     origin: [522, 222] as Point,
-    source: (index: number): Point => [150, [56, 164, 280, 388][index]!],
+    source: (index: number): Point => [160, [56, 164, 280, 388][index]!],
   },
   tall: {
     width: 360,
@@ -192,7 +192,7 @@ function useBeamCanvas(
 
     /* Colour by position along the flow axis. */
     const axis = wide ? 0 : 1;
-    const from = wide ? 150 : 108;
+    const from = wide ? 160 : 108;
     const to = origin[axis];
     const at = (value: number) => Math.min(1, Math.max(0, (value - from) / (to - from)));
     const gradient = () => (wide ? context.createLinearGradient(from, 0, to, 0) : context.createLinearGradient(0, from, 0, to));
@@ -554,7 +554,7 @@ function Scene({ name, prefix }: { name: LayoutName; prefix: string }) {
           return wide
             ? (
                 <g key={lane.name}>
-                  <rect x="0" y={sy - 23} width="150" height="46" rx="23" className={styles.pill} />
+                  <rect x="0" y={sy - 23} width="160" height="46" rx="23" className={styles.pill} />
                   <circle cx="23" cy={sy} r="15" className={styles.pillIcon} />
                   <LaneIcon x={14} y={sy - 9} size={18} weight="duotone" className={styles.icon} />
                   <text x="46" y={sy - 3} className={styles.name}>{lane.name}</text>
@@ -664,10 +664,7 @@ export function CitadelGate() {
       </div>
 
       <div className={styles.log}>
-        <div className={styles.logHead}>
-          <span>Decision log</span>
-          <span>Simulated requests</span>
-        </div>
+        <p className={styles.logHead}>Decision log</p>
         <ol aria-hidden="true">
           {rows.map(row => (
             <li key={row.key} data-tone={verdictTone[row.verdict]}>
@@ -680,7 +677,7 @@ export function CitadelGate() {
       </div>
 
       <figcaption id={`${prefix}-caption`} className={styles.caption}>
-        Illustration of how Citadel handles requests: visitors and search crawlers pass through Citadel to the
+        How Citadel handles requests: visitors and search crawlers pass through Citadel to the
         origin, a headless bot fails a JS challenge and is blocked with 403, and an HTTP flood is rate-limited with 429.
       </figcaption>
     </figure>

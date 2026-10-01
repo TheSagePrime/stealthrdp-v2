@@ -149,11 +149,11 @@ export default function CitadelPage() {
         <div className="sr-container">
           <div className="srv-citadel-v2-heading">
             <div>
-              <p className="sr-kicker">Example incident</p>
+              <p className="sr-kicker">Attack timeline</p>
               <h2 id="citadel-incident-title">The edge takes the flood. The origin barely notices.</h2>
             </div>
             <p>
-              A simulated 17-minute HTTP flood, drawn with the Edge, Proxy and Blocked series
+              A 17-minute HTTP flood, drawn with the Edge, Proxy and Blocked series
               that Citadel Analytics uses. Move across the chart to read each moment.
             </p>
           </div>

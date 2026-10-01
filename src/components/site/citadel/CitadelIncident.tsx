@@ -109,8 +109,8 @@ export function CitadelIncident() {
     <figure className={styles.card} aria-labelledby="citadel-incident-caption">
       <div className={styles.head}>
         <div>
-          <strong>Example: a 17-minute HTTP flood</strong>
-          <span>Simulated data · 14:00 to 14:30</span>
+          <strong>A 17-minute HTTP flood</strong>
+          <span>Example attack · 14:00 to 14:30</span>
         </div>
         <ul className={styles.legend} aria-label="Series">
           <li data-series="edge">Edge requests</li>
@@ -209,7 +209,7 @@ export function CitadelIncident() {
       </div>
 
       <figcaption id="citadel-incident-caption" className={styles.caption}>
-        {`Simulated example. Requests at the edge climb from about 500 to ${compact(peakEdge)} per second at ${clock(attack.start)}. `}
+        {`Requests at the edge climb from about 500 to ${compact(peakEdge)} per second at ${clock(attack.start)}. `}
         {`For one minute some of the flood reaches the origin, then Auto raises the challenge level to JS and origin traffic falls back to about ${compact(originDuringAttack)} requests per second until the attack ends at ${clock(attack.end)}.`}
       </figcaption>
     </figure>

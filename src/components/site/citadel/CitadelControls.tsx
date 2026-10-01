@@ -210,7 +210,7 @@ export function CitadelControls() {
             sensitive query values redacted.
           </p>
         </header>
-        <div className={styles.logs} role="table" aria-label="Example log rows">
+        <div className={styles.logs} role="table" aria-label="Request log rows">
           <div role="row">
             <span role="columnheader">Method</span>
             <span role="columnheader">Path</span>
