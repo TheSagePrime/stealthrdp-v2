@@ -37,7 +37,7 @@ const questions = [
   ['Can I run Ubuntu?', 'Yes. Ubuntu 18.04 LTS, 20.04 LTS, 22.04 LTS, 24.04 LTS, and 26.04 LTS.'],
   ['Do plans include Root?', 'Yes. The FAQ states that VPS plans include full Root access.'],
   ['Are USA and EU Linux plans available?', 'Yes. Both appear in the public catalog. Confirm the region at checkout.'],
-  ['When is it activated?', 'Typically within 5 minutes for standard installs. Most services within 5–10 minutes after payment confirmation.'],
+  ['When is it activated?', 'Most servers are live within 60 seconds of payment confirmation. At busy times it can take a few minutes.'],
   ['How do I get credentials?', 'By email after payment confirmation.'],
 ] as const;
 

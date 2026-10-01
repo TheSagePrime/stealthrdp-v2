@@ -40,7 +40,7 @@ export function OsJourney({ kind }: { kind: Kind }) {
     {
       title: 'Receive your credentials',
       text: 'StealthRDP sends them by email after payment confirmation.',
-      time: 'Typically within 5 minutes',
+      time: 'Typically within 60 seconds',
     },
     windows
       ? { title: 'Connect with Remote Desktop', text: 'Enter the server IP from the email and sign in as Administrator.', link: { href: '/docs/how-do-i-log-into-windows', label: 'How do I log into Windows?' } }
@@ -51,7 +51,7 @@ export function OsJourney({ kind }: { kind: Kind }) {
     <section className="sr-section sr-section-border" aria-labelledby={`${kind}-journey`}>
       <div className="sr-container">
         <Head kicker="From order to sign-in" title={windows ? 'Four steps from checkout to your Windows desktop' : 'Four steps from checkout to a root shell'} id={`${kind}-journey`}>
-          Standard installations are typically active within 5 minutes. Most services are active within 5–10 minutes after payment confirmation.
+          Most servers are live within 60 seconds of payment confirmation. At busy times it can take a few minutes.
         </Head>
         <ol className={styles.journey}>
           {steps.map((step, index) => (

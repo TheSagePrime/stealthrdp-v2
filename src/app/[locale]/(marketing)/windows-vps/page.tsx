@@ -23,7 +23,7 @@ const questions = [
   ['Do Windows VPS plans include Administrator access?', 'Yes. The FAQ states that VPS plans include full Administrator access.'],
   ['Which Windows versions are listed?', 'Windows Server 2019, 2022, and 2025.'],
   ['Is a Microsoft Windows licence included?', 'No. Any Microsoft licensing required for the intended use remains the customer’s responsibility. Windows Server Evaluation may be provided for evaluation/testing purposes and is Evaluation software, not a permanently licensed Windows installation. Customers may use their own eligible Microsoft licences where permitted by Microsoft’s applicable licensing terms. Customers are responsible for determining whether their licence is valid for their intended hosted deployment.'],
-  ['When will my Windows VPS be activated?', 'Standard installations are typically activated within 5 minutes. Most services are activated within 5–10 minutes after payment confirmation.'],
+  ['When will my Windows VPS be activated?', 'Most servers are live within 60 seconds of payment confirmation. At busy times it can take a few minutes.'],
   ['How will I receive my credentials?', 'StealthRDP sends service credentials by email after payment confirmation.'],
   ['How do I choose CPU, RAM, and storage?', 'Use your software requirements, user count, processing needs, and data size. Then use the plan comparison to compare the available configurations.'],
   ['Where can I get support?', 'Use WhatsApp support, the client-area ticketing system, or support email. The FAQ provides the current support details.'],

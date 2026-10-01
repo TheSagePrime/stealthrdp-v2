@@ -19,14 +19,14 @@ const reasons = [
   { title: 'Speed of deployment', text: 'Full server access within 60 seconds of purchase. No waiting, no manual provisioning.' },
   { title: 'Enterprise-grade hardware', text: 'NVMe storage and isolated VM instances.' },
   { title: 'Transparent operations', text: 'Live status page showing every production node, monitored 24/7.' },
-  { title: 'Support that answers', text: '24/7 technical assistance with an average response under 2 hours.' },
+  { title: 'Quick support', text: 'Quick 24/7 technical help on WhatsApp and through client-area tickets.' },
   { title: 'Flexible plans', text: 'USA and EU locations, monthly to biannual billing, and a build-your-own configurator.' },
 ];
 
 const proof = [
   { value: '10,000+', label: 'Orders' },
   { value: 'USA + EU', label: 'locations' },
-  { value: '99.9%', label: 'Uptime SLA' },
+  { value: '24/7', label: 'Uptime monitoring' },
 ];
 
 export const revalidate = 21600;
@@ -107,7 +107,7 @@ export default async function AboutPage() {
             <div>
               <h2 className="sr-section-title">Trusted at scale</h2>
             </div>
-            <p>10,000+ orders and counting for remote work, web hosting, trading infrastructure, and always-on automation. Every new server is backed by our 99.9% uptime SLA and a 7-day money-back guarantee.</p>
+            <p>10,000+ orders and counting for remote work, web hosting, trading infrastructure, and always-on automation. Every new server is monitored 24/7 on our public status page and comes with a 7-day money-back guarantee.</p>
           </div>
 
           <Card className="srv-about-stats-strip">
@@ -134,7 +134,7 @@ export default async function AboutPage() {
           <div>
             <p className="sr-kicker">Questions about our infrastructure?</p>
             <h2>Talk to our team.</h2>
-            <p>or message WhatsApp support — we respond within 2 hours, 24/7.</p>
+            <p>or message WhatsApp support for a quick reply, 24/7.</p>
           </div>
           <div className="sr-actions">
             <Button asChild size="lg">
