@@ -2,12 +2,17 @@
 'use client';
 
 import type { BillingCycle, Plan } from '@/lib/stealth/content';
-import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+/* Homepage pricing configurator: interaction/state here, visual language in stealth-v3.css. */
 import { useMemo, useState } from 'react';
-import { checkoutUrl } from '@/lib/stealth/content';
+import { PricingColumn } from '@/components/launchui/pricing-column';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import {
 
-/* Homepage plan list: the four entry plans of a region as an aligned spec table. */
+  checkoutUrl,
+
+} from '@/lib/stealth/content';
 
 const cycles: BillingCycle[] = ['monthly', 'quarterly', 'semiannual', 'annual', 'biannual'];
 
@@ -22,17 +27,20 @@ const months: Record<BillingCycle, number> = {
 const cycleLabel: Record<BillingCycle, string> = {
   monthly: 'Monthly',
   quarterly: 'Quarterly',
-  semiannual: '6 months',
+  semiannual: '6-month',
   annual: 'Annual',
-  biannual: '2 years',
+  biannual: '2-year',
 };
 
-const money = (value: number) => (Number.isInteger(value) ? String(value) : value.toFixed(2));
+const format = (value: number) => Number.isInteger(value) ? String(value) : value.toFixed(2);
+
+function tierName(plan: Plan) {
+  return plan.name.replace(/ USA| EU/g, '');
+}
 
 export function HomePricing({ plans }: { plans: Plan[] }) {
   const [region, setRegion] = useState<'USA' | 'EU'>('USA');
   const [cycle, setCycle] = useState<BillingCycle>('monthly');
-
   const visible = useMemo(() => (
     plans
       .filter(plan => plan.location === region)
@@ -40,91 +48,190 @@ export function HomePricing({ plans }: { plans: Plan[] }) {
       .slice(0, 4)
   ), [plans, region]);
 
-  /* One recommendation per region: the first plan flagged popular. */
-  const popular = visible.find(plan => plan.popular)?.name;
-
   return (
-    <div className="hm-plans">
-      <div className="hm-plans-controls">
-        <div className="hm-toggle" role="group" aria-label="Region">
-          {(['USA', 'EU'] as const).map(item => (
-            <button
-              key={item}
-              type="button"
-              aria-pressed={region === item}
-              onClick={() => setRegion(item)}
-            >
-              {item}
-            </button>
-          ))}
+    <div className="flex w-full flex-col gap-5">
+      <div className="srv-pricing-controls">
+        <div className="srv-pricing-control-card srv-pricing-region">
+          <div className="srv-selector" role="group" aria-label="Deployment region">
+            {(['USA', 'EU'] as const).map(item => (
+              <button
+                key={item}
+                type="button"
+                className="srv-selector-option"
+                data-selected={region === item}
+                aria-pressed={region === item}
+                onClick={() => setRegion(item)}
+              >
+                <span className="srv-selector-dot" aria-hidden="true" />
+                {item}
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="hm-toggle" role="group" aria-label="Billing cycle">
-          {cycles.map(item => (
-            <button
-              key={item}
-              type="button"
-              aria-pressed={cycle === item}
-              onClick={() => setCycle(item)}
-            >
-              {cycleLabel[item]}
-            </button>
-          ))}
+
+        <div className="srv-pricing-control-card srv-pricing-billing">
+          <div className="srv-billing-rail" role="group" aria-label="Billing cycle">
+            {cycles.map(item => (
+              <button
+                key={item}
+                type="button"
+                className="srv-billing-option"
+                data-selected={cycle === item}
+                aria-pressed={cycle === item}
+                onClick={() => setCycle(item)}
+              >
+                {cycleLabel[item]}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
-      <div className="hm-table" role="table" aria-label={`${region} VPS plans, ${cycleLabel[cycle].toLowerCase()} billing`}>
-        <div className="hm-row hm-row-head" role="row">
-          <span role="columnheader">Plan</span>
-          <span role="columnheader">CPU</span>
-          <span role="columnheader">RAM</span>
-          <span role="columnheader">Storage</span>
-          <span role="columnheader">Price</span>
-          <span role="columnheader">Stock</span>
-          <span role="columnheader"><span className="sr-visually-hidden">Order</span></span>
-        </div>
-
+      <div className="
+        srv-home-pricing-grid grid grid-cols-1 gap-4
+        md:grid-cols-2
+        xl:grid-cols-4
+      "
+      >
         {visible.map((plan) => {
           const price = plan.pricing[cycle];
+          const monthEquivalent = price.amount / months[cycle];
+          const osLabel = plan.source.os === 'linux-only' ? 'Linux only' : 'Windows + Linux';
+          const featured = plan.popular;
           const available = plan.source.availability !== 'out-of-stock';
-          const perMonth = price.amount / months[cycle];
 
           return (
-            <div className="hm-row" role="row" key={plan.name} data-popular={plan.name === popular || undefined}>
-              <span role="cell" className="hm-cell-plan">
-                <strong>{plan.name}</strong>
-                <small>
-                  {plan.source.os === 'linux-only' ? 'Linux only' : 'Windows or Linux'}
-                  {plan.name === popular ? ' · Popular' : ''}
-                </small>
-              </span>
-              <span role="cell" className="hm-num" data-label="CPU">{plan.specs.cpu.replace(' Core', ' vCPU')}</span>
-              <span role="cell" className="hm-num" data-label="RAM">{plan.specs.ram}</span>
-              <span role="cell" className="hm-num" data-label="Storage">{plan.specs.storage}</span>
-              <span role="cell" className="hm-cell-price" data-label="Price">
-                <strong className="hm-num">{`€${money(price.amount)}`}</strong>
-                <small>{cycle === 'monthly' ? 'per month' : `${price.suffix} · €${perMonth.toFixed(2)}/mo`}</small>
-              </span>
-              <span role="cell" className="hm-cell-stock" data-label="Stock" data-available={available}>
-                {plan.source.stock !== undefined ? `${plan.source.stock} left` : available ? 'In stock' : 'Sold out'}
-              </span>
-              <span role="cell" className="hm-cell-order">
+            <div key={plan.name} className="srv-home-pricing-item">
+              <PricingColumn
+                className="srv-home-pricing-card srv-home-pricing-card-desktop"
+                name={plan.name}
+                description={osLabel}
+                featured={featured}
+                badge={featured ? <Badge variant="outline">Most popular</Badge> : null}
+                price={(
+                  <span>
+                    €
+                    {format(price.amount)}
+                    <span className="
+                      ml-1 text-base font-medium text-muted-foreground
+                    "
+                    >
+                      {price.suffix}
+                    </span>
+                  </span>
+                )}
+                priceNote={cycle === 'monthly'
+                  ? 'Billed monthly'
+                  : `€${monthEquivalent.toFixed(2)}/mo effective · due today`}
+                cta={{
+                  label: available ? `Choose ${tierName(plan)}` : 'Out of stock',
+                  href: available ? checkoutUrl(plan, cycle) : undefined,
+                  disabled: !available,
+                }}
+                features={[
+                  plan.specs.cpu,
+                  plan.specs.ram,
+                  plan.specs.storage,
+                  `${plan.specs.bandwidth} bandwidth`,
+                  'Dedicated IPv4',
+                ]}
+                footer={(
+                  <span className={available
+                    ? 'font-medium text-status-ok'
+                    : `font-medium text-muted-foreground`}
+                  >
+                    {plan.source.stock !== undefined
+                      ? `${plan.source.stock} available`
+                      : available ? 'In stock' : 'Out of stock'}
+                  </span>
+                )}
+              />
+
+              <article className="srv-mobile-plan-card" data-featured={featured || undefined}>
+                <header className="srv-mobile-plan-head">
+                  <div>
+                    <div className="srv-mobile-plan-title-row">
+                      <h3>{plan.name}</h3>
+                      {featured ? <Badge variant="outline">Popular</Badge> : null}
+                    </div>
+                    <p>{osLabel}</p>
+                  </div>
+                  <span className={available
+                    ? 'srv-mobile-stock is-available'
+                    : `srv-mobile-stock`}
+                  >
+                    {plan.source.stock !== undefined
+                      ? `${plan.source.stock} left`
+                      : available ? 'In stock' : 'Out of stock'}
+                  </span>
+                </header>
+
+                <div className="srv-mobile-plan-price">
+                  <strong>
+                    €
+                    {format(price.amount)}
+                  </strong>
+                  <span>{price.suffix}</span>
+                </div>
+                <p className="srv-mobile-plan-note">
+                  {cycle === 'monthly'
+                    ? 'Billed monthly'
+                    : `€${monthEquivalent.toFixed(2)}/mo effective · due today`}
+                </p>
+
+                <dl className="srv-mobile-plan-specs">
+                  <div>
+                    <dt>CPU</dt>
+                    <dd>{plan.specs.cpu}</dd>
+                  </div>
+                  <div>
+                    <dt>RAM</dt>
+                    <dd>{plan.specs.ram}</dd>
+                  </div>
+                  <div>
+                    <dt>Storage</dt>
+                    <dd>{plan.specs.storage}</dd>
+                  </div>
+                </dl>
+
+                <details className="srv-mobile-plan-more">
+                  <summary>View full specs</summary>
+                  <ul>
+                    <li>{plan.specs.cpu}</li>
+                    <li>{plan.specs.ram}</li>
+                    <li>{plan.specs.storage}</li>
+                    <li>
+                      {plan.specs.bandwidth}
+                      {' '}
+                      bandwidth
+                    </li>
+                    <li>Dedicated IPv4</li>
+                  </ul>
+                </details>
+
                 {available
                   ? (
-                      <a className="hm-button hm-button-small" href={checkoutUrl(plan, cycle)}>
-                        {`Order ${plan.name.replace(/ (USA|EU)$/, '')}`}
-                      </a>
+                      <Button asChild size="lg" className="srv-mobile-plan-cta">
+                        <a href={checkoutUrl(plan, cycle)}>
+                          Choose
+                          {tierName(plan)}
+                        </a>
+                      </Button>
                     )
-                  : <span className="hm-sold">Sold out</span>}
-              </span>
+                  : (
+                      <Button size="lg" className="srv-mobile-plan-cta" disabled>Out of stock</Button>
+                    )}
+              </article>
             </div>
           );
         })}
       </div>
 
-      <Link href="/plans" className="hm-more">
-        {`All ${plans.filter(plan => plan.location === region).length} ${region} plans, including larger servers`}
-        <ArrowRight aria-hidden="true" />
-      </Link>
+      <div className="flex flex-wrap justify-center gap-3">
+        <Button asChild variant="outline">
+          <Link href="/plans">View all plans</Link>
+        </Button>
+      </div>
     </div>
   );
 }
