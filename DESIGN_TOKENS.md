@@ -151,7 +151,7 @@ Do not use `shadow-2xl`, `shadow-[…]`, `backdrop-blur` or gradient utilities (
 | Interface and feature icons | `@phosphor-icons/react` (primary; use `/dist/ssr` in server components) | one weight per surface; `fill` for feature icons; sizes 16/20/24/32 |
 | Brand marks (Discord, Telegram, X, WhatsApp…) | `@icons-pack/react-simple-icons` or the vendor SVG | never redraw a logo |
 | OS and product logos | `public/brand/*.svg` (Windows, Linux/Tux, Ubuntu, Debian, CentOS, AlmaLinux, Fedora, Citadel shield) | sources in `public/brand/provenance.json` |
-| Lucide | `lucide-react` | legacy; do not use for new work |
+| Lucide | `lucide-react` | legacy (`legacyIconPackages` in `design.contract.json`); do not use for new work. Exception: the shadcn primitives keep Lucide — `components.json` `iconLibrary` stays `lucide` and the stack check enforces it. |
 
 Decorative icons get `aria-hidden="true"`. Icon-only controls need an accessible name and a 44px hit
 area.

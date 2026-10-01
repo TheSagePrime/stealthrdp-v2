@@ -71,7 +71,8 @@ Homepage order (current, `src/app/[locale]/(marketing)/page.tsx`):
 
 Use shadcn/ui + Radix as the canonical interactive foundation.
 Use Phosphor for interface and feature icons, Simple Icons or the vendor SVG for brand marks.
-Lucide is legacy: do not use it for new work (`stack.contract.json`).
+Lucide is legacy: do not use it for new work (`stack.contract.json`, `design.contract.json`). The
+shadcn primitives in `src/components/ui` keep their Lucide icons.
 Build custom StealthRDP marketing components for hero, plans, infrastructure, locations, trust and conversion surfaces.
 
 Do not add another general-purpose UI kit.
