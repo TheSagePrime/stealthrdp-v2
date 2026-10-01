@@ -11,7 +11,7 @@ import { cn } from '@/utils/Helpers';
 export const metadata: Metadata = createPageMetadata({
   path: '/about',
   title: 'About Us — StealthRDP',
-  description: 'StealthRDP provides high-performance remote desktop and VPS infrastructure with 10,000+ orders worldwide.',
+  description: 'StealthRDP provides high-performance remote desktop and VPS infrastructure, with 12,000+ VPS deployed.',
   ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
@@ -24,7 +24,7 @@ const reasons = [
 ];
 
 const proof = [
-  { value: '10,000+', label: 'Orders' },
+  { value: '12,000+', label: 'VPS deployed' },
   { value: 'USA + EU', label: 'locations' },
   { value: '24/7', label: 'Uptime monitoring' },
 ];
@@ -107,7 +107,7 @@ export default async function AboutPage() {
             <div>
               <h2 className="sr-section-title">Trusted at scale</h2>
             </div>
-            <p>10,000+ orders and counting for remote work, web hosting, trading infrastructure, and always-on automation. Every new server is monitored 24/7 on our public status page and comes with a 7-day money-back guarantee.</p>
+            <p>12,000+ VPS deployed so far for remote work, web hosting, trading infrastructure, and always-on automation. Every new server is monitored 24/7 on our public status page and comes with a 7-day money-back guarantee.</p>
           </div>
 
           <Card className="srv-about-stats-strip">
