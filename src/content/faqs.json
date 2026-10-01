@@ -35,7 +35,7 @@
   {
     "_id": "68235345089f47364fbefe63",
     "question": "What is the 'Build Your Own VPS' option?",
-    "answer": "Our Build Your Own VPS option allows complete customization of your server resources. You can select your preferred CPU cores (1-32), RAM (1GB-128GB), and SSD storage (20GB-2TB) based on your specific needs. You can also choose your preferred operating system, data center location (USA or EU), and billing cycle. This option provides maximum flexibility and ensures you only pay for exactly what you need.",
+    "answer": "Our Build Your Own VPS option allows complete customization of your server resources. You can select your preferred CPU cores (1-32), RAM (1GB-128GB), and NVMe storage (20GB-2TB) based on your specific needs. You can also choose your preferred operating system, data center location (USA or EU), and billing cycle. This option provides maximum flexibility and ensures you only pay for exactly what you need.",
     "category": "Services & Plans",
     "displayOrder": 4,
     "isPublished": true,

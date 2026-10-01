@@ -12,7 +12,7 @@ import {
 
   checkoutUrl,
 
-} from '@/lib/stealth/content';
+} from '@/lib/stealth/checkout';
 
 const cycles: BillingCycle[] = ['monthly', 'quarterly', 'semiannual', 'annual', 'biannual'];
 

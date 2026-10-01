@@ -4,6 +4,7 @@
 import type { Faq } from '@/lib/stealth/content';
 import Link from 'next/link';
 import { Accordion, AccordionItem } from '@/components/ui/accordion';
+import { Button } from '@/components/ui/button';
 import { faqCategoryId } from '@/lib/stealth/faq-topics';
 
 const LICENSING_PHRASE = 'Windows licensing page in Docs';
@@ -58,8 +59,12 @@ export function FaqExplorer({ faqs }: { faqs: Faq[] }) {
           <p>Account, billing, and server-specific questions are handled through support.</p>
         </div>
         <div className="sr-res-support-actions">
-          <a href="https://dash.stealthrdp.com/submitticket.php">Open a support ticket</a>
-          <a href="https://wa.me/447441426993">WhatsApp support</a>
+          <Button asChild>
+            <a href="https://dash.stealthrdp.com/submitticket.php">Open a support ticket</a>
+          </Button>
+          <Button asChild variant="outline">
+            <a href="https://wa.me/447441426993" target="_blank" rel="noopener noreferrer">WhatsApp support</a>
+          </Button>
         </div>
       </aside>
     </div>
