@@ -2,6 +2,7 @@
 import type { Metadata } from 'next';
 import { ArrowRight, ShieldCheck } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
+import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { CitadelControls } from '@/components/site/citadel/CitadelControls';
 import { CitadelGate } from '@/components/site/citadel/CitadelGate';
 import { CitadelIncident } from '@/components/site/citadel/CitadelIncident';
@@ -16,6 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { citadelJsonLd } from '@/lib/stealth/structured-data';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
 import { createPageMetadata } from '@/libs/seo/metadata';
@@ -64,6 +66,12 @@ export default function CitadelPage() {
 
   return (
     <div className="srv-page srv-page-citadel srv-citadel-v2">
+      <ProductionJsonLd
+        data={citadelJsonLd(
+          getSeoConfig().siteUrl,
+          plans.map(plan => ({ ...plan, price: Number(plan.price.replace(/[^\d.]/g, '')) })),
+        )}
+      />
       {jsonLd.map(block => (
         <script
           key={String(block['@type'])}

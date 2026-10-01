@@ -142,3 +142,26 @@ export function techArticleJsonLd(input: {
     },
   ];
 }
+
+type CitadelPlan = { name: string; price: number; domains: string; bandwidth: string; checkout: string };
+
+/** Citadel as a service with one monthly offer per plan, from the same data the page shows. */
+export function citadelJsonLd(siteUrl: string, plans: CitadelPlan[]): Node {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    'name': 'Citadel Layer 7 DDoS protection',
+    'serviceType': 'DDoS protection',
+    'description': 'Layer 7 protection for HTTP/HTTPS applications: browser challenges, rate limits, allowlists, lockdown mode, caching and request logs.',
+    'url': `${siteUrl}/citadel`,
+    'provider': provider(siteUrl),
+    'offers': plans.map(plan => ({
+      '@type': 'Offer',
+      'name': `Citadel ${plan.name}`,
+      'price': plan.price,
+      'priceCurrency': 'EUR',
+      'url': plan.checkout,
+      'description': `${plan.domains}, ${plan.bandwidth} clean bandwidth, monthly billing`,
+    })),
+  };
+}
