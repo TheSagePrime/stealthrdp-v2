@@ -6,8 +6,10 @@ import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { CitadelControls } from '@/components/site/citadel/CitadelControls';
 import { CitadelGate } from '@/components/site/citadel/CitadelGate';
 import { CitadelIncident } from '@/components/site/citadel/CitadelIncident';
+import { CitadelIncluded } from '@/components/site/citadel/CitadelIncluded';
+import { CitadelPortal } from '@/components/site/citadel/CitadelPortal';
+import { CitadelSetup } from '@/components/site/citadel/CitadelSetup';
 import { CitadelThreats } from '@/components/site/citadel/CitadelThreats';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -131,21 +133,24 @@ export default function CitadelPage() {
         </div>
       </section>
 
-      <section className="srv-citadel-v2-band">
+      <section className="srv-citadel-v2-section" aria-labelledby="citadel-setup-title">
         <div className="sr-container">
-          <Alert tone="info" className="srv-citadel-v2-scope">
+          <div className="srv-citadel-v2-heading">
             <div>
-              <AlertTitle>Citadel protects the application layer.</AlertTitle>
-              <AlertDescription>
-                It is designed for Layer 7 HTTP/HTTPS traffic. Protected hostnames need
-                proxied Cloudflare DNS records; network-layer mitigation remains a separate edge task.
-              </AlertDescription>
+              <p className="sr-kicker">How it connects</p>
+              <h2 id="citadel-setup-title">Point one A record. Citadel protects the site.</h2>
             </div>
-          </Alert>
+            <p>
+              Cloudflare stays your DNS and edge. Citadel is the reverse proxy behind it that
+              decides which requests reach your origin.
+            </p>
+          </div>
+
+          <CitadelSetup />
         </div>
       </section>
 
-      <section className="srv-citadel-v2-section" aria-labelledby="citadel-incident-title">
+      <section className="srv-citadel-v2-section srv-citadel-v2-section-muted" aria-labelledby="citadel-incident-title">
         <div className="sr-container">
           <div className="srv-citadel-v2-heading">
             <div>
@@ -162,7 +167,7 @@ export default function CitadelPage() {
         </div>
       </section>
 
-      <section className="srv-citadel-v2-section srv-citadel-v2-section-muted">
+      <section className="srv-citadel-v2-section">
         <div className="sr-container">
           <div className="srv-citadel-v2-heading">
             <div>
@@ -179,7 +184,7 @@ export default function CitadelPage() {
         </div>
       </section>
 
-      <section className="srv-citadel-v2-section">
+      <section className="srv-citadel-v2-section srv-citadel-v2-section-muted">
         <div className="sr-container">
           <div className="srv-citadel-v2-heading">
             <div>
@@ -193,6 +198,23 @@ export default function CitadelPage() {
           </div>
 
           <CitadelControls />
+        </div>
+      </section>
+
+      <section className="srv-citadel-v2-section" aria-labelledby="citadel-portal-title">
+        <div className="sr-container">
+          <div className="srv-citadel-v2-heading">
+            <div>
+              <p className="sr-kicker">Citadel portal</p>
+              <h2 id="citadel-portal-title">Run your protection yourself, from one portal.</h2>
+            </div>
+            <p>
+              Every setting on this page is self-serve. Billing, invoices and tickets stay in
+              the StealthRDP client area.
+            </p>
+          </div>
+
+          <CitadelPortal />
         </div>
       </section>
 
@@ -254,6 +276,8 @@ export default function CitadelPage() {
               </Card>
             ))}
           </div>
+
+          <CitadelIncluded />
         </div>
       </section>
 

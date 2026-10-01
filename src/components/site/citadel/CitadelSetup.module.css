@@ -1,0 +1,345 @@
+.setup {
+  display: grid;
+  gap: 28px;
+  color: var(--citadel-ink);
+}
+
+/* Request path ------------------------------------------------------------- */
+
+.flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 36px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hop {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  align-content: start;
+  border: 1px solid var(--citadel-border);
+  border-radius: var(--radius-lg);
+  background: var(--citadel-surface);
+  padding: 18px;
+}
+
+.hop strong {
+  font-size: 0.9375rem;
+}
+
+.hop > span:last-child {
+  color: var(--citadel-muted);
+  font-size: 0.8125rem;
+  line-height: 1.45;
+}
+
+.hopIcon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  margin-bottom: 8px;
+  place-items: center;
+  border: 1px solid var(--citadel-border);
+  border-radius: 999px;
+  background: var(--citadel-canvas);
+  color: var(--primary);
+}
+
+.hop[data-core] {
+  border-color: color-mix(in srgb, var(--primary) 45%, transparent);
+  box-shadow: 0 14px 30px color-mix(in srgb, var(--primary) 14%, transparent);
+}
+
+.hop[data-core] .hopIcon {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* Connector between hops, with one packet moving along it. */
+.hop:not(:last-child)::after,
+.hop:not(:last-child)::before {
+  position: absolute;
+  top: 38px;
+  left: 100%;
+  content: '';
+}
+
+.hop:not(:last-child)::after {
+  width: 36px;
+  border-top: 1.5px dashed color-mix(in srgb, var(--primary) 40%, transparent);
+}
+
+.hop:not(:last-child)::before {
+  z-index: 1;
+  width: 7px;
+  height: 7px;
+  margin-top: -3px;
+  border-radius: 999px;
+  background: var(--citadel-glow);
+  animation: packet 2.4s linear infinite;
+}
+
+.hop:nth-child(2)::before {
+  animation-delay: 0.8s;
+}
+
+.hop:nth-child(3)::before {
+  animation-delay: 1.6s;
+}
+
+@keyframes packet {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+
+  15%,
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(29px);
+    opacity: 0;
+  }
+}
+
+/* Steps and DNS ------------------------------------------------------------ */
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.steps {
+  display: grid;
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: step;
+}
+
+.steps li {
+  position: relative;
+  padding-left: 46px;
+  counter-increment: step;
+}
+
+.steps li::before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 10%, var(--citadel-surface));
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  content: counter(step);
+}
+
+.steps strong {
+  display: block;
+  font-size: 0.9375rem;
+  line-height: 30px;
+}
+
+.steps p {
+  margin: 2px 0 0;
+  color: var(--citadel-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.dns {
+  margin: 0;
+  border: 1px solid var(--citadel-border);
+  border-radius: var(--radius-lg);
+  background: var(--citadel-surface);
+  overflow: hidden;
+}
+
+.dns figcaption {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--citadel-border);
+  background: var(--citadel-canvas);
+  padding: 12px 16px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.dnsNote {
+  color: var(--citadel-muted);
+  font-weight: 500;
+}
+
+.dns table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8125rem;
+}
+
+.dns th {
+  padding: 10px 16px;
+  color: var(--citadel-muted);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+.dns td {
+  border-top: 1px solid var(--citadel-border);
+  padding: 11px 16px;
+  white-space: nowrap;
+}
+
+.dns tr[data-protected] td:nth-child(3) {
+  color: var(--primary);
+  font-weight: 650;
+}
+
+.proxy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--citadel-muted);
+}
+
+.proxy::before {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--citadel-muted);
+  content: '';
+}
+
+tr[data-protected] .proxy {
+  color: var(--citadel-ink);
+  font-weight: 650;
+}
+
+tr[data-protected] .proxy::before {
+  background: var(--sr-raw-f59e0b);
+}
+
+.dnsFoot {
+  margin: 0;
+  border-top: 1px solid var(--citadel-border);
+  padding: 12px 16px;
+  color: var(--citadel-muted);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+.dnsFoot a {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.scope {
+  margin: 0;
+  color: var(--citadel-muted);
+  font-size: 0.8125rem;
+}
+
+@media (max-width: 1040px) {
+  .flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .hop:nth-child(2)::after,
+  .hop:nth-child(2)::before {
+    display: none;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .flow {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  .hop {
+    grid-template-columns: 40px minmax(0, 1fr);
+    column-gap: 14px;
+    padding: 14px 18px;
+  }
+
+  .hopIcon {
+    grid-row: span 2;
+    margin-bottom: 0;
+  }
+
+  .hop:not(:last-child)::after,
+  .hop:not(:last-child)::before {
+    display: block;
+    top: 100%;
+    left: 38px;
+    margin-top: 0;
+  }
+
+  .hop:not(:last-child)::after {
+    width: 0;
+    height: 22px;
+    border-top: 0;
+    border-left: 1.5px dashed color-mix(in srgb, var(--primary) 40%, transparent);
+  }
+
+  .hop:not(:last-child)::before {
+    margin-top: 0;
+    margin-left: -3px;
+    animation-name: packetDown;
+  }
+
+  .dns {
+    overflow-x: auto;
+  }
+
+  .dns figcaption {
+    flex-direction: column;
+    gap: 2px;
+  }
+}
+
+@keyframes packetDown {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  15%,
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(15px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hop:not(:last-child)::before {
+    animation: none;
+    opacity: 0;
+  }
+}
