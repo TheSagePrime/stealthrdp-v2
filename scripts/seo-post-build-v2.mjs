@@ -588,15 +588,20 @@ function waitForServer(url, timeoutMs = 45000) {
   });
 }
 
+const serverLog = [];
+
 async function withServer(fn) {
   /* Same bind address as the Dockerfile (HOSTNAME=0.0.0.0), so forwarded
      requests behave as they do behind Traefik. */
   const child = spawn('pnpm', ['exec', 'next', 'start', '-p', '3123', '-H', '0.0.0.0'], {
     cwd: root,
     env: { ...process.env, PATH: `${root}/node_modules/.bin:${process.env.PATH || ''}` },
-    stdio: 'ignore',
+    stdio: ['ignore', 'pipe', 'pipe'],
     detached: true,
   });
+  /* Keep the server log so a failed hosted build can show why pages errored. */
+  child.stdout.on('data', chunk => serverLog.push(String(chunk)));
+  child.stderr.on('data', chunk => serverLog.push(String(chunk)));
   try {
     await waitForServer(`${crawlOrigin}/`);
     await fn();
@@ -651,6 +656,10 @@ if (report.failCount) {
     .split('\n')
     .filter(line => line.startsWith('[FAIL]'));
   console.error(failures.slice(0, 20).join('\n'));
+  if (serverLog.length) {
+    console.error('--- audit server log (last 40 lines) ---');
+    console.error(serverLog.join('').split('\n').slice(-40).join('\n'));
+  }
   process.exit(1);
 }
 console.log(`SEO post-build passed with ${report.warnCount} warning(s).`);
