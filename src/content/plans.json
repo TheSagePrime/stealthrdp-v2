@@ -8,28 +8,6 @@
     ],
     "verifiedAt": "2026-09-26T09:39:00Z"
   },
-  "billingCycles": {
-    "monthly": {
-      "label": "Monthly",
-      "urlKey": "monthly"
-    },
-    "quarterly": {
-      "label": "Quarterly",
-      "urlKey": "quarterly"
-    },
-    "semiannual": {
-      "label": "Semi-annual",
-      "urlKey": "semiannually"
-    },
-    "annual": {
-      "label": "Annual",
-      "urlKey": "annually"
-    },
-    "biannual": {
-      "label": "Biannual",
-      "urlKey": "biennially"
-    }
-  },
   "plans": [
     {
       "name": "Starter USA",

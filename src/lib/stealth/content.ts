@@ -45,17 +45,10 @@ export type Testimonial = {
   sourceType?: string;
 };
 
-export const billingCycles = plansJson.billingCycles;
 export const plans = plansJson.plans as Plan[];
 export const faqs = (faqsJson as Faq[]).filter(item => item.isPublished);
 export const testimonials = testimonialsJson as Testimonial[];
 export const reviews = reviewsJson as Testimonial[];
 export const uptime = uptimeJson;
 
-export function checkoutUrl(plan: Plan, cycle: BillingCycle): string {
-  const value = new URL(plan.purchaseUrl);
-  /* WHMCS urlKeys: annually, semiannually, biennially. Monthly and quarterly keep their own name. */
-  const key = billingCycles[cycle]?.urlKey ?? cycle;
-  value.searchParams.set('billingcycle', key);
-  return value.toString();
-}
+export { billingCycles, checkoutUrl } from './checkout';

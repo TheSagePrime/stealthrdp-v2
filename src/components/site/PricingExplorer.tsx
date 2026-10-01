@@ -21,7 +21,7 @@ import {
   billingCycles,
   checkoutUrl,
 
-} from '@/lib/stealth/content';
+} from '@/lib/stealth/checkout';
 
 const cycleOrder: BillingCycle[] = ['monthly', 'quarterly', 'semiannual', 'annual', 'biannual'];
 
