@@ -15,12 +15,7 @@ const config: KnipConfig = {
     'src/libs/seo/research-artifacts.ts',
     'src/templates/Logo.tsx',
     'src/utils/Helpers.ts',
-    // Homepage and motion components kept from earlier redesigns. Not routed now.
-    'src/components/launchui/*.tsx',
-    'src/components/site/HelpSidebar.tsx',
-    'src/components/site/VpsMotionShowcase.tsx',
-    'src/components/site/home/*.tsx',
-    'src/lib/ease.ts',
+    // Used by src/components/ui/orbiting-circle.tsx, which knip ignores.
     'src/lib/utils.ts',
   ],
   // Files to exclude from Knip analysis

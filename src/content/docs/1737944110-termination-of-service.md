@@ -2,7 +2,7 @@
 order: 8
 title: Termination of Service
 category: Terms and policies
-date: May 05, 2025
+date: Oct 01, 2026
 sourceTitle: Termination of Service
 sourceUrl: https://docs.stealthrdp.com/hc/stealth-rdp-docs/articles/1737944110-termination-of-service
 migration:
@@ -22,7 +22,7 @@ Last updated on May 05, 2025
 
 1.  **Right to Terminate:** StealthRDP reserves the right to suspend or terminate your service with immediate effect for any breach of these Terms and Conditions, including, but not limited to, non-payment of fees, violation of the Acceptable Use Policy, or any illegal activities.
     
-2.  **User-Initiated Termination:** You may terminate your service with StealthRDP at any time. However, please be aware that according to our non-refundable policy, you may not be eligible for a refund upon termination.
+2.  **User-Initiated Termination:** You may terminate your service with StealthRDP at any time. A new service can be refunded within 7 days of payment, as account credit to your StealthRDP site wallet. After 7 days, payments are non-refundable (see Payment Terms).
     
 3.  **Notification of Termination:** In the event of termination by StealthRDP, we will endeavor to provide you with prior notice. However, in cases of serious violations, termination may be immediate and without notice.
     

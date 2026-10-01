@@ -100,7 +100,7 @@ export function HomeHero({ from }: { from: number }) {
               {'Starting from '}
               <strong>{`${price}/month`}</strong>
             </span>
-            <span>7-day money-back</span>
+            <span>7-day refund as credit</span>
             <span>No hidden fees</span>
             <span>Cancel anytime</span>
           </div>
