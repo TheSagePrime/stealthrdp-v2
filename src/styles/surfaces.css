@@ -249,7 +249,7 @@
 .sr-prose-block p {
   margin: 0 0 1rem;
 }
-.sr-prose-block a {
+.sr-prose-block a:not([data-slot='button']) {
   color: var(--foreground);
   text-decoration: underline;
 }
@@ -767,7 +767,7 @@
 .sr-prose-block p {
   margin: 0 0 1rem;
 }
-.sr-prose-block a {
+.sr-prose-block a:not([data-slot='button']) {
   color: var(--text);
   text-decoration: underline;
 }

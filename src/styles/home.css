@@ -1,0 +1,684 @@
+/* ==========================================================================
+   Homepage. One idea: a spec sheet, not a template. Real numbers in
+   monospace, hairline rows instead of card grids, one dark object per view.
+   Tokens only. Loaded after resources.css.
+   ========================================================================== */
+
+.hm-wrap {
+  width: min(1240px, calc(100% - 40px));
+  margin-inline: auto;
+}
+
+.hm-num {
+  font-feature-settings: 'tnum' 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Buttons and links ------------------------------------------------------ */
+.hm-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.hm-button {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--primary);
+  border-radius: var(--radius-sm);
+  background: var(--primary);
+  padding: 0 20px;
+  color: var(--primary-foreground);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease;
+}
+
+.hm-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.hm-button:hover {
+  background: color-mix(in srgb, var(--primary) 86%, var(--foreground));
+}
+
+.hm-button-quiet {
+  border-color: var(--border-control);
+  background: transparent;
+  color: var(--foreground);
+}
+
+.hm-button-quiet:hover {
+  border-color: var(--foreground);
+  background: transparent;
+}
+
+.hm-button-small {
+  min-height: 40px;
+  padding: 0 14px;
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+.hm-link,
+.hm-more,
+.hm-sheet-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--primary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.hm-link svg,
+.hm-more svg,
+.hm-sheet-link svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 160ms ease;
+}
+
+.hm-link:hover svg,
+.hm-more:hover svg,
+.hm-sheet-link:hover svg {
+  transform: translateX(3px);
+}
+
+.hm-button:focus-visible,
+.hm-link:focus-visible,
+.hm-more:focus-visible,
+.hm-sheet-link:focus-visible,
+.hm-toggle button:focus-visible,
+.hm-uses a:focus-visible,
+.hm-product:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+}
+
+/* Hero ------------------------------------------------------------------- */
+.hm-hero {
+  border-bottom: 1px solid var(--border-divider);
+  background: var(--card);
+  padding: clamp(56px, 8vw, 104px) 0 clamp(48px, 7vw, 88px);
+}
+
+.hm-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(320px, 0.75fr);
+  gap: clamp(40px, 6vw, 96px);
+  align-items: center;
+}
+
+.hm-hero-copy h1 {
+  max-width: 15ch;
+  text-wrap: balance;
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(2.5rem, 5.2vw, 4.25rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+
+.hm-hero-copy h1 span {
+  color: var(--text-dim);
+}
+
+.hm-lede {
+  max-width: 54ch;
+  margin: 24px 0 32px;
+  color: var(--text-muted);
+  font-size: 1.1875rem;
+  line-height: 1.6;
+}
+
+.hm-sheet {
+  border-radius: var(--radius-lg);
+  background: var(--foreground);
+  padding: 28px;
+  color: var(--card);
+}
+
+.hm-sheet-title {
+  margin: 0 0 8px;
+  color: color-mix(in srgb, var(--card) 70%, var(--foreground));
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.hm-sheet-list {
+  margin: 0;
+}
+
+.hm-sheet-list div {
+  display: grid;
+  gap: 2px;
+  border-top: 1px solid color-mix(in srgb, var(--card) 14%, transparent);
+  padding: 14px 0;
+}
+
+.hm-sheet-list dt {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.hm-sheet-list dd {
+  margin: 0;
+  color: color-mix(in srgb, var(--card) 70%, var(--foreground));
+  font-size: 0.875rem;
+}
+
+.hm-sheet-foot {
+  display: grid;
+  gap: 10px;
+  border-top: 1px solid color-mix(in srgb, var(--card) 14%, transparent);
+  padding-top: 20px;
+}
+
+.hm-sheet-foot p {
+  margin: 0;
+}
+
+.hm-sheet-price {
+  font-size: 2.5rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.hm-sheet-unit {
+  margin-left: 6px;
+  color: color-mix(in srgb, var(--card) 70%, var(--foreground));
+  font-size: 0.9375rem;
+}
+
+.hm-sheet-stock {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: color-mix(in srgb, var(--card) 82%, var(--foreground));
+  font-size: 0.875rem;
+}
+
+.hm-dot {
+  width: 8px;
+  height: 8px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--status-ok);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--status-ok) 30%, transparent);
+}
+
+.hm-sheet-link {
+  color: var(--card);
+}
+
+.hm-sheet-link:focus-visible {
+  outline-color: var(--card);
+}
+
+/* Operating systems ------------------------------------------------------ */
+.hm-os {
+  border-bottom: 1px solid var(--border-divider);
+  padding: 24px 0;
+}
+
+.hm-os-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 40px;
+}
+
+.hm-os h2 {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.hm-os ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 28px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hm-os li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--foreground);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+/* Sections --------------------------------------------------------------- */
+.hm-section {
+  padding: clamp(64px, 8vw, 112px) 0;
+}
+
+.hm-section-rule {
+  border-top: 1px solid var(--border-divider);
+}
+
+.hm-head h2 {
+  max-width: 24ch;
+  text-wrap: balance;
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.hm-head > p {
+  max-width: 56ch;
+  margin: 14px 0 0;
+  color: var(--text-muted);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+.hm-head .hm-link {
+  margin-top: 20px;
+}
+
+.hm-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(40px, 6vw, 96px);
+  align-items: start;
+}
+
+/* Plan table ------------------------------------------------------------- */
+.hm-plans {
+  margin-top: 40px;
+}
+
+.hm-plans-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.hm-toggle {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 2px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  background: var(--card);
+  padding: 3px;
+}
+
+.hm-toggle button {
+  min-height: 36px;
+  border: 0;
+  border-radius: calc(var(--radius-sm) - 3px);
+  background: transparent;
+  padding: 0 14px;
+  color: var(--text-muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.hm-toggle button[aria-pressed='true'] {
+  background: var(--foreground);
+  color: var(--card);
+}
+
+.hm-table {
+  border-top: 2px solid var(--foreground);
+}
+
+.hm-row {
+  display: grid;
+  grid-template-columns:
+    minmax(170px, 1.4fr) repeat(3, minmax(70px, 0.7fr)) minmax(140px, 1fr) minmax(80px, 0.6fr)
+    150px;
+  gap: 16px;
+  align-items: center;
+  border-bottom: 1px solid var(--border-divider);
+  padding: 18px 12px;
+}
+
+.hm-row-head {
+  padding-block: 12px;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.hm-row[data-popular] {
+  background: var(--card);
+  box-shadow: inset 3px 0 0 var(--primary);
+}
+
+.hm-row .hm-num {
+  color: var(--foreground);
+  font-size: 0.9375rem;
+}
+
+.hm-cell-plan,
+.hm-cell-price {
+  display: grid;
+  gap: 2px;
+}
+
+.hm-cell-plan strong {
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.hm-cell-plan small,
+.hm-cell-price small {
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+}
+
+.hm-cell-price strong {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.hm-cell-stock {
+  color: var(--text-dim);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.hm-cell-stock[data-available='true'] {
+  /* --status-ok alone is 4.3:1 on --bg; a little foreground lifts it past AA. */
+  color: color-mix(in srgb, var(--status-ok) 85%, var(--foreground));
+}
+
+.hm-cell-order {
+  justify-self: end;
+}
+
+.hm-sold {
+  color: var(--text-dim);
+  font-size: 0.875rem;
+}
+
+.hm-more {
+  margin-top: 24px;
+}
+
+/* Use cases -------------------------------------------------------------- */
+.hm-uses {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 40px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hm-uses a {
+  display: grid;
+  gap: 6px;
+  border-top: 1px solid var(--border-divider);
+  padding: 20px 0 24px;
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+.hm-uses strong {
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.hm-uses span {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+}
+
+.hm-uses a:hover strong {
+  color: var(--primary);
+}
+
+/* Products --------------------------------------------------------------- */
+.hm-products {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 40px;
+  overflow: hidden;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+}
+
+.hm-product {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: clamp(24px, 4vw, 40px);
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+.hm-product + .hm-product {
+  border-left: 1px solid var(--border-divider);
+}
+
+.hm-product-tag {
+  color: var(--primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.hm-product strong {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.hm-product > span:not(.hm-product-tag, .hm-link) {
+  max-width: 44ch;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.hm-product .hm-link {
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.hm-product:hover {
+  background: var(--surface-2);
+}
+
+/* Reviews ---------------------------------------------------------------- */
+.hm-quote {
+  margin: 32px 0 0;
+}
+
+.hm-quote blockquote {
+  margin: 0;
+  border-left: 3px solid var(--primary);
+  padding-left: 20px;
+  color: var(--foreground);
+  font-size: 1.3125rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.hm-quote figcaption {
+  margin-top: 16px;
+  padding-left: 23px;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+
+.hm-reviews {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hm-reviews li {
+  border-top: 1px solid var(--border-divider);
+  padding: 20px 0 24px;
+}
+
+.hm-reviews blockquote {
+  margin: 0;
+  color: var(--foreground);
+  line-height: 1.6;
+}
+
+.hm-reviews p {
+  margin: 10px 0 0;
+  color: var(--text-dim);
+  font-size: 0.875rem;
+}
+
+/* Closing band ----------------------------------------------------------- */
+.hm-cta {
+  background: var(--foreground);
+  padding: clamp(56px, 7vw, 88px) 0;
+  color: var(--card);
+}
+
+.hm-cta-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px 48px;
+}
+
+.hm-cta h2 {
+  max-width: 20ch;
+  text-wrap: balance;
+  margin: 0;
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.hm-button-light {
+  border-color: var(--card);
+  background: var(--card);
+  color: var(--foreground);
+}
+
+.hm-button-light:hover {
+  background: color-mix(in srgb, var(--card) 88%, var(--foreground));
+}
+
+.hm-button-ghost {
+  border-color: color-mix(in srgb, var(--card) 40%, transparent);
+  background: transparent;
+  color: var(--card);
+}
+
+.hm-button-ghost:hover {
+  border-color: var(--card);
+  background: transparent;
+}
+
+.hm-cta .hm-button:focus-visible {
+  outline-color: var(--card);
+}
+
+/* The dark band closes the page; the footer follows it directly. */
+main:has(.hm-cta) + .srv3-footer {
+  margin-top: 0;
+}
+
+/* Responsive ------------------------------------------------------------- */
+@media (max-width: 1000px) {
+  .hm-hero-grid,
+  .hm-split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 880px) {
+  .hm-row-head {
+    display: none;
+  }
+
+  .hm-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: start;
+    gap: 12px 16px;
+    padding: 18px 12px;
+  }
+
+  .hm-cell-plan {
+    grid-column: 1 / -1;
+  }
+
+  .hm-row [data-label]::before {
+    content: attr(data-label);
+    display: block;
+    color: var(--text-dim);
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .hm-cell-price,
+  .hm-cell-stock {
+    grid-column: span 1;
+  }
+
+  .hm-cell-order {
+    grid-column: 1 / -1;
+    justify-self: stretch;
+  }
+
+  .hm-cell-order .hm-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 760px) {
+  .hm-plans-controls .hm-toggle {
+    flex-wrap: nowrap;
+    max-width: 100%;
+    overflow-x: auto;
+  }
+
+  .hm-toggle button {
+    flex: none;
+    padding: 0 11px;
+  }
+
+  .hm-uses,
+  .hm-products {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hm-product + .hm-product {
+    border-top: 1px solid var(--border-divider);
+    border-left: 0;
+  }
+
+  .hm-cta-inner .hm-actions,
+  .hm-hero-copy .hm-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
