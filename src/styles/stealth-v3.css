@@ -5595,8 +5595,8 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   }
 }
 
-.srv-review-source[data-source='discord'],
-.srv-review-source-badge[data-source='discord'] {
+.srv-review-source[data-source='discord-review'],
+.srv-review-source-badge[data-source='discord-review'] {
   color: var(--sr-raw-5865f2);
   border-color: color-mix(in srgb, var(--sr-raw-5865f2) 22%, transparent);
   background: color-mix(in srgb, var(--sr-raw-5865f2) 6%, transparent);
@@ -12981,12 +12981,6 @@ a.srv-help-tree-heading:hover {
     background-color 160ms ease !important;
 }
 
-.srv-whatsapp-float svg {
-  width: 17px !important;
-  height: 17px !important;
-  color: var(--sr-raw-16a34a) !important;
-}
-
 .srv-whatsapp-float:hover {
   transform: translateY(-2px) !important;
   border-color: color-mix(in srgb, var(--sr-raw-16a34a) 26%, transparent) !important;
@@ -13156,5 +13150,71 @@ a.srv-help-tree-heading:hover {
   .srv-status-v2-table th:nth-child(3),
   .srv-status-v2-table td:nth-child(3) {
     display: none;
+  }
+}
+
+/* WhatsApp mark: the real glyph in a green disc ---------------------------- */
+.sr-wa-mark {
+  display: inline-grid;
+  flex: none;
+  width: var(--wa-size, 24px);
+  height: var(--wa-size, 24px);
+  place-items: center;
+  border-radius: 999px;
+  background: var(--sr-raw-16a34a);
+  color: var(--sr-raw-ffffff);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--sr-raw-16a34a) 32%, transparent);
+}
+
+.srv3-whatsapp-link {
+  gap: 8px;
+  border-color: var(--border-divider);
+  border-radius: 999px;
+  background: var(--surface-1);
+  padding: 0 14px 0 6px;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+}
+
+.srv3-whatsapp-link:hover {
+  border-color: color-mix(in srgb, var(--sr-raw-16a34a) 45%, var(--border-divider));
+  background: var(--surface-1);
+}
+
+.srv-whatsapp-float {
+  gap: 10px !important;
+  border-radius: 999px !important;
+  padding: 0 16px 0 6px !important;
+  min-height: 46px !important;
+  font-size: 0.8125rem !important;
+}
+
+@media (max-width: 1040px) {
+  .srv3-mobile-whatsapp {
+    border: 0;
+    background: transparent;
+  }
+
+  .srv3-mobile-whatsapp:hover {
+    background: transparent;
+  }
+}
+
+@media (max-width: 520px) {
+  .srv-whatsapp-float {
+    width: auto !important;
+    height: auto !important;
+    border: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .srv-whatsapp-float span:not(.sr-wa-mark) {
+    display: none;
+  }
+
+  .srv-whatsapp-float .sr-wa-mark {
+    display: inline-grid;
   }
 }

@@ -267,8 +267,8 @@ export default function CitadelPage() {
                 </CardContent>
                 <CardFooter>
                   <Button asChild variant={plan.featured ? 'default' : 'outline'}>
-                    <a href={plan.checkout}>
-                      {`Choose ${plan.name} `}
+                    <a href={plan.checkout} aria-label={`Order Now: Citadel ${plan.name}`}>
+                      Order Now
                       <ArrowRight size={15} aria-hidden="true" />
                     </a>
                   </Button>
