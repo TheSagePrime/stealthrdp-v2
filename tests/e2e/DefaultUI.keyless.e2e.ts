@@ -8,8 +8,8 @@ test.describe('StealthRDP v2 public UI', () => {
     await expect(page.locator('html')).toHaveAttribute('lang', 'en');
     await expect(page.getByRole('heading', { level: 1, name: /Your Windows VPS/ })).toBeVisible();
     await expect(page.getByRole('heading', { level: 2, name: 'Choose the product your workload needs.' })).toBeVisible();
-    // Below the desktop breakpoint the Client Area link sits in the closed mobile menu.
-    await expect(page.getByRole('link', { name: 'Client Area', includeHidden: true }).first())
+    // Below the desktop breakpoint the Log In link sits in the closed mobile menu.
+    await expect(page.getByRole('link', { name: 'Log In', includeHidden: true }).first())
       .toHaveAttribute('href', /dash\.stealthrdp\.com/);
 
     const horizontalOverflow = await page.evaluate(

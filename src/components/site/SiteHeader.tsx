@@ -7,6 +7,17 @@ import { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { WhatsAppMark } from './WhatsAppMark';
 
+const LOGIN_URL = 'https://dash.stealthrdp.com/index.php?rp=/login';
+
+/* One list for the desktop bar and the mobile menu, so the two always match. */
+const mainLinks = [
+  ['VPS Plans', '/plans'],
+  ['DDoS Protection', '/citadel'],
+  ['Server Status', '/status'],
+  ['Docs', '/resources'],
+  ['About', '/about'],
+] as const;
+
 export function SiteHeader() {
   const mobileNavRef = useRef<HTMLDetailsElement>(null);
 
@@ -29,11 +40,7 @@ export function SiteHeader() {
         </Link>
 
         <nav className="srv3-nav" aria-label="Main navigation">
-          <Link href="/plans">VPS Plans</Link>
-          <Link href="/citadel">DDoS Protection</Link>
-          <Link href="/status">Server Status</Link>
-          <Link href="/resources">Docs</Link>
-          <Link href="/about">About</Link>
+          {mainLinks.map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
         </nav>
 
         <div className="srv3-header-actions">
@@ -47,8 +54,8 @@ export function SiteHeader() {
             <WhatsAppMark size={26} />
             <span>WhatsApp</span>
           </a>
-          <a className="srv3-login" href="https://dash.stealthrdp.com/index.php?rp=/login">
-            Client Area
+          <a className="srv3-login" href={LOGIN_URL}>
+            Log In
           </a>
           <Button asChild size="sm">
             <Link href="/plans">
@@ -74,11 +81,15 @@ export function SiteHeader() {
             <span>Menu</span>
           </summary>
           <nav aria-label="Mobile navigation">
-            <Link href="/plans" onClick={closeMobileNav}>VPS Plans</Link>
-            <Link href="/citadel" onClick={closeMobileNav}>DDoS Protection</Link>
-            <Link href="/resources" onClick={closeMobileNav}>Docs</Link>
+            {mainLinks.map(([label, href]) => <Link key={href} href={href} onClick={closeMobileNav}>{label}</Link>)}
+            <hr className="srv3-mobile-nav-divider" />
             <a href="https://dash.stealthrdp.com/submitticket.php" onClick={closeMobileNav}>Support</a>
-            <a href="https://dash.stealthrdp.com/index.php?rp=/login" onClick={closeMobileNav}>Client Area</a>
+            <a href={LOGIN_URL} onClick={closeMobileNav}>Log In</a>
+            <div className="srv3-mobile-nav-cta">
+              <Button asChild size="sm">
+                <Link href="/plans" onClick={closeMobileNav}>View plans</Link>
+              </Button>
+            </div>
           </nav>
         </details>
       </div>
