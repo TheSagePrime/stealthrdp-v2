@@ -14,7 +14,7 @@ Never invent reviews, numbers, stock, deadlines, guarantees or live data.
 | Uptime guarantee | There is **no SLA**. Show measured uptime only, from the status page. | Owner |
 | Status data | Per monitored service: state, daily uptime for 90 days, 30- and 90-day uptime and incidents, from the UptimeRobot API (`UPTIMEROBOT_API_KEY`, production). Without the key: the public UptimeRobot page. When both fail: the snapshot in `src/content/uptime.json`. | `src/lib/stealth/uptime.ts` |
 | Scale | 12,000+ VPS deployed. | Owner. Do **not** say "10,000 customers" or similar. |
-| Support | Quick support through WhatsApp, client-area tickets and support@stealthrdp.com. | Owner. Do **not** offer "priority support" or promise a response time. |
+| Support | 24/7 support through WhatsApp, client-area tickets and support@stealthrdp.com. | Owner, confirmed Oct 2026. Do **not** offer "priority support" or promise a response time. |
 | Backups | Weekly backups. | Owner. An on-demand backup add-on is planned — do **not** mention it until it launches. |
 | Storage | NVMe storage on every plan, USA and EU. | `src/content/plans.json` |
 | Regions | USA and Europe. | `src/content/plans.json` |
@@ -31,15 +31,14 @@ Never invent reviews, numbers, stock, deadlines, guarantees or live data.
 
 - "guaranteed", "99.99% uptime", "100% uptime", "SLA" (there is no SLA)
 - "instant" without the 60-second wording above
-- "cheapest" (we do not claim the lowest price)
+- "cheap" and "cheapest", in copy, titles and meta descriptions (owner, Oct 2026)
 - "priority support", and any promised response time
 - "SSD" alone (all storage is NVMe), "dedicated CPU", "no overselling", "guaranteed RAM"
 - any customer count, rating or revenue number that is not in the table
 
 ## Not verified yet — ask the owner before you use it
 
-- "24/7 support". It is on `/plans` today (the `included` list in its page file). The owner has
-  confirmed "quick support", not round-the-clock staff.
+- Nothing open right now.
 
 ## Archive data — do not use
 
