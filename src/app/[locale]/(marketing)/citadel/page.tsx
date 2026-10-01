@@ -1,19 +1,11 @@
+/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
-import {
-  ArrowRight,
-  BellRinging,
-  Browser,
-  Database,
-  Fingerprint,
-  Funnel,
-  Gauge,
-  Lock,
-  Pulse,
-  ShieldCheck,
-  Stack,
-  Target,
-} from '@phosphor-icons/react/dist/ssr';
+import { ArrowRight, ShieldCheck } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
+import { CitadelControls } from '@/components/site/citadel/CitadelControls';
+import { CitadelGate } from '@/components/site/citadel/CitadelGate';
+import { CitadelIncident } from '@/components/site/citadel/CitadelIncident';
+import { CitadelThreats } from '@/components/site/citadel/CitadelThreats';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -24,8 +16,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { CitadelTelemetryPreview } from '@/components/site/CitadelTelemetryPreview';
-import { CitadelFlow } from '@/components/site/citadel/CitadelFlow';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
 import { createPageMetadata } from '@/libs/seo/metadata';
@@ -69,66 +59,6 @@ const plans = [
   },
 ] as const;
 
-const threats = [
-  {
-    icon: Pulse,
-    title: 'HTTP floods',
-    text: 'High request volume that looks valid enough to make the application and database do real work.',
-    response: 'Rate signals → challenge → strike / temporary ban',
-  },
-  {
-    icon: Fingerprint,
-    title: 'Credential stuffing',
-    text: 'Repeated authentication attempts that target expensive login paths instead of the whole site.',
-    response: 'Path policy → session signals → stronger challenge',
-  },
-  {
-    icon: Browser,
-    title: 'Headless automation',
-    text: 'Bots and scrapers that can pass simple network checks but do not behave like a normal browser session.',
-    response: 'JS / Interaction challenge → escalation',
-  },
-  {
-    icon: Gauge,
-    title: 'Burst abuse',
-    text: 'Short spikes that should not permanently block a customer, but still need an immediate response.',
-    response: 'Preset limit → strike → timed recovery',
-  },
-] as const;
-
-const controls = [
-  {
-    icon: Target,
-    title: 'Challenge levels and path bypasses',
-    text: 'Choose a domain challenge level, then bypass specific API and webhook paths that cannot complete browser challenges.',
-  },
-  {
-    icon: Funnel,
-    title: 'Rate limits and strikes',
-    text: 'Escalate repeat offenders with thresholds, temporary bans and strike history instead of one blunt rule.',
-  },
-  {
-    icon: Lock,
-    title: 'Explicit allowlists',
-    text: 'Allow by path, IP, CIDR or user agent. Lockdown narrows a domain to known-good traffic during an attack.',
-  },
-  {
-    icon: Database,
-    title: 'Cache before origin',
-    text: 'Per-domain caching can absorb repeated clean requests before your application pays the compute cost.',
-  },
-  {
-    icon: BellRinging,
-    title: 'Operational alerts',
-    text: 'Origin-health monitoring plus webhook and email notifications keep the protection loop visible.',
-  },
-  {
-    icon: Stack,
-    title: 'Profiles that stay understandable',
-    text: 'Balanced and Strict give each domain a known posture while route rules handle the exceptions.',
-  },
-] as const;
-
 export default function CitadelPage() {
   const jsonLd = buildPageJsonLd(getSeoConfig());
 
@@ -143,13 +73,17 @@ export default function CitadelPage() {
       ))}
 
       <section className="srv-citadel-v2-hero">
-        <div className="sr-container srv-citadel-v2-hero-grid srv-citadel-v2-hero-grid-solo">
+        <div className="sr-container srv-citadel-v2-hero-grid">
           <div className="srv-citadel-v2-copy">
             <Badge variant="outline" className="srv-citadel-v2-eyebrow">
               <ShieldCheck size={14} weight="fill" aria-hidden="true" />
               Citadel · Layer 7 DDoS protection
             </Badge>
-            <h1>Make every request <span>earn its way to the origin.</span></h1>
+            <h1>
+              Make every request
+              {' '}
+              <span>earn its way to the origin.</span>
+            </h1>
             <p>
               Citadel sits in front of HTTP/HTTPS applications and decides what should
               pass, be challenged, slowed, cached, escalated or blocked — before your
@@ -157,19 +91,35 @@ export default function CitadelPage() {
             </p>
             <div className="srv-citadel-v2-actions">
               <Button asChild size="lg">
-                <a href="#citadel-plans">Choose protection <ArrowRight size={16} aria-hidden="true" /></a>
+                <a href="#citadel-plans">
+                  Choose protection
+                  <ArrowRight size={16} aria-hidden="true" />
+                </a>
               </Button>
               <Button asChild size="lg" variant="outline">
                 <Link href="/citadel/docs/getting-started">Read Citadel setup guide</Link>
               </Button>
             </div>
             <div className="srv-citadel-v2-facts">
-              <span><strong>€0</strong> starter tier</span>
-              <span><strong>6</strong> challenge modes</span>
-              <span><strong>Per-path</strong> policy</span>
+              <span>
+                <strong>€0</strong>
+                {' '}
+                starter tier
+              </span>
+              <span>
+                <strong>6</strong>
+                {' '}
+                challenge modes
+              </span>
+              <span>
+                <strong>Per-path</strong>
+                {' '}
+                policy
+              </span>
             </div>
           </div>
 
+          <CitadelGate />
         </div>
       </section>
 
@@ -187,20 +137,20 @@ export default function CitadelPage() {
         </div>
       </section>
 
-      <section className="srv-citadel-v2-section" aria-labelledby="citadel-flow-title">
+      <section className="srv-citadel-v2-section" aria-labelledby="citadel-incident-title">
         <div className="sr-container">
           <div className="srv-citadel-v2-heading">
             <div>
-              <p className="sr-kicker">Request flow</p>
-              <h2 id="citadel-flow-title">Good traffic moves on. Bad traffic stops here.</h2>
+              <p className="sr-kicker">Example incident</p>
+              <h2 id="citadel-incident-title">The edge takes the flood. The origin barely notices.</h2>
             </div>
             <p>
-              Application-aware checks challenge suspicious requests before they reach
-              your origin, while legitimate visitors keep moving.
+              A simulated 17-minute HTTP flood, drawn with the Edge, Proxy and Blocked series
+              that Citadel Analytics uses. Move across the chart to read each moment.
             </p>
           </div>
 
-          <CitadelFlow />
+          <CitadelIncident />
         </div>
       </section>
 
@@ -217,33 +167,11 @@ export default function CitadelPage() {
             </p>
           </div>
 
-          <div className="srv-citadel-v2-threats">
-            {threats.map(item => {
-              const Icon = item.icon;
-              return (
-                <Card key={item.title} className="srv-citadel-v2-threat">
-                  <CardHeader>
-                    <span><Icon size={19} weight="duotone" /></span>
-                    <CardTitle>{item.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p>{item.text}</p>
-                    <small>{item.response}</small>
-                  </CardContent>
-                </Card>
-              );
-            })}
-          </div>
+          <CitadelThreats />
         </div>
       </section>
 
       <section className="srv-citadel-v2-section">
-        <div className="sr-container">
-          <CitadelTelemetryPreview />
-        </div>
-      </section>
-
-      <section className="srv-citadel-v2-section srv-citadel-v2-section-muted">
         <div className="sr-container">
           <div className="srv-citadel-v2-heading">
             <div>
@@ -256,24 +184,11 @@ export default function CitadelPage() {
             </p>
           </div>
 
-          <div className="srv-citadel-v2-controls">
-            {controls.map(item => {
-              const Icon = item.icon;
-              return (
-                <Card key={item.title} className="srv-citadel-v2-control">
-                  <CardHeader>
-                    <span><Icon size={19} weight="duotone" /></span>
-                    <CardTitle>{item.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent><p>{item.text}</p></CardContent>
-                </Card>
-              );
-            })}
-          </div>
+          <CitadelControls />
         </div>
       </section>
 
-      <section className="srv-citadel-v2-section" id="citadel-plans">
+      <section className="srv-citadel-v2-section srv-citadel-v2-section-muted" id="citadel-plans">
         <div className="sr-container">
           <div className="srv-citadel-v2-heading">
             <div>
@@ -294,20 +209,38 @@ export default function CitadelPage() {
                     <Badge variant="outline">{plan.featured ? 'Most popular' : 'Citadel'}</Badge>
                     <CardTitle>{plan.name}</CardTitle>
                   </div>
-                  <div className="srv-citadel-v2-price"><strong>{plan.price}</strong><span>/mo</span></div>
+                  <div className="srv-citadel-v2-price">
+                    <strong>{plan.price}</strong>
+                    <span>/mo</span>
+                  </div>
                 </CardHeader>
                 <CardContent>
                   <p>{plan.text}</p>
                   <dl>
-                    <div><dt>Protected domains</dt><dd>{plan.domains}</dd></div>
-                    <div><dt>Clean bandwidth</dt><dd>{plan.bandwidth}</dd></div>
-                    <div><dt>Challenge modes</dt><dd>Cookie · JS · Interaction · Auto</dd></div>
-                    <div><dt>Attack mode</dt><dd>Lockdown + allowlists</dd></div>
+                    <div>
+                      <dt>Protected domains</dt>
+                      <dd>{plan.domains}</dd>
+                    </div>
+                    <div>
+                      <dt>Clean bandwidth</dt>
+                      <dd>{plan.bandwidth}</dd>
+                    </div>
+                    <div>
+                      <dt>Challenge modes</dt>
+                      <dd>Cookie · JS · Interaction · Auto</dd>
+                    </div>
+                    <div>
+                      <dt>Attack mode</dt>
+                      <dd>Lockdown + allowlists</dd>
+                    </div>
                   </dl>
                 </CardContent>
                 <CardFooter>
                   <Button asChild variant={plan.featured ? 'default' : 'outline'}>
-                    <a href={plan.checkout}>Choose {plan.name} <ArrowRight size={15} aria-hidden="true" /></a>
+                    <a href={plan.checkout}>
+                      {`Choose ${plan.name} `}
+                      <ArrowRight size={15} aria-hidden="true" />
+                    </a>
                   </Button>
                 </CardFooter>
               </Card>
@@ -320,14 +253,20 @@ export default function CitadelPage() {
         <div className="sr-container">
           <Card className="srv-citadel-v2-final-card">
             <div>
-              <Badge variant="outline"><ShieldCheck size={13} weight="fill" /> Citadel</Badge>
+              <Badge variant="outline">
+                <ShieldCheck size={13} weight="fill" />
+                {' '}
+                Citadel
+              </Badge>
               <h2>Protect the origin without turning the website into a CAPTCHA wall.</h2>
               <p>Start with the free tier, then tune protection by domain and path as traffic changes.</p>
             </div>
             <div>
               <Button asChild size="lg">
                 <a href="https://dash.stealthrdp.com/store/layer-7-ddos-protection">
-                  View protection plans <ArrowRight size={16} aria-hidden="true" />
+                  View protection plans
+                  {' '}
+                  <ArrowRight size={16} aria-hidden="true" />
                 </a>
               </Button>
               <Button asChild size="lg" variant="outline">
