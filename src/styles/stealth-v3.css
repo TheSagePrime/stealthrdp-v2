@@ -6302,3 +6302,60 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
     display: inline-grid;
   }
 }
+
+/* ==========================================================================
+   Region and billing switches on phones.
+   Region: two equal halves. Billing: all five cycles in one row with short
+   labels (the full label stays for screen readers). One 44px height for both.
+   Last in the file so it wins over the earlier mobile overrides.
+   ========================================================================== */
+
+.srv-billing-short {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .srv-pricing-region,
+  .srv-pricing-billing {
+    overflow: visible !important;
+  }
+
+  .srv-pricing-controls .srv-selector,
+  .srv-pricing-controls .srv-billing-rail {
+    display: grid !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    gap: 4px;
+  }
+
+  .srv-pricing-controls .srv-selector {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .srv-pricing-controls .srv-billing-rail {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .srv-pricing-controls .srv-selector-option,
+  .srv-pricing-controls .srv-billing-option {
+    justify-content: center;
+    min-width: 0;
+    min-height: 44px;
+    padding-inline: 4px;
+    font-size: 0.8125rem;
+    white-space: nowrap;
+  }
+
+  .srv-billing-full {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .srv-billing-short {
+    display: inline;
+  }
+}
