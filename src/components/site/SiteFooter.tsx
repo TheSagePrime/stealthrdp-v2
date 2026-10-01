@@ -1,8 +1,9 @@
-/* eslint-disable @next/next/no-img-element */
+/* eslint-disable better-tailwindcss/no-unknown-classes, next/no-img-element */
 import { SiDiscord, SiInstagram, SiTelegram, SiX } from '@icons-pack/react-simple-icons';
 import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { CookieSettingsButton } from './TrackingConsent';
 
 const columns = [
   {
@@ -67,8 +68,16 @@ export function SiteFooter() {
             </p>
 
             <div className="srv3-footer-proof" aria-label="StealthRDP service highlights">
-              <span><strong>USA + EU</strong> regions</span>
-              <span><strong>24/7</strong> support</span>
+              <span>
+                <strong>USA + EU</strong>
+                {' '}
+                regions
+              </span>
+              <span>
+                <strong>24/7</strong>
+                {' '}
+                support
+              </span>
             </div>
 
             <ul className="srv3-socials" aria-label="StealthRDP social links">
@@ -91,14 +100,16 @@ export function SiteFooter() {
                 <ul>
                   {column.links.map(([label, href]) => (
                     <li key={href}>
-                      {href.startsWith('http') ? (
-                        <a href={href}>
-                          <span>{label}</span>
-                          <ArrowUpRight size={14} aria-hidden="true" />
-                        </a>
-                      ) : (
-                        <Link href={href}>{label}</Link>
-                      )}
+                      {href.startsWith('http')
+                        ? (
+                            <a href={href}>
+                              <span>{label}</span>
+                              <ArrowUpRight size={14} aria-hidden="true" />
+                            </a>
+                          )
+                        : (
+                            <Link href={href}>{label}</Link>
+                          )}
                     </li>
                   ))}
                 </ul>
@@ -116,14 +127,16 @@ export function SiteFooter() {
                 <ul>
                   {column.links.map(([label, href]) => (
                     <li key={href}>
-                      {href.startsWith('http') ? (
-                        <a href={href}>
-                          <span>{label}</span>
-                          <ArrowUpRight size={13} aria-hidden="true" />
-                        </a>
-                      ) : (
-                        <Link href={href}>{label}</Link>
-                      )}
+                      {href.startsWith('http')
+                        ? (
+                            <a href={href}>
+                              <span>{label}</span>
+                              <ArrowUpRight size={13} aria-hidden="true" />
+                            </a>
+                          )
+                        : (
+                            <Link href={href}>{label}</Link>
+                          )}
                     </li>
                   ))}
                 </ul>
@@ -137,6 +150,7 @@ export function SiteFooter() {
             <span className="srv3-footer-copyright">© 2026 StealthRDP. All rights reserved.</span>
             <div className="srv3-footer-legal">
               <Link href="/privacy">Privacy</Link>
+              <CookieSettingsButton className="srv3-footer-cookie" />
               <Link href="/docs/use-of-service">Use of service</Link>
               <Link href="/docs/windows-licensing">Windows licensing</Link>
             </div>
