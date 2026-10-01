@@ -4,7 +4,7 @@ import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
-import { CatalogMap } from '@/components/site/plans/CatalogMap';
+import { OsSession } from '@/components/site/os/OsSession';
 import extras from '@/components/site/plans/PlansExtras.module.css';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
 import { Badge } from '@/components/ui/badge';
@@ -91,7 +91,7 @@ export default async function PlansPage() {
               </span>
             </div>
           </div>
-          <CatalogMap plans={plans} />
+          <OsSession kind="plans" />
         </div>
       </section>
 

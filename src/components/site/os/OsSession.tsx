@@ -12,9 +12,12 @@ import styles from './OsSession.module.css';
  * Motion is CSS transforms and opacity only; reduced motion stops it.
  */
 
-type Kind = 'windows' | 'linux';
+type Kind = 'windows' | 'linux' | 'plans';
 
-const content = {
+/* An image may override how you connect to it; /plans mixes Windows and Linux. */
+type Image = { label: string; logo: string; client?: string; session?: string; access?: string };
+
+const content: Record<Kind, { client: string; session: string; access: string; images: Image[]; facts: string[] }> = {
   windows: {
     client: 'Remote Desktop',
     session: 'RDP session',
@@ -39,7 +42,17 @@ const content = {
     ],
     facts: ['Typically live in 5 min', 'Dedicated IPv4', 'Unlimited bandwidth'],
   },
-} as const;
+  plans: {
+    client: 'Remote Desktop',
+    session: 'RDP session',
+    access: 'Administrator',
+    images: [
+      { label: 'Windows Server', logo: '/brand/windows.svg' },
+      { label: 'Linux', logo: '/brand/linux.svg', client: 'SSH client', session: 'SSH session', access: 'root' },
+    ],
+    facts: ['Typically live in 5 min', 'Dedicated IPv4', 'Unlimited bandwidth'],
+  },
+};
 
 const regions = ['USA', 'EU'] as const;
 
@@ -84,7 +97,7 @@ function Core({ x, y, r, image, access, prefix, labelBelow = false }: {
   y: number;
   r: number;
   labelBelow?: boolean;
-  image: { label: string; logo: string };
+  image: Image;
   access: string;
   prefix: string;
 }) {
@@ -174,6 +187,9 @@ export function OsSession({ kind }: { kind: Kind }) {
   const regionIndex = useCycle(regions.length, 3900, root);
   const image = data.images[imageIndex]!;
   const region = regions[regionIndex]!;
+  const client = image.client ?? data.client;
+  const session = image.session ?? data.session;
+  const access = image.access ?? data.access;
 
   return (
     <div ref={root} className={styles.figure}>
@@ -186,7 +202,7 @@ export function OsSession({ kind }: { kind: Kind }) {
         <Comets axis="x" from={182} to={352} at={214} direction="out" count={4} prefix={`${kind}-w`} />
         <g className={styles.chip}>
           <rect x="216" y="152" width="102" height="24" rx="12" />
-          <text x="267" y="168" textAnchor="middle">{data.session}</text>
+          <text x="267" y="168" textAnchor="middle">{session}</text>
         </g>
 
         <g>
@@ -194,10 +210,10 @@ export function OsSession({ kind }: { kind: Kind }) {
           <circle cx="36" cy="205" r="18" className={styles.pillIcon} />
           <Laptop x={25} y={194} size={22} weight="duotone" className={styles.icon} />
           <text x="62" y="201" className={styles.name}>Your computer</text>
-          <text x="62" y="218" className={styles.note}>{data.client}</text>
+          <text x="62" y="218" className={styles.note}>{client}</text>
         </g>
 
-        <Core x={420} y={205} r={66} image={image} access={data.access} prefix={`${kind}-w`} />
+        <Core x={420} y={205} r={66} image={image} access={access} prefix={`${kind}-w`} />
 
         {data.facts.map((fact, index) => {
           const y = 150 + index * 55;
@@ -230,7 +246,7 @@ export function OsSession({ kind }: { kind: Kind }) {
         <Comets axis="y" from={76} to={200} at={189} direction="out" count={4} prefix={`${kind}-t`} />
         <g className={styles.chip}>
           <rect x="204" y="118" width="102" height="24" rx="12" />
-          <text x="255" y="134" textAnchor="middle">{data.session}</text>
+          <text x="255" y="134" textAnchor="middle">{session}</text>
         </g>
 
         <g>
@@ -238,10 +254,10 @@ export function OsSession({ kind }: { kind: Kind }) {
           <circle cx="122" cy="48" r="18" className={styles.pillIcon} />
           <Laptop x={111} y={37} size={22} weight="duotone" className={styles.icon} />
           <text x="148" y="44" className={styles.name}>Your computer</text>
-          <text x="148" y="61" className={styles.note}>{data.client}</text>
+          <text x="148" y="61" className={styles.note}>{client}</text>
         </g>
 
-        <Core x={180} y={262} r={58} image={image} access={data.access} prefix={`${kind}-t`} labelBelow />
+        <Core x={180} y={262} r={58} image={image} access={access} prefix={`${kind}-t`} labelBelow />
 
         {data.facts.map((fact, index) => {
           /* Two on the first row, one centred below. */
