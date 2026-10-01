@@ -43,6 +43,23 @@ function isSyntheticAuditRequest(request: NextRequest): boolean {
     && /sage-prime-seo-audit/i.test(request.headers.get('user-agent') || '');
 }
 
+function firstForwardedValue(value: string | null): string | null {
+  const first = value?.split(',')[0]?.trim();
+  return first || null;
+}
+
+/* The address the visitor used. Behind Coolify's Traefik the app sees plain
+   http on an internal port, so the forwarded host and protocol decide; without
+   this every production request redirects to itself in a loop. */
+function externalRequestUrl(request: NextRequest): URL {
+  const forwardedHost = firstForwardedValue(request.headers.get('x-forwarded-host'));
+  const forwardedProto = firstForwardedValue(request.headers.get('x-forwarded-proto'));
+  const host = forwardedHost ?? request.headers.get('host') ?? request.nextUrl.host;
+  const protocol = (forwardedProto ?? request.nextUrl.protocol).replace(/:$/, '');
+
+  return new URL(`${protocol}://${host}${request.nextUrl.pathname}${request.nextUrl.search}`);
+}
+
 function seoNormalizeRedirect(request: NextRequest): NextResponse | null {
   if (request.method !== 'GET' && request.method !== 'HEAD') {
     return null;
@@ -59,9 +76,9 @@ function seoNormalizeRedirect(request: NextRequest): NextResponse | null {
       return null;
     }
 
-    const current = request.nextUrl;
+    const current = externalRequestUrl(request);
     const pathname = normalizePathname(current.pathname, config.url.trailingSlash);
-    const target = current.clone();
+    const target = new URL(current);
     target.pathname = pathname;
 
     if (isProductionDeployEnv(config.environment.deployEnv)) {
