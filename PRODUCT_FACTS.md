@@ -12,7 +12,7 @@ Never invent reviews, numbers, stock, deadlines, guarantees or live data.
 | Activation | Most servers are live within 60 seconds of payment confirmation. At busy times it can take a few minutes. | Owner, Sep 2026 |
 | Refunds | 7-day refund, paid as account credit to the website wallet (not to the card). | `src/content/docs/1737944184-payment-terms.md`, `…-termination-of-service.md` |
 | Uptime guarantee | There is **no SLA**. Show measured uptime only, from the status page. | Owner |
-| Status data | Live 90-day uptime per monitored service from the public UptimeRobot page (`/api/uptime`); a dated snapshot in `src/content/uptime.json` when the feed is down. | `src/app/api/uptime/route.ts` |
+| Status data | Per monitored service: state, daily uptime for 90 days, 30- and 90-day uptime and incidents, from the UptimeRobot API (`UPTIMEROBOT_API_KEY`, production). Without the key: the public UptimeRobot page. When both fail: the snapshot in `src/content/uptime.json`. | `src/lib/stealth/uptime.ts` |
 | Scale | 12,000+ VPS deployed. | Owner. Do **not** say "10,000 customers" or similar. |
 | Support | Quick support through WhatsApp, client-area tickets and support@stealthrdp.com. | Owner. Do **not** offer "priority support" or promise a response time. |
 | Backups | Weekly backups. | Owner. An on-demand backup add-on is planned — do **not** mention it until it launches. |
