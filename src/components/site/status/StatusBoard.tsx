@@ -48,20 +48,24 @@ function when(iso: string): string {
   return `${day(iso)}, ${new Date(iso).toISOString().slice(11, 16)} UTC`;
 }
 
+/* UptimeRobot's own day colours: 100% green, 99–100% pale green, 95–99% orange, under 95% red. */
 function level(ratio: number | null): string {
   if (ratio === null) {
     return 'none';
   }
-  if (ratio >= 99.9) {
-    return 'ok';
+  if (ratio >= 100) {
+    return 'up';
   }
-  return ratio >= 99 ? 'warn' : 'bad';
+  if (ratio >= 99) {
+    return 'minor';
+  }
+  return ratio >= 95 ? 'degraded' : 'down';
 }
 
 function dayTitle(uptimeDay: UptimeDay): string {
   const date = day(`${uptimeDay.date}T00:00:00Z`);
   if (uptimeDay.ratio === null) {
-    return `${date}: no data`;
+    return `${date}: no records`;
   }
   const down = uptimeDay.downSeconds ? `, ${duration(uptimeDay.downSeconds)} down` : '';
   return `${date}: ${percent(uptimeDay.ratio)}${down}`;
@@ -230,10 +234,11 @@ export function StatusBoard({ report, children }: { report: UptimeReport; childr
           ))}
 
           <ul className={styles.legend} aria-label="Bar colours">
-            <li data-level="ok">99.9% or more</li>
-            <li data-level="warn">99% to 99.9%</li>
-            <li data-level="bad">Under 99%</li>
-            <li data-level="none">No data</li>
+            <li data-level="up">100%</li>
+            <li data-level="minor">99% to 100%</li>
+            <li data-level="degraded">95% to 99%</li>
+            <li data-level="down">Under 95%</li>
+            <li data-level="none">No records</li>
           </ul>
 
           <IncidentList incidents={report.incidents} latestOnly={report.source === 'public'} />
