@@ -34,6 +34,34 @@ for (const className of contract.protectedSeoStyles) {
   if (!globalCss.includes(`.${className}`)) errors.push(`protected SEO style missing: .${className}`);
 }
 
+for (const token of Object.values(contract.typography?.semanticScale ?? {})) {
+  if (!globalCss.includes(`${token}:`)) {
+    errors.push(`missing semantic typography token ${token}`);
+  }
+}
+
+const publicTypographyCssFiles = [
+  'src/styles/stealth.css',
+  'src/styles/stealth-v3.css',
+  'src/styles/surfaces.css',
+].filter(path => fs.existsSync(path));
+const allowedPublicFontFamilies = new Set([
+  'var(--font-body)',
+  'var(--font-display)',
+  'var(--font-mono)',
+  'inherit',
+]);
+
+for (const path of publicTypographyCssFiles) {
+  const css = fs.readFileSync(path, 'utf8');
+  for (const match of css.matchAll(/font-family:\s*([^;]+);/g)) {
+    const family = match[1].trim();
+    if (!allowedPublicFontFamilies.has(family)) {
+      errors.push(`${path}: unsupported public font-family ${family}`);
+    }
+  }
+}
+
 const sourceFiles = contract.sourceRoots
   .filter(root => fs.existsSync(root))
   .flatMap(root => listSourceFiles(root));
@@ -100,6 +128,25 @@ for (const path of sourceFiles) {
   for (const utility of contract.rules.forbiddenDecorationUtilities ?? []) {
     if (source.includes(utility)) {
       errors.push(`${path}: forbidden decorative utility "${utility}" detected`);
+    }
+  }
+}
+
+if (contract.visualSourceOfTruth && !fs.existsSync(contract.visualSourceOfTruth)) {
+  errors.push(`missing visual source of truth ${contract.visualSourceOfTruth}`);
+}
+
+const marketingRoots = [
+  'src/app/[locale]/(marketing)/',
+  'src/components/site/home/',
+];
+
+for (const path of sourceFiles) {
+  if (!marketingRoots.some(root => path.startsWith(root))) continue;
+  const source = fs.readFileSync(path, 'utf8');
+  for (const pattern of contract.rules.forbidLegacyMarketingPatterns ?? []) {
+    if (source.includes(pattern)) {
+      errors.push(`${path}: legacy marketing pattern "${pattern}" is forbidden by DESIGN.md`);
     }
   }
 }

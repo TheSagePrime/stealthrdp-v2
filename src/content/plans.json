@@ -1,0 +1,726 @@
+{
+  "currency": "EUR",
+  "source": {
+    "provider": "WHMCS",
+    "catalogUrls": [
+      "https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps",
+      "https://dash.stealthrdp.com/index.php?rp=/store/eu"
+    ],
+    "verifiedAt": "2026-09-26T09:39:00Z"
+  },
+  "plans": [
+    {
+      "name": "Starter USA",
+      "description": "Blazing Fast Connectivity",
+      "location": "USA",
+      "popular": false,
+      "specs": {
+        "cpu": "1 Core",
+        "ram": "2 GB",
+        "storage": "20 GB NVMe",
+        "bandwidth": "Unlimited"
+      },
+      "purchaseUrl": "https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps/starter-usa&billingcycle=monthly",
+      "source": {
+        "url": "https://dash.stealthrdp.com/store/standard-usa-rdp-vps/starter-usa",
+        "availability": "in-stock",
+        "stock": 20,
+        "os": "linux-only"
+      },
+      "pricing": {
+        "monthly": {
+          "amount": 4.59,
+          "suffix": "/mo",
+          "periodLabel": "every month"
+        },
+        "quarterly": {
+          "amount": 13.59,
+          "suffix": "/3mo",
+          "periodLabel": "every 3 months",
+          "referenceAmount": 13.77,
+          "discountLabel": "Save 1%"
+        },
+        "semiannual": {
+          "amount": 24.59,
+          "suffix": "/6mo",
+          "periodLabel": "every 6 months",
+          "referenceAmount": 27.54,
+          "discountLabel": "Save 11%"
+        },
+        "annual": {
+          "amount": 45.59,
+          "suffix": "/yr",
+          "periodLabel": "every year",
+          "referenceAmount": 55.08,
+          "discountLabel": "Save 17%"
+        },
+        "biannual": {
+          "amount": 80.59,
+          "suffix": "/2yr",
+          "periodLabel": "every 2 years",
+          "referenceAmount": 110.16,
+          "discountLabel": "Save 27%"
+        }
+      }
+    },
+    {
+      "name": "Bronze USA",
+      "description": "Blazing Fast Connectivity",
+      "location": "USA",
+      "popular": true,
+      "specs": {
+        "cpu": "2 Core",
+        "ram": "4 GB",
+        "storage": "60 GB NVMe",
+        "bandwidth": "Unlimited"
+      },
+      "purchaseUrl": "https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps/bronze-usa2&billingcycle=monthly",
+      "source": {
+        "url": "https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps/bronze-usa2&billingcycle=monthly",
+        "availability": "in-stock",
+        "stock": 16,
+        "os": "linux-windows"
+      },
+      "pricing": {
+        "currency": "EUR",
+        "monthly": {
+          "amount": 9.5,
+          "suffix": "/mo",
+          "periodLabel": "every month"
+        },
+        "quarterly": {
+          "amount": 26.5,
+          "referenceAmount": 28.5,
+          "suffix": "/3mo",
+          "periodLabel": "every 3 months",
+          "discountLabel": "Save 7%"
+        },
+        "semiannual": {
+          "amount": 51.5,
+          "referenceAmount": 57.0,
+          "suffix": "/6mo",
+          "periodLabel": "every 6 months",
+          "discountLabel": "Save 10%"
+        },
+        "annual": {
+          "amount": 96.5,
+          "referenceAmount": 114.0,
+          "suffix": "/yr",
+          "periodLabel": "every year",
+          "discountLabel": "Save 15%"
+        },
+        "biannual": {
+          "amount": 169.5,
+          "referenceAmount": 228.0,
+          "suffix": "/2yr",
+          "periodLabel": "every 2 years",
+          "discountLabel": "Save 26%"
+        }
+      }
+    },
+    {
+      "name": "Silver USA",
+      "description": "Blazing Fast Connectivity",
+      "location": "USA",
+      "popular": false,
+      "specs": {
+        "cpu": "2 Core",
+        "ram": "8 GB",
+        "storage": "80 GB NVMe",
+        "bandwidth": "Unlimited"
+      },
+      "purchaseUrl": "https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps/silver-usa&billingcycle=monthly",
+      "source": {
+        "url": "https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps/silver-usa&billingcycle=monthly",
+        "availability": "out-of-stock",
+        "stock": 0,
+        "os": "linux-windows"
+      },
+      "pricing": {
+        "currency": "EUR",
+        "monthly": {
+          "amount": 18.04,
+          "suffix": "/mo",
+          "periodLabel": "every month"
+        },
+        "quarterly": {
+          "amount": 51.3,
+          "referenceAmount": 54.12,
+          "suffix": "/3mo",
+          "periodLabel": "every 3 months",
+          "discountLabel": "Save 5%"
+        },
+        "semiannual": {
+          "amount": 69.5,
+          "referenceAmount": 108.24,
+          "suffix": "/6mo",
+          "periodLabel": "every 6 months",
+          "discountLabel": "Save 36%"
+        },
+        "annual": {
+          "amount": 182.88,
+          "referenceAmount": 216.48,
+          "suffix": "/yr",
+          "periodLabel": "every year",
+          "discountLabel": "Save 16%"
+        },
+        "biannual": {
+          "amount": 319.2,
+          "referenceAmount": 432.96,
+          "suffix": "/2yr",
+          "periodLabel": "every 2 years",
+          "discountLabel": "Save 26%"
+        }
+      }
+    },
+    {
+      "name": "Gold USA",
+      "description": "Blazing Fast Connectivity",
+      "location": "USA",
+      "popular": true,
+      "specs": {
+        "cpu": "4 Core",
+        "ram": "16 GB",
+        "storage": "100 GB NVMe",
+        "bandwidth": "Unlimited"
+      },
+      "purchaseUrl": "https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps/gold-usa&billingcycle=monthly",
+      "source": {
+        "url": "https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps/gold-usa&billingcycle=monthly",
+        "availability": "out-of-stock",
+        "stock": 0,
+        "os": "linux-windows"
+      },
+      "pricing": {
+        "currency": "EUR",
+        "monthly": {
+          "amount": 31.59,
+          "suffix": "/mo",
+          "periodLabel": "every month"
+        },
+        "quarterly": {
+          "amount": 89.59,
+          "referenceAmount": 94.77,
+          "suffix": "/3mo",
+          "periodLabel": "every 3 months",
+          "discountLabel": "Save 5%"
+        },
+        "semiannual": {
+          "amount": 169.59,
+          "referenceAmount": 189.54,
+          "suffix": "/6mo",
+          "periodLabel": "every 6 months",
+          "discountLabel": "Save 11%"
+        },
+        "annual": {
+          "amount": 319.59,
+          "referenceAmount": 379.08,
+          "suffix": "/yr",
+          "periodLabel": "every year",
+          "discountLabel": "Save 16%"
+        },
+        "biannual": {
+          "amount": 558.59,
+          "referenceAmount": 758.16,
+          "suffix": "/2yr",
+          "periodLabel": "every 2 years",
+          "discountLabel": "Save 26%"
+        }
+      }
+    },
+    {
+      "name": "Platinum USA",
+      "description": "Blazing Fast Connectivity",
+      "location": "USA",
+      "popular": false,
+      "specs": {
+        "cpu": "6 Core",
+        "ram": "16 GB",
+        "storage": "100 GB NVMe",
+        "bandwidth": "Unlimited"
+      },
+      "purchaseUrl": "https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps/platinum-usa&billingcycle=monthly",
+      "source": {
+        "url": "https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps/platinum-usa&billingcycle=monthly",
+        "availability": "out-of-stock",
+        "stock": 0,
+        "os": "linux-windows"
+      },
+      "pricing": {
+        "currency": "EUR",
+        "monthly": {
+          "amount": 36.59,
+          "suffix": "/mo",
+          "periodLabel": "every month"
+        },
+        "quarterly": {
+          "amount": 103.59,
+          "referenceAmount": 109.77,
+          "suffix": "/3mo",
+          "periodLabel": "every 3 months",
+          "discountLabel": "Save 6%"
+        },
+        "semiannual": {
+          "amount": 196.59,
+          "referenceAmount": 219.54,
+          "suffix": "/6mo",
+          "periodLabel": "every 6 months",
+          "discountLabel": "Save 10%"
+        },
+        "annual": {
+          "amount": 369.59,
+          "referenceAmount": 439.08,
+          "suffix": "/yr",
+          "periodLabel": "every year",
+          "discountLabel": "Save 16%"
+        },
+        "biannual": {
+          "amount": 649.59,
+          "referenceAmount": 878.16,
+          "suffix": "/2yr",
+          "periodLabel": "every 2 years",
+          "discountLabel": "Save 26%"
+        }
+      }
+    },
+    {
+      "name": "Diamond USA",
+      "description": "Blazing Fast Connectivity",
+      "location": "USA",
+      "popular": true,
+      "specs": {
+        "cpu": "6 Core",
+        "ram": "32 GB",
+        "storage": "150 GB NVMe",
+        "bandwidth": "Unlimited"
+      },
+      "purchaseUrl": "https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps/diamond-usa&billingcycle=monthly",
+      "source": {
+        "url": "https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps/diamond-usa&billingcycle=monthly",
+        "availability": "out-of-stock",
+        "stock": 0,
+        "os": "linux-windows"
+      },
+      "pricing": {
+        "currency": "EUR",
+        "monthly": {
+          "amount": 49.59,
+          "suffix": "/mo",
+          "periodLabel": "every month"
+        },
+        "quarterly": {
+          "amount": 139.59,
+          "referenceAmount": 148.77,
+          "suffix": "/3mo",
+          "periodLabel": "every 3 months",
+          "discountLabel": "Save 6%"
+        },
+        "semiannual": {
+          "amount": 264.59,
+          "referenceAmount": 297.54,
+          "suffix": "/6mo",
+          "periodLabel": "every 6 months",
+          "discountLabel": "Save 11%"
+        },
+        "annual": {
+          "amount": 499.59,
+          "referenceAmount": 595.08,
+          "suffix": "/yr",
+          "periodLabel": "every year",
+          "discountLabel": "Save 16%"
+        },
+        "biannual": {
+          "amount": 869.59,
+          "referenceAmount": 1190.16,
+          "suffix": "/2yr",
+          "periodLabel": "every 2 years",
+          "discountLabel": "Save 27%"
+        }
+      }
+    },
+    {
+      "name": "Emerald USA",
+      "description": "Blazing Fast Connectivity",
+      "location": "USA",
+      "popular": false,
+      "specs": {
+        "cpu": "8 Core",
+        "ram": "32 GB",
+        "storage": "150 GB NVMe",
+        "bandwidth": "Unlimited"
+      },
+      "purchaseUrl": "https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps/emerald-usa&billingcycle=monthly",
+      "source": {
+        "url": "https://dash.stealthrdp.com/index.php?rp=/store/standard-usa-rdp-vps/emerald-usa&billingcycle=monthly",
+        "availability": "out-of-stock",
+        "stock": 0,
+        "os": "linux-windows"
+      },
+      "pricing": {
+        "currency": "EUR",
+        "monthly": {
+          "amount": 59.59,
+          "suffix": "/mo",
+          "periodLabel": "every month"
+        },
+        "quarterly": {
+          "amount": 169.59,
+          "referenceAmount": 178.77,
+          "suffix": "/3mo",
+          "periodLabel": "every 3 months",
+          "discountLabel": "Save 5%"
+        },
+        "semiannual": {
+          "amount": 319.59,
+          "referenceAmount": 357.54,
+          "suffix": "/6mo",
+          "periodLabel": "every 6 months",
+          "discountLabel": "Save 11%"
+        },
+        "annual": {
+          "amount": 599.59,
+          "referenceAmount": 715.08,
+          "suffix": "/yr",
+          "periodLabel": "every year",
+          "discountLabel": "Save 16%"
+        },
+        "biannual": {
+          "amount": 999.59,
+          "referenceAmount": 1430.16,
+          "suffix": "/2yr",
+          "periodLabel": "every 2 years",
+          "discountLabel": "Save 30%"
+        }
+      }
+    },
+    {
+      "name": "Starter EU",
+      "description": "Blazing Fast Connectivity",
+      "location": "EU",
+      "popular": false,
+      "specs": {
+        "cpu": "2 Core",
+        "ram": "2 GB",
+        "storage": "15 GB NVMe",
+        "bandwidth": "Unlimited"
+      },
+      "purchaseUrl": "https://dash.stealthrdp.com/index.php?rp=/store/eu/starter-eu&billingcycle=monthly",
+      "source": {
+        "url": "https://dash.stealthrdp.com/store/eu/starter-eu",
+        "availability": "in-stock",
+        "stock": 3,
+        "os": "linux-only"
+      },
+      "pricing": {
+        "monthly": {
+          "amount": 6.59,
+          "suffix": "/mo",
+          "periodLabel": "every month"
+        },
+        "quarterly": {
+          "amount": 19.59,
+          "suffix": "/3mo",
+          "periodLabel": "every 3 months",
+          "referenceAmount": 19.77,
+          "discountLabel": "Save 1%"
+        },
+        "semiannual": {
+          "amount": 38.59,
+          "suffix": "/6mo",
+          "periodLabel": "every 6 months",
+          "referenceAmount": 39.54,
+          "discountLabel": "Save 2%"
+        },
+        "annual": {
+          "amount": 69.59,
+          "suffix": "/yr",
+          "periodLabel": "every year",
+          "referenceAmount": 79.08,
+          "discountLabel": "Save 12%"
+        },
+        "biannual": {
+          "amount": 119.59,
+          "suffix": "/2yr",
+          "periodLabel": "every 2 years",
+          "referenceAmount": 158.16,
+          "discountLabel": "Save 24%"
+        }
+      }
+    },
+    {
+      "name": "Bronze EU",
+      "description": "Blazing Fast Connectivity",
+      "location": "EU",
+      "popular": false,
+      "specs": {
+        "cpu": "2 Core",
+        "ram": "4 GB",
+        "storage": "40 GB NVMe",
+        "bandwidth": "Unlimited"
+      },
+      "purchaseUrl": "https://dash.stealthrdp.com/index.php?rp=/store/eu/bronze-eu&billingcycle=monthly",
+      "source": {
+        "url": "https://dash.stealthrdp.com/index.php?rp=/store/eu/bronze-eu&billingcycle=monthly",
+        "availability": "in-stock",
+        "stock": 5,
+        "os": "linux-windows"
+      },
+      "pricing": {
+        "currency": "EUR",
+        "monthly": {
+          "amount": 13.59,
+          "suffix": "/mo",
+          "periodLabel": "every month"
+        },
+        "quarterly": {
+          "amount": 38.59,
+          "referenceAmount": 40.77,
+          "suffix": "/3mo",
+          "periodLabel": "every 3 months",
+          "discountLabel": "Save 5%"
+        },
+        "semiannual": {
+          "amount": 72.59,
+          "referenceAmount": 81.54,
+          "suffix": "/6mo",
+          "periodLabel": "every 6 months",
+          "discountLabel": "Save 11%"
+        },
+        "annual": {
+          "amount": 134.59,
+          "referenceAmount": 163.08,
+          "suffix": "/yr",
+          "periodLabel": "every year",
+          "discountLabel": "Save 17%"
+        },
+        "biannual": {
+          "amount": 239.59,
+          "referenceAmount": 326.16,
+          "suffix": "/2yr",
+          "periodLabel": "every 2 years",
+          "discountLabel": "Save 27%"
+        }
+      }
+    },
+    {
+      "name": "Silver EU",
+      "description": "Blazing Fast Connectivity",
+      "location": "EU",
+      "popular": true,
+      "specs": {
+        "cpu": "4 Core",
+        "ram": "8 GB",
+        "storage": "80 GB NVMe",
+        "bandwidth": "Unlimited"
+      },
+      "purchaseUrl": "https://dash.stealthrdp.com/index.php?rp=/store/eu/silver-eu&billingcycle=monthly",
+      "source": {
+        "url": "https://dash.stealthrdp.com/index.php?rp=/store/eu",
+        "availability": "in-stock",
+        "stock": 2,
+        "os": "linux-windows"
+      },
+      "pricing": {
+        "currency": "EUR",
+        "monthly": {
+          "amount": 24.59,
+          "suffix": "/mo",
+          "periodLabel": "every month"
+        },
+        "quarterly": {
+          "amount": 69.59,
+          "referenceAmount": 73.77,
+          "suffix": "/3mo",
+          "periodLabel": "every 3 months",
+          "discountLabel": "Save 6%"
+        },
+        "semiannual": {
+          "amount": 129.59,
+          "referenceAmount": 147.54,
+          "suffix": "/6mo",
+          "periodLabel": "every 6 months",
+          "discountLabel": "Save 12%"
+        },
+        "annual": {
+          "amount": 249.59,
+          "referenceAmount": 295.08,
+          "suffix": "/yr",
+          "periodLabel": "every year",
+          "discountLabel": "Save 15%"
+        },
+        "biannual": {
+          "amount": 399.59,
+          "referenceAmount": 590.16,
+          "suffix": "/2yr",
+          "periodLabel": "every 2 years",
+          "discountLabel": "Save 32%"
+        }
+      }
+    },
+    {
+      "name": "Gold EU",
+      "description": "Blazing Fast Connectivity",
+      "location": "EU",
+      "popular": false,
+      "specs": {
+        "cpu": "4 Core",
+        "ram": "16 GB",
+        "storage": "100 GB NVMe",
+        "bandwidth": "Unlimited"
+      },
+      "purchaseUrl": "https://dash.stealthrdp.com/index.php?rp=/store/eu/gold-eu&billingcycle=monthly",
+      "source": {
+        "url": "https://dash.stealthrdp.com/index.php?rp=/store/eu",
+        "availability": "out-of-stock",
+        "stock": 0,
+        "os": "linux-windows"
+      },
+      "pricing": {
+        "currency": "EUR",
+        "monthly": {
+          "amount": 44.59,
+          "suffix": "/mo",
+          "periodLabel": "every month"
+        },
+        "quarterly": {
+          "amount": 124.59,
+          "referenceAmount": 133.77,
+          "suffix": "/3mo",
+          "periodLabel": "every 3 months",
+          "discountLabel": "Save 7%"
+        },
+        "semiannual": {
+          "amount": 239.59,
+          "referenceAmount": 267.54,
+          "suffix": "/6mo",
+          "periodLabel": "every 6 months",
+          "discountLabel": "Save 10%"
+        },
+        "annual": {
+          "amount": 449.59,
+          "referenceAmount": 535.08,
+          "suffix": "/yr",
+          "periodLabel": "every year",
+          "discountLabel": "Save 16%"
+        },
+        "biannual": {
+          "amount": 769.59,
+          "referenceAmount": 1070.16,
+          "suffix": "/2yr",
+          "periodLabel": "every 2 years",
+          "discountLabel": "Save 28%"
+        }
+      }
+    },
+    {
+      "name": "Platinum EU",
+      "description": "Blazing Fast Connectivity",
+      "location": "EU",
+      "popular": true,
+      "specs": {
+        "cpu": "6 Core",
+        "ram": "16 GB",
+        "storage": "100 GB NVMe",
+        "bandwidth": "Unlimited"
+      },
+      "purchaseUrl": "https://dash.stealthrdp.com/index.php?rp=/store/eu/platinum-eu&billingcycle=monthly",
+      "source": {
+        "url": "https://dash.stealthrdp.com/index.php?rp=/store/eu",
+        "availability": "out-of-stock",
+        "stock": 0,
+        "os": "linux-windows"
+      },
+      "pricing": {
+        "currency": "EUR",
+        "monthly": {
+          "amount": 49.59,
+          "suffix": "/mo",
+          "periodLabel": "every month"
+        },
+        "quarterly": {
+          "amount": 139.59,
+          "referenceAmount": 148.77,
+          "suffix": "/3mo",
+          "periodLabel": "every 3 months",
+          "discountLabel": "Save 6%"
+        },
+        "semiannual": {
+          "amount": 259.59,
+          "referenceAmount": 297.54,
+          "suffix": "/6mo",
+          "periodLabel": "every 6 months",
+          "discountLabel": "Save 13%"
+        },
+        "annual": {
+          "amount": 499.59,
+          "referenceAmount": 595.08,
+          "suffix": "/yr",
+          "periodLabel": "every year",
+          "discountLabel": "Save 16%"
+        },
+        "biannual": {
+          "amount": 869.59,
+          "referenceAmount": 1190.16,
+          "suffix": "/2yr",
+          "periodLabel": "every 2 years",
+          "discountLabel": "Save 27%"
+        }
+      }
+    },
+    {
+      "name": "Diamond EU",
+      "description": "Blazing Fast Connectivity",
+      "location": "EU",
+      "popular": false,
+      "specs": {
+        "cpu": "6 Core",
+        "ram": "24 GB",
+        "storage": "120 GB NVMe",
+        "bandwidth": "Unlimited"
+      },
+      "purchaseUrl": "https://dash.stealthrdp.com/index.php?rp=/store/eu/diamond-eu&billingcycle=monthly",
+      "source": {
+        "url": "https://dash.stealthrdp.com/index.php?rp=/store/eu",
+        "availability": "out-of-stock",
+        "stock": 0,
+        "os": "linux-windows"
+      },
+      "pricing": {
+        "currency": "EUR",
+        "monthly": {
+          "amount": 55.59,
+          "suffix": "/mo",
+          "periodLabel": "every month"
+        },
+        "quarterly": {
+          "amount": 159.59,
+          "referenceAmount": 166.77,
+          "suffix": "/3mo",
+          "periodLabel": "every 3 months",
+          "discountLabel": "Save 4%"
+        },
+        "semiannual": {
+          "amount": 299.59,
+          "referenceAmount": 333.54,
+          "suffix": "/6mo",
+          "periodLabel": "every 6 months",
+          "discountLabel": "Save 10%"
+        },
+        "annual": {
+          "amount": 559.59,
+          "referenceAmount": 667.08,
+          "suffix": "/yr",
+          "periodLabel": "every year",
+          "discountLabel": "Save 16%"
+        },
+        "biannual": {
+          "amount": 999.59,
+          "referenceAmount": 1334.16,
+          "suffix": "/2yr",
+          "periodLabel": "every 2 years",
+          "discountLabel": "Save 25%"
+        }
+      }
+    }
+  ]
+}

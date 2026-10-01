@@ -16,7 +16,14 @@
     "styling": "tailwindcss",
     "componentSystem": "shadcn/ui",
     "primitives": "radix-ui",
-    "icons": "lucide-react"
+    "icons": [
+      "@phosphor-icons/react",
+      "@hugeicons/react",
+      "@hugeicons/core-free-icons",
+      "@icons-pack/react-simple-icons"
+    ],
+    "iconsLegacy": "lucide-react",
+    "iconRules": "One family per component. Phosphor is primary; Hugeicons is a marketing accent only; brand marks come from Simple Icons or the official vendor SVG. Sizes 16/20/24/32. One stroke weight per surface. Decorative icons are aria-hidden; icon-only controls need an accessible name and a 44px hit area. No emoji as icons. lucide-react is legacy and must not be used for new work."
   },
   "database": {
     "engine": "postgresql",
@@ -29,7 +36,11 @@
     "provider": "coolify"
   },
   "requiredDependencies": [
+    "@hugeicons/core-free-icons",
+    "@hugeicons/react",
+    "@icons-pack/react-simple-icons",
     "@logtape/logtape",
+    "@phosphor-icons/react",
     "class-variance-authority",
     "clsx",
     "drizzle-orm",

@@ -1,0 +1,303 @@
+{
+  "artifact_type": "search_demand_map",
+  "version": 1,
+  "identity": {
+    "project": "stealthrdp",
+    "canonical_domain": "www.stealthrdp.com",
+    "country": "US",
+    "locale": "en-US",
+    "open_seo": {
+      "project_id": "stealthrdp",
+      "location_code": 2840,
+      "language_code": "en"
+    }
+  },
+  "research_period": "2026-09-27 current SERP/intent review; no paid keyword-volume refresh",
+  "research_sources": [
+    {
+      "kind": "serp",
+      "reference": "https://rafftechnologies.com/windows-server/windows-vps-for-remote-desktop",
+      "note": "Remote desktop decision/sizing result",
+      "project_id": "stealthrdp",
+      "country": "US",
+      "locale": "en-US",
+      "retrieved_at": "2026-09-27"
+    },
+    {
+      "kind": "serp",
+      "reference": "https://rafftechnologies.com/learn/guides/vps-for-web-hosting",
+      "note": "Web-hosting decision result",
+      "project_id": "stealthrdp",
+      "country": "US",
+      "locale": "en-US",
+      "retrieved_at": "2026-09-27"
+    },
+    {
+      "kind": "serp",
+      "reference": "https://www.bluehost.com/blog/vps-for-automation-workflows/",
+      "note": "Automation-workflow guide result",
+      "project_id": "stealthrdp",
+      "country": "US",
+      "locale": "en-US",
+      "retrieved_at": "2026-09-27"
+    },
+    {
+      "kind": "serp",
+      "reference": "https://servury.com/blog/best-vps-for-trading-what-actually-matters-beyond-price/",
+      "note": "Trading infrastructure selection result",
+      "project_id": "stealthrdp",
+      "country": "US",
+      "locale": "en-US",
+      "retrieved_at": "2026-09-27"
+    },
+    {
+      "kind": "serp",
+      "reference": "https://vpsproof.com/blog/best-vps-for-backups",
+      "note": "Backup VPS decision result",
+      "project_id": "stealthrdp",
+      "country": "US",
+      "locale": "en-US",
+      "retrieved_at": "2026-09-27"
+    }
+  ],
+  "clusters": [
+    {
+      "name": "VPS use cases",
+      "queries": [
+        "vps for remote desktop",
+        "vps for web hosting",
+        "vps for automation",
+        "vps for trading",
+        "vps for backups"
+      ],
+      "applies": true
+    },
+    {
+      "name": "VPS sizing and selection",
+      "queries": [
+        "how to choose vps for remote desktop",
+        "vps resources for web hosting",
+        "vps for bots and scripts",
+        "trading vps latency",
+        "backup vps storage"
+      ],
+      "applies": true
+    }
+  ],
+  "opportunities": [
+    {
+      "target_query": "vps for remote desktop",
+      "secondary_queries": [
+        "remote desktop vps",
+        "use vps as remote desktop"
+      ],
+      "intent": "informational/commercial investigation",
+      "page_type": "article",
+      "commercial_value": "high",
+      "product_relevance": "high",
+      "serp_evidence": [
+        {
+          "kind": "serp",
+          "reference": "https://rafftechnologies.com/windows-server/windows-vps-for-remote-desktop",
+          "note": "Decision-oriented RDP VPS guide",
+          "project_id": "stealthrdp",
+          "country": "US",
+          "locale": "en-US",
+          "retrieved_at": "2026-09-27"
+        },
+        {
+          "kind": "serp",
+          "reference": "https://cloud.google.com/learn/what-is-a-virtual-private-server",
+          "note": "Authoritative VPS use-case background",
+          "project_id": "stealthrdp",
+          "country": "US",
+          "locale": "en-US",
+          "retrieved_at": "2026-09-27"
+        }
+      ],
+      "content_gap": "Existing StealthRDP content covers RDP security and performance, but not the earlier decision of whether a VPS fits remote-desktop work or how to size it.",
+      "proposed_unique_value": "Separate access protocol, server resources, licensing, latency and application sizing; link to existing security/performance guides instead of duplicating them.",
+      "funnel_destination": "/plans",
+      "cannibalization": "Distinct from /blog/7-tips-for-securing-your-remote-desktop-connection.html and /blog/5-ways-to-optimize-your-rdp-performance-for-remote-work.html; this page owns selection/sizing intent.",
+      "internal_link_targets": [
+        "/plans",
+        "/docs/windows-licensing",
+        "/blog/7-tips-for-securing-your-remote-desktop-connection.html",
+        "/blog/5-ways-to-optimize-your-rdp-performance-for-remote-work.html"
+      ],
+      "priority": "high",
+      "existing_url": null
+    },
+    {
+      "target_query": "vps for web hosting",
+      "secondary_queries": [
+        "vps web hosting",
+        "when to use vps for website"
+      ],
+      "intent": "informational/commercial investigation",
+      "page_type": "article",
+      "commercial_value": "high",
+      "product_relevance": "high",
+      "serp_evidence": [
+        {
+          "kind": "serp",
+          "reference": "https://rafftechnologies.com/learn/guides/vps-for-web-hosting",
+          "note": "Current decision guide",
+          "project_id": "stealthrdp",
+          "country": "US",
+          "locale": "en-US",
+          "retrieved_at": "2026-09-27"
+        },
+        {
+          "kind": "serp",
+          "reference": "https://aws.amazon.com/what-is/vps/",
+          "note": "Authoritative VPS background",
+          "project_id": "stealthrdp",
+          "country": "US",
+          "locale": "en-US",
+          "retrieved_at": "2026-09-27"
+        }
+      ],
+      "content_gap": "Existing StealthRDP articles discuss management/issues but do not clearly explain when a VPS is preferable to shared/managed hosting and how to size the whole web stack.",
+      "proposed_unique_value": "Decision framework covering when not to use a VPS, whole-stack sizing, OS choice, operational responsibility and the point where one VPS stops being enough.",
+      "funnel_destination": "/plans",
+      "cannibalization": "No current article owns the web-hosting selection intent; links to Windows-vs-Linux and performance/issue guides as supporting content.",
+      "internal_link_targets": [
+        "/plans",
+        "/blog/windows-vs-linux-vps-which-os-best-fits-your-business.html",
+        "/blog/common-vps-hosting-issues-and-their-solutions.html",
+        "/blog/common-vps-performance-bottlenecks.html"
+      ],
+      "priority": "high",
+      "existing_url": null
+    },
+    {
+      "target_query": "vps for automation",
+      "secondary_queries": [
+        "vps for bots",
+        "vps for automation scripts",
+        "server for automation workflows"
+      ],
+      "intent": "informational/commercial investigation",
+      "page_type": "article",
+      "commercial_value": "high",
+      "product_relevance": "high",
+      "serp_evidence": [
+        {
+          "kind": "serp",
+          "reference": "https://www.bluehost.com/blog/vps-for-automation-workflows/",
+          "note": "Current automation VPS guide",
+          "project_id": "stealthrdp",
+          "country": "US",
+          "locale": "en-US",
+          "retrieved_at": "2026-09-27"
+        },
+        {
+          "kind": "serp",
+          "reference": "https://cloud.google.com/learn/what-is-a-virtual-private-server",
+          "note": "Authoritative VPS background",
+          "project_id": "stealthrdp",
+          "country": "US",
+          "locale": "en-US",
+          "retrieved_at": "2026-09-27"
+        }
+      ],
+      "content_gap": "SERPs often jump quickly to tools/spec recommendations. StealthRDP can add a workload-first framework around concurrency, persistence, restart design, OS fit and abuse boundaries.",
+      "proposed_unique_value": "Explain when persistent VPS hosting fits automation, size by concurrency, distinguish server health from job health, and state acceptable-use boundaries without promising 24/7 application success.",
+      "funnel_destination": "/plans",
+      "cannibalization": "Distinct from high-availability and monitoring articles; this page owns initial automation/bot infrastructure selection.",
+      "internal_link_targets": [
+        "/plans",
+        "/blog/designing-automated-high-availability-vps.html",
+        "/blog/8-signs-you-need-to-upgrade-your-vps-resources.html"
+      ],
+      "priority": "high",
+      "existing_url": null
+    },
+    {
+      "target_query": "vps for trading",
+      "secondary_queries": [
+        "trading vps",
+        "vps for trading bots",
+        "vps for metatrader"
+      ],
+      "intent": "informational/commercial investigation",
+      "page_type": "article",
+      "commercial_value": "high",
+      "product_relevance": "medium",
+      "serp_evidence": [
+        {
+          "kind": "serp",
+          "reference": "https://servury.com/blog/best-vps-for-trading-what-actually-matters-beyond-price/",
+          "note": "Infrastructure selection result",
+          "project_id": "stealthrdp",
+          "country": "US",
+          "locale": "en-US",
+          "retrieved_at": "2026-09-27"
+        },
+        {
+          "kind": "serp",
+          "reference": "https://thetradingexpert.com/learn/guides/trading-vps-selection-guide",
+          "note": "Trading VPS selection/setup result",
+          "project_id": "stealthrdp",
+          "country": "US",
+          "locale": "en-US",
+          "retrieved_at": "2026-09-27"
+        }
+      ],
+      "content_gap": "Many results market latency or rank providers. A safer and more useful page should separate infrastructure benefits from trading outcomes and explain endpoint proximity, reliability, OS fit and restart planning.",
+      "proposed_unique_value": "Explicitly state that a VPS cannot improve a strategy or guarantee execution/profit; focus only on server placement, continuity, sizing and recovery.",
+      "funnel_destination": "/plans",
+      "cannibalization": "No existing StealthRDP article serves trading-infrastructure selection intent.",
+      "internal_link_targets": [
+        "/plans",
+        "/blog/8-signs-you-need-to-upgrade-your-vps-resources.html"
+      ],
+      "priority": "medium",
+      "existing_url": null
+    },
+    {
+      "target_query": "vps for backups",
+      "secondary_queries": [
+        "vps backup server",
+        "vps for backup storage",
+        "remote backup vps"
+      ],
+      "intent": "informational/commercial investigation",
+      "page_type": "article",
+      "commercial_value": "medium",
+      "product_relevance": "medium",
+      "serp_evidence": [
+        {
+          "kind": "serp",
+          "reference": "https://vpsproof.com/blog/best-vps-for-backups",
+          "note": "Backup VPS selection result",
+          "project_id": "stealthrdp",
+          "country": "US",
+          "locale": "en-US",
+          "retrieved_at": "2026-09-27"
+        },
+        {
+          "kind": "serp",
+          "reference": "https://www.hostmycode.com/tutorials/incremental-backup-tutorial-2026-restic-s3-vps-dedicated-servers",
+          "note": "Backup implementation/restore result",
+          "project_id": "stealthrdp",
+          "country": "US",
+          "locale": "en-US",
+          "retrieved_at": "2026-09-27"
+        }
+      ],
+      "content_gap": "StealthRDP already has an automated-backup setup article, but not a selection/design guide explaining when a VPS is an appropriate backup target and when object/dedicated storage may be better.",
+      "proposed_unique_value": "Lead with failure-domain separation, retention-driven sizing, bandwidth/restore windows, encryption and restore testing; link to existing setup tutorial.",
+      "funnel_destination": "/plans",
+      "cannibalization": "Distinct from /blog/how-to-set-up-automated-backups-for-vps-hosting.html; new page owns architecture/selection intent, existing page owns setup.",
+      "internal_link_targets": [
+        "/plans",
+        "/blog/how-to-set-up-automated-backups-for-vps-hosting.html"
+      ],
+      "priority": "medium",
+      "existing_url": null
+    }
+  ],
+  "decision": "produce"
+}

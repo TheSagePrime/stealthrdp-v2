@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="320" viewBox="0 0 960 320" role="img" aria-label="Cloudflare to Citadel to origin">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b1220"/>
+      <stop offset="100%" stop-color="#111827"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="320" rx="24" fill="url(#bg)"/>
+  <rect x="40" y="90" width="200" height="120" rx="16" fill="rgba(34,211,238,0.08)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="140" y="145" text-anchor="middle" fill="#e2e8f0" font-family="Segoe UI,sans-serif" font-size="18" font-weight="600">Visitor</text>
+  <text x="140" y="172" text-anchor="middle" fill="#94a3b8" font-family="Segoe UI,sans-serif" font-size="13">Browser / app</text>
+  <path d="M250 150 H310" stroke="#67e8f9" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="320" y="90" width="200" height="120" rx="16" fill="rgba(59,130,246,0.1)" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="420" y="145" text-anchor="middle" fill="#e2e8f0" font-family="Segoe UI,sans-serif" font-size="18" font-weight="600">Cloudflare</text>
+  <text x="420" y="172" text-anchor="middle" fill="#94a3b8" font-family="Segoe UI,sans-serif" font-size="13">Orange-cloud DNS</text>
+  <path d="M530 150 H590" stroke="#67e8f9" stroke-width="2"/>
+  <rect x="600" y="90" width="200" height="120" rx="16" fill="rgba(34,211,238,0.12)" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="700" y="145" text-anchor="middle" fill="#e2e8f0" font-family="Segoe UI,sans-serif" font-size="18" font-weight="600">Citadel</text>
+  <text x="700" y="172" text-anchor="middle" fill="#94a3b8" font-family="Segoe UI,sans-serif" font-size="13">L7 challenge + proxy</text>
+  <path d="M810 150 H860" stroke="#67e8f9" stroke-width="2"/>
+  <circle cx="900" cy="150" r="28" fill="rgba(16,185,129,0.15)" stroke="#34d399" stroke-width="1.5"/>
+  <text x="900" y="155" text-anchor="middle" fill="#e2e8f0" font-family="Segoe UI,sans-serif" font-size="12" font-weight="600">Origin</text>
+  <text x="480" y="280" text-anchor="middle" fill="#64748b" font-family="Segoe UI,sans-serif" font-size="13">Only clean requests reach your server</text>
+</svg>

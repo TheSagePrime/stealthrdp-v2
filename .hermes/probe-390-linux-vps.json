@@ -1,0 +1,259 @@
+{
+  "url": "http://localhost:3124/linux-vps",
+  "viewport": [
+    390,
+    844
+  ],
+  "elementCount": 823,
+  "spacing": {
+    "2": 110,
+    "4": 122,
+    "6": 123,
+    "8": 207,
+    "10": 55,
+    "12": 153,
+    "14": 4,
+    "16": 319,
+    "18": 4,
+    "20": 146,
+    "24": 29,
+    "32": 19,
+    "40": 12,
+    "48": 8,
+    "58": 1,
+    "60": 2,
+    "64": 21,
+    "72": 2
+  },
+  "spacingSingletons": [
+    58
+  ],
+  "radii": {
+    "0": 662,
+    "12": 116,
+    "18": 9,
+    "999": 36
+  },
+  "type": {
+    "10": 1,
+    "11": 41,
+    "12": 108,
+    "13": 261,
+    "14": 67,
+    "16": 327,
+    "34.4": 8,
+    "20.03": 6,
+    "44.8": 2,
+    "18.4": 1,
+    "24.29": 1
+  },
+  "lineHeights": {
+    "18": 17,
+    "24": 34,
+    "26.4": 275,
+    "21.45": 252,
+    "19.8": 76,
+    "23.1": 38,
+    "18.15": 23,
+    "15.4": 18
+  },
+  "shadowCount": 4,
+  "overflow": [],
+  "overflowIntentional": [],
+  "overflowContained": [
+    {
+      "sel": "thead > tr > th > span.sr-visually-hidden",
+      "over": 50,
+      "text": "Action"
+    }
+  ],
+  "clipped": [],
+  "alignmentEdges": {
+    "0": 13,
+    "16": 1,
+    "64": 1
+  },
+  "siblingVariance": [
+    {
+      "parent": "div.sr-table-wrap > table.sr-table > thead > tr",
+      "tag": "TH",
+      "n": 7,
+      "heightSpread": 0,
+      "widthSpread": 146,
+      "heights": [
+        52,
+        52,
+        52,
+        52,
+        52,
+        52,
+        52
+      ]
+    },
+    {
+      "parent": "div.sr-table-wrap > table.sr-table > tbody > tr",
+      "tag": "TD",
+      "n": 6,
+      "heightSpread": 0,
+      "widthSpread": 110,
+      "heights": [
+        108,
+        108,
+        108,
+        108,
+        108,
+        108
+      ]
+    },
+    {
+      "parent": "div.sr-table-wrap > table.sr-table > tbody > tr",
+      "tag": "TD",
+      "n": 6,
+      "heightSpread": 0,
+      "widthSpread": 110,
+      "heights": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        102
+      ]
+    },
+    {
+      "parent": "div.sr-table-wrap > table.sr-table > tbody > tr",
+      "tag": "TD",
+      "n": 6,
+      "heightSpread": 0,
+      "widthSpread": 110,
+      "heights": [
+        108,
+        108,
+        108,
+        108,
+        108,
+        108
+      ]
+    },
+    {
+      "parent": "div.sr-table-wrap > table.sr-table > tbody > tr",
+      "tag": "TD",
+      "n": 6,
+      "heightSpread": 0,
+      "widthSpread": 110,
+      "heights": [
+        102,
+        102,
+        102,
+        102,
+        102,
+        102
+      ]
+    },
+    {
+      "parent": "div.sr-table-wrap > table.sr-table > tbody > tr",
+      "tag": "TD",
+      "n": 6,
+      "heightSpread": 0,
+      "widthSpread": 110,
+      "heights": [
+        139,
+        139,
+        139,
+        139,
+        139,
+        139
+      ]
+    },
+    {
+      "parent": "div.sr-table-wrap > table.sr-table > tbody > tr",
+      "tag": "TD",
+      "n": 6,
+      "heightSpread": 0,
+      "widthSpread": 110,
+      "heights": [
+        101,
+        101,
+        101,
+        101,
+        101,
+        101
+      ]
+    },
+    {
+      "parent": "div.sr-table-wrap > table.sr-table > thead > tr",
+      "tag": "TH",
+      "n": 3,
+      "heightSpread": 0,
+      "widthSpread": 179,
+      "heights": [
+        52,
+        52,
+        52
+      ]
+    },
+    {
+      "parent": "tbody > tr > td > ul.flex",
+      "tag": "LI",
+      "n": 3,
+      "heightSpread": 0,
+      "widthSpread": 54,
+      "heights": [
+        27,
+        27,
+        27
+      ]
+    }
+  ],
+  "buttons": [
+    {
+      "sel": "div.sr-control-row > div.sr-control-stack > div.inline-flex > button.inline-flex",
+      "label": "USA",
+      "w": 52,
+      "h": 44,
+      "x": 29,
+      "y": 1609
+    },
+    {
+      "sel": "div.sr-control-row > div.sr-control-stack > div.inline-flex > button.inline-flex",
+      "label": "EU",
+      "w": 44,
+      "h": 44,
+      "x": 80,
+      "y": 1609
+    },
+    {
+      "sel": "div.sr-control-stack > ul.sr-term-ladder > li > button.sr-term-option",
+      "label": "Monthly\u20ac9.50per month\u20ac9.",
+      "w": 161,
+      "h": 118,
+      "x": 29,
+      "y": 1689
+    },
+    {
+      "sel": "div.sr-control-stack > ul.sr-term-ladder > li > button.sr-term-option",
+      "label": "Quarterly\u20ac9per month\u20ac27 ",
+      "w": 161,
+      "h": 155,
+      "x": 200,
+      "y": 1689
+    },
+    {
+      "sel": "div.sr-control-stack > ul.sr-term-ladder > li > button.sr-term-option",
+      "label": "Annual\u20ac8per month\u20ac96 bil",
+      "w": 161,
+      "h": 155,
+      "x": 29,
+      "y": 1853
+    },
+    {
+      "sel": "div.sr-control-stack > ul.sr-term-ladder > li > button.sr-term-option",
+      "label": "Biannual\u20ac7per month\u20ac168 ",
+      "w": 161,
+      "h": 155,
+      "x": 200,
+      "y": 1853
+    }
+  ],
+  "smallTargets": []
+}

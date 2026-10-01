@@ -1,0 +1,351 @@
+/* Frameless, like the Citadel hero: the scene sits on the hero itself. */
+.figure {
+  position: relative;
+  isolation: isolate;
+  color: var(--citadel-ink);
+}
+
+.figure::before {
+  position: absolute;
+  z-index: -1;
+  inset: -6% -4%;
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    color-mix(in srgb, var(--citadel-muted) 28%, transparent) 1px,
+    transparent 0
+  );
+  background-size: 16px 16px;
+  content: '';
+  mask-image: radial-gradient(ellipse 55% 60% at 62% 48%, black 20%, transparent 76%);
+}
+
+.scene {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.scene[data-layout='tall'] {
+  display: none;
+}
+
+/* Gradient stops ---------------------------------------------------------- */
+
+.stopPrimary {
+  stop-color: var(--primary);
+}
+
+.stopGlow {
+  stop-color: var(--citadel-glow);
+}
+
+.stopPrimaryClear {
+  stop-color: var(--primary);
+  stop-opacity: 0;
+}
+
+.stopGlowClear {
+  stop-color: var(--citadel-glow);
+  stop-opacity: 0;
+}
+
+.haloInner {
+  stop-color: var(--citadel-glow);
+  stop-opacity: 0.26;
+}
+
+.haloMid {
+  stop-color: var(--primary);
+  stop-opacity: 0.08;
+}
+
+.haloOuter {
+  stop-color: var(--primary);
+  stop-opacity: 0;
+}
+
+/* Beams and comets -------------------------------------------------------- */
+
+.track {
+  stroke: color-mix(in srgb, var(--primary) 22%, transparent);
+  stroke-dasharray: 1 6;
+  stroke-linecap: round;
+  stroke-width: 1.5;
+}
+
+.comet {
+  opacity: 0;
+  animation: 2.4s linear var(--delay) infinite;
+}
+
+.comet[data-axis='x'] {
+  animation-name: travelX;
+}
+
+.comet[data-axis='y'] {
+  animation-name: travelY;
+}
+
+.cometTail {
+  stroke-linecap: round;
+  stroke-width: 3;
+}
+
+.cometTip {
+  stroke: var(--citadel-surface);
+  stroke-width: 1.2;
+}
+
+.cometTip[data-tone='in'] {
+  fill: var(--primary);
+}
+
+.cometTip[data-tone='out'] {
+  fill: var(--citadel-glow);
+}
+
+@keyframes travelX {
+  0% {
+    transform: translateX(0);
+    opacity: 0;
+  }
+
+  12%,
+  86% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateX(var(--travel));
+    opacity: 0;
+  }
+}
+
+@keyframes travelY {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  12%,
+  86% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(var(--travel));
+    opacity: 0;
+  }
+}
+
+.chip rect {
+  fill: var(--citadel-surface);
+  stroke: color-mix(in srgb, var(--primary) 26%, transparent);
+}
+
+.chip text {
+  fill: var(--primary);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Core -------------------------------------------------------------------- */
+
+.aura {
+  fill: none;
+  stroke: var(--citadel-glow);
+  stroke-width: 10;
+  filter: blur(7px);
+  opacity: 0.45;
+  animation: breathe 2.8s ease-in-out infinite;
+}
+
+.disc {
+  fill: var(--citadel-surface);
+  filter: drop-shadow(0 14px 26px color-mix(in srgb, var(--primary) 28%, transparent));
+}
+
+.rim {
+  fill: none;
+  stroke-width: 2;
+}
+
+.inner {
+  fill: color-mix(in srgb, var(--citadel-glow) 7%, var(--citadel-surface));
+  stroke: color-mix(in srgb, var(--primary) 16%, transparent);
+  stroke-dasharray: 2 4;
+}
+
+/* A soft ring leaves the core each time a reply goes back to the user. */
+.pulse {
+  fill: none;
+  stroke: var(--citadel-glow);
+  stroke-width: 1.5;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulse 2.4s ease-out 0.3s infinite;
+}
+
+.logo {
+  animation: appear 420ms ease-out;
+}
+
+.version {
+  fill: var(--citadel-ink);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  animation: appear 420ms ease-out;
+}
+
+.access {
+  fill: var(--citadel-muted);
+  font-family: var(--font-body);
+  font-size: 12px;
+}
+
+.accessUser {
+  fill: var(--primary);
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+@keyframes breathe {
+  50% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+
+  60%,
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Labels ------------------------------------------------------------------ */
+
+.pill {
+  fill: var(--citadel-surface);
+  stroke: var(--citadel-border);
+  filter: drop-shadow(0 4px 10px color-mix(in srgb, var(--citadel-ink) 6%, transparent));
+}
+
+.pillIcon {
+  fill: var(--citadel-canvas);
+  stroke: var(--citadel-border);
+}
+
+.icon {
+  color: var(--citadel-ink);
+}
+
+.name {
+  fill: var(--citadel-ink);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 650;
+}
+
+.note {
+  fill: var(--citadel-muted);
+  font-family: var(--font-body);
+  font-size: 11.5px;
+}
+
+.link {
+  fill: none;
+  stroke: color-mix(in srgb, var(--primary) 30%, transparent);
+  stroke-width: 1.25;
+}
+
+.fact rect {
+  fill: var(--citadel-surface);
+  stroke: color-mix(in srgb, var(--citadel-glow) 45%, transparent);
+  filter: drop-shadow(0 6px 12px color-mix(in srgb, var(--citadel-glow) 16%, transparent));
+}
+
+.fact text {
+  fill: var(--citadel-ink);
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  font-weight: 650;
+}
+
+.region rect {
+  fill: var(--citadel-surface);
+  stroke: var(--citadel-border);
+  transition:
+    fill 300ms ease,
+    stroke 300ms ease;
+}
+
+.region text {
+  fill: var(--citadel-muted);
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  transition: fill 300ms ease;
+}
+
+.region[data-active] rect {
+  fill: var(--primary);
+  stroke: var(--primary);
+}
+
+.region[data-active] text {
+  fill: var(--primary-foreground);
+}
+
+@media (max-width: 640px) {
+  .scene[data-layout='wide'] {
+    display: none;
+  }
+
+  .scene[data-layout='tall'] {
+    display: block;
+  }
+
+  .figure::before {
+    mask-image: radial-gradient(ellipse 60% 55% at 50% 50%, black 20%, transparent 76%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .comet,
+  .aura,
+  .pulse,
+  .logo,
+  .version {
+    animation: none;
+  }
+
+  /* One comet per beam stays visible mid-flight so the flow still reads. */
+  .comet:nth-child(2) {
+    opacity: 1;
+  }
+
+  .comet[data-axis='x']:nth-child(2) {
+    transform: translateX(calc(var(--travel) * 0.5));
+  }
+
+  .comet[data-axis='y']:nth-child(2) {
+    transform: translateY(calc(var(--travel) * 0.5));
+  }
+}

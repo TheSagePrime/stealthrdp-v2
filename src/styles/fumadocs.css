@@ -1,0 +1,21 @@
+/* Fumadocs supplies the docs navigation and article layout. These few tokens
+   align its responsive shell with the StealthRDP light visual system. */
+#nd-docs-layout {
+  --fd-layout-width: 90rem;
+  --fd-nav-height: 78px;
+  --fd-sidebar-width: 17rem;
+  background: transparent;
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  #nd-docs-layout {
+    --fd-sidebar-width: 14rem;
+  }
+}
+
+@media (max-width: 767px) {
+  #nd-docs-layout {
+    --fd-nav-height: 64px;
+    --fd-sidebar-width: 0px;
+  }
+}

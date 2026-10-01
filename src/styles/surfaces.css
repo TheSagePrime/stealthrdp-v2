@@ -1,0 +1,278 @@
+/* ==========================================================================
+   Legacy migrated StealthRDP route surfaces.
+
+   Keep only as compatibility for routes not yet structurally rewritten.
+   New visual work must follow DESIGN.md and src/styles/stealth-v3.css.
+
+   Historical note: surfaces that M1 does not recompose.
+
+   Token-migrated from base ae5f38c: three generations of palette (cobalt, cyan
+   and a light-mode island) collapse into the single Graphite / Restrained Gold
+   token set declared in global.css. Composition is unchanged here. M2 and M3
+   recompose plans, docs, status, faq, blog and the policy surfaces.
+   ========================================================================== */
+.sr-inline-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1rem;
+  margin-top: 1rem;
+}
+.sr-inline-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  color: var(--foreground);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.sr-inline-links svg {
+  width: 1rem;
+}
+.sr-byo-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 2rem;
+  align-items: center;
+  border: 1px solid color-mix(in srgb, var(--accent) 26%, var(--border));
+  border-radius: var(--radius-lg);
+  background: var(--sr-surface-strong);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+}
+.sr-byo-panel h2 {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  letter-spacing: -0.04em;
+}
+.sr-byo-panel p:not(.sr-kicker) {
+  margin: 0.75rem 0 0;
+  color: var(--muted-foreground);
+}
+.sr-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.sr-os-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.72fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+.sr-copy-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+  gap: clamp(2rem, 7vw, 7rem);
+  align-items: start;
+}
+.sr-prose-block {
+  color: var(--muted-foreground);
+  line-height: 1.75;
+}
+.sr-prose-block p {
+  margin: 0 0 1rem;
+}
+.sr-prose-block a:not([data-slot='button']) {
+  color: var(--foreground);
+  text-decoration: underline;
+}
+@media (max-width: 1020px) {
+  .sr-os-hero-grid,
+  .sr-copy-grid {
+    grid-template-columns: 1fr;
+  }
+  .sr-byo-panel {
+    grid-template-columns: 1fr auto;
+  }
+  .sr-byo-panel > :first-child {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 720px) {
+  .sr-byo-panel {
+    grid-template-columns: 1fr;
+  }
+  .sr-byo-panel > :first-child {
+    grid-column: auto;
+  }
+}
+.sr-page-hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-divider);
+  padding: clamp(4.8rem, 8vw, 6.8rem) 0 clamp(3.1rem, 6vw, 4.7rem);
+  background:
+    radial-gradient(circle at 82% 8%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 28rem), transparent;
+}
+.sr-page-hero .sr-title {
+  font-size: clamp(2.8rem, 6vw, 5.2rem);
+}
+.sr-page-hero .sr-lede {
+  max-width: 800px;
+  margin-top: 1.25rem;
+}
+.sr-inline-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625rem 1rem;
+  margin-top: 1rem;
+}
+.sr-byo-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: 2rem;
+  align-items: center;
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 76% 20%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 24rem),
+    var(--surface-1);
+  padding: clamp(1.5rem, 4vw, 2.4rem);
+}
+.sr-byo-panel h2 {
+  margin: 0;
+  font-size: clamp(1.75rem, 4vw, 2.8rem);
+  letter-spacing: -0.04em;
+}
+.sr-byo-panel p:not(.sr-kicker) {
+  margin: 0.625rem 0 0;
+  color: var(--text-muted);
+}
+.sr-os-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.72fr);
+  gap: clamp(2rem, 6vw, 5rem);
+  align-items: center;
+}
+.sr-copy-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+  gap: clamp(2rem, 7vw, 7rem);
+  align-items: start;
+}
+.sr-prose-block {
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+.sr-prose-block p {
+  margin: 0 0 1rem;
+}
+.sr-prose-block a:not([data-slot='button']) {
+  color: var(--text);
+  text-decoration: underline;
+}
+.sr-collection-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+  margin-bottom: 1rem;
+}
+.sr-collection-head h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2.15rem);
+  letter-spacing: -0.035em;
+}
+.sr-collection-head > span {
+  color: var(--text-muted);
+  font-size: 0.6875rem;
+}
+.seo-article-index > h1 {
+  display: none;
+}
+.seo-article-publication-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin: 0.75rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+.seo-article-publication-meta time {
+  color: var(--text);
+}
+.seo-article-citation {
+  color: var(--accent-press);
+  font-weight: 600;
+  text-decoration: underline;
+}
+.seo-article-sources {
+  margin-top: 1.5rem;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+  color: var(--text-muted);
+}
+.seo-article-sources summary {
+  cursor: pointer;
+  padding: 0.75rem 1rem;
+  color: var(--text);
+  font-weight: 700;
+}
+.seo-article-sources ol {
+  margin: 0;
+  padding: 0 1rem 1rem 2rem;
+}
+.seo-article-sources li {
+  color: var(--text-muted);
+}
+.seo-article-sources a {
+  color: var(--accent-press);
+}
+.sr-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+@media (max-width: 1080px) {
+  .sr-os-hero-grid,
+  .sr-copy-grid {
+    grid-template-columns: 1fr;
+  }
+  .sr-byo-panel {
+    grid-template-columns: 1fr auto;
+  }
+  .sr-byo-panel > :first-child {
+    grid-column: 1 / -1;
+  }
+}
+@media (max-width: 820px) {
+  .sr-title {
+    font-size: clamp(2.8rem, 12vw, 4.7rem);
+  }
+}
+@media (max-width: 560px) {
+  .sr-container {
+    width: min(100% - 1.3rem, 1200px);
+  }
+  .sr-section {
+    padding: 4rem 0;
+  }
+  .sr-byo-panel {
+    grid-template-columns: 1fr;
+  }
+  .sr-byo-panel > :first-child {
+    grid-column: auto;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Base rules for surfaces M1 does not recompose.
+
+   These class hooks were defined in the dropped base layers of ae5f38c. They are
+   restored here, token-migrated, so no page loses its styling.
+   -------------------------------------------------------------------------- */
+
+.sr-article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin: 0.75rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}

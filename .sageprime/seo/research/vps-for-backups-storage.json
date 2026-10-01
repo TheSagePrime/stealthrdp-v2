@@ -1,0 +1,69 @@
+{
+  "artifact_type": "page_research_package",
+  "version": 1,
+  "identity": {
+    "project": "stealthrdp",
+    "canonical_domain": "www.stealthrdp.com",
+    "country": "US",
+    "locale": "en-US",
+    "open_seo": {
+      "project_id": "stealthrdp",
+      "location_code": 2840,
+      "language_code": "en"
+    }
+  },
+  "status": "approved",
+  "asset_type": "article",
+  "target_query": "vps for backups",
+  "secondary_queries": [],
+  "target_reader": "Server operators and site owners evaluating a VPS as an offsite or secondary backup target.",
+  "intent": "Informational/commercial investigation: decide whether a VPS fits backup storage and how to size/design it.",
+  "serp_evidence": [
+    {
+      "kind": "serp",
+      "reference": "https://vpsproof.com/blog/best-vps-for-backups",
+      "note": "Backup VPS selection result",
+      "project_id": "stealthrdp",
+      "country": "US",
+      "locale": "en-US",
+      "retrieved_at": "2026-09-27"
+    },
+    {
+      "kind": "serp",
+      "reference": "https://www.hostmycode.com/tutorials/incremental-backup-tutorial-2026-restic-s3-vps-dedicated-servers",
+      "note": "Backup/restore implementation result",
+      "project_id": "stealthrdp",
+      "country": "US",
+      "locale": "en-US",
+      "retrieved_at": "2026-09-27"
+    }
+  ],
+  "competing_pages": [
+    "https://vpsproof.com/blog/best-vps-for-backups",
+    "https://www.hostmycode.com/tutorials/incremental-backup-tutorial-2026-restic-s3-vps-dedicated-servers"
+  ],
+  "existing_results_do_well": [
+    "Cover storage capacity, encryption, retention and restore testing.",
+    "Discuss remote/offsite backup design."
+  ],
+  "existing_results_miss": [
+    "Clear distinction between a programmable VPS target and cheaper/durable object or dedicated storage.",
+    "Retention-driven sizing rather than current-dataset sizing.",
+    "Explicit connection to existing StealthRDP setup tutorial without duplicating it."
+  ],
+  "related_questions": [],
+  "unique_value": "A selection/design guide centered on failure domains, retention, bandwidth/restore windows, encryption and restore tests, with a clear 'when a VPS is not the right storage product' section.",
+  "required_facts_evidence": [
+    ".sageprime/project-truth/manifest.json",
+    "src/content/plans.json"
+  ],
+  "internal_link_opportunities": [
+    "/plans",
+    "/blog/how-to-set-up-automated-backups-for-vps-hosting.html"
+  ],
+  "commercial_connection": "Reader can compare current NVMe/storage/bandwidth tiers only after deciding that a VPS is appropriate as the backup target.",
+  "conversion_path": "/plans",
+  "cannibalization": "New page owns selection/design; existing automated-backup article owns implementation.",
+  "existence_question": "Why should vps-for-backups-storage exist when search already has competing results?",
+  "existence_decision": "produce"
+}

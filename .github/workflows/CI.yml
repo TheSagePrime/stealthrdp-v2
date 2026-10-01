@@ -48,8 +48,11 @@ jobs:
       - name: Build and run SEO gates
         run: pnpm run build
         env:
-          APP_ENV: production
+          # The synthetic audit is refused when APP_ENV=production (see src/proxy.ts),
+          # so audit as a preview build. This matches the Dockerfile.
+          APP_ENV: preview
           SEO_AUDIT_LOCAL: 'true'
+          SEO_AUDIT_SITE_URL: https://seo-ci.invalid
           NEXT_PUBLIC_SENTRY_DISABLED: 'true'
           NEXT_PUBLIC_APP_URL: http://localhost:3008
           SITE_URL: https://seo-ci.invalid

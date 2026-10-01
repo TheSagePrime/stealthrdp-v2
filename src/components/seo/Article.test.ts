@@ -1,6 +1,7 @@
 import type { ReactElement, ReactNode } from 'react';
 import type { ArticlePublication, ArticleSource } from '@/libs/seo/articles';
 import { describe, expect, it } from 'vitest';
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { defaultSeoConfig } from '@/config/seo';
 import { ArticleCitation, ArticleIndex, ArticlePublicationMeta, ArticleSources } from './Article';
 
@@ -46,6 +47,36 @@ function elementChildren(element: TestElement): TestElement[] {
     .map(asElement);
 }
 
+/**
+ * Reads the vendored UI slots of one index card.
+ * Structure: ol > li > Card > CardHeader [Badge + time, CardTitle > a > h3, CardDescription]
+ *                           > CardFooter > a
+ */
+function cardSlots(card: TestElement) {
+  const container = elementChildren(card)[0]!;
+
+  expect(container.type).toBe(Card);
+
+  const [header, footer] = elementChildren(container);
+
+  expect(header!.type).toBe(CardHeader);
+  expect(footer!.type).toBe(CardFooter);
+
+  const headerChildren = elementChildren(header!);
+  const meta = elementChildren(headerChildren[0]!);
+  const title = headerChildren.find(child => child.type === CardTitle)!;
+  const link = elementChildren(title)[0]!;
+
+  return {
+    order: meta[0]!.props.children,
+    dateTime: meta[1]!.props.dateTime,
+    heading: elementChildren(link)[0]!.props.children,
+    href: link.props.href,
+    description: headerChildren.find(child => child.type === CardDescription)!.props.children,
+    cta: elementChildren(footer!)[0]!.props.children,
+  };
+}
+
 describe('article components', () => {
   it('renders the native disclosure contract with clickable source titles', () => {
     const sources: ArticleSource[] = [
@@ -87,10 +118,17 @@ describe('article components', () => {
   it('sorts ArticleIndex cards newest first', () => {
     const index = asElement(ArticleIndex({ articles, config }));
     const list = elementChildren(index)[1]!;
-    const cards = elementChildren(list);
+    const cards = elementChildren(list).map(cardSlots);
 
     expect(cards).toHaveLength(2);
-    expect(elementChildren(elementChildren(cards[0]!)[0]!)[0]!.props.children).toBe('Newer article');
-    expect(elementChildren(elementChildren(cards[1]!)[0]!)[0]!.props.children).toBe('Older article');
+    expect(cards[0]!.heading).toBe('Newer article');
+    expect(cards[1]!.heading).toBe('Older article');
+    expect(cards.map(card => card.order)).toEqual(['01', '02']);
+    expect(cards[0]!.dateTime).toBe('2026-01-01');
+    expect(cards[1]!.dateTime).toBe('2025-01-01');
+    expect(cards[0]!.description).toBe('Newer article description.');
+    expect(String(cards[0]!.href)).toContain('/blog/newer');
+    expect(String(cards[1]!.href)).toContain('/blog/older');
+    expect(cards[0]!.cta).toBe('Read article →');
   });
 });

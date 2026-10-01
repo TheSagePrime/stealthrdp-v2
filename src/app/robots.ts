@@ -7,23 +7,16 @@ export default function robots(): MetadataRoute.Robots {
   const sitemap = `${config.siteUrl}/sitemap.xml`;
 
   if (!isProductionDeployEnv(config.environment.deployEnv)) {
-    return {
-      rules: {
-        userAgent: '*',
-        disallow: '/',
-      },
-      sitemap,
-    };
+    return { rules: { userAgent: '*', disallow: '/' }, sitemap };
   }
 
   return {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: [
-        ...config.routes.privatePages,
-        ...config.routes.privateApis,
-      ],
+      disallow: ['/api/'],
+      /* Same AI policy as the v1 site: no model training, yes to search and AI answers. */
+      other: { 'Content-Signal': 'ai-train=no, search=yes, ai-input=yes' },
     },
     sitemap,
   };

@@ -1,0 +1,334 @@
+.figure {
+  position: relative;
+  margin: 0;
+  color: var(--citadel-ink);
+}
+
+/* No frame: the scene sits on the hero itself. A soft brand light and a dot
+   grid gather around the core and fade out before the edges. */
+.stage {
+  position: relative;
+  isolation: isolate;
+  background:
+    radial-gradient(
+      ellipse 55% 60% at 54% 47%,
+      color-mix(in srgb, var(--citadel-glow) 13%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(ellipse 40% 50% at 82% 47%, color-mix(in srgb, var(--primary) 7%, transparent), transparent 70%);
+}
+
+.stage::before {
+  position: absolute;
+  z-index: -1;
+  inset: -8% -4%;
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    color-mix(in srgb, var(--citadel-muted) 28%, transparent) 1px,
+    transparent 0
+  );
+  background-size: 16px 16px;
+  content: '';
+  mask-image: radial-gradient(ellipse 58% 62% at 54% 48%, black 25%, transparent 78%);
+}
+
+.scene {
+  position: relative;
+}
+
+.scene[data-layout='tall'] {
+  display: none;
+}
+
+.back {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+/* The canvas and the front SVG sit exactly on the back SVG. */
+.canvas,
+.front {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.canvas {
+  pointer-events: none;
+}
+
+/* Gradient stops ---------------------------------------------------------- */
+
+.stopPrimary {
+  stop-color: var(--primary);
+}
+
+.stopGlow {
+  stop-color: var(--citadel-glow);
+}
+
+.haloInner {
+  stop-color: var(--citadel-glow);
+  stop-opacity: 0.28;
+}
+
+.haloMid {
+  stop-color: var(--primary);
+  stop-opacity: 0.08;
+}
+
+.haloOuter {
+  stop-color: var(--primary);
+  stop-opacity: 0;
+}
+
+/* Beams ------------------------------------------------------------------- */
+
+.track {
+  fill: none;
+  stroke: color-mix(in srgb, var(--citadel-muted) 26%, transparent);
+  stroke-linecap: round;
+  stroke-width: 1.25;
+}
+
+.outTrack {
+  fill: none;
+  stroke-linecap: round;
+  stroke-width: 3;
+}
+
+.laserGlow {
+  fill: none;
+  stroke-linecap: round;
+  stroke-width: 12;
+  filter: blur(5px);
+  opacity: 0.45;
+}
+
+/* Core -------------------------------------------------------------------- */
+
+.coreDisc {
+  fill: var(--citadel-surface);
+  filter: drop-shadow(0 12px 24px color-mix(in srgb, var(--primary) 30%, transparent));
+}
+
+.coreRim {
+  fill: none;
+  stroke-width: 2;
+}
+
+.coreInner {
+  fill: color-mix(in srgb, var(--citadel-glow) 7%, var(--citadel-surface));
+  stroke: color-mix(in srgb, var(--primary) 16%, transparent);
+  stroke-dasharray: 2 4;
+}
+
+.coreLabel {
+  fill: var(--primary);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tag rect {
+  fill: color-mix(in srgb, var(--status-bad) 7%, var(--citadel-surface));
+  stroke: color-mix(in srgb, var(--status-bad) 24%, transparent);
+}
+
+.tag .tagFlash {
+  fill: color-mix(in srgb, var(--status-bad) 18%, var(--citadel-surface));
+  stroke: var(--status-bad);
+}
+
+.tag text {
+  fill: var(--status-bad);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* Sources and origin ------------------------------------------------------ */
+
+.pill {
+  fill: var(--citadel-surface);
+  stroke: var(--citadel-border);
+  filter: drop-shadow(0 4px 10px color-mix(in srgb, var(--citadel-ink) 6%, transparent));
+}
+
+.pillIcon {
+  fill: var(--citadel-canvas);
+  stroke: var(--citadel-border);
+}
+
+.icon {
+  color: var(--citadel-ink);
+}
+
+.origin {
+  fill: var(--citadel-surface);
+  stroke: color-mix(in srgb, var(--citadel-glow) 55%, transparent);
+  stroke-width: 1.5;
+  filter: drop-shadow(0 12px 22px color-mix(in srgb, var(--citadel-glow) 22%, transparent));
+}
+
+.originTile {
+  fill: color-mix(in srgb, var(--citadel-glow) 12%, var(--citadel-surface));
+  stroke: color-mix(in srgb, var(--citadel-glow) 30%, transparent);
+}
+
+.originIcon {
+  color: var(--primary);
+}
+
+.okDot {
+  fill: var(--status-ok);
+}
+
+.name {
+  fill: var(--citadel-ink);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.request {
+  fill: var(--citadel-muted);
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+}
+
+.note {
+  fill: var(--citadel-muted);
+  font-family: var(--font-body);
+  font-size: 11.5px;
+}
+
+/* Decision log ------------------------------------------------------------ */
+
+.log {
+  margin: 4px auto 0;
+  max-width: 560px;
+}
+
+.logHead {
+  margin: 0 0 6px;
+  color: var(--citadel-muted);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.log ol {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.log li {
+  display: grid;
+  grid-template-columns: 86px minmax(0, 0.9fr) minmax(0, 1.25fr);
+  align-items: center;
+  gap: 12px;
+  min-height: 32px;
+  border-top: 1px solid color-mix(in srgb, var(--citadel-border) 70%, transparent);
+  font-size: 0.8125rem;
+}
+
+.log li:first-child {
+  border-top: 0;
+  animation: logIn 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+/* The newest decision flashes in; older rows stay readable. */
+.log li:first-child {
+  background: linear-gradient(to right, color-mix(in srgb, var(--primary) 6%, transparent), transparent 70%);
+}
+
+.log b {
+  justify-self: start;
+  border-radius: 999px;
+  padding: 2px 9px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.log li[data-tone='pass'] b {
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary);
+}
+
+.log li[data-tone='challenge'] b {
+  background: color-mix(in srgb, var(--status-warn) 13%, transparent);
+  color: var(--status-warn);
+}
+
+.log li[data-tone='block'] b {
+  background: color-mix(in srgb, var(--status-bad) 10%, transparent);
+  color: var(--status-bad);
+}
+
+.log code {
+  overflow: hidden;
+  color: var(--citadel-ink);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.log li span {
+  overflow: hidden;
+  color: var(--citadel-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.caption {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@keyframes logIn {
+  from {
+    transform: translateY(-6px);
+  }
+}
+
+@media (max-width: 640px) {
+  .scene[data-layout='wide'] {
+    display: none;
+  }
+
+  .scene[data-layout='tall'] {
+    display: block;
+  }
+
+  .log li {
+    grid-template-columns: 78px minmax(0, 1fr);
+  }
+
+  .log li span {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .log li:first-child {
+    animation: none;
+  }
+}

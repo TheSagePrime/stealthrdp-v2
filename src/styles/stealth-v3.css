@@ -1,0 +1,6282 @@
+/* ==========================================================================
+   StealthRDP V3 — reference-led public visual system
+   Canonical direction: DESIGN.md
+
+   This file loads after the migrated route styles. It intentionally owns the
+   public brand, shared geometry, marketing components and legacy route cleanup.
+   ========================================================================== */
+
+/* Shared dark colour roles are defined in global.css. */
+
+html {
+  background: var(--background);
+}
+
+body {
+  background:
+    radial-gradient(circle at 18% -10%, color-mix(in srgb, var(--primary) 12%, transparent), transparent 30rem),
+    radial-gradient(circle at 92% 0%, color-mix(in srgb, var(--primary) 7%, transparent), transparent 28rem),
+    var(--background);
+}
+
+.sr-site {
+  min-height: 100vh;
+  overflow: clip;
+  color: var(--foreground);
+}
+
+.sr-container {
+  width: min(1240px, calc(100% - 64px));
+  margin-inline: auto;
+}
+
+.sr-section {
+  position: relative;
+  padding: clamp(64px, 7vw, 96px) 0;
+}
+
+.sr-section-border {
+  border-top: 1px solid var(--border-divider);
+}
+
+.sr-kicker {
+  margin: 0 0 16px;
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sr-title,
+.sr-section-title {
+  font-family: var(--font-body);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+.sr-title {
+  max-width: 900px;
+  margin: 0;
+  font-size: clamp(3rem, 6.2vw, 6.5rem);
+  line-height: 0.95;
+}
+
+.sr-title span {
+  color: var(--primary);
+}
+
+.sr-lede {
+  max-width: 730px;
+  margin: 24px 0 0;
+  color: var(--muted-foreground);
+  font-size: clamp(1rem, 1.5vw, 1.16rem);
+  line-height: 1.75;
+}
+
+.sr-section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
+  gap: 64px;
+  align-items: end;
+  margin-bottom: 40px;
+}
+
+.sr-section-title {
+  max-width: 780px;
+  margin: 0;
+  font-size: clamp(2.25rem, 4.2vw, 4.35rem);
+  line-height: 1;
+}
+
+.sr-section-head > p {
+  max-width: 520px;
+  margin: 0 0 4px;
+  color: var(--muted-foreground);
+  line-height: 1.7;
+}
+
+.sr-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Header ----------------------------------------------------------------- */
+
+.srv3-header {
+  position: sticky;
+  z-index: 50;
+  top: 0;
+  border-bottom: 1px solid var(--border-divider);
+  background: color-mix(in srgb, var(--surface-1) 88%, transparent);
+  backdrop-filter: blur(18px);
+}
+
+.srv3-header-row {
+  display: grid;
+  min-height: 76px;
+  grid-template-columns: auto 1fr auto;
+  gap: 32px;
+  align-items: center;
+}
+
+.srv3-logo {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Brand asset is white ink on an opaque black field. Invert for the light
+   surface, then multiply so the (now white) field drops out on any ground. */
+.srv3-logo img {
+  display: block;
+  width: 176px;
+  height: auto;
+  filter: invert(1);
+  mix-blend-mode: multiply;
+}
+
+.srv3-nav {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.srv3-nav a,
+.srv3-login {
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease;
+}
+
+.srv3-nav a:hover,
+.srv3-login:hover {
+  background: color-mix(in srgb, var(--text) 5%, transparent);
+  color: var(--foreground);
+}
+
+/* Trust-rail status link: tappable without breaking the proof-rail rhythm. */
+
+.srv3-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.srv3-mobile-nav {
+  display: none;
+  position: relative;
+  justify-self: end;
+}
+
+.srv3-mobile-nav summary {
+  display: inline-flex;
+  min-height: 44px;
+  cursor: pointer;
+  list-style: none;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0 12px;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.srv3-mobile-nav summary::-webkit-details-marker {
+  display: none;
+}
+
+.srv3-mobile-nav summary svg {
+  width: 16px;
+}
+
+.srv3-mobile-nav nav {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  display: grid;
+  width: min(310px, calc(100vw - 40px));
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  background: var(--surface-1);
+  box-shadow: 0 12px 32px color-mix(in srgb, var(--text) 9%, transparent);
+  padding: 8px;
+}
+
+.srv3-mobile-nav nav a {
+  border-radius: var(--radius-md);
+  padding: 12px;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.srv3-mobile-nav nav a:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+/* Hero ------------------------------------------------------------------- */
+
+/* Grid children must shrink below content width or the 390px viewport clips. */
+
+/* Trust strip ------------------------------------------------------------ */
+
+/* Pricing ---------------------------------------------------------------- */
+
+.sr-pricing-explorer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  min-width: 0;
+  gap: 24px;
+}
+
+/* Infrastructure --------------------------------------------------------- */
+
+/* Regions ---------------------------------------------------------------- */
+
+/* Reviews ---------------------------------------------------------------- */
+
+/* Shared inner page refresh ---------------------------------------------- */
+
+.sr-page-hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border-divider);
+  background:
+    radial-gradient(circle at 78% 28%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 26rem),
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-1) 58%, transparent), transparent);
+  padding: clamp(78px, 9vw, 118px) 0 clamp(64px, 7vw, 92px);
+}
+
+.sr-copy-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+  gap: clamp(48px, 8vw, 100px);
+}
+
+.sr-prose-block {
+  color: var(--text-dim);
+  line-height: 1.8;
+}
+
+.sr-prose-block a:not([data-slot='button']),
+.sr-inline-links a {
+  color: var(--primary);
+}
+
+.sr-inline-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  margin-top: 20px;
+}
+
+.sr-inline-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.sr-inline-links svg {
+  width: 16px;
+}
+
+/* Legacy grids made calmer and more commercial. */
+
+.sr-byo-panel,
+.sr-cta {
+  border: 1px solid var(--border-soft) !important;
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--primary) 9%, transparent), transparent 48%), var(--surface-1) !important;
+  box-shadow: none !important;
+}
+
+/* Footer ----------------------------------------------------------------- */
+
+.srv3-footer {
+  position: relative;
+  margin-top: 0;
+  overflow: hidden;
+  border-top: 1px solid var(--border-divider);
+  background:
+    radial-gradient(circle at 8% 10%, color-mix(in srgb, var(--primary) 5%, transparent), transparent 24rem), var(--bg);
+  padding: 0;
+}
+
+.srv3-footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--primary) 3%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--primary) 2%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+  opacity: 0.34;
+  mask-image: linear-gradient(
+    90deg,
+    black 0%,
+    color-mix(in srgb, var(--sr-raw-000000) 40%, transparent) 32%,
+    transparent 72%
+  );
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    black 0%,
+    color-mix(in srgb, var(--sr-raw-000000) 40%, transparent) 32%,
+    transparent 72%
+  );
+}
+
+.srv3-footer-shell {
+  position: relative;
+  z-index: 1;
+}
+
+.srv3-footer-main {
+  display: grid;
+  grid-template-columns: minmax(300px, 1.3fr) minmax(0, 2fr);
+  gap: clamp(64px, 8vw, 120px);
+  align-items: start;
+  padding: 64px 0 56px;
+}
+
+.srv3-footer-brand {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  min-width: 0;
+}
+
+.srv3-footer-logo img {
+  width: 164px;
+}
+
+.srv3-footer-description {
+  max-width: 390px;
+  margin: 22px 0 0;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+}
+
+.srv3-footer-proof {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-divider);
+  color: var(--text-dim);
+  font-size: 0.6875rem;
+}
+
+.srv3-footer-proof span {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.srv3-footer-proof strong {
+  color: var(--text);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.srv3-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.srv3-socials a {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border-color: var(--border-divider);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--surface-1) 62%, transparent);
+  color: var(--text-dim);
+  padding: 0;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--background) 72%, transparent),
+    0 5px 14px color-mix(in srgb, var(--foreground) 4%, transparent);
+  transition:
+    color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease,
+    background-color 160ms ease;
+}
+
+.srv3-socials a:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--primary) 26%, var(--border-divider));
+  background: color-mix(in srgb, var(--primary) 5%, var(--surface-1));
+  color: var(--primary);
+}
+
+.srv3-socials svg {
+  width: 16px;
+  height: 16px;
+}
+
+.srv3-footer-links {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(150px, 1fr));
+  gap: clamp(32px, 5vw, 72px);
+  align-items: start;
+}
+
+.srv3-footer-column {
+  min-width: 0;
+}
+
+.srv3-footer-links h2 {
+  margin: 2px 0 18px;
+  color: var(--text);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.srv3-footer-links ul {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.srv3-footer-links li {
+  min-width: 0;
+}
+
+.srv3-footer-links a {
+  display: inline-flex;
+  min-height: 38px;
+  max-width: 100%;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  line-height: 1.35;
+  transition:
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.srv3-footer-links a:hover {
+  transform: translateX(3px);
+  color: var(--text);
+}
+
+.srv3-footer-links a svg {
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  opacity: 0.58;
+}
+
+.srv3-footer-bottom {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid var(--border-divider);
+  color: var(--text-dim);
+  font-size: 0.6875rem;
+}
+
+.srv3-footer-bottom-main,
+.srv3-footer-bottom-note {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 28px;
+  align-items: center;
+}
+
+.srv3-footer-bottom-main {
+  min-height: 62px;
+}
+
+.srv3-footer-bottom-note {
+  min-height: 46px;
+  border-top: 1px solid color-mix(in srgb, var(--border-divider) 68%, transparent);
+  font-size: 0.625rem;
+}
+
+.srv3-footer-copyright {
+  justify-self: start;
+}
+
+.srv3-footer-credit {
+  justify-self: end;
+  text-align: right;
+}
+
+.srv3-footer-legal {
+  display: flex;
+  justify-content: flex-end;
+  gap: 18px;
+  white-space: nowrap;
+}
+
+.srv3-footer-legal a {
+  color: var(--text-dim);
+  transition: color 160ms ease;
+}
+
+.srv3-footer-legal a:hover {
+  color: var(--text);
+}
+
+/* Responsive ------------------------------------------------------------- */
+
+@media (max-width: 1040px) {
+  .srv3-nav,
+  .srv3-header-actions {
+    display: none;
+  }
+
+  .srv3-header-row {
+    grid-template-columns: 1fr auto;
+  }
+
+  .srv3-mobile-nav {
+    display: block;
+  }
+}
+
+@media (max-width: 760px) {
+  .sr-container {
+    width: min(100% - 40px, 1240px);
+  }
+
+  .srv3-logo img {
+    width: 152px;
+  }
+
+  .sr-section-head {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .sr-copy-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .srv3-footer-links {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .srv3-footer-bottom {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 520px) {
+  .sr-container {
+    width: min(100% - 32px, 1240px);
+  }
+
+  .srv3-header-row {
+    min-height: 68px;
+  }
+
+  .srv3-footer-links {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* OS product visual ------------------------------------------------------- */
+
+.sr-os-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(380px, 0.75fr);
+  gap: clamp(48px, 8vw, 100px);
+  align-items: center;
+}
+
+/* Real OS mark in the hero tile: keep every mark on the same 26px box. */
+
+@media (max-width: 900px) {
+  .sr-os-hero-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   V3.1 refinement pass
+   Tightens typography, rhythm, component finish and interaction quality while
+   preserving the approved V3 page skeleton.
+   ========================================================================== */
+
+.sr-site {
+  --srv3-radius-sm: var(--radius-sm);
+  --srv3-radius-md: var(--radius-md);
+  --srv3-radius-lg: var(--radius-lg);
+  --srv3-surface-glass: color-mix(in srgb, var(--surface-1) 82%, transparent);
+  --srv3-border: var(--border-divider);
+  --srv3-border-strong: var(--border-soft);
+}
+
+.sr-section {
+  padding-block: clamp(76px, 7vw, 104px);
+}
+
+.sr-kicker {
+  margin-bottom: 12px;
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.065em;
+}
+
+.sr-section-title {
+  max-width: 720px;
+  font-size: clamp(2.15rem, 3.65vw, 3.75rem);
+  line-height: 1.05;
+  letter-spacing: -0.042em;
+}
+
+.sr-section-head {
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.sr-section-head > p {
+  max-width: 470px;
+  color: var(--text-dim);
+  font-size: 0.875rem;
+  line-height: 1.7;
+}
+
+/* Header refinement ------------------------------------------------------ */
+
+.srv3-header {
+  background: var(--surface-1);
+  backdrop-filter: none;
+}
+
+.srv3-header-row {
+  min-height: 72px;
+}
+
+.srv3-logo img {
+  width: 164px;
+}
+
+.srv3-nav {
+  gap: 2px;
+}
+
+.srv3-nav a,
+.srv3-login {
+  padding: 10px 12px;
+  font-size: 0.8125rem;
+}
+
+.srv3-nav a:hover,
+.srv3-login:hover {
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+}
+
+/* Hero refinement -------------------------------------------------------- */
+
+/* Pricing refinement ----------------------------------------------------- */
+
+.sr-pricing-explorer {
+  gap: 20px;
+}
+
+.sr-segmented-control {
+  max-width: 100%;
+  overflow-x: auto;
+  border-radius: var(--radius-md);
+}
+
+.sr-segmented-control [data-slot='button'] {
+  flex: 0 0 auto;
+  min-width: 44px;
+  min-height: 44px;
+  height: 44px;
+  border-color: var(--border-divider);
+  background: var(--bg);
+  padding-inline: 12px;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  box-shadow: none;
+}
+
+.sr-segmented-control [data-slot='button'][aria-pressed='true'] {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.sr-segmented-control [data-slot='button']:not([aria-pressed='true']):hover {
+  color: var(--text);
+}
+
+/* Infrastructure refinement (desktop only — mobile stacks via the 1040px rule) - */
+
+/* Region refinement ------------------------------------------------------ */
+
+/* Customer proof refinement --------------------------------------------- */
+
+/* Shared inner surfaces -------------------------------------------------- */
+
+.sr-page-hero {
+  padding: clamp(64px, 6vw, 88px) 0 clamp(48px, 5vw, 68px);
+}
+
+.sr-page-hero .sr-title {
+  max-width: 820px;
+  font-size: clamp(2.8rem, 5vw, 4.9rem);
+  line-height: 1;
+}
+
+.sr-byo-panel,
+.sr-cta {
+  border-radius: var(--radius-lg);
+}
+
+/* Small screens ---------------------------------------------------------- */
+
+@media (max-width: 760px) {
+  .sr-section {
+    padding-block: 56px;
+  }
+
+  .sr-section-head {
+    margin-bottom: 32px;
+  }
+
+  .sr-segmented-control {
+    width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .sr-segmented-control[aria-label='Billing cycle'] {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+    overflow: visible;
+  }
+
+  .sr-segmented-control[aria-label='Billing cycle'] [data-slot='button'] {
+    min-width: 0;
+    width: 100%;
+    margin-left: 0;
+    border-radius: var(--radius-md);
+    padding-inline: 8px;
+  }
+}
+
+/* V3.1 secondary-page polish -------------------------------------------- */
+
+/* About page */
+
+/* FAQ / shadcn accordion */
+
+/* Skip link: visible on keyboard focus only. */
+.sr-skip-link {
+  position: absolute;
+  left: 16px;
+  top: -64px;
+  z-index: 100;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  color: var(--text);
+  font-weight: 700;
+  transition: top 160ms ease;
+}
+
+.sr-skip-link:focus-visible {
+  top: 12px;
+}
+
+.sr-faq-groups {
+  display: grid;
+  gap: 64px;
+}
+
+.sr-faq-group {
+  scroll-margin-top: 128px;
+}
+
+.sr-collection-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: end;
+  margin-bottom: 24px;
+}
+
+.sr-collection-head h2 {
+  margin: 0;
+  font-size: 1.75rem;
+  letter-spacing: -0.035em;
+}
+
+.sr-collection-head > span {
+  color: var(--text-dim);
+  font-size: 0.6875rem;
+}
+
+/* Status */
+
+/* =========================================================================
+   Plan ledger and billing-term ladder (approved light direction).
+   Tokens only: no literal colour, radius from the shared scale.
+   ========================================================================= */
+
+.sr-ledger-title {
+  margin: 32px 0 6px;
+  color: var(--text);
+  font-size: clamp(1.15rem, 1rem + 0.6vw, 1.5rem);
+  letter-spacing: -0.02em;
+}
+
+.sr-ledger-note {
+  max-width: 76ch;
+  margin: 0 0 16px;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.sr-ledger-scroll {
+  max-width: 100%;
+  overflow-x: auto;
+  background: var(--surface-1);
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-lg);
+}
+
+.sr-ledger-scroll .sr-table {
+  width: 100%;
+  min-width: 880px;
+  border-collapse: collapse;
+}
+
+.sr-ledger-scroll thead th {
+  position: sticky;
+  top: 0;
+  background: var(--surface-2);
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sr-ledger-scroll th,
+.sr-ledger-scroll td {
+  padding: 16px 16px;
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--border-divider);
+}
+
+.sr-ledger-scroll tbody tr:last-child th,
+.sr-ledger-scroll tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.sr-ledger-scroll tbody tr:hover {
+  background: var(--surface-2);
+}
+
+/* Keep the plan name and the Buy action visible while the table scrolls sideways. */
+@media (max-width: 900px) {
+  .sr-ledger-scroll thead th:first-child,
+  .sr-ledger-scroll tbody th[scope='row'] {
+    position: sticky;
+    left: 0;
+    z-index: 2;
+    background: var(--surface-1);
+    box-shadow: 1px 0 0 var(--border-divider);
+  }
+
+  .sr-ledger-scroll thead th:first-child {
+    background: var(--surface-2);
+  }
+
+  .sr-ledger-scroll thead th:last-child,
+  .sr-ledger-scroll tbody td:last-child {
+    position: sticky;
+    right: 0;
+    z-index: 2;
+    background: var(--surface-1);
+    box-shadow: -1px 0 0 var(--border-divider);
+  }
+
+  .sr-ledger-scroll thead th:last-child {
+    background: var(--surface-2);
+  }
+}
+
+.sr-ledger-value {
+  display: block;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.sr-ledger-meta {
+  display: block;
+  margin-top: 6px;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
+.sr-ledger-was {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  text-decoration: line-through;
+}
+
+.sr-ledger-spec [data-slot='progress'] {
+  margin-top: 10px;
+  gap: 6px;
+}
+
+.sr-ledger-spec [data-slot='progress'] span {
+  font-size: 0.6875rem;
+}
+
+.sr-ledger-price {
+  color: var(--text);
+  font-size: 1rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.sr-ledger-action {
+  white-space: nowrap;
+}
+
+.sr-plan-row {
+  display: inline-flex;
+  min-height: 2rem;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  font-weight: 600;
+}
+
+.sr-ledger-hint {
+  display: none;
+}
+
+/* --- Plan picker ----------------------------------------------------------
+   Region + billing strip on top, buyable plan cards, sticky selection
+   summary. The ledger table survives only as a collapsed comparison
+   inside .sr-compare-details.
+   ------------------------------------------------------------------------- */
+
+.sr-term-option {
+  display: inline-flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 12px;
+  color: var(--text-dim);
+  background: var(--surface-1);
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-md);
+  font-size: 0.8125rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.sr-term-option[data-selected='true'] {
+  color: var(--primary-foreground);
+  background: var(--primary);
+  border-color: var(--primary);
+}
+
+.sr-term-option:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.sr-pick-cards {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+
+.sr-pick-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(130px, 0.75fr);
+  grid-template-areas:
+    'head price'
+    'os price'
+    'specs specs'
+    'action action'
+    'stock stock';
+  align-items: center;
+  gap: 4px 12px;
+  background: var(--surface-1);
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-md);
+  padding: 12px;
+  scroll-margin-top: 128px;
+}
+
+.sr-pick-card-head {
+  grid-area: head;
+}
+.sr-pick-card-price {
+  grid-area: price;
+}
+.sr-pick-card-os {
+  grid-area: os;
+}
+.sr-pick-specs {
+  grid-area: specs;
+}
+.sr-pick-card-action {
+  grid-area: action;
+}
+.sr-pick-stock {
+  grid-area: stock;
+}
+
+@media (min-width: 720px) {
+  .sr-pick-card {
+    grid-template-columns: minmax(150px, 1fr) minmax(160px, 1fr) minmax(240px, 2fr) minmax(150px, 0.9fr);
+    grid-template-areas:
+      'head price specs action'
+      'os price specs stock';
+    gap: 4px 16px;
+    padding: 14px 18px;
+  }
+
+  .sr-pick-specs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px 20px;
+    margin: 0;
+    padding: 0 0 0 16px;
+    border-top: 0;
+    border-left: 1px solid var(--border-divider);
+  }
+
+  .sr-pick-card-action {
+    align-self: end;
+  }
+}
+
+.sr-pick-card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: start;
+}
+
+.sr-pick-card-name {
+  margin: 0;
+  color: var(--text);
+  font-size: 1rem;
+  letter-spacing: -0.01em;
+}
+
+.sr-pick-card-badges {
+  display: flex;
+  flex-shrink: 0;
+  gap: 6px;
+}
+
+.sr-pick-card[data-popular='true'] {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.sr-pick-card-os {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.sr-pick-specs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 20px;
+  min-width: 0;
+  margin: 2px 0 0;
+  padding: 8px 0 0;
+  border-top: 1px solid var(--border-divider);
+}
+
+.sr-pick-spec {
+  display: flex;
+  justify-content: flex-start;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  font-size: 0.8125rem;
+}
+
+.sr-pick-spec dt {
+  flex: 0 0 60px;
+  color: var(--text-dim);
+}
+
+.sr-pick-spec dd {
+  min-width: 0;
+  margin: 0;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-pick-stock {
+  margin: 2px 0 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.sr-pick-stock[data-state='in-stock'] {
+  color: var(--sr-status-success);
+}
+
+.sr-pick-stock[data-state='out-of-stock'] {
+  color: var(--text-dim);
+  font-weight: 400;
+}
+
+.sr-pick-card-price {
+  display: grid;
+  gap: 2px;
+  margin: 4px 0 0;
+}
+
+.sr-pick-card-amount {
+  color: var(--text);
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.sr-pick-card-period {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
+.sr-pick-card-was {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  text-decoration: line-through;
+}
+
+.sr-pick-card-buy {
+  width: 100%;
+  min-height: 44px;
+}
+
+.sr-compare-details {
+  background: var(--surface-1);
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-md);
+}
+
+.sr-compare-summary {
+  display: grid;
+  gap: 4px;
+  padding: 16px 20px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.sr-compare-summary::-webkit-details-marker {
+  display: none;
+}
+
+.sr-compare-summary .sr-ledger-title {
+  margin: 0;
+}
+
+/* The expander hides the native marker, so the label carries the affordance. */
+.sr-compare-label {
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.sr-compare-label svg {
+  color: var(--text-dim);
+  transition: transform 160ms ease;
+}
+
+.sr-compare-details[open] .sr-compare-label svg {
+  transform: rotate(180deg);
+}
+
+@media (max-width: 900px) {
+  .sr-ledger-hint {
+    display: block;
+    margin: -6px 0 12px;
+    color: var(--text-dim);
+    font-size: 0.75rem;
+  }
+}
+
+/* Anchored comparison jumps must clear the sticky header. */
+
+/* --- Tap targets ---------------------------------------------------------
+   The rendered-layout gate fails any interactive target below 44x44 px.
+   These controls render 20-41 px tall. min-height lifts the hit area only:
+   type, colour, and the surrounding rhythm stay as approved.
+   ------------------------------------------------------------------------- */
+.srv3-nav a,
+.srv3-login,
+.srv3-logo {
+  min-height: 44px;
+}
+
+/* --- Keyboard focus -------------------------------------------------------
+   The rendered-layout gate failed controls whose focus ring resolved to no
+   outline and a transparent shadow. One visible outline covers every control
+   in every browser, and nothing changes for pointer users.
+   ------------------------------------------------------------------------- */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-md);
+}
+
+/* Sold-out plan rows: state plus a route to an in-stock plan. */
+.sr-ledger-stack {
+  display: grid;
+  gap: 6px;
+  justify-items: start;
+}
+
+.sr-ledger-alt {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  color: var(--primary);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Support route at the end of a documentation article. */
+
+/* ==========================================================================
+   Homepage composition pass — senior UX/layout refinement
+   Keeps the existing palette and component language, but removes the
+   "stacked sections with air between them" feeling from the default homepage.
+   ========================================================================== */
+
+main:has(.srv3-final-section) + .srv3-footer {
+  margin-top: 0;
+  padding-top: 48px;
+}
+
+@media (max-width: 760px) {
+  main:has(.srv3-final-section) + .srv3-footer {
+    padding-top: 40px;
+  }
+}
+
+/* ==========================================================================
+   Homepage UX polish pass
+   Decision hierarchy, false-affordance cleanup, and final density tuning.
+   ========================================================================== */
+
+main:has(.srv3-final-section) + .srv3-footer {
+  padding: 36px 0 24px;
+}
+
+main:has(.srv3-final-section) + .srv3-footer .srv3-footer-brand p {
+  margin-top: 16px;
+}
+
+main:has(.srv3-final-section) + .srv3-footer .srv3-socials {
+  margin-top: 16px;
+}
+
+main:has(.srv3-final-section) + .srv3-footer .srv3-footer-bottom {
+  margin-top: 32px;
+  padding-top: 20px;
+}
+
+@media (max-width: 520px) {
+  main:has(.srv3-final-section) + .srv3-footer {
+    padding-top: 32px;
+  }
+}
+
+/* ==========================================================================
+   Homepage production-parity polish: moving OS rail + wide desktop canvas
+   ========================================================================== */
+
+.srv-home-wide {
+  width: 100%;
+  max-width: 1480px;
+  margin-inline: auto;
+}
+
+.srv-os-band {
+  overflow: hidden;
+}
+
+.srv-os-band-inner {
+  display: grid;
+  min-height: 76px;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 24px;
+  align-items: center;
+}
+
+.srv-os-marquee {
+  min-width: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent 0, black 5%, black 95%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, black 5%, black 95%, transparent 100%);
+}
+
+.srv-os-marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: srv-os-marquee-right 38s linear infinite;
+}
+
+.srv-os-marquee-copy {
+  display: flex;
+  min-width: max-content;
+  align-items: center;
+  gap: 34px;
+  padding-right: 34px;
+}
+
+.srv-os-logo {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 10px;
+  color: var(--foreground);
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+
+.srv-os-logo:hover {
+  transform: translateY(-1px);
+}
+
+.srv-os-logo:hover img,
+.srv-os-logo:hover svg {
+  opacity: 1;
+}
+
+.srv-os-logo img,
+.srv-os-logo svg {
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  object-fit: contain;
+  /* Fade the logos only; the names keep full text contrast. */
+  opacity: 0.72;
+}
+
+.srv-os-logo span {
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+@keyframes srv-os-marquee-right {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (min-width: 1440px) {
+  .srv-home-wide {
+    max-width: 1520px;
+  }
+}
+
+@media (max-width: 900px) {
+  .srv-os-band-inner {
+    min-height: 70px;
+    gap: 16px;
+  }
+
+  .srv-os-marquee-copy {
+    gap: 28px;
+    padding-right: 28px;
+  }
+}
+
+@media (max-width: 640px) {
+  .srv-os-band-inner {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding-block: 12px;
+  }
+
+  .srv-os-marquee {
+    margin-inline: -16px;
+  }
+
+  .srv-os-logo span {
+    font-size: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv-os-marquee-track {
+    animation: none;
+    transform: none;
+  }
+
+  .srv-os-marquee-copy[data-clone='true'] {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Homepage lower-half density + motion
+   ========================================================================== */
+
+/* Reviews become a single continuous proof rail instead of a 2-row wall. */
+.srv-review-marquee {
+  overflow: hidden;
+  margin-inline: calc((100vw - min(100vw, 1520px)) / -2);
+  padding-inline: max(16px, calc((100vw - 1520px) / 2));
+  mask-image: linear-gradient(90deg, transparent 0, black 4%, black 96%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, black 4%, black 96%, transparent 100%);
+}
+
+.srv-review-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: srv-review-drift 54s linear infinite;
+}
+
+.srv-review-marquee:hover .srv-review-track,
+.srv-review-marquee:focus-within .srv-review-track {
+  animation-play-state: paused;
+}
+
+.srv-review-set {
+  display: flex;
+  min-width: max-content;
+  gap: 16px;
+  padding-right: 16px;
+}
+
+@keyframes srv-review-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+/* Homepage close should feel like one continuous ending, not CTA -> void -> footer. */
+main:has(.srv-home-final-section) + .srv3-footer {
+  margin-top: 0;
+  padding-top: 40px;
+  padding-bottom: 24px;
+}
+
+main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-brand p {
+  margin-top: 14px;
+}
+
+main:has(.srv-home-final-section) + .srv3-footer .srv3-socials {
+  margin-top: 14px;
+}
+
+main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-links {
+  gap: 24px;
+}
+
+main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-links h2 {
+  margin-bottom: 10px;
+}
+
+main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-links a {
+  min-height: 36px;
+}
+
+main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
+  margin-top: 32px;
+  padding-top: 18px;
+}
+
+@media (max-width: 1100px) {
+  .srv-home-infra .srv-home-wide,
+  .srv-home-products .srv-home-wide,
+  .srv-home-reviews .srv-home-wide,
+  .srv-home-final-section .srv-home-wide {
+    max-width: 1240px;
+  }
+}
+
+@media (max-width: 760px) {
+  .srv-home-infra,
+  .srv-home-products,
+  .srv-home-reviews {
+    padding-block: 40px;
+  }
+
+  .srv-home-final-section {
+    padding-block: 28px;
+  }
+
+  .srv-review-marquee {
+    margin-inline: -16px;
+    padding-inline: 16px;
+  }
+
+  main:has(.srv-home-final-section) + .srv3-footer {
+    padding-top: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv-review-marquee {
+    overflow-x: auto;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+
+  .srv-review-track {
+    animation: none;
+    transform: none;
+  }
+
+  .srv-review-set[data-clone='true'] {
+    display: none;
+  }
+}
+
+/* Canonical homepage hero ambient grid ------------------------------------ */
+
+/* Homepage pricing: 4-up compact card density ---------------------------- */
+.srv-home-pricing-card {
+  gap: 18px;
+  padding: 22px;
+}
+
+.srv-home-pricing-card > header {
+  min-height: 64px;
+  gap: 6px;
+}
+
+.srv-home-pricing-card > header h3 {
+  font-size: 1rem;
+}
+
+.srv-home-pricing-card > header p {
+  font-size: 0.75rem;
+  line-height: 1.45;
+}
+
+.srv-home-pricing-card > div:nth-of-type(1) {
+  gap: 4px;
+}
+
+.srv-home-pricing-card > div:nth-of-type(1) > div {
+  font-size: 2rem;
+}
+
+.srv-home-pricing-card > div:nth-of-type(1) p {
+  font-size: 0.75rem;
+}
+
+.srv-home-pricing-card [data-slot='button'] {
+  min-height: 42px;
+  height: 42px;
+}
+
+.srv-home-pricing-card > div.border-t {
+  padding-top: 16px;
+}
+
+.srv-home-pricing-card > div.border-t ul {
+  gap: 9px;
+}
+
+.srv-home-pricing-card > div.border-t li {
+  font-size: 0.75rem;
+}
+
+.srv-home-pricing-card > div:last-child {
+  font-size: 0.75rem;
+}
+
+@media (max-width: 1279px) {
+  .srv-home-pricing-card {
+    padding: 24px;
+  }
+}
+
+/* Homepage section atmosphere ---------------------------------------------
+   Keep content comfortably inset, but make the viewport gutters feel like
+   intentional parts of the page rather than empty leftover space.
+   ------------------------------------------------------------------------- */
+
+.srv-home-plans {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border-block: 1px solid color-mix(in srgb, var(--border) 72%, transparent);
+  background:
+    radial-gradient(circle at 8% 18%, color-mix(in srgb, var(--primary) 7%, transparent), transparent 24rem),
+    radial-gradient(circle at 92% 76%, color-mix(in srgb, var(--primary) 6%, transparent), transparent 28rem),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--card) 26%, transparent),
+      color-mix(in srgb, var(--background) 94%, transparent)
+    );
+}
+
+.srv-home-plans::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--primary) 6%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--primary) 4%, transparent) 1px, transparent 1px);
+  background-size: 64px 64px;
+  opacity: 0.28;
+  mask-image: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--sr-raw-000000) 80%, transparent) 0%,
+    color-mix(in srgb, var(--sr-raw-000000) 24%, transparent) 18%,
+    color-mix(in srgb, var(--sr-raw-000000) 8%, transparent) 50%,
+    color-mix(in srgb, var(--sr-raw-000000) 24%, transparent) 82%,
+    color-mix(in srgb, var(--sr-raw-000000) 80%, transparent) 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--sr-raw-000000) 80%, transparent) 0%,
+    color-mix(in srgb, var(--sr-raw-000000) 24%, transparent) 18%,
+    color-mix(in srgb, var(--sr-raw-000000) 8%, transparent) 50%,
+    color-mix(in srgb, var(--sr-raw-000000) 24%, transparent) 82%,
+    color-mix(in srgb, var(--sr-raw-000000) 80%, transparent) 100%
+  );
+}
+
+.srv-home-plans::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--foreground) 3%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--foreground) 3%, transparent);
+}
+
+.srv-home-plans > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Slightly soften other homepage transitions so sections feel connected. */
+.srv-home-infra,
+.srv-home-products,
+.srv-home-reviews,
+.srv-home-final-section {
+  position: relative;
+}
+
+.srv-home-infra::before,
+.srv-home-reviews::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  top: -1px;
+  height: 96px;
+  pointer-events: none;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--primary) 3%, transparent), transparent);
+}
+
+@media (max-width: 760px) {
+  .srv-home-plans::before {
+    background-size: 48px 48px;
+    opacity: 0.2;
+  }
+}
+
+/* Four-up pricing should read as a deliberate cluster, not stretched columns. */
+.srv-home-pricing-grid {
+  justify-content: center;
+}
+
+@media (min-width: 1280px) {
+  .srv-home-pricing-grid {
+    grid-template-columns: repeat(4, minmax(0, 290px));
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1536px) {
+  .srv-home-pricing-grid {
+    grid-template-columns: repeat(4, minmax(0, 300px));
+    gap: 24px;
+  }
+}
+
+/* ==========================================================================
+   Homepage composition contract
+   Components use natural max-widths; section atmosphere remains full-bleed.
+   ========================================================================== */
+
+.srv-home-wide {
+  max-width: 1320px;
+}
+
+.srv-home-infra .srv-home-wide,
+.srv-home-reviews .srv-home-wide {
+  max-width: 1220px;
+}
+
+.srv-home-reviews .srv-review-marquee {
+  width: min(100%, 1220px);
+  max-width: 1220px;
+  margin-inline: auto;
+  padding-inline: 0;
+}
+
+@media (min-width: 1536px) {
+  .srv-home-wide {
+    max-width: 1320px;
+  }
+}
+
+@media (max-width: 760px) {
+  .srv-home-reviews .srv-review-marquee {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+/* ==========================================================================
+   Homepage plan configurator
+   One coherent control surface with light motion instead of a giant form card.
+   ========================================================================== */
+
+@keyframes srv-configurator-sheen {
+  0%,
+  72%,
+  100% {
+    transform: translateX(-55%);
+  }
+
+  86% {
+    transform: translateX(55%);
+  }
+}
+
+.srv-selector,
+.srv-billing-rail {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: fit-content;
+  border: 1px solid color-mix(in srgb, var(--border) 90%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--background) 74%, transparent);
+  padding: 4px;
+  box-shadow: inset 0 1px 0 color-mix(in srgb, white 45%, transparent);
+}
+
+.srv-selector-option,
+.srv-billing-option {
+  position: relative;
+  min-height: 36px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  padding: 0 13px;
+  color: var(--muted-foreground);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.srv-selector-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.srv-selector-option:hover,
+.srv-billing-option:hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 4%, transparent);
+}
+
+.srv-selector-option[data-selected='true'],
+.srv-billing-option[data-selected='true'] {
+  color: var(--sr-raw-ffffff);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--primary) 88%, white 5%), var(--primary));
+  box-shadow:
+    0 5px 14px color-mix(in srgb, var(--primary) 22%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 22%, transparent);
+  transform: translateY(-1px);
+}
+
+.srv-selector-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.72;
+}
+
+.srv-billing-rail {
+  width: 100%;
+}
+
+.srv-billing-option {
+  flex: 1;
+  min-width: 86px;
+  padding-inline: 10px;
+}
+
+@keyframes srv-summary-pulse {
+  0%,
+  100% {
+    opacity: 0.62;
+    transform: scale(0.92);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 700px) {
+  .srv-selector,
+  .srv-billing-rail {
+    width: 100%;
+  }
+
+  .srv-selector-option,
+  .srv-billing-option {
+    flex: 1;
+  }
+
+  .srv-billing-rail {
+    overflow-x: auto;
+  }
+
+  .srv-billing-option {
+    min-width: 92px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv-selector-option,
+  .srv-billing-option {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   Homepage lower-half art direction
+   Timeline -> product flow -> editorial proof -> closing endcap.
+   ========================================================================== */
+
+/* 1) Infrastructure: open rail, not cards. */
+.srv-infra-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.7fr) minmax(0, 1.3fr);
+  gap: clamp(44px, 6vw, 82px);
+  align-items: start;
+}
+
+.srv-infra-intro {
+  position: sticky;
+  top: 108px;
+  display: grid;
+  gap: 16px;
+  max-width: 390px;
+}
+
+.srv-infra-intro h2 {
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(2rem, 3vw, 3.15rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+
+.srv-infra-intro > p:not(:first-child) {
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+.srv-inline-link {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 8px;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  transition:
+    color 160ms ease,
+    gap 160ms ease;
+}
+
+.srv-inline-link:hover {
+  gap: 11px;
+  color: var(--primary);
+}
+
+.srv-infra-rail {
+  position: relative;
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.srv-infra-rail::before {
+  content: '';
+  position: absolute;
+  top: 28px;
+  bottom: 28px;
+  left: 17px;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent,
+    color-mix(in srgb, var(--primary) 30%, var(--border)) 12%,
+    color-mix(in srgb, var(--primary) 14%, var(--border)) 88%,
+    transparent
+  );
+}
+
+.srv-infra-item {
+  position: relative;
+  display: grid;
+  min-height: 108px;
+  grid-template-columns: 36px 42px minmax(0, 1fr);
+  gap: 14px;
+  align-items: center;
+  padding: 18px 12px 18px 0;
+  border-bottom: 1px solid var(--border);
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.srv-infra-item:first-child {
+  border-top: 1px solid var(--border);
+}
+
+.srv-infra-item:hover {
+  transform: translateX(5px);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--primary) 6%, transparent), transparent 62%);
+}
+
+.srv-infra-number {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--background);
+  color: var(--muted-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+  transition:
+    border-color 180ms ease,
+    color 180ms ease,
+    background-color 180ms ease;
+}
+
+.srv-infra-item:hover .srv-infra-number {
+  border-color: color-mix(in srgb, var(--primary) 42%, var(--border));
+  background: color-mix(in srgb, var(--primary) 7%, var(--background));
+  color: var(--primary);
+}
+
+.srv-infra-icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  color: var(--primary);
+}
+
+.srv-infra-icon svg {
+  width: 19px;
+  height: 19px;
+}
+
+.srv-infra-copy {
+  display: grid;
+  min-width: 0;
+  gap: 6px;
+}
+
+.srv-infra-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.srv-infra-title-row h3 {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.srv-infra-title-row span {
+  color: var(--muted-foreground);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.srv-infra-copy p {
+  max-width: 650px;
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+.srv-infra-line {
+  position: absolute;
+  right: 0;
+  bottom: -1px;
+  width: 0;
+  height: 1px;
+  background: var(--primary);
+  transition: width 240ms ease;
+}
+
+.srv-infra-item:hover .srv-infra-line {
+  width: 42%;
+}
+
+/* 2) Products: connected stack story instead of three separate surfaces. */
+.srv-home-products-story {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(44px, 6vw, 80px);
+  align-items: center;
+  max-width: 1180px;
+}
+
+.srv-products-copy {
+  display: grid;
+  gap: 16px;
+}
+
+.srv-products-copy h2 {
+  max-width: 500px;
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(2.05rem, 3vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.03;
+  letter-spacing: -0.045em;
+}
+
+.srv-products-copy > p:not(:first-child) {
+  max-width: 470px;
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+.srv-products-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.srv-product-flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 90px minmax(0, 1fr);
+  align-items: center;
+  min-width: 0;
+}
+
+.srv-product-node {
+  position: relative;
+  display: grid;
+  min-height: 250px;
+  align-content: start;
+  gap: 10px;
+  padding: 28px;
+  border-block: 1px solid var(--border);
+  color: inherit;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--card) 66%, transparent), transparent);
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.srv-product-node:first-child {
+  border-left: 1px solid var(--border);
+  border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+}
+
+.srv-product-node:last-child {
+  border-right: 1px solid var(--border);
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+}
+
+.srv-product-node:hover {
+  transform: translateY(-3px);
+  background:
+    radial-gradient(circle at 20% 0%, color-mix(in srgb, var(--primary) 8%, transparent), transparent 15rem),
+    color-mix(in srgb, var(--card) 86%, transparent);
+}
+
+.srv-product-node-protection:hover {
+  background:
+    radial-gradient(circle at 80% 0%, color-mix(in srgb, var(--primary) 8%, transparent), transparent 15rem),
+    color-mix(in srgb, var(--card) 86%, transparent);
+}
+
+.srv-product-node-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  margin-bottom: 8px;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--primary) 8%, transparent);
+  color: var(--primary);
+}
+
+.srv-product-node-icon svg {
+  width: 21px;
+  height: 21px;
+}
+
+.srv-product-node-kicker {
+  color: var(--primary);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.srv-product-node strong {
+  max-width: 260px;
+  color: var(--foreground);
+  font-size: 1.2rem;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+
+.srv-product-node small {
+  max-width: 280px;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  line-height: 1.55;
+}
+
+.srv-product-node-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: auto;
+  padding-top: 28px;
+  color: var(--foreground);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.srv-product-node-link svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 160ms ease;
+}
+
+.srv-product-node:hover .srv-product-node-link svg {
+  transform: translateX(3px);
+}
+
+/* 3) Reviews: editorial feature + continuous proof stream. */
+.srv-review-layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(30px, 4vw, 56px);
+  align-items: stretch;
+  max-width: 1220px;
+}
+
+.srv-review-featured {
+  position: relative;
+  display: grid;
+  align-content: space-between;
+  gap: 30px;
+  min-height: 310px;
+  padding: 28px 0;
+  border-block: 1px solid var(--border);
+}
+
+.srv-review-featured::before {
+  content: '“';
+  position: absolute;
+  top: 62px;
+  right: 8px;
+  color: color-mix(in srgb, var(--primary) 11%, transparent);
+  font-size: 8rem;
+  font-family: var(--font-body);
+  line-height: 1;
+  pointer-events: none;
+}
+
+.srv-review-featured-head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.srv-review-featured-head h2 {
+  margin: 8px 0 0;
+  color: var(--foreground);
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+
+.srv-review-featured > blockquote {
+  position: relative;
+  z-index: 1;
+  max-width: 560px;
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(1rem, 1.35vw, 1.25rem);
+  line-height: 1.65;
+}
+
+.srv-review-featured-author {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.srv-review-featured-author > div {
+  display: grid;
+  gap: 3px;
+}
+
+.srv-review-featured-author strong {
+  font-size: 0.8125rem;
+}
+
+.srv-review-featured-author span,
+.srv-review-source {
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+}
+
+.srv-review-source {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.srv-review-stream-wrap {
+  display: grid;
+  align-content: center;
+  min-width: 0;
+  gap: 12px;
+}
+
+.srv-review-stream-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+}
+
+.srv-review-stream-heading p {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.srv-home-reviews .srv-review-marquee {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 8px 0;
+}
+
+.srv-review-set {
+  gap: 12px;
+  padding-right: 12px;
+}
+
+.srv-review-chip {
+  display: grid;
+  width: 286px;
+  min-height: 220px;
+  flex: 0 0 auto;
+  align-content: space-between;
+  gap: 20px;
+  padding: 20px;
+  border-left: 1px solid var(--border);
+  background: transparent;
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.srv-review-chip:hover {
+  transform: translateY(-2px);
+  background: color-mix(in srgb, var(--card) 70%, transparent);
+}
+
+.srv-review-chip-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.srv-review-chip-top [data-slot='badge'] {
+  color: var(--muted-foreground);
+  font-size: 0.625rem;
+}
+
+.srv-review-chip-top a {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  color: var(--muted-foreground);
+  transition: color 160ms ease;
+}
+
+.srv-review-chip-top a:hover {
+  color: var(--primary);
+}
+
+.srv-review-chip-top svg {
+  width: 14px;
+  height: 14px;
+}
+
+.srv-review-chip blockquote {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 0;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
+}
+
+.srv-review-chip-author {
+  display: grid;
+  gap: 3px;
+}
+
+.srv-review-chip-author strong {
+  font-size: 0.75rem;
+}
+
+.srv-review-chip-author span {
+  color: var(--muted-foreground);
+  font-size: 0.6875rem;
+}
+
+/* 4) Final CTA: an endcap, not another card. */
+.srv-home-final-banner {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: center;
+  max-width: 1180px;
+  overflow: hidden;
+  padding: 34px 38px;
+  border-block: 1px solid var(--border);
+  background:
+    radial-gradient(circle at 82% 20%, color-mix(in srgb, var(--primary) 12%, transparent), transparent 24rem),
+    linear-gradient(
+      100deg,
+      color-mix(in srgb, var(--card) 84%, transparent),
+      color-mix(in srgb, var(--background) 82%, transparent)
+    );
+}
+
+.srv-home-final-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--primary) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--primary) 4%, transparent) 1px, transparent 1px);
+  background-size: 36px 36px;
+  opacity: 0.4;
+  mask-image: linear-gradient(90deg, transparent, black 55%, black);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 55%, black);
+}
+
+.srv-final-copy,
+.srv-final-trust,
+.srv-final-actions {
+  position: relative;
+  z-index: 1;
+}
+
+.srv-final-copy {
+  display: grid;
+  gap: 10px;
+}
+
+.srv-final-eyebrow {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 7px;
+  color: var(--primary);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.srv-final-eyebrow svg {
+  width: 14px;
+  height: 14px;
+}
+
+.srv-final-copy h2 {
+  max-width: 570px;
+  margin: 0;
+  color: var(--foreground);
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 700;
+  line-height: 1.03;
+  letter-spacing: -0.045em;
+}
+
+.srv-final-copy p {
+  max-width: 600px;
+  margin: 0;
+  color: var(--muted-foreground);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+.srv-final-trust {
+  display: flex;
+  align-items: stretch;
+  border-left: 1px solid var(--border);
+}
+
+.srv-final-trust > span {
+  display: grid;
+  min-width: 92px;
+  gap: 2px;
+  align-content: center;
+  padding: 8px 16px;
+  border-right: 1px solid var(--border);
+}
+
+.srv-final-trust strong {
+  color: var(--foreground);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.srv-final-trust small {
+  color: var(--muted-foreground);
+  font-size: 0.625rem;
+}
+
+.srv-final-actions {
+  display: grid;
+  gap: 8px;
+  min-width: 190px;
+}
+
+.srv-final-sales {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: var(--muted-foreground);
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: color 160ms ease;
+}
+
+.srv-final-sales:hover {
+  color: var(--primary);
+}
+
+@media (max-width: 1080px) {
+  .srv-infra-layout,
+  .srv-home-products-story,
+  .srv-review-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .srv-infra-intro {
+    position: static;
+    max-width: 650px;
+  }
+
+  .srv-product-flow {
+    max-width: 780px;
+  }
+
+  .srv-review-featured {
+    min-height: 0;
+  }
+
+  .srv-home-final-banner {
+    grid-template-columns: 1fr auto;
+  }
+
+  .srv-final-trust {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    border-left: 0;
+    border-top: 1px solid var(--border);
+    padding-top: 14px;
+  }
+}
+
+@media (max-width: 720px) {
+  .srv-infra-item {
+    grid-template-columns: 34px 36px minmax(0, 1fr);
+    padding-right: 0;
+  }
+
+  .srv-infra-title-row {
+    align-items: start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .srv-product-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .srv-product-node:first-child,
+  .srv-product-node:last-child {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+
+  .srv-product-node {
+    min-height: 220px;
+  }
+
+  .srv-review-featured-head {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .srv-home-final-banner {
+    grid-template-columns: 1fr;
+    padding: 28px 24px;
+  }
+
+  .srv-final-trust {
+    grid-column: auto;
+    grid-row: auto;
+    overflow-x: auto;
+  }
+
+  .srv-final-actions {
+    min-width: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv-infra-item,
+  .srv-infra-number,
+  .srv-infra-line,
+  .srv-product-node,
+  .srv-product-node-link svg,
+  .srv-review-chip {
+    transition: none;
+  }
+
+  .srv-infra-item:hover,
+  .srv-product-node:hover,
+  .srv-review-chip:hover {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   Homepage semantic icon color
+   Color lives in recognition cues; surfaces remain neutral.
+   ========================================================================== */
+
+.srv-infra-icon {
+  border-radius: var(--radius-sm);
+  transition:
+    color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.srv-infra-item[data-tone='cyan'] .srv-infra-icon {
+  color: var(--sr-raw-06b6d4);
+  background: color-mix(in srgb, var(--sr-raw-06b6d4) 9%, transparent);
+}
+
+.srv-infra-item[data-tone='violet'] .srv-infra-icon {
+  color: var(--sr-raw-8b5cf6);
+  background: color-mix(in srgb, var(--sr-raw-8b5cf6) 9%, transparent);
+}
+
+.srv-infra-item[data-tone='blue'] .srv-infra-icon {
+  color: var(--sr-raw-3b82f6);
+  background: color-mix(in srgb, var(--sr-raw-3b82f6) 9%, transparent);
+}
+
+.srv-infra-item[data-tone='green'] .srv-infra-icon {
+  color: var(--sr-raw-22c55e);
+  background: color-mix(in srgb, var(--sr-raw-22c55e) 9%, transparent);
+}
+
+.srv-infra-item:hover .srv-infra-icon {
+  transform: translateY(-1px) scale(1.04);
+  box-shadow: 0 8px 20px color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.srv-infra-item[data-tone='cyan']:hover .srv-infra-line {
+  background: var(--sr-raw-06b6d4);
+}
+
+.srv-infra-item[data-tone='violet']:hover .srv-infra-line {
+  background: var(--sr-raw-8b5cf6);
+}
+
+.srv-infra-item[data-tone='blue']:hover .srv-infra-line {
+  background: var(--sr-raw-3b82f6);
+}
+
+.srv-infra-item[data-tone='green']:hover .srv-infra-line {
+  background: var(--sr-raw-22c55e);
+}
+
+.srv-infra-item[data-tone='cyan']:hover .srv-infra-number {
+  color: var(--sr-raw-06b6d4);
+  border-color: color-mix(in srgb, var(--sr-raw-06b6d4) 35%, transparent);
+  background: color-mix(in srgb, var(--sr-raw-06b6d4) 6%, transparent);
+}
+
+.srv-infra-item[data-tone='violet']:hover .srv-infra-number {
+  color: var(--sr-raw-8b5cf6);
+  border-color: color-mix(in srgb, var(--sr-raw-8b5cf6) 35%, transparent);
+  background: color-mix(in srgb, var(--sr-raw-8b5cf6) 6%, transparent);
+}
+
+.srv-infra-item[data-tone='blue']:hover .srv-infra-number {
+  color: var(--sr-raw-3b82f6);
+  border-color: color-mix(in srgb, var(--sr-raw-3b82f6) 35%, transparent);
+  background: color-mix(in srgb, var(--sr-raw-3b82f6) 6%, transparent);
+}
+
+.srv-infra-item[data-tone='green']:hover .srv-infra-number {
+  color: var(--sr-raw-22c55e);
+  border-color: color-mix(in srgb, var(--sr-raw-22c55e) 35%, transparent);
+  background: color-mix(in srgb, var(--sr-raw-22c55e) 6%, transparent);
+}
+
+.srv-product-node[data-tone='hosting'] .srv-product-node-icon {
+  color: var(--sr-raw-3b82f6);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--sr-raw-3b82f6) 14%, transparent),
+    color-mix(in srgb, var(--sr-raw-06b6d4) 8%, transparent)
+  );
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sr-raw-3b82f6) 13%, transparent);
+}
+
+.srv-product-node[data-tone='hosting'] .srv-product-node-kicker {
+  color: var(--sr-raw-3b82f6);
+}
+
+.srv-product-node[data-tone='protection'] .srv-product-node-icon {
+  color: var(--sr-raw-22c55e);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, var(--sr-raw-22c55e) 13%, transparent),
+    color-mix(in srgb, var(--sr-raw-06b6d4) 7%, transparent)
+  );
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sr-raw-22c55e) 13%, transparent);
+}
+
+.srv-product-node[data-tone='protection'] .srv-product-node-kicker {
+  color: var(--sr-raw-22c55e);
+}
+
+.srv-product-node[data-tone='hosting']:hover .srv-product-node-icon {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--sr-raw-3b82f6) 22%, transparent),
+    0 8px 24px color-mix(in srgb, var(--sr-raw-3b82f6) 12%, transparent);
+}
+
+.srv-product-node[data-tone='protection']:hover .srv-product-node-icon {
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--sr-raw-22c55e) 22%, transparent),
+    0 8px 24px color-mix(in srgb, var(--sr-raw-22c55e) 10%, transparent);
+}
+
+.srv-review-source[data-source='trustpilot'],
+.srv-review-source-badge[data-source='trustpilot'] {
+  color: var(--sr-raw-00b67a);
+  border-color: color-mix(in srgb, var(--sr-raw-00b67a) 24%, transparent);
+  background: color-mix(in srgb, var(--sr-raw-00b67a) 6%, transparent);
+}
+
+.srv-review-source-badge[data-source='customer-testimonial'] {
+  color: var(--sr-raw-3b82f6);
+  border-color: color-mix(in srgb, var(--sr-raw-3b82f6) 20%, transparent);
+  background: color-mix(in srgb, var(--sr-raw-3b82f6) 5%, transparent);
+}
+
+.srv-review-source-badge[data-source='third-party-review'] {
+  color: var(--sr-raw-8b5cf6);
+  border-color: color-mix(in srgb, var(--sr-raw-8b5cf6) 20%, transparent);
+  background: color-mix(in srgb, var(--sr-raw-8b5cf6) 5%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv-infra-icon {
+    transition: none;
+  }
+
+  .srv-infra-item:hover .srv-infra-icon {
+    transform: none;
+  }
+}
+
+.srv-review-source[data-source='discord-review'],
+.srv-review-source-badge[data-source='discord-review'] {
+  color: var(--sr-raw-5865f2);
+  border-color: color-mix(in srgb, var(--sr-raw-5865f2) 22%, transparent);
+  background: color-mix(in srgb, var(--sr-raw-5865f2) 6%, transparent);
+}
+
+/* ==========================================================================
+   Site-wide approved homepage language
+   Scoped to .srv-page so the approved Windows/Linux landing pages stay intact.
+   ========================================================================== */
+
+.srv-page {
+  --srv-page-width: 1160px;
+  overflow: clip;
+}
+.srv-page-plans,
+.srv-page-citadel {
+  --srv-page-width: 1240px;
+}
+.srv-page .sr-container {
+  width: min(var(--srv-page-width), calc(100% - 64px));
+}
+
+.srv-page .sr-page-hero {
+  isolation: isolate;
+  padding: clamp(72px, 8vw, 104px) 0 clamp(54px, 6vw, 78px);
+  background:
+    radial-gradient(circle at 82% 24%, color-mix(in srgb, var(--primary) 10%, transparent), transparent 24rem),
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-1) 64%, transparent), transparent);
+}
+.srv-page .sr-page-hero::before {
+  content: '';
+  position: absolute;
+  inset: -64px;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--primary) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--primary) 5%, transparent) 1px, transparent 1px);
+  background-size: 52px 52px;
+  opacity: 0.32;
+  mask-image: radial-gradient(
+    circle at 76% 38%,
+    black 0%,
+    color-mix(in srgb, var(--sr-raw-000000) 42%, transparent) 42%,
+    transparent 76%
+  );
+  -webkit-mask-image: radial-gradient(
+    circle at 76% 38%,
+    black 0%,
+    color-mix(in srgb, var(--sr-raw-000000) 42%, transparent) 42%,
+    transparent 76%
+  );
+  animation: srv-site-grid-drift 34s linear infinite;
+}
+.srv-page .sr-page-hero > * {
+  position: relative;
+  z-index: 1;
+}
+@keyframes srv-site-grid-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(52px, 52px, 0);
+  }
+}
+
+.srv-page .sr-title {
+  max-width: 820px;
+  font-size: clamp(3rem, 5.5vw, 5.7rem);
+}
+.srv-page .sr-lede {
+  max-width: 680px;
+}
+.srv-page .sr-section {
+  padding: clamp(52px, 6vw, 78px) 0;
+}
+.srv-page .sr-section-border {
+  border-top: 1px solid color-mix(in srgb, var(--border-divider) 82%, transparent);
+}
+.srv-page .sr-section-border:nth-of-type(even) {
+  background:
+    radial-gradient(circle at 4% 30%, color-mix(in srgb, var(--primary) 3%, transparent), transparent 20rem),
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-1) 22%, transparent), transparent);
+}
+.srv-page .sr-section-head {
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.58fr);
+  gap: clamp(32px, 5vw, 62px);
+  margin-bottom: 30px;
+}
+.srv-page .sr-section-title {
+  font-size: clamp(2.1rem, 3.5vw, 3.45rem);
+}
+.srv-page .sr-copy-grid {
+  grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(38px, 6vw, 78px);
+}
+.srv-page .sr-prose-block {
+  max-width: 720px;
+  font-size: 0.9375rem;
+  line-height: 1.8;
+}
+
+.srv-site-final,
+.srv-page .sr-byo-panel {
+  position: relative;
+  overflow: hidden;
+  border: 0 !important;
+  border-block: 1px solid var(--border-divider) !important;
+  border-radius: 0 !important;
+  background:
+    radial-gradient(circle at 84% 10%, color-mix(in srgb, var(--primary) 11%, transparent), transparent 24rem),
+    linear-gradient(
+      100deg,
+      color-mix(in srgb, var(--surface-1) 82%, transparent),
+      color-mix(in srgb, var(--background) 84%, transparent)
+    ) !important;
+  box-shadow: none !important;
+}
+.srv-site-final::before,
+.srv-page .sr-byo-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, color-mix(in srgb, var(--primary) 4%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in srgb, var(--primary) 3%, transparent) 1px, transparent 1px);
+  background-size: 38px 38px;
+  opacity: 0.34;
+  mask-image: linear-gradient(90deg, transparent, black 58%, black);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 58%, black);
+}
+.srv-site-final > *,
+.srv-page .sr-byo-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* About */
+.srv-page-about .srv-about-reasons {
+  display: grid;
+  max-width: 980px;
+  margin-left: auto;
+  counter-reset: about-reason;
+}
+.srv-page-about .srv-about-reason {
+  counter-increment: about-reason;
+  position: relative;
+  min-height: 0 !important;
+  border: 0 !important;
+  border-top: 1px solid var(--border-divider) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  transition:
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+.srv-page-about .srv-about-reason:last-child {
+  border-bottom: 1px solid var(--border-divider) !important;
+}
+.srv-page-about .srv-about-reason [data-slot='card-header'] {
+  position: relative;
+  display: grid;
+  min-height: 112px;
+  grid-template-columns: 54px minmax(0, 0.55fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+  padding: 18px 12px;
+}
+.srv-page-about .srv-about-reason [data-slot='card-header']::before {
+  content: counter(about-reason, decimal-leading-zero);
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid var(--border-divider);
+  border-radius: 999px;
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  font-weight: 700;
+}
+.srv-page-about .srv-about-reason [data-slot='card-title'],
+.srv-page-about .srv-about-reason [data-slot='card-description'] {
+  margin: 0;
+}
+.srv-page-about .srv-about-reason [data-slot='card-description'] {
+  line-height: 1.65;
+}
+.srv-page-about .srv-about-reason:hover {
+  transform: translateX(5px);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--primary) 5%, transparent), transparent 68%) !important;
+}
+.srv-page-about .srv-about-reason:nth-child(2) [data-slot='card-header']::before {
+  color: var(--sr-raw-8b5cf6);
+}
+.srv-page-about .srv-about-reason:nth-child(3) [data-slot='card-header']::before {
+  color: var(--sr-raw-22c55e);
+}
+.srv-page-about .srv-about-reason:nth-child(4) [data-slot='card-header']::before {
+  color: var(--sr-raw-f59e0b);
+}
+.srv-page-about .srv-about-reason:nth-child(5) [data-slot='card-header']::before {
+  color: var(--sr-raw-06b6d4);
+}
+.srv-page-about .srv-about-stats-strip {
+  border: 0 !important;
+  border-block: 1px solid var(--border-divider) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.srv-page-about .srv-about-stats-strip [data-slot='card-content'] {
+  padding: 24px 0;
+}
+.srv-page-about .srv-about-stats-strip dl > div {
+  padding-right: 28px;
+  border-right: 1px solid var(--border-divider);
+}
+.srv-page-about .srv-about-stats-strip dl > div:last-child {
+  border-right: 0;
+}
+
+/* Plans */
+.srv-page-plans #plan-grid > .sr-container {
+  width: min(1280px, calc(100% - 64px));
+}
+.srv-page-plans .srv-plan-os-flow {
+  gap: 0;
+  border-block: 1px solid var(--border-divider);
+}
+.srv-page-plans .srv-plan-os-option {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.srv-page-plans .srv-plan-os-option + .srv-plan-os-option {
+  border-left: 1px solid var(--border-divider) !important;
+}
+.srv-page-plans .srv-plan-os-option [data-slot='card-header'] {
+  padding: 28px 30px 16px;
+}
+.srv-page-plans .srv-plan-os-option [data-slot='card-content'],
+.srv-page-plans .srv-plan-os-option [data-slot='card-footer'] {
+  padding-inline: 30px;
+}
+.srv-page-plans .srv-plan-os-option [data-slot='card-footer'] {
+  padding-bottom: 28px;
+}
+.srv-page-plans .srv-plan-os-windows [data-slot='card-header'] > span:first-child {
+  color: var(--sr-raw-3b82f6) !important;
+  border-color: color-mix(in srgb, var(--sr-raw-3b82f6) 18%, transparent) !important;
+  background: color-mix(in srgb, var(--sr-raw-3b82f6) 7%, transparent) !important;
+}
+.srv-page-plans .srv-plan-os-linux [data-slot='card-header'] > span:first-child {
+  color: var(--sr-raw-f59e0b) !important;
+  border-color: color-mix(in srgb, var(--sr-raw-f59e0b) 18%, transparent) !important;
+  background: color-mix(in srgb, var(--sr-raw-f59e0b) 7%, transparent) !important;
+}
+.srv-page-plans .srv-plan-included {
+  counter-reset: plan-included;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 0 !important;
+  border-block: 1px solid var(--border-divider);
+}
+.srv-page-plans .srv-plan-included-item {
+  counter-increment: plan-included;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.srv-page-plans .srv-plan-included-item + .srv-plan-included-item {
+  border-left: 1px solid var(--border-divider) !important;
+}
+.srv-page-plans .srv-plan-included-item [data-slot='card-header'] {
+  min-height: 148px;
+  padding: 22px;
+}
+.srv-page-plans .srv-plan-included-item [data-slot='card-header']::before {
+  content: counter(plan-included, decimal-leading-zero);
+  margin-bottom: 16px;
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+}
+.srv-page-plans .srv-plan-included-item:nth-child(2) [data-slot='card-header']::before {
+  color: var(--sr-raw-06b6d4);
+}
+.srv-page-plans .srv-plan-included-item:nth-child(3) [data-slot='card-header']::before {
+  color: var(--sr-raw-8b5cf6);
+}
+.srv-page-plans .srv-plan-included-item:nth-child(4) [data-slot='card-header']::before {
+  color: var(--sr-raw-22c55e);
+}
+.srv-page-plans .srv-plan-included-item:nth-child(5) [data-slot='card-header']::before {
+  color: var(--sr-raw-f59e0b);
+}
+
+/* Docs / FAQ */
+
+/* Status */
+
+/* Blog */
+
+/* Long-form */
+.srv-page-legal .sr-legal-header h1 {
+  max-width: 780px;
+  font-size: clamp(2.7rem, 5vw, 4.8rem);
+  line-height: 0.98;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+}
+/* Legal pages: a reading column with a sticky contents list beside it. */
+.sr-legal {
+  padding: 56px 0 96px;
+  background:
+    radial-gradient(circle at 78% 0%, color-mix(in srgb, var(--primary) 7%, transparent), transparent 26rem),
+    var(--background);
+}
+.sr-legal-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 220px) minmax(0, 720px);
+  gap: clamp(32px, 6vw, 88px);
+  justify-content: center;
+  align-items: start;
+}
+.sr-legal-toc {
+  position: sticky;
+  top: 104px;
+  padding-top: 8px;
+}
+.sr-legal-toc > p {
+  margin: 0 0 12px;
+  color: var(--text-dim);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.sr-legal-toc ol {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid var(--border-divider);
+  list-style: none;
+  counter-reset: legal;
+}
+.sr-legal-toc li {
+  counter-increment: legal;
+}
+.sr-legal-toc a {
+  display: flex;
+  gap: 10px;
+  margin-left: -1px;
+  padding: 6px 0 6px 14px;
+  border-left: 2px solid transparent;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  text-decoration: none;
+}
+.sr-legal-toc a::before {
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  content: counter(legal, decimal-leading-zero);
+}
+.sr-legal-toc a:hover,
+.sr-legal-toc a:focus-visible {
+  border-left-color: var(--primary);
+  color: var(--foreground);
+}
+.sr-legal-header {
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border-divider);
+}
+.sr-legal-header h1 {
+  margin: 8px 0 14px;
+}
+.sr-legal-summary {
+  margin-top: 28px;
+  padding: 20px 22px;
+  border: 1px solid var(--border-divider);
+  border-left: 3px solid var(--primary);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+}
+.sr-legal-summary > p {
+  margin: 0 0 10px;
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+.sr-legal-summary ul {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding-left: 18px;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  list-style: disc;
+  line-height: 1.6;
+}
+.sr-legal-body section {
+  scroll-margin-top: 104px;
+  padding-top: 32px;
+}
+.sr-legal-body section + section {
+  margin-top: 32px;
+  border-top: 1px solid var(--border-divider);
+}
+.srv-page-legal .sr-legal-body h2 {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  margin: 0 0 14px;
+}
+.sr-legal-body h2 > span {
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.sr-legal-body p,
+.sr-legal-body li {
+  max-width: 68ch;
+}
+
+@media (max-width: 1040px) {
+  .sr-legal {
+    padding-top: 40px;
+  }
+  .sr-legal-grid {
+    grid-template-columns: minmax(0, 720px);
+  }
+  .sr-legal-toc {
+    display: none;
+  }
+}
+
+@media (max-width: 980px) {
+  .srv-page .sr-section-head,
+  .srv-page .sr-copy-grid {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+  .srv-page-plans .srv-plan-included {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+  .srv-page-plans .srv-plan-included-item {
+    border-left: 0 !important;
+    border-bottom: 1px solid var(--border-divider) !important;
+  }
+}
+@media (max-width: 720px) {
+  .srv-page .sr-container {
+    width: min(calc(100% - 32px), var(--srv-page-width));
+  }
+  .srv-page .sr-title {
+    font-size: clamp(2.7rem, 13vw, 4.4rem);
+  }
+  .srv-page-about .srv-about-reason [data-slot='card-header'] {
+    grid-template-columns: 44px 1fr;
+  }
+  .srv-page-about .srv-about-reason [data-slot='card-description'] {
+    grid-column: 2;
+  }
+  .srv-page-plans .srv-plan-os-option + .srv-plan-os-option {
+    border-left: 0 !important;
+    border-top: 1px solid var(--border-divider) !important;
+  }
+  .srv-page-plans .srv-plan-included {
+    grid-template-columns: 1fr !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .srv-page .sr-page-hero::before {
+    animation: none;
+  }
+  .srv-page-about .srv-about-reason {
+    transition: none;
+  }
+}
+
+/* Plans page: use the same vertical pricing-card language as homepage. */
+.srv-page-plans .sr-pick-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 320px));
+  justify-content: center;
+  gap: 22px;
+}
+
+.srv-page-plans .sr-pick-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    'head'
+    'os'
+    'price'
+    'specs'
+    'action'
+    'stock';
+  align-content: start;
+  gap: 14px;
+  width: 100%;
+  min-height: 100%;
+  padding: 22px;
+  border-radius: 16px;
+}
+
+.srv-page-plans .sr-pick-card-head {
+  min-height: 42px;
+  align-items: flex-start;
+}
+
+.srv-page-plans .sr-pick-card-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.srv-page-plans .sr-pick-card-os {
+  margin-top: -8px;
+  font-size: 0.6875rem;
+}
+
+.srv-page-plans .sr-pick-card-price {
+  gap: 4px;
+  margin: 2px 0 0;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-divider);
+}
+
+.srv-page-plans .sr-pick-card-amount {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+}
+
+.srv-page-plans .sr-pick-card-period {
+  line-height: 1.45;
+}
+
+.srv-page-plans .sr-pick-specs {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.srv-page-plans .sr-pick-spec {
+  display: flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid color-mix(in srgb, var(--border-divider) 78%, transparent);
+  font-size: 0.75rem;
+}
+
+.srv-page-plans .sr-pick-spec dt {
+  flex: 0 0 auto;
+  color: var(--text-dim);
+}
+
+.srv-page-plans .sr-pick-spec dd {
+  text-align: right;
+  font-weight: 600;
+}
+
+.srv-page-plans .sr-pick-card-action {
+  align-self: end;
+  margin-top: 4px;
+}
+
+.srv-page-plans .sr-pick-card-buy {
+  width: 100%;
+}
+
+.srv-page-plans .sr-pick-stock {
+  margin: -4px 0 0;
+  text-align: left;
+  font-size: 0.6875rem;
+}
+
+.srv-page-plans .sr-pick-card[data-popular='true'] {
+  position: relative;
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border-divider));
+  background:
+    radial-gradient(circle at 90% 0%, color-mix(in srgb, var(--primary) 7%, transparent), transparent 13rem),
+    var(--surface-1);
+  box-shadow:
+    0 12px 34px color-mix(in srgb, var(--primary) 7%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+.srv-page-plans .sr-compare-details {
+  margin-top: 4px;
+}
+
+@media (min-width: 1480px) {
+  .srv-page-plans .sr-pick-cards {
+    grid-template-columns: repeat(3, minmax(0, 330px));
+    gap: 26px;
+  }
+}
+
+@media (max-width: 1080px) {
+  .srv-page-plans .sr-pick-cards {
+    grid-template-columns: repeat(2, minmax(0, 320px));
+  }
+}
+
+@media (max-width: 700px) {
+  .srv-page-plans .sr-pick-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .srv-page-plans .sr-pick-card {
+    max-width: 430px;
+    margin-inline: auto;
+  }
+}
+
+/* ==========================================================================
+   Windows / Linux product pages
+   Preserve the strong OS hero marks; modernize the rest of the experience.
+   ========================================================================== */
+
+.srv-page-os {
+  --srv-page-width: 1180px;
+}
+
+.srv-page-os .sr-os-page-hero {
+  background:
+    radial-gradient(circle at 82% 24%, color-mix(in srgb, var(--primary) 11%, transparent), transparent 25rem),
+    linear-gradient(180deg, color-mix(in srgb, var(--surface-1) 62%, transparent), transparent);
+}
+
+.srv-page-os .sr-os-hero-grid,
+.srv-page-plans .sr-os-hero-grid,
+.srv-page-status .sr-os-hero-grid,
+.srv-page-about .sr-os-hero-grid {
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  gap: clamp(32px, 4vw, 56px);
+}
+
+@media (max-width: 1040px) {
+  .srv-page-os .sr-os-hero-grid,
+  .srv-page-plans .sr-os-hero-grid,
+  .srv-page-status .sr-os-hero-grid,
+  .srv-page-about .sr-os-hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Vertical plan cards on product pages, matching homepage/Plans. */
+.srv-page-os .sr-pick-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 320px));
+  justify-content: center;
+  gap: 22px;
+}
+
+.srv-page-os .sr-pick-card {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    'head'
+    'os'
+    'price'
+    'specs'
+    'action'
+    'stock';
+  align-content: start;
+  gap: 14px;
+  width: 100%;
+  min-height: 100%;
+  padding: 22px;
+  border-radius: 16px;
+}
+
+.srv-page-os .sr-pick-card-head {
+  min-height: 42px;
+}
+
+.srv-page-os .sr-pick-card-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+.srv-page-os .sr-pick-card-os {
+  margin-top: -8px;
+  font-size: 0.6875rem;
+}
+
+.srv-page-os .sr-pick-card-price {
+  gap: 4px;
+  margin: 2px 0 0;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border-divider);
+}
+
+.srv-page-os .sr-pick-card-amount {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+}
+
+.srv-page-os .sr-pick-specs {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.srv-page-os .sr-pick-spec {
+  display: flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid color-mix(in srgb, var(--border-divider) 78%, transparent);
+  font-size: 0.75rem;
+}
+
+.srv-page-os .sr-pick-spec dt {
+  flex: 0 0 auto;
+}
+
+.srv-page-os .sr-pick-spec dd {
+  text-align: right;
+  font-weight: 600;
+}
+
+.srv-page-os .sr-pick-card-action {
+  align-self: end;
+  margin-top: 4px;
+}
+
+.srv-page-os .sr-pick-stock {
+  margin: -4px 0 0;
+  text-align: left;
+  font-size: 0.6875rem;
+}
+
+.srv-page-os .sr-pick-card[data-popular='true'] {
+  border-color: color-mix(in srgb, var(--primary) 48%, var(--border-divider));
+  background:
+    radial-gradient(circle at 88% 0%, color-mix(in srgb, var(--primary) 7%, transparent), transparent 13rem),
+    var(--surface-1);
+  box-shadow:
+    0 12px 34px color-mix(in srgb, var(--primary) 7%, transparent),
+    inset 0 0 0 1px color-mix(in srgb, var(--primary) 20%, transparent);
+}
+
+/* Editorial bands keep long SEO pages from becoming repetitive. */
+
+/* Real OS/distribution logos in dimensional recognition tiles. */
+
+/* Environment tables are clean data surfaces, not cards. */
+
+/* Clean dimensional technical glyph tiles. */
+
+/* Regions share one split surface instead of two unrelated cards. */
+
+/* Order, FAQ and closing rhythm. */
+
+.srv-page-os .srv-os-final {
+  border-radius: 0 !important;
+}
+
+@media (max-width: 1080px) {
+  .srv-page-os .sr-pick-cards {
+    grid-template-columns: repeat(2, minmax(0, 320px));
+  }
+}
+
+@media (max-width: 720px) {
+  .srv-page-os .sr-pick-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .srv-page-os .sr-pick-card {
+    max-width: 430px;
+    margin-inline: auto;
+  }
+}
+
+/* Homepage icon refinement: keep semantic colour, add dimensional product-grade treatment. */
+
+.srv-infra-icon,
+.srv-product-node-icon {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, currentColor 18%, var(--border-divider));
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--background) 86%, transparent),
+    0 10px 22px color-mix(in srgb, currentColor 10%, transparent);
+  transform: perspective(220px) rotateX(3deg) rotateY(-3deg);
+}
+
+.srv-infra-icon::after,
+.srv-product-node-icon::after {
+  content: '';
+  position: absolute;
+  inset: 1px 1px 54% 1px;
+  border-radius: inherit;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--background) 24%, transparent), transparent);
+  pointer-events: none;
+}
+
+.srv-infra-icon svg,
+.srv-product-node-icon svg {
+  position: relative;
+  z-index: 1;
+}
+
+.srv-infra-item:hover .srv-infra-icon,
+.srv-product-node:hover .srv-product-node-icon {
+  transform: perspective(220px) rotateX(0deg) rotateY(0deg) translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv-infra-icon,
+  .srv-product-node-icon {
+    transform: none;
+  }
+}
+
+/* Footer responsive alignment -------------------------------------------- */
+@media (max-width: 1040px) {
+  .srv3-footer-main {
+    grid-template-columns: minmax(240px, 0.8fr) minmax(0, 1.6fr);
+    gap: 52px;
+  }
+
+  .srv3-footer-links {
+    gap: 28px;
+  }
+}
+
+@media (max-width: 760px) {
+  .srv3-footer-main {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 40px 0 28px;
+  }
+
+  .srv3-footer-brand {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'logo socials'
+      'copy copy'
+      'proof proof';
+    gap: 0 18px;
+    max-width: none;
+    align-items: center;
+  }
+
+  .srv3-footer-logo {
+    grid-area: logo;
+  }
+
+  .srv3-footer-logo img {
+    width: 146px;
+  }
+
+  .srv3-footer-description {
+    grid-area: copy;
+    max-width: 520px;
+    margin-top: 14px;
+    font-size: 0.75rem;
+    line-height: 1.55;
+  }
+
+  .srv3-footer-proof {
+    grid-area: proof;
+    margin-top: 14px;
+    padding-top: 12px;
+  }
+
+  .srv3-socials {
+    grid-area: socials;
+    flex-wrap: nowrap;
+    margin: 0;
+  }
+
+  .srv3-socials a {
+    width: 40px;
+    height: 40px;
+  }
+
+  .srv3-footer-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px 28px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border-divider);
+  }
+
+  .srv3-footer-column:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .srv3-footer-column:last-child ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 24px;
+  }
+
+  .srv3-footer-links h2 {
+    margin-bottom: 10px;
+  }
+
+  .srv3-footer-links ul {
+    gap: 0;
+  }
+
+  .srv3-footer-links a {
+    min-height: 32px;
+    font-size: 0.75rem;
+  }
+
+  .srv3-footer-bottom-main,
+  .srv3-footer-bottom-note {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    align-items: start;
+  }
+
+  .srv3-footer-bottom-main {
+    min-height: 0;
+    padding: 14px 0;
+  }
+
+  .srv3-footer-bottom-note {
+    min-height: 0;
+    padding: 10px 0 14px;
+  }
+
+  .srv3-footer-legal {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 6px 14px;
+    white-space: normal;
+  }
+
+  .srv3-footer-credit {
+    justify-self: start;
+    text-align: left;
+  }
+}
+
+@media (max-width: 520px) {
+  .srv3-footer-main {
+    gap: 22px;
+    padding: 28px 0 20px;
+  }
+
+  .srv3-footer-brand {
+    grid-template-columns: 1fr auto;
+  }
+
+  .srv3-footer-logo img {
+    width: 132px;
+  }
+
+  .srv3-socials {
+    gap: 6px;
+  }
+
+  .srv3-socials a {
+    width: 44px;
+    height: 44px;
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .srv3-footer-description {
+    margin-top: 12px;
+    font-size: 0.6875rem;
+    line-height: 1.5;
+  }
+
+  .srv3-footer-proof {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    padding-top: 10px;
+    font-size: 0.625rem;
+  }
+
+  .srv3-footer-proof strong {
+    font-size: 0.6875rem;
+  }
+
+  .srv3-footer-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 18px;
+    padding-top: 18px;
+  }
+
+  .srv3-footer-column:last-child {
+    grid-column: 1 / -1;
+    padding-top: 14px;
+    border-top: 1px solid var(--border-divider);
+  }
+
+  .srv3-footer-column:last-child ul {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 18px;
+  }
+
+  .srv3-footer-links h2 {
+    margin-bottom: 8px;
+    font-size: 0.625rem;
+  }
+
+  .srv3-footer-links a {
+    min-height: 30px;
+    font-size: 0.6875rem;
+  }
+
+  .srv3-footer-bottom {
+    font-size: 0.625rem;
+  }
+
+  .srv3-footer-bottom-main {
+    padding: 12px 0;
+  }
+
+  .srv3-footer-bottom-note {
+    padding: 8px 0 12px;
+  }
+
+  .srv3-footer-bottom-note > span:first-child {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv3-socials a,
+  .srv3-footer-links a {
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   Site-wide clean icon system
+   Real OS marks are exempt on Windows/Linux pages. Elsewhere icons are crisp,
+   standalone glyphs: no neon glow, halo, faux glass tile or 3D transform.
+   ========================================================================== */
+
+/* Compact homepage configurator: only region + billing controls on top. */
+
+/* Homepage infrastructure and product icons: clean glyphs, no icon tile. */
+.srv-infra-icon,
+.srv-product-node-icon {
+  position: static;
+  overflow: visible;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.srv-infra-icon::after,
+.srv-product-node-icon::after {
+  display: none !important;
+}
+
+.srv-infra-icon {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+}
+
+.srv-infra-icon svg {
+  width: 25px;
+  height: 25px;
+}
+
+.srv-product-node-icon {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  margin-bottom: 8px;
+}
+
+.srv-product-node-icon svg {
+  width: 29px;
+  height: 29px;
+}
+
+.srv-infra-item:hover .srv-infra-icon,
+.srv-product-node:hover .srv-product-node-icon {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Keep restrained recognition colour, but remove all glow/surface effects. */
+.srv-infra-item[data-tone='cyan'] .srv-infra-icon {
+  color: var(--sr-raw-0891b2);
+}
+.srv-infra-item[data-tone='violet'] .srv-infra-icon {
+  color: var(--sr-raw-7c3aed);
+}
+.srv-infra-item[data-tone='blue'] .srv-infra-icon {
+  color: var(--sr-raw-2563eb);
+}
+.srv-infra-item[data-tone='green'] .srv-infra-icon {
+  color: var(--sr-raw-16a34a);
+}
+
+.srv-product-node[data-tone='hosting'] .srv-product-node-icon {
+  color: var(--sr-raw-2563eb);
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.srv-product-node[data-tone='protection'] .srv-product-node-icon {
+  color: var(--sr-raw-16a34a);
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.srv-product-node[data-tone='hosting']:hover .srv-product-node-icon,
+.srv-product-node[data-tone='protection']:hover .srv-product-node-icon {
+  box-shadow: none !important;
+}
+
+/* Plans page uses real OS marks instead of generic icon boxes. */
+.srv-page-plans .srv-plan-os-mark {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  margin-bottom: 2px;
+}
+
+.srv-page-plans .srv-plan-os-mark img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.srv-page-plans .srv-plan-os-mark-linux img {
+  width: 31px;
+  height: 38px;
+}
+
+/* Footer social marks are brand icons; keep them simple and flat. */
+.srv3-socials a {
+  box-shadow: none;
+  background: transparent;
+}
+
+.srv3-socials a:hover {
+  transform: none;
+  background: var(--surface-1);
+}
+
+/* Generic BYO utility glyph stays neutral rather than becoming another effect tile. */
+
+/* Do not alter the approved Windows/Linux branded visual treatment. */
+
+/* Final generic icon contract: substantial filled icons, no rainbow outline system. */
+
+.srv-infra-icon {
+  color: var(--primary) !important;
+  background: none !important;
+  box-shadow: none !important;
+  filter: none !important;
+}
+
+.srv-infra-item:hover .srv-infra-number {
+  color: var(--primary);
+  border-color: color-mix(in srgb, var(--primary) 28%, var(--border-divider));
+  background: color-mix(in srgb, var(--primary) 4%, transparent);
+}
+
+.srv-infra-item:hover .srv-infra-line {
+  background: var(--primary);
+}
+
+.srv-product-node-icon {
+  filter: none !important;
+}
+
+/* Real brand marks remain real marks; no decorative container effect is added. */
+.srv-page-plans .srv-plan-os-mark {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+/* Homepage use-case article rail ----------------------------------------- */
+.srv-home-usecases {
+  background:
+    radial-gradient(circle at 8% 18%, color-mix(in srgb, var(--primary) 4%, transparent), transparent 22rem),
+    color-mix(in srgb, var(--card) 20%, transparent);
+}
+
+.srv-usecase-layout {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(44px, 7vw, 94px);
+  align-items: start;
+}
+
+.srv-usecase-intro {
+  position: sticky;
+  top: 108px;
+  display: grid;
+  gap: 16px;
+  max-width: 440px;
+}
+
+.srv-usecase-intro h2 {
+  margin: 0;
+  max-width: 520px;
+  font-size: clamp(2rem, 3.2vw, 3.2rem);
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+.srv-usecase-intro > p:not(:first-child) {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+
+.srv-usecase-rail {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--border-divider);
+}
+
+.srv-usecase-rail li {
+  border-bottom: 1px solid var(--border-divider);
+}
+
+.srv-usecase-row {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 36px;
+  gap: 18px;
+  align-items: center;
+  min-height: 112px;
+  padding: 18px 10px;
+  color: inherit;
+  text-decoration: none;
+  transition:
+    transform 170ms ease,
+    background-color 170ms ease;
+}
+
+.srv-usecase-row:hover {
+  transform: translateX(5px);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--primary) 5%, transparent), transparent 72%);
+}
+
+.srv-usecase-number {
+  color: var(--primary);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.srv-usecase-copy {
+  display: grid;
+  gap: 6px;
+}
+
+.srv-usecase-copy strong {
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.srv-usecase-copy small {
+  max-width: 680px;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+.srv-usecase-arrow {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  justify-self: end;
+  color: var(--text-dim);
+}
+
+.srv-usecase-arrow svg {
+  width: 17px;
+  height: 17px;
+}
+
+.srv-usecase-row:hover .srv-usecase-arrow {
+  color: var(--primary);
+}
+
+/* Pricing configurator no longer needs workload/recommendation space. */
+
+@media (max-width: 900px) {
+  .srv-usecase-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .srv-usecase-intro {
+    position: static;
+    max-width: 620px;
+  }
+}
+
+@media (max-width: 620px) {
+  .srv-usecase-row {
+    grid-template-columns: 38px minmax(0, 1fr) 28px;
+    gap: 12px;
+    min-height: 96px;
+    padding-inline: 2px;
+  }
+
+  .srv-usecase-copy small {
+    font-size: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv-usecase-row {
+    transition: none;
+  }
+
+  .srv-usecase-row:hover {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   Resources / Guides / Help Center knowledge architecture
+   Mintlify-inspired information hierarchy with StealthRDP visual language.
+   ========================================================================== */
+
+/* Shared left resource navigation --------------------------------------- */
+
+/* Search --------------------------------------------------------------- */
+
+/* Resources landing ---------------------------------------------------- */
+
+/* Right rail ----------------------------------------------------------- */
+
+/* Help Center collections ---------------------------------------------- */
+
+/* FAQ becomes a Help Center subsection --------------------------------- */
+
+/* Guides index --------------------------------------------------------- */
+
+/* Long-form knowledge reading shell ----------------------------------- */
+
+/* Responsive knowledge system ----------------------------------------- */
+
+/* ==========================================================================
+   Help Center documentation product
+   Based on Mintlify's public navigation/content model, adapted to StealthRDP.
+   ========================================================================== */
+
+/* Docs behave as their own product surface, not another marketing page. */
+
+/* Three-column docs frame ------------------------------------------------ */
+
+/* Left navigation tree -------------------------------------------------- */
+
+/* Help Center home ------------------------------------------------------ */
+
+/* Individual documentation article ------------------------------------- */
+
+/* Related help, previous/next, escalation ------------------------------- */
+
+/* Mobile docs navigation ------------------------------------------------ */
+
+/* ==========================================================================
+   Unified Resources application
+   Same shell for Resources, Guides, Help Center and Common Questions.
+   ========================================================================== */
+
+/* Top bar is now two rows; every sticky resource element shares one offset. */
+
+/* Every resource index uses the same compact content rhythm. */
+
+/* FAQ is documentation content now, not a separate landing-page design. */
+
+/* Guide articles inherit the exact Help Center reading typography. */
+
+/* The shared search is always available and visually identical. */
+
+/* ==========================================================================
+   Homepage pricing controls
+   Separate compact surfaces aligned exactly to the pricing-card cluster.
+   ========================================================================== */
+
+.srv-pricing-controls {
+  display: flex;
+  width: 100%;
+  max-width: 1220px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-inline: auto;
+}
+
+.srv-pricing-control-card {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-width: 0;
+  border: 1px solid color-mix(in srgb, var(--border) 88%, transparent);
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--card) 80%, var(--background));
+  padding: 4px;
+  box-shadow:
+    0 8px 22px color-mix(in srgb, var(--foreground) 4%, transparent),
+    inset 0 1px 0 color-mix(in srgb, white 42%, transparent);
+}
+
+.srv-pricing-controls .srv-selector,
+.srv-pricing-controls .srv-billing-rail {
+  width: fit-content !important;
+  min-height: 0 !important;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+}
+
+.srv-pricing-controls .srv-selector-option,
+.srv-pricing-controls .srv-billing-option {
+  flex: 0 0 auto;
+  min-width: 0;
+  min-height: 36px;
+  padding-inline: 13px;
+}
+
+.srv-pricing-controls .srv-billing-option {
+  padding-inline: 14px;
+}
+
+.srv-pricing-controls .srv-billing-option[data-selected='true'],
+.srv-pricing-controls .srv-selector-option[data-selected='true'] {
+  transform: none;
+  box-shadow: none;
+}
+
+.srv-pricing-billing {
+  margin-left: auto;
+}
+
+@media (min-width: 1536px) {
+  .srv-pricing-controls {
+    max-width: 1272px;
+  }
+}
+
+@media (max-width: 1279px) {
+  .srv-pricing-controls {
+    max-width: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .srv-pricing-controls {
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .srv-pricing-control-card {
+    padding: 3px;
+  }
+
+  .srv-pricing-billing {
+    max-width: calc(100% - 128px);
+    overflow-x: auto;
+    margin-left: auto;
+    scrollbar-width: none;
+  }
+
+  .srv-pricing-billing::-webkit-scrollbar {
+    display: none;
+  }
+
+  .srv-pricing-controls .srv-selector-option,
+  .srv-pricing-controls .srv-billing-option {
+    min-height: 34px;
+    padding-inline: 11px;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 520px) {
+  .srv-pricing-controls {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+  }
+
+  .srv-pricing-billing {
+    width: 100%;
+    max-width: 100%;
+    justify-self: stretch;
+  }
+}
+
+/* ==========================================================================
+   Canonical public typography hierarchy
+   One semantic scale across the public site. The homepage hero H1 is the only
+   intentional display-size exception; everything else follows role, not route.
+   ========================================================================== */
+
+.sr-site {
+  font-family: var(--font-body);
+}
+
+/* Page titles: one calm, confident size on every non-home route. */
+.srv-page.srv-page h1 {
+  font-family: var(--font-body);
+  font-size: var(--text-page-title);
+  font-weight: 700;
+  line-height: var(--text-page-title--line-height);
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+/* Marketing section headings: consistent across About, Plans, OS and Citadel. */
+.srv-page:not(.srv-docs-product):not(.srv-page-legal) section h2,
+.srv-home-plans h2,
+.srv-home-usecases h2,
+.srv-home-infra h2,
+.srv-home-products h2,
+.srv-home-reviews h2,
+.srv-home-final-section h2 {
+  font-family: var(--font-body);
+  font-size: var(--text-section-title);
+  font-weight: 700;
+  line-height: var(--text-section-title--line-height);
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+/* Documentation, legal and resource collection headings belong to reading UI,
+   so they intentionally sit one step below marketing section headings. */
+.srv-page-legal h2 {
+  font-family: var(--font-body);
+  font-size: var(--text-subsection-title);
+  font-weight: 600;
+  line-height: var(--text-subsection-title--line-height);
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+/* H3/card titles stay readable without competing with the page narrative. */
+.srv-page:not(.srv-docs-product) section h3,
+.srv-page-legal h3 {
+  font-family: var(--font-body);
+  font-size: var(--text-card-title);
+  font-weight: 600;
+  line-height: var(--text-card-title--line-height);
+  letter-spacing: -0.01em;
+}
+
+/* Keep the homepage hero expressive. Its H1 is deliberately not normalized. */
+
+/* ==========================================================================
+   Resources application v2 — stronger alignment, typography and wayfinding.
+   One shell across Resources, Guides, Help Center and Common Questions.
+   ========================================================================== */
+
+/* Resources home: outcome-first destination cards. */
+
+/* Resources wayfinding icons use the existing Phosphor UI icon set. */
+
+/* Pricing controls follow the exact plan-card cluster boundaries on inner pricing pages.
+   Homepage remains on its four-card 1220/1272px composition. */
+.srv-page-plans .srv-pricing-controls,
+.srv-page-os .srv-pricing-controls {
+  width: min(100%, 1004px);
+  max-width: 1004px;
+  margin-inline: auto;
+}
+
+@media (min-width: 1480px) {
+  .srv-page-plans .srv-pricing-controls {
+    width: min(100%, 1042px);
+    max-width: 1042px;
+  }
+}
+
+@media (max-width: 1080px) {
+  .srv-page-plans .srv-pricing-controls,
+  .srv-page-os .srv-pricing-controls {
+    width: min(100%, 662px);
+    max-width: 662px;
+  }
+}
+
+@media (max-width: 720px) {
+  .srv-page-plans .srv-pricing-controls,
+  .srv-page-os .srv-pricing-controls {
+    width: min(100%, 430px);
+    max-width: 430px;
+  }
+}
+
+/* ==========================================================================
+   Persistent support + direct service-status navigation
+   ========================================================================== */
+
+.srv3-whatsapp-link {
+  display: inline-flex;
+  min-height: 38px;
+  align-items: center;
+  gap: 7px;
+  border: 1px solid color-mix(in srgb, var(--sr-raw-22c55e) 34%, var(--border-divider));
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--sr-raw-22c55e) 5%, var(--surface-1));
+  padding: 0 11px;
+  color: color-mix(in srgb, var(--sr-raw-15803d) 82%, var(--foreground));
+  font-size: 0.75rem;
+  font-weight: 700;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.srv3-whatsapp-link:hover {
+  border-color: color-mix(in srgb, var(--sr-raw-22c55e) 58%, var(--border-divider));
+  background: color-mix(in srgb, var(--sr-raw-22c55e) 9%, var(--surface-1));
+  transform: translateY(-1px);
+}
+
+.srv-whatsapp-float {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 70;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid color-mix(in srgb, var(--sr-raw-22c55e) 58%, var(--sr-raw-0b0f2d));
+  border-radius: 999px;
+  background: var(--sr-raw-16a34a);
+  padding: 0 16px;
+  color: var(--sr-raw-ffffff);
+  font-size: 0.75rem;
+  font-weight: 750;
+  box-shadow: 0 14px 34px color-mix(in srgb, var(--sr-raw-000000) 16%, transparent);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.srv-whatsapp-float:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 42px color-mix(in srgb, var(--sr-raw-000000) 20%, transparent);
+}
+
+@media (max-width: 1040px) {
+  .srv-whatsapp-float {
+    right: 16px;
+    bottom: 16px;
+  }
+}
+
+@media (max-width: 520px) {
+  .srv-whatsapp-float {
+    width: 46px;
+    height: 46px;
+    justify-content: center;
+    padding: 0;
+  }
+  .srv-whatsapp-float span {
+    display: none;
+  }
+}
+
+/* Status v2 ------------------------------------------------------------- */
+
+.srv-status-v2 {
+  background:
+    radial-gradient(circle at 82% 8%, color-mix(in srgb, var(--primary) 6%, transparent), transparent 26rem),
+    var(--background);
+}
+
+.srv-status-v2-hero {
+  border-bottom: 1px solid var(--border-divider);
+  padding: 64px 0 42px;
+}
+
+.srv-status-v2-copy {
+  max-width: 720px;
+}
+.srv-status-v2-badge {
+  gap: 7px;
+  margin-bottom: 18px;
+}
+
+.srv-status-v2-copy h1 {
+  max-width: 720px;
+  margin: 0;
+  font-size: clamp(2.5rem, 4.5vw, 4.5rem) !important;
+  line-height: 0.98 !important;
+  letter-spacing: -0.05em !important;
+}
+
+.srv-status-v2-copy > p {
+  max-width: 620px;
+  margin: 20px 0 0;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.srv-status-v2-body {
+  padding: 36px 0 clamp(48px, 7vw, 88px);
+}
+.srv-status-v2-console {
+  display: grid;
+  gap: 18px;
+}
+
+.srv-status-v2-help {
+  gap: 0;
+  padding-block: 0;
+}
+
+.srv-status-v2-help [data-slot='card-content'] {
+  display: flex;
+  min-height: 72px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-block: 14px;
+}
+
+.srv-status-v2-help [data-slot='card-content'] > div:first-child {
+  display: grid;
+  gap: 4px;
+}
+.srv-status-v2-help strong {
+  font-size: 0.8125rem;
+}
+.srv-status-v2-help span {
+  color: var(--text-dim);
+  font-size: 0.6875rem;
+}
+.srv-status-v2-help [data-slot='card-content'] > div:last-child {
+  display: flex;
+  gap: 10px;
+}
+
+.srv-status-v2-help a {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-sm);
+  padding: 0 12px;
+  color: var(--text);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.srv-status-v2-help a:first-child {
+  border-color: color-mix(in srgb, var(--sr-raw-22c55e) 35%, var(--border-divider));
+  color: var(--sr-raw-15803d);
+}
+
+@media (max-width: 560px) {
+  .srv-status-v2-hero {
+    padding-top: 46px;
+  }
+  .srv-status-v2-help [data-slot='card-content'] {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .srv-status-v2-help [data-slot='card-content'] > div:last-child {
+    flex-wrap: wrap;
+  }
+}
+
+/* Citadel v2 ------------------------------------------------------------ */
+
+.srv-citadel-v2 {
+  background:
+    radial-gradient(circle at 78% 6%, color-mix(in srgb, var(--primary) 8%, transparent), transparent 30rem),
+    var(--background);
+}
+
+.srv-citadel-v2-hero {
+  padding: 76px 0 58px;
+}
+
+.srv-citadel-v2-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(36px, 4.5vw, 64px);
+  align-items: center;
+}
+
+.srv-citadel-v2-copy {
+  max-width: 720px;
+}
+.srv-citadel-v2-eyebrow {
+  gap: 7px;
+  margin-bottom: 20px;
+}
+
+.srv-citadel-v2-copy h1 {
+  margin: 0;
+  font-size: clamp(2.9rem, 4.6vw, 4.5rem) !important;
+  line-height: 0.93 !important;
+  letter-spacing: -0.06em !important;
+}
+
+.srv-citadel-v2-copy h1 span {
+  display: block;
+  margin-top: 7px;
+  color: var(--primary);
+}
+
+.srv-citadel-v2-copy > p {
+  max-width: 650px;
+  margin: 24px 0 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.srv-citadel-v2-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 30px;
+}
+
+.srv-citadel-v2-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px 18px;
+  margin-top: 22px;
+  color: var(--text-dim);
+  font-size: 0.6875rem;
+}
+
+.srv-citadel-v2-facts span {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+}
+.srv-citadel-v2-facts strong {
+  color: var(--text);
+}
+.srv-citadel-v2-section {
+  padding: 72px 0;
+}
+
+.srv-citadel-v2-section-muted {
+  border-block: 1px solid var(--border-divider);
+  background: color-mix(in srgb, var(--surface-1) 46%, transparent);
+}
+
+.srv-citadel-v2-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.55fr);
+  gap: 48px;
+  align-items: end;
+  margin-bottom: 28px;
+}
+
+.srv-citadel-v2-heading h2 {
+  max-width: 760px;
+  margin: 0;
+  font-size: clamp(2rem, 3.4vw, 3.4rem);
+  line-height: 1.03;
+  letter-spacing: -0.045em;
+}
+
+.srv-citadel-v2-heading > p {
+  max-width: 470px;
+  margin: 0 0 3px;
+  color: var(--text-dim);
+  font-size: 0.8125rem;
+  line-height: 1.65;
+}
+
+.srv-citadel-v2-plan p {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.srv-citadel-v2-plans {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.srv-citadel-v2-plan {
+  gap: 0;
+  overflow: hidden;
+  border-radius: 14px;
+  padding-block: 0;
+}
+
+.srv-citadel-v2-plan[data-featured='true'] {
+  border-color: color-mix(in srgb, var(--primary) 42%, var(--border-divider));
+  box-shadow: 0 14px 38px color-mix(in srgb, var(--primary) 8%, transparent);
+}
+
+.srv-citadel-v2-plan [data-slot='card-header'] {
+  display: flex;
+  min-height: 102px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-bottom: 1px solid var(--border-divider);
+  padding-block: 18px;
+}
+
+.srv-citadel-v2-plan [data-slot='card-header'] > div:first-child {
+  display: grid;
+  gap: 9px;
+}
+.srv-citadel-v2-plan [data-slot='card-title'] {
+  font-size: 1rem;
+}
+
+.srv-citadel-v2-price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+.srv-citadel-v2-price strong {
+  font-size: 1.9rem;
+  letter-spacing: -0.05em;
+}
+.srv-citadel-v2-price span {
+  color: var(--text-dim);
+  font-size: 0.6875rem;
+}
+
+.srv-citadel-v2-plan [data-slot='card-content'] {
+  display: grid;
+  gap: 18px;
+  padding-block: 18px;
+}
+
+.srv-citadel-v2-plan dl {
+  display: grid;
+  margin: 0;
+}
+
+.srv-citadel-v2-plan dl > div {
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-bottom: 1px solid color-mix(in srgb, var(--border-divider) 78%, transparent);
+  font-size: 0.6875rem;
+}
+
+.srv-citadel-v2-plan dt {
+  color: var(--text-dim);
+}
+.srv-citadel-v2-plan dd {
+  max-width: 58%;
+  margin: 0;
+  text-align: right;
+  font-weight: 650;
+}
+
+.srv-citadel-v2-plan [data-slot='card-footer'] {
+  border-top: 1px solid var(--border-divider);
+  padding-block: 16px;
+}
+
+.srv-citadel-v2-plan [data-slot='button'] {
+  width: 100%;
+}
+
+.srv-citadel-v2-final {
+  padding: 12px 0 clamp(48px, 6vw, 72px);
+}
+
+.srv-citadel-v2-final-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 42px;
+  align-items: center;
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(circle at 90% 10%, color-mix(in srgb, var(--primary) 12%, transparent), transparent 18rem),
+    var(--surface-1);
+  padding: 34px 38px;
+}
+
+.srv-citadel-v2-final-card > div:first-child {
+  display: grid;
+  gap: 9px;
+}
+.srv-citadel-v2-final-card [data-slot='badge'] {
+  width: fit-content;
+  gap: 6px;
+}
+
+.srv-citadel-v2-final-card h2 {
+  max-width: 760px;
+  margin: 0;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.srv-citadel-v2-final-card p {
+  max-width: 650px;
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.srv-citadel-v2-final-card > div:last-child {
+  display: grid;
+  gap: 9px;
+  min-width: 230px;
+}
+
+@media (max-width: 1040px) {
+  .srv-citadel-v2-hero-grid,
+  .srv-citadel-v2-heading {
+    grid-template-columns: 1fr;
+  }
+  .srv-citadel-v2-plans {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .srv-citadel-v2-plan:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 760px) {
+  .srv-citadel-v2-hero {
+    padding-top: 52px;
+  }
+  .srv-citadel-v2-section {
+    padding: 54px 0;
+  }
+  .srv-citadel-v2-plans {
+    grid-template-columns: 1fr;
+  }
+  .srv-citadel-v2-plan:last-child {
+    grid-column: auto;
+  }
+
+  .srv-citadel-v2-final-card {
+    grid-template-columns: 1fr;
+    padding: 28px;
+  }
+}
+
+@media (max-width: 520px) {
+  .srv-citadel-v2-copy h1 {
+    font-size: clamp(2.8rem, 14vw, 4rem) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv3-whatsapp-link,
+  .srv-whatsapp-float {
+    transition: none;
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   Responsive shell contract — one breakpoint model across the whole site.
+   Marketing and resource/article shells switch modes at the same 1040px edge.
+   This prevents a 1024px device from showing a mobile marketing header while
+   Help/Guides/Citadel still render their desktop sidebars.
+   ========================================================================== */
+
+@media (max-width: 1040px) {
+  /* Main marketing shell */
+  .srv3-nav,
+  .srv3-header-actions {
+    display: none !important;
+  }
+
+  .srv3-mobile-nav {
+    display: block !important;
+  }
+}
+
+@media (min-width: 1041px) {
+  /* Main marketing shell */
+  .srv3-mobile-nav {
+    display: none !important;
+  }
+
+  .srv3-nav,
+  .srv3-header-actions {
+    display: flex !important;
+  }
+}
+
+/* At compact desktop width keep the reading column and left navigation only. */
+
+/* Full desktop restores the optional third rail. */
+
+/* ==========================================================================
+   Mobile composition — deliberate layout changes without duplicating content.
+   This layer intentionally stacks dense desktop compositions instead of
+   converting the whole site into swipe-only rails.
+   ========================================================================== */
+
+@media (max-width: 760px) {
+  .sr-site,
+  .srv-page {
+    overflow-x: clip;
+  }
+
+  .srv-page .sr-container {
+    width: calc(100% - 32px);
+  }
+
+  .srv-page .sr-page-hero,
+  .sr-page-hero {
+    padding-block: 44px 36px;
+  }
+
+  .srv-page .sr-title,
+  .sr-page-hero .sr-title {
+    max-width: none;
+    font-size: clamp(2.35rem, 10.5vw, 3.2rem);
+    line-height: 1;
+    letter-spacing: -0.045em;
+  }
+
+  .srv-page .sr-lede,
+  .sr-page-hero .sr-lede {
+    max-width: none;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+  }
+
+  .srv-page .sr-actions,
+  .sr-page-hero .sr-actions,
+  .srv-site-final .sr-actions,
+  .srv-citadel-v2-actions {
+    display: grid !important;
+    width: 100%;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .srv-page .sr-actions > *,
+  .sr-page-hero .sr-actions > *,
+  .srv-site-final .sr-actions > *,
+  .srv-citadel-v2-actions > * {
+    width: 100%;
+  }
+
+  .sr-section,
+  .srv-page .sr-section,
+  .srv-citadel-v2-section {
+    padding-block: 48px;
+  }
+
+  .sr-section-head,
+  .srv-citadel-v2-heading {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .srv-usecase-layout,
+  .srv-infra-layout,
+  .srv-home-products-story,
+  .srv-review-layout,
+  .srv-citadel-v2-hero-grid,
+  .srv-page-os .sr-os-hero-grid,
+  .srv-page-os .sr-copy-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 24px !important;
+  }
+
+  .srv-usecase-intro,
+  .srv-infra-intro {
+    position: static !important;
+    max-width: none !important;
+  }
+
+  /* Plans remain a readable vertical comparison on phones. */
+  .srv-home-pricing-grid,
+  .srv-page-plans .sr-pick-cards,
+  .srv-page-os .sr-pick-cards,
+  .srv-page-plans .srv-plan-os-flow,
+  .srv-citadel-v2-plans,
+  .srv-page-about .srv-about-reasons {
+    display: grid !important;
+    width: 100% !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 12px !important;
+    overflow: visible !important;
+    padding-inline: 0 !important;
+  }
+
+  .srv-home-pricing-card,
+  .srv-page-plans .sr-pick-card,
+  .srv-page-os .sr-pick-card,
+  .srv-page-plans .srv-plan-os-option,
+  .srv-citadel-v2-plan,
+  .srv-page-about .srv-about-reason {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+  }
+
+  .srv-pricing-controls {
+    display: grid !important;
+    width: 100% !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .srv-pricing-control-card,
+  .srv-pricing-region,
+  .srv-pricing-billing {
+    width: 100% !important;
+    max-width: none !important;
+    margin-inline: 0 !important;
+  }
+
+  .srv-usecase-rail {
+    display: grid !important;
+    width: 100% !important;
+    gap: 0 !important;
+    overflow: visible !important;
+  }
+
+  .srv-usecase-rail li {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .srv-usecase-row {
+    min-height: 0;
+    grid-template-columns: 36px minmax(0, 1fr) auto;
+    gap: 12px;
+    padding-block: 18px;
+  }
+
+  .srv-product-flow,
+  .srv-page-plans .srv-plan-included,
+  .srv-page-os .srv-os-final,
+  .srv-citadel-v2-final-card {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+
+  /* Keep data complete; allow tables to scroll instead of rewriting rows. */
+
+  /* Resource / docs product: dedicated phone reading mode. */
+
+  /* Footer becomes compact navigation, not a shrunken desktop footer. */
+  .srv3-footer {
+    margin-top: 52px;
+  }
+
+  .srv3-footer-main {
+    gap: 28px;
+  }
+
+  .srv3-footer-links {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 24px 18px;
+  }
+
+  .srv3-footer-bottom-main,
+  .srv3-footer-bottom-note {
+    grid-template-columns: 1fr !important;
+    gap: 8px;
+    padding-block: 14px;
+  }
+
+  .srv3-footer-credit,
+  .srv3-footer-legal {
+    justify-self: start;
+    text-align: left;
+  }
+
+  .srv3-footer-legal {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    white-space: normal;
+  }
+}
+
+@media (max-width: 420px) {
+  .srv-page .sr-container {
+    width: calc(100% - 28px);
+  }
+
+  .srv3-logo img {
+    width: 128px;
+  }
+
+  .srv3-footer-links {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Mobile visual QA fixes -------------------------------------------------- */
+.srv3-mobile-whatsapp {
+  display: none;
+}
+
+@media (max-width: 1040px) {
+  .srv3-header-row {
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 8px;
+  }
+
+  .srv3-mobile-whatsapp {
+    display: inline-flex;
+    width: 42px;
+    height: 42px;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid color-mix(in srgb, var(--sr-raw-22c55e) 45%, var(--border-divider));
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--sr-raw-22c55e) 8%, var(--surface-1));
+    color: var(--sr-raw-15803d);
+  }
+
+  .srv3-mobile-whatsapp:hover {
+    background: color-mix(in srgb, var(--sr-raw-22c55e) 13%, var(--surface-1));
+  }
+}
+
+@media (max-width: 760px) {
+  /* The animated heading reserves the widest word. Allow the prefix and word
+     to wrap independently so a 390px viewport never inherits a desktop width. */
+
+  /* Marketing pages expose WhatsApp in the sticky header on phones, so the
+     floating control no longer obscures proof, pricing or footer content. */
+  .sr-site:not(:has(.srv-docs-product)) .srv-whatsapp-float {
+    display: none !important;
+  }
+
+  .srv3-footer-links a {
+    min-height: 40px !important;
+    font-size: 0.8125rem !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .srv3-mobile-whatsapp {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Mobile homepage refinement: simplify the hero, expose OS choices, and make
+   reviews touch-native instead of carrying desktop-only behavior to phones. */
+.srv-review-mobile-hint {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  /* The deploy visual is useful desktop proof, but adds unnecessary height and
+     a code-heavy second column on a phone. Keep the buying message first. */
+
+  /* Give proof metrics enough breathing room on narrow phones. */
+
+  /* Show every supported OS on phones rather than cropping an auto-marquee. */
+  .srv-os-band {
+    overflow: visible !important;
+  }
+
+  .srv-os-band-inner {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    padding-block: 16px !important;
+  }
+
+  .srv-os-marquee {
+    margin-inline: 0 !important;
+    overflow: visible !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+  }
+
+  .srv-os-marquee-track {
+    display: block !important;
+    width: 100% !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .srv-os-marquee-copy {
+    display: flex !important;
+    min-width: 0 !important;
+    flex-wrap: wrap;
+    gap: 10px 14px !important;
+    padding-right: 0 !important;
+  }
+
+  .srv-os-marquee-copy[data-clone='true'] {
+    display: none !important;
+  }
+
+  .srv-os-logo {
+    min-height: 36px;
+    flex: 1 1 calc(50% - 8px);
+    min-width: 132px;
+  }
+
+  .srv-os-logo img,
+  .srv-os-logo svg {
+    width: 22px;
+    height: 22px;
+    flex-basis: 22px;
+  }
+
+  /* Mobile reviews are user-controlled: no auto-motion and no hover-only cue. */
+  .srv-review-desktop-hint {
+    display: none !important;
+  }
+
+  .srv-review-mobile-hint {
+    display: inline !important;
+    white-space: nowrap;
+  }
+
+  .srv-home-reviews .srv-review-marquee {
+    overflow-x: auto !important;
+    overflow-y: visible;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+    padding: 8px 18px 12px 0 !important;
+  }
+
+  .srv-home-reviews .srv-review-marquee::-webkit-scrollbar {
+    display: none;
+  }
+
+  .srv-review-track {
+    width: max-content !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .srv-review-set[data-clone='true'] {
+    display: none !important;
+  }
+
+  .srv-review-set {
+    gap: 12px !important;
+    padding-right: 0 !important;
+  }
+
+  .srv-review-chip {
+    width: min(82vw, 300px) !important;
+    min-height: 210px;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+}
+
+@media (max-width: 420px) {
+  .srv-os-logo {
+    flex-basis: 100%;
+  }
+}
+
+/* ==========================================================================
+   Adaptive mobile homepage — same data/components, phone-specific composition.
+   Desktop remains unchanged. Mobile prioritizes scanability, touch targets and
+   short vertical paths instead of shrinking desktop UI.
+   ========================================================================== */
+
+.srv-mobile-plan-card {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .srv-home-pricing-card-desktop {
+    display: none !important;
+  }
+
+  .srv-mobile-plan-card {
+    display: block;
+  }
+
+  /* Compact proof strip instead of a tall 2+1 card. */
+
+  /* No visible "Works with your OS" heading. The logos become a compact
+     three-column capability grid on phones. */
+  .srv-os-band {
+    overflow: visible !important;
+  }
+
+  .srv-os-band-inner {
+    display: block !important;
+    min-height: 0 !important;
+    padding-block: 18px !important;
+  }
+
+  .srv-os-marquee {
+    margin-inline: 0 !important;
+    overflow: visible !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+  }
+
+  .srv-os-marquee-track {
+    display: block !important;
+    width: 100% !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .srv-os-marquee-copy {
+    display: grid !important;
+    min-width: 0 !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px 8px !important;
+    padding-right: 0 !important;
+  }
+
+  .srv-os-marquee-copy[data-clone='true'] {
+    display: none !important;
+  }
+
+  .srv-os-logo {
+    display: grid !important;
+    min-width: 0 !important;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 6px !important;
+    text-align: center;
+  }
+
+  .srv-os-logo img,
+  .srv-os-logo svg {
+    width: 23px !important;
+    height: 23px !important;
+    flex-basis: 23px !important;
+  }
+
+  .srv-os-logo span {
+    max-width: 100%;
+    font-size: 0.625rem !important;
+    line-height: 1.25;
+    white-space: normal !important;
+  }
+
+  /* Tighten the transition into pricing. */
+  .srv-home-plans {
+    padding-block: 42px !important;
+  }
+
+  .srv-home-plans .srv-home-wide {
+    gap: 22px !important;
+  }
+
+  .srv-home-plans h2 {
+    max-width: 13ch;
+    font-size: 2rem !important;
+    line-height: 1.05 !important;
+  }
+
+  .srv-home-plans .srv-home-wide > div:first-child > p {
+    font-size: 0.875rem !important;
+    line-height: 1.6 !important;
+  }
+
+  .srv-pricing-controls {
+    gap: 8px !important;
+  }
+
+  .srv-pricing-control-card {
+    border-radius: var(--radius-md) !important;
+  }
+
+  .srv-pricing-billing {
+    overflow-x: auto !important;
+    scrollbar-width: none;
+  }
+
+  .srv-pricing-billing::-webkit-scrollbar {
+    display: none;
+  }
+
+  .srv-pricing-controls .srv-billing-rail {
+    width: max-content !important;
+    min-width: 100%;
+  }
+
+  .srv-pricing-controls .srv-billing-option {
+    min-height: 42px;
+    padding-inline: 14px;
+    white-space: nowrap;
+  }
+
+  .srv-home-pricing-grid {
+    gap: 12px !important;
+  }
+
+  .srv-home-pricing-item {
+    min-width: 0;
+  }
+
+  /* Purpose-built phone plan card: price + 3 key specs + expandable detail. */
+  .srv-mobile-plan-card {
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--card);
+    padding: 18px;
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--foreground) 5%, transparent);
+  }
+
+  .srv-mobile-plan-card[data-featured='true'] {
+    border-color: color-mix(in srgb, var(--primary) 42%, var(--border));
+    box-shadow: 0 10px 28px color-mix(in srgb, var(--primary) 9%, transparent);
+  }
+
+  .srv-mobile-plan-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .srv-mobile-plan-title-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .srv-mobile-plan-title-row h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    line-height: 1.2;
+  }
+
+  .srv-mobile-plan-head p {
+    margin: 5px 0 0;
+    color: var(--muted-foreground);
+    font-size: 0.75rem;
+  }
+
+  .srv-mobile-stock {
+    flex: 0 0 auto;
+    color: var(--muted-foreground);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .srv-mobile-stock.is-available {
+    color: var(--status-ok, var(--sr-raw-15803d));
+  }
+
+  .srv-mobile-plan-price {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-top: 20px;
+  }
+
+  .srv-mobile-plan-price strong {
+    font-size: 2rem;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+
+  .srv-mobile-plan-price span {
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  .srv-mobile-plan-note {
+    margin: 6px 0 0;
+    color: var(--muted-foreground);
+    font-size: 0.6875rem;
+  }
+
+  .srv-mobile-plan-specs {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin: 18px 0 0;
+  }
+
+  .srv-mobile-plan-specs > div {
+    min-width: 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--muted) 54%, transparent);
+    padding: 10px;
+  }
+
+  .srv-mobile-plan-specs dt {
+    color: var(--muted-foreground);
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .srv-mobile-plan-specs dd {
+    margin: 4px 0 0;
+    overflow-wrap: anywhere;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .srv-mobile-plan-more {
+    margin-top: 12px;
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+  }
+
+  .srv-mobile-plan-more summary {
+    cursor: pointer;
+    color: var(--muted-foreground);
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .srv-mobile-plan-more ul {
+    display: grid;
+    gap: 5px;
+    margin: 10px 0 0;
+    padding-left: 18px;
+    color: var(--muted-foreground);
+    font-size: 0.75rem;
+  }
+
+  .srv-mobile-plan-cta {
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  /* Existing lower sections already work well; just bring spacing into the
+     same compact rhythm as the rebuilt top half. */
+  .srv-home-usecases,
+  .srv-home-infra,
+  .srv-home-products,
+  .srv-home-reviews {
+    padding-block: 44px !important;
+  }
+
+  .srv-home-final-section {
+    padding-block: 28px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .srv-os-marquee-copy {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .srv-mobile-plan-specs {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .srv-mobile-plan-specs > div:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Mobile OS rail: keep the same continuous motion language as desktop. */
+@media (max-width: 760px) {
+  .srv-os-band {
+    overflow: hidden !important;
+  }
+
+  .srv-os-band-inner {
+    display: block !important;
+    min-height: 64px !important;
+    padding-block: 0 !important;
+  }
+
+  .srv-os-marquee {
+    width: 100% !important;
+    margin-inline: 0 !important;
+    overflow: hidden !important;
+    touch-action: pan-y;
+    mask-image: linear-gradient(90deg, transparent 0, black 7%, black 93%, transparent 100%) !important;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, black 7%, black 93%, transparent 100%) !important;
+  }
+
+  .srv-os-marquee-track {
+    display: flex !important;
+    width: max-content !important;
+    transform: none;
+    will-change: transform;
+    animation: srv-os-marquee-right 38s linear infinite !important;
+  }
+
+  .srv-os-marquee-copy,
+  .srv-os-marquee-copy[data-clone='true'] {
+    display: flex !important;
+    min-width: max-content !important;
+    flex-wrap: nowrap !important;
+    align-items: center;
+    gap: 28px !important;
+    padding-right: 28px !important;
+  }
+
+  .srv-os-logo {
+    display: inline-flex !important;
+    min-width: max-content !important;
+    min-height: 64px;
+    flex: 0 0 auto !important;
+    grid-template-columns: none !important;
+    align-items: center;
+    justify-items: initial !important;
+    gap: 9px !important;
+    opacity: 0.76;
+    text-align: left !important;
+  }
+
+  .srv-os-logo img,
+  .srv-os-logo svg {
+    width: 22px !important;
+    height: 22px !important;
+    flex: 0 0 22px !important;
+  }
+
+  .srv-os-logo span {
+    max-width: none !important;
+    font-size: 0.75rem !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+  }
+
+  .srv-os-marquee:active .srv-os-marquee-track,
+  .srv-os-marquee:focus-within .srv-os-marquee-track {
+    animation-play-state: paused !important;
+  }
+}
+
+@media (max-width: 760px) and (prefers-reduced-motion: reduce) {
+  .srv-os-marquee {
+    overflow-x: auto !important;
+    mask-image: none !important;
+    -webkit-mask-image: none !important;
+    scrollbar-width: none;
+  }
+
+  .srv-os-marquee::-webkit-scrollbar {
+    display: none;
+  }
+
+  .srv-os-marquee-track {
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .srv-os-marquee-copy[data-clone='true'] {
+    display: none !important;
+  }
+}
+
+/* Compact mobile footer --------------------------------------------------- */
+.srv3-footer-mobile-links {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .srv3-footer {
+    margin-top: 0 !important;
+  }
+
+  .srv3-footer-main {
+    display: grid;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    padding: 22px 0 12px !important;
+  }
+
+  /* On phones the brand block is identification + contact only.
+     The descriptive copy and proof are already present above the footer. */
+  .srv3-footer-brand {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    grid-template-areas: 'logo socials' !important;
+    gap: 12px !important;
+    align-items: center;
+  }
+
+  .srv3-footer-logo {
+    grid-area: logo;
+  }
+
+  .srv3-footer-logo img {
+    width: 126px !important;
+  }
+
+  .srv3-footer-description,
+  .srv3-footer-proof {
+    display: none !important;
+  }
+
+  .srv3-socials {
+    grid-area: socials;
+    gap: 5px !important;
+    margin: 0 !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .srv3-socials a {
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    min-height: 36px !important;
+    border-radius: var(--radius-sm) !important;
+  }
+
+  /* Desktop columns are replaced with collapsed mobile groups. */
+  .srv3-footer-links {
+    display: none !important;
+  }
+
+  .srv3-footer-mobile-links {
+    display: grid;
+    border-top: 1px solid var(--border-divider);
+  }
+
+  .srv3-footer-mobile-links details {
+    border-bottom: 1px solid var(--border-divider);
+  }
+
+  .srv3-footer-mobile-links summary {
+    display: flex;
+    min-height: 44px;
+    cursor: pointer;
+    list-style: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    color: var(--text);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.055em;
+    text-transform: uppercase;
+  }
+
+  .srv3-footer-mobile-links summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .srv3-footer-mobile-toggle {
+    color: var(--text-dim);
+    font-size: 1.1rem;
+    font-weight: 400;
+    line-height: 1;
+    transition: transform 160ms ease;
+  }
+
+  .srv3-footer-mobile-links details[open] .srv3-footer-mobile-toggle {
+    transform: rotate(45deg);
+  }
+
+  .srv3-footer-mobile-links ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 14px;
+    margin: 0;
+    padding: 0 0 12px;
+    list-style: none;
+  }
+
+  .srv3-footer-mobile-links a {
+    display: inline-flex;
+    min-height: 36px;
+    max-width: 100%;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .srv3-footer-mobile-links a svg {
+    flex: 0 0 auto;
+    opacity: 0.58;
+  }
+
+  .srv3-footer-bottom {
+    font-size: 0.625rem !important;
+  }
+
+  .srv3-footer-bottom-main {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+    min-height: 0 !important;
+    padding: 10px 0 !important;
+  }
+
+  .srv3-footer-legal {
+    display: flex;
+    gap: 8px 14px !important;
+    flex-wrap: wrap;
+    justify-content: flex-start !important;
+    white-space: normal !important;
+  }
+
+  /* Keep required artwork attribution, remove redundant billing copy. */
+  .srv3-footer-bottom-note {
+    display: block !important;
+    min-height: 0 !important;
+    padding: 7px 0 10px !important;
+    border-top: 1px solid color-mix(in srgb, var(--border-divider) 68%, transparent);
+  }
+
+  .srv3-footer-bottom-note > span:first-child {
+    display: none !important;
+  }
+
+  .srv3-footer-credit {
+    justify-self: start !important;
+    text-align: left !important;
+    font-size: 0.5625rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .srv3-footer-main {
+    padding-top: 18px !important;
+  }
+
+  .srv3-footer-logo img {
+    width: 118px !important;
+  }
+
+  .srv3-socials a {
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
+    min-height: 34px !important;
+  }
+
+  .srv3-footer-mobile-links ul {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 10px;
+  }
+}
+
+/* Joly UI Animated Beam hero visual -------------------------------------- */
+
+.animated-beam-path {
+  will-change: stroke-dashoffset;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animated-beam-path {
+    animation: none !important;
+  }
+}
+
+/* Hero motion refinement: freeform, edge-faded, compositor-light -------- */
+
+.animated-beam-path {
+  shape-rendering: geometricPrecision;
+  will-change: stroke-dashoffset;
+}
+
+/* Network illustration v3 — UI Layouts beams + Joly world map ------------ */
+
+/* Homepage infra illustration v4: transparent, mixed components ---------- */
+@keyframes srv-joly-orbit {
+  from {
+    transform: rotate(0deg) translateX(var(--radius)) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(var(--radius)) rotate(-360deg);
+  }
+}
+
+.orbiting-container {
+  position: relative;
+}
+
+.orbiting-circle {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: calc(var(--icon-size) / -2);
+  margin-top: calc(var(--icon-size) / -2);
+  animation: srv-joly-orbit var(--duration) linear infinite;
+  animation-delay: var(--delay);
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orbiting-circle {
+    animation: none !important;
+  }
+}
+
+/* Homepage infra illustration v5: de-stacked + single focal objects ------- */
+
+/* Homepage infra diagram v6: structured product flow --------------------- */
+
+/* Homepage infra diagram v7: safe bounds + clearer route spacing --------- */
+
+/* Keep all terminal nodes comfortably inside the illustration column. */
+
+/* Give the upper RDP lane a clean strip between Internet and the VPS. */
+
+/* Separate the lower web route into three readable horizontal beats. */
+
+/* Slightly reduce the endpoint labels so their text never collides. */
+
+/* Homepage VPS motion showcase ------------------------------------------ */
+@keyframes srv-vps-orbit {
+  from {
+    transform: rotate(0deg) translateX(var(--radius)) rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg) translateX(var(--radius)) rotate(-360deg);
+  }
+}
+
+/* VPS showcase polish v2: fixed motion anchoring + cleaner composition ---- */
+
+/* VPS showcase v3: Lottie focal assets ---------------------------------- */
+
+/* VPS showcase v4: coherent blue illustration + single Lottie focal asset */
+
+/* Floating WhatsApp support — match the refined hero UI ------------------ */
+.srv-whatsapp-float {
+  right: 24px !important;
+  bottom: 24px !important;
+  min-height: 42px !important;
+  gap: 8px !important;
+  border: 1px solid color-mix(in srgb, var(--sr-raw-20314c) 13%, transparent) !important;
+  border-radius: var(--radius-md) !important;
+  background: color-mix(in srgb, var(--sr-raw-ffffff) 94%, transparent) !important;
+  padding: 0 12px !important;
+  color: var(--sr-raw-20314c) !important;
+  font-size: 0.72rem !important;
+  font-weight: 750 !important;
+  box-shadow:
+    0 12px 30px -24px color-mix(in srgb, var(--sr-raw-20314c) 45%, transparent),
+    0 2px 8px color-mix(in srgb, var(--sr-raw-20314c) 4%, transparent) !important;
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease,
+    background-color 160ms ease !important;
+}
+
+.srv-whatsapp-float:hover {
+  transform: translateY(-2px) !important;
+  border-color: color-mix(in srgb, var(--sr-raw-16a34a) 26%, transparent) !important;
+  background: var(--sr-raw-ffffff) !important;
+  box-shadow:
+    0 16px 34px -24px color-mix(in srgb, var(--sr-raw-20314c) 52%, transparent),
+    0 4px 12px color-mix(in srgb, var(--sr-raw-20314c) 6%, transparent) !important;
+}
+
+@media (max-width: 1040px) {
+  .srv-whatsapp-float {
+    right: 16px !important;
+    bottom: 16px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .srv-whatsapp-float {
+    width: 44px !important;
+    height: 44px !important;
+    min-height: 44px !important;
+    border-radius: var(--radius-md) !important;
+    padding: 0 !important;
+  }
+}
+
+/* Product separation: VPS and Citadel are independent products. ----------- */
+.srv-product-flow {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+
+.srv-product-node:first-child,
+.srv-product-node:last-child {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+@media (max-width: 720px) {
+  .srv-product-flow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+}
+
+/* Status hero: state line under the lede; the fleet map sits on the right. */
+.srv-page-status .sr-os-hero-grid {
+  align-items: center;
+}
+.srv-status-v2-state {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border-divider);
+  color: var(--status-ok);
+}
+.srv-status-v2-state[data-state='attention'] {
+  color: var(--status-warn);
+}
+.srv-status-v2-state > div {
+  display: grid;
+  gap: 4px;
+}
+.srv-status-v2-state strong {
+  color: var(--foreground);
+  font-size: 1rem;
+}
+.srv-status-v2-state span {
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+/* Status service table: one row per monitor, grouped like the hero map. */
+.srv-status-v2-table-card {
+  padding: 0;
+  overflow-x: auto;
+}
+.srv-status-v2-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+.srv-status-v2-table caption {
+  padding: 18px 20px 6px;
+  color: var(--foreground);
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: left;
+}
+.srv-status-v2-table thead th {
+  padding: 10px 20px;
+  border-bottom: 1px solid var(--border-divider);
+  color: var(--text-dim);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.srv-status-v2-table tbody th,
+.srv-status-v2-table tbody td {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border-divider);
+  text-align: left;
+  vertical-align: middle;
+}
+.srv-status-v2-table tbody:last-child tr:last-child > * {
+  border-bottom: 0;
+}
+.srv-status-v2-table tbody th[scope='row'] {
+  font-weight: 400;
+}
+.srv-status-v2-table tbody th[scope='row'] strong {
+  display: block;
+  font-weight: 650;
+}
+.srv-status-v2-table tbody th[scope='row'] span {
+  display: block;
+  margin-top: 2px;
+}
+.srv-status-v2-table tbody th span {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+.srv-status-v2-table-group th {
+  background: color-mix(in srgb, var(--surface-2) 60%, transparent);
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+.srv-status-v2-table-group th span {
+  margin-left: 8px;
+}
+.srv-status-v2-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .srv-status-v2-table thead th,
+  .srv-status-v2-table tbody th,
+  .srv-status-v2-table tbody td {
+    padding-inline: 8px;
+  }
+  .srv-status-v2-table thead th:first-child,
+  .srv-status-v2-table tbody > * > :first-child {
+    padding-left: 14px;
+  }
+  .srv-status-v2-table tbody th[scope='row'] {
+    min-width: 7rem;
+  }
+  .srv-status-v2-table tbody th[scope='row'] span {
+    display: none;
+  }
+  .srv-status-v2-num {
+    font-size: 0.75rem;
+  }
+  .srv-status-v2-table td:last-child {
+    padding-right: 12px;
+  }
+  .srv-status-v2-table th:nth-child(3),
+  .srv-status-v2-table td:nth-child(3) {
+    display: none;
+  }
+}
+
+/* WhatsApp mark: the real glyph in a green disc ---------------------------- */
+.sr-wa-mark {
+  display: inline-grid;
+  flex: none;
+  width: var(--wa-size, 24px);
+  height: var(--wa-size, 24px);
+  place-items: center;
+  border-radius: 999px;
+  background: var(--sr-raw-16a34a);
+  color: var(--sr-raw-ffffff);
+  box-shadow: 0 2px 6px color-mix(in srgb, var(--sr-raw-16a34a) 32%, transparent);
+}
+
+.srv3-whatsapp-link {
+  gap: 8px;
+  border-color: var(--border-divider);
+  border-radius: 999px;
+  background: var(--surface-1);
+  padding: 0 14px 0 6px;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+}
+
+.srv3-whatsapp-link:hover {
+  border-color: color-mix(in srgb, var(--sr-raw-16a34a) 45%, var(--border-divider));
+  background: var(--surface-1);
+}
+
+.srv-whatsapp-float {
+  gap: 10px !important;
+  border-radius: 999px !important;
+  padding: 0 16px 0 6px !important;
+  min-height: 46px !important;
+  font-size: 0.8125rem !important;
+}
+
+@media (max-width: 1040px) {
+  .srv3-mobile-whatsapp {
+    border: 0;
+    background: transparent;
+  }
+
+  .srv3-mobile-whatsapp:hover {
+    background: transparent;
+  }
+}
+
+@media (max-width: 520px) {
+  .srv-whatsapp-float {
+    width: auto !important;
+    height: auto !important;
+    border: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .srv-whatsapp-float span:not(.sr-wa-mark) {
+    display: none;
+  }
+
+  .srv-whatsapp-float .sr-wa-mark {
+    display: inline-grid;
+  }
+}

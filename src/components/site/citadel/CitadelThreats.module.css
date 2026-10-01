@@ -1,0 +1,235 @@
+/* Vertical tabs: the attack list on the left, its anatomy on the right. */
+.explorer {
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 0 !important;
+  overflow: hidden;
+  border: 1px solid var(--citadel-border);
+  border-radius: var(--radius-lg);
+  background: var(--citadel-surface);
+  color: var(--citadel-ink);
+}
+
+.explorer [role='tablist'] {
+  flex-direction: column;
+  flex-wrap: nowrap;
+  gap: 0;
+  border-right: 1px solid var(--citadel-border);
+  border-bottom: 0;
+  background: var(--citadel-canvas);
+  padding: 10px;
+}
+
+.explorer [role='tab'] {
+  justify-content: flex-start;
+  min-height: 52px;
+  margin: 0;
+  border: 0;
+  border-radius: var(--radius-sm);
+  padding: 0 16px;
+  color: var(--citadel-muted);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.explorer [role='tab']:hover {
+  color: var(--citadel-ink);
+}
+
+.explorer [role='tab'][aria-selected='true'] {
+  background: var(--citadel-surface);
+  box-shadow:
+    inset 3px 0 0 var(--primary),
+    0 1px 3px color-mix(in srgb, var(--citadel-ink) 10%, transparent);
+  color: var(--citadel-ink);
+}
+
+.explorer [role='tabpanel'] {
+  grid-row: 1;
+  grid-column: 2;
+  min-width: 0;
+}
+
+.explorer [role='tabpanel']:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+
+.panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  gap: 24px 32px;
+  padding: 28px 32px 30px;
+}
+
+.copy h3 {
+  margin: 0;
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.copy > p {
+  margin: 8px 0 0;
+  color: var(--citadel-muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.setting {
+  margin-top: 18px;
+  border-left: 3px solid var(--primary);
+  padding: 2px 0 2px 14px;
+}
+
+.setting span {
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.setting p {
+  margin: 4px 0 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.shape {
+  display: grid;
+  grid-template-rows: auto 132px;
+  align-self: start;
+  gap: 10px;
+  border: 1px solid var(--citadel-border);
+  border-radius: var(--radius-md);
+  background: var(--citadel-canvas);
+  padding: 14px 16px 16px;
+}
+
+.shape span {
+  color: var(--citadel-muted);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.shape svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.shape path:first-child {
+  fill: color-mix(in srgb, var(--status-bad) 12%, transparent);
+}
+
+.shape path:last-child {
+  fill: none;
+  stroke: var(--status-bad);
+  stroke-linejoin: round;
+  stroke-width: 1.75;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Escalation ladder: one rail, severity rises left to right. */
+.ladder {
+  position: relative;
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ladder::before {
+  position: absolute;
+  top: 15px;
+  right: 12%;
+  left: 12%;
+  height: 2px;
+  background: linear-gradient(to right, var(--primary), var(--status-warn) 45%, var(--status-bad));
+  content: '';
+}
+
+.ladder li {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.ladder li span {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background: var(--citadel-surface);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+.ladder li[data-tone='observe'] span {
+  color: var(--primary);
+}
+
+.ladder li[data-tone='challenge'] span {
+  color: var(--status-warn);
+}
+
+.ladder li[data-tone='block'] span {
+  color: var(--status-bad);
+}
+
+.ladder li[data-tone='recover'] span {
+  color: var(--status-ok);
+}
+
+@media (max-width: 900px) {
+  .explorer {
+    grid-template-columns: 1fr;
+  }
+
+  .explorer [role='tablist'] {
+    flex-direction: row;
+    overflow-x: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--citadel-border);
+  }
+
+  .explorer [role='tab'] {
+    flex: 0 0 auto;
+    min-height: 44px;
+  }
+
+  .explorer [role='tab'][aria-selected='true'] {
+    box-shadow:
+      inset 0 -3px 0 var(--primary),
+      0 1px 3px color-mix(in srgb, var(--citadel-ink) 10%, transparent);
+  }
+
+  .explorer [role='tabpanel'] {
+    grid-row: auto;
+    grid-column: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .panel {
+    grid-template-columns: 1fr;
+    padding: 22px 18px 24px;
+  }
+
+  .ladder {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 18px;
+  }
+
+  .ladder::before {
+    display: none;
+  }
+}

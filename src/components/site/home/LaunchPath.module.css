@@ -1,0 +1,213 @@
+/* Frameless: the path sits on the hero background, like the other heroes. */
+.figure {
+  position: relative;
+  isolation: isolate;
+  color: var(--citadel-ink);
+}
+
+.figure::before {
+  position: absolute;
+  z-index: -1;
+  inset: -6% -4%;
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    color-mix(in srgb, var(--citadel-muted) 26%, transparent) 1px,
+    transparent 0
+  );
+  background-size: 16px 16px;
+  content: '';
+  mask-image: radial-gradient(ellipse 58% 60% at 62% 50%, black 22%, transparent 78%);
+}
+
+.scene {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.scene[data-layout='tall'] {
+  display: none;
+}
+
+.stopPrimary {
+  stop-color: var(--primary);
+}
+
+.stopGlow {
+  stop-color: var(--citadel-glow);
+}
+
+.haloInner {
+  stop-color: var(--citadel-glow);
+  stop-opacity: 0.24;
+}
+
+.haloMid {
+  stop-color: var(--primary);
+  stop-opacity: 0.07;
+}
+
+.haloOuter {
+  stop-color: var(--primary);
+  stop-opacity: 0;
+}
+
+.beam,
+.beamGlow {
+  fill: none;
+  stroke-linecap: round;
+}
+
+.beam {
+  stroke-dasharray: 1 7;
+  stroke-width: 2.5;
+  opacity: 0.75;
+}
+
+.beamGlow {
+  stroke-width: 8;
+  filter: blur(6px);
+  opacity: 0.25;
+}
+
+.trail {
+  fill: var(--citadel-glow);
+  filter: blur(5px);
+  opacity: 0.7;
+}
+
+.head {
+  fill: var(--citadel-surface);
+  stroke: var(--primary);
+  stroke-width: 2.5;
+}
+
+.pill {
+  fill: var(--citadel-surface);
+  stroke: var(--citadel-border);
+  filter: drop-shadow(0 6px 14px color-mix(in srgb, var(--citadel-ink) 7%, transparent));
+}
+
+.pillLit {
+  fill: none;
+  stroke: var(--citadel-glow);
+  stroke-width: 2;
+}
+
+.pillIcon {
+  fill: color-mix(in srgb, var(--primary) 8%, var(--citadel-surface));
+  stroke: color-mix(in srgb, var(--primary) 22%, transparent);
+}
+
+.icon {
+  color: var(--primary);
+}
+
+.name {
+  fill: var(--citadel-ink);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 650;
+}
+
+.note {
+  fill: var(--citadel-muted);
+  font-family: var(--font-body);
+  font-size: 11.5px;
+}
+
+.node {
+  fill: var(--citadel-surface);
+  stroke: color-mix(in srgb, var(--primary) 35%, transparent);
+  stroke-width: 1.5;
+  filter: drop-shadow(0 6px 12px color-mix(in srgb, var(--primary) 18%, transparent));
+}
+
+.nodeLit {
+  fill: color-mix(in srgb, var(--primary) 10%, transparent);
+  stroke: var(--primary);
+  stroke-width: 2;
+}
+
+.regionText {
+  fill: var(--primary);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.coreDisc {
+  fill: var(--citadel-surface);
+  filter: drop-shadow(0 14px 28px color-mix(in srgb, var(--primary) 28%, transparent));
+}
+
+.coreRim {
+  fill: none;
+  stroke-width: 2.5;
+}
+
+.coreInner {
+  fill: color-mix(in srgb, var(--citadel-glow) 7%, var(--citadel-surface));
+  stroke: color-mix(in srgb, var(--primary) 16%, transparent);
+  stroke-dasharray: 2 4;
+}
+
+.coreRing {
+  fill: none;
+  stroke: var(--citadel-glow);
+  stroke-width: 2;
+}
+
+.logo {
+  animation: appear 500ms ease-out;
+}
+
+.coreName {
+  fill: var(--citadel-ink);
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.status rect {
+  fill: color-mix(in srgb, var(--status-ok) 8%, var(--citadel-surface));
+  stroke: color-mix(in srgb, var(--status-ok) 35%, transparent);
+}
+
+.status circle {
+  fill: var(--status-ok);
+}
+
+.status text {
+  fill: color-mix(in srgb, var(--status-ok) 85%, var(--foreground));
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .scene[data-layout='wide'] {
+    display: none;
+  }
+
+  .scene[data-layout='tall'] {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .traveller {
+    display: none;
+  }
+
+  .logo {
+    animation: none;
+  }
+}

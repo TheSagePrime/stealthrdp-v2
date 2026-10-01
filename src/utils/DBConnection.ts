@@ -20,10 +20,14 @@ function validateDatabaseTransport(connectionString: string): void {
 // Canonical production provider: Neon PostgreSQL.
 // Keep the standard pg + Drizzle boundary for Node.js/Coolify portability.
 export const createDbConnection = () => {
-  validateDatabaseTransport(Env.DATABASE_URL);
+  const connectionString = Env.DATABASE_URL;
+  if (!connectionString) {
+    throw new Error('DATABASE_URL is required for database operations');
+  }
+  validateDatabaseTransport(connectionString);
 
   const pool = new Pool({
-    connectionString: Env.DATABASE_URL,
+    connectionString,
     max: 10,
     idleTimeoutMillis: 30_000,
     connectionTimeoutMillis: 5_000,

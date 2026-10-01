@@ -3,7 +3,7 @@ import * as z from 'zod';
 
 export const Env = createEnv({
   server: {
-    DATABASE_URL: z.string().min(1),
+    DATABASE_URL: z.string().min(1).optional(),
     BETTER_STACK_INGESTING_URL: z.string().url().optional(),
     BETTER_STACK_SOURCE_TOKEN: z.string().min(1).optional(),
     LOGGING_LEVEL: z.enum(['error', 'info', 'debug', 'warning', 'trace', 'fatal']).default('info'),

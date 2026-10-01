@@ -1,0 +1,17 @@
+Third-party motion assets used by the StealthRDP homepage preview.
+
+1) Lottie Web player
+Source: https://github.com/airbnb/lottie-web
+File: build/player/lottie_light.min.js
+License: MIT
+Copyright (c) 2015 Bodymovin
+
+2) Server Lottie animation
+Source: https://github.com/foss42/apidash
+File: assets/api_server.json
+License: Apache-2.0
+
+The homepage globe is rendered from the already-integrated Joly UI / project
+network assets and does not use the previous third-party globe Lottie.
+
+For full license texts and notices, refer to the upstream repositories above.

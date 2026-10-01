@@ -5,25 +5,30 @@ const config: KnipConfig = {
   entry: [
     'scripts/seo-post-build-v2.mjs',
     'scripts/seo-post-build.mjs',
+    'src/components/ActiveLink.tsx',
+    'src/components/LocaleSwitcher.tsx',
     'src/components/seo/Article.tsx',
+    'src/libs/I18nNavigation.ts',
     'src/libs/seo/articles.ts',
     'src/libs/seo/locale.ts',
     'src/libs/seo/project.ts',
     'src/libs/seo/research-artifacts.ts',
+    'src/templates/Logo.tsx',
     'src/utils/Helpers.ts',
+    // Used by src/components/ui/orbiting-circle.tsx, which knip ignores.
+    'src/lib/utils.ts',
   ],
   // Files to exclude from Knip analysis
   ignore: [
     'checkly.config.ts',
+    'public/vendor/lottie/lottie_light.min.js',
     'src/components/ui/*',
-    'src/libs/DB.ts',
     'src/libs/I18n.ts',
-    'src/libs/Logger.ts',
-    'src/utils/DBConnection.ts',
   ],
   // Dependencies to ignore during analysis
   ignoreDependencies: [
-    '@logtape/logtape',
+    '@hugeicons/core-free-icons', // Required by stack.contract.json (marketing accent icons).
+    '@hugeicons/react', // Required by stack.contract.json.
     '@swc/helpers', // Keep the existing Next.js runtime helper explicit.
   ],
   // Include custom Playwright test file suffixes
