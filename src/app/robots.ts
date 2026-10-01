@@ -15,6 +15,8 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
       disallow: ['/api/'],
+      /* Same AI policy as the v1 site: no model training, yes to search and AI answers. */
+      other: { 'Content-Signal': 'ai-train=no, search=yes, ai-input=yes' },
     },
     sitemap,
   };

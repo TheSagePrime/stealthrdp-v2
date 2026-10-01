@@ -10,7 +10,7 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: Why Having a Fast Website Is Crucial
+summary: "Why WordPress speed matters, how to test it with GTmetrix, and 10 ways to make a WordPress site faster, from hosting and updates to caching."
 relatedSlugs: []
 ---
 10 Ways to Optimize Your WordPress Website for Speed

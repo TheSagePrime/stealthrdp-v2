@@ -18,7 +18,7 @@ const publications: ArticleRegistryConfig['publications'] = blogArticles.map(art
   locale: 'en',
   country: 'US',
   indexPolicy: 'index, follow',
-  image: article.image,
+  image: article.image ?? 'https://www.stealthrdp.com/assets/og-cover.png',
   sources: article.sources,
 }));
 

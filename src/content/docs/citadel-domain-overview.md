@@ -4,7 +4,7 @@ title: Understand a Citadel domain's status
 category: "Citadel: Domains"
 date: Sep 27, 2026
 sourceUrl: https://citadel.stealthrdp.com/docs/domain-overview
-summary: Find the ingress IP and confirm that protection is active.
+summary: "Find a domain's Citadel ingress IP, see when its status changes from awaiting DNS to Active, and jump to Origin, Health, Security, Cache and Insights."
 relatedSlugs:
   - citadel-cloudflare-setup
   - citadel-origin

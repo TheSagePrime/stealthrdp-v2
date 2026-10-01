@@ -10,7 +10,7 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: Reset Server Password
+summary: "Reset your server's root or Administrator password from the client area, and change or reset your StealthRDP client area password."
 relatedSlugs: []
 ---
 How to Reset Server / Change or Reset Client Area Password

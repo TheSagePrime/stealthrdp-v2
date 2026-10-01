@@ -135,10 +135,35 @@ async function handleLocalSeoAudit(request: NextRequest): Promise<Response | nul
   });
 }
 
+/** True when the Accept header lists text/markdown with a quality above zero. */
+function acceptsMarkdown(accept: string | null): boolean {
+  return (accept ?? '').split(',').some((range) => {
+    const [type, ...params] = range.split(';').map(part => part.trim().toLowerCase());
+    if (type !== 'text/markdown') {
+      return false;
+    }
+    const quality = params.find(param => param.startsWith('q='));
+    return quality ? Number(quality.slice(2)) > 0 : true;
+  });
+}
+
 export default async function proxy(request: NextRequest) {
   const seoRedirect = seoNormalizeRedirect(request);
   if (seoRedirect) {
     return seoRedirect;
+  }
+
+  /* Production only, as on the v1 site: an agent that asks for Markdown on the homepage gets
+     llms.txt, the Markdown overview of the site. */
+  if (
+    request.nextUrl.pathname === '/'
+    && acceptsMarkdown(request.headers.get('accept'))
+    && isProductionDeployEnv(getSeoConfig().environment.deployEnv)
+  ) {
+    const markdown = NextResponse.rewrite(new URL('/llms.txt', request.url));
+    /* Never cache this answer in a shared cache: the HTML for "/" lives at the same URL. */
+    markdown.headers.set('Cache-Control', 'private, no-store');
+    return markdown;
   }
 
   const localSeoAudit = await handleLocalSeoAudit(request);

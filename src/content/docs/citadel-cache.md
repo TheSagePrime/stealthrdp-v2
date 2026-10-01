@@ -4,7 +4,7 @@ title: Use Citadel cache and purge
 category: "Citadel: Protection"
 date: Sep 27, 2026
 sourceUrl: https://citadel.stealthrdp.com/docs/cache
-summary: Cache eligible static responses and bypass dynamic paths.
+summary: "Enable Citadel caching for static files such as CSS, JavaScript, images and fonts, bypass dynamic paths like /api/, and purge the cache after a release."
 relatedSlugs:
   - citadel-bandwidth
   - citadel-security

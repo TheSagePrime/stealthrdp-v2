@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { ArrowRight, SlidersHorizontal as Settings2 } from '@phosphor-icons/react/dist/ssr';
 import Image from 'next/image';
 import Link from 'next/link';
+import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -15,6 +16,8 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { getPlans } from '@/lib/stealth/live-plans';
+import { plansJsonLd } from '@/lib/stealth/structured-data';
+import { getSeoConfig } from '@/libs/seo/config';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
@@ -43,6 +46,7 @@ export default async function PlansPage() {
 
   return (
     <div className="srv-page srv-page-plans">
+      <ProductionJsonLd data={plansJsonLd(getSeoConfig().siteUrl, plans)} />
       <section className="sr-page-hero">
         <div className="sr-container">
           <p className="sr-kicker">Windows and Linux VPS</p>

@@ -4,7 +4,7 @@ title: Manage Citadel domains
 category: "Citadel: Domains"
 date: Sep 27, 2026
 sourceUrl: https://citadel.stealthrdp.com/docs/domains
-summary: Add domains, find them, check connections, and remove protection.
+summary: "Add a domain to Citadel with its root name, origin host, port and TLS setting, check its connection, search the Domains list, or remove protection."
 relatedSlugs:
   - citadel-getting-started
   - citadel-cloudflare-setup

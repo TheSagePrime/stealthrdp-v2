@@ -10,7 +10,7 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: What is an SSL and why do you need it?
+summary: "Redirect all traffic to HTTPS with .htaccess, or force HTTPS for one domain or specific folders only, using Apache rewrite rules."
 relatedSlugs: []
 ---
 How to Force HTTPS using .htaccess
