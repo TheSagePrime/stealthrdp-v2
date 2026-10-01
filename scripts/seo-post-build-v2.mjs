@@ -26,7 +26,10 @@ const deployEnv = resolveDeployEnv(process.env);
 const config = { ...defaultSeoConfig, environment: { deployEnv } };
 const site = resolveSiteUrl(process.env, deployEnv);
 config.siteUrl = site.origin;
-const crawlOrigin = 'http://127.0.0.1:3123';
+/* The bind address itself: on Vercel's build machine Next.js labels internal
+   rewrites with this host, and any other host makes it proxy the rewrite
+   to itself over https (500 on every page). */
+const crawlOrigin = 'http://0.0.0.0:3123';
 const titleRoutes = new Map();
 
 const normalizedPath = value => normalizePathname(value || '/', config.url.trailingSlash);
