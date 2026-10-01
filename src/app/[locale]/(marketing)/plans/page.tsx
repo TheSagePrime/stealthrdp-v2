@@ -1,9 +1,11 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
-import { ArrowRight, SlidersHorizontal as Settings2 } from '@phosphor-icons/react/dist/ssr';
+import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
+import { CatalogMap } from '@/components/site/plans/CatalogMap';
+import extras from '@/components/site/plans/PlansExtras.module.css';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -31,7 +33,7 @@ const included = [
   { title: 'Full admin access', text: 'Control your server from day one' },
   { title: 'NVMe SSD storage', text: 'Fast disk for everyday workloads' },
   { title: 'Isolated VMs', text: 'Separate virtual machines per server' },
-  { title: 'Instant activation', text: 'Ready after checkout' },
+  { title: 'Fast activation', text: 'Typically within 5 minutes of payment' },
   { title: '24/7 support', text: 'Help when you need it' },
 ];
 
@@ -43,31 +45,53 @@ export const revalidate = 21600;
 
 export default async function PlansPage() {
   const plans = await getPlans();
+  const lowest = Math.min(...plans.map(plan => plan.pricing.monthly.amount));
+  const inStock = plans.reduce((sum, plan) => sum + (plan.source.stock ?? 0), 0);
 
   return (
     <div className="srv-page srv-page-plans">
       <ProductionJsonLd data={plansJsonLd(getSeoConfig().siteUrl, plans)} />
       <section className="sr-page-hero">
-        <div className="sr-container">
-          <p className="sr-kicker">Windows and Linux VPS</p>
-          <h1 className="sr-title">Windows & Linux VPS Hosting Plans</h1>
-          <p className="sr-lede">
-            Compare Windows and Linux VPS hosting plans in one place. Choose a resource level,
-            region, and billing cycle before the checkout.
-          </p>
-          <div className="sr-actions">
-            <Button asChild size="lg">
-              <a href="#plan-grid">
-                Compare Standard Plans
-                <ArrowRight size={16} />
-              </a>
-            </Button>
-            <Button asChild size="lg" variant="outline">
-              <a href="https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps">
-                Build Your Own VPS
-              </a>
-            </Button>
+        <div className="sr-container sr-os-hero-grid">
+          <div>
+            <p className="sr-kicker">Windows and Linux VPS</p>
+            <h1 className="sr-title">Windows & Linux VPS Hosting Plans</h1>
+            <p className="sr-lede">
+              Compare Windows and Linux VPS hosting plans in one place. Choose a resource level,
+              region, and billing cycle before the checkout.
+            </p>
+            <div className="sr-actions">
+              <Button asChild size="lg">
+                <a href="#plan-grid">
+                  Compare Standard Plans
+                  <ArrowRight size={16} />
+                </a>
+              </Button>
+              <Button asChild size="lg" variant="outline">
+                <a href="https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps">
+                  Build Your Own VPS
+                </a>
+              </Button>
+            </div>
+            <div className="srv-citadel-v2-facts">
+              <span>
+                <strong>{plans.length}</strong>
+                {' '}
+                plans
+              </span>
+              <span>
+                <strong>{`€${lowest.toFixed(2)}`}</strong>
+                {' '}
+                /mo to start
+              </span>
+              <span>
+                <strong>{inStock}</strong>
+                {' '}
+                servers in stock
+              </span>
+            </div>
           </div>
+          <CatalogMap plans={plans} />
         </div>
       </section>
 
@@ -87,7 +111,7 @@ export default async function PlansPage() {
         <div className="sr-container">
           <div className="sr-section-head">
             <div>
-              <p className="sr-kicker">01 / Choose an operating system</p>
+              <p className="sr-kicker">Operating systems</p>
               <h2 className="sr-section-title">Pick the VPS environment that fits your work.</h2>
             </div>
           </div>
@@ -215,10 +239,16 @@ export default async function PlansPage() {
             <h2>Build a server around your exact brief.</h2>
             <p>Choose your own CPU, RAM, storage, location, and billing cycle in the server configurator.</p>
           </div>
-          <div className="sr-byo-visual" aria-hidden="true">
-            <Settings2 size={18} weight="fill" />
-            <span>CPU · RAM · STORAGE · REGION</span>
-          </div>
+          <ul className={extras.configurator} aria-hidden="true">
+            {[['CPU', 50], ['RAM', 70], ['Storage', 40], ['Region', 100]].map(([label, fill]) => (
+              <li key={label}>
+                <span>{label}</span>
+                <i className={extras.track}>
+                  <b style={{ width: `${fill}%` }} />
+                </i>
+              </li>
+            ))}
+          </ul>
           <Button asChild size="lg">
             <a href="https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps">
               Configure & Deploy

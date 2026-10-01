@@ -6259,9 +6259,17 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
     linear-gradient(180deg, color-mix(in srgb, var(--surface-1) 62%, transparent), transparent);
 }
 
-.srv-page-os .sr-os-hero-grid {
+.srv-page-os .sr-os-hero-grid,
+.srv-page-plans .sr-os-hero-grid {
   grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
   gap: clamp(32px, 4vw, 56px);
+}
+
+@media (max-width: 1040px) {
+  .srv-page-os .sr-os-hero-grid,
+  .srv-page-plans .sr-os-hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }
 
 .srv-page-os .srv3-os-visual {

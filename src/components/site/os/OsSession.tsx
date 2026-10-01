@@ -178,7 +178,7 @@ export function OsSession({ kind }: { kind: Kind }) {
   return (
     <div ref={root} className={styles.figure}>
       {/* Wide: computer on the left, VPS core on the right. */}
-      <svg viewBox="0 0 660 430" className={styles.scene} data-layout="wide" aria-hidden="true">
+      <svg viewBox="0 0 680 430" className={styles.scene} data-layout="wide" aria-hidden="true">
         <Defs prefix={`${kind}-w`} />
         <line x1="182" y1="196" x2="352" y2="196" className={styles.track} />
         <line x1="182" y1="214" x2="352" y2="214" className={styles.track} />
