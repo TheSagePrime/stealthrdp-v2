@@ -502,7 +502,7 @@ export default async function HomePage({ params }: Props) {
           <div className="srv-final-copy">
             <span className="srv-final-eyebrow">
               <Lightning weight="fill" aria-hidden="true" />
-              Backed by 10,000+ orders
+              12,000+ VPS deployed
             </span>
             <h2>Ready to deploy your next VPS?</h2>
             <p>

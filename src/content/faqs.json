@@ -57,7 +57,7 @@
   {
     "_id": "6824a1ca105d77ad34fbf09b",
     "question": "What features are included with StealthRDP plans?",
-    "answer": "All our plans include: dedicated IPv4 addresses, high-speed network connections (250 Mbps standard, with an optional 1 Gbps upgrade), unlimited bandwidth (fair usage policy applies), full Administrator/Root access, 99.99% uptime guarantee, and responsive technical support. Higher-tier plans include additional features like priority support, and faster provisioning times.",
+    "answer": "All our plans include: dedicated IPv4 addresses, high-speed network connections (250 Mbps standard, with an optional 1 Gbps upgrade), unlimited bandwidth (fair usage policy applies), full Administrator/Root access, NVMe storage, 24/7 uptime monitoring, and quick technical support.",
     "category": "Services & Plans",
     "displayOrder": 6,
     "isPublished": true,
@@ -178,7 +178,7 @@
   {
     "_id": "6824a351105d77ad34fbf0ba",
     "question": "What should I do if I experience technical issues?",
-    "answer": "If you encounter technical problems, you can contact our support team on WhatsApp at +44 7441 426993, via the ticketing system in your client area, or by emailing support@stealthrdp.com. Our technical support team is available 24/7 and replies quickly. For critical issues affecting service availability, we offer priority support for enterprise customers.",
+    "answer": "If you encounter technical problems, you can contact our support team on WhatsApp at +44 7441 426993, via the ticketing system in your client area, or by emailing support@stealthrdp.com. Our technical support team is available 24/7 and replies quickly. For urgent issues, message us on WhatsApp for the quickest response.",
     "category": "Technical Support & Security",
     "displayOrder": 17,
     "isPublished": true,
