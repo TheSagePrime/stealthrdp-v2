@@ -1,64 +1,68 @@
 # StealthRDP v2
 
-Next-generation public website for StealthRDP, built from the Sage Prime `web-starter`.
+The public website of StealthRDP: https://www.stealthrdp.com
 
-## Product boundary
+It sells Windows and Linux VPS hosting and Citadel (Layer 7 DDoS protection). It explains the products,
+compares plans, publishes guides and help articles, and shows service status. Checkout, login, billing
+and tickets stay in WHMCS at `dash.stealthrdp.com`.
 
-This repository owns the public website: product discovery, VPS plan comparison, Windows/Linux landing pages, documentation, blog content, FAQ, public status presentation, SEO, and future traffic tools.
+## Read this first
 
-It does **not** replace WHMCS. `dash.stealthrdp.com` continues to own login, checkout, billing, tickets, and client-account flows.
+| You want to | Read |
+|---|---|
+| Change anything (people and AI agents) | [AGENTS.md](AGENTS.md) — the rules |
+| Add or edit a page, guide, help article, FAQ, plan or redirect | [CONTRIBUTING.md](CONTRIBUTING.md) — step-by-step recipes |
+| Write a claim about the product (price, speed, refund, support…) | [PRODUCT_FACTS.md](PRODUCT_FACTS.md) — the only approved facts |
+| Understand how the site works | [ARCHITECTURE.md](ARCHITECTURE.md) |
+| Change how something looks | [DESIGN.md](DESIGN.md), then [DESIGN_SYSTEM.md](DESIGN_SYSTEM.md) |
+| Touch headers, CSP, tracking, secrets | [SECURITY.md](SECURITY.md) |
 
-## Stack
+## Environments
 
-- Next.js App Router + React + strict TypeScript
-- Tailwind CSS + shadcn/ui + Radix + Lucide
-- Neon PostgreSQL + Drizzle; PGlite locally
-- pnpm
-- Coolify-compatible deployment
-- Vitest, Playwright, Storybook
-- protected SEO/security/design contracts
+| Environment | URL | Built from | Host |
+|---|---|---|---|
+| Production | https://www.stealthrdp.com | `main` | Vercel project `stealthrdp-v2` (region iad1, Node 24) |
+| Preview | https://preview.antah.de | `redesign/homepage-production-parity` | Coolify (Dockerfile, Node 24) |
+| Local | http://localhost:3000 | your branch | `pnpm dev` |
 
-## Migrated public routes
+- The apex `stealthrdp.com` and `http://` redirect to `https://www.stealthrdp.com`.
+- Preview is never indexed (robots disallow and an `X-Robots-Tag` header).
+- Analytics, ad tags and structured data run in production only.
+- The old site (v1, repository `TheSagePrime/stealthrdp`) is locked on Vercel: it has no domains, no
+  builds, and its Vercel URLs need a Vercel login. It is kept only for rollback.
 
-The V2 build includes the current homepage, plans, Windows VPS, Linux VPS, status, FAQ, about, privacy, docs, blog, and the Minecraft VPS page. Existing public content data is stored under `src/content/`.
-
-## Design
-
-`DESIGN.md` is the single visual source of truth.
-`DESIGN_SYSTEM.md` defines the shared layout/component implementation rules.
-`src/styles/stealth-v3.css` is the active public brand layer.
-
-The older `stealth.css` and `surfaces.css` files are compatibility layers for migrated routes and must not be used as visual references for new work.
-
-## Development
+## Quick start
 
 ```bash
 pnpm install --frozen-lockfile
 cp .env.example .env
-pnpm dev
+pnpm dev            # starts local PGlite and Next.js on http://localhost:3000
 ```
 
-For preview on Coolify use:
+Use Node 24 LTS (production and preview run Node 24; `package.json` allows Node 22 or later) and the
+pnpm version in the `packageManager` field.
 
-```text
-SITE_URL=https://preview.antah.de
-APP_ENV=preview
-```
-
-Preview remains noindex through the SEO environment contract.
-
-## Verification
+## Before you open a pull request
 
 ```bash
-pnpm check:architecture
+pnpm check:architecture   # stack, design, SEO and security contracts
 pnpm test:contracts
 pnpm test:security
-pnpm typegen
 pnpm check:types
 pnpm check:oxlint
-pnpm check:format
-pnpm test
-pnpm storybook:test
-pnpm test:visual
-pnpm build
+pnpm test                 # unit + UI tests
+pnpm build                # SEO pre-build, Next build, SEO post-build audit
 ```
+
+The pre-commit hook runs the contract checks, ESLint, type checks and knip. Do not skip it
+(`--no-verify` is not allowed). Commit messages follow Conventional Commits with a lowercase subject,
+for example `fix(seo): add canonical to the faq page`.
+
+## Release
+
+1. Work on a branch. Open a pull request to `main`.
+2. If the pull request changes a protected file (see [AGENTS.md](AGENTS.md#protected-files)), the
+   owner reviews it and adds the `architecture-approved` label. Only the owner adds this label.
+3. Merge to `main`. Vercel deploys production in about 2 minutes.
+4. Bring `main` into `redesign/homepage-production-parity` with a pull request so the preview matches.
+5. Check the live site: the changed pages, `/sitemap.xml`, and the browser console.
