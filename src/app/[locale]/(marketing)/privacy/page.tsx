@@ -39,6 +39,24 @@ const sections = [
     body: <p>We do not sell your personal data. We share information only with service providers who help us operate our business and only to the extent necessary to provide our services or as required by law.</p>,
   },
   {
+    id: 'cookies',
+    title: 'Cookies, analytics & advertising',
+    body: (
+      <>
+        <p>This website uses these third-party tools:</p>
+        <ul>
+          <li>Google Analytics 4 and Google Ads, through our tag server at sgtm.stealthrdp.com, to measure visits and ad conversions and to build remarketing audiences</li>
+          <li>The Meta pixel, to measure Meta ads</li>
+          <li>DataFast, to count visits</li>
+          <li>A Yandex Webmaster script from jsDelivr, to confirm that we own the site</li>
+        </ul>
+        <p>These tools can set cookies or similar identifiers and receive your IP address, browser details and the pages you visit.</p>
+        <p>In the EU, the EEA, the UK and Switzerland they load only after you select Accept. In other countries they load by default. You can change your choice at any time with Cookie settings at the bottom of every page.</p>
+        <p>We also store two strictly necessary items: your consent choice in your browser and a region cookie (sr_region) that tells the site which consent rule applies.</p>
+      </>
+    ),
+  },
+  {
     id: 'retention-and-security',
     title: 'Data retention & security',
     body: <p>We retain account and billing records as required for business and legal purposes. We apply appropriate technical and organizational measures, including isolated infrastructure and restricted access, to safeguard your data.</p>,
@@ -87,7 +105,7 @@ export default function PrivacyPage() {
           <header className="sr-legal-header">
             <p className="sr-kicker">Legal</p>
             <h1>Privacy Policy</h1>
-            <p className="sr-article-meta">Last updated: August 2026</p>
+            <p className="sr-article-meta">Last updated: October 2026</p>
           </header>
 
           <aside className="sr-legal-summary" aria-label="Key points">

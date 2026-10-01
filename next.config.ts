@@ -6,13 +6,15 @@ import { whmcsLegacyRedirects } from './src/config/legacy-redirects-whmcs';
 import { isProductionDeployEnv, resolveDeployEnv } from './src/libs/seo/env';
 import './src/libs/Env';
 
-/* Hosts that the tags in the server-side GTM container (sgtm.stealthrdp.com) load:
-   Google Ads conversion and remarketing, the Meta pixel and the Yandex verification template.
-   The Google list follows developers.google.com/tag-platform/security/guides/csp. */
+/* Hosts that the tags in the server-side GTM container (sgtm.stealthrdp.com) use, measured
+   in a browser on the live site: Google Ads remarketing, GA4, the Meta pixel (with its
+   Conversions API parameter builder and its form fallback to /tr) and the Yandex
+   verification template. Images need no entry because img-src allows https:. */
 const tagHosts = {
-  script: 'https://www.googleadservices.com https://googleads.g.doubleclick.net https://www.google.com https://connect.facebook.net https://cdn.jsdelivr.net/gh/yandex/',
-  connect: 'https://analytics.google.com https://*.g.doubleclick.net https://ad.doubleclick.net https://www.google.com https://www.googleadservices.com https://*.googletagmanager.com https://www.facebook.com https://connect.facebook.net',
-  frame: 'https://sgtm.stealthrdp.com https://td.doubleclick.net https://www.googletagmanager.com',
+  script: 'https://googleads.g.doubleclick.net https://connect.facebook.net https://capi-automation.s3.us-east-2.amazonaws.com/public/client_js/ https://cdn.jsdelivr.net/gh/yandex/',
+  connect: 'https://analytics.google.com https://ad.doubleclick.net https://www.google.com',
+  frame: 'https://sgtm.stealthrdp.com https://www.facebook.com',
+  form: 'https://www.facebook.com',
 };
 
 const csp = [
@@ -20,7 +22,7 @@ const csp = [
   'base-uri \'self\'',
   'object-src \'none\'',
   'frame-ancestors \'none\'',
-  'form-action \'self\'',
+  `form-action 'self' ${tagHosts.form}`,
   'img-src \'self\' data: blob: https:',
   'font-src \'self\' data: https:',
   'style-src \'self\' \'unsafe-inline\'',

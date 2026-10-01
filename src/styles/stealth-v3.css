@@ -6,7 +6,7 @@
    public brand, shared geometry, marketing components and legacy route cleanup.
    ========================================================================== */
 
-/* Shared dark colour roles are defined in global.css. */
+/* Colour roles are defined in global.css (light palette on :root). See DESIGN_TOKENS.md. */
 
 html {
   background: var(--background);
@@ -542,8 +542,19 @@ body {
   transition: color 160ms ease;
 }
 
-.srv3-footer-legal a:hover {
+.srv3-footer-legal a:hover,
+.srv3-footer-cookie:hover {
   color: var(--text);
+}
+
+.srv3-footer-cookie {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--text-dim);
+  font: inherit;
+  cursor: pointer;
+  transition: color 160ms ease;
 }
 
 /* Responsive ------------------------------------------------------------- */

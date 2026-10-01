@@ -1,0 +1,55 @@
+# Product facts
+
+These are the only approved claims about StealthRDP. Use them as written. If a page needs a fact that is
+not here, ask the owner first and add the fact here in the same pull request.
+
+Never invent reviews, numbers, stock, deadlines, guarantees or live data.
+
+## Approved facts
+
+| Topic | Approved wording | Source of truth |
+|---|---|---|
+| Activation | Most servers are live within 60 seconds of payment confirmation. At busy times it can take a few minutes. | Owner, Sep 2026 |
+| Refunds | 7-day refund, paid as account credit to the website wallet (not to the card). | `src/content/docs/1737944184-payment-terms.md`, `…-termination-of-service.md` |
+| Uptime guarantee | There is **no SLA**. Show measured uptime only, from the status page. | Owner |
+| Status data | Live 90-day uptime per monitored service from the public UptimeRobot page (`/api/uptime`); a dated snapshot in `src/content/uptime.json` when the feed is down. | `src/app/api/uptime/route.ts` |
+| Scale | 12,000+ VPS deployed. | Owner. Do **not** say "10,000 customers" or similar. |
+| Support | Quick support through WhatsApp, client-area tickets and support@stealthrdp.com. | Owner. Do **not** offer "priority support" or promise a response time. |
+| Backups | Weekly backups. | Owner. An on-demand backup add-on is planned — do **not** mention it until it launches. |
+| Storage | NVMe storage on every plan, USA and EU. | `src/content/plans.json` |
+| Regions | USA and Europe. | `src/content/plans.json` |
+| Access | Full Administrator access on Windows, full Root access on Linux. | FAQ |
+| Windows licensing | Microsoft licensing is not included. Windows Server Evaluation may be provided for evaluation only. The customer is responsible for licensing. | `/docs/windows-licensing` |
+| Windows versions | Windows Server 2019, 2022 and 2025. | `src/app/[locale]/(marketing)/windows-vps/page.tsx` |
+| Linux distributions | The list on `/linux-vps` (`distros` in its page file). | WHMCS order form |
+| VPS prices | EUR. The values in `src/content/plans.json` (verified from WHMCS; see `source.verifiedAt`). | WHMCS store |
+| VPS stock | Read live from the WHMCS store pages every 6 hours. Never type stock numbers into copy. | `src/lib/stealth/live-plans.ts` |
+| Citadel | A separate Layer 7 HTTP/HTTPS protection product. It does not need a StealthRDP VPS. Plans: Starter €0, Growth €49, Scale €149 per month. | `src/app/[locale]/(marketing)/citadel/page.tsx`, WHMCS |
+| Reviews | Only real reviews with a source (Trustpilot or Discord), stored in `src/content/testimonials.json` and `reviews.json`. | Public review pages |
+
+## Words to avoid
+
+- "guaranteed", "99.99% uptime", "100% uptime", "SLA" (there is no SLA)
+- "instant" without the 60-second wording above
+- "cheapest" (we do not claim the lowest price)
+- "priority support", and any promised response time
+- "SSD" alone (all storage is NVMe), "dedicated CPU", "no overselling", "guaranteed RAM"
+- any customer count, rating or revenue number that is not in the table
+
+## Not verified yet — ask the owner before you use it
+
+- "24/7 support". It is on `/plans` today (the `included` list in its page file). The owner has
+  confirmed "quick support", not round-the-clock staff.
+
+## Archive data — do not use
+
+`src/content/features.json` is the old v1 feature list. No page renders it; only a migration test
+counts it. It contains claims that are no longer approved (99.99% uptime, SSD, 24/7 support). Do not
+copy from it.
+
+## When a fact changes
+
+1. Change the source of truth (for example `plans.json` or the terms document).
+2. Update this file in the same pull request.
+3. Search the whole repository for the old wording, including `src/content/llms.md`,
+   `src/content/faqs.json`, the guides and the help articles, and update every copy.
