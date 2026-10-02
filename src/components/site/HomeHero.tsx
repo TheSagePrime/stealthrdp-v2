@@ -12,7 +12,7 @@ const systems = {
   linux: { name: 'Linux', title: 'Linux VPS' },
 } as const;
 
-/* The headline names Windows and Linux in turn. */
+/* The headline and the animation show Windows and Linux in turn. */
 const CYCLE_MS = 6000;
 
 export function HomeHero({ from }: { from: number }) {
@@ -78,13 +78,13 @@ export function HomeHero({ from }: { from: number }) {
               {'Starting from '}
               <strong>{`${price}/month`}</strong>
             </span>
-            <span>7-day refund as credit</span>
+            <span>24/7 support</span>
             <span>No hidden fees</span>
             <span>Cancel anytime</span>
           </div>
         </div>
         <div ref={showcaseRef} className={styles.showcase}>
-          <OsSession kind="plans" />
+          <OsSession kind="plans" imageIndex={mode === 'windows' ? 0 : 1} />
         </div>
       </div>
     </section>

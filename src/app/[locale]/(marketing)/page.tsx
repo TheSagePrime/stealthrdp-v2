@@ -504,8 +504,8 @@ export default async function HomePage({ params }: Props) {
               <small>starting price</small>
             </span>
             <span>
-              <strong>7 days</strong>
-              <small>refund as credit</small>
+              <strong>60 sec</strong>
+              <small>typical setup</small>
             </span>
             <span>
               <strong>24/7</strong>
