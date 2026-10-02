@@ -1,14 +1,14 @@
 ---
 order: 14
-title: Common VPS Hosting Issues and Their Solutions
-excerpt: Explore common VPS hosting issues, from performance bottlenecks to security vulnerabilities, and discover effective solutions to enhance reliability.
+title: Common VPS Hosting Issues and How to Fix Them
+excerpt: Fix common VPS problems, from high CPU usage and network traffic spikes to disk, security and configuration errors, with the Linux commands to diagnose each.
 category: VPS Management
 author: StealthRDP Team
 date: 2025-06-01
 readingTime: 18
 image: https://assets.seobotai.com/cdn-cgi/image/quality=75,w=1536,h=1024/stealthrdp.com/683ba3b80194258b64ab40df-1748757420535.jpg
 ---
-<p><strong><a href="/">VPS hosting</a> can be powerful, but it comes with challenges.</strong> From slow performance to security risks, these issues can disrupt your website and user experience. Here’s a quick rundown of common VPS problems and their fixes:</p>
+<p><strong><a href="/plans">VPS hosting</a> can be powerful, but it comes with challenges.</strong> From slow performance to security risks, these issues can disrupt your website and user experience. Here’s a quick rundown of common VPS problems and their fixes:</p>
 <ul>
 <li><strong>Performance Bottlenecks</strong>: Caused by high CPU/RAM usage, disk I/O limits, or network latency. Use monitoring tools like <code>htop</code> or <code>iotop</code> to identify issues, and scale resources or optimize software settings to improve performance.</li>
 <li><strong>Network Connectivity Issues</strong>: Misconfigurations, IP conflicts, or DDoS attacks can cause downtime. Tools like <code>ping</code>, <code>traceroute</code>, and firewalls like <a href="https://en.wikipedia.org/wiki/Uncomplicated_Firewall" target="_blank" rel="nofollow noopener noreferrer">UFW</a> can help diagnose and fix problems.</li>
@@ -26,6 +26,17 @@ image: https://assets.seobotai.com/cdn-cgi/image/quality=75,w=1536,h=1024/stealt
 <p>Monitoring tools are your best friend when diagnosing performance issues. For a real-time look at CPU and memory usage, the <code>htop</code> command offers a clear, color-coded interface. If you need more memory-specific details, <code>free -m</code> shows memory usage in megabytes, while <code>vmstat</code> provides insights into processes, paging, and CPU activity.</p>
 <p>When disk performance is the issue, <code>iotop</code> can help identify processes hogging your storage. Keep in mind that one-time snapshots don’t tell the full story - track metrics over time for a clearer picture. For network issues, running speed tests at various times of the day can reveal patterns, while the <code>dd</code> command is a simple way to measure disk read and write speeds.</p>
 <p>Beyond system-level monitoring, tools like <a href="https://developers.google.com/speed/docs/insights/v5/about" target="_blank" rel="nofollow noopener noreferrer">Google PageSpeed Insights</a>, <a href="https://gtmetrix.com/" target="_blank" rel="nofollow noopener noreferrer">GTmetrix</a>, and <a href="https://www.pingdom.com/" target="_blank" rel="nofollow noopener noreferrer">Pingdom</a> analyze page load times and suggest specific optimizations. These tools are especially helpful for spotting bottlenecks in your website’s performance.</p>
+<h3 id="how-to-troubleshoot-high-cpu-usage-on-a-vps" tabindex="-1">How to Troubleshoot High CPU Usage on a VPS</h3>
+<p>When CPU stays near 100%, work through these steps on a Linux VPS:</p>
+<ol>
+<li><strong>Confirm the load.</strong> Run <code>uptime</code> and compare the load averages with the number of cores from <code>nproc</code>. A load that stays above the core count means processes are waiting for CPU.</li>
+<li><strong>Find the process.</strong> Run <code>top</code> or <code>htop</code> and sort by CPU, or list the top consumers with <code>ps -eo pid,user,%cpu,%mem,cmd --sort=-%cpu | head</code>.</li>
+<li><strong>Check for steal time.</strong> In <code>top</code>, the <code>st</code> value shows CPU time the hypervisor gave to other guests. If it stays high while your own processes are quiet, contact your provider.</li>
+<li><strong>Check I/O wait.</strong> A high <code>wa</code> value means processes wait for disk, not CPU. Use <code>iotop</code> or <code>iostat -x 1</code> to find the disk-heavy process.</li>
+<li><strong>Look for the cause.</strong> Check the logs of the busy service with <code>journalctl -u &lt;service&gt; --since "1 hour ago"</code>. Common causes are a runaway cron job, a loop in application code, a traffic spike, brute-force login attempts, or unwanted software such as a crypto miner.</li>
+<li><strong>Fix or limit it.</strong> Restart or fix the process, rate-limit the traffic, or lower its priority with <code>renice</code>. If the load is legitimate and permanent, upgrade the plan.</li>
+</ol>
+<p>On a Windows VPS, Task Manager and Resource Monitor show the same information: sort the Processes tab by CPU.</p>
 <h3 id="scaling-resources" tabindex="-1">Scaling Resources</h3>
 <p>If your monitoring tools consistently show resource shortages, it’s time to scale up. Vertical scaling - upgrading your VPS’s resources - is a straightforward way to handle increased workloads. This could mean adding more CPU cores, increasing RAM, or expanding storage. For small to medium workloads, this approach is both effective and relatively simple.</p>
 <p>Before upgrading, take a closer look at your VPS performance data. For instance, if CPU usage regularly exceeds 80%, adding more cores can help manage concurrent requests. If memory usage is nearing its limit, additional RAM can improve response times. Similarly, increasing storage can reduce delays caused by disk I/O bottlenecks.</p>
@@ -102,6 +113,16 @@ image: https://assets.seobotai.com/cdn-cgi/image/quality=75,w=1536,h=1024/stealt
 </table>
 <p>Additionally, monitor your server's resource usage - CPU, RAM, and storage - to ensure they aren't contributing to network instability. Double-check firewall settings to confirm that legitimate traffic isn't being blocked unintentionally.</p>
 <p>For testing purposes, you can simulate network issues to observe how applications behave under stress. For example, use the command <code>tc qdisc add dev eth0 root netem loss 10%</code> to introduce artificial packet loss.</p>
+<h3 id="how-to-monitor-network-traffic-on-a-vps" tabindex="-1">How to Monitor Network Traffic on a VPS</h3>
+<p>Different tools answer different questions about network traffic:</p>
+<ul>
+<li><strong>Which connections use bandwidth now?</strong> <code>iftop -i eth0</code> shows live traffic per remote host.</li>
+<li><strong>Which process uses bandwidth?</strong> <code>nethogs</code> groups traffic by process.</li>
+<li><strong>How much traffic over days or months?</strong> <code>vnStat</code> keeps a history per interface; run <code>vnstat -d</code> for daily totals.</li>
+<li><strong>Which ports are open and connected?</strong> <code>ss -tunap</code> lists sockets with their processes.</li>
+<li><strong>What is inside the traffic?</strong> <code>tcpdump -i eth0 port 443</code> captures packets for a closer look.</li>
+</ul>
+<p>Replace <code>eth0</code> with your interface name from <code>ip -br link</code>. For long-term graphs and alerts, export the same metrics to a monitoring stack such as Prometheus with node_exporter, or Netdata.</p>
 <h3 id="managing-bandwidth-usage" tabindex="-1">Managing Bandwidth Usage</h3>
 <p>Limited bandwidth can noticeably slow down your VPS, causing delays in page loads and overall performance dips. When multiple processes compete for the same network resources, the strain can impact everything. Start by identifying bandwidth hogs using tools like <code>iftop</code>, which shows real-time bandwidth usage by connection.</p>
 <p>Once you've pinpointed the bottlenecks, you can take steps to improve efficiency. Adjust your web server settings to better handle multiple simultaneous connections. This ensures your system can handle spikes in traffic without becoming overwhelmed. Offloading static files to a content delivery network (CDN) is another effective way to reduce the load on your VPS. For high-traffic environments, deploying load balancers to distribute traffic across multiple servers can prevent overburdening a single machine.</p>
