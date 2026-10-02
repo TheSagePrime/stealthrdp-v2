@@ -2,23 +2,29 @@
 import type { Metadata } from 'next';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
+import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { OsFaq, OsJourney, OsRegions, OsResources, OsSupport, WindowsVersions } from '@/components/site/os/OsSections';
 import { OsSession } from '@/components/site/os/OsSession';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
 import { Button } from '@/components/ui/button';
 import { getPlans } from '@/lib/stealth/live-plans';
+import { osPageJsonLd } from '@/lib/stealth/structured-data';
+import { getSeoConfig } from '@/libs/seo/config';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/windows-vps',
-  title: 'Windows VPS Hosting | Compare USA and EU Plans | StealthRDP',
-  description: 'Compare Windows VPS hosting plans with full Administrator access, multiple OS versions, and flexible resources. Choose USA or EU regions and deploy fast.',
+  title: 'Windows VPS Server Hosting | USA and EU | StealthRDP',
+  description: 'Windows VPS servers with Windows Server 2019, 2022 or 2025, full Administrator access, NVMe storage and Remote Desktop. USA and EU regions.',
   ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
 const windowsVersions = ['2019', '2022', '2025'];
 
 const questions = [
+  ['What is a Windows VPS server?', 'A Windows VPS server is a virtual private server that runs Windows Server. It has its own CPU, RAM and NVMe storage allocation, and you manage it with full Administrator access.'],
+  ['Can I connect to my Windows VPS with Remote Desktop?', 'Yes. You connect to a Windows VPS with Remote Desktop (RDP), from Windows, macOS, Linux, Android or iOS. The Help Center explains how to log in with each client.'],
+  ['Do you offer Windows VPS hosting in the USA and Europe?', 'Yes. Windows VPS plans are available in the USA (Phoenix, Arizona) and the EU (Amsterdam, Netherlands). Choose the region that is closest to you or to the people and services the server works with.'],
   ['Can I use familiar Windows software?', 'A Windows VPS provides a Windows environment for compatible software. Check each application’s system requirements before ordering.'],
   ['Do Windows VPS plans include Administrator access?', 'Yes. The FAQ states that VPS plans include full Administrator access.'],
   ['Which Windows versions are listed?', 'Windows Server 2019, 2022, and 2025.'],
@@ -26,7 +32,7 @@ const questions = [
   ['When will my Windows VPS be activated?', 'Most servers are live within 60 seconds of payment confirmation. At busy times it can take a few minutes.'],
   ['How will I receive my credentials?', 'StealthRDP sends service credentials by email after payment confirmation.'],
   ['How do I choose CPU, RAM, and storage?', 'Use your software requirements, user count, processing needs, and data size. Then use the plan comparison to compare the available configurations.'],
-  ['Where can I get support?', 'Use WhatsApp support, the client-area ticketing system, or support email. The FAQ provides the current support details.'],
+  ['Where can I get support?', 'Support is available 24/7 through WhatsApp, the client-area ticketing system, and support email.'],
   ['Can I run any workload?', 'No. Use must remain lawful and must follow the Use of Service terms.'],
 ] as const;
 
@@ -38,12 +44,22 @@ export default async function WindowsVpsPage() {
 
   return (
     <div className="srv-page srv-page-os srv-page-windows">
+      <ProductionJsonLd
+        data={osPageJsonLd({
+          siteUrl: getSeoConfig().siteUrl,
+          path: '/windows-vps',
+          name: 'Windows VPS hosting',
+          description: 'Windows VPS hosting with full Administrator access, Windows Server 2019, 2022 and 2025, NVMe storage, and USA or EU regions.',
+          plans,
+          questions,
+        })}
+      />
       <section className="sr-page-hero sr-os-page-hero">
         <div className="sr-container sr-os-hero-grid">
           <div>
             <p className="sr-kicker">Windows VPS hosting</p>
             <h1 className="sr-title">
-              Windows VPS hosting for work that
+              Windows VPS server hosting for work that
               {' '}
               <span>belongs on Windows.</span>
             </h1>
@@ -87,6 +103,17 @@ export default async function WindowsVpsPage() {
           workflows. It can also suit users who need access to a Windows desktop or server without keeping the machine on site.
         </p>
         <p>Start with the software and users. A plan that fits one application may not fit several concurrent sessions or a larger installation.</p>
+        <p>
+          You reach the server with Remote Desktop. If remote desktop access is the main reason you need a server, the
+          {' '}
+          <Link href="/rdp-vps">RDP VPS guide</Link>
+          {' '}
+          explains what to check, and the
+          {' '}
+          <Link href="/docs/how-do-i-log-into-windows">Remote Desktop login guide</Link>
+          {' '}
+          shows how to connect from each device.
+        </p>
         <div className="sr-inline-links">
           <Link href="/plans#windows-vps">
             Windows VPS catalog

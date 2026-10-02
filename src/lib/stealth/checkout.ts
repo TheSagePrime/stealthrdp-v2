@@ -12,6 +12,15 @@ export const billingCycles: Record<BillingCycle, { label: string; urlKey: string
   biannual: { label: 'Biannual', urlKey: 'biennially' },
 };
 
+/* Button labels for the billing switch. Phones show the short form; screen readers always get the full one. */
+export const cycleLabels: Record<BillingCycle, { full: string; short: string }> = {
+  monthly: { full: 'Monthly', short: '1 mo' },
+  quarterly: { full: 'Quarterly', short: '3 mo' },
+  semiannual: { full: '6-month', short: '6 mo' },
+  annual: { full: 'Annual', short: '1 yr' },
+  biannual: { full: '2-year', short: '2 yr' },
+};
+
 export function checkoutUrl(plan: Plan, cycle: BillingCycle): string {
   const value = new URL(plan.purchaseUrl);
   value.searchParams.set('billingcycle', billingCycles[cycle]?.urlKey ?? cycle);

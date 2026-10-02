@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import {
 
   checkoutUrl,
+  cycleLabels,
 
 } from '@/lib/stealth/checkout';
 
@@ -22,14 +23,6 @@ const months: Record<BillingCycle, number> = {
   semiannual: 6,
   annual: 12,
   biannual: 24,
-};
-
-const cycleLabel: Record<BillingCycle, string> = {
-  monthly: 'Monthly',
-  quarterly: 'Quarterly',
-  semiannual: '6-month',
-  annual: 'Annual',
-  biannual: '2-year',
 };
 
 const format = (value: number) => Number.isInteger(value) ? String(value) : value.toFixed(2);
@@ -76,7 +69,8 @@ export function HomePricing({ plans }: { plans: Plan[] }) {
                 aria-pressed={cycle === item}
                 onClick={() => setCycle(item)}
               >
-                {cycleLabel[item]}
+                <span className="srv-billing-full">{cycleLabels[item].full}</span>
+                <span className="srv-billing-short" aria-hidden="true">{cycleLabels[item].short}</span>
               </button>
             ))}
           </div>

@@ -1,7 +1,7 @@
 ---
 order: 12
-title: 7 Tips for Securing Your Remote Desktop Connection
-excerpt: Secure your Remote Desktop Protocol connection with these essential tips to thwart cyberattacks and protect sensitive data.
+title: "How to Secure Remote Desktop: 7 Tips for RDP Security"
+excerpt: How to secure Remote Desktop on Windows, from enabling RDP safely with Settings, PowerShell or Group Policy to MFA, VPNs, gateways and NLA.
 category: Remote Desktop
 author: StealthRDP Team
 date: 2025-06-11
@@ -213,6 +213,18 @@ New-NetFirewallRule -DisplayName &quot;RDP New Port UDP&quot; -Profile Public -D
 </ul>
 <p>Use tools like <a href="https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/virtual-dc/active-directory-domain-services-overview" target="_blank" rel="nofollow noopener noreferrer">Active Directory</a> and Azure AD groups to centrally manage and control access permissions. Restrict RDP access to a pre-approved list of IP addresses and user accounts. Additionally, prevent direct RDP access from external networks by requiring a VPN connection as the first step.</p>
 <p>To further contain potential breaches, implement <strong>microsegmentation</strong>. This involves dividing your infrastructure into smaller segments, which limits attackers’ ability to move laterally within the network. Combine this with least-privilege policies and continuous monitoring of all network traffic to maintain visibility and detect threats early.</p>
+<h2 id="how-to-enable-remote-desktop-safely-on-windows" tabindex="-1" class="sb h2-sbb-cls">How to Enable Remote Desktop Safely on Windows</h2>
+<p>Every tip above assumes Remote Desktop is switched on only where you need it. Windows 10 and Windows 11 Pro, Enterprise and Education can accept RDP connections; the Home editions cannot host a session. There are three common ways to turn it on. Whichever you use, keep Network Level Authentication enabled and limit who can connect.</p>
+<h3 id="allow-remote-desktop-in-windows-11-settings" tabindex="-1">Allow Remote Desktop in Windows 11 Settings</h3>
+<p>On a single machine, open <strong>Settings → System → Remote Desktop</strong> and switch <strong>Remote Desktop</strong> on. Leave <strong>Require devices to use Network Level Authentication to connect</strong> checked, then use <strong>Remote Desktop users</strong> to add only the accounts that need access. Administrators can connect by default.</p>
+<h3 id="enable-remote-desktop-with-powershell" tabindex="-1">Enable Remote Desktop with PowerShell</h3>
+<p>On a server or a remote machine, PowerShell is faster. Run these commands in an elevated session. The first allows RDP connections, and the second opens the built-in Windows Firewall rules for Remote Desktop:</p>
+<pre><code>Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0
+Enable-NetFirewallRule -DisplayGroup "Remote Desktop"</code></pre>
+<p>Then narrow those firewall rules to trusted addresses, as described in tip 3, instead of leaving port 3389 open to the internet.</p>
+<h3 id="use-group-policy-to-enable-remote-desktop" tabindex="-1">Use Group Policy to Enable Remote Desktop</h3>
+<p>For many machines in a domain, use Group Policy. In the Group Policy Management Editor, go to <strong>Computer Configuration → Administrative Templates → Windows Components → Remote Desktop Services → Remote Desktop Session Host → Connections</strong> and enable <strong>Allow users to connect remotely by using Remote Desktop Services</strong>. Under <strong>Security</strong> in the same branch, enable <strong>Require user authentication for remote connections by using Network Level Authentication</strong>. Pair the policy with a firewall rule that only allows your management network or VPN range.</p>
+<p>If you run Windows on a <a href="/windows-vps">Windows VPS</a>, the same steps apply. Change the administrator password on first login and restrict RDP to the addresses you connect from.</p>
 <h2 id="conclusion-secure-your-rdp-connection" tabindex="-1" class="sb h2-sbb-cls">Conclusion: Secure Your RDP Connection</h2>
 <p>Remote Desktop Protocol (RDP) is a vital tool, but it comes with significant security risks. Considering that RDP is implicated in 90% of cyberattacks, the seven security measures discussed in this guide are essential for defending against today’s increasingly sophisticated threats.</p>
 <p>Recent statistics underline the urgency: as of 2023, 72% of global respondents voiced concerns about cybersecurity risks tied to remote work, and about 68% of data breaches involve human error or negligence. The good news? Many of these breaches are avoidable with the right precautions and awareness.</p>

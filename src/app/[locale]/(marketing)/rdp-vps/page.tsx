@@ -52,7 +52,7 @@ export default function RdpVpsPage() {
       'datePublished': rdpVpsGuide.datePublished,
       'dateModified': rdpVpsGuide.dateModified,
       'inLanguage': 'en-US',
-      'wordCount': 1659,
+      'wordCount': 1735,
       'mainEntityOfPage': { '@id': canonical },
       'author': {
         '@type': 'Person',

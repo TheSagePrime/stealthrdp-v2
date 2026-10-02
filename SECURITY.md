@@ -1,12 +1,12 @@
-# Sage Prime Web Security and Privacy
+# StealthRDP v2 Security and Privacy
 
-The web starter is public-facing, but its backend, data, logs, deployment, and build chain remain security boundaries.
+The website is public-facing, but its backend, data, logs, deployment, and build chain remain security boundaries.
 
 The machine-readable source of truth is `security.contract.json`; `pnpm check:security` enforces deterministic rules.
 
 ## Public-by-default surface
 
-Pages and free tools are expected to be publicly reachable unless a child project deliberately introduces a protected subsystem.
+Pages are public. There are no logins or customer data on this site; WHMCS holds them.
 
 There is no default identity provider, tenant model, or billing identity. Do not reintroduce those concepts casually.
 
@@ -40,6 +40,29 @@ Sentry PII and replay default off. Client telemetry is opt-in. Better Stack cred
 The starter preserves CSP, HSTS in production, frame denial, referrer policy, permissions policy, COOP, and `nosniff`.
 
 The base CSP intentionally contains no Clerk, Polar, or Stripe origins.
+
+The CSP is in `next.config.ts` (protected). Third-party hosts are kept in one `tagHosts` object and
+each host is there because a browser test of the live site showed the tags need it:
+
+- `script-src`: the sGTM container, DataFast, Google Tag Manager, Google Ads remarketing, the Meta
+  pixel and its Conversions API parameter builder path, the Yandex verification template path.
+- `connect-src`: Sentry, sGTM, DataFast, Google Analytics, Google Ads collection endpoints.
+- `frame-src`: YouTube, the sGTM service-worker frame, `www.facebook.com` (Meta pixel fallback).
+- `form-action`: `'self'` and `www.facebook.com` (Meta pixel fallback).
+
+To add a host: reproduce the block in the browser console, add only that host (with a path when the
+host is shared, such as an S3 bucket or a CDN), and explain it in the pull request. Do not add
+wildcards that cover a whole platform.
+
+## Tracking and consent
+
+- Trackers load only through `src/components/site/TrackingConsent.tsx`, and only in production.
+- EU, EEA, UK and Switzerland: nothing loads before the visitor selects Accept. When the country is
+  unknown, the site treats the visitor as EU.
+- Other countries: tags load by default, and "Cookie settings" in the footer lets the visitor opt out.
+- The privacy page names every tool that receives visitor data. A new tool needs a privacy-page
+  update in the same pull request.
+- In GTM, the Meta pixel tag should require `ad_storage` consent.
 
 ## Supply chain
 

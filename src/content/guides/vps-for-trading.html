@@ -1,7 +1,7 @@
 ---
 order: 2
-title: "VPS for Trading: What the Server Can and Cannot Improve"
-excerpt: A trading VPS can keep a terminal or bot online and may reduce network delay when placed near the broker or exchange. It cannot improve a trading strategy. Here is what to evaluate.
+title: "Forex VPS for Trading: What a Server Can and Cannot Improve"
+excerpt: A forex VPS keeps MT4, MT5 or a trading bot online and can sit closer to the broker. It cannot improve a strategy. What to check before you choose.
 category: VPS Use Cases
 author: StealthRDP Team
 date: 2026-09-27
@@ -41,6 +41,16 @@ sources:
 <p>Many desktop trading platforms are Windows-first, so Windows is a common choice when the software expects a graphical desktop. Linux can be a better fit for Python services, exchange APIs, custom bots, containers, and headless automation that do not depend on Windows software.</p>
 <p>Check the platform requirements before choosing the OS. Do not choose Windows simply because the workload is called “trading,” and do not choose Linux simply because it uses fewer resources.</p>
 
+<h2>Running MT4 or MT5 on a forex VPS</h2>
+<p>MetaTrader 4 and MetaTrader 5 are Windows programs, so most traders run them on a Windows VPS. The setup is the same as on a desktop PC:</p>
+<ol>
+<li>Connect to the VPS with Remote Desktop.</li>
+<li>Download the terminal from your broker's website and install it.</li>
+<li>Log in to your trading account and attach your Expert Advisor to the chart.</li>
+<li>Check the connection indicator in the terminal's status bar. It shows the round-trip time from the VPS to the broker's server.</li>
+<li>Close the Remote Desktop window with the X button instead of signing out, so the terminal keeps running.</li>
+</ol>
+<p>Each additional terminal uses more memory. If you run several MT4 or MT5 instances, size RAM for all of them together, not for one.</p>
 <h2>Plan for restarts and updates</h2>
 <p>An unattended trading system needs a recovery plan. Decide what happens after a guest reboot, platform crash, network interruption, authentication failure, or application update. Configure only the restart behaviour you understand, and test it before relying on the system.</p>
 <p>Keep credentials and API keys protected, limit remote access, and avoid storing secrets directly in scripts when the application provides a safer mechanism.</p>

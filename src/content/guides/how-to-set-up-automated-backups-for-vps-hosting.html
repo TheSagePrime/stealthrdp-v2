@@ -1,7 +1,7 @@
 ---
 order: 10
 title: How to Set Up Automated Backups for VPS Hosting
-excerpt: Learn how to set up automated backups for VPS hosting to safeguard your data against loss and ensure quick recovery options.
+excerpt: Set up automated VPS backups with control panels, cron scripts and server backup software such as restic, BorgBackup and rclone, then test restores.
 category: VPS Management
 author: StealthRDP Team
 date: 2025-08-01
@@ -94,17 +94,65 @@ tar -czf /backup/www/website-$(date +%Y%m%d).tar.gz /var/www/html/
 </code></pre>
 <p>Schedule these scripts to run automatically. On Linux, use <code>cron</code> (e.g., <code>0 2 * * 1 /backup/www-backup.sh</code>), and on Windows, use Task Scheduler to execute PowerShell or batch file backups.</p>
 <p>Regular testing is critical. Scripts can fail due to permission issues, disk space shortages, or system updates. Add error handling, logging, and email notifications to monitor backup status <a href="https://avenacloud.com/blog/how-to-schedule-backup-scripts-for-vps-security" target="_blank" style="text-decoration: none;" rel="nofollow noopener noreferrer"><sup>[5]</sup></a>.</p>
-<h3 id="configuring-backups-on-stealthrdp-vps" tabindex="-1">Configuring Backups on <a href="/">StealthRDP</a> VPS</h3>
+<h3 id="server-backup-software-restic-borgbackup-and-rclone" tabindex="-1">Server Backup Software: restic, BorgBackup and rclone</h3>
+<p><code>tar</code> and <code>rsync</code> copy files, but they do not keep space-efficient versions or encrypt them for you. Three open-source tools cover that gap and run well on a VPS:</p>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>What it does</th>
+<th>Where it stores backups</th>
+<th>Runs on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong><a href="https://restic.net/" target="_blank" rel="nofollow noopener noreferrer">restic</a></strong></td>
+<td>Encrypted, deduplicated snapshots</td>
+<td>Local disk, SFTP, S3-compatible storage, Backblaze B2, Azure, Google Cloud, or any rclone remote</td>
+<td>Linux, Windows, macOS, BSD</td>
+</tr>
+<tr>
+<td><strong><a href="https://www.borgbackup.org/" target="_blank" rel="nofollow noopener noreferrer">BorgBackup</a></strong></td>
+<td>Encrypted, deduplicated and compressed archives</td>
+<td>Local disk, or another server over SSH that has Borg installed</td>
+<td>Linux, macOS, BSD (Windows only through WSL)</td>
+</tr>
+<tr>
+<td><strong><a href="https://rclone.org/" target="_blank" rel="nofollow noopener noreferrer">rclone</a></strong></td>
+<td>Copies and syncs files to cloud storage; not versioned on its own</td>
+<td>Dozens of cloud and object storage providers</td>
+<td>Linux, Windows, macOS, BSD</td>
+</tr>
+</tbody>
+</table>
+<p><strong>restic backup example.</strong> Create an encrypted repository on a second server over SFTP, back up web files and configuration, keep a rolling history, and check the repository:</p>
+<pre><code class="language-bash">restic -r sftp:backup@backup-host:/srv/restic init
+restic -r sftp:backup@backup-host:/srv/restic backup /var/www /etc
+restic -r sftp:backup@backup-host:/srv/restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 6 --prune
+restic -r sftp:backup@backup-host:/srv/restic check
+</code></pre>
+<p>Set the repository password in the <code>RESTIC_PASSWORD_FILE</code> environment variable so cron can run it unattended, and store a copy of that password somewhere other than the server. Without it, the backup cannot be restored.</p>
+<p><strong>BorgBackup example.</strong> Borg works the same way over SSH:</p>
+<pre><code class="language-bash">borg init --encryption=repokey ssh://backup@backup-host/./borg-repo
+borg create --stats ssh://backup@backup-host/./borg-repo::'{hostname}-{now}' /var/www /etc
+borg prune --keep-daily 7 --keep-weekly 4 --keep-monthly 6 ssh://backup@backup-host/./borg-repo
+borg compact ssh://backup@backup-host/./borg-repo
+</code></pre>
+<p>Export the repository key with <code>borg key export</code> and keep it off the server. <a href="https://torsion.org/borgmatic/" target="_blank" rel="nofollow noopener noreferrer">borgmatic</a> wraps these commands in one configuration file if you prefer not to write the script yourself.</p>
+<p><strong>Where rclone fits.</strong> Use rclone to copy finished archives to object storage, or point restic at an rclone remote (<code>restic -r rclone:remote:bucket</code>) to reach providers restic does not support directly. A plain <code>rclone sync</code> mirrors deletions too, so on its own it is a copy, not a versioned backup.</p>
+<p>Whichever server backup software you choose, schedule it with cron or a systemd timer, write a log, and alert on failure, as covered below.</p>
+<h3 id="configuring-backups-on-stealthrdp-vps" tabindex="-1">Configuring Backups on a StealthRDP VPS</h3>
 <p><img src="https://assets.seobotai.com/stealthrdp.com/688c06e90d660161d1d30a21/60b3d0a0cd41408f4eab799549db166b.jpg" alt="StealthRDP"></p>
-<p>With StealthRDP VPS, you can take advantage of full root access and multi-OS support to set up flexible backup systems. This level of control allows you to install backup software, modify configurations, and access all directories.</p>
+<p>StealthRDP takes weekly backups of each server. For data that changes more often than that, run your own backups as well. A <a href="/linux-vps">Linux VPS</a> comes with full root access and a <a href="/windows-vps">Windows VPS</a> with full Administrator access, so you can install any of the tools above, change configurations and reach every directory.</p>
 <p>For Linux environments, script-based automation using tools like <code>tar</code> or <code>rsync</code> works well. On Windows, Microsoft’s backup utilities can handle the task effectively. Organize your backups into directories like <code>/backup/</code>, <code>/backup/www/</code>, and <code>/backup/sql/</code> to keep files, websites, and databases separate <a href="https://zomro.com/blog/faq/357-creating-a-backup-from-the-console-through-the-cron-scheduler" target="_blank" style="text-decoration: none;" rel="nofollow noopener noreferrer"><sup>[6]</sup></a>.</p>
 <p>Here’s an example of a practical cron setup:</p>
 <ul>
 <li><strong>Website backups (weekly):</strong> <code>00 2 * * 1 root sh /backup/www-backup.sh</code></li>
 <li><strong>Database backups (daily):</strong> <code>00 3 * * * root sh /backup/mysql-backup.sh</code></li>
 </ul>
-<p>After adding new cron jobs, remember to restart the cron daemon for the changes to take effect.</p>
-<p>StealthRDP's data centers in the Netherlands and the USA allow you to choose backup storage locations that balance regulatory compliance and latency. Off-site backups in these locations ensure better data protection, while their 24/7 technical support can assist with any complex configurations or troubleshooting.</p>
+<p>Cron picks up changes to <code>/etc/crontab</code> and to files edited with <code>crontab -e</code> automatically, so you do not need to restart it.</p>
+<p>StealthRDP servers in the USA and Europe allow you to choose backup storage locations that balance regulatory compliance and latency. Off-site backups in these locations ensure better data protection, while their 24/7 technical support can assist with any complex configurations or troubleshooting.</p>
 <h6 id="sbb-itb-4dcde33" tabindex="-1">sbb-itb-4dcde33</h6>
 <h2 id="testing-and-monitoring-your-backup-system" tabindex="-1" class="sb h2-sbb-cls">Testing and Monitoring Your Backup System</h2>
 <p>Setting up automated backups is just the first step in safeguarding your data. To ensure your backups are reliable and ready when you need them, regular testing and continuous monitoring are essential.</p>
@@ -113,9 +161,9 @@ tar -czf /backup/www/website-$(date +%Y%m%d).tar.gz /var/www/html/
 <blockquote>
 <p>&quot;Regularly test your backup files to ensure they work. An untested backup can be as bad as having no backup when disaster strikes.&quot; <a href="https://shape.host/resources/automating-vps-backups-best-practices-and-tools" target="_blank" style="text-decoration: none;" rel="nofollow noopener noreferrer"><sup>[7]</sup></a></p>
 </blockquote>
-<p>To do this, create a dedicated test environment where you can safely perform trial restorations without disrupting your live VPS <a href="https://www.enginyring.com/en/blog/the-ultimate-guide-to-vps-backups-strategies-tools-and-best-practices" target="_blank" style="text-decoration: none;" rel="nofollow noopener noreferrer"><sup>[8]</sup></a>. This &quot;sandbox&quot; setup allows you to verify the integrity of your backups while keeping your production systems secure.</p>
+<p>To do this, create a dedicated test environment where you can safely perform trial restorations without disrupting your live VPS <a href="https://web.archive.org/web/20260104014806/https://www.enginyring.com/en/blog/the-ultimate-guide-to-vps-backups-strategies-tools-and-best-practices" target="_blank" style="text-decoration: none;" rel="nofollow noopener noreferrer"><sup>[8]</sup></a>. This &quot;sandbox&quot; setup allows you to verify the integrity of your backups while keeping your production systems secure.</p>
 <p>Start by randomly selecting backups from different dates for trial restorations. During the process, confirm that all files are present, databases load properly, and applications perform as they should. Additionally, check that restored files retain the correct permissions and ownership.</p>
-<p>Use tools like checksums (e.g., md5sum or sha256sum) to validate file integrity <a href="https://www.enginyring.com/en/blog/the-ultimate-guide-to-vps-backups-strategies-tools-and-best-practices" target="_blank" style="text-decoration: none;" rel="nofollow noopener noreferrer"><sup>[8]</sup></a>. Document every step of your testing process by creating a detailed checklist. This should include tasks like file restoration, database recovery, application functionality checks, and permission verification <a href="https://www.enginyring.com/en/blog/the-ultimate-guide-to-vps-backups-strategies-tools-and-best-practices" target="_blank" style="text-decoration: none;" rel="nofollow noopener noreferrer"><sup>[8]</sup></a>. Such documentation is invaluable for training team members or troubleshooting under time-sensitive conditions.</p>
+<p>Use tools like checksums (e.g., md5sum or sha256sum) to validate file integrity <a href="https://web.archive.org/web/20260104014806/https://www.enginyring.com/en/blog/the-ultimate-guide-to-vps-backups-strategies-tools-and-best-practices" target="_blank" style="text-decoration: none;" rel="nofollow noopener noreferrer"><sup>[8]</sup></a>. Document every step of your testing process by creating a detailed checklist. This should include tasks like file restoration, database recovery, application functionality checks, and permission verification <a href="https://web.archive.org/web/20260104014806/https://www.enginyring.com/en/blog/the-ultimate-guide-to-vps-backups-strategies-tools-and-best-practices" target="_blank" style="text-decoration: none;" rel="nofollow noopener noreferrer"><sup>[8]</sup></a>. Such documentation is invaluable for training team members or troubleshooting under time-sensitive conditions.</p>
 <p>For best results, schedule these tests at least once a month. If you’re managing critical systems, weekly testing is ideal. Rotate through backups from different dates to ensure your entire retention period provides reliable data.</p>
 <h3 id="tracking-backup-status-and-getting-alerts" tabindex="-1">Tracking Backup Status and Getting Alerts</h3>
 <p>Once you’ve confirmed your backups are reliable, shift your focus to monitoring them regularly. This ensures any issues are identified and resolved quickly. Monitoring involves checking the status and performance of your backup processes to confirm they’re completing successfully and on schedule <a href="https://www.paessler.com/monitoring/application/backup-monitoring" target="_blank" style="text-decoration: none;" rel="nofollow noopener noreferrer"><sup>[10]</sup></a>. Without this, failed backups could go unnoticed, leaving your data at risk.</p>

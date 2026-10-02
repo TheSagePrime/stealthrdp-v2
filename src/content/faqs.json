@@ -13,23 +13,23 @@
   {
     "_id": "681b69d1e75118f3793b13ca",
     "question": "Where are your data centers located?",
-    "answer": "We currently operate data centers in the United States (for USA plans) and the Netherlands (for EU plans). All our data centers feature state-of-the-art infrastructure with redundant power supplies, cooling systems, and network connections to ensure maximum reliability and uptime.",
+    "answer": "Our data centers are in Phoenix, Arizona (for USA plans) and Amsterdam, Netherlands (for EU plans). Choose the location closest to you or to the people and services the server works with for the lowest latency.",
     "category": "Services & Plans",
     "displayOrder": 2,
     "isPublished": true,
     "createdAt": "2025-05-07T14:10:25.920Z",
-    "updatedAt": "2025-05-14T13:57:52.932Z",
+    "updatedAt": "2026-10-02T00:00:00.000Z",
     "__v": 0
   },
   {
     "_id": "681b72067bfe24c6e835c48f",
     "question": "What is the difference between USA and EU plans?",
-    "answer": "USA and EU plans offer similar specifications but are hosted in different geographic locations. USA plans are hosted in our US-based data centers, while EU plans are hosted in the Netherlands. The main difference is latency - choose the region closest to your location or target audience for optimal performance. Resource allocations and pricing may vary slightly between equivalent tiers in different regions.",
+    "answer": "USA and EU plans offer similar specifications but are hosted in different geographic locations. USA plans are hosted in Phoenix, Arizona, and EU plans in Amsterdam, Netherlands. The main difference is latency - choose the region closest to your location or target audience for optimal performance. Resource allocations and pricing may vary slightly between equivalent tiers in different regions.",
     "category": "Services & Plans",
     "displayOrder": 3,
     "isPublished": true,
     "createdAt": "2025-05-07T14:45:26.804Z",
-    "updatedAt": "2025-05-14T13:58:21.342Z",
+    "updatedAt": "2026-10-02T00:00:00.000Z",
     "__v": 0
   },
   {
@@ -228,6 +228,17 @@
     "isPublished": true,
     "createdAt": "2026-09-16T21:00:00.000Z",
     "updatedAt": "2026-09-16T21:00:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "bd1ec784d5cc89de37f5febc",
+    "question": "Can I change my server's IP address?",
+    "answer": "Yes. Every server comes with a dedicated IPv4 address. If you need a different one, we can change it for a fee of €5 per IP change. Request it on WhatsApp, through a ticket in your client area, or by email at support@stealthrdp.com.",
+    "category": "Pricing & Billing",
+    "displayOrder": 22,
+    "isPublished": true,
+    "createdAt": "2026-10-02T00:00:00.000Z",
+    "updatedAt": "2026-10-02T00:00:00.000Z",
     "__v": 0
   }
 ]

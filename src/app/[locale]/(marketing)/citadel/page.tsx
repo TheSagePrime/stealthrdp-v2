@@ -29,7 +29,7 @@ export const metadata: Metadata = createPageMetadata({
   path: '/citadel',
   title: 'Layer 7 DDoS Protection — Citadel by StealthRDP',
   description:
-    'Protect websites and HTTP/HTTPS applications from Layer 7 DDoS attacks with Citadel by StealthRDP: adaptive challenges, rate limits, lockdown mode, visibility, and origin protection.',
+    'Layer 7 DDoS protection for websites and HTTP/HTTPS apps: adaptive challenges, rate limits, lockdown mode and origin protection. Starter plan from €0.',
   ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
@@ -175,8 +175,10 @@ export default function CitadelPage() {
               <h2>Attack traffic can look normal until you inspect what it is doing.</h2>
             </div>
             <p>
-              That is why Citadel focuses on requests, paths and sessions instead of
-              pretending every DDoS problem is just a bandwidth problem.
+              A Layer 7 DDoS attack floods a website with HTTP requests that look like
+              real visitors: page loads, logins, searches and API calls. Bandwidth filters
+              alone do not stop it. That is why Citadel focuses on requests, paths and
+              sessions instead of pretending every DDoS problem is just a bandwidth problem.
             </p>
           </div>
 

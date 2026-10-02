@@ -56,8 +56,11 @@ export function createPageMetadata(input: PageMetadataInput): Metadata {
     alternates: {
       canonical,
       ...(AllLocales.length > 1 ? { languages } : {}),
+      types: { 'application/rss+xml': `${site.origin}${config.articles.feedPath}` },
     },
     openGraph: {
+      type: 'website',
+      siteName: config.projectName,
       title,
       description,
       url: canonical,

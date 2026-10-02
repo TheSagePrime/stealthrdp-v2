@@ -25,7 +25,7 @@ When Windows Server Evaluation is used, an expired evaluation period can cause t
 
 Where Windows Server Evaluation is used, it is Evaluation software, not a permanently licensed Windows installation. Evaluation editions are typically valid for **180 days**. After the evaluation period expires, customers may use their own eligible Microsoft licences where permitted by Microsoft's applicable licensing terms. Customers are responsible for determining whether their licence is valid for their intended hosted deployment. StealthRDP provides the infrastructure only. Microsoft Windows licensing is not included and is not supplied by StealthRDP. StealthRDP does not provide SPLA licences, RDS licences, activation keys, or licensing services, even if requested.
 
-Please follow this tutorial: [How to Extend the Windows Server 180-Day Evaluation Period](/docs/how-to-re-activate-and-extend-your-180-day-windows-trial)
+Please follow this tutorial: [Windows Server rearm: extend the evaluation](/docs/how-to-re-activate-and-extend-your-180-day-windows-trial)
 
 See also [Windows licensing](/docs/windows-licensing).
 

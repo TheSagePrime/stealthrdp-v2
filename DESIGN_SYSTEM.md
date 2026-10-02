@@ -1,4 +1,4 @@
-# Sage Prime Design System
+# StealthRDP Design System
 
 This repository uses one primary component foundation and one project-owned visual system.
 
@@ -8,7 +8,7 @@ Primary:
 - Tailwind CSS
 - shadcn/ui
 - Radix UI
-- Lucide
+- Phosphor icons (primary), Simple Icons for brand marks; Lucide is legacy
 - CVA
 
 Do not mix in MUI, Chakra, Ant Design, Bootstrap, React Icons, Font Awesome, or another full UI kit.
@@ -36,7 +36,22 @@ Page → Section → Container → Layout → Component → Element
 Canonical marketing geometry lives in src/styles/stealth-v3.css.
 Do not invent a new container width, section rhythm or breakpoint inside individual pages.
 
+## Where styles live
+
+| Layer | File | Use it for |
+|---|---|---|
+| Tokens | `src/styles/global.css` (protected) | colours, radii, type and spacing scales, protected SEO article styles |
+| Brand layer | `src/styles/stealth-v3.css` | shared marketing classes (`sr-*`, `srv-*`, `srv3-*`), container, header, footer |
+| Help Center | `src/styles/resources.css` | `/resources`, `/docs`, `/citadel/docs` |
+| Older layers | `src/styles/stealth.css`, `src/styles/surfaces.css` | kept for migrated routes; do not copy from them |
+| Components | `Component.module.css` next to the component | styles that belong to one component |
+
+New component styles go in a CSS module. Use tokens (`var(--primary)`, `var(--radius-lg)`), never
+literal colours. Plan-card styles are frozen (see `DESIGN.md`).
+
 ## Tokens
+
+The full token and pattern reference with values is `DESIGN_TOKENS.md`.
 
 All product colours use tokens from src/styles/global.css.
 Brand colour is allowed.

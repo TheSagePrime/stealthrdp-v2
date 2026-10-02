@@ -1,26 +1,23 @@
 'use client';
-import type { LaunchOs } from './home/LaunchPath';
-import { ArrowRight, ArrowUpRight } from '@phosphor-icons/react';
+import { ArrowRight } from '@phosphor-icons/react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { LaunchPath } from './home/LaunchPath';
 import styles from './HomeHero.module.css';
+import { OsSession } from './os/OsSession';
 
-type OsMode = LaunchOs;
+type OsMode = 'windows' | 'linux';
 
 const systems = {
   windows: { name: 'Windows', title: 'Windows VPS' },
   linux: { name: 'Linux', title: 'Linux VPS' },
 } as const;
 
-/* One launch-path cycle in LaunchPath; the OS and region change between cycles. */
+/* The headline and the animation show Windows and Linux in turn. */
 const CYCLE_MS = 6000;
 
 export function HomeHero({ from }: { from: number }) {
   const [mode, setMode] = useState<OsMode>('windows');
-  const [pinned, setPinned] = useState(false);
-  const [region, setRegion] = useState<'USA' | 'EU'>('USA');
-  const showcaseRef = useRef<HTMLElement>(null);
+  const showcaseRef = useRef<HTMLDivElement>(null);
   const system = systems[mode];
   const price = `€${from.toFixed(2)}`;
 
@@ -33,26 +30,12 @@ export function HomeHero({ from }: { from: number }) {
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let visible = false;
     let timer = 0;
-    let tick = 0;
     const apply = () => {
       const play = visible && !motion.matches && document.visibilityState === 'visible';
-      for (const svg of element.querySelectorAll('svg')) {
-        if (play) {
-          svg.unpauseAnimations();
-        } else {
-          svg.pauseAnimations();
-        }
-      }
       window.clearInterval(timer);
       if (play) {
         timer = window.setInterval(() => {
-          tick += 1;
-          if (!pinned) {
-            setMode(current => (current === 'windows' ? 'linux' : 'windows'));
-          }
-          if (tick % 2 === 0) {
-            setRegion(current => (current === 'USA' ? 'EU' : 'USA'));
-          }
+          setMode(current => (current === 'windows' ? 'linux' : 'windows'));
         }, CYCLE_MS);
       }
     };
@@ -69,12 +52,7 @@ export function HomeHero({ from }: { from: number }) {
       motion.removeEventListener('change', apply);
       document.removeEventListener('visibilitychange', apply);
     };
-  }, [pinned]);
-
-  const choose = (next: OsMode) => {
-    setPinned(true);
-    setMode(next);
-  };
+  }, []);
 
   return (
     <section className={styles.hero} aria-label="Windows and Linux VPS">
@@ -100,25 +78,14 @@ export function HomeHero({ from }: { from: number }) {
               {'Starting from '}
               <strong>{`${price}/month`}</strong>
             </span>
-            <span>7-day refund as credit</span>
+            <span>24/7 support</span>
             <span>No hidden fees</span>
             <span>Cancel anytime</span>
           </div>
         </div>
-        <section ref={showcaseRef} className={styles.showcase} aria-label={`${system.title}: from checkout to a connected session`}>
-          <div className={styles.osToggle} role="group" aria-label="Operating system">
-            {(['windows', 'linux'] as const).map(item => (
-              <button key={item} type="button" aria-pressed={mode === item} onClick={() => choose(item)}>
-                {systems[item].name}
-              </button>
-            ))}
-          </div>
-          <LaunchPath system={mode} region={region} from={price} />
-          <Link className={styles.explore} href="/plans">
-            {`Explore ${system.name} VPS`}
-            <ArrowUpRight size={16} aria-hidden="true" />
-          </Link>
-        </section>
+        <div ref={showcaseRef} className={styles.showcase}>
+          <OsSession kind="plans" imageIndex={mode === 'windows' ? 0 : 1} />
+        </div>
       </div>
     </section>
   );

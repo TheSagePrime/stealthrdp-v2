@@ -1,6 +1,6 @@
 ---
 order: 16
-title: How to install Direct admin in a Linux server?
+title: 'How to Install DirectAdmin on a Linux Server'
 category: Web panels
 date: Jan 27, 2025
 sourceTitle: How to install Direct admin in a Linux server?
@@ -10,13 +10,10 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: Do you want to install direct admin on your Linux server? Well, I am here to demonstrate how you can install direct admin.
+summary: 'Check the DirectAdmin system requirements, install it on a clean Linux VPS, and compare DirectAdmin with cPanel before you buy a licence.'
 relatedSlugs: []
 ---
-How to install Direct admin in a Linux server?
-
-How to install Direct admin in a Linux server?
-==============================================
+How to Install DirectAdmin on a Linux Server
 
 Last updated on Jan 27, 2025
 
@@ -61,3 +58,7 @@ The auto method will be best for most people. It automatically installs everythi
 **Accessing the Control Panel**
 
 DirectAdmin can be accessed at http://server.ip.address:2222. Use the Admin username/password from the output information provided by setup.sh (the same information is specified in the /usr/local/directadmin/scripts/setup.txt file)
+
+## DirectAdmin vs cPanel
+
+Both are commercial control panels and both need a paid licence. cPanel pairs with WHM for server-level administration. DirectAdmin uses one interface with admin, reseller and user levels. Compare the current licence prices and supported operating systems on each vendor's website before you choose. If you want a free panel, see [CyberPanel](/docs/install-cyber-panel-with-open-lite-speed-in-linux) or [CentOS Web Panel](/docs/how-to-install-centos-web-panel-cwp-free-web-panel).

@@ -1,6 +1,8 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes, react-refresh/only-export-components */
 import { withCopyableCode } from '@/components/site/code/code-block-markup';
 import { CodeCopyListener } from '@/components/site/code/CodeCopyListener';
+import { withClickToPlayVideos } from '@/components/site/video/video-embed-markup';
+import { VideoPlayListener } from '@/components/site/video/VideoPlayListener';
 
 export type ResourceHeading = {
   id: string;
@@ -74,14 +76,22 @@ function withAccessibleEmbeds(html: string): string {
   ;
 }
 
+// Article images load when they near the viewport, so off-screen images from
+// other hosts do not delay the page load.
+function withLazyImages(html: string): string {
+  return html.replace(/<img\b([^>]*)>/gi, (tag, attrs: string) =>
+    /\bloading\s*=/i.test(attrs) ? tag : `<img loading="lazy" decoding="async"${attrs}>`);
+}
+
 export function TrustedArticleBody({ html }: { html: string }) {
   return (
     <>
       <div
         className="sr-richtext"
-        dangerouslySetInnerHTML={{ __html: withCopyableCode(withAccessibleEmbeds(withHeadingIds(html))) }}
+        dangerouslySetInnerHTML={{ __html: withCopyableCode(withAccessibleEmbeds(withLazyImages(withClickToPlayVideos(withHeadingIds(html))))) }}
       />
       <CodeCopyListener />
+      <VideoPlayListener />
     </>
   );
 }

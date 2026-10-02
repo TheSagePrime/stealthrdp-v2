@@ -2,17 +2,20 @@
 import type { Metadata } from 'next';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
+import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { LinuxDistros, OsFaq, OsJourney, OsRegions, OsResources, OsSupport } from '@/components/site/os/OsSections';
 import { OsSession } from '@/components/site/os/OsSession';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
 import { Button } from '@/components/ui/button';
 import { getPlans } from '@/lib/stealth/live-plans';
+import { osPageJsonLd } from '@/lib/stealth/structured-data';
+import { getSeoConfig } from '@/libs/seo/config';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/linux-vps',
-  title: 'Linux VPS Hosting | Ubuntu, Debian, CentOS | StealthRDP',
-  description: 'Compare cheap Linux VPS plans with Ubuntu, Debian, or CentOS, Root access, and USA or EU regions. Check live catalog prices, then continue to checkout.',
+  title: 'Linux VPS Server Hosting | Ubuntu, Debian | StealthRDP',
+  description: 'Linux VPS servers with full Root access, NVMe storage and Ubuntu, Debian, AlmaLinux or another listed distro. USA and EU regions.',
   ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
@@ -32,11 +35,12 @@ const distros = [
 ];
 
 const questions = [
-  ['Can I order a cheap Linux VPS?', 'You can compare current Linux plan prices on the catalog, including Bronze at €9.50/month on the live plans page. Confirm the live price. We do not claim to be the cheapest host.'],
+  ['What does a Linux VPS server cost?', 'Plans start with Bronze at €9.50/month on the live plans page. Confirm the live price and region at checkout.'],
   ['Which Linux distributions can I run?', 'AlmaLinux 8, 9, and 10; Alpine Linux 3.15, 3.19, and 3.23; CentOS 7, Stream 8, and Stream 9; Debian 10, 11, 12, and 13; Fedora 37 through 44; FreeBSD 13.2 through 15.0; Rocky Linux 8, 9, and 10; Ubuntu 18.04 LTS, 20.04 LTS, 22.04 LTS, 24.04 LTS, and 26.04 LTS; openSUSE Leap 15; CloudLinux 9; Arch Linux Latest; and Oracle Linux 8 and 9.'],
-  ['Can I run Ubuntu?', 'Yes. Ubuntu 18.04 LTS, 20.04 LTS, 22.04 LTS, 24.04 LTS, and 26.04 LTS.'],
+  ['Can I get an Ubuntu VPS?', 'Yes. Choose Ubuntu as the operating system at checkout: 18.04 LTS, 20.04 LTS, 22.04 LTS, 24.04 LTS, or 26.04 LTS. You get the VPS with Ubuntu installed and full Root access.'],
+  ['Debian or Ubuntu server: which should I choose?', 'Both run most server software well. Ubuntu LTS is common in tutorials and control-panel guides. Debian stable changes less between releases. If your software documents one of them, choose that one.'],
   ['Do plans include Root?', 'Yes. The FAQ states that VPS plans include full Root access.'],
-  ['Are USA and EU Linux plans available?', 'Yes. Both appear in the public catalog. Confirm the region at checkout.'],
+  ['Are USA and EU Linux plans available?', 'Yes. USA plans run in Phoenix, Arizona and EU plans in Amsterdam, Netherlands. Both appear in the public catalog; confirm the region at checkout.'],
   ['When is it activated?', 'Most servers are live within 60 seconds of payment confirmation. At busy times it can take a few minutes.'],
   ['How do I get credentials?', 'By email after payment confirmation.'],
 ] as const;
@@ -52,12 +56,22 @@ export default async function LinuxVpsPage() {
 
   return (
     <div className="srv-page srv-page-os srv-page-linux">
+      <ProductionJsonLd
+        data={osPageJsonLd({
+          siteUrl: getSeoConfig().siteUrl,
+          path: '/linux-vps',
+          name: 'Linux VPS hosting',
+          description: 'Linux VPS hosting with full Root access, a wide choice of distributions, NVMe storage, and USA or EU regions.',
+          plans,
+          questions: liveQuestions,
+        })}
+      />
       <section className="sr-page-hero sr-os-page-hero">
         <div className="sr-container sr-os-hero-grid">
           <div>
             <p className="sr-kicker">Linux VPS hosting</p>
             <h1 className="sr-title">
-              Linux VPS hosting with Root access and a distro
+              Linux VPS server hosting with Root access and a distro
               {' '}
               <span>you can confirm.</span>
             </h1>
@@ -99,7 +113,7 @@ export default async function LinuxVpsPage() {
 
       <OsResources plans={plans} kind="linux">
         <p>
-          {`If you searched for cheap Linux VPS: “Cheap” here means see the current catalog, including Bronze at ${bronzePrice}/month on the live plans page. It does not mean we are the cheapest provider on the internet. We do not claim that.`}
+          {`The current catalog starts with Bronze at ${bronzePrice}/month on the live plans page. Choose Ubuntu, Debian or another listed distribution at checkout.`}
         </p>
         <p>
           {bronze.map(plan => `${plan.name} lists ${plan.specs.cpu}, ${plan.specs.ram} RAM, ${plan.specs.storage}, and ${plan.specs.bandwidth} bandwidth.`).join(' ')}

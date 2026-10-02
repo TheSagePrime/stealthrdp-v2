@@ -46,8 +46,18 @@ function offer(plan: Plan): Node {
   };
 }
 
-export function homeJsonLd(siteUrl: string, plans: Plan[]): Node[] {
+function aggregateOffer(plans: Plan[]): Node {
   const prices = plans.map(plan => plan.pricing.monthly.amount);
+  return {
+    '@type': 'AggregateOffer',
+    'priceCurrency': 'EUR',
+    'lowPrice': Math.min(...prices),
+    'highPrice': Math.max(...prices),
+    'offerCount': plans.length,
+  };
+}
+
+export function homeJsonLd(siteUrl: string, plans: Plan[]): Node[] {
   return [
     {
       '@context': 'https://schema.org',
@@ -65,14 +75,42 @@ export function homeJsonLd(siteUrl: string, plans: Plan[]): Node[] {
       'url': `${siteUrl}/plans`,
       'areaServed': ['US', 'EU'],
       'provider': provider(siteUrl),
-      'offers': {
-        '@type': 'AggregateOffer',
-        'priceCurrency': 'EUR',
-        'lowPrice': Math.min(...prices),
-        'highPrice': Math.max(...prices),
-        'offerCount': plans.length,
-      },
+      'offers': aggregateOffer(plans),
     },
+  ];
+}
+
+/** A Windows or Linux VPS page: the service with its live price range, the breadcrumb and the questions the page shows. */
+export function osPageJsonLd(input: {
+  siteUrl: string;
+  path: string;
+  name: string;
+  description: string;
+  plans: Plan[];
+  questions: ReadonlyArray<readonly [string, string]>;
+}): Node[] {
+  const url = `${input.siteUrl}${input.path}`;
+  return [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      'name': input.name,
+      'serviceType': input.name,
+      'description': input.description,
+      'url': url,
+      'areaServed': ['US', 'EU'],
+      'provider': provider(input.siteUrl),
+      'offers': aggregateOffer(input.plans),
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': input.siteUrl },
+        { '@type': 'ListItem', 'position': 2, 'name': input.name, 'item': url },
+      ],
+    },
+    faqJsonLd(input.questions.map(([question, answer]) => ({ question, answer }))),
   ];
 }
 
@@ -96,7 +134,7 @@ export function plansJsonLd(siteUrl: string, plans: Plan[]): Node {
   };
 }
 
-export function faqJsonLd(faqs: Faq[]): Node {
+export function faqJsonLd(faqs: Pick<Faq, 'question' | 'answer'>[]): Node {
   return {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -164,4 +202,45 @@ export function citadelJsonLd(siteUrl: string, plans: CitadelPlan[]): Node {
       'description': `${plan.domains}, ${plan.bandwidth} clean bandwidth, monthly billing`,
     })),
   };
+}
+
+/** The about page, describing the company: logo, social profiles and the 24/7 support contact. */
+export function aboutJsonLd(siteUrl: string, brand: { logoUrl?: string; socialProfiles?: string[] } = {}): Node[] {
+  const url = `${siteUrl}/about`;
+  return [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'AboutPage',
+      'name': 'About StealthRDP',
+      'url': url,
+      'mainEntity': {
+        '@type': 'Organization',
+        '@id': `${siteUrl}/#organization`,
+        'name': 'StealthRDP',
+        'url': siteUrl,
+        ...(brand.logoUrl ? { logo: brand.logoUrl } : {}),
+        ...(brand.socialProfiles?.length ? { sameAs: brand.socialProfiles } : {}),
+        'description': 'Windows and Linux VPS hosting from data centers in Phoenix, Arizona and Amsterdam, Netherlands, and Citadel Layer 7 DDoS protection.',
+        'contactPoint': {
+          '@type': 'ContactPoint',
+          'contactType': 'customer support',
+          'email': 'support@stealthrdp.com',
+          'hoursAvailable': {
+            '@type': 'OpeningHoursSpecification',
+            'dayOfWeek': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            'opens': '00:00',
+            'closes': '23:59',
+          },
+        },
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': siteUrl },
+        { '@type': 'ListItem', 'position': 2, 'name': 'About', 'item': url },
+      ],
+    },
+  ];
 }

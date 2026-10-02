@@ -20,6 +20,7 @@ import {
 
   billingCycles,
   checkoutUrl,
+  cycleLabels,
 
 } from '@/lib/stealth/checkout';
 
@@ -32,14 +33,6 @@ const priceHeader: Record<BillingCycle, string> = {
   semiannual: 'Price per 6 months',
   annual: 'Price per year',
   biannual: 'Price per 2 years',
-};
-
-const cycleLabel: Record<BillingCycle, string> = {
-  monthly: 'Monthly',
-  quarterly: 'Quarterly',
-  semiannual: '6-month',
-  annual: 'Annual',
-  biannual: '2-year',
 };
 
 const formatPrice = (amount: number) => Number.isInteger(amount) ? `${amount}` : amount.toFixed(2);
@@ -406,7 +399,8 @@ export function PricingExplorer({
                   aria-disabled={!termPrice}
                   onClick={() => setCycle(item)}
                 >
-                  {cycleLabel[item]}
+                  <span className="srv-billing-full">{cycleLabels[item].full}</span>
+                  <span className="srv-billing-short" aria-hidden="true">{cycleLabels[item].short}</span>
                   <span className="sr-visually-hidden">
                     {termPrice ? `from €${formatPrice(termPrice.amount)} ${termPrice.periodLabel}, due today` : 'price at checkout'}
                   </span>
