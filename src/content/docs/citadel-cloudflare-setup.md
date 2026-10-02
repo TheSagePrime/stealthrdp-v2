@@ -24,4 +24,7 @@ illustration:
 5. Return to Citadel. It checks awaiting domains about every minute; Check connection refreshes immediately.
 ## Troubleshoot activation
 A grey-cloud record, the wrong ingress IP, or Flexible SSL can leave a domain awaiting DNS or cause browser errors. DNS-only records skip Citadel entirely. Mail, TXT, and other non-web records remain in Cloudflare.
+## Cloudflare DDoS protection and Citadel
+With proxied records, traffic passes through Cloudflare first, so Cloudflare's own DDoS protection still applies. Citadel then inspects the HTTP requests that reach it, with challenge levels, rate limits and per-domain logs, before it forwards clean traffic to your origin.
+
 See [DNS stays in Cloudflare](/citadel/docs/dns) and [Origin and hostnames](/citadel/docs/origin).

@@ -10,6 +10,9 @@ relatedSlugs:
   - citadel-allowlists
   - citadel-branding
 ---
+## Why challenge levels stop Layer 7 attacks
+A Layer 7 attack sends HTTP requests that look like normal visitors: repeated page loads, login attempts, searches or API calls. Each request is small, so the attack hides inside ordinary traffic. A challenge asks the client to prove it is a real browser or a real person before Citadel forwards the request to your origin. Bots that cannot pass the challenge never reach the server.
+
 ## Choose the right level
 - Start public websites on Auto (Balanced). It begins at a calmer baseline and escalates under attack.
 - Use Interaction during active abuse when Auto is insufficient, and allowlist APIs first.
