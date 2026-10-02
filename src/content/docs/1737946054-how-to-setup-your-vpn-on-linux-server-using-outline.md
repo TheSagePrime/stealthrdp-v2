@@ -1,6 +1,6 @@
 ---
 order: 2
-title: How to Setup your VPN on Linux Server using outline?
+title: How to Set Up Outline VPN with Docker
 category: VPN and networking
 date: Jan 27, 2025
 sourceTitle: How to Setup your VPN on Linux Server using outline?
@@ -10,44 +10,74 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: Outline VPN is a new open-source VPN that promises an incredibly easy-to-install VPN experience—far easier than existing options, like OpenVPN. Via Outline, Jigsaw is trying to make VPNs not only secure but also incre…
+summary: "Set up your own Outline VPN server on a Linux VPS with Docker: install Docker, run the Outline install script, open the ports and connect with Outline Manager."
 relatedSlugs: []
 ---
-How to Setup your VPN on Linux Server using outline?
+Outline is an open-source VPN from Jigsaw that runs as Docker containers on your own server. You manage it with the Outline Manager desktop app and share access keys with your users, who connect with the Outline Client. This guide sets up an Outline VPN server on a Linux VPS.
 
-How to Setup your VPN on Linux Server using outline?
-====================================================
+## What you need
 
-Last updated on Jan 27, 2025
+- A Linux VPS with root or sudo access, such as a [StealthRDP Linux VPS](/linux-vps).
+- A local computer with [Outline Manager](https://getoutline.org/get-started/) installed (Windows, macOS or Linux).
+- Use of a VPN must follow your local law and the [StealthRDP use of service terms](/docs/use-of-service).
 
-Outline VPN is a new open-source VPN that promises an incredibly easy-to-install VPN experience—far easier than existing options, like OpenVPN. Via Outline, Jigsaw is trying to make VPNs not only secure but also incredibly easy to set up—especially for those who don’t happen to be sysadmins. The target demographic for the Outline VPN is journalists and news organizations, but anyone can take advantage of their hard work. For example, Journalists need safe access to information to research issues, communicate with sources, and report the news. Outline makes it easy for news organizations to set up a virtual private network (VPN) on their server. This gives news organizations the power to provide anyone in their organization with safer access to the internet and keep their communications private.
+## Step 1. Install Docker
 
-**Prerequisites:**
+Outline runs in Docker. If Docker is not installed, install it with Docker's convenience script:
 
-A VPS running any of our OS options A working Docker installation A non-root, sudo-enabled user A local computer running Windows or Linux
+```bash
+curl -fsSL https://get.docker.com | sudo sh
+sudo systemctl enable --now docker
+```
 
-**Step 1. Install Docker (if not installed already)**
+Check that Docker is running:
 
-The Outline + Docker combination is what makes this VPN solution so easy to install. So, if you don’t have Docker installed on your server yet, take a moment to perform this one-command installation: $ sudo curl -sS https://get.docker.com/ | sh The script will update your system as needed, add the appropriate Docker repositories, and install the correct Docker packages. You may then need to start the Docker service. $ sudo systemctl start docker $ sudo systemctl enable docker
+```bash
+sudo systemctl status docker
+```
 
-**Finally, verify that the Docker service is running:**
+The output must show `active (running)`. If you skip this step, the Outline install script offers to install Docker for you.
 
-$ sudo sudo systemctl status docker ● docker.service - Docker Application Container Engine Loaded: loaded (/usr/lib/systemd/system/docker.service; disabled; vendor preset: disabled) Drop-In: /etc/systemd/system/docker.service.d └─firewalld.conf Active: active (running) since Mon 2018-03-26 14:36:26 EDT; 4s ago Docs: https://docs.docker.com Main PID: 31232 (dockerd)
+## Step 2. Run the Outline install script
 
-**Step 2. Installing the Outline VPN server**
+Open Outline Manager, choose **Set up Outline anywhere**, and copy the install command it shows. At the time of writing, it is:
 
-With Docker installed, you can run the Outline server installation script: $ sudo wget -qO- https://raw.githubusercontent.com/Jigsaw-Code/outline-server/master/src/server\_manager/install\_scripts/install\_server.sh | bash You will see lots of output from the script: first, it checks for the necessary programs (Docker), creates secret keys, and then downloads and starts two Docker containers: a shadowbox server and a watchtower server to update shadowbox as needed.
+```bash
+sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/OutlineFoundation/outline-apps/master/server_manager/install_scripts/install_server.sh)"
+```
 
-**When the Outline VPN server installation script finishes, you’ll see some output similar to the following:**
+Run it on the server. The script creates secret keys and starts two containers: `shadowbox` (the VPN server) and `watchtower` (which keeps it updated).
 
-{ "apiUrl": "https://[redacted example endpoint]:12345/xxxxxxxxxxxxxxxxxxxxxxx", "certSha256": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" }
+## Step 3. Open the firewall ports
 
-**Step 3. Keep that information safe, as you’ll need it in the next step. For now, rejoice: You have successfully installed a VPN server!** **Step 4. Using Outline Manager to set up your VPN**
+When the script finishes, it prints the two ports it uses:
 
-Jigsaw has created a desktop app called Outline Manager to help users configure their Outline VPN servers. You can download the server manager from the following link:
+- a **management port** (TCP), used by Outline Manager;
+- an **access key port** (TCP and UDP), used by VPN clients.
 
-**https://getoutline.org/get-started/#step-1** **Once you open the Outline Manager app, scroll down to Set up Outline anywhere and click on the Get started button.**
+If you use `ufw`, allow both, replacing the numbers with the ones the script printed:
 
-You’ll see two steps to follow. You’ve already done the first one, and for the second step, all you need to do is copy the bracketed text from Step 3 into the field and click Done Once you’re connected, you will see that you already have a key called My access key. Click on the Get connected button, which will give you a walkthrough on how to install and configure the appropriate VPN client for your platform. For every user, it’s recommended that you create a new key and give it to the user.
+```bash
+sudo ufw allow 12345/tcp
+sudo ufw allow 23456/tcp
+sudo ufw allow 23456/udp
+```
 
-**STAY SAFE ONLINE WITH OUTLINE VPN!**
+## Step 4. Connect Outline Manager
+
+The script ends with a line like this:
+
+```json
+{ "apiUrl": "https://[your-server-ip]:12345/xxxxxxxx", "certSha256": "xxxxxxxx" }
+```
+
+Copy the whole line into Outline Manager and click **Done**. Keep it private: anyone with it can manage your server.
+
+## Step 5. Share access keys
+
+Outline Manager creates a first key called **My access key**. Create one key per person, click **Share**, and send the key. Each user installs the Outline Client on their device and adds the key to connect.
+
+## Troubleshooting
+
+- **Outline Manager cannot connect:** check that the management port is open in every firewall and that the `shadowbox` container is running with `sudo docker ps`.
+- **Clients connect but have no internet:** check that the access key port is open for both TCP and UDP.

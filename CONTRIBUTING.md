@@ -84,6 +84,7 @@ URL: `/citadel/docs/<name>`.
 2. Use one of the existing categories: `Account Management`, `Pricing & Billing`, `Services & Plans`,
    `Technical Support & Security`.
 3. The `/faq` page and its FAQPage structured data update on their own.
+4. Update the FAQ count in `src/lib/stealth/migration.test.ts`.
 
 ## 5. Add a review
 

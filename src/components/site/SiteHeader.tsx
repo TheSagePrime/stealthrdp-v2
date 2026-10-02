@@ -14,7 +14,7 @@ const mainLinks = [
   ['VPS Plans', '/plans'],
   ['DDoS Protection', '/citadel'],
   ['Server Status', '/status'],
-  ['Docs', '/resources'],
+  ['Resources', '/resources'],
   ['About', '/about'],
 ] as const;
 
