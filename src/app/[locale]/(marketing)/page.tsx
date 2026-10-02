@@ -91,9 +91,9 @@ const infrastructure = [
     icon: HardDrive,
   },
   {
-    title: 'Isolated virtual machines',
-    text: 'Each server runs in its own VM with dedicated resources and full administrative access.',
-    label: 'Isolation',
+    title: 'Full administrative access',
+    text: 'Each server runs in its own virtual machine with full Administrator access on Windows or root on Linux.',
+    label: 'Control',
     icon: Cpu,
   },
   {
@@ -103,8 +103,8 @@ const infrastructure = [
     icon: GlobeHemisphereWest,
   },
   {
-    title: '24/7 monitoring',
-    text: 'Production nodes are monitored continuously with public infrastructure status visibility.',
+    title: 'Measured uptime, in public',
+    text: 'Every monitored service shows its measured uptime on the status page, and support answers 24/7.',
     label: 'Visibility',
     icon: ShieldCheck,
   },
@@ -223,92 +223,80 @@ export default async function HomePage({ params }: Props) {
       </Section>
 
       <Section className="
-        srv-home-usecases border-y border-border bg-card/20 py-10
-        sm:py-12
-        lg:py-14
+        srv-home-usecases border-y border-border bg-card/20 py-12
+        sm:py-14
+        lg:py-16
       "
       >
-        <div className="srv-home-wide srv-usecase-layout">
-          <div className="srv-usecase-intro">
-            <p className="
-              text-xs font-semibold tracking-widest text-primary uppercase
-            "
-            >
-              VPS use cases
-            </p>
-            <h2>What can you run on a VPS?</h2>
+        <div className="srv-home-wide srv-section-stack">
+          <div className="srv-section-head">
+            <div>
+              <p className="srv-kicker">VPS use cases</p>
+              <h2>What can you run on a VPS?</h2>
+            </div>
             <p>
-              Explore practical guides for remote desktop, web hosting, automation, trading,
-              backups, and more — with sizing and setup considerations for each workload.
+              Practical guides for remote desktop, web hosting, automation, trading and backups, with
+              sizing and setup advice for each workload.
+              {' '}
+              <Link href="/blog" className="srv-inline-link">
+                Browse all VPS guides
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
             </p>
-            <Link href="/blog" className="srv-inline-link">
-              Browse all VPS guides
-              <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
           </div>
 
-          <ol className="srv-usecase-rail">
-            {useCases.map((item, index) => (
+          <ul className="srv-guide-grid">
+            {useCases.map(item => (
               <li key={item.href}>
-                <Link href={item.href} className="srv-usecase-row">
-                  <span className="srv-usecase-number">{String(index + 1).padStart(2, '0')}</span>
-                  <span className="srv-usecase-copy">
-                    <strong>{item.title}</strong>
-                    <small>{item.text}</small>
-                  </span>
-                  <span className="srv-usecase-arrow" aria-hidden="true">
+                <Link href={item.href} className="srv-guide-card">
+                  <strong>{item.title}</strong>
+                  <small>{item.text}</small>
+                  <span aria-hidden="true">
+                    Read the guide
                     <ArrowRight />
                   </span>
                 </Link>
               </li>
             ))}
-          </ol>
+          </ul>
         </div>
       </Section>
 
       <Section className="
-        srv-home-infra border-y border-border bg-card/30 py-10
-        sm:py-12
-        lg:py-14
+        srv-home-infra border-y border-border bg-card/30 py-12
+        sm:py-14
+        lg:py-16
       "
       >
-        <div className="srv-home-wide srv-infra-layout">
-          <div className="srv-infra-intro">
-            <p className="
-              text-xs font-semibold tracking-widest text-primary uppercase
-            "
-            >
-              Core infrastructure
-            </p>
-            <h2>Infrastructure that doesn&apos;t flinch.</h2>
+        <div className="srv-home-wide srv-section-stack">
+          <div className="srv-section-head">
+            <div>
+              <p className="srv-kicker">Core infrastructure</p>
+              <h2>Infrastructure that doesn&apos;t flinch.</h2>
+            </div>
             <p>
-              Speed, isolation, network reach, and visibility without turning the page into a
-              wall of feature claims.
+              Speed, control, reach and visibility on every server, with a status page where you can
+              check the uptime yourself.
+              {' '}
+              <Link href="/status" className="srv-inline-link">
+                View server status
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
             </p>
-            <Link href="/status" className="srv-inline-link">
-              View server status
-              <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
           </div>
 
-          <ol className="srv-infra-rail">
-            {infrastructure.map(({ title, text, label, icon: Icon }, index) => (
-              <li key={title} className="srv-infra-item">
-                <span className="srv-infra-number">{String(index + 1).padStart(2, '0')}</span>
-                <span className="srv-infra-icon">
+          <ul className="srv-why-grid">
+            {infrastructure.map(({ title, text, label, icon: Icon }) => (
+              <li key={title} className="srv-why-card">
+                <span className="srv-why-icon">
                   <Icon aria-hidden="true" weight="fill" />
                 </span>
-                <div className="srv-infra-copy">
-                  <div className="srv-infra-title-row">
-                    <h3>{title}</h3>
-                    <span>{label}</span>
-                  </div>
-                  <p>{text}</p>
-                </div>
-                <span className="srv-infra-line" aria-hidden="true" />
+                <span className="srv-why-label">{label}</span>
+                <h3>{title}</h3>
+                <p>{text}</p>
               </li>
             ))}
-          </ol>
+          </ul>
         </div>
       </Section>
 
