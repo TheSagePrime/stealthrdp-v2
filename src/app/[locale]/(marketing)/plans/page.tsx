@@ -39,7 +39,7 @@ const included = [
 ];
 
 const questions = [
-  ['Where are the VPS servers located?', 'In the USA and in Europe. Each plan row shows its region. Choose a USA VPS for users and services in North America, and an EU VPS for users and services in Europe.'],
+  ['Where are the VPS servers located?', 'In Phoenix, Arizona (USA) and Amsterdam, Netherlands (EU). Each plan row shows its region. Choose a USA VPS for users and services in North America, and an EU VPS for users and services in Europe.'],
   ['How do I buy a Windows VPS or a Linux VPS?', 'Choose a plan and billing cycle above, then continue to checkout. Select Windows or Linux and the exact version at checkout. Most servers are live within 60 seconds of payment confirmation.'],
   ['Which VPS hosting plan should I choose?', 'Start from your software, the number of users or sessions, and the data you store. Compare CPU, RAM and NVMe storage as separate limits. If no standard plan fits, build your own server in the configurator.'],
   ['Is support included?', 'Yes. Support is available 24/7 through WhatsApp, the client-area ticketing system, and support email.'],

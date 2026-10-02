@@ -24,7 +24,7 @@ const windowsVersions = ['2019', '2022', '2025'];
 const questions = [
   ['What is a Windows VPS server?', 'A Windows VPS server is a virtual private server that runs Windows Server. It has its own CPU, RAM and NVMe storage allocation, and you manage it with full Administrator access.'],
   ['Can I connect to my Windows VPS with Remote Desktop?', 'Yes. You connect to a Windows VPS with Remote Desktop (RDP), from Windows, macOS, Linux, Android or iOS. The Help Center explains how to log in with each client.'],
-  ['Do you offer Windows VPS hosting in the USA and Europe?', 'Yes. Windows VPS plans are available in USA and EU regions. Choose the region that is closest to you or to the people and services the server works with.'],
+  ['Do you offer Windows VPS hosting in the USA and Europe?', 'Yes. Windows VPS plans are available in the USA (Phoenix, Arizona) and the EU (Amsterdam, Netherlands). Choose the region that is closest to you or to the people and services the server works with.'],
   ['Can I use familiar Windows software?', 'A Windows VPS provides a Windows environment for compatible software. Check each application’s system requirements before ordering.'],
   ['Do Windows VPS plans include Administrator access?', 'Yes. The FAQ states that VPS plans include full Administrator access.'],
   ['Which Windows versions are listed?', 'Windows Server 2019, 2022, and 2025.'],

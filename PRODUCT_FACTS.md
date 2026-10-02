@@ -17,7 +17,7 @@ Never invent reviews, numbers, stock, deadlines, guarantees or live data.
 | Support | 24/7 support through WhatsApp, client-area tickets and support@stealthrdp.com. | Owner, confirmed Oct 2026. Do **not** offer "priority support" or promise a response time. |
 | Backups | Weekly backups. | Owner. An on-demand backup add-on is planned — do **not** mention it until it launches. |
 | Storage | NVMe storage on every plan, USA and EU. | `src/content/plans.json` |
-| Regions | USA and Europe. | `src/content/plans.json` |
+| Regions | USA and Europe. Data centers: Phoenix, Arizona (USA plans) and Amsterdam, Netherlands (EU plans). | `src/content/plans.json`; locations: owner, Oct 2026 |
 | Access | Full Administrator access on Windows, full Root access on Linux. | FAQ |
 | IP address | Every server has a dedicated IPv4 address. An IP change costs €5 per change, requested through support. | Owner, Oct 2026 |
 | Windows licensing | Microsoft licensing is not included. Windows Server Evaluation may be provided for evaluation only. The customer is responsible for licensing. | `/docs/windows-licensing` |
