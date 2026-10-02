@@ -1,7 +1,7 @@
 ---
 order: 3
 title: "VPS for Automation and Bots: How to Choose the Right Server"
-excerpt: Use a VPS for scripts, bots, cron jobs, webhook workers, and self-hosted automation when you need a persistent environment. Here is how to size it and where the operational limits are.
+excerpt: Use a VPS for bots, scripts, cron jobs and self-hosted AI agents such as OpenClaw. Learn how to size the server, keep it running and stay within the rules.
 category: VPS Use Cases
 author: StealthRDP Team
 date: 2026-09-27
@@ -15,6 +15,10 @@ sources:
     url: https://cloud.google.com/learn/what-is-a-virtual-private-server
     publisher: Google Cloud
     accessedAt: 2026-09-27
+  - title: OpenClaw documentation
+    url: https://docs.openclaw.ai/vps
+    publisher: OpenClaw
+    accessedAt: 2026-10-02
 ---
 <p>A VPS is useful for automation when a script, bot, webhook listener, scheduler, queue worker, or self-hosted automation tool needs a persistent server rather than a laptop that can sleep or disconnect. A VPS gives you an operating-system environment where you can install the runtime and keep the process running independently of your personal device. <a class="seo-article-citation" href="#source-1" aria-label="Source 1">[1]</a> <a class="seo-article-citation" href="#source-2" aria-label="Source 2">[2]</a></p>
 
@@ -39,6 +43,18 @@ sources:
 <h2>Design for restarts and failed jobs</h2>
 <p>A VPS being online does not guarantee that your process is healthy. Use a process manager, service unit, container restart policy, or orchestration layer appropriate to the application. Persist important state outside ephemeral process memory, log failures, and make jobs safe to retry where possible.</p>
 <p>Monitoring should answer at least two separate questions: “is the server reachable?” and “is the automation actually completing?” A healthy VM with a dead worker is still a failed automation system.</p>
+
+<h2>Running OpenClaw on a VPS</h2>
+<p>OpenClaw is an open-source, self-hosted gateway that connects chat apps such as WhatsApp, Telegram, Discord and Slack to AI coding agents. Its documentation covers running it on a Linux server or VPS, which keeps the gateway online when your own computer is off. <a class="seo-article-citation" href="#source-3" aria-label="Source 3">[3]</a></p>
+<p>When you choose a VPS for OpenClaw, check these points:</p>
+<ul>
+<li><strong>Operating system:</strong> use Linux. OpenClaw needs a current Node.js release, and the install script supports Linux directly.</li>
+<li><strong>Resources:</strong> the documentation does not set minimum specs and mentions low-power VMs. Start with a small plan, watch RAM and CPU while your agents run, and upgrade when you see pressure.</li>
+<li><strong>Keep it running:</strong> install the gateway as a systemd service with <code>openclaw onboard --install-daemon</code> so it restarts after a reboot.</li>
+<li><strong>Access:</strong> keep the gateway bound to loopback and reach the control UI through an SSH tunnel or Tailscale instead of a public port. If you bind it to a network interface, set a gateway token or password.</li>
+<li><strong>Accounts:</strong> harden SSH before you expose the server, and do not sign a shared server into personal accounts.</li>
+</ul>
+<p>A <a href="/linux-vps">Linux VPS</a> with full root access is enough to follow the official install steps.</p>
 
 <h2>Do not turn automation into abuse</h2>
 <p>Automation does not remove your responsibility to follow third-party terms, rate limits, access controls, acceptable-use rules, and applicable law. Do not use a VPS to send unsolicited bulk mail, brute-force external services, run malware, evade platform controls, or perform other abusive activity.</p>
