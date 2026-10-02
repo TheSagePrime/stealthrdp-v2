@@ -15,7 +15,33 @@ It is built on the Sage Prime public-web foundation and is separate from the bil
 | UptimeRobot | uptime monitoring (read through `/api/uptime`) | public status page |
 | Server-side GTM | analytics and ad tags (GA4, Google Ads, Meta pixel, Yandex verification) | `sgtm.stealthrdp.com` |
 
-The website links into WHMCS. It does not copy WHMCS authentication, billing or dashboard logic.
+The website links into WHMCS for authentication, registration, billing and account management.
+The owner explicitly requested a separate Citadel customer interface at `/citadel/app`.
+Its session-issuing WHMCS OIDC callback is deferred; the current interface has no usable customer
+login or alternative identity source. Implementation and integration constraints are in
+`docs/citadel-dashboard.md`.
+
+## Citadel customer interface
+
+`src/app/[locale]/(customer)/citadel/app` renders the customer shell separately from the marketing
+layout. Existing shadcn primitives and design tokens are reused. Marketing trackers, footer and
+floating support controls are not mounted in this subsystem. The route and API responses are
+noindex, no-referrer and private/no-store, robots-disallowed, and never added to the public sitemap.
+
+`src/app/api/citadel/` is a server-owned boundary. It decrypts the short-lived host-only session,
+checks CSRF for mutations, revalidates the user and their organisation with Citadel, checks domain
+membership, then forwards only an allowlisted customer operation using the customer's credential.
+It does not forward the platform key or arbitrary browser-supplied paths, headers, bodies or queries.
+Only safe display projections are returned to the browser. There is no local customer database.
+
+The handoff's User schema has one current organisation per user, and no customer organisation
+listing/switching endpoint. The UI therefore exposes that verified organisation only. It must never
+enumerate the fleet-wide admin organisation endpoint to populate a customer selector.
+
+The offline OpenAPI omits most resource and mutation payload schemas. The initial interface reads
+domains, protection and delivery settings, service, traffic, notifications, team and key metadata.
+It supports checked connection refresh, origin-health probe, protection-default restoration and
+domain removal. Other settings remain read-only until actual request/response contracts are supplied.
 
 ## Stack
 

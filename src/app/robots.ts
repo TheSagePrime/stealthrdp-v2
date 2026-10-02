@@ -14,7 +14,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: ['/api/'],
+      disallow: ['/api/', '/citadel/app', '/en/citadel/app'],
       /* Same AI policy as the v1 site: no model training, yes to search and AI answers. */
       other: { 'Content-Signal': 'ai-train=no, search=yes, ai-input=yes' },
     },
