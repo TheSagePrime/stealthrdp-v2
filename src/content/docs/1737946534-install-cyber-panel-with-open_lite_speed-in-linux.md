@@ -1,6 +1,6 @@
 ---
 order: 18
-title: Install Cyber Panel With OpenLiteSpeed in Linux
+title: 'Install CyberPanel with OpenLiteSpeed on Linux'
 category: Web panels
 date: Jan 27, 2025
 sourceTitle: Install Cyber Panel With OpenLiteSpeed in Linux
@@ -10,13 +10,10 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: "In this tutorial, we will be installing a cyber panel in a Linux server and I will try to make the tutorial as easy as possible, we are going to use the free plan which offers: Unlimited Domains Unlimited Subdomains U…"
+summary: 'Install CyberPanel with OpenLiteSpeed on a fresh Linux VPS over SSH, then open the panel to manage websites, email and databases.'
 relatedSlugs: []
 ---
-Install Cyber Panel With OpenLiteSpeed in Linux
-
-Install Cyber Panel With OpenLiteSpeed in Linux
-===============================================
+Install CyberPanel with OpenLiteSpeed on Linux
 
 Last updated on Jan 27, 2025
 

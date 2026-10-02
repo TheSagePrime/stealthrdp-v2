@@ -1,6 +1,6 @@
 ---
 order: 5
-title: How to install Centos Web Panel (CWP) (Free Web Panel)
+title: 'How to Install CentOS Web Panel (CWP) on Linux'
 category: Web panels
 date: Jan 27, 2025
 sourceTitle: How to install Centos Web Panel (CWP) (Free Web Panel)
@@ -10,20 +10,16 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: "In this tutorial, we will be installing CWP on a Linux Centos server and I will try to make the tutorial as easy as possible, we are going to use the free plan which offers:"
+summary: 'Install the free CentOS Web Panel (CWP) control panel on a Linux VPS over SSH, then log in to manage websites, email and DNS.'
 relatedSlugs: []
 ---
-How to install Centos Web Panel (CWP) (Free Web Panel)
-
-How to install Centos Web Panel (CWP) (Free Web Panel)
-======================================================
+How to Install CentOS Web Panel (CWP) on Linux
 
 Last updated on Jan 27, 2025
 
 In this tutorial, we will be installing CWP on a Linux Centos server and I will try to make the tutorial as easy as possible, we are going to use the free plan which offers:
------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-**(However, some features are not available to free users, you may need to buy CWP Pro in order to enjoy the full services, its cheap!)**
+**(Some features are only available in CWP Pro, a paid upgrade.)**
 
 – Apache Web Server (Mod Security + Automatic updated rules optional) – PHP 5.6 (suPHP, SuExec + PHP version switcher) – MySQL/MariaDB + phpMyAdmin – Postfix + Dovecot + roundcube webmail (Antivirus, Spamassassin optional) – CSF Firewall – File System Lock (no more website hacking, all your files are locked from changes) – Backups (optional) – AutoFixer for server configuration – CloudLinux + CageFS + PHP Selector – Softaculous – Script Installer (Free and Premium) – LiteSpeed Enterprise (Web Server) – Setups Server for Web Hosting (websites like WordPress…) – API for easier account management, and billing API – NAT-ed version, support for NAT-ed IPs
 
