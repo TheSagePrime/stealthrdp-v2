@@ -6412,3 +6412,248 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
     margin-top: 12px;
   }
 }
+
+/* ==========================================================================
+   Homepage refresh (Oct 2026)
+   One section header pattern and card grids for the infrastructure and VPS
+   use-case sections. Theme tokens only.
+   ========================================================================== */
+
+.srv-section-stack {
+  display: grid;
+  gap: clamp(28px, 4vw, 44px);
+}
+
+.srv-section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: end;
+  gap: 16px 48px;
+}
+
+.srv-section-head h2 {
+  margin: 8px 0 0;
+  color: var(--foreground);
+  font-size: clamp(1.875rem, 3.2vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.srv-section-head > p {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.srv-section-head > p .srv-inline-link {
+  margin-top: 10px;
+}
+
+.srv-kicker {
+  margin: 0;
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Infrastructure: four icon cards. */
+.srv-why-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.srv-why-card {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  padding: 24px 22px;
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.srv-why-card:hover {
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--border-divider));
+  transform: translateY(-2px);
+}
+
+.srv-why-icon {
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary);
+}
+
+.srv-why-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.srv-why-label {
+  margin-top: 6px;
+  color: var(--text-muted);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.srv-why-card h3 {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.srv-why-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Guides: link cards instead of a second numbered list. */
+.srv-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.srv-guide-card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  padding: 22px;
+  color: var(--foreground);
+  text-decoration: none;
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.srv-guide-card strong {
+  font-size: 1rem;
+}
+
+.srv-guide-card small {
+  flex: 1;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+.srv-guide-card span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  color: var(--primary);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.srv-guide-card span svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 160ms ease;
+}
+
+.srv-guide-card:hover {
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--border-divider));
+  transform: translateY(-2px);
+}
+
+.srv-guide-card:hover span svg {
+  transform: translateX(3px);
+}
+
+.srv-guide-card:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+@media (max-width: 1040px) {
+  .srv-why-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .srv-section-head {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .srv-why-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  /* Icon beside the text so four cards fit in far less height. */
+  .srv-why-card {
+    grid-template-columns: 40px minmax(0, 1fr);
+    column-gap: 14px;
+    row-gap: 4px;
+    padding: 18px;
+  }
+
+  .srv-why-icon {
+    width: 40px;
+    height: 40px;
+    grid-row: 1 / span 3;
+  }
+
+  .srv-why-label {
+    margin-top: 0;
+  }
+
+  .srv-guide-grid {
+    gap: 10px;
+  }
+
+  .srv-guide-card {
+    padding: 16px 18px;
+  }
+
+  .srv-guide-card span {
+    margin-top: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv-why-card,
+  .srv-guide-card,
+  .srv-guide-card span svg {
+    transition: none;
+  }
+
+  .srv-why-card:hover,
+  .srv-guide-card:hover,
+  .srv-guide-card:hover span svg {
+    transform: none;
+  }
+}

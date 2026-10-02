@@ -180,12 +180,13 @@ function Defs({ prefix }: { prefix: string }) {
   );
 }
 
-export function OsSession({ kind }: { kind: Kind }) {
+/* `imageIndex` lets a caller pick the image, so the homepage hero shows Windows or Linux in step with its headline. */
+export function OsSession({ kind, imageIndex }: { kind: Kind; imageIndex?: number }) {
   const data = content[kind];
   const root = useRef<HTMLDivElement>(null);
-  const imageIndex = useCycle(data.images.length, 2600, root);
+  const cycledIndex = useCycle(imageIndex === undefined ? data.images.length : 1, 2600, root);
   const regionIndex = useCycle(regions.length, 3900, root);
-  const image = data.images[imageIndex]!;
+  const image = data.images[imageIndex ?? cycledIndex]!;
   const region = regions[regionIndex]!;
   const client = image.client ?? data.client;
   const session = image.session ?? data.session;

@@ -108,7 +108,7 @@ export default async function AboutPage() {
             <div>
               <h2 className="sr-section-title">Trusted at scale</h2>
             </div>
-            <p>12,000+ VPS deployed so far for remote work, web hosting, trading infrastructure, and always-on automation. Every new server is monitored 24/7 on our public status page and comes with a 7-day refund as account credit.</p>
+            <p>12,000+ VPS deployed so far for remote work, web hosting, trading infrastructure, and always-on automation. Every new server is monitored 24/7 on our public status page.</p>
           </div>
 
           <Card className="srv-about-stats-strip">
