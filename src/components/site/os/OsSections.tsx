@@ -386,7 +386,7 @@ export function OsSupport({ kind }: { kind: Kind }) {
 /* Questions --------------------------------------------------------------- */
 
 export function OsFaq({ kind, title, questions, other }: {
-  kind: Kind;
+  kind: Kind | 'plans';
   title: string;
   questions: ReadonlyArray<readonly [string, string]>;
   other: { title: string; text: string; href: string; label: string };

@@ -113,6 +113,8 @@ describe('active marketing palette', () => {
       'var(--radius-md)',
       'var(--radius-lg)',
       'var(--radius-xl)',
+      'var(--radius-plan-card)',
+      'var(--radius-plan-card-compact)',
       '999px',
       '50%',
       '0',

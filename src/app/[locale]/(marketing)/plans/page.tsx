@@ -4,6 +4,7 @@ import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
+import { OsFaq } from '@/components/site/os/OsSections';
 import { OsSession } from '@/components/site/os/OsSession';
 import extras from '@/components/site/plans/PlansExtras.module.css';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
@@ -24,8 +25,8 @@ import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
   path: '/plans',
-  title: 'Windows & Linux VPS Hosting | USA & EU | StealthRDP',
-  description: 'Compare Windows and Linux VPS hosting plans from StealthRDP with USA and EU locations, NVMe storage, flexible billing, and checkout.',
+  title: 'VPS Hosting Plans | Windows and Linux | StealthRDP',
+  description: 'Compare VPS hosting plans for Windows and Linux in the USA and EU: NVMe storage, full admin access and 24/7 support. Choose a plan and order online.',
   ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
@@ -36,6 +37,14 @@ const included = [
   { title: 'Fast activation', text: 'Typically within 60 seconds of payment' },
   { title: '24/7 support', text: 'Help when you need it' },
 ];
+
+const questions = [
+  ['Where are the VPS servers located?', 'In the USA and in Europe. Each plan row shows its region. Choose a USA VPS for users and services in North America, and an EU VPS for users and services in Europe.'],
+  ['How do I buy a Windows VPS or a Linux VPS?', 'Choose a plan and billing cycle above, then continue to checkout. Select Windows or Linux and the exact version at checkout. Most servers are live within 60 seconds of payment confirmation.'],
+  ['Which VPS hosting plan should I choose?', 'Start from your software, the number of users or sessions, and the data you store. Compare CPU, RAM and NVMe storage as separate limits. If no standard plan fits, build your own server in the configurator.'],
+  ['Is support included?', 'Yes. Support is available 24/7 through WhatsApp, the client-area ticketing system, and support email.'],
+  ['Can I get a refund?', 'A new service can be refunded within 7 days of payment. The refund is paid as account credit to the website wallet, not to the card. The payment terms have the details.'],
+] as const;
 
 /* Token utilities for the card link rows, replacing the bespoke .sr-inline-links hook. */
 const cardLinkClass = 'inline-flex min-h-11 items-center gap-2 text-small font-semibold text-primary transition-colors hover:text-accent-hover';
@@ -231,6 +240,18 @@ export default async function PlansPage() {
           </div>
         </div>
       </section>
+
+      <OsFaq
+        kind="plans"
+        title="VPS hosting plan questions"
+        questions={questions}
+        other={{
+          title: 'Not sure which system?',
+          text: 'Read the Windows VPS and Linux VPS guides before you choose.',
+          href: '/windows-vps',
+          label: 'Windows VPS hosting',
+        }}
+      />
 
       <section className="sr-section sr-section-border">
         <div className="sr-container sr-byo-panel srv-site-final">

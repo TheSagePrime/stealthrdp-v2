@@ -71,6 +71,9 @@
   --radius-lg: 18px;
   --radius-xl: 18px;
   --radius-full: 999px;
+  /* Frozen plan cards keep their 16px corners (DESIGN.md). */
+  --radius-plan-card: 16px;
+  --radius-plan-card-compact: 14px;
 
   /* type families — DESIGN.md section 4. One sans family + one technical mono. */
   --font-display: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
