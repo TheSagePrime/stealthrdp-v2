@@ -1,6 +1,6 @@
 ---
 order: 13
-title: How to Force HTTPS using .htaccess
+title: How to Force HTTPS with .htaccess
 category: Web panels
 date: Jan 27, 2025
 sourceTitle: How to Force HTTPS using .htaccess
@@ -10,52 +10,86 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: "Redirect all traffic to HTTPS with .htaccess, or force HTTPS for one domain or specific folders only, using Apache rewrite rules."
+summary: "Force HTTPS with .htaccess on Apache: redirect all traffic, one domain or specific folders with a 301 redirect, plus the Nginx equivalent and how to test it."
 relatedSlugs: []
 ---
-How to Force HTTPS using .htaccess
+After you install an SSL/TLS certificate, your site answers on both `http://` and `https://`. Force HTTPS so every visitor and search engine uses the encrypted version. On Apache, you do this with rewrite rules in the `.htaccess` file. For why this matters, see [why you should redirect HTTP to HTTPS](/docs/why-you-should-redirect-all-http-traffic-to-https).
 
-How to Force HTTPS using .htaccess
-==================================
+## Before you start
 
-Last updated on Jan 27, 2025
+- A valid SSL/TLS certificate is installed and `https://yourdomain.com` loads without a browser warning.
+- Apache has `mod_rewrite` enabled. On Debian or Ubuntu, run `sudo a2enmod rewrite` and restart Apache.
+- The site's `AllowOverride` setting permits `.htaccess` rules.
 
-What is an SSL and why do you need it?
---------------------------------------
+## Force HTTPS on all traffic
 
-SSL stands for Secure Sockets Layer, a security protocol that creates an encrypted link between a web server and a web browser. Companies and organizations need to add SSL certificates to their websites to secure online transactions and keep customer information private and secure
+Open `.htaccess` in your site's document root (for example `public_html`). Create the file if it does not exist. Add these lines near the top:
 
-After installing an SSL certificate, your website is available over HTTP and HTTPS. However, it’s better to use only the latter because it encrypts and secures your website’s data
+```apache
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+```
 
-Forcing HTTPS on All Traffic
-----------------------------
+`R=301` makes the redirect permanent, so browsers and search engines update to the HTTPS URL.
 
-**1**
+## Force HTTPS on one domain
 
-Go to **File Manager** in your hosting panel and open .htaccess inside the **public\_html** folder. If you can’t locate it, make sure to create or unhide it
+If two domains serve the same site and you only want to redirect one of them:
 
-**2**
+```apache
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^yourdomain1\.com$ [NC]
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+```
 
-Scroll down to find **RewriteEngine** On and insert the following lines of code below it:
+Replace `yourdomain1.com` with your domain.
 
-**RewriteEngine On** **RewriteCond %{HTTPS} off** **RewriteRule ^(.\*)$ https://%{HTTP\_HOST}%{REQUEST\_URI} \[L,R=301\]** **3**
+## Force HTTPS on specific folders
 
-Save the **changes**
+To redirect only some folders, list them in the rule:
 
-Forcing HTTPS on a Specific Domain
-----------------------------------
+```apache
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(folder1|folder2|folder3)(/.*)?$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+```
 
-Let’s say that you have two domains: **http://yourdomain1.com** and **http://yourdomain2.com** Both domains access the same website, but you only want the first one to be redirected to the HTTPS version. In this case, you need to use the following code:
+Replace the folder names with your own.
 
-**RewriteEngine On** **RewriteCond %{HTTP\_HOST} ^yourdomain1.com \[NC\]** **RewriteCond %{HTTPS} off** **RewriteRule ^(.\*)$ https://%{HTTP\_HOST}%{REQUEST\_URI} \[R=301,L\]**
+## Force HTTPS behind a proxy or CDN
 
-Make sure to replace **yourdomain1** with the actual domain you’re trying to force HTTPS on.
+If Cloudflare or a load balancer ends TLS before Apache, `%{HTTPS}` is always off and the rule above loops. Check the forwarded header instead:
 
-Forcing HTTPS on a Specific Folder
-----------------------------------
+```apache
+RewriteEngine On
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+```
 
-The **.htaccess** file can also be used to force HTTPS on specific folders. However, the file should be placed in the folder that will have the HTTPS connection
+With Cloudflare, also set SSL/TLS to **Full** or **Full (strict)**, not **Flexible**.
 
-**RewriteEngine On** **RewriteCond %{HTTPS} off** **RewriteRule ^(folder1|folder2|folder3) https://%{HTTP\_HOST}%{REQUEST\_URI} \[R=301,L\]** **Make sure to change the folder references to the actual directory names.**
+## Force HTTPS on Nginx
 
-After making the changes, clear your browser’s cache and try to connect to your site via HTTP. If everything was added correctly, the browser will redirect you to the HTTPS version.
+Nginx does not read `.htaccess`. Add a separate server block for port 80 that redirects everything:
+
+```nginx
+server {
+    listen 80;
+    server_name yourdomain.com www.yourdomain.com;
+    return 301 https://$host$request_uri;
+}
+```
+
+Test the configuration with `sudo nginx -t`, then reload with `sudo systemctl reload nginx`.
+
+## Test the redirect
+
+Run this from any computer:
+
+```bash
+curl -I http://yourdomain.com/
+```
+
+The response must show `301 Moved Permanently` and a `Location:` header that starts with `https://`. Clear your browser cache before you test in a browser, because browsers cache permanent redirects.

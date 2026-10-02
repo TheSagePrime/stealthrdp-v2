@@ -1,6 +1,6 @@
 ---
 order: 14
-title: Why you should redirect all HTTP traffic to HTTPS
+title: Why You Should Redirect HTTP to HTTPS
 category: Web panels
 date: Jan 27, 2025
 sourceTitle: Why you should redirect all HTTP traffic to HTTPS
@@ -10,18 +10,10 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: If you’re thinking about switching to the HTTPS protocol but aren’t exactly sure how it will affect your website, this article will guide you through the process.
+summary: "Why an HTTP to HTTPS redirect matters for security, browser warnings and SEO, how HTTP and HTTPS differ, and how to set up a permanent 301 redirect."
 relatedSlugs: []
 ---
-Why you should redirect all HTTP traffic to HTTPS
-
-Why you should redirect all HTTP traffic to HTTPS
-=================================================
-
-Last updated on Jan 27, 2025
-
 If you’re thinking about switching to the HTTPS protocol but aren’t exactly sure how it will affect your website, this article will guide you through the process.
-------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 **We will explain the difference between HTTP and HTTPS in terms of security, performance, and search engine optimization (SEO) benefits**
 
@@ -110,3 +102,14 @@ This results in faster site speeds and smoother performance compared to using th
 HTTPS is also a better option when loading websites on mobile devices, especially when using Accelerated Mobile Pages (AMP). AMP is a Google-made web component framework that, among other functions, creates a more streamlined user experience for mobile users by loading the website content much faster.
 
 A secure encrypted connection is required for a website’s AMP version to show up on search engines. Considering that by the end of 2019, 61% of Google search queries came from mobile devices, the performance benefits of using HTTPS outweigh HTTP
+
+How to Redirect HTTP to HTTPS
+-----------------------------
+
+Once your SSL/TLS certificate is installed, send every HTTP request to HTTPS with a permanent **301** redirect. A 301 tells browsers and search engines that the HTTPS URL is the real address, so rankings and links carry over.
+
+- **Apache:** add a rewrite rule to `.htaccess`. See [how to force HTTPS with .htaccess](/docs/how-to-force-https-using-htaccess).
+- **Nginx:** add a port 80 server block with `return 301 https://$host$request_uri;`.
+- **Cloudflare:** turn on **Always Use HTTPS** and set SSL/TLS to **Full (strict)**.
+
+After the redirect works, update internal links and your sitemap to the HTTPS URLs, and check the HTTPS property in Google Search Console.
