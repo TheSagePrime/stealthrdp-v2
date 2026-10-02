@@ -43,6 +43,7 @@ const questions = [
   ['How do I buy a Windows VPS or a Linux VPS?', 'Choose a plan and billing cycle above, then continue to checkout. Select Windows or Linux and the exact version at checkout. Most servers are live within 60 seconds of payment confirmation.'],
   ['Which VPS hosting plan should I choose?', 'Start from your software, the number of users or sessions, and the data you store. Compare CPU, RAM and NVMe storage as separate limits. If no standard plan fits, build your own server in the configurator.'],
   ['Is support included?', 'Yes. Support is available 24/7 through WhatsApp, the client-area ticketing system, and support email.'],
+  ['Can I change my IP address?', 'Yes. Every server has a dedicated IPv4 address. An IP change costs €5 per change; request it from support on WhatsApp, a client-area ticket or email.'],
   ['Can I get a refund?', 'A new service can be refunded within 7 days of payment. The refund is paid as account credit to the website wallet, not to the card. The payment terms have the details.'],
 ] as const;
 

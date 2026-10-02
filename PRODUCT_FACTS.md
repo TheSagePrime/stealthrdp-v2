@@ -19,6 +19,7 @@ Never invent reviews, numbers, stock, deadlines, guarantees or live data.
 | Storage | NVMe storage on every plan, USA and EU. | `src/content/plans.json` |
 | Regions | USA and Europe. | `src/content/plans.json` |
 | Access | Full Administrator access on Windows, full Root access on Linux. | FAQ |
+| IP address | Every server has a dedicated IPv4 address. An IP change costs €5 per change, requested through support. | Owner, Oct 2026 |
 | Windows licensing | Microsoft licensing is not included. Windows Server Evaluation may be provided for evaluation only. The customer is responsible for licensing. | `/docs/windows-licensing` |
 | Windows versions | Windows Server 2019, 2022 and 2025. | `src/app/[locale]/(marketing)/windows-vps/page.tsx` |
 | Linux distributions | The list on `/linux-vps` (`distros` in its page file). | WHMCS order form |

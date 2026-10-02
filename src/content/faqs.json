@@ -229,5 +229,16 @@
     "createdAt": "2026-09-16T21:00:00.000Z",
     "updatedAt": "2026-09-16T21:00:00.000Z",
     "__v": 0
+  },
+  {
+    "_id": "bd1ec784d5cc89de37f5febc",
+    "question": "Can I change my server's IP address?",
+    "answer": "Yes. Every server comes with a dedicated IPv4 address. If you need a different one, we can change it for a fee of €5 per IP change. Request it on WhatsApp, through a ticket in your client area, or by email at support@stealthrdp.com.",
+    "category": "Pricing & Billing",
+    "displayOrder": 22,
+    "isPublished": true,
+    "createdAt": "2026-10-02T00:00:00.000Z",
+    "updatedAt": "2026-10-02T00:00:00.000Z",
+    "__v": 0
   }
 ]
