@@ -10,7 +10,7 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: "1. Account Security: Users are responsible for maintaining the security and confidentiality of their account credentials. Any activities under the account are the user's responsibility. Promptly inform StealthRDP of a…"
+summary: "Your responsibilities as a StealthRDP customer: account security, lawful and acceptable use, your own backups, fair resource use and Windows licensing."
 relatedSlugs: []
 ---
 User Responsibilities

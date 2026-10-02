@@ -10,7 +10,7 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: "1. Right to Terminate: StealthRDP reserves the right to suspend or terminate your service with immediate effect for any breach of these Terms and Conditions, including, but not limited to, non-payment of fees, violati…"
+summary: "When StealthRDP or you can end a service, how refunds, outstanding payments and stored data are handled after termination, and when service can be reinstated."
 relatedSlugs: []
 ---
 Termination of Service

@@ -1,6 +1,6 @@
 ---
 order: 15
-title: 10 Ways to Optimize Your WordPress Website for Speed
+title: 10 Ways to Speed Up a WordPress Website
 category: Web panels
 date: Jan 27, 2025
 sourceTitle: 10 Ways to Optimize Your WordPress Website for Speed
@@ -13,10 +13,10 @@ migration:
 summary: "Why WordPress speed matters, how to test it with GTmetrix, and 10 ways to make a WordPress site faster, from hosting and updates to caching."
 relatedSlugs: []
 ---
-10 Ways to Optimize Your WordPress Website for Speed
+10 Ways to Speed Up a WordPress Website
 
-10 Ways to Optimize Your WordPress Website for Speed
-====================================================
+10 Ways to Speed Up a WordPress Website
+=======================================
 
 Last updated on Jan 27, 2025
 

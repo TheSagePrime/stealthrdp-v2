@@ -1,6 +1,6 @@
 ---
 order: 17
-title: Install Cpanel and WHM in Linux (You need a license)
+title: How to Install cPanel and WHM on Linux
 category: Web panels
 date: Jan 27, 2025
 sourceTitle: Install Cpanel and WHM in Linux (You need a license)
@@ -10,13 +10,13 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: In this tutorial, we will be installing a Cpanel and WHM in a Linux server and I will try to make the tutorial as easy as possible, You will have to buy the Cpanel license from their website.
+summary: "Install cPanel and WHM on a fresh Linux server with the official installer. cPanel needs a paid licence, bought from cPanel for your server's IP address."
 relatedSlugs: []
 ---
-Install Cpanel and WHM in Linux (You need a license)
+How to Install cPanel and WHM on Linux
 
-Install Cpanel and WHM in Linux (You need a license)
-====================================================
+How to Install cPanel and WHM on Linux
+======================================
 
 Last updated on Jan 27, 2025
 

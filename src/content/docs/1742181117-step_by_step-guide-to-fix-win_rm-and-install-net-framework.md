@@ -1,6 +1,6 @@
 ---
 order: 21
-title: Step-by-Step Guide to Fix WinRM and Install .NET Framework
+title: Fix WinRM and Install .NET Framework
 category: Server management
 date: Mar 17, 2025
 sourceTitle: Step-by-Step Guide to Fix WinRM and Install .NET Framework
@@ -13,14 +13,14 @@ migration:
 summary: "Follow these steps to configure WinRM and resolve the .NET Framework installation issue:"
 relatedSlugs: []
 ---
-Step-by-Step Guide to Fix WinRM and Install .NET Framework
+Fix WinRM and Install .NET Framework
 
-Step-by-Step Guide to Fix WinRM and Install .NET Framework
-==========================================================
+Fix WinRM and Install .NET Framework
+====================================
 
 Last updated on Mar 17, 2025
 
-## **Step-by-Step Guide to Fix WinRM and Install .NET Framework**
+## **Fix WinRM and Install .NET Framework**
 
 Follow these steps to configure WinRM and resolve the .NET Framework installation issue:
 
