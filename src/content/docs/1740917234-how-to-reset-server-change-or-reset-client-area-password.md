@@ -1,6 +1,6 @@
 ---
 order: 20
-title: How to Reset Server / Change or Reset Client Area Password
+title: Reset a Server or Client Area Password
 category: Server management
 date: Mar 13, 2025
 sourceTitle: How to Reset Server / Change or Reset Client Area Password
@@ -13,10 +13,10 @@ migration:
 summary: "Reset your server's root or Administrator password from the client area, and change or reset your StealthRDP client area password."
 relatedSlugs: []
 ---
-How to Reset Server / Change or Reset Client Area Password
+Reset a Server or Client Area Password
 
-How to Reset Server / Change or Reset Client Area Password
-==========================================================
+Reset a Server or Client Area Password
+======================================
 
 Last updated on Mar 13, 2025
 

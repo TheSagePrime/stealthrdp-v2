@@ -9,7 +9,7 @@ migration:
   source: StealthRDP Windows licensing disclosure
   date: 2026-09-16
   redactions: []
-summary: StealthRDP provides the infrastructure only. Microsoft Windows licensing is not included and is not supplied by StealthRDP. Customers using Windows are responsible for their own licensing compliance.
+summary: "StealthRDP provides the server only. Microsoft Windows licensing is not included, and customers are responsible for their own licences and any evaluation use."
 relatedSlugs:
   - 1737944013-use-of-service
   - 1737944204-user-responsibilities

@@ -40,7 +40,7 @@ const questions = [
   ['Can I get an Ubuntu VPS?', 'Yes. Choose Ubuntu as the operating system at checkout: 18.04 LTS, 20.04 LTS, 22.04 LTS, 24.04 LTS, or 26.04 LTS. You get the VPS with Ubuntu installed and full Root access.'],
   ['Debian or Ubuntu server: which should I choose?', 'Both run most server software well. Ubuntu LTS is common in tutorials and control-panel guides. Debian stable changes less between releases. If your software documents one of them, choose that one.'],
   ['Do plans include Root?', 'Yes. The FAQ states that VPS plans include full Root access.'],
-  ['Are USA and EU Linux plans available?', 'Yes. Both appear in the public catalog. Confirm the region at checkout.'],
+  ['Are USA and EU Linux plans available?', 'Yes. USA plans run in Phoenix, Arizona and EU plans in Amsterdam, Netherlands. Both appear in the public catalog; confirm the region at checkout.'],
   ['When is it activated?', 'Most servers are live within 60 seconds of payment confirmation. At busy times it can take a few minutes.'],
   ['How do I get credentials?', 'By email after payment confirmation.'],
 ] as const;

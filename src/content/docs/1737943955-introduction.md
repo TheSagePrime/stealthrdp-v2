@@ -10,7 +10,7 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: Welcome to StealthRDP, where robust Remote Desktop Protocols (RDPs), cutting-edge Virtual Private Servers (VPS), and comprehensive web hosting solutions converge to fulfill the evolving cloud-based needs of modern ent…
+summary: "Introduction to the StealthRDP Terms and Conditions. By using StealthRDP services you agree to these terms, which may be updated over time."
 relatedSlugs: []
 ---
 Introduction
