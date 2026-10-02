@@ -155,10 +155,6 @@ export function SiteFooter() {
               <Link href="/docs/windows-licensing">Windows licensing</Link>
             </div>
           </div>
-          <div className="srv3-footer-bottom-note">
-            <span>Billing and account management are handled in the StealthRDP client area.</span>
-            <span className="srv3-footer-credit">Tux artwork by Larry Ewing, CC BY-SA 3.0.</span>
-          </div>
         </div>
       </div>
     </footer>
