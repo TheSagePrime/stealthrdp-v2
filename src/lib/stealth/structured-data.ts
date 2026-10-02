@@ -203,3 +203,44 @@ export function citadelJsonLd(siteUrl: string, plans: CitadelPlan[]): Node {
     })),
   };
 }
+
+/** The about page, describing the company: logo, social profiles and the 24/7 support contact. */
+export function aboutJsonLd(siteUrl: string, brand: { logoUrl?: string; socialProfiles?: string[] } = {}): Node[] {
+  const url = `${siteUrl}/about`;
+  return [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'AboutPage',
+      'name': 'About StealthRDP',
+      'url': url,
+      'mainEntity': {
+        '@type': 'Organization',
+        '@id': `${siteUrl}/#organization`,
+        'name': 'StealthRDP',
+        'url': siteUrl,
+        ...(brand.logoUrl ? { logo: brand.logoUrl } : {}),
+        ...(brand.socialProfiles?.length ? { sameAs: brand.socialProfiles } : {}),
+        'description': 'Windows and Linux VPS hosting from data centers in Phoenix, Arizona and Amsterdam, Netherlands, and Citadel Layer 7 DDoS protection.',
+        'contactPoint': {
+          '@type': 'ContactPoint',
+          'contactType': 'customer support',
+          'email': 'support@stealthrdp.com',
+          'hoursAvailable': {
+            '@type': 'OpeningHoursSpecification',
+            'dayOfWeek': ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
+            'opens': '00:00',
+            'closes': '23:59',
+          },
+        },
+      },
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      'itemListElement': [
+        { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': siteUrl },
+        { '@type': 'ListItem', 'position': 2, 'name': 'About', 'item': url },
+      ],
+    },
+  ];
+}

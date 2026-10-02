@@ -3001,74 +3001,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 }
 
 /* About */
-.srv-page-about .srv-about-reasons {
-  display: grid;
-  max-width: 980px;
-  margin-left: auto;
-  counter-reset: about-reason;
-}
-.srv-page-about .srv-about-reason {
-  counter-increment: about-reason;
-  position: relative;
-  min-height: 0 !important;
-  border: 0 !important;
-  border-top: 1px solid var(--border-divider) !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  padding: 0 !important;
-  box-shadow: none !important;
-  transition:
-    background-color 180ms ease,
-    transform 180ms ease;
-}
-.srv-page-about .srv-about-reason:last-child {
-  border-bottom: 1px solid var(--border-divider) !important;
-}
-.srv-page-about .srv-about-reason [data-slot='card-header'] {
-  position: relative;
-  display: grid;
-  min-height: 112px;
-  grid-template-columns: 54px minmax(0, 0.55fr) minmax(0, 1fr);
-  gap: 18px;
-  align-items: center;
-  padding: 18px 12px;
-}
-.srv-page-about .srv-about-reason [data-slot='card-header']::before {
-  content: counter(about-reason, decimal-leading-zero);
-  display: grid;
-  width: 34px;
-  height: 34px;
-  place-items: center;
-  border: 1px solid var(--border-divider);
-  border-radius: 999px;
-  color: var(--primary);
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  font-weight: 700;
-}
-.srv-page-about .srv-about-reason [data-slot='card-title'],
-.srv-page-about .srv-about-reason [data-slot='card-description'] {
-  margin: 0;
-}
-.srv-page-about .srv-about-reason [data-slot='card-description'] {
-  line-height: 1.65;
-}
-.srv-page-about .srv-about-reason:hover {
-  transform: translateX(5px);
-  background: linear-gradient(90deg, color-mix(in srgb, var(--primary) 5%, transparent), transparent 68%) !important;
-}
-.srv-page-about .srv-about-reason:nth-child(2) [data-slot='card-header']::before {
-  color: var(--sr-raw-8b5cf6);
-}
-.srv-page-about .srv-about-reason:nth-child(3) [data-slot='card-header']::before {
-  color: var(--sr-raw-22c55e);
-}
-.srv-page-about .srv-about-reason:nth-child(4) [data-slot='card-header']::before {
-  color: var(--sr-raw-f59e0b);
-}
-.srv-page-about .srv-about-reason:nth-child(5) [data-slot='card-header']::before {
-  color: var(--sr-raw-06b6d4);
-}
 .srv-page-about .srv-about-stats-strip {
   border: 0 !important;
   border-block: 1px solid var(--border-divider) !important;
@@ -3330,12 +3262,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   .srv-page .sr-title {
     font-size: clamp(2.7rem, 13vw, 4.4rem);
   }
-  .srv-page-about .srv-about-reason [data-slot='card-header'] {
-    grid-template-columns: 44px 1fr;
-  }
-  .srv-page-about .srv-about-reason [data-slot='card-description'] {
-    grid-column: 2;
-  }
   .srv-page-plans .srv-plan-os-option + .srv-plan-os-option {
     border-left: 0 !important;
     border-top: 1px solid var(--border-divider) !important;
@@ -3347,9 +3273,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 @media (prefers-reduced-motion: reduce) {
   .srv-page .sr-page-hero::before {
     animation: none;
-  }
-  .srv-page-about .srv-about-reason {
-    transition: none;
   }
 }
 
@@ -5093,8 +5016,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   .srv-page-plans .sr-pick-cards,
   .srv-page-os .sr-pick-cards,
   .srv-page-plans .srv-plan-os-flow,
-  .srv-citadel-v2-plans,
-  .srv-page-about .srv-about-reasons {
+  .srv-citadel-v2-plans {
     display: grid !important;
     width: 100% !important;
     grid-template-columns: minmax(0, 1fr) !important;
@@ -5107,8 +5029,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   .srv-page-plans .sr-pick-card,
   .srv-page-os .sr-pick-card,
   .srv-page-plans .srv-plan-os-option,
-  .srv-citadel-v2-plan,
-  .srv-page-about .srv-about-reason {
+  .srv-citadel-v2-plan {
     width: 100% !important;
     max-width: none !important;
     min-width: 0 !important;
@@ -6655,5 +6576,152 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   .srv-guide-card:hover,
   .srv-guide-card:hover span svg {
     transform: none;
+  }
+}
+
+/* ==========================================================================
+   About page refresh (Oct 2026)
+   Reuses the homepage section header and card grids; adds the numbers band,
+   two- and three-column card grids and the review cards. Theme tokens only.
+   ========================================================================== */
+
+.srv-why-grid[data-columns='3'] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.srv-why-grid[data-columns='2'] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.srv-page-about .srv-about-proof {
+  padding-block: 0 clamp(40px, 5vw, 64px);
+}
+
+.srv-page-about .srv-about-stats-strip dl {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px 28px;
+  margin: 0;
+}
+
+.srv-page-about .srv-about-stats-strip dt {
+  color: var(--foreground);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.srv-page-about .srv-about-stats-strip dd {
+  margin: 6px 0 0;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.srv-about-products .srv-guide-card {
+  padding: 28px;
+}
+
+.srv-about-products .srv-guide-card strong {
+  font-size: 1.25rem;
+}
+
+.srv-about-products .srv-guide-card small {
+  font-size: 0.9375rem;
+}
+
+.srv-why-card .srv-about-price {
+  margin-top: 4px;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.srv-about-reviews {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.srv-about-reviews figure {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 18px;
+  margin: 0;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  padding: 24px 22px;
+}
+
+.srv-about-reviews blockquote {
+  flex: 1;
+  margin: 0;
+  color: var(--foreground);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.srv-about-reviews figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 12px;
+  border-top: 1px solid var(--border-divider);
+  padding-top: 14px;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.srv-about-reviews figcaption a {
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.srv-about-reviews figcaption a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 1040px) {
+  .srv-why-grid[data-columns='3'],
+  .srv-about-reviews {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .srv-page-about .srv-about-stats-strip dl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .srv-page-about .srv-about-stats-strip dl > div:nth-child(2) {
+    border-right: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .srv-about-reviews {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .srv-why-grid[data-columns='3'],
+  .srv-why-grid[data-columns='2'] {
+    grid-template-columns: 1fr;
+  }
+
+  .srv-about-products .srv-guide-card {
+    padding: 20px;
+  }
+
+  .srv-page-about .srv-about-stats-strip dl > div {
+    padding-right: 12px;
+  }
+
+  .srv-why-card .srv-about-price {
+    grid-column: 2;
   }
 }
