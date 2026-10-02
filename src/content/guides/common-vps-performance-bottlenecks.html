@@ -172,6 +172,16 @@ image: https://assets.seobotai.com/cdn-cgi/image/quality=75,w=1536,h=1024/stealt
 <p>A notorious example is the 2017 Equifax breach, where an unpatched vulnerability exposed the personal data of over 147 million people. This highlights how neglecting updates doesn’t just pose security risks but can also lead to severe performance issues.</p>
 <p>Beyond vulnerabilities, other threats like malware infections, brute-force login attempts, and unpatched exploits can significantly degrade your VPS. Regular updates to your operating system, server software, and applications not only patch security holes but also improve performance. Optimizing application code, indexing database queries, and implementing caching mechanisms are additional steps that can reduce resource usage and improve response times.</p>
 <p>Routine audits and adjustments to server configurations can help you identify and resolve performance bottlenecks before they escalate. Treating software maintenance as an ongoing task - rather than a one-and-done activity - ensures your VPS stays fast, secure, and reliable for your users.</p>
+<h2 id="how-to-benchmark-a-vps" tabindex="-1">How to benchmark a VPS</h2>
+<p>Benchmark before you blame a bottleneck, and again after each change. Run each test on an idle server, repeat it three times, and compare the same test only.</p>
+<ul>
+<li><strong>CPU:</strong> <code>sysbench cpu run</code> reports events per second for a fixed workload.</li>
+<li><strong>Memory:</strong> <code>sysbench memory run</code> measures memory throughput.</li>
+<li><strong>Disk:</strong> <code>fio</code> tests random and sequential reads and writes. Random 4K reads and writes matter most for databases.</li>
+<li><strong>Network:</strong> <code>iperf3 -c SERVER</code> measures throughput to a server you control.</li>
+<li><strong>Whole system:</strong> UnixBench runs a set of CPU, file and process tests and reports one combined index.</li>
+</ul>
+<p>A VPS benchmark shows what the server can do at that moment. Keep the results with the date, plan and operating system, so you can compare them after an upgrade.</p>
 <h2 id="how-to-fix-and-prevent-performance-problems" tabindex="-1" class="sb h2-sbb-cls">How to Fix and Prevent Performance Problems</h2>
 <p>Addressing performance bottlenecks and staying ahead with proactive upgrades and consistent monitoring can save you from costly VPS downtime. Delaying action could be expensive - the average cost of unplanned IT downtime reached $14,056 per minute and spiked to $23,750 for large organizations in 2024. Research indicates that <strong>60% of downtime can be avoided</strong> with regular monitoring and maintenance.</p>
 <h3 id="upgrading-and-tuning-your-resources" tabindex="-1">Upgrading and Tuning Your Resources</h3>
