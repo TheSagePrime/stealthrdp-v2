@@ -515,30 +515,12 @@ body {
 }
 
 .srv3-footer-bottom-main,
-.srv3-footer-bottom-note {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 28px;
-  align-items: center;
-}
-
 .srv3-footer-bottom-main {
   min-height: 62px;
 }
 
-.srv3-footer-bottom-note {
-  min-height: 46px;
-  border-top: 1px solid color-mix(in srgb, var(--border-divider) 68%, transparent);
-  font-size: 0.625rem;
-}
-
 .srv3-footer-copyright {
   justify-self: start;
-}
-
-.srv3-footer-credit {
-  justify-self: end;
-  text-align: right;
 }
 
 .srv3-footer-legal {
@@ -3721,20 +3703,9 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   }
 
   .srv3-footer-bottom-main,
-  .srv3-footer-bottom-note {
-    grid-template-columns: 1fr;
-    gap: 8px;
-    align-items: start;
-  }
-
   .srv3-footer-bottom-main {
     min-height: 0;
     padding: 14px 0;
-  }
-
-  .srv3-footer-bottom-note {
-    min-height: 0;
-    padding: 10px 0 14px;
   }
 
   .srv3-footer-legal {
@@ -3742,11 +3713,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
     justify-content: flex-start;
     gap: 6px 14px;
     white-space: normal;
-  }
-
-  .srv3-footer-credit {
-    justify-self: start;
-    text-align: left;
   }
 }
 
@@ -3826,14 +3792,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 
   .srv3-footer-bottom-main {
     padding: 12px 0;
-  }
-
-  .srv3-footer-bottom-note {
-    padding: 8px 0 12px;
-  }
-
-  .srv3-footer-bottom-note > span:first-child {
-    display: none;
   }
 }
 
@@ -5095,13 +5053,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   }
 
   .srv3-footer-bottom-main,
-  .srv3-footer-bottom-note {
-    grid-template-columns: 1fr !important;
-    gap: 8px;
-    padding-block: 14px;
-  }
-
-  .srv3-footer-credit,
   .srv3-footer-legal {
     justify-self: start;
     text-align: left;
@@ -5837,22 +5788,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   }
 
   /* Keep required artwork attribution, remove redundant billing copy. */
-  .srv3-footer-bottom-note {
-    display: block !important;
-    min-height: 0 !important;
-    padding: 7px 0 10px !important;
-    border-top: 1px solid color-mix(in srgb, var(--border-divider) 68%, transparent);
-  }
-
-  .srv3-footer-bottom-note > span:first-child {
-    display: none !important;
-  }
-
-  .srv3-footer-credit {
-    justify-self: start !important;
-    text-align: left !important;
-    font-size: 0.5625rem;
-  }
 }
 
 @media (max-width: 420px) {

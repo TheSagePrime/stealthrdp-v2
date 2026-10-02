@@ -1,35 +1,36 @@
 {
-  "source": "Wikimedia Commons",
+  "source": "Wikimedia Commons and Simple Icons (see each record)",
   "usage": "Nominative use in a supported-operating-system list. Not modified except where noted.",
   "verified": "sha1 compared against the Commons original at download time",
-  "attribution": "Linux Tux artwork by Larry Ewing, CC BY-SA 3.0, via Wikimedia Commons.",
   "assets": {
-    "almalinux.svg": "File:AlmaLinux Icon Logo.svg",
-    "centos.svg": "File:CentOS Linux color logo (2020).svg",
+    "almalinux.svg": "Simple Icons: AlmaLinux",
+    "centos.svg": "Simple Icons: CentOS",
     "debian.svg": "File:Openlogo-debianV2.svg",
     "fedora.svg": "File:Fedora icon (2021).svg",
-    "linux.svg": "File:Tux-simple.svg",
+    "linux.svg": "Simple Icons: Linux",
     "ubuntu.svg": "File:UbuntuCoF.svg",
     "windows.svg": "File:Windows 11 start button icon.svg"
   },
   "records": [
     {
       "file": "almalinux.svg",
-      "commonsFile": "File:AlmaLinux Icon Logo.svg",
-      "page": "https://commons.wikimedia.org/wiki/File:AlmaLinux_Icon_Logo.svg",
-      "licence": "CC BY-SA 4.0",
-      "artist": "AlmaLinux OS Foundation",
-      "attributionRequired": true,
-      "sha1": "adffadc926f2c6c934b3ec565bc479f76ff9fae0"
+      "source": "Simple Icons (path from @icons-pack/react-simple-icons)",
+      "page": "https://simpleicons.org/",
+      "licence": "CC0 1.0",
+      "artist": "Simple Icons contributors",
+      "attributionRequired": false,
+      "fill": "#000000, the Simple Icons brand colour",
+      "replaces": "File:AlmaLinux Icon Logo.svg (CC BY-SA 4.0, needed visible credit; replaced 2026-10-02)"
     },
     {
       "file": "centos.svg",
-      "commonsFile": "File:CentOS Linux color logo (2020).svg",
-      "page": "https://commons.wikimedia.org/wiki/File:CentOS_Linux_color_logo_(2020).svg",
-      "licence": "CC BY-SA 4.0",
-      "artist": "CentOS Project",
-      "attributionRequired": true,
-      "sha1": "9def2298904226a3dce9279865e50546aa0c19d3"
+      "source": "Simple Icons (path from @icons-pack/react-simple-icons)",
+      "page": "https://simpleicons.org/",
+      "licence": "CC0 1.0",
+      "artist": "Simple Icons contributors",
+      "attributionRequired": false,
+      "fill": "#262577, the Simple Icons brand colour",
+      "replaces": "File:CentOS Linux color logo (2020).svg (CC BY-SA 4.0, needed visible credit; replaced 2026-10-02)"
     },
     {
       "file": "debian.svg",
@@ -51,13 +52,13 @@
     },
     {
       "file": "linux.svg",
-      "commonsFile": "File:Tux-simple.svg",
-      "page": "https://commons.wikimedia.org/wiki/File:Tux-simple.svg",
-      "licence": "Attribution (CC BY-SA 3.0)",
-      "artist": "Larry Ewing",
-      "attributionRequired": true,
-      "sha1": "8770ac68243a39dbf43a1f5d37983232c7814823",
-      "replaces": "File:Linux tux circle logo.svg (reduced penguin-face emblem; replaced 2026-09-25)"
+      "source": "Simple Icons (path from @icons-pack/react-simple-icons)",
+      "page": "https://simpleicons.org/",
+      "licence": "CC0 1.0",
+      "artist": "Simple Icons contributors",
+      "attributionRequired": false,
+      "fill": "#000000; the Simple Icons brand colour #FCC624 is unreadable on white",
+      "replaces": "File:Tux-simple.svg (Attribution (CC BY-SA 3.0), needed visible credit; replaced 2026-10-02)"
     },
     {
       "file": "ubuntu.svg",
