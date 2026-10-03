@@ -14,7 +14,7 @@ alternative identity provider. Every customer API denies requests without a vali
 
 ## Citadel customer boundary
 
-- `src/features/citadel/{session,http,upstream,projection,operations}.ts` are server-only.
+- `src/features/citadel/{session,http,upstream,projection,operations,validation}.ts` are server-only.
 - A future WHMCS OIDC callback must validate authorization code + S256 PKCE, state, nonce, signed ID
   token issuer/audience/expiry, and verified email before minting a user-scoped Citadel credential.
   It must verify the minted principal via `/api/v1/auth/me` before invoking `sealSession`.
@@ -32,7 +32,11 @@ alternative identity provider. Every customer API denies requests without a vali
 - Browser calls are restricted to explicit customer endpoint/method allowlists. No admin proxy,
   browser-supplied bearer credentials, tenant-override headers or arbitrary upstream query exists.
   Upstream redirects are rejected, requests time out after eight seconds, and responses are bounded
-  to 1 MiB. Display projection drops unknown fields, credential fields, HTML and log query strings.
+  to 1 MiB. Display projection drops unknown fields, credentials, webhook URLs and log query strings. Branding
+  HTML is returned only as escaped editor text and never executed. Mutation bodies use strict,
+  bounded schemas; filters are reconstructed from per-operation allowlists. Nested schedule, webhook
+  and key identifiers must belong to the current customer collection. Fleet-wide bans/unlock remain
+  unavailable. Partial upstream changes return a safe failure rather than claiming full success.
 - Errors never include upstream response bodies or credentials. Responses use private/no-store,
   noindex and no-referrer headers. Customer routes are excluded from robots and sitemap output.
 - Non-production environments cannot contact the production Citadel origin. They require a separate

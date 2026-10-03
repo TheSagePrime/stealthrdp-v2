@@ -32,16 +32,20 @@ noindex, no-referrer and private/no-store, robots-disallowed, and never added to
 checks CSRF for mutations, revalidates the user and their organisation with Citadel, checks domain
 membership, then forwards only an allowlisted customer operation using the customer's credential.
 It does not forward the platform key or arbitrary browser-supplied paths, headers, bodies or queries.
-Only safe display projections are returned to the browser. There is no local customer database.
+Only allowlisted display and editing DTOs are returned to the browser. There is no local customer database.
 
 The handoff's User schema has one current organisation per user, and no customer organisation
 listing/switching endpoint. The UI therefore exposes that verified organisation only. It must never
 enumerate the fleet-wide admin organisation endpoint to populate a customer selector.
 
-The offline OpenAPI omits most resource and mutation payload schemas. The initial interface reads
-domains, protection and delivery settings, service, traffic, notifications, team and key metadata.
-It supports checked connection refresh, origin-health probe, protection-default restoration and
-domain removal. Other settings remain read-only until actual request/response contracts are supplied.
+The OpenAPI omits most payload schemas. Read-only live API and signed-in customer-portal inspection
+confirmed the data fields and control bodies; strict validators now support domain/origin edits,
+protection policy, incident/schedule configuration, cache, speed limits, branding, email alerts,
+webhooks and key revocation. Traffic charts, filters and pagination use validated query fields.
+Nested resource identifiers must be present in the current customer collection before mutation.
+Fleet-wide bans/unlock, identity/team changes, key creation and organisation switching remain
+unavailable. Branding is edited as escaped text without executing HTML or expanding CSP.
+See `docs/citadel-dashboard.md` for the verified scope, staging checks and scheduler limitation.
 
 ## Stack
 

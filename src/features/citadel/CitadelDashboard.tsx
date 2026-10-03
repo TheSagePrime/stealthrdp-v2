@@ -22,10 +22,13 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Dialog } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Pill } from '@/components/ui/pill';
+import { Select } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Tabs } from '@/components/ui/tabs';
 import { accountResources, domainResources } from './catalog';
 import styles from './CitadelDashboard.module.css';
+import { SettingsEditor } from './SettingsEditor';
+import { TrafficPanel } from './TrafficPanel';
 
 class DashboardError extends Error {
   constructor(
@@ -63,13 +66,17 @@ function Fields({ fields }: { fields: DisplayField[] }) {
   );
 }
 
-function ResourcePanel({ title, endpoint, onExpired }: { title: string; endpoint: string; onExpired: () => void }) {
+function ResourcePanel({ title, endpoint, resource, session, onExpired }: { title: string; endpoint: string; resource: string; session: SessionView; onExpired: () => void }) {
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
   const [result, setResult] = useState<ResourceView | null>(null);
   const [error, setError] = useState('');
   const [revision, setRevision] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [filters, setFilters] = useState<Record<string, string>>({});
+  const [page, setPage] = useState(1);
+  const paginated = ['logs', 'events'].includes(resource);
+  const queryString = new URLSearchParams({ ...Object.fromEntries(Object.entries(filters).filter(([, value]) => value)), ...(paginated ? { page: String(page), pageSize: '25' } : {}) }).toString();
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -90,7 +97,7 @@ function ResourcePanel({ title, endpoint, onExpired }: { title: string; endpoint
     const controller = new AbortController();
     setLoading(true);
     setError('');
-    api<ResourceView>(endpoint, { signal: controller.signal })
+    api<ResourceView>(`${endpoint}${queryString ? `?${queryString}` : ''}`, { signal: controller.signal })
       .then(value => setResult(value))
       .catch((failure: unknown) => {
         if (controller.signal.aborted) {
@@ -107,7 +114,7 @@ function ResourcePanel({ title, endpoint, onExpired }: { title: string; endpoint
         }
       });
     return () => controller.abort();
-  }, [endpoint, visible, revision, onExpired]);
+  }, [endpoint, visible, revision, onExpired, queryString]);
 
   return (
     <Card className={styles.resource} ref={ref}>
@@ -126,6 +133,47 @@ function ResourcePanel({ title, endpoint, onExpired }: { title: string; endpoint
         </div>
       </CardHeader>
       <CardContent aria-busy={loading}>
+        {resource === 'logs'
+          ? (
+              <form
+                className={styles.formGroup}
+                onSubmit={(event) => {
+                  event.preventDefault();
+                  const data = new FormData(event.currentTarget);
+                  setPage(1);
+                  setFilters(Object.fromEntries([...data].map(([key, value]) => [key, String(value)])));
+                }}
+              >
+                <label>
+                  Log type
+                  <Select name="type">
+                    <option value="">All types</option>
+                    {['access', 'security', 'error'].map(type => <option key={type} value={type}>{type}</option>)}
+                  </Select>
+                </label>
+                <label>
+                  HTTP method
+                  <Input name="method" maxLength={10} />
+                </label>
+                <label>
+                  Status code
+                  <Input name="status" pattern="[1-5][0-9]{2}" />
+                </label>
+                <label>
+                  Search logs
+                  <Input name="search" maxLength={200} />
+                </label>
+                <label>
+                  Log order
+                  <Select name="sort">
+                    <option value="desc">Newest first</option>
+                    <option value="asc">Oldest first</option>
+                  </Select>
+                </label>
+                <Button type="submit" variant="outline" disabled={loading}>Apply log filters</Button>
+              </form>
+            )
+          : null}
         {error ? <p role="alert">{error}</p> : null}
         {loading && !result
           ? (
@@ -143,6 +191,33 @@ function ResourcePanel({ title, endpoint, onExpired }: { title: string; endpoint
                     <Fields fields={row} />
                   </div>
                 ))}
+                {paginated
+                  ? (
+                      <div className={styles.actions}>
+                        <Button variant="outline" disabled={loading || page <= 1} onClick={() => setPage(value => value - 1)}>Previous page</Button>
+                        <span>
+                          Page
+                          {page}
+                          {' '}
+                          of
+                          {String(result.data?.totalPages || 1)}
+                        </span>
+                        <Button variant="outline" disabled={loading || page >= Number(result.data?.totalPages || 1)} onClick={() => setPage(value => value + 1)}>Next page</Button>
+                      </div>
+                    )
+                  : null}
+                <SettingsEditor
+                  key={`${endpoint}-${revision}`}
+                  resource={resource}
+                  result={result}
+                  endpoint={endpoint}
+                  session={session}
+                  onExpired={onExpired}
+                  onSaved={() => {
+                    setResult(null);
+                    setRevision(value => value + 1);
+                  }}
+                />
                 {!result.fields.length && !result.rows.length
                   ? (
                       <p className={styles.muted}>No details are available yet.</p>
@@ -400,6 +475,8 @@ export function CitadelDashboard() {
         <ResourcePanel
           key={`${resource.path}-${revision}`}
           title={resource.title}
+          resource={resource.path}
+          session={session}
           endpoint={`${prefix}/${resource.path}`}
           onExpired={onExpired}
         />
@@ -510,6 +587,27 @@ export function CitadelDashboard() {
                       </Card>
                     ))}
                   </div>
+                  {view === 'domains'
+                    ? (
+                        <Card>
+                          <CardHeader><CardTitle>Add a website</CardTitle></CardHeader>
+                          <CardContent>
+                            <SettingsEditor
+                              resource="domains"
+                              result={{ fields: [], rows: [] }}
+                              endpoint={`${base}/domains`}
+                              session={session}
+                              onExpired={onExpired}
+                              onSaved={() => {
+                                setRevision(value => value + 1);
+                                void refreshDomains().catch(() => setMessage('Refresh to load your new domain.'));
+                              }}
+                              key={`add-${revision}`}
+                            />
+                          </CardContent>
+                        </Card>
+                      )
+                    : null}
                   <div className={styles.toolbar}>
                     <h2>Your domains</h2>
                     <Input
@@ -528,7 +626,8 @@ export function CitadelDashboard() {
                             <TableHeader>
                               <TableRow>
                                 <TableHead>Domain</TableHead>
-                                <TableHead>Connection</TableHead>
+                                <TableHead>Protection</TableHead>
+                                <TableHead>Cloudflare DNS</TableHead>
                                 <TableHead>Manage</TableHead>
                               </TableRow>
                             </TableHeader>
@@ -543,6 +642,7 @@ export function CitadelDashboard() {
                                   <TableCell>
                                     <DomainStatus status={domain.status} />
                                   </TableCell>
+                                  <TableCell>{domain.dnsStatus ? <DomainStatus status={domain.dnsStatus} /> : 'Unknown'}</TableCell>
                                   <TableCell>
                                     <Button
                                       variant="outline"
@@ -590,8 +690,8 @@ export function CitadelDashboard() {
                     <Button variant="outline" disabled={!canWrite || busy} onClick={() => perform('refresh')}>
                       Check connection
                     </Button>
-                    <Button variant="outline" disabled={!canWrite || busy} onClick={() => perform('origin-check')}>
-                      Check origin health
+                    <Button variant="outline" disabled={!canWrite || busy} onClick={() => perform('protection')}>
+                      Repair protection
                     </Button>
                     <Button
                       variant="outline"
@@ -607,8 +707,7 @@ export function CitadelDashboard() {
                   <div className={styles.notice}>
                     <Info size={20} aria-hidden="true" />
                     <span>
-                      Settings are view-only in this version.
-                      {!canWrite ? ' Your organisation role also limits you to viewing.' : ''}
+                      {canWrite ? 'Review and confirm changes before applying them. Each tab contains the settings for this domain.' : 'Your organisation role limits you to viewing settings.'}
                     </span>
                   </div>
                   <Tabs
@@ -629,13 +728,7 @@ export function CitadelDashboard() {
                 </>
               )
             : null}
-          {view === 'traffic'
-            ? resourcePanels(
-                accountResources.filter(
-                  resource => resource.path.startsWith('analytics') || resource.path === 'service/bandwidth',
-                ),
-              )
-            : null}
+          {view === 'traffic' ? <TrafficPanel base={base} domains={domains} onExpired={onExpired} /> : null}
           {view === 'settings'
             ? (
                 <>
@@ -644,7 +737,7 @@ export function CitadelDashboard() {
                     <span>
                       Account creation and billing are managed in the
                       <a href="https://dash.stealthrdp.com">StealthRDP Client Area</a>
-                      . These settings are view-only.
+                      . Identity and team access remain managed there. Organisation email alerts can be edited below.
                     </span>
                   </div>
                   {resourcePanels(

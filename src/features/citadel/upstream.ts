@@ -34,15 +34,16 @@ function apiOrigin(): string {
   return url.origin;
 }
 
-export async function citadelRequest(bearer: string, path: string, method = 'GET'): Promise<unknown> {
+export async function citadelRequest(bearer: string, path: string, method = 'GET', body?: unknown, query?: URLSearchParams): Promise<unknown> {
   if (!/^\/api\/v1\/[a-z0-9/-]+$/.test(path)) {
     throw new CitadelError(400, 'Unsupported Citadel operation.');
   }
   let response: Response;
   try {
-    response = await fetch(`${apiOrigin()}${path}`, {
+    response = await fetch(`${apiOrigin()}${path}${query?.size ? `?${query}` : ''}`, {
       method,
-      headers: { Authorization: `Bearer ${bearer}`, Accept: 'application/json' },
+      headers: { Authorization: `Bearer ${bearer}`, Accept: 'application/json', ...(body === undefined ? {} : { 'Content-Type': 'application/json' }) },
+      ...(body === undefined ? {} : { body: JSON.stringify(body) }),
       cache: 'no-store',
       redirect: 'error',
       signal: AbortSignal.timeout(8000),
@@ -87,8 +88,15 @@ export async function citadelRequest(bearer: string, path: string, method = 'GET
       }
       chunks.push(value);
     }
-    return JSON.parse(Buffer.concat(chunks).toString('utf8'));
-  } catch {
+    const result: unknown = JSON.parse(Buffer.concat(chunks).toString('utf8'));
+    if (response.status === 207 || (result && typeof result === 'object' && 'ok' in result && result.ok === false)) {
+      throw new CitadelError(409, 'Citadel applied only part of this change. Refresh the settings before trying again.');
+    }
+    return result;
+  } catch (error) {
+    if (error instanceof CitadelError) {
+      throw error;
+    }
     throw new CitadelError(502, 'Citadel returned an invalid response.');
   } finally {
     reader.releaseLock();

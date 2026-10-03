@@ -1,6 +1,7 @@
 export type DisplayField = { label: string; value: string };
-export type ResourceView = { fields: DisplayField[]; rows: DisplayField[][] };
-export type DomainView = { id: string; name: string; status: string };
+export type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+export type ResourceView = { fields: DisplayField[]; rows: DisplayField[][]; data?: Record<string, JsonValue> };
+export type DomainView = { id: string; name: string; status: string; dnsStatus?: string; connectionMode?: string };
 export type SessionView = {
   email: string;
   role: 'owner' | 'admin' | 'member';
@@ -9,7 +10,7 @@ export type SessionView = {
   expiresAt: number;
 };
 
-// Paths and methods come from the handoff. No account/auth/key mutation is proxied.
+// Customer paths come from the v1 handoff; identity and credential creation stay outside this boundary.
 export const accountResources = [
   { path: 'service', title: 'Your service' },
   { path: 'service/bandwidth', title: 'Bandwidth' },
@@ -30,7 +31,6 @@ export const domainResources = [
   { path: 'blocklists', title: 'Managed blocklists', group: 'security' },
   { path: 'incident', title: 'Incident protection', group: 'security' },
   { path: 'schedules', title: 'Protection schedules', group: 'security' },
-  { path: 'bans', title: 'Temporary bans', group: 'security' },
   { path: 'origin', title: 'Origin hosts', group: 'origin' },
   { path: 'backend', title: 'Backend summary', group: 'origin' },
   { path: 'cache', title: 'Cache settings', group: 'delivery' },
@@ -40,4 +40,4 @@ export const domainResources = [
   { path: 'logs', title: 'Request logs', group: 'activity' },
 ] as const;
 
-export type DomainAction = 'refresh' | 'origin-check' | 'restore-defaults' | 'remove';
+export type DomainAction = 'refresh' | 'protection' | 'restore-defaults' | 'remove';

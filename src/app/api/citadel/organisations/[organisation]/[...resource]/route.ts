@@ -9,4 +9,4 @@ async function handle(request: Request, context: Context): Promise<Response> {
   return handleOperation(request, organisation, resource);
 }
 
-export { handle as DELETE, handle as GET, handle as POST };
+export { handle as DELETE, handle as GET, handle as PATCH, handle as POST, handle as PUT };

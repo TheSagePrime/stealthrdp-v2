@@ -12,38 +12,63 @@ confirmation. Registration and billing link to `dash.stealthrdp.com`.
 issue a cookie or mint a Citadel credential. There are no runtime mock records or bypass switches.
 UI tests use synthetic records in `example.invalid` exclusively through mocked browser requests.
 
-## Offline contract limitations
+## Verified API surface and remaining limits
 
-The supplied OpenAPI defines the User schema, paths and methods, but almost every resource omits
-response schemas and mutation request bodies. The handoff and platform credential remain outside
-the repository. No guessed setting-write payload is shipped.
+The handoff v1 OpenAPI determines the supported paths and methods. The live v1 YAML matched the
+supplied YAML byte-for-byte. With the owner's approval, read-only checks inspected the documented
+organisation's resources and the signed-in customer portal. Request bodies were recovered from its
+public frontend modules; they were parsed as source, not executed. No live mutation, token mint or
+customer credential extraction was performed. The handoff, platform credential, downloaded modules
+and private example identifiers remain outside git. Tests contain synthetic `example.invalid` data.
 
-The server currently accepts a domain array or `{ domains: [...] }` with a UUID `id`, hostname
-(`domain`, `hostname` or `name`), optional `status`, and optional `organization_id`. These adapters
-need confirmation against an isolated test account before production access. A malformed shape
-fails closed with 502; an explicit foreign organisation fails with 403.
+`validation.ts` supplies strict, bounded schemas for those confirmed mutation bodies. Unsupported
+properties, duplicate/unknown queries and oversized bodies fail closed. It constructs policy update
+flags on the server and checks presets against the current API options. Origin hostnames must be
+part of the selected domain; backend URLs cannot contain credentials, paths, queries or fragments.
+Origin health checks must select an enabled saved origin. Schedule, webhook and key removals require
+membership in the current domain/customer collection. Customer API calls never include a platform
+key or organisation override header. A partial upstream result is a 409 with a safe message, rather
+than an unconditional success.
 
-Other resources are projected through an explicit display-key allowlist. Unknown properties do not
-reach the client. This is intentionally a conservative read adapter, not a complete response schema.
-Confirmed response schemas must replace/extend it to ensure every live setting and metric renders.
-Pagination, time-range filters, complete log searching and traffic charts need those contracts too;
-the current reader bounds domain lists to 500 and display records to 50.
-
-| Operation | Current support |
+| Customer feature | Implemented |
 | --- | --- |
-| Domain list, status and local search | Read adapter; verify live response schema |
-| Domain settings, origin/backend, events/logs | Allowlisted GET projections |
-| Service/bandwidth, analytics/live, notifications, team, webhooks, key metadata | Allowlisted GET projections |
-| Domain connection refresh | Checked POST `/api/v1/domains/{id}/refresh` |
-| Origin health probe | Checked POST `/api/v1/domains/{id}/origin-check` |
-| Restore protection defaults | Checked POST `/api/v1/domains/{id}/restore-defaults` with UI confirmation |
-| Remove domain | Checked DELETE `/api/v1/domains/{id}` with UI confirmation |
-| Add domain, PATCH settings, origin edits, cache purge, incident/schedule/ban changes | Deferred pending payload schemas |
-| Branding edits, notifications, team, webhooks and API-key creation/revocation | Deferred pending payload schemas and role rules |
-| Customer organisation switching | Deferred; User has one organisation and no customer membership-list endpoint |
+| Domains | List/search, separate protection and Cloudflare DNS status, add/remove, connection refresh, protection repair |
+| Origins and health | Edit hostname/backend URL/TLS via URL scheme/enabled state, add hosts, remove subdomain origin, probe saved enabled host, backend summary |
+| Protection | Challenge and auto baseline, rate preset, blocklists and supported soft mode, lockdown allowlist |
+| Policy | IP/CIDR/path/agent allowlists, session/ban/auto thresholds, path rules, country/ASN lists, HTTP methods and per-method overrides |
+| Incident and schedules | Start/clear timed incident; create/edit/enable/disable through edit form/remove schedules |
+| Delivery | Cache configuration and full/prefix purge, ordered outbound speed rules, branding shell text editor and per-page default restoration |
+| Traffic/activity | Own-domain scope and time windows, historical traffic/bandwidth charts, 15-second proxy snapshots, log filters and event/log pagination |
+| Organisation | Service/entitlements, notification feed, email-event/BCC settings, team metadata, webhook add/remove, key metadata/revocation |
 
-The four shipped mutation handlers send no body; confirm these bodyless operations against the
-test account before enabling customer access. The API refuses all extra browser queries and bodies.
+Read projections are explicit allowlists. Editable values are returned in a separate bounded DTO.
+Unknown fields, credentials and upstream errors are excluded; log query strings are dropped.
+Webhook URLs are never returned. Branding HTML is escaped text in a code block/textarea: no iframe,
+`srcDoc`, `dangerouslySetInnerHTML`, local execution or CSP relaxation. Metadata limits are 500
+domains and 50 display rows; paginated logs/events use 25 rows, historical chart data allows up to
+1,000 points within the 1 MiB upstream response cap.
+
+Deliberate exclusions:
+
+- **WHMCS login and token minting remain deferred.** The authenticated existing portal confirms the
+  current WHMCS integration; it does not verify the required website OIDC authorization-code/PKCE
+  flow. There is no password fallback or runtime session issuer.
+- Fleet-wide temporary bans and unlock are not exposed, including the ban reader. The existing UI
+  explicitly describes proxy-wide bans; the supplied API cannot demonstrate their tenant isolation.
+- Identity/email changes and team invitations/promotions are not exposed. Identity remains WHMCS-owned.
+  API-key creation is omitted; it would require a separate one-time credential delivery design.
+- Organisation switching is omitted: the User schema identifies one current organisation, with no
+  customer membership-list API. No admin fleet endpoint is used to discover customers.
+- Schedule management stores configuration only. The existing portal says schedules are applied
+  while that portal runs; this implementation does not add a background scheduler or silently run
+  protection writes. Confirm operator-side execution before relying on unattended schedules.
+- Protection presets can be set individually. The existing portal's composite profiles perform
+  several non-atomic calls; this UI avoids presenting those as one transactional change.
+
+All mutations require an explicit dashboard confirmation and an owner/admin role. Before enabling
+customer login, exercise each write in an isolated staging organisation using minted user-scoped
+credentials, including plan limits, role denial, tenant isolation, revocation and incident reversion.
+The production inspection established shapes and UI semantics, not successful production writes.
 
 ## Future WHMCS callback
 
@@ -84,7 +109,7 @@ test account before enabling customer access. The API refuses all extra browser 
 - The CSP is unchanged. Keep browser fetches same-origin; Citadel connections happen on the server.
 - Marketing trackers are outside the customer layout. Use full document navigation for any future
   marketing-to-customer entry link so previously loaded marketing scripts cannot follow navigation.
-- Before enabling login, verify the supported actions and response adapters with an isolated test
+- Before enabling login, verify the confirmed actions and response adapters with an isolated test
   organisation, including denied foreign-organisation/domain IDs and a revoked-session retry.
 
 This PR is an integration foundation, not an enabled production customer portal. Merge/deployment
