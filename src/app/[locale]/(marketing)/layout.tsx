@@ -1,7 +1,9 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 import { SiteFooter } from '@/components/site/SiteFooter';
 import { SiteHeader } from '@/components/site/SiteHeader';
+import { TrackingConsent } from '@/components/site/TrackingConsent';
 import { WhatsAppMark } from '@/components/site/WhatsAppMark';
+import { isProductionDeployEnv, resolveDeployEnv } from '@/libs/seo/env';
 
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -20,6 +22,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
         <WhatsAppMark size={34} />
         <span>WhatsApp support</span>
       </a>
+      {isProductionDeployEnv(resolveDeployEnv()) ? <TrackingConsent /> : null}
     </div>
   );
 }

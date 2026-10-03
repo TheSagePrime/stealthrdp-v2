@@ -6,7 +6,44 @@ The machine-readable source of truth is `security.contract.json`; `pnpm check:se
 
 ## Public-by-default surface
 
-Pages are public. There are no logins or customer data on this site; WHMCS holds them.
+Marketing pages are public. WHMCS remains the only customer identity source.
+
+The explicitly requested Citadel customer subsystem at `/citadel/app` is separate from marketing.
+WHMCS login is deferred: there is no session-issuing route, credential form, development bypass or
+alternative identity provider. Every customer API denies requests without a valid encrypted session.
+
+## Citadel customer boundary
+
+- `src/features/citadel/{session,http,upstream,projection,operations,validation}.ts` are server-only.
+- A future WHMCS OIDC callback must validate authorization code + S256 PKCE, state, nonce, signed ID
+  token issuer/audience/expiry, and verified email before minting a user-scoped Citadel credential.
+  It must verify the minted principal via `/api/v1/auth/me` before invoking `sealSession`.
+- The cookie is AES-256-GCM encrypted, bound to its name with authenticated additional data, and
+  uses a random IV, httpOnly, Secure, SameSite=Lax, host-only scope and a maximum 15-minute lifetime.
+  `SESSION_SECRET` must contain a base64-encoded 32-byte random key. No token enters a browser DTO.
+- Each data request rechecks the Citadel user principal and organisation via the customer credential.
+  The browser organisation identifier must equal the verified principal's organisation. Domain
+  reads and changes also require membership in that organisation's current user-scoped domain list.
+- Mutations require matching Origin and an unpredictable session-bound CSRF header. Members are
+  read-only; logout is permitted for every authenticated role. Logout revokes the Citadel session
+  where reachable and always clears the local cookie after a valid CSRF check.
+- Routes use the existing bounded process-local rate limiter (aggregate and subject buckets).
+  Distributed deployment limits also require a platform/WAF rule before customer access is enabled.
+- Browser calls are restricted to explicit customer endpoint/method allowlists. No admin proxy,
+  browser-supplied bearer credentials, tenant-override headers or arbitrary upstream query exists.
+  Upstream redirects are rejected, requests time out after eight seconds, and responses are bounded
+  to 1 MiB. Display projection drops unknown fields, credentials, webhook URLs and log query strings. Branding
+  HTML is returned only as escaped editor text and never executed. Mutation bodies use strict,
+  bounded schemas; filters are reconstructed from per-operation allowlists. Nested schedule, webhook
+  and key identifiers must belong to the current customer collection. Fleet-wide bans/unlock remain
+  unavailable. Partial upstream changes return a safe failure rather than claiming full success.
+- Errors never include upstream response bodies or credentials. Responses use private/no-store,
+  noindex and no-referrer headers. Customer routes are excluded from robots and sitemap output.
+- Non-production environments cannot contact the production Citadel origin. They require a separate
+  HTTPS `CITADEL_API_BASE_URL`; production platform keys must not be configured in preview/local.
+- Marketing tracking is mounted only in the marketing layout, outside the customer layout.
+- The confidential handoff and its key are not committed. The remaining integration constraints
+  and unsupported payloads are recorded in `docs/citadel-dashboard.md`.
 
 There is no default identity provider, tenant model, or billing identity. Do not reintroduce those concepts casually.
 

@@ -15,7 +15,37 @@ It is built on the Sage Prime public-web foundation and is separate from the bil
 | UptimeRobot | uptime monitoring (read through `/api/uptime`) | public status page |
 | Server-side GTM | analytics and ad tags (GA4, Google Ads, Meta pixel, Yandex verification) | `sgtm.stealthrdp.com` |
 
-The website links into WHMCS. It does not copy WHMCS authentication, billing or dashboard logic.
+The website links into WHMCS for authentication, registration, billing and account management.
+The owner explicitly requested a separate Citadel customer interface at `/citadel/app`.
+Its session-issuing WHMCS OIDC callback is deferred; the current interface has no usable customer
+login or alternative identity source. Implementation and integration constraints are in
+`docs/citadel-dashboard.md`.
+
+## Citadel customer interface
+
+`src/app/[locale]/(customer)/citadel/app` renders the customer shell separately from the marketing
+layout. Existing shadcn primitives and design tokens are reused. Marketing trackers, footer and
+floating support controls are not mounted in this subsystem. The route and API responses are
+noindex, no-referrer and private/no-store, robots-disallowed, and never added to the public sitemap.
+
+`src/app/api/citadel/` is a server-owned boundary. It decrypts the short-lived host-only session,
+checks CSRF for mutations, revalidates the user and their organisation with Citadel, checks domain
+membership, then forwards only an allowlisted customer operation using the customer's credential.
+It does not forward the platform key or arbitrary browser-supplied paths, headers, bodies or queries.
+Only allowlisted display and editing DTOs are returned to the browser. There is no local customer database.
+
+The handoff's User schema has one current organisation per user, and no customer organisation
+listing/switching endpoint. The UI therefore exposes that verified organisation only. It must never
+enumerate the fleet-wide admin organisation endpoint to populate a customer selector.
+
+The OpenAPI omits most payload schemas. Read-only live API and signed-in customer-portal inspection
+confirmed the data fields and control bodies; strict validators now support domain/origin edits,
+protection policy, incident/schedule configuration, cache, speed limits, branding, email alerts,
+webhooks and key revocation. Traffic charts, filters and pagination use validated query fields.
+Nested resource identifiers must be present in the current customer collection before mutation.
+Fleet-wide bans/unlock, identity/team changes, key creation and organisation switching remain
+unavailable. Branding is edited as escaped text without executing HTML or expanding CSP.
+See `docs/citadel-dashboard.md` for the verified scope, staging checks and scheduler limitation.
 
 ## Stack
 
