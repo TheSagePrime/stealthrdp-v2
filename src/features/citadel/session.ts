@@ -5,7 +5,13 @@ import { z } from 'zod';
 import 'server-only';
 
 export const SESSION_COOKIE = '__Host-citadel-session';
+export const LOGIN_COOKIE = '__Host-citadel-login';
 const LIFETIME_SECONDS = 15 * 60;
+/** A sign-in transaction only has to survive one round trip through the identity provider. */
+export const LOGIN_LIFETIME_SECONDS = 10 * 60;
+const MAX_SEALED_LENGTH = 3800;
+const MIN_PACKED_LENGTH = 29;
+
 const sessionSchema = z
   .object({
     version: z.literal(1),
@@ -20,7 +26,16 @@ const sessionSchema = z
 
 export type CitadelSession = z.infer<typeof sessionSchema>;
 
-function encryptionKey(): Buffer {
+type SealedPayload = { issuedAt: number; expiresAt: number };
+
+type EnvelopeOptions<T extends SealedPayload> = {
+  cookie: string;
+  purpose: string;
+  schema: z.ZodType<T>;
+  lifetimeSeconds: number;
+};
+
+function masterKey(): Buffer {
   const secret = process.env.SESSION_SECRET;
   if (!secret || !/^[A-Z0-9+/]{43}=$/i.test(secret)) {
     throw new Error('SESSION_SECRET must be a base64-encoded 32-byte random key');
@@ -29,61 +44,95 @@ function encryptionKey(): Buffer {
   if (decoded.length !== 32) {
     throw new Error('Invalid session configuration');
   }
-  return Buffer.from(hkdfSync('sha256', decoded, 'citadel-session-v1', SESSION_COOKIE, 32));
+  return decoded;
 }
 
-/** Server integration seam for the future verified WHMCS OIDC callback. No HTTP issuer exists. */
-export function sealSession(identity: { bearer: string; email: string; subject: string; expiresAt: number }): {
-  value: string;
-  maxAge: number;
-} {
+/* One key per purpose and cookie name, so a sealed value can only be opened as what it is. */
+function derivedKey(purpose: string, cookie: string): Buffer {
+  return Buffer.from(hkdfSync('sha256', masterKey(), purpose, cookie, 32));
+}
+
+/** Seals a bounded JSON payload with AES-256-GCM. The cookie name is the authenticated data. */
+export function sealEnvelope<T extends SealedPayload>(options: EnvelopeOptions<T>, payload: T): { value: string; maxAge: number } {
   const now = Math.floor(Date.now() / 1000);
-  const expiresAt = Math.min(identity.expiresAt, now + LIFETIME_SECONDS);
+  const expiresAt = Math.min(payload.expiresAt, now + options.lifetimeSeconds);
   if (expiresAt <= now) {
     throw new Error('Expired Citadel session');
   }
-  const session = sessionSchema.parse({
-    ...identity,
-    version: 1,
-    csrf: randomBytes(32).toString('hex'),
-    issuedAt: now,
-    expiresAt,
-  });
+  const sealed = options.schema.parse({ ...payload, issuedAt: now, expiresAt });
   const iv = randomBytes(12);
-  const cipher = createCipheriv('aes-256-gcm', encryptionKey(), iv);
-  cipher.setAAD(Buffer.from(SESSION_COOKIE));
-  const encrypted = Buffer.concat([cipher.update(JSON.stringify(session), 'utf8'), cipher.final()]);
+  const cipher = createCipheriv('aes-256-gcm', derivedKey(options.purpose, options.cookie), iv);
+  cipher.setAAD(Buffer.from(options.cookie));
+  const encrypted = Buffer.concat([cipher.update(JSON.stringify(sealed), 'utf8'), cipher.final()]);
   const value = Buffer.concat([iv, cipher.getAuthTag(), encrypted]).toString('base64url');
-  if (value.length > 3800) {
+  if (value.length > MAX_SEALED_LENGTH) {
     throw new Error('Citadel session exceeds cookie size limit');
   }
   return { value, maxAge: expiresAt - now };
 }
 
-export function openSession(value: string | undefined): CitadelSession | null {
-  if (!value || value.length > 3800 || !/^[\w-]+$/.test(value)) {
+/** Opens a sealed payload. Tampering, truncation, expiry and a rotated secret all return null. */
+export function openEnvelope<T extends SealedPayload>(options: EnvelopeOptions<T>, value: string | undefined): T | null {
+  if (!value || value.length > MAX_SEALED_LENGTH || !/^[\w-]+$/.test(value)) {
     return null;
   }
   try {
     const packed = Buffer.from(value, 'base64url');
-    if (packed.length < 29) {
+    if (packed.length < MIN_PACKED_LENGTH) {
       return null;
     }
-    const decipher = createDecipheriv('aes-256-gcm', encryptionKey(), packed.subarray(0, 12));
-    decipher.setAAD(Buffer.from(SESSION_COOKIE));
+    const decipher = createDecipheriv('aes-256-gcm', derivedKey(options.purpose, options.cookie), packed.subarray(0, 12));
+    decipher.setAAD(Buffer.from(options.cookie));
     decipher.setAuthTag(packed.subarray(12, 28));
     const plaintext = Buffer.concat([decipher.update(packed.subarray(28)), decipher.final()]);
-    const session = sessionSchema.parse(JSON.parse(plaintext.toString('utf8')));
+    const payload = options.schema.parse(JSON.parse(plaintext.toString('utf8')));
     const now = Math.floor(Date.now() / 1000);
-    if (session.issuedAt > now || session.expiresAt <= now || session.expiresAt - session.issuedAt > LIFETIME_SECONDS) {
+    if (payload.issuedAt > now || payload.expiresAt <= now || payload.expiresAt - payload.issuedAt > options.lifetimeSeconds) {
       return null;
     }
-    return session;
+    return payload;
   } catch {
     return null;
   }
 }
 
+const SESSION_ENVELOPE: EnvelopeOptions<CitadelSession> = {
+  cookie: SESSION_COOKIE,
+  purpose: 'citadel-session-v1',
+  schema: sessionSchema,
+  lifetimeSeconds: LIFETIME_SECONDS,
+};
+
+/**
+ * The only way a Citadel customer credential enters a browser cookie. The verified
+ * WHMCS OIDC callback in `login.ts` is the only caller.
+ */
+export function sealSession(identity: { bearer: string; email: string; subject: string; expiresAt: number }): {
+  value: string;
+  maxAge: number;
+} {
+  const now = Math.floor(Date.now() / 1000);
+  return sealEnvelope(SESSION_ENVELOPE, {
+    ...identity,
+    version: 1,
+    csrf: randomBytes(32).toString('hex'),
+    issuedAt: now,
+    expiresAt: Math.min(identity.expiresAt, now + LIFETIME_SECONDS),
+  });
+}
+
+export function openSession(value: string | undefined): CitadelSession | null {
+  return openEnvelope(SESSION_ENVELOPE, value);
+}
+
+function cookieHeader(name: string, value: string, maxAge: number): string {
+  return `${name}=${value}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${maxAge}`;
+}
+
 export function sessionCookie(value: string, maxAge: number): string {
-  return `${SESSION_COOKIE}=${value}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${maxAge}`;
+  return cookieHeader(SESSION_COOKIE, value, maxAge);
+}
+
+export function loginCookie(value: string, maxAge: number): string {
+  return cookieHeader(LOGIN_COOKIE, value, maxAge);
 }

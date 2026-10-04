@@ -17,9 +17,10 @@ It is built on the Sage Prime public-web foundation and is separate from the bil
 
 The website links into WHMCS for authentication, registration, billing and account management.
 The owner explicitly requested a separate Citadel customer interface at `/citadel/app`.
-Its session-issuing WHMCS OIDC callback is deferred; the current interface has no usable customer
-login or alternative identity source. Implementation and integration constraints are in
-`docs/citadel-dashboard.md`.
+WHMCS OpenID Connect owns its identity: `/api/citadel/auth/start` and `/api/citadel/auth/callback`
+implement the authorization-code + S256 PKCE flow and the callback is the only session-issuing
+route. Live PKCE, nonce and verified-email support is not yet confirmed against the provider, so the
+sign-in fails closed and the open gates are recorded in `docs/citadel-dashboard.md`.
 
 ## Citadel customer interface
 
@@ -33,6 +34,13 @@ checks CSRF for mutations, revalidates the user and their organisation with Cita
 membership, then forwards only an allowlisted customer operation using the customer's credential.
 It does not forward the platform key or arbitrary browser-supplied paths, headers, bodies or queries.
 Only allowlisted display and editing DTOs are returned to the browser. There is no local customer database.
+
+`src/app/api/citadel/auth/{start,callback}` are the only identity routes. Start seals a single-use
+state, nonce and S256 PKCE verifier into a host-only transaction cookie and redirects to WHMCS.
+Callback validates the transaction, verifies the signed ID token and the email, mints a user-scoped
+credential with the operator-only platform key on the server, verifies it against `/api/v1/auth/me`,
+and only then seals the 15-minute session. Failed attempts return one public failure code. See
+`docs/citadel-dashboard.md` for the flow and the open live-test gates.
 
 The handoff's User schema has one current organisation per user, and no customer organisation
 listing/switching endpoint. The UI therefore exposes that verified organisation only. It must never

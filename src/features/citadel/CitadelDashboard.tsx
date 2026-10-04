@@ -274,7 +274,24 @@ function DashboardHeader({ onLogout, busy }: { onLogout?: () => void; busy?: boo
   );
 }
 
-function AccessGate({ expired = false }: { expired?: boolean }) {
+/* Public failure codes from the WHMCS callback; the full list stays server-side. */
+const signInNotices: Record<string, string> = {
+  unconfigured: 'Customer sign-in is not available on this site yet.',
+  denied: 'StealthRDP sign-in was cancelled before it finished.',
+  expired: 'That sign-in link has expired. Start the sign-in again.',
+  unavailable: 'StealthRDP sign-in is temporarily unavailable. Try again in a moment.',
+  state: 'That sign-in link no longer matches this browser. Start again.',
+  nonce: 'That sign-in link no longer matches this browser. Start again.',
+  email_unverified: 'Your StealthRDP email address is not verified yet. Verify it in the Client Area, then try again.',
+};
+
+function failureNotice(code: string): string {
+  return signInNotices[code] ?? 'StealthRDP could not verify your account for Citadel. Try again or contact support.';
+}
+
+function AccessGate({ expired = false, failureCode = '' }: { expired?: boolean; failureCode?: string }) {
+  const notice = failureCode === '' ? '' : failureNotice(failureCode);
+
   return (
     <div className={styles.shell}>
       <DashboardHeader />
@@ -290,18 +307,29 @@ function AccessGate({ expired = false }: { expired?: boolean }) {
             </div>
             <CardDescription>
               {expired
-                ? 'Your session has ended. Customer sign-in will be available here once setup is complete.'
-                : 'Customer access is being prepared. You’ll use your existing StealthRDP account to sign in here.'}
+                ? 'Your session has ended. Sign in again with your StealthRDP account.'
+                : 'Sign in with the StealthRDP account you already use. Your protection settings are the same account.'}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <p>Registration and account management stay in the StealthRDP Client Area.</p>
             <div className={styles.actions}>
-              <Button disabled>StealthRDP sign-in coming soon</Button>
+              {/* Sign-in must be a full document navigation, so this is deliberately a plain link. */}
+              <Button asChild>
+                {/* eslint-disable-next-line next/no-html-link-for-pages -- a full document navigation is required here, not client-side routing */}
+                <a href="/api/citadel/auth/start">Sign in with StealthRDP</a>
+              </Button>
               <Button asChild variant="outline">
                 <a href="https://dash.stealthrdp.com">Open Client Area</a>
               </Button>
             </div>
+            {notice
+              ? (
+                  <p className={styles.message} role="alert">
+                    {notice}
+                  </p>
+                )
+              : null}
           </CardContent>
         </Card>
       </main>
@@ -316,7 +344,7 @@ const navigation: { id: string; label: string; icon: Icon }[] = [
   { id: 'settings', label: 'Settings', icon: SlidersHorizontal },
 ];
 
-export function CitadelDashboard() {
+export function CitadelDashboard({ failureCode = '' }: { failureCode?: string }) {
   const [session, setSession] = useState<SessionView | null>(null);
   const [domains, setDomains] = useState<DomainView[]>([]);
   const [view, setView] = useState('overview');
@@ -455,7 +483,7 @@ export function CitadelDashboard() {
   if (!session) {
     return (
       <>
-        <AccessGate expired={expired} />
+        <AccessGate expired={expired} failureCode={failureCode} />
         {failed
           ? (
               <p className={styles.message} role="alert">

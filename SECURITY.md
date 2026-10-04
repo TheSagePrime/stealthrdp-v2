@@ -9,15 +9,31 @@ The machine-readable source of truth is `security.contract.json`; `pnpm check:se
 Marketing pages are public. WHMCS remains the only customer identity source.
 
 The explicitly requested Citadel customer subsystem at `/citadel/app` is separate from marketing.
-WHMCS login is deferred: there is no session-issuing route, credential form, development bypass or
-alternative identity provider. Every customer API denies requests without a valid encrypted session.
+WHMCS owns identity: `/api/citadel/auth/start` and `/api/citadel/auth/callback` implement the
+OpenID Connect authorization-code + S256 PKCE flow, and the callback is the only session-issuing
+route. There is no credential form, development bypass or alternative identity provider. Every
+customer API denies requests without a valid encrypted session.
 
 ## Citadel customer boundary
 
-- `src/features/citadel/{session,http,upstream,projection,operations,validation}.ts` are server-only.
-- A future WHMCS OIDC callback must validate authorization code + S256 PKCE, state, nonce, signed ID
-  token issuer/audience/expiry, and verified email before minting a user-scoped Citadel credential.
-  It must verify the minted principal via `/api/v1/auth/me` before invoking `sealSession`.
+- `src/features/citadel/{session,http,upstream,projection,operations,validation,login,whmcs,oidc}.ts`
+  are server-only.
+- The WHMCS OIDC callback validates the authorization code, the S256 PKCE verifier, state, nonce,
+  the signed ID token issuer/audience/lifetime/signature, and a verified email before minting a
+  user-scoped Citadel credential. It verifies the minted principal via `/api/v1/auth/me`, requires
+  the same verified email, and revokes the credential if any later step fails.
+- Unknown provider support fails closed. The live WHMCS metadata advertises no nonce, no email or
+  `email_verified` claim, no response type and no PKCE method, so sign-in stays unverified until the
+  gates in `docs/citadel-dashboard.md` pass. A missing nonce, an unverified email or a missing
+  credential expiry refuses the sign-in instead of downgrading the check.
+- Sign-in start refuses a cross-site navigation, each state is single-use, and both sign-in routes
+  are rate limited by the existing bounded helper. The sealed sign-in transaction and the session
+  cookie use separate derived keys, are bound to their own cookie names as authenticated data, and
+  cannot be replayed as each other.
+- The Citadel platform key is operator-only and server-only. Outside production it is refused unless
+  `CITADEL_PLATFORM_KEY_ALLOW_NON_PRODUCTION=true` is set with a separate staging key, and the
+  production Citadel hostname is rejected outside production. No platform key, WHMCS client secret,
+  exchanged token or minted credential is logged, returned to a browser or placed in a URL.
 - The cookie is AES-256-GCM encrypted, bound to its name with authenticated additional data, and
   uses a random IV, httpOnly, Secure, SameSite=Lax, host-only scope and a maximum 15-minute lifetime.
   `SESSION_SECRET` must contain a base64-encoded 32-byte random key. No token enters a browser DTO.
