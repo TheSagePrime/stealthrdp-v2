@@ -8,6 +8,7 @@
     "directory": "src/content/guides",
     "format": "html-front-matter",
     "url_template": "/blog/{slug}.html",
+    "dates_file": "src/content/page-dates.json",
     "registry": {
       "mode": "derived"
     }

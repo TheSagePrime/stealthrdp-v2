@@ -5,6 +5,7 @@ import { RelatedArticles } from '@/components/site/RelatedArticles';
 import { ResourceDocsLayout } from '@/components/site/ResourceDocsLayout';
 import { articleHeadings, TrustedArticleBody } from '@/components/site/TrustedArticleBody';
 import { rdpVpsGuide } from '@/content/rdp-vps';
+import { formatUpdated, pageUpdated } from '@/lib/stealth/page-dates';
 import { guidePageTree } from '@/lib/stealth/resource-tree';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
 import { createPageMetadata } from '@/libs/seo/metadata';
@@ -18,6 +19,7 @@ export const metadata: Metadata = createPageMetadata({
 
 export default function RdpVpsPage() {
   const canonical = 'https://www.stealthrdp.com/rdp-vps';
+  const dateModified = pageUpdated('/rdp-vps') ?? rdpVpsGuide.datePublished;
   const toc = articleHeadings(rdpVpsGuide.html).map(heading => ({
     title: heading.text,
     url: `#${heading.id}`,
@@ -33,13 +35,12 @@ export default function RdpVpsPage() {
       'headline': rdpVpsGuide.h1,
       'description': rdpVpsGuide.description,
       'inLanguage': 'en-US',
-      'dateModified': rdpVpsGuide.dateModified,
+      dateModified,
       'mainEntity': { '@id': `${canonical}#article` },
       'author': {
-        '@type': 'Person',
+        '@type': 'Organization',
         'name': rdpVpsGuide.author,
         'url': 'https://www.stealthrdp.com/about',
-        '@id': 'https://www.stealthrdp.com/about#person',
       },
     },
     {
@@ -50,13 +51,12 @@ export default function RdpVpsPage() {
       'headline': rdpVpsGuide.h1,
       'description': rdpVpsGuide.description,
       'datePublished': rdpVpsGuide.datePublished,
-      'dateModified': rdpVpsGuide.dateModified,
+      dateModified,
       'inLanguage': 'en-US',
       'wordCount': 1735,
       'mainEntityOfPage': { '@id': canonical },
       'author': {
-        '@type': 'Person',
-        '@id': 'https://www.stealthrdp.com/about#person',
+        '@type': 'Organization',
         'name': rdpVpsGuide.author,
         'url': 'https://www.stealthrdp.com/about',
       },
@@ -91,7 +91,8 @@ export default function RdpVpsPage() {
         <DocsTitle>{rdpVpsGuide.h1}</DocsTitle>
         <DocsDescription>{rdpVpsGuide.description}</DocsDescription>
         <div className="sr-docs-article-meta">
-          <span>{`Published ${rdpVpsGuide.datePublished}`}</span>
+          <span>{`Published ${formatUpdated(rdpVpsGuide.datePublished)}`}</span>
+          {dateModified > rdpVpsGuide.datePublished ? <span>{`Updated ${formatUpdated(dateModified)}`}</span> : null}
           <span>{rdpVpsGuide.author}</span>
         </div>
         <DocsBody>

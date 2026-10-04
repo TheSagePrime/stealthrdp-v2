@@ -8,6 +8,7 @@ import { DocBody, docHeadings } from '@/components/site/DocBody';
 import { RelatedArticles } from '@/components/site/RelatedArticles';
 import { citadelDocsArticles, docPublicSlug, findCitadelDocByPublicSlug } from '@/lib/stealth/articles';
 import { citadelArticleHref, citadelCollectionForArticle } from '@/lib/stealth/help-center';
+import { formatUpdated, pageUpdated } from '@/lib/stealth/page-dates';
 import { techArticleJsonLd } from '@/lib/stealth/structured-data';
 import { getSeoConfig } from '@/libs/seo/config';
 import { createPageMetadata } from '@/libs/seo/metadata';
@@ -51,6 +52,8 @@ export default async function CitadelDocPage({ params }: { params: Promise<{ slu
     .filter((item): item is (typeof citadelDocsArticles)[number] => Boolean(item))
     .slice(0, 4);
 
+  const updated = pageUpdated(`/citadel/docs/${slug}`);
+
   return (
     <DocsPage toc={toc} tableOfContent={{ style: 'clerk' }}>
       <ProductionJsonLd
@@ -59,14 +62,14 @@ export default async function CitadelDocPage({ params }: { params: Promise<{ slu
           path: `/citadel/docs/${slug}`,
           title: article.title,
           description: article.summary,
-          date: article.date,
+          date: updated ?? article.date,
           section: { name: 'Citadel Docs', path: '/citadel/docs' },
         })}
       />
       <DocsTitle>{article.title}</DocsTitle>
       <DocsDescription>{article.summary}</DocsDescription>
       <div className="sr-docs-article-meta">
-        <span>{`Updated ${article.date}`}</span>
+        <span>{`Updated ${updated ? formatUpdated(updated) : article.date}`}</span>
         {collection ? <span>{collection.title.replace(/^Citadel:\s*/, '')}</span> : null}
       </div>
 

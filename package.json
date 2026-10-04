@@ -46,6 +46,8 @@
     "check:design": "node scripts/check-design-contract.mjs",
     "check:architecture": "run-s check:stack check:design check:seo-contract check:security",
     "check:seo-contract": "node scripts/check-seo-contract.mjs",
+    "page-dates": "node --experimental-loader ./scripts/seo-ts-loader.mjs scripts/page-dates.mjs",
+    "check:page-dates": "node --experimental-loader ./scripts/seo-ts-loader.mjs scripts/page-dates.mjs --check",
     "test:contracts": "node scripts/test-contract-guards.mjs",
     "test:visual": "vitest run --project visual",
     "check:frontend": "run-s check:design storybook:test test:visual",
