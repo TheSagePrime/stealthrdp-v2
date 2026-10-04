@@ -38,10 +38,9 @@ export default function RdpVpsPage() {
       dateModified,
       'mainEntity': { '@id': `${canonical}#article` },
       'author': {
-        '@type': 'Person',
+        '@type': 'Organization',
         'name': rdpVpsGuide.author,
         'url': 'https://www.stealthrdp.com/about',
-        '@id': 'https://www.stealthrdp.com/about#person',
       },
     },
     {
@@ -57,8 +56,7 @@ export default function RdpVpsPage() {
       'wordCount': 1735,
       'mainEntityOfPage': { '@id': canonical },
       'author': {
-        '@type': 'Person',
-        '@id': 'https://www.stealthrdp.com/about#person',
+        '@type': 'Organization',
         'name': rdpVpsGuide.author,
         'url': 'https://www.stealthrdp.com/about',
       },
