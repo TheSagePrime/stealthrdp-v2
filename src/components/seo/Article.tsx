@@ -37,11 +37,23 @@ export function ArticlePublicationMeta({
   article: ArticlePublication;
   label?: string;
 }) {
+  const updated = article.dateModified && article.dateModified > article.datePublished ? article.dateModified : undefined;
   return (
     <p className="seo-article-publication-meta">
-      <span>{label}</span>
-      {' '}
-      <time dateTime={article.datePublished}>{formatPublicationDate(article.datePublished, article.locale)}</time>
+      <span>
+        {label}
+        {' '}
+        <time dateTime={article.datePublished}>{formatPublicationDate(article.datePublished, article.locale)}</time>
+      </span>
+      {updated
+        ? (
+            <span>
+              Updated
+              {' '}
+              <time dateTime={updated}>{formatPublicationDate(updated, article.locale)}</time>
+            </span>
+          )
+        : null}
     </p>
   );
 }

@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { AllLocales } from '@/config/i18n';
 import { resolveSeoSite } from '@/config/seo';
 import { citadelDocPublicPaths, indexableDocPublicPaths } from '@/lib/stealth/articles';
+import { pageUpdated } from '@/lib/stealth/page-dates';
 import { buildArticleSitemapEntries } from '@/libs/seo/articles';
 import { getSeoConfig } from '@/libs/seo/config';
 import { localizedPath } from '@/libs/seo/locale';
@@ -18,11 +19,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...indexableDocPublicPaths,
     ...citadelDocPublicPaths,
   ];
-  const routeEntries = routes.flatMap(route =>
-    AllLocales.map(locale => ({
+  /* lastmod comes from scripts/page-dates.mjs and moves only when a page's words change. */
+  const routeEntries = routes.flatMap((route) => {
+    const lastModified = pageUpdated(route);
+    return AllLocales.map(locale => ({
       url: canonicalUrlForPath(localizedPath(route, locale, config), site, config),
-    })),
-  );
+      ...(lastModified ? { lastModified } : {}),
+    }));
+  });
   const entries = [...routeEntries, ...buildArticleSitemapEntries(config, site)];
   return [...new Map(entries.map(entry => [entry.url, entry])).values()];
 }

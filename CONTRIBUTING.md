@@ -8,6 +8,13 @@ Run `pnpm build` after any recipe. The build runs the SEO pre-build check, the N
 SEO post-build audit; the audit crawls every public page and fails on missing titles, canonicals,
 broken internal links and similar errors.
 
+**Page dates are automatic.** `src/content/page-dates.json` records when the words on each page last
+changed. It feeds the sitemap `lastmod`, `dateModified` in structured data and the "Updated" line on
+guides and docs. The pre-commit hook runs `pnpm page-dates`, which moves a page's date only when its
+text changes, not on markup, class name or formatting edits. CI runs `pnpm check:page-dates` and
+fails when the file is stale; if you committed without the hook, run `pnpm page-dates` and commit
+the file. Never type a date into it, and never change front matter `date` to signal an update.
+
 ---
 
 ## 1. Add a blog guide
@@ -25,7 +32,7 @@ index, structured data and blog list read the folder.
    excerpt: One or two sentences, 70–160 characters. Used as the meta description.
    category: VPS Use Cases
    author: StealthRDP Team
-   date: 2026-10-01 # ISO date
+   date: 2026-10-01 # ISO publication date; updates are dated automatically
    readingTime: 7 # minutes
    sources: # real, live pages only — open each link before you add it
      - title: Page title
@@ -54,7 +61,7 @@ URL: `/docs/<slug>`.
    title: How to do X
    category: Server management # reuse one: Server management, Windows, Web panels,
    # VPN and networking, Terms and policies
-   date: Oct 1, 2026
+   date: Oct 1, 2026 # first publication; updates are dated automatically
    summary: One sentence, used as the meta description.
    relatedSlugs: [] # file names (without .md) of related articles
    ---
@@ -115,6 +122,8 @@ Do not change how plan cards look. Plan-card styles are frozen by the owner.
    - one `<h1>`; sections use `sr-container` for width and gutters.
 2. Add `'/<route>'` to `routes.publicMarketing` in `src/config/seo.ts`. This puts it in the sitemap
    and the SEO audit. A page that must not be indexed goes in `publicUtility` instead.
+   Then list the files its words come from in `marketingSources` in `scripts/page-dates.mjs`, so
+   its sitemap date updates with its content. `pnpm check:page-dates` fails until you do.
 3. Link to it from `src/components/site/SiteHeader.tsx` or `SiteFooter.tsx` if visitors need to find it.
 4. If it is a main page, add it to "Primary pages" in `src/content/llms.md`.
 5. Structured data, if useful: add a helper in `src/lib/stealth/structured-data.ts` and render it with

@@ -7,6 +7,7 @@ import { DocBody, docHeadings } from '@/components/site/DocBody';
 import { RelatedArticles } from '@/components/site/RelatedArticles';
 import { docPublicSlug, findDocByPublicSlug, helpDocsArticles } from '@/lib/stealth/articles';
 import { helpArticleHref, helpCollectionForArticle } from '@/lib/stealth/help-center';
+import { formatUpdated, pageUpdated } from '@/lib/stealth/page-dates';
 import { techArticleJsonLd } from '@/lib/stealth/structured-data';
 import { getSeoConfig } from '@/libs/seo/config';
 import { createPageMetadata } from '@/libs/seo/metadata';
@@ -47,6 +48,8 @@ export default async function DocPageRoute({ params }: { params: Promise<{ slug:
     .filter((item): item is (typeof helpDocsArticles)[number] => Boolean(item))
     .slice(0, 3);
 
+  const updated = pageUpdated(`/docs/${slug}`);
+
   return (
     <DocsPage toc={toc} tableOfContent={{ style: 'clerk' }}>
       <ProductionJsonLd
@@ -55,14 +58,14 @@ export default async function DocPageRoute({ params }: { params: Promise<{ slug:
           path: `/docs/${slug}`,
           title: article.title,
           description: article.summary,
-          date: article.date,
+          date: updated ?? article.date,
           section: { name: 'Help Center', path: '/docs' },
         })}
       />
       <DocsTitle>{article.title}</DocsTitle>
       <DocsDescription>{article.summary}</DocsDescription>
       <div className="sr-docs-article-meta">
-        <span>{`Updated ${article.date}`}</span>
+        <span>{`Updated ${updated ? formatUpdated(updated) : article.date}`}</span>
         {collection ? <span>{collection.title}</span> : null}
       </div>
 
