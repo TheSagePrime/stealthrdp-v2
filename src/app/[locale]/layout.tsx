@@ -3,9 +3,7 @@ import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { DocsRootProvider } from '@/components/site/DocsRootProvider';
-import { TrackingConsent } from '@/components/site/TrackingConsent';
 import { routing } from '@/libs/I18nRouting';
-import { isProductionDeployEnv, resolveDeployEnv } from '@/libs/seo/env';
 import '@/styles/global.css';
 import '@/styles/surfaces.css';
 import '@/styles/stealth.css';
@@ -41,7 +39,6 @@ export default async function RootLayout(props: {
     notFound();
   }
   setRequestLocale(locale);
-  const production = isProductionDeployEnv(resolveDeployEnv());
   return (
     <html lang={locale}>
       <body>
@@ -50,7 +47,6 @@ export default async function RootLayout(props: {
             {props.children}
           </DocsRootProvider>
         </NextIntlClientProvider>
-        {production ? <TrackingConsent /> : null}
       </body>
     </html>
   );

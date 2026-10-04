@@ -235,10 +235,21 @@ export default async function proxy(request: NextRequest) {
   }
 
   if (request.nextUrl.pathname.startsWith('/api/')) {
-    return NextResponse.next();
+    const response = NextResponse.next();
+    return protectCitadelResponse(request, response);
   }
 
-  return withConsentRegion(request, handleI18nRouting(request));
+  return protectCitadelResponse(request, withConsentRegion(request, handleI18nRouting(request)));
+}
+
+function protectCitadelResponse(request: NextRequest, response: NextResponse): NextResponse {
+  if (/^\/(?:en\/)?citadel\/app(?:\/|$)/.test(request.nextUrl.pathname)
+    || /^\/api\/citadel(?:\/|$)/.test(request.nextUrl.pathname)) {
+    response.headers.set('X-Robots-Tag', 'noindex, nofollow, noarchive');
+    response.headers.set('Cache-Control', 'private, no-store');
+    response.headers.set('Referrer-Policy', 'no-referrer');
+  }
+  return response;
 }
 
 export const config = {
