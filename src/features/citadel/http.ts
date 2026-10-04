@@ -9,7 +9,7 @@ import { openSession, SESSION_COOKIE } from './session';
 import { CitadelError, citadelRequest } from './upstream';
 import 'server-only';
 
-const principalSchema = z.object({
+export const citadelPrincipalSchema = z.object({
   user: z.object({
     id: z.uuid(),
     email: z.email(),
@@ -71,7 +71,7 @@ export function sessionForRequest(request: Request, mutation = false) {
 export async function authorize(request: Request, mutation = false) {
   const session = sessionForRequest(request, mutation);
   // Revalidate membership and revocation with the user-scoped credential on EVERY request.
-  const parsed = principalSchema.safeParse(await citadelRequest(session.bearer, '/api/v1/auth/me'));
+  const parsed = citadelPrincipalSchema.safeParse(await citadelRequest(session.bearer, '/api/v1/auth/me'));
   if (!parsed.success) {
     throw new CitadelError(401, 'Your Citadel session could not be verified.');
   }

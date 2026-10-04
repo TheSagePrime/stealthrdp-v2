@@ -7,6 +7,17 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false, nocache: true },
 };
 
-export default function CitadelAppPage() {
-  return <CitadelDashboard />;
+/**
+ * The sign-in callback returns here with one public failure code. It is read on the
+ * server so the notice renders without JavaScript; no credential ever reaches this page.
+ */
+export default async function CitadelAppPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const params = await searchParams;
+  const failureCode = typeof params.citadel_error === 'string' ? params.citadel_error : '';
+
+  return <CitadelDashboard failureCode={failureCode} />;
 }

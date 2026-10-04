@@ -60,11 +60,34 @@ describe('Citadel customer experience', () => {
     await render(<CitadelDashboard />);
 
     await expect.element(page.getByRole('heading', { name: 'Citadel dashboard' })).toBeVisible();
-    expect(page.getByRole('button', { name: 'StealthRDP sign-in coming soon' })).toBeDisabled();
+
+    // Sign-in is a full-document link to the server route: no credential form and no fetch.
+    const signIn = document.querySelector('a[href="/api/citadel/auth/start"]');
+
+    expect(signIn?.textContent).toBe('Sign in with StealthRDP');
     expect(document.querySelector('form')).toBeNull();
     expect(document.querySelector('input')).toBeNull();
     expect(document.body.textContent).not.toContain(identity.email);
     expect(document.querySelector('a[href="https://dash.stealthrdp.com"]')).not.toBeNull();
+    expect(fetchMock.mock.calls.every(call => call[0] === '/api/citadel/session')).toBe(true);
+  });
+
+  it('explains a failed sign-in with the public code only', async () => {
+    fetchMock.mockResolvedValue(Response.json({ error: 'Sign-in unavailable' }, { status: 401 }));
+    await render(<CitadelDashboard failureCode="nonce" />);
+
+    await vi.waitFor(() => expect(document.body.textContent).toContain('That sign-in link no longer matches this browser. Start again.'));
+
+    expect(document.body.textContent).not.toContain(identity.email);
+  });
+
+  it('falls back to one safe notice for an unknown sign-in failure code', async () => {
+    fetchMock.mockResolvedValue(Response.json({ error: 'Sign-in unavailable' }, { status: 401 }));
+    await render(<CitadelDashboard failureCode="upstream-detail-must-not-render" />);
+
+    await vi.waitFor(() => expect(document.body.textContent).toContain('StealthRDP could not verify your account for Citadel.'));
+
+    expect(document.body.textContent).not.toContain('upstream-detail-must-not-render');
   });
 
   it('renders a compact desktop dashboard and searches the customer domain list', async () => {
