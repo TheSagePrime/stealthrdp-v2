@@ -21,8 +21,16 @@ export const cycleLabels: Record<BillingCycle, { full: string; short: string }> 
   biannual: { full: '2-year', short: '2 yr' },
 };
 
-export function checkoutUrl(plan: Plan, cycle: BillingCycle): string {
+/* WHMCS language names. German and Spanish visitors land in a checkout in their language when
+   WHMCS has that language enabled; WHMCS ignores the parameter otherwise. */
+const whmcsLanguages: Record<string, string> = { de: 'german', es: 'spanish' };
+
+export function checkoutUrl(plan: Plan, cycle: BillingCycle, locale = 'en'): string {
   const value = new URL(plan.purchaseUrl);
   value.searchParams.set('billingcycle', billingCycles[cycle]?.urlKey ?? cycle);
+  const language = whmcsLanguages[locale];
+  if (language) {
+    value.searchParams.set('language', language);
+  }
   return value.toString();
 }

@@ -88,8 +88,11 @@ export function osPageJsonLd(input: {
   description: string;
   plans: Plan[];
   questions: ReadonlyArray<readonly [string, string]>;
+  /* German and Spanish pages: the breadcrumb's first step in that language and its home URL. */
+  home?: { name: string; path: string };
 }): Node[] {
   const url = `${input.siteUrl}${input.path}`;
+  const home = input.home ?? { name: 'Home', path: '' };
   return [
     {
       '@context': 'https://schema.org',
@@ -106,7 +109,7 @@ export function osPageJsonLd(input: {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       'itemListElement': [
-        { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': input.siteUrl },
+        { '@type': 'ListItem', 'position': 1, 'name': home.name, 'item': `${input.siteUrl}${home.path}` },
         { '@type': 'ListItem', 'position': 2, 'name': input.name, 'item': url },
       ],
     },

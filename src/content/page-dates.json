@@ -151,6 +151,10 @@
     "updated": "2026-09-27",
     "fingerprint": "bd4d8f0637fab6a9"
   },
+  "/de/windows-vps": {
+    "updated": "2026-10-05",
+    "fingerprint": "2574151a92494657"
+  },
   "/docs/10-ways-to-optimize-your-word-press-website-for-speed": {
     "updated": "2026-10-02",
     "fingerprint": "81beb3da6c2c1196"
@@ -239,17 +243,21 @@
     "updated": "2026-10-02",
     "fingerprint": "7d46b672c7af0437"
   },
+  "/es/windows-vps": {
+    "updated": "2026-10-05",
+    "fingerprint": "2c9340e91c89edfc"
+  },
   "/faq": {
     "updated": "2026-10-02",
     "fingerprint": "72d4248c71701470"
   },
   "/linux-vps": {
     "updated": "2026-10-02",
-    "fingerprint": "6b131da17fbc21ee"
+    "fingerprint": "b60c6b8aec4cdd5c"
   },
   "/plans": {
     "updated": "2026-10-02",
-    "fingerprint": "3da1c8f717f3093b"
+    "fingerprint": "5b4ececf82dfa21d"
   },
   "/privacy": {
     "updated": "2026-10-01",
@@ -265,6 +273,6 @@
   },
   "/windows-vps": {
     "updated": "2026-10-02",
-    "fingerprint": "647b04349a030410"
+    "fingerprint": "5ee1eee62bf77dcf"
   }
 }

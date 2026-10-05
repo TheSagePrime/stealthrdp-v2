@@ -21,8 +21,8 @@ export const AllLocales: SiteLocale[] = I18nConfig.locales.map(locale => locale.
    is written for that market (keyword maps in .sageprime/seo). Everything else stays English-only:
    no hreflang, no sitemap entry and a 404 under the language prefix. */
 const localizedRoutes: Readonly<Record<Exclude<SiteLocale, 'en'>, readonly string[]>> = {
-  de: [],
-  es: [],
+  de: ['/windows-vps'],
+  es: ['/windows-vps'],
 };
 
 export function isSiteLocale(value: string): value is SiteLocale {
