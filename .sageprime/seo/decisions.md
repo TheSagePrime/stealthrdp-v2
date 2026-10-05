@@ -6,10 +6,11 @@ Judgment calls, with the reason, so a later session does not re-argue them. Newe
 
 - **German says "Sie", Spanish (Spain) says "tú"**, the usual register of hosting sites in each market.
 - **Only approved facts.** The owner confirmed every claim on the English site (2026-10-05), so the
-  German and Spanish FAQs carry all English answers plus a GDPR answer. One exception: the English
-  FAQ's fixed billing-cycle discounts (5/10/20/30%) differ from the savings the plan cards show from
-  WHMCS, so `/de/faq` and `/es/faq` point to the saving on each plan instead. The owner should
-  reconcile the English FAQ with the plan data.
+  German and Spanish FAQs carry all English answers plus a GDPR answer.
+- **Billing-cycle savings come from WHMCS.** The English FAQ claimed 5/10/20/30%; the real WHMCS
+  prices (all 65 match `plans.json`) give 4-7/10-13/15-18/25-32% on most plans and less on Starter. The
+  FAQ was rewritten to the real figures and euros (2026-10-05). The German and Spanish FAQs point to
+  the saving each plan shows.
 - **The privacy policy is translated, not rewritten**, and says that the English version is binding.
 - **Product names stay as the product shows them**: Citadel's challenge levels (Off, Cookie, JS,
   Interaction, Auto, Lockdown) and portal sections, plan names, WHMCS button names.
