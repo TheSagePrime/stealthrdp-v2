@@ -52,12 +52,8 @@ export default async function LinuxVpsPage() {
   const money = pricingCopy[locale].money;
   const plans = await getPlans();
   const bronze = plans.filter(plan => plan.name.startsWith('Bronze '));
-  const bronzePrice = locale === 'en'
-    ? `€${(bronze[0]?.pricing.monthly.amount ?? 9.5).toFixed(2)}`
-    : money(bronze[0]?.pricing.monthly.amount ?? 9.5);
   const cheapestPlan = [...plans].sort((a, b) => a.pricing.monthly.amount - b.pricing.monthly.amount)[0];
   const facts = {
-    bronzePrice,
     bronze,
     cheapest: { name: cheapestPlan?.name ?? 'Bronze', price: money(cheapestPlan?.pricing.monthly.amount ?? 9.5) },
   };
