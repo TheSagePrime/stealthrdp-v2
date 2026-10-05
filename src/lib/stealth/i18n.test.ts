@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { routeLocales } from '@/config/i18n';
 import { defaultSeoConfig } from '@/config/seo';
 import { hreflangAlternates } from '@/libs/seo/locale';
-import { formatEuro, languageVersions, localeHref, logicalPath } from './i18n';
+import { formatEuro, languageLinks, localeHref, logicalPath } from './i18n';
 
 describe('language helpers', () => {
   it('formats euro prices the way each market writes them', () => {
@@ -24,7 +24,15 @@ describe('language helpers', () => {
     expect(routeLocales(englishOnly)).toEqual(['en']);
     expect(localeHref(englishOnly, 'de')).toBe(englishOnly);
     expect(hreflangAlternates(englishOnly, defaultSeoConfig)).toEqual({});
-    expect(languageVersions(englishOnly)).toHaveLength(1);
+  });
+
+  it('links every language, falling back to its home page where a page is English only', () => {
+    expect(languageLinks('/plans').map(link => link.href)).toEqual(['/plans', '/de/plans', '/es/plans']);
+    expect(languageLinks('/blog/vps-for-trading.html')).toEqual([
+      { locale: 'en', name: 'English', href: '/blog/vps-for-trading.html', exists: true },
+      { locale: 'de', name: 'Deutsch', href: '/de', exists: false },
+      { locale: 'es', name: 'Español', href: '/es', exists: false },
+    ]);
   });
 
   it('leaves external and anchor links alone', () => {

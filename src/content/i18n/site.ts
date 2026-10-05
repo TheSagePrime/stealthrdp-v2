@@ -10,8 +10,6 @@ const en = {
   whatsapp: {
     floatLabel: 'Open StealthRDP WhatsApp support',
     floatText: 'WhatsApp support',
-    chatLabel: 'Chat with StealthRDP support on WhatsApp',
-    hiddenText: 'WhatsApp support',
   },
   header: {
     /* VPS plans are the button at the end of the bar, so they are not repeated here. */
@@ -96,8 +94,6 @@ const de: SiteCopy = {
   whatsapp: {
     floatLabel: 'StealthRDP-Support auf WhatsApp öffnen',
     floatText: 'WhatsApp-Support',
-    chatLabel: 'Mit dem StealthRDP-Support auf WhatsApp chatten',
-    hiddenText: 'WhatsApp-Support',
   },
   header: {
     links: [
@@ -178,8 +174,6 @@ const es: SiteCopy = {
   whatsapp: {
     floatLabel: 'Abrir el soporte de StealthRDP en WhatsApp',
     floatText: 'Soporte por WhatsApp',
-    chatLabel: 'Chatear con el soporte de StealthRDP en WhatsApp',
-    hiddenText: 'Soporte por WhatsApp',
   },
   header: {
     links: [

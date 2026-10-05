@@ -40,13 +40,14 @@ export function logicalPath(pathname: string): { path: string; locale: SiteLocal
   return { path: pathname || '/', locale: I18nConfig.defaultLocale };
 }
 
-/* Every version of a logical path, for a language switcher. */
-export function languageVersions(path: string): { locale: SiteLocale; name: string; href: string }[] {
-  return routeLocales(path).map(locale => ({
-    locale,
-    name: I18nConfig.locales.find(item => item.id === locale)?.name ?? locale,
-    href: localeHref(path, locale),
-  }));
+/* One link per language for the language switch. Where this page has no version in a language,
+   the link goes to that language's home page instead (`exists` is false). */
+export function languageLinks(path: string): { locale: SiteLocale; name: string; href: string; exists: boolean }[] {
+  const published = routeLocales(path);
+  return I18nConfig.locales.map(({ id, name }) => {
+    const exists = published.includes(id);
+    return { locale: id, name, href: localeHref(exists ? path : '/', id), exists };
+  });
 }
 
 const numberLocales: Record<SiteLocale, string> = { en: 'en-US', de: 'de-DE', es: 'es-ES' };
