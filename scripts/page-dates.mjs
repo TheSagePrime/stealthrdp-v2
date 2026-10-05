@@ -34,9 +34,9 @@ const citadelComponents = fs.readdirSync(path.join(root, 'src/components/site/ci
    A new marketing route fails the check until it is listed here or in pagesWithoutDates. */
 const marketingSourcesFor = locale => ({
   '/': [`${marketing}/page.tsx`, 'src/components/site/HomeHero.tsx', 'src/components/site/HomePricing.tsx', 'src/content/plans.json', 'src/content/testimonials.json'],
-  '/plans': [`${marketing}/plans/page.tsx`, ...osPage(locale)],
+  '/plans': [`${marketing}/plans/page.tsx`, ...osPage(locale), copy(locale, 'plans.tsx')],
   '/windows-vps': [`${marketing}/windows-vps/page.tsx`, ...osPage(locale), copy(locale, 'windows-vps.tsx')],
-  '/linux-vps': [`${marketing}/linux-vps/page.tsx`, ...osPage(locale)],
+  '/linux-vps': [`${marketing}/linux-vps/page.tsx`, ...osPage(locale), copy(locale, 'linux-vps.tsx')],
   '/citadel': [`${marketing}/citadel/page.tsx`, ...citadelComponents],
   '/about': [`${marketing}/about/page.tsx`, 'src/components/site/about/AboutMap.tsx', 'src/content/testimonials.json'],
   '/faq': [`${marketing}/faq/page.tsx`, 'src/components/site/FaqExplorer.tsx', 'src/content/faqs.json'],

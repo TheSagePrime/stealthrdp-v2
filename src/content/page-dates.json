@@ -151,6 +151,14 @@
     "updated": "2026-09-27",
     "fingerprint": "bd4d8f0637fab6a9"
   },
+  "/de/linux-vps": {
+    "updated": "2026-10-05",
+    "fingerprint": "c933a7a0b6a47d53"
+  },
+  "/de/plans": {
+    "updated": "2026-10-05",
+    "fingerprint": "e5dedbc4842c098b"
+  },
   "/de/windows-vps": {
     "updated": "2026-10-05",
     "fingerprint": "2574151a92494657"
@@ -243,6 +251,14 @@
     "updated": "2026-10-02",
     "fingerprint": "7d46b672c7af0437"
   },
+  "/es/linux-vps": {
+    "updated": "2026-10-05",
+    "fingerprint": "b8c4e8aa398ab50a"
+  },
+  "/es/plans": {
+    "updated": "2026-10-05",
+    "fingerprint": "9fcd94f36c0de051"
+  },
   "/es/windows-vps": {
     "updated": "2026-10-05",
     "fingerprint": "2c9340e91c89edfc"
@@ -252,12 +268,12 @@
     "fingerprint": "72d4248c71701470"
   },
   "/linux-vps": {
-    "updated": "2026-10-02",
-    "fingerprint": "b60c6b8aec4cdd5c"
+    "updated": "2026-10-05",
+    "fingerprint": "4516303cdad83509"
   },
   "/plans": {
     "updated": "2026-10-02",
-    "fingerprint": "5b4ececf82dfa21d"
+    "fingerprint": "d237771f377cecae"
   },
   "/privacy": {
     "updated": "2026-10-01",

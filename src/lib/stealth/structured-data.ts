@@ -117,11 +117,18 @@ export function osPageJsonLd(input: {
   ];
 }
 
-export function plansJsonLd(siteUrl: string, plans: Plan[]): Node {
+export function plansJsonLd(
+  siteUrl: string,
+  plans: Plan[],
+  words: { listName: string; describe: (plan: Plan) => string } = {
+    listName: 'StealthRDP VPS plans',
+    describe: plan => `${plan.specs.cpu}, ${plan.specs.ram} RAM, ${plan.specs.storage}, ${plan.location} region`,
+  },
+): Node {
   return {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    'name': 'StealthRDP VPS plans',
+    'name': words.listName,
     'itemListElement': plans.map((plan, index) => ({
       '@type': 'ListItem',
       'position': index + 1,
@@ -129,7 +136,7 @@ export function plansJsonLd(siteUrl: string, plans: Plan[]): Node {
         '@type': 'Service',
         'name': plan.name,
         'serviceType': 'VPS hosting',
-        'description': `${plan.specs.cpu}, ${plan.specs.ram} RAM, ${plan.specs.storage}, ${plan.location} region`,
+        'description': words.describe(plan),
         'provider': provider(siteUrl),
         'offers': offer(plan),
       },

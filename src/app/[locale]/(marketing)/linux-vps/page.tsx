@@ -7,18 +7,26 @@ import { LinuxDistros, OsFaq, OsJourney, OsRegions, OsResources, OsSupport } fro
 import { OsSession } from '@/components/site/os/OsSession';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
 import { Button } from '@/components/ui/button';
-import { requirePageLocale } from '@/lib/stealth/i18n-server';
+import { homeCrumb } from '@/content/i18n/home-crumb';
+import { linuxVpsCopy } from '@/content/i18n/linux-vps';
+import { pricingCopy } from '@/content/i18n/pricing';
+import { localeHref } from '@/lib/stealth/i18n';
+import { localizedPageMetadata, requirePageLocale } from '@/lib/stealth/i18n-server';
 import { getPlans } from '@/lib/stealth/live-plans';
 import { osPageJsonLd } from '@/lib/stealth/structured-data';
 import { getSeoConfig } from '@/libs/seo/config';
-import { createPageMetadata } from '@/libs/seo/metadata';
 
-export const metadata: Metadata = createPageMetadata({
-  path: '/linux-vps',
-  title: 'Linux VPS Server Hosting | Ubuntu, Debian | StealthRDP',
-  description: 'Linux VPS servers with full Root access, NVMe storage and Ubuntu, Debian, AlmaLinux or another listed distro. USA and EU regions.',
-  ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
-});
+/* The words of this page are in src/content/i18n/<language>/linux-vps.tsx. */
+
+const ogImage = 'https://www.stealthrdp.com/assets/og-cover.png';
+
+export async function generateMetadata(): Promise<Metadata> {
+  return localizedPageMetadata('/linux-vps', {
+    en: { ...linuxVpsCopy.en.meta, ogImage },
+    de: { ...linuxVpsCopy.de.meta, ogImage },
+    es: { ...linuxVpsCopy.es.meta, ogImage },
+  });
+}
 
 const distros = [
   { name: 'Ubuntu', versions: '18.04 LTS, 20.04 LTS, 22.04 LTS, 24.04 LTS, 26.04 LTS', text: 'Fits many websites, panels, and development stacks.' },
@@ -35,63 +43,63 @@ const distros = [
   { name: 'Oracle Linux', versions: '8, 9', text: 'Use when the stack asks for Oracle Linux.' },
 ];
 
-const questions = [
-  ['What does a Linux VPS server cost?', 'Plans start with Bronze at €9.50/month on the live plans page. Confirm the live price and region at checkout.'],
-  ['Which Linux distributions can I run?', 'AlmaLinux 8, 9, and 10; Alpine Linux 3.15, 3.19, and 3.23; CentOS 7, Stream 8, and Stream 9; Debian 10, 11, 12, and 13; Fedora 37 through 44; FreeBSD 13.2 through 15.0; Rocky Linux 8, 9, and 10; Ubuntu 18.04 LTS, 20.04 LTS, 22.04 LTS, 24.04 LTS, and 26.04 LTS; openSUSE Leap 15; CloudLinux 9; Arch Linux Latest; and Oracle Linux 8 and 9.'],
-  ['Can I get an Ubuntu VPS?', 'Yes. Choose Ubuntu as the operating system at checkout: 18.04 LTS, 20.04 LTS, 22.04 LTS, 24.04 LTS, or 26.04 LTS. You get the VPS with Ubuntu installed and full Root access.'],
-  ['Debian or Ubuntu server: which should I choose?', 'Both run most server software well. Ubuntu LTS is common in tutorials and control-panel guides. Debian stable changes less between releases. If your software documents one of them, choose that one.'],
-  ['Do plans include Root?', 'Yes. The FAQ states that VPS plans include full Root access.'],
-  ['Are USA and EU Linux plans available?', 'Yes. USA plans run in Phoenix, Arizona and EU plans in Amsterdam, Netherlands. Both appear in the public catalog; confirm the region at checkout.'],
-  ['When is it activated?', 'Most servers are live within 60 seconds of payment confirmation. At busy times it can take a few minutes.'],
-  ['How do I get credentials?', 'By email after payment confirmation.'],
-] as const;
-
 /* Stock is read live from WHMCS; see src/lib/stealth/live-plans.ts. Must be a literal: 6 hours. */
 export const revalidate = 21600;
 
 export default async function LinuxVpsPage() {
-  await requirePageLocale('/linux-vps');
+  const locale = await requirePageLocale('/linux-vps');
+  const t = linuxVpsCopy[locale];
+  const money = pricingCopy[locale].money;
   const plans = await getPlans();
   const bronze = plans.filter(plan => plan.name.startsWith('Bronze '));
-  const bronzePrice = `€${(bronze[0]?.pricing.monthly.amount ?? 9.5).toFixed(2)}`;
-  const liveQuestions = questions.map(([question, answer]) => [question, answer.replace('€9.50', bronzePrice)] as const);
+  const bronzePrice = locale === 'en'
+    ? `€${(bronze[0]?.pricing.monthly.amount ?? 9.5).toFixed(2)}`
+    : money(bronze[0]?.pricing.monthly.amount ?? 9.5);
+  const cheapestPlan = [...plans].sort((a, b) => a.pricing.monthly.amount - b.pricing.monthly.amount)[0];
+  const facts = {
+    bronzePrice,
+    bronze,
+    cheapest: { name: cheapestPlan?.name ?? 'Bronze', price: money(cheapestPlan?.pricing.monthly.amount ?? 9.5) },
+  };
+  const liveQuestions = t.questions(facts);
+  const localDistros = distros.map(distro => ({ ...distro, versions: distro.versions.replace('Latest', t.latest) }));
 
   return (
     <div className="srv-page srv-page-os srv-page-linux">
       <ProductionJsonLd
         data={osPageJsonLd({
           siteUrl: getSeoConfig().siteUrl,
-          path: '/linux-vps',
-          name: 'Linux VPS hosting',
-          description: 'Linux VPS hosting with full Root access, a wide choice of distributions, NVMe storage, and USA or EU regions.',
+          path: localeHref('/linux-vps', locale),
+          name: t.jsonLd.name,
+          description: t.jsonLd.description,
           plans,
           questions: liveQuestions,
+          home: homeCrumb(locale),
         })}
       />
       <section className="sr-page-hero sr-os-page-hero">
         <div className="sr-container sr-os-hero-grid">
           <div>
-            <p className="sr-kicker">Linux VPS hosting</p>
+            <p className="sr-kicker">{t.kicker}</p>
             <h1 className="sr-title">
-              Linux VPS server hosting with Root access and a distro
+              {t.title[0]}
               {' '}
-              <span>you can confirm.</span>
+              <span>{t.title[1]}</span>
             </h1>
             <p className="sr-lede">
-              You need a Linux server you can administer as root, in a USA or EU region. That can be Ubuntu, Debian, CentOS,
-              or another listed image, at a price you can verify before you pay.
+              {t.lede}
             </p>
             <div className="sr-actions">
               <Button asChild size="lg">
                 <Link href="#linux-plans">
-                  Compare Linux VPS plans
+                  {t.compareButton}
                   <ArrowRight size={16} />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline"><Link href="#linux-distros">Linux distributions</Link></Button>
+              <Button asChild size="lg" variant="outline"><Link href="#linux-distros">{t.distrosButton}</Link></Button>
             </div>
           </div>
-          <OsSession kind="linux" />
+          <OsSession kind="linux" locale={locale} />
         </div>
       </section>
 
@@ -99,55 +107,34 @@ export default async function LinuxVpsPage() {
         <div className="sr-container">
           <div className="sr-section-head">
             <div>
-              <p className="sr-kicker">Current VPS catalog</p>
+              <p className="sr-kicker">{t.pricing.kicker}</p>
               <h2 className="sr-section-title">
-                Choose your resource level
+                {t.pricing.title}
               </h2>
             </div>
           </div>
-          <PricingExplorer plans={plans} />
+          <PricingExplorer plans={plans} locale={locale} />
         </div>
       </section>
 
-      <OsJourney kind="linux" />
+      <OsJourney kind="linux" locale={locale} />
 
-      <LinuxDistros distros={distros} />
+      <LinuxDistros distros={localDistros} locale={locale} />
 
-      <OsResources plans={plans} kind="linux">
-        <p>
-          {`The current catalog starts with Bronze at ${bronzePrice}/month on the live plans page. Choose Ubuntu, Debian or another listed distribution at checkout.`}
-        </p>
-        <p>
-          {bronze.map(plan => `${plan.name} lists ${plan.specs.cpu}, ${plan.specs.ram} RAM, ${plan.specs.storage}, and ${plan.specs.bandwidth} bandwidth.`).join(' ')}
-          {' '}
-          Confirm the live row before you order. Prices and stock can change.
-        </p>
-        <div className="sr-inline-links">
-          <Link href="/plans#linux-vps">
-            Linux VPS catalog
-            <ArrowRight size={16} />
-          </Link>
-          <Link href="/plans#comparison">
-            Plan comparison
-            <ArrowRight size={16} />
-          </Link>
-        </div>
+      <OsResources plans={plans} kind="linux" locale={locale}>
+        {t.resources(facts)}
       </OsResources>
 
-      <OsRegions plans={plans} kind="linux" />
+      <OsRegions plans={plans} kind="linux" locale={locale} />
 
-      <OsSupport kind="linux" />
+      <OsSupport kind="linux" locale={locale} />
 
       <OsFaq
         kind="linux"
-        title="Linux VPS questions"
+        title={t.faqTitle}
         questions={liveQuestions}
-        other={{
-          title: 'Need Windows instead?',
-          text: 'For familiar Windows software and remote Windows desktop or server access, see Windows VPS hosting.',
-          href: '/windows-vps',
-          label: 'Windows VPS hosting',
-        }}
+        other={t.other}
+        locale={locale}
       />
 
       <section className="sr-section">
@@ -156,18 +143,18 @@ export default async function LinuxVpsPage() {
         "
         >
           <div>
-            <p className="sr-kicker">Linux VPS plans</p>
-            <h2>Compare Linux VPS plans</h2>
-            <p>Check the current plan, region, and displayed price, then confirm Linux and the exact image in checkout.</p>
+            <p className="sr-kicker">{t.cta.kicker}</p>
+            <h2>{t.cta.title}</h2>
+            <p>{t.cta.text}</p>
           </div>
           <div className="sr-actions">
             <Button asChild size="lg">
-              <Link href="/plans#linux-vps">
-                Compare Linux VPS plans
+              <Link href={t.cta.compareHref}>
+                {t.cta.compare}
                 <ArrowRight size={16} />
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline"><Link href="/plans">Continue to checkout</Link></Button>
+            <Button asChild size="lg" variant="outline"><Link href={t.cta.checkoutHref}>{t.cta.checkout}</Link></Button>
           </div>
         </div>
       </section>
