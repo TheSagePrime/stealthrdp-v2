@@ -1,0 +1,339 @@
+{
+ "artifact_type": "keyword_map",
+ "version": 1,
+ "identity": {
+  "project": "stealthrdp",
+  "canonical_domain": "www.stealthrdp.com",
+  "country": "ES",
+  "locale": "es-ES",
+  "url_prefix": "/es",
+  "open_seo": {
+   "project_id": "6ddaa19c-a5a6-410a-a845-3d6dfe4869dc",
+   "location_code": 2724,
+   "language_code": "es"
+  }
+ },
+ "researched_at": "2026-10-05",
+ "sources": [
+  "OpenSEO research_keywords, 10 seeds, es-ES, 2026-10-05",
+  "OpenSEO find_serp_competitors, 20 commercial keywords, 2026-10-05",
+  "OpenSEO get_serp_results, 5 SERPs, depth 10, 2026-10-05"
+ ],
+ "rules": [
+  "One page owns each keyword. Never target the same keyword on two pages.",
+  "Primary keyword: title, H1 or its close variant, first paragraph, meta description.",
+  "Each secondary keyword: one H2 or FAQ question that genuinely answers it, used once or twice in natural copy.",
+  "No keyword lists, hidden text, repeated exact phrases or doorway sections.",
+  "Write the page for this market from the research. Do not translate the English page line by line.",
+  "Product facts come only from PRODUCT_FACTS.md. Plan names, prices and specs come from src/content/plans.json.",
+  "Do not claim 'best'. Words in owner_decision stay out of copy until the owner decides.",
+  "Say plainly that the Windows Server licence is not included (PRODUCT_FACTS: Windows licensing).",
+  "Name the data centres as Amsterdam (EU) and Phoenix (USA). Never imply a Spanish data centre or a Spanish IP ('vps españa' searchers expect one).",
+  "'barato' and 'económico' are the Spanish equivalents of 'cheap' and are held for the owner's decision.",
+  "Write neutral Spanish for Spain. Mexico was researched (5 seeds) and is too small to target separately; in Mexico 'rdp' is mostly a vitamin C medicine brand."
+ ],
+ "pages": [
+  {
+   "page": "/es",
+   "english_page": "/",
+   "primary": "servidor vps",
+   "keywords": [
+    {
+     "keyword": "servidor vps",
+     "volume": 590,
+     "kd": 31,
+     "source": "openseo"
+    },
+    {
+     "keyword": "vps",
+     "volume": 6600,
+     "kd": 53,
+     "source": "openseo"
+    },
+    {
+     "keyword": "hosting vps",
+     "volume": 590,
+     "kd": 30,
+     "source": "openseo"
+    },
+    {
+     "keyword": "vps server",
+     "volume": 480,
+     "kd": 31,
+     "source": "openseo"
+    }
+   ]
+  },
+  {
+   "page": "/es/plans",
+   "english_page": "/plans",
+   "primary": "vps precios",
+   "keywords": [
+    {
+     "keyword": "vps precios",
+     "volume": 110,
+     "kd": 39,
+     "source": "openseo"
+    },
+    {
+     "keyword": "servidor virtual",
+     "volume": 260,
+     "kd": 53,
+     "source": "openseo"
+    },
+    {
+     "keyword": "virtual server hosting",
+     "volume": 590,
+     "kd": 30,
+     "source": "openseo"
+    }
+   ]
+  },
+  {
+   "page": "/es/windows-vps",
+   "english_page": "/windows-vps",
+   "primary": "vps windows",
+   "keywords": [
+    {
+     "keyword": "vps windows",
+     "volume": 320,
+     "kd": 14,
+     "source": "openseo"
+    },
+    {
+     "keyword": "windows vps",
+     "volume": 320,
+     "kd": 2,
+     "source": "openseo"
+    },
+    {
+     "keyword": "servidor windows",
+     "volume": 90,
+     "kd": 8,
+     "source": "openseo"
+    },
+    {
+     "keyword": "vps windows server",
+     "volume": 50,
+     "kd": 1,
+     "source": "openseo"
+    },
+    {
+     "keyword": "windows vps hosting",
+     "volume": 30,
+     "kd": 12,
+     "source": "openseo"
+    }
+   ]
+  },
+  {
+   "page": "/es/linux-vps",
+   "english_page": "/linux-vps",
+   "primary": "vps linux",
+   "keywords": [
+    {
+     "keyword": "vps linux",
+     "volume": 70,
+     "kd": 4,
+     "source": "openseo"
+    }
+   ]
+  },
+  {
+   "page": "/es/rdp-vps",
+   "english_page": "/rdp-vps",
+   "primary": "servidor rdp",
+   "keywords": [
+    {
+     "keyword": "servidor rdp",
+     "volume": 10,
+     "kd": 47,
+     "source": "openseo"
+    }
+   ]
+  },
+  {
+   "page": "/es/vps-hosting-minecraft",
+   "english_page": "/vps-hosting-minecraft",
+   "primary": "minecraft server hosting",
+   "keywords": [
+    {
+     "keyword": "minecraft server hosting",
+     "volume": 1900,
+     "kd": 26,
+     "source": "openseo"
+    },
+    {
+     "keyword": "crear servidor minecraft",
+     "volume": 590,
+     "kd": 10,
+     "source": "openseo"
+    },
+    {
+     "keyword": "comprar servidor minecraft",
+     "volume": 90,
+     "kd": 8,
+     "source": "openseo"
+    },
+    {
+     "keyword": "alquilar servidor minecraft",
+     "volume": 30,
+     "kd": 13,
+     "source": "openseo"
+    }
+   ]
+  },
+  {
+   "page": "/es/citadel",
+   "english_page": "/citadel",
+   "primary": "protección ddos",
+   "keywords": [
+    {
+     "keyword": "protección ddos",
+     "volume": 40,
+     "kd": 57,
+     "source": "openseo"
+    },
+    {
+     "keyword": "ataque ddos definicion",
+     "volume": 30,
+     "kd": null,
+     "source": "openseo"
+    }
+   ]
+  },
+  {
+   "page": "/es/faq",
+   "english_page": "/faq",
+   "primary": null,
+   "keywords": []
+  },
+  {
+   "page": "/es/about",
+   "english_page": "/about",
+   "primary": null,
+   "keywords": []
+  },
+  {
+   "page": "/es/status",
+   "english_page": "/status",
+   "primary": null,
+   "keywords": []
+  },
+  {
+   "page": "/es/privacy",
+   "english_page": "/privacy",
+   "primary": null,
+   "keywords": []
+  },
+  {
+   "page": "/es/docs",
+   "english_page": "/docs",
+   "primary": null,
+   "keywords": []
+  },
+  {
+   "page": "/es/blog",
+   "english_page": "/blog",
+   "primary": null,
+   "keywords": []
+  },
+  {
+   "page": "/es/resources",
+   "english_page": "/resources",
+   "primary": null,
+   "keywords": []
+  },
+  {
+   "page": "/es/citadel/docs",
+   "english_page": "/citadel/docs",
+   "primary": null,
+   "keywords": []
+  }
+ ],
+ "guide_backlog": [
+  {
+   "keyword": "escritorio remoto windows",
+   "volume": 480,
+   "kd": 0,
+   "source": "openseo"
+  },
+  {
+   "keyword": "vps que es",
+   "volume": 720,
+   "kd": 7,
+   "source": "openseo"
+  },
+  {
+   "keyword": "que es un vps",
+   "volume": 480,
+   "kd": 3,
+   "source": "openseo"
+  },
+  {
+   "keyword": "forex vps",
+   "volume": 320,
+   "kd": 19,
+   "source": "openseo"
+  },
+  {
+   "keyword": "vps para trading",
+   "volume": 30,
+   "kd": 0,
+   "source": "openseo"
+  },
+  {
+   "keyword": "escritorio remoto windows 11",
+   "volume": 210,
+   "kd": 0,
+   "source": "openseo"
+  },
+  {
+   "keyword": "habilitar escritorio remoto windows 11",
+   "volume": 110,
+   "kd": 0,
+   "source": "openseo"
+  },
+  {
+   "keyword": "escritorio remoto windows 10",
+   "volume": 170,
+   "kd": 0,
+   "source": "openseo"
+  }
+ ],
+ "owner_decision": {
+  "question": "May localized copy use the local word for cheap?",
+  "keywords": [
+   {
+    "keyword": "vps barato",
+    "volume": 880,
+    "kd": 16,
+    "source": "openseo"
+   },
+   {
+    "keyword": "vps baratos",
+    "volume": 880,
+    "kd": 14,
+    "source": "openseo"
+   },
+   {
+    "keyword": "vps windows barato",
+    "volume": 90,
+    "kd": 8,
+    "source": "openseo"
+   },
+   {
+    "keyword": "servidor vps barato",
+    "volume": 90,
+    "kd": 18,
+    "source": "openseo"
+   },
+   {
+    "keyword": "vps barato españa",
+    "volume": 90,
+    "kd": 36,
+    "source": "openseo"
+   }
+  ]
+ }
+}

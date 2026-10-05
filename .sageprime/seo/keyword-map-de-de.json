@@ -1,0 +1,404 @@
+{
+ "artifact_type": "keyword_map",
+ "version": 1,
+ "identity": {
+  "project": "stealthrdp",
+  "canonical_domain": "www.stealthrdp.com",
+  "country": "DE",
+  "locale": "de-DE",
+  "url_prefix": "/de",
+  "open_seo": {
+   "project_id": "6ddaa19c-a5a6-410a-a845-3d6dfe4869dc",
+   "location_code": 2276,
+   "language_code": "de"
+  }
+ },
+ "researched_at": "2026-10-05",
+ "sources": [
+  "OpenSEO research_keywords, 10 seeds, de-DE, 2026-10-05",
+  "OpenSEO find_serp_competitors, 20 commercial keywords, 2026-10-05",
+  "OpenSEO get_serp_results, 5 SERPs, depth 10, 2026-10-05"
+ ],
+ "rules": [
+  "One page owns each keyword. Never target the same keyword on two pages.",
+  "Primary keyword: title, H1 or its close variant, first paragraph, meta description.",
+  "Each secondary keyword: one H2 or FAQ question that genuinely answers it, used once or twice in natural copy.",
+  "No keyword lists, hidden text, repeated exact phrases or doorway sections.",
+  "Write the page for this market from the research. Do not translate the English page line by line.",
+  "Product facts come only from PRODUCT_FACTS.md. Plan names, prices and specs come from src/content/plans.json.",
+  "Do not claim 'best'. Words in owner_decision stay out of copy until the owner decides.",
+  "Say plainly that the Windows Server licence is not included (PRODUCT_FACTS: Windows licensing). German competitors advertise 'Lizenz inklusive'.",
+  "Name the data centres as Amsterdam (EU) and Phoenix (USA). Never imply a German data centre. Do not write 'DSGVO-konform' until the owner approves that claim.",
+  "'günstig' is the German equivalent of 'cheap' and is held for the owner's decision."
+ ],
+ "pages": [
+  {
+   "page": "/de",
+   "english_page": "/",
+   "primary": "vps server",
+   "keywords": [
+    {
+     "keyword": "vps server",
+     "volume": 2900,
+     "kd": 38,
+     "source": "openseo"
+    },
+    {
+     "keyword": "vps hosting",
+     "volume": 1600,
+     "kd": 0,
+     "source": "openseo"
+    },
+    {
+     "keyword": "virtual private server",
+     "volume": 9900,
+     "kd": 35,
+     "source": "openseo"
+    },
+    {
+     "keyword": "vps anbieter",
+     "volume": 140,
+     "kd": 48,
+     "source": "openseo"
+    }
+   ]
+  },
+  {
+   "page": "/de/plans",
+   "english_page": "/plans",
+   "primary": "vserver mieten",
+   "keywords": [
+    {
+     "keyword": "vserver mieten",
+     "volume": 590,
+     "kd": 46,
+     "source": "openseo"
+    },
+    {
+     "keyword": "vserver",
+     "volume": 1600,
+     "kd": 54,
+     "source": "openseo"
+    },
+    {
+     "keyword": "vps server mieten",
+     "volume": 390,
+     "kd": 57,
+     "source": "openseo"
+    },
+    {
+     "keyword": "virtueller server mieten",
+     "volume": 210,
+     "kd": 60,
+     "source": "openseo"
+    },
+    {
+     "keyword": "cloud server mieten",
+     "volume": 260,
+     "kd": 33,
+     "source": "openseo"
+    }
+   ]
+  },
+  {
+   "page": "/de/windows-vps",
+   "english_page": "/windows-vps",
+   "primary": "windows vserver",
+   "keywords": [
+    {
+     "keyword": "windows vserver",
+     "volume": 2900,
+     "kd": 9,
+     "source": "openseo"
+    },
+    {
+     "keyword": "windows vps",
+     "volume": 880,
+     "kd": 14,
+     "source": "openseo"
+    },
+    {
+     "keyword": "vps server windows",
+     "volume": 880,
+     "kd": 3,
+     "source": "openseo"
+    },
+    {
+     "keyword": "windows server mieten",
+     "volume": 320,
+     "kd": 0,
+     "source": "openseo"
+    },
+    {
+     "keyword": "vps windows server",
+     "volume": 210,
+     "kd": 0,
+     "source": "openseo"
+    }
+   ]
+  },
+  {
+   "page": "/de/linux-vps",
+   "english_page": "/linux-vps",
+   "primary": "linux vps",
+   "keywords": [
+    {
+     "keyword": "linux vps",
+     "volume": 260,
+     "kd": 39,
+     "source": "openseo"
+    },
+    {
+     "keyword": "linux server mieten",
+     "volume": 210,
+     "kd": 27,
+     "source": "openseo"
+    },
+    {
+     "keyword": "linux vserver",
+     "volume": 140,
+     "kd": 35,
+     "source": "openseo"
+    },
+    {
+     "keyword": "root server mieten",
+     "volume": 590,
+     "kd": 0,
+     "source": "openseo"
+    },
+    {
+     "keyword": "kvm server mieten",
+     "volume": 40,
+     "kd": 12,
+     "source": "openseo"
+    }
+   ]
+  },
+  {
+   "page": "/de/rdp-vps",
+   "english_page": "/rdp-vps",
+   "primary": "rdp server",
+   "keywords": [
+    {
+     "keyword": "rdp server",
+     "volume": 170,
+     "kd": 13,
+     "source": "openseo"
+    },
+    {
+     "keyword": "terminal server mieten",
+     "volume": 50,
+     "kd": 0,
+     "source": "openseo"
+    },
+    {
+     "keyword": "rdp server windows",
+     "volume": 50,
+     "kd": 0,
+     "source": "openseo"
+    },
+    {
+     "keyword": "windows remote desktop server",
+     "volume": 50,
+     "kd": 6,
+     "source": "openseo"
+    }
+   ]
+  },
+  {
+   "page": "/de/vps-hosting-minecraft",
+   "english_page": "/vps-hosting-minecraft",
+   "primary": "minecraft server selber hosten",
+   "keywords": [
+    {
+     "keyword": "minecraft server selber hosten",
+     "volume": 320,
+     "kd": 11,
+     "source": "openseo"
+    },
+    {
+     "keyword": "minecraft server mieten",
+     "volume": 5400,
+     "kd": 29,
+     "source": "openseo"
+    },
+    {
+     "keyword": "minecraft root server",
+     "volume": 20,
+     "kd": 55,
+     "source": "openseo"
+    }
+   ]
+  },
+  {
+   "page": "/de/citadel",
+   "english_page": "/citadel",
+   "primary": "ddos schutz",
+   "keywords": [
+    {
+     "keyword": "ddos schutz",
+     "volume": 170,
+     "kd": 1,
+     "source": "openseo"
+    },
+    {
+     "keyword": "ddos protection",
+     "volume": 320,
+     "kd": 25,
+     "source": "openseo"
+    },
+    {
+     "keyword": "ddos-angriff abwehren",
+     "volume": 50,
+     "kd": 8,
+     "source": "openseo"
+    },
+    {
+     "keyword": "ddos mitigation",
+     "volume": 90,
+     "kd": 0,
+     "source": "openseo"
+    }
+   ]
+  },
+  {
+   "page": "/de/faq",
+   "english_page": "/faq",
+   "primary": null,
+   "keywords": []
+  },
+  {
+   "page": "/de/about",
+   "english_page": "/about",
+   "primary": null,
+   "keywords": []
+  },
+  {
+   "page": "/de/status",
+   "english_page": "/status",
+   "primary": null,
+   "keywords": []
+  },
+  {
+   "page": "/de/privacy",
+   "english_page": "/privacy",
+   "primary": null,
+   "keywords": []
+  },
+  {
+   "page": "/de/docs",
+   "english_page": "/docs",
+   "primary": null,
+   "keywords": []
+  },
+  {
+   "page": "/de/blog",
+   "english_page": "/blog",
+   "primary": null,
+   "keywords": []
+  },
+  {
+   "page": "/de/resources",
+   "english_page": "/resources",
+   "primary": null,
+   "keywords": []
+  },
+  {
+   "page": "/de/citadel/docs",
+   "english_page": "/citadel/docs",
+   "primary": null,
+   "keywords": []
+  }
+ ],
+ "guide_backlog": [
+  {
+   "keyword": "forex vps",
+   "volume": 590,
+   "kd": 8,
+   "source": "openseo"
+  },
+  {
+   "keyword": "vps server trading",
+   "volume": 110,
+   "kd": 13,
+   "source": "openseo"
+  },
+  {
+   "keyword": "remotedesktopverbindung",
+   "volume": 2400,
+   "kd": 0,
+   "source": "openseo"
+  },
+  {
+   "keyword": "remote desktop verbindung",
+   "volume": 720,
+   "kd": 0,
+   "source": "openseo"
+  },
+  {
+   "keyword": "remote desktop verbindung einrichten",
+   "volume": 140,
+   "kd": 0,
+   "source": "openseo"
+  },
+  {
+   "keyword": "rdp port ändern",
+   "volume": 70,
+   "kd": 0,
+   "source": "openseo"
+  },
+  {
+   "keyword": "rdp aktivieren windows 11",
+   "volume": 70,
+   "kd": 0,
+   "source": "openseo"
+  },
+  {
+   "keyword": "ubuntu xrdp",
+   "volume": 210,
+   "kd": 0,
+   "source": "openseo"
+  },
+  {
+   "keyword": "windows server 2025 lizenz",
+   "volume": 720,
+   "kd": 0,
+   "source": "openseo"
+  },
+  {
+   "keyword": "ddos-angriff",
+   "volume": 2900,
+   "kd": 0,
+   "source": "openseo"
+  }
+ ],
+ "owner_decision": {
+  "question": "May localized copy use the local word for cheap?",
+  "keywords": [
+   {
+    "keyword": "vserver günstig",
+    "volume": 320,
+    "kd": 48,
+    "source": "openseo"
+   },
+   {
+    "keyword": "vps günstig",
+    "volume": 320,
+    "kd": 44,
+    "source": "openseo"
+   },
+   {
+    "keyword": "günstige vserver",
+    "volume": 320,
+    "kd": 49,
+    "source": "openseo"
+   },
+   {
+    "keyword": "vps server günstig",
+    "volume": 170,
+    "kd": 48,
+    "source": "openseo"
+   }
+  ]
+ }
+}
