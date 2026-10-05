@@ -1,7 +1,7 @@
 {
   "/": {
-    "updated": "2026-10-02",
-    "fingerprint": "03292df78d2c7e41"
+    "updated": "2026-10-05",
+    "fingerprint": "3a3ec12e93025258"
   },
   "/about": {
     "updated": "2026-10-02",
@@ -153,7 +153,7 @@
   },
   "/de": {
     "updated": "2026-10-05",
-    "fingerprint": "e60e82e22ac45563"
+    "fingerprint": "84998e3fb5abf03e"
   },
   "/de/about": {
     "updated": "2026-10-05",
@@ -169,11 +169,11 @@
   },
   "/de/linux-vps": {
     "updated": "2026-10-05",
-    "fingerprint": "c3251162ea9f8330"
+    "fingerprint": "4a80731d74a9f9ac"
   },
   "/de/plans": {
     "updated": "2026-10-05",
-    "fingerprint": "e5dedbc4842c098b"
+    "fingerprint": "baa24f86f0e54db7"
   },
   "/de/privacy": {
     "updated": "2026-10-05",
@@ -181,7 +181,7 @@
   },
   "/de/windows-vps": {
     "updated": "2026-10-05",
-    "fingerprint": "2574151a92494657"
+    "fingerprint": "2184e617c9cb59c8"
   },
   "/docs/10-ways-to-optimize-your-word-press-website-for-speed": {
     "updated": "2026-10-02",
@@ -273,7 +273,7 @@
   },
   "/es": {
     "updated": "2026-10-05",
-    "fingerprint": "c91aa6fe898ff69e"
+    "fingerprint": "6bf5193878767784"
   },
   "/es/about": {
     "updated": "2026-10-05",
@@ -289,11 +289,11 @@
   },
   "/es/linux-vps": {
     "updated": "2026-10-05",
-    "fingerprint": "8ccc0902e03c8f94"
+    "fingerprint": "1fa143f094b17139"
   },
   "/es/plans": {
     "updated": "2026-10-05",
-    "fingerprint": "9fcd94f36c0de051"
+    "fingerprint": "585c6b8ded7093d7"
   },
   "/es/privacy": {
     "updated": "2026-10-05",
@@ -301,7 +301,7 @@
   },
   "/es/windows-vps": {
     "updated": "2026-10-05",
-    "fingerprint": "2c9340e91c89edfc"
+    "fingerprint": "1ba2ff36e43ff4a9"
   },
   "/faq": {
     "updated": "2026-10-05",
@@ -309,11 +309,11 @@
   },
   "/linux-vps": {
     "updated": "2026-10-05",
-    "fingerprint": "f33d745cc1a1a340"
+    "fingerprint": "605369ebb105565f"
   },
   "/plans": {
-    "updated": "2026-10-02",
-    "fingerprint": "d237771f377cecae"
+    "updated": "2026-10-05",
+    "fingerprint": "b620c1a51494deb0"
   },
   "/privacy": {
     "updated": "2026-10-01",
@@ -328,7 +328,7 @@
     "fingerprint": "cd8cc47593061cc4"
   },
   "/windows-vps": {
-    "updated": "2026-10-02",
-    "fingerprint": "5ee1eee62bf77dcf"
+    "updated": "2026-10-05",
+    "fingerprint": "9ac9f7df531e25e2"
   }
 }
