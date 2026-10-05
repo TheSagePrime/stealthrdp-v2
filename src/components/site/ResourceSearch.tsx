@@ -1,6 +1,7 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 'use client';
 
+import type { ResourcesCopy } from '@/content/i18n/resources';
 import type { ResourceEntry } from '@/lib/stealth/resource-index';
 import { Search } from 'lucide-react';
 import Link from 'next/link';
@@ -54,7 +55,7 @@ function snippet(entry: Entry, terms: string[]): string {
   return `${start > 0 ? '…' : ''}${excerpt}…`;
 }
 
-export function ResourceSearch({ placeholder }: { placeholder: string }) {
+export function ResourceSearch({ words }: { words: ResourcesCopy['search'] }) {
   const [query, setQuery] = useState('');
   const [entries, setEntries] = useState<Entry[] | null>(null);
   const [failed, setFailed] = useState(false);
@@ -108,7 +109,7 @@ export function ResourceSearch({ placeholder }: { placeholder: string }) {
 
   return (
     <div className="sr-res-search">
-      <label htmlFor="resource-search" className="sr-visually-hidden">Search resources</label>
+      <label htmlFor="resource-search" className="sr-visually-hidden">{words.label}</label>
       <div className="sr-res-search-field">
         <Search aria-hidden="true" className="sr-res-search-icon" />
         <input
@@ -121,7 +122,7 @@ export function ResourceSearch({ placeholder }: { placeholder: string }) {
             loadIndex();
             setQuery(event.target.value);
           }}
-          placeholder={placeholder}
+          placeholder={words.placeholder}
           autoComplete="off"
         />
         <kbd aria-hidden="true">/</kbd>
@@ -129,9 +130,9 @@ export function ResourceSearch({ placeholder }: { placeholder: string }) {
 
       {active && (
         <div className="sr-res-search-results" aria-live="polite">
-          {failed && <p>Search is unavailable right now. Try again in a moment.</p>}
-          {!failed && !entries && <p>Loading search…</p>}
-          {entries && matches.length === 0 && <p>No matching resources. Try a broader phrase.</p>}
+          {failed && <p>{words.unavailable}</p>}
+          {!failed && !entries && <p>{words.loading}</p>}
+          {entries && matches.length === 0 && <p>{words.empty}</p>}
           {matches.length > 0 && (
             <ul>
               {matches.map(({ entry, snippet: text }) => (

@@ -1,5 +1,8 @@
+import type { SiteLocale } from '@/config/i18n';
+import { resourcesCopy } from '@/content/i18n/resources';
 import { articlePath, blogArticles, citadelDocsArticles, docPublicSlug, helpDocsArticles } from '@/lib/stealth/articles';
 import { articlesForCollection, citadelArticleHref, citadelCollections } from '@/lib/stealth/help-center';
+import { localeHref } from '@/lib/stealth/i18n';
 
 type Entry = { category: string; title: string; url: string };
 
@@ -79,13 +82,20 @@ export const citadelPageTree = {
   ],
 };
 
-export const resourcesPageTree = {
-  name: 'Resources',
-  children: [
-    { type: 'page' as const, name: 'Resources home', url: '/resources' },
-    { type: 'page' as const, name: 'Guides', url: '/blog' },
-    { type: 'page' as const, name: 'Help Center', url: '/docs' },
-    { type: 'page' as const, name: 'Citadel Docs', url: '/citadel/docs' },
-    { type: 'page' as const, name: 'Common Questions', url: '/faq' },
-  ],
-};
+/* The resources sidebar in one language. Links to English-only sections stay English URLs. */
+export function resourcesTree(locale: SiteLocale) {
+  const t = resourcesCopy[locale];
+  const page = (name: string, url: string) => ({ type: 'page' as const, name, url: localeHref(url, locale) });
+  return {
+    name: t.tabs.resources,
+    children: [
+      page(t.resourcesHome, '/resources'),
+      page(t.tabs.guides, '/blog'),
+      page(t.tabs.help, '/docs'),
+      page(t.tabs.citadel, '/citadel/docs'),
+      page(t.tabs.faq, '/faq'),
+    ],
+  };
+}
+
+export const resourcesPageTree = resourcesTree('en');

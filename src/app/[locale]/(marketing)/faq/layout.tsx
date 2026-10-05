@@ -1,7 +1,9 @@
 import type { ReactNode } from 'react';
 import { ResourceDocsLayout } from '@/components/site/ResourceDocsLayout';
-import { resourcesPageTree } from '@/lib/stealth/resource-tree';
+import { pageLocale } from '@/lib/stealth/i18n-server';
+import { resourcesTree } from '@/lib/stealth/resource-tree';
 
-export default function FaqLayoutRoute({ children }: { children: ReactNode }) {
-  return <ResourceDocsLayout area="faq" tree={resourcesPageTree}>{children}</ResourceDocsLayout>;
+export default async function FaqLayoutRoute({ children }: { children: ReactNode }) {
+  const locale = await pageLocale();
+  return <ResourceDocsLayout area="faq" locale={locale} tree={resourcesTree(locale)}>{children}</ResourceDocsLayout>;
 }

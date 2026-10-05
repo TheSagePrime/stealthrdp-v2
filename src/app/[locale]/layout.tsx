@@ -4,6 +4,7 @@ import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { DocsRootProvider } from '@/components/site/DocsRootProvider';
 import { TrackingConsent } from '@/components/site/TrackingConsent';
+import { docsUiCopy } from '@/content/i18n/docs-ui';
 import { siteCopy } from '@/content/i18n/site';
 import { asSiteLocale, localeHref } from '@/lib/stealth/i18n';
 import { routing } from '@/libs/I18nRouting';
@@ -44,11 +45,16 @@ export default async function RootLayout(props: {
   }
   setRequestLocale(locale);
   const production = isProductionDeployEnv(resolveDeployEnv());
+  const docsUi = docsUiCopy[asSiteLocale(locale)];
   return (
     <html lang={locale}>
       <body>
         <NextIntlClientProvider>
-          <DocsRootProvider search={{ enabled: false }} theme={{ enabled: false, hotKey: false }}>
+          <DocsRootProvider
+            search={{ enabled: false }}
+            theme={{ enabled: false, hotKey: false }}
+            i18n={docsUi ? { locale, translations: docsUi } : undefined}
+          >
             {props.children}
           </DocsRootProvider>
         </NextIntlClientProvider>

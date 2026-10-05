@@ -39,7 +39,7 @@ const marketingSourcesFor = locale => ({
   '/linux-vps': [`${marketing}/linux-vps/page.tsx`, ...osPage(locale), copy(locale, 'linux-vps.tsx')],
   '/citadel': [`${marketing}/citadel/page.tsx`, ...citadelComponents],
   '/about': [`${marketing}/about/page.tsx`, 'src/components/site/about/AboutMap.tsx', 'src/content/testimonials.json'],
-  '/faq': [`${marketing}/faq/page.tsx`, 'src/components/site/FaqExplorer.tsx', 'src/content/faqs.json'],
+  '/faq': [`${marketing}/faq/page.tsx`, 'src/components/site/FaqExplorer.tsx', locale === 'en' ? 'src/content/faqs.json' : copy(locale, 'faqs.ts'), copy(locale, 'faq.ts')],
   '/privacy': [`${marketing}/privacy/page.tsx`],
   '/rdp-vps': [`${marketing}/rdp-vps/page.tsx`, 'src/content/rdp-vps.ts'],
 });

@@ -155,6 +155,10 @@
     "updated": "2026-10-05",
     "fingerprint": "ed6a1e6ca527c0a1"
   },
+  "/de/faq": {
+    "updated": "2026-10-05",
+    "fingerprint": "e828e91ff688be75"
+  },
   "/de/linux-vps": {
     "updated": "2026-10-05",
     "fingerprint": "c933a7a0b6a47d53"
@@ -259,6 +263,10 @@
     "updated": "2026-10-05",
     "fingerprint": "942666f8a332c0c5"
   },
+  "/es/faq": {
+    "updated": "2026-10-05",
+    "fingerprint": "55d1616212793e17"
+  },
   "/es/linux-vps": {
     "updated": "2026-10-05",
     "fingerprint": "b8c4e8aa398ab50a"
@@ -272,8 +280,8 @@
     "fingerprint": "2c9340e91c89edfc"
   },
   "/faq": {
-    "updated": "2026-10-02",
-    "fingerprint": "72d4248c71701470"
+    "updated": "2026-10-05",
+    "fingerprint": "c7c284132d7e1edd"
   },
   "/linux-vps": {
     "updated": "2026-10-05",
