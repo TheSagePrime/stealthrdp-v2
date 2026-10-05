@@ -14,8 +14,8 @@ const en = {
     hiddenText: 'WhatsApp support',
   },
   header: {
+    /* VPS plans are the button at the end of the bar, so they are not repeated here. */
     links: [
-      ['VPS Plans', '/plans'],
       ['DDoS Protection', '/citadel'],
       ['Server Status', '/status'],
       ['Resources', '/resources'],
@@ -26,7 +26,7 @@ const en = {
     menu: 'Menu',
     support: 'Support',
     login: 'Log In',
-    viewPlans: 'View plans',
+    viewPlans: 'VPS Plans',
   },
   footer: {
     description: 'Windows and Linux VPS infrastructure with USA and EU regions, NVMe storage and full administrative access.',
@@ -100,7 +100,6 @@ const de: SiteCopy = {
   },
   header: {
     links: [
-      ['VPS-Tarife', '/plans'],
       ['DDoS-Schutz', '/citadel'],
       ['Serverstatus', '/status'],
       ['Ressourcen', '/resources'],
@@ -111,7 +110,7 @@ const de: SiteCopy = {
     menu: 'Menü',
     support: 'Support',
     login: 'Anmelden',
-    viewPlans: 'Tarife ansehen',
+    viewPlans: 'VPS-Tarife',
   },
   footer: {
     description: 'Windows- und Linux-VPS mit Standorten in den USA und der EU, NVMe-Speicher und vollem Administratorzugriff.',
@@ -182,7 +181,6 @@ const es: SiteCopy = {
   },
   header: {
     links: [
-      ['Planes VPS', '/plans'],
       ['Protección DDoS', '/citadel'],
       ['Estado del servicio', '/status'],
       ['Recursos', '/resources'],
@@ -193,7 +191,7 @@ const es: SiteCopy = {
     menu: 'Menú',
     support: 'Soporte',
     login: 'Iniciar sesión',
-    viewPlans: 'Ver planes',
+    viewPlans: 'Planes VPS',
   },
   footer: {
     description: 'VPS Windows y Linux con regiones en EE. UU. y la UE, almacenamiento NVMe y acceso total de administrador.',

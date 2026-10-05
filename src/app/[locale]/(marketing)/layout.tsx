@@ -21,9 +21,9 @@ export default async function MarketingLayout({ children }: { children: React.Re
         target="_blank"
         rel="noopener noreferrer"
         aria-label={copy.whatsapp.floatLabel}
+        title={copy.whatsapp.floatText}
       >
-        <WhatsAppMark size={34} />
-        <span>{copy.whatsapp.floatText}</span>
+        <WhatsAppMark size={56} />
       </a>
     </div>
   );

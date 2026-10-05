@@ -52,7 +52,7 @@ export function SiteHeader({ locale = 'en', copy = siteCopy.en }: { locale?: Sit
             rel="noopener noreferrer"
             aria-label={copy.whatsapp.chatLabel}
           >
-            <WhatsAppMark size={26} />
+            <WhatsAppMark size={28} />
             <span>WhatsApp</span>
           </a>
           <LanguageLinks label={copy.languageLabel} />
