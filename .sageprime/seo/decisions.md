@@ -5,10 +5,11 @@ Judgment calls, with the reason, so a later session does not re-argue them. Newe
 ## 2026-10-05 — How the German and Spanish pages are written
 
 - **German says "Sie", Spanish (Spain) says "tú"**, the usual register of hosting sites in each market.
-- **Only approved facts.** English FAQ answers that conflict with `PRODUCT_FACTS.md` or `plans.json`
-  (billing-cycle discount percentages, payment methods, upgrade and cancellation terms, 250 Mbps /
-  1 Gbps bandwidth, biometric data-centre security) are left out of `/de/faq` and `/es/faq` until the
-  owner confirms them. A GDPR answer was added instead.
+- **Only approved facts.** The owner confirmed every claim on the English site (2026-10-05), so the
+  German and Spanish FAQs carry all English answers plus a GDPR answer. One exception: the English
+  FAQ's fixed billing-cycle discounts (5/10/20/30%) differ from the savings the plan cards show from
+  WHMCS, so `/de/faq` and `/es/faq` point to the saving on each plan instead. The owner should
+  reconcile the English FAQ with the plan data.
 - **The privacy policy is translated, not rewritten**, and says that the English version is binding.
 - **Product names stay as the product shows them**: Citadel's challenge levels (Off, Cookie, JS,
   Interaction, Auto, Lockdown) and portal sections, plan names, WHMCS button names.
