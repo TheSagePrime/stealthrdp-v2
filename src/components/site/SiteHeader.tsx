@@ -9,7 +9,6 @@ import { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { siteCopy } from '@/content/i18n/site';
 import { localeHref } from '@/lib/stealth/i18n';
-import { LanguageLinks } from './LanguageLinks';
 import { WhatsAppMark } from './WhatsAppMark';
 
 const LOGIN_URL = 'https://dash.stealthrdp.com/index.php?rp=/login';
@@ -45,18 +44,6 @@ export function SiteHeader({ locale = 'en', copy = siteCopy.en }: { locale?: Sit
         </nav>
 
         <div className="srv3-header-actions">
-          <a
-            className="srv3-whatsapp-link"
-            href="https://wa.me/447441426993"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <WhatsAppMark size={28} />
-            {/* The full label on wide screens, the short one where the bar gets tight. */}
-            <span className="srv3-wa-long">{t.whatsapp}</span>
-            <span className="srv3-wa-short">WhatsApp</span>
-          </a>
-          <LanguageLinks label={copy.languageLabel} />
           <a className="srv3-login" href={LOGIN_URL}>
             {t.login}
           </a>
@@ -67,15 +54,15 @@ export function SiteHeader({ locale = 'en', copy = siteCopy.en }: { locale?: Sit
           </Button>
         </div>
 
+        {/* Phones only: WhatsApp stays in the sticky header, so no floating button covers content. */}
         <a
           className="srv3-mobile-whatsapp"
           href="https://wa.me/447441426993"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={copy.whatsapp.chatLabel}
         >
           <WhatsAppMark size={38} />
-          <span className="sr-visually-hidden">{copy.whatsapp.hiddenText}</span>
+          <span className="sr-visually-hidden">{t.whatsapp}</span>
         </a>
 
         <details ref={mobileNavRef} className="srv3-mobile-nav">
@@ -88,7 +75,6 @@ export function SiteHeader({ locale = 'en', copy = siteCopy.en }: { locale?: Sit
             <hr className="srv3-mobile-nav-divider" />
             <a href="https://dash.stealthrdp.com/submitticket.php" onClick={closeMobileNav}>{t.support}</a>
             <a href={LOGIN_URL} onClick={closeMobileNav}>{t.login}</a>
-            <LanguageLinks label={copy.languageLabel} />
             <div className="srv3-mobile-nav-cta">
               <Button asChild size="sm">
                 <Link href={plans} onClick={closeMobileNav}>{t.viewPlans}</Link>

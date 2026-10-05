@@ -165,13 +165,17 @@ Do not introduce heavy WebGL or scroll choreography.
 
 ## Shared site elements
 
-- Header: logo, navigation (DDoS Protection, Server Status, Resources, About), WhatsApp (green glyph
-  and quiet text like Log In: "Message us on WhatsApp", shortened to "WhatsApp" below 1400px and to the
-  icon below 1180px so the bar never wraps), language switch, Log In, and a VPS Plans button. VPS plans appear once,
-  as the button. Below 1040px a Menu button holds the same links, then Support and Log In, then the
-  VPS Plans button. Both menus read one list (`mainLinks` in `SiteHeader.tsx`).
+- Top bar (`SiteTopBar`): a thin strip above the header that scrolls away. WhatsApp on the left
+  ("Message us on WhatsApp", "WhatsApp" on phones), the language switch on the right (a globe and
+  English · Deutsch · Español, codes on phones). Every language links somewhere: to this page in that
+  language, or to that language's home page when the page is English only.
+- Header (sticky): logo, navigation (DDoS Protection, Server Status, Resources, About), Log In and a
+  VPS Plans button. VPS plans appear once, as the button. Below 1040px a Menu button holds the same
+  links, then Support and Log In, then the VPS Plans button. Both menus read one list (`mainLinks` in
+  `SiteHeader.tsx`). On phones and tablets the header also shows a round WhatsApp icon next to Menu.
 - Floating WhatsApp button bottom-right (`.srv-whatsapp-float`): one round green button, no text.
-  Keep content clear of it.
+  Hidden on phones (the header icon replaces it) so it never covers pricing or order buttons. Keep
+  content clear of it.
 - Consent banner bottom-left (`TrackingConsent`), shown only where consent is needed. Reject and
   Accept stay the same size.
 - Footer: product, resource and company links, Privacy, Cookie settings, legal links.
