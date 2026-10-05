@@ -1,0 +1,32 @@
+name: IndexNow
+
+# After each successful production deploy, tell IndexNow (Bing and others) which pages changed.
+# Production deploys from main, where every change lands as one merge commit, so the commit's
+# first parent is the previous production state. Run it by hand to submit every page once.
+on:
+  deployment_status:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  submit:
+    if: github.event_name == 'workflow_dispatch' || (github.event.deployment_status.state == 'success' && startsWith(github.event.deployment_status.environment, 'Production'))
+    name: Submit changed pages
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          ref: ${{ github.event.deployment.sha || github.sha }}
+          fetch-depth: 2
+
+      - name: Submit to IndexNow
+        if: github.event_name == 'deployment_status'
+        run: node scripts/indexnow.mjs HEAD^1 HEAD
+
+      - name: Submit every page
+        if: github.event_name == 'workflow_dispatch'
+        run: node scripts/indexnow.mjs --all

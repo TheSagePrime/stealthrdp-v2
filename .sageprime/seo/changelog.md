@@ -4,6 +4,25 @@ One entry per change that affects search. Newest first. Each entry: date, what c
 why, and when to measure it (see `.claude/skills/measurement-discipline`). Judge a change on Search
 Console clicks, at least 60 days after it went live.
 
+## 2026-10-05 — robots.txt: Content-Signal line removed
+
+- What: removed `Content-Signal: ai-train=no, search=yes, ai-input=yes` from `robots.txt`.
+- Why: Bing Webmaster Tools' robots.txt tester reports it as "syntax not understood", and no major
+  crawler (GPTBot, Googlebot, ClaudeBot, CCBot) acts on it, so crawling does not change. Owner decision.
+- Measure: Bing robots.txt tester shows no errors.
+
+## 2026-10-05 — IndexNow submission after production deploys
+
+- What: `scripts/indexnow.mjs` and `.github/workflows/indexnow.yml`. After each successful production
+  deploy, the pages whose date in `page-dates.json` moved (and the index page of a changed guide or
+  doc) are sent to IndexNow, filtered to the live sitemap. Running the workflow by hand sends the
+  whole sitemap once. Uses the v1 key file in `public/`.
+- No page changed. Why: Bing (and through it ChatGPT search and Copilot) learns about changed pages
+  within hours instead of on its own crawl schedule. Only real word changes are sent, so the signal
+  stays trustworthy.
+- Measure: Bing Webmaster Tools, IndexNow report and crawl dates of submitted URLs, after 2 weeks.
+  Baseline: 77 Bing organic sessions and 4 chatgpt.com sessions in GA4, 2026-07-07 to 2026-10-04.
+
 ## 2026-10-05 — German and Spanish core pages live
 
 - Pages: `/de`, `/es` and under each `/plans`, `/windows-vps`, `/linux-vps`, `/faq`, `/about`,

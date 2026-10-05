@@ -14,9 +14,9 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
+      /* Every crawler, AI crawlers included. No Content-Signal line: no major crawler reads it and
+         Bing's robots.txt tester reports it as a syntax error (owner decision, 2026-10-05). */
       disallow: ['/api/'],
-      /* Same AI policy as the v1 site: no model training, yes to search and AI answers. */
-      other: { 'Content-Signal': 'ai-train=no, search=yes, ai-input=yes' },
     },
     sitemap,
   };
