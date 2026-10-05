@@ -1,0 +1,58 @@
+import type { StatusCopy } from '../en/status';
+
+/* /es/status. No keyword target in keyword-map-es-es.json. Service names and incident reasons
+   come from UptimeRobot in English and are shown as they are. */
+
+const status: StatusCopy = {
+  meta: {
+    title: 'Estado de los servidores | StealthRDP',
+    description: 'Estado actual de los servidores y servicios de StealthRDP, disponibilidad de los últimos 90 días e incidencias, leídos de nuestros monitores de UptimeRobot.',
+  },
+  badge: 'Estado de la infraestructura en directo',
+  title: 'Comprueba qué funciona antes de abrir un ticket.',
+  text: 'Estado actual, disponibilidad diaria de los últimos 90 días e incidencias recientes de cada servidor y servicio de StealthRDP, leídos de nuestros monitores de UptimeRobot.',
+  board: {
+    states: { up: 'Operativo', down: 'Caído', paused: 'En pausa', unknown: 'Desconocido' },
+    months: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sept', 'oct', 'nov', 'dic'],
+    day: (date, month, year) => `${date} ${month} ${year}`,
+    percent: value => `${value}\u00A0%`,
+    decimal: ',',
+    noRecords: date => `${date}: sin datos`,
+    downFor: duration => `, ${duration} caído`,
+    barsLabel: (name, uptime, troubled, total) =>
+      `${name}: ${uptime} de disponibilidad en 90 días; ${troubled} de ${total} días tuvieron caídas.`,
+    daysAgo: count => `hace ${count} días`,
+    today: 'Hoy',
+    noHistory: 'El historial diario no está disponible ahora mismo.',
+    uptime30: 'Disponibilidad, 30 días',
+    uptime90: 'Disponibilidad, 90 días',
+    averageResponse: 'Respuesta media',
+    lastIncident: 'Última incidencia',
+    noneRecorded: 'Ninguna registrada',
+    recentIncidents: 'Incidencias recientes',
+    latestOnly: 'Última incidencia de cada servicio, últimos 90 días',
+    last90: 'Últimos 90 días',
+    incident: (duration, started) => `Caído durante ${duration} · inicio ${started}`,
+    noIncidents: 'Ninguna incidencia en los últimos 90 días.',
+    allUp: total => `Los ${total} servicios están operativos`,
+    someDown: (down, total) => `${down} de ${total} servicios caídos`,
+    someUp: (up, total) => `${up} de ${total} servicios operativos`,
+    snapshot: date => `Los datos en directo no están disponibles. Se muestran los datos guardados del ${date}.`,
+    checked: time => `Comprobado el ${time} · se actualiza cada 5 minutos`,
+    averageUptime: 'Disponibilidad media, 90 días',
+    servicesUp: 'Servicios operativos',
+    noneIn90: 'Ninguna en 90 días',
+    groups: { 'USA servers': 'Servidores en EE. UU.', 'Europe servers': 'Servidores en Europa', 'Platform': 'Plataforma' },
+    serviceCount: count => `${count} ${count === 1 ? 'servicio' : 'servicios'}`,
+    legendLabel: 'Colores de las barras',
+    legend: ['100\u00A0%', '99 a 100\u00A0%', '95 a 99\u00A0%', 'Menos del 95\u00A0%', 'Sin datos'],
+    help: {
+      title: '¿Algo no va bien en tu servidor?',
+      text: 'La página de estado cubre la infraestructura compartida. Los problemas de tu cuenta o de un servidor concreto los resuelve el soporte.',
+      whatsapp: 'Soporte por WhatsApp',
+      ticket: 'Abrir un ticket',
+    },
+  },
+};
+
+export default status;

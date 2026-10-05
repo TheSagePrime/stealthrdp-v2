@@ -9,6 +9,7 @@ import { ResourceDocsLayout } from '@/components/site/ResourceDocsLayout';
 import { articleHeadings, TrustedArticleBody } from '@/components/site/TrustedArticleBody';
 import { Button } from '@/components/ui/button';
 import { articlePath, blogArticles, findBlog } from '@/lib/stealth/articles';
+import { requirePageLocale } from '@/lib/stealth/i18n-server';
 import { guidePageTree } from '@/lib/stealth/resource-tree';
 import { createArticleMetadata } from '@/libs/seo/articles';
 import { getSeoConfig } from '@/libs/seo/config';
@@ -19,7 +20,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return publication ? createArticleMetadata(publication, config) : {};
 }
 
-export default function MinecraftPage() {
+export default async function MinecraftPage() {
+  await requirePageLocale('/vps-hosting-minecraft');
   const article = findBlog('vps-hosting-minecraft');
   const config = getSeoConfig();
   const publication = config.articles.publications.find(item => item.slug === 'vps-hosting-minecraft');

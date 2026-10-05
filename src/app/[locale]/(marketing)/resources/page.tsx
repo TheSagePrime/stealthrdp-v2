@@ -5,6 +5,7 @@ import { ArrowRight, BookOpen, LifeBuoy, MessageCircleQuestion, ShieldCheck } fr
 import Link from 'next/link';
 import { blogArticles, citadelDocsArticles, helpDocsArticles } from '@/lib/stealth/articles';
 import { faqs } from '@/lib/stealth/content';
+import { requirePageLocale } from '@/lib/stealth/i18n-server';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
@@ -54,7 +55,8 @@ const popular = [
   { title: 'Set up Citadel protection', href: '/citadel/docs/getting-started', kind: 'Citadel' },
 ] as const;
 
-export default function ResourcesPage() {
+export default async function ResourcesPage() {
+  await requirePageLocale('/resources');
   return (
     <DocsPage>
       <DocsTitle>Guides, help, and answers</DocsTitle>

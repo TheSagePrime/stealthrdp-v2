@@ -1,24 +1,25 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 'use client';
 
+import type { SiteLocale } from '@/config/i18n';
+import type { SiteCopy } from '@/content/i18n/site';
 import { List as Menu } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
 import { useRef } from 'react';
 import { Button } from '@/components/ui/button';
+import { siteCopy } from '@/content/i18n/site';
+import { localeHref } from '@/lib/stealth/i18n';
+import { LanguageLinks } from './LanguageLinks';
 import { WhatsAppMark } from './WhatsAppMark';
 
 const LOGIN_URL = 'https://dash.stealthrdp.com/index.php?rp=/login';
 
-/* One list for the desktop bar and the mobile menu, so the two always match. */
-const mainLinks = [
-  ['VPS Plans', '/plans'],
-  ['DDoS Protection', '/citadel'],
-  ['Server Status', '/status'],
-  ['Resources', '/resources'],
-  ['About', '/about'],
-] as const;
-
-export function SiteHeader() {
+export function SiteHeader({ locale = 'en', copy = siteCopy.en }: { locale?: SiteLocale; copy?: SiteCopy }) {
+  const t = copy.header;
+  /* One list for the desktop bar and the mobile menu, so the two always match. */
+  const mainLinks = t.links.map(([label, href]) => [label, localeHref(href, locale)] as const);
+  const home = localeHref('/', locale);
+  const plans = localeHref('/plans', locale);
   const mobileNavRef = useRef<HTMLDetailsElement>(null);
 
   const closeMobileNav = () => {
@@ -30,7 +31,7 @@ export function SiteHeader() {
   return (
     <header className="srv3-header">
       <div className="sr-container srv3-header-row">
-        <Link className="srv3-logo" href="/" aria-label="StealthRDP home">
+        <Link className="srv3-logo" href={home} aria-label={copy.homeLabel}>
           <img
             src="https://cdn.stealthrdp.com/images/new/6.png"
             alt="StealthRDP"
@@ -39,7 +40,7 @@ export function SiteHeader() {
           />
         </Link>
 
-        <nav className="srv3-nav" aria-label="Main navigation">
+        <nav className="srv3-nav" aria-label={t.navLabel}>
           {mainLinks.map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
         </nav>
 
@@ -49,17 +50,19 @@ export function SiteHeader() {
             href="https://wa.me/447441426993"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Chat with StealthRDP support on WhatsApp"
           >
-            <WhatsAppMark size={26} />
-            <span>WhatsApp</span>
+            <WhatsAppMark size={28} />
+            {/* The full label on wide screens, the short one where the bar gets tight. */}
+            <span className="srv3-wa-long">{t.whatsapp}</span>
+            <span className="srv3-wa-short">WhatsApp</span>
           </a>
+          <LanguageLinks label={copy.languageLabel} />
           <a className="srv3-login" href={LOGIN_URL}>
-            Log In
+            {t.login}
           </a>
           <Button asChild size="sm">
-            <Link href="/plans">
-              View plans
+            <Link href={plans}>
+              {t.viewPlans}
             </Link>
           </Button>
         </div>
@@ -69,25 +72,26 @@ export function SiteHeader() {
           href="https://wa.me/447441426993"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Chat with StealthRDP support on WhatsApp"
+          aria-label={copy.whatsapp.chatLabel}
         >
           <WhatsAppMark size={38} />
-          <span className="sr-visually-hidden">WhatsApp support</span>
+          <span className="sr-visually-hidden">{copy.whatsapp.hiddenText}</span>
         </a>
 
         <details ref={mobileNavRef} className="srv3-mobile-nav">
           <summary>
             <Menu size={16} aria-hidden="true" />
-            <span>Menu</span>
+            <span>{t.menu}</span>
           </summary>
-          <nav aria-label="Mobile navigation">
+          <nav aria-label={t.mobileNavLabel}>
             {mainLinks.map(([label, href]) => <Link key={href} href={href} onClick={closeMobileNav}>{label}</Link>)}
             <hr className="srv3-mobile-nav-divider" />
-            <a href="https://dash.stealthrdp.com/submitticket.php" onClick={closeMobileNav}>Support</a>
-            <a href={LOGIN_URL} onClick={closeMobileNav}>Log In</a>
+            <a href="https://dash.stealthrdp.com/submitticket.php" onClick={closeMobileNav}>{t.support}</a>
+            <a href={LOGIN_URL} onClick={closeMobileNav}>{t.login}</a>
+            <LanguageLinks label={copy.languageLabel} />
             <div className="srv3-mobile-nav-cta">
               <Button asChild size="sm">
-                <Link href="/plans" onClick={closeMobileNav}>View plans</Link>
+                <Link href={plans} onClick={closeMobileNav}>{t.viewPlans}</Link>
               </Button>
             </div>
           </nav>

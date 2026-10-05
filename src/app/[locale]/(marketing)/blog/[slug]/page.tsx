@@ -6,6 +6,7 @@ import { ArticleJsonLd, ArticlePublicationMeta, ArticleSources } from '@/compone
 import { RelatedArticles } from '@/components/site/RelatedArticles';
 import { articleHeadings, TrustedArticleBody } from '@/components/site/TrustedArticleBody';
 import { articlePath, blogArticles, findBlog } from '@/lib/stealth/articles';
+import { requirePageLocale } from '@/lib/stealth/i18n-server';
 import { createArticleMetadata } from '@/libs/seo/articles';
 import { getSeoConfig } from '@/libs/seo/config';
 
@@ -25,6 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function BlogArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  await requirePageLocale(`/blog/${slug}`);
   const articleSlug = slug.replace(/\.html$/, '');
   const article = findBlog(articleSlug);
   const config = getSeoConfig();

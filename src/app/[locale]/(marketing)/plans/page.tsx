@@ -18,33 +18,25 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { plansCopy } from '@/content/i18n/plans';
+import { pricingCopy } from '@/content/i18n/pricing';
+import { localeHref } from '@/lib/stealth/i18n';
+import { localizedPageMetadata, requirePageLocale } from '@/lib/stealth/i18n-server';
 import { getPlans } from '@/lib/stealth/live-plans';
 import { plansJsonLd } from '@/lib/stealth/structured-data';
 import { getSeoConfig } from '@/libs/seo/config';
-import { createPageMetadata } from '@/libs/seo/metadata';
 
-export const metadata: Metadata = createPageMetadata({
-  path: '/plans',
-  title: 'VPS Hosting Plans | Windows and Linux | StealthRDP',
-  description: 'Compare VPS hosting plans for Windows and Linux in the USA and EU: NVMe storage, full admin access and 24/7 support. Choose a plan and order online.',
-  ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
-});
+/* The words of this page are in src/content/i18n/<language>/plans.tsx. */
 
-const included = [
-  { title: 'Full admin access', text: 'Control your server from day one' },
-  { title: 'NVMe SSD storage', text: 'Fast disk for everyday workloads' },
-  { title: 'Isolated VMs', text: 'Separate virtual machines per server' },
-  { title: 'Fast activation', text: 'Typically within 60 seconds of payment' },
-  { title: '24/7 support', text: 'Help when you need it' },
-];
+const ogImage = 'https://www.stealthrdp.com/assets/og-cover.png';
 
-const questions = [
-  ['Where are the VPS servers located?', 'In Phoenix, Arizona (USA) and Amsterdam, Netherlands (EU). Each plan row shows its region. Choose a USA VPS for users and services in North America, and an EU VPS for users and services in Europe.'],
-  ['How do I buy a Windows VPS or a Linux VPS?', 'Choose a plan and billing cycle above, then continue to checkout. Select Windows or Linux and the exact version at checkout. Most servers are live within 60 seconds of payment confirmation.'],
-  ['Which VPS hosting plan should I choose?', 'Start from your software, the number of users or sessions, and the data you store. Compare CPU, RAM and NVMe storage as separate limits. If no standard plan fits, build your own server in the configurator.'],
-  ['Is support included?', 'Yes. Support is available 24/7 through WhatsApp, the client-area ticketing system, and support email.'],
-  ['Can I change my IP address?', 'Yes. Every server has a dedicated IPv4 address. An IP change costs €5 per change; request it from support on WhatsApp, a client-area ticket or email.'],
-] as const;
+export async function generateMetadata(): Promise<Metadata> {
+  return localizedPageMetadata('/plans', {
+    en: { ...plansCopy.en.meta, ogImage },
+    de: { ...plansCopy.de.meta, ogImage },
+    es: { ...plansCopy.es.meta, ogImage },
+  });
+}
 
 /* Token utilities for the card link rows, replacing the bespoke .sr-inline-links hook. */
 const cardLinkClass = 'inline-flex min-h-11 items-center gap-2 text-small font-semibold text-primary transition-colors hover:text-accent-hover';
@@ -53,32 +45,33 @@ const cardLinkClass = 'inline-flex min-h-11 items-center gap-2 text-small font-s
 export const revalidate = 21600;
 
 export default async function PlansPage() {
+  const locale = await requirePageLocale('/plans');
+  const t = plansCopy[locale];
   const plans = await getPlans();
   const lowest = Math.min(...plans.map(plan => plan.pricing.monthly.amount));
   const inStock = plans.reduce((sum, plan) => sum + (plan.source.stock ?? 0), 0);
 
   return (
     <div className="srv-page srv-page-plans">
-      <ProductionJsonLd data={plansJsonLd(getSeoConfig().siteUrl, plans)} />
+      <ProductionJsonLd data={plansJsonLd(getSeoConfig().siteUrl, plans, t.jsonLd)} />
       <section className="sr-page-hero">
         <div className="sr-container sr-os-hero-grid">
           <div>
-            <p className="sr-kicker">Windows and Linux VPS</p>
-            <h1 className="sr-title">Windows & Linux VPS Hosting Plans</h1>
+            <p className="sr-kicker">{t.kicker}</p>
+            <h1 className="sr-title">{t.title}</h1>
             <p className="sr-lede">
-              Compare Windows and Linux VPS hosting plans in one place. Choose a resource level,
-              region, and billing cycle before the checkout.
+              {t.lede}
             </p>
             <div className="sr-actions">
               <Button asChild size="lg">
                 <a href="#plan-grid">
-                  Compare Standard Plans
+                  {t.compareButton}
                   <ArrowRight size={16} />
                 </a>
               </Button>
               <Button asChild size="lg" variant="outline">
                 <a href="https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps">
-                  Build Your Own VPS
+                  {t.buildButton}
                 </a>
               </Button>
             </div>
@@ -86,21 +79,21 @@ export default async function PlansPage() {
               <span>
                 <strong>{plans.length}</strong>
                 {' '}
-                plans
+                {t.facts.plans}
               </span>
               <span>
-                <strong>{`€${lowest.toFixed(2)}`}</strong>
+                <strong>{t.facts.start(lowest)}</strong>
                 {' '}
-                /mo to start
+                {t.facts.startText}
               </span>
               <span>
                 <strong>{inStock}</strong>
                 {' '}
-                servers in stock
+                {t.facts.stock}
               </span>
             </div>
           </div>
-          <OsSession kind="plans" />
+          <OsSession kind="plans" locale={locale} />
         </div>
       </section>
 
@@ -108,11 +101,11 @@ export default async function PlansPage() {
         <div className="sr-container">
           <div className="sr-section-head">
             <div>
-              <p className="sr-kicker">STANDARD PLANS</p>
-              <h2 className="sr-section-title">Choose your resource level</h2>
+              <p className="sr-kicker">{t.grid.kicker}</p>
+              <h2 className="sr-section-title">{t.grid.title}</h2>
             </div>
           </div>
-          <PricingExplorer plans={plans} showComparison />
+          <PricingExplorer plans={plans} showComparison locale={locale} />
         </div>
       </section>
 
@@ -120,8 +113,8 @@ export default async function PlansPage() {
         <div className="sr-container">
           <div className="sr-section-head">
             <div>
-              <p className="sr-kicker">Operating systems</p>
-              <h2 className="sr-section-title">Pick the VPS environment that fits your work.</h2>
+              <p className="sr-kicker">{t.os.kicker}</p>
+              <h2 className="sr-section-title">{t.os.title}</h2>
             </div>
           </div>
 
@@ -138,13 +131,12 @@ export default async function PlansPage() {
                 <span className="srv-plan-os-mark" aria-hidden="true">
                   <Image src="/brand/windows.svg" alt="" width={34} height={34} />
                 </span>
-                <Badge variant="outline" className="w-fit text-body-muted">Windows VPS</Badge>
+                <Badge variant="outline" className="w-fit text-body-muted">{t.os.windows.badge}</Badge>
                 <CardTitle className="text-heading-4 text-body-text">
-                  <h3>Windows VPS for graphical remote access.</h3>
+                  <h3>{t.os.windows.title}</h3>
                 </CardTitle>
                 <CardDescription className="text-small text-body-muted">
-                  Choose Windows when your workflow needs a graphical desktop or Microsoft-compatible
-                  software. Compare CPU, RAM, NVMe storage, bandwidth, region, and billing cycle above.
+                  {t.os.windows.text}
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -153,23 +145,17 @@ export default async function PlansPage() {
                   text-small text-body-muted
                 "
                 >
-                  <strong>Windows licensing:</strong>
-                  {' '}
-                  StealthRDP provides the infrastructure only.
-                  Microsoft Windows licensing is not included and is not supplied by StealthRDP.
-                  Customers using Windows are responsible for their own licensing compliance.
-                  {' '}
-                  <Link href="/docs/windows-licensing">Read the Windows licensing page.</Link>
+                  {t.os.windows.licensing}
                 </p>
               </CardContent>
               <CardFooter className="mt-auto flex-wrap gap-x-6 gap-y-2">
-                <Link href="/windows-vps" className={cardLinkClass}>
-                  Read the Windows VPS hosting guide
+                <Link href={localeHref('/windows-vps', locale)} className={cardLinkClass}>
+                  {t.os.windows.guide}
                   {' '}
                   <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
-                <Link href="/plans#plan-grid" className={cardLinkClass}>
-                  Compare Windows VPS resources
+                <Link href={`${localeHref('/plans', locale)}#plan-grid`} className={cardLinkClass}>
+                  {t.os.windows.compare}
                   {' '}
                   <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
@@ -184,23 +170,22 @@ export default async function PlansPage() {
                 <span className="srv-plan-os-mark srv-plan-os-mark-linux" aria-hidden="true">
                   <Image src="/brand/linux.svg" alt="" width={34} height={40} />
                 </span>
-                <Badge variant="outline" className="w-fit text-body-muted">Linux VPS</Badge>
+                <Badge variant="outline" className="w-fit text-body-muted">{t.os.linux.badge}</Badge>
                 <CardTitle className="text-heading-4 text-body-text">
-                  <h3>Linux VPS for server and open-source workloads.</h3>
+                  <h3>{t.os.linux.title}</h3>
                 </CardTitle>
                 <CardDescription className="text-small text-body-muted">
-                  Choose Linux for command-line administration, web hosting, open-source applications,
-                  automation, and server tooling. Compare the same resource levels before you continue to the checkout.
+                  {t.os.linux.text}
                 </CardDescription>
               </CardHeader>
               <CardFooter className="mt-auto flex-wrap gap-x-6 gap-y-2">
-                <Link href="/linux-vps" className={cardLinkClass}>
-                  Read the Linux VPS hosting guide
+                <Link href={localeHref('/linux-vps', locale)} className={cardLinkClass}>
+                  {t.os.linux.guide}
                   {' '}
                   <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
-                <Link href="/plans#plan-grid" className={cardLinkClass}>
-                  Compare Linux VPS resources
+                <Link href={`${localeHref('/plans', locale)}#plan-grid`} className={cardLinkClass}>
+                  {t.os.linux.compare}
                   {' '}
                   <ArrowRight aria-hidden="true" className="size-4" />
                 </Link>
@@ -214,10 +199,10 @@ export default async function PlansPage() {
         <div className="sr-container">
           <div className="sr-section-head">
             <div>
-              <p className="sr-kicker">Included with every plan</p>
-              <h2 className="sr-section-title">The essentials are already covered.</h2>
+              <p className="sr-kicker">{t.included.kicker}</p>
+              <h2 className="sr-section-title">{t.included.title}</h2>
             </div>
-            <p>Choose a plan by resource level. These service basics stay with every server.</p>
+            <p>{t.included.text}</p>
           </div>
           <div className="
             srv-plan-included grid gap-4
@@ -225,7 +210,7 @@ export default async function PlansPage() {
             lg:grid-cols-3
           "
           >
-            {included.map(({ title, text }) => (
+            {t.included.items.map(({ title, text }) => (
               <Card key={title} className="srv-plan-included-item">
                 <CardHeader>
                   <CardTitle className="text-heading-4 text-body-text">
@@ -243,25 +228,21 @@ export default async function PlansPage() {
 
       <OsFaq
         kind="plans"
-        title="VPS hosting plan questions"
-        questions={questions}
-        other={{
-          title: 'Not sure which system?',
-          text: 'Read the Windows VPS and Linux VPS guides before you choose.',
-          href: '/windows-vps',
-          label: 'Windows VPS hosting',
-        }}
+        title={t.faqTitle}
+        questions={t.questions(pricingCopy[locale].money(lowest))}
+        other={{ ...t.other, href: localeHref(t.other.href, locale) }}
+        locale={locale}
       />
 
       <section className="sr-section sr-section-border">
         <div className="sr-container sr-byo-panel srv-site-final">
           <div>
-            <p className="sr-kicker">For workloads between the lines</p>
-            <h2>Build a server around your exact brief.</h2>
-            <p>Choose your own CPU, RAM, storage, location, and billing cycle in the server configurator.</p>
+            <p className="sr-kicker">{t.build.kicker}</p>
+            <h2>{t.build.title}</h2>
+            <p>{t.build.text}</p>
           </div>
           <ul className={extras.configurator} aria-hidden="true">
-            {[['CPU', 50], ['RAM', 70], ['Storage', 40], ['Region', 100]].map(([label, fill]) => (
+            {([50, 70, 40, 100] as const).map((fill, index) => [t.build.labels[index], fill] as const).map(([label, fill]) => (
               <li key={label}>
                 <span>{label}</span>
                 <i className={extras.track}>
@@ -272,7 +253,7 @@ export default async function PlansPage() {
           </ul>
           <Button asChild size="lg">
             <a href="https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps">
-              Configure & Deploy
+              {t.build.button}
               <ArrowRight size={16} />
             </a>
           </Button>

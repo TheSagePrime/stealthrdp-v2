@@ -1,42 +1,15 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes, next/no-img-element */
+import type { SiteLocale } from '@/config/i18n';
+import type { SiteCopy } from '@/content/i18n/site';
 import { SiDiscord, SiInstagram, SiTelegram, SiX } from '@icons-pack/react-simple-icons';
 import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
+import { isRouteLocalized } from '@/config/i18n';
+import { siteCopy } from '@/content/i18n/site';
+import { localeHref } from '@/lib/stealth/i18n';
+import { LanguageLinks } from './LanguageLinks';
 import { CookieSettingsButton } from './TrackingConsent';
-
-const columns = [
-  {
-    title: 'Products',
-    links: [
-      ['VPS plans', '/plans'],
-      ['DDoS protection', '/citadel'],
-      ['Build your own VPS', 'https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps'],
-    ],
-  },
-  {
-    title: 'Resources',
-    links: [
-      ['Resources home', '/resources'],
-      ['Guides', '/blog'],
-      ['Help Center', '/docs'],
-      ['Citadel Docs', '/citadel/docs'],
-      ['Common questions', '/faq'],
-      ['Server status', '/status'],
-    ],
-  },
-  {
-    title: 'Company',
-    links: [
-      ['About', '/about'],
-      ['Support', 'https://dash.stealthrdp.com/submitticket.php'],
-      ['WhatsApp support', 'https://wa.me/447441426993'],
-      ['Privacy', '/privacy'],
-      ['Use of service', '/docs/use-of-service'],
-      ['Windows licensing', '/docs/windows-licensing'],
-    ],
-  },
-] as const;
 
 /* Same four profiles the brand schema declares in src/config/seo.ts. Official marks from Simple Icons. */
 const socials = [
@@ -46,13 +19,28 @@ const socials = [
   ['Instagram', 'https://www.instagram.com/stealth_rdp', SiInstagram],
 ] as const;
 
-export function SiteFooter() {
+export function SiteFooter({ locale = 'en', copy = siteCopy.en }: { locale?: SiteLocale; copy?: SiteCopy }) {
+  const t = copy.footer;
+  /* Internal links point to this language's version when it exists; otherwise to the English
+     page, labelled as English for German and Spanish readers. */
+  const localLink = ([label, href]: [string, string]): [string, string] => {
+    if (!href.startsWith('/')) {
+      return [label, href];
+    }
+    const path = href.split('#')[0] ?? href;
+    return locale === 'en' || isRouteLocalized(path, locale)
+      ? [label, localeHref(href, locale)]
+      : [`${label}${t.englishOnly}`, href];
+  };
+  const columns = t.columns.map(column => ({ title: column.title, links: column.links.map(localLink) }));
+  const legal = t.legal.map(localLink);
+
   return (
     <footer className="srv3-footer">
       <div className="sr-container srv3-footer-shell">
         <div className="srv3-footer-main">
           <div className="srv3-footer-brand">
-            <Link className="srv3-logo srv3-footer-logo" href="/" aria-label="StealthRDP home">
+            <Link className="srv3-logo srv3-footer-logo" href={localeHref('/', locale)} aria-label={copy.homeLabel}>
               <img
                 src="https://cdn.stealthrdp.com/images/new/6.png"
                 alt="StealthRDP"
@@ -63,24 +51,23 @@ export function SiteFooter() {
             </Link>
 
             <p className="srv3-footer-description">
-              Windows and Linux VPS infrastructure with USA and EU regions,
-              NVMe storage and full administrative access.
+              {t.description}
             </p>
 
-            <div className="srv3-footer-proof" aria-label="StealthRDP service highlights">
+            <div className="srv3-footer-proof" aria-label={t.highlightsLabel}>
               <span>
-                <strong>USA + EU</strong>
+                <strong>{t.regions[0]}</strong>
                 {' '}
-                regions
+                {t.regions[1]}
               </span>
               <span>
-                <strong>24/7</strong>
+                <strong>{t.support[0]}</strong>
                 {' '}
-                support
+                {t.support[1]}
               </span>
             </div>
 
-            <ul className="srv3-socials" aria-label="StealthRDP social links">
+            <ul className="srv3-socials" aria-label={t.socialLabel}>
               {socials.map(([label, href, Mark]) => (
                 <li key={label}>
                   <Button asChild variant="outline" size="icon-sm">
@@ -93,7 +80,7 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          <nav className="srv3-footer-links" aria-label="Footer navigation">
+          <nav className="srv3-footer-links" aria-label={t.navLabel}>
             {columns.map(column => (
               <div className="srv3-footer-column" key={column.title}>
                 <h2>{column.title}</h2>
@@ -117,7 +104,7 @@ export function SiteFooter() {
             ))}
           </nav>
 
-          <nav className="srv3-footer-mobile-links" aria-label="Footer navigation">
+          <nav className="srv3-footer-mobile-links" aria-label={t.navLabel}>
             {columns.map(column => (
               <details key={column.title}>
                 <summary>
@@ -147,12 +134,12 @@ export function SiteFooter() {
 
         <div className="srv3-footer-bottom">
           <div className="srv3-footer-bottom-main">
-            <span className="srv3-footer-copyright">© 2026 StealthRDP. All rights reserved.</span>
+            <span className="srv3-footer-copyright">{t.copyright}</span>
             <div className="srv3-footer-legal">
-              <Link href="/privacy">Privacy</Link>
-              <CookieSettingsButton className="srv3-footer-cookie" />
-              <Link href="/docs/use-of-service">Use of service</Link>
-              <Link href="/docs/windows-licensing">Windows licensing</Link>
+              <LanguageLinks label={copy.languageLabel} />
+              <Link href={legal[0]![1]}>{legal[0]![0]}</Link>
+              <CookieSettingsButton className="srv3-footer-cookie" label={copy.consent.settings} />
+              {legal.slice(1).map(([label, href]) => <Link key={href} href={href}>{label}</Link>)}
             </div>
           </div>
         </div>

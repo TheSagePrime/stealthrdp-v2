@@ -1,0 +1,58 @@
+import type { StatusCopy } from '../en/status';
+
+/* /de/status. No keyword target in keyword-map-de-de.json. Service names and incident reasons
+   come from UptimeRobot in English and are shown as they are. */
+
+const status: StatusCopy = {
+  meta: {
+    title: 'Serverstatus und Verfügbarkeit | StealthRDP',
+    description: 'Aktueller Status aller StealthRDP-Server und -Dienste, Verfügbarkeit der letzten 90 Tage und Störungen, direkt aus unseren UptimeRobot-Monitoren.',
+  },
+  badge: 'Live-Status der Infrastruktur',
+  title: 'Erst den Status prüfen, dann das Ticket schreiben.',
+  text: 'Aktueller Zustand, tägliche Verfügbarkeit der letzten 90 Tage und Störungen für jeden StealthRDP-Server und Plattformdienst, gelesen aus unseren UptimeRobot-Monitoren.',
+  board: {
+    states: { up: 'In Betrieb', down: 'Ausgefallen', paused: 'Pausiert', unknown: 'Unbekannt' },
+    months: ['Jan.', 'Feb.', 'März', 'Apr.', 'Mai', 'Juni', 'Juli', 'Aug.', 'Sept.', 'Okt.', 'Nov.', 'Dez.'],
+    day: (date, month, year) => `${date}. ${month} ${year}`,
+    percent: value => `${value}\u00A0%`,
+    decimal: ',',
+    noRecords: date => `${date}: keine Daten`,
+    downFor: duration => `, ${duration} ausgefallen`,
+    barsLabel: (name, uptime, troubled, total) =>
+      `${name}: ${uptime} Verfügbarkeit in 90 Tagen; an ${troubled} von ${total} Tagen gab es Ausfälle.`,
+    daysAgo: count => `vor ${count} Tagen`,
+    today: 'Heute',
+    noHistory: 'Der Tagesverlauf ist gerade nicht verfügbar.',
+    uptime30: 'Verfügbarkeit, 30 Tage',
+    uptime90: 'Verfügbarkeit, 90 Tage',
+    averageResponse: 'Mittlere Antwortzeit',
+    lastIncident: 'Letzte Störung',
+    noneRecorded: 'Keine erfasst',
+    recentIncidents: 'Letzte Störungen',
+    latestOnly: 'Letzte Störung je Dienst, letzte 90 Tage',
+    last90: 'Letzte 90 Tage',
+    incident: (duration, started) => `${duration} ausgefallen · Beginn ${started}`,
+    noIncidents: 'Keine Störungen in den letzten 90 Tagen.',
+    allUp: total => `Alle ${total} Dienste in Betrieb`,
+    someDown: (down, total) => `${down} von ${total} Diensten ausgefallen`,
+    someUp: (up, total) => `${up} von ${total} Diensten in Betrieb`,
+    snapshot: date => `Live-Daten sind gerade nicht verfügbar. Angezeigt wird der Stand vom ${date}.`,
+    checked: time => `Geprüft ${time} · alle 5 Minuten aktualisiert`,
+    averageUptime: 'Mittlere Verfügbarkeit, 90 Tage',
+    servicesUp: 'Dienste in Betrieb',
+    noneIn90: 'Keine in 90 Tagen',
+    groups: { 'USA servers': 'Server in den USA', 'Europe servers': 'Server in Europa', 'Platform': 'Plattform' },
+    serviceCount: count => `${count} ${count === 1 ? 'Dienst' : 'Dienste'}`,
+    legendLabel: 'Farben der Balken',
+    legend: ['100\u00A0%', '99 bis 100\u00A0%', '95 bis 99\u00A0%', 'Unter 95\u00A0%', 'Keine Daten'],
+    help: {
+      title: 'Stimmt etwas mit Ihrem Server nicht?',
+      text: 'Die Statusseite zeigt die gemeinsame Infrastruktur. Probleme mit Ihrem Konto oder einem einzelnen Server klärt der Support.',
+      whatsapp: 'Support per WhatsApp',
+      ticket: 'Ticket eröffnen',
+    },
+  },
+};
+
+export default status;

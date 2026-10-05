@@ -1,6 +1,7 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { ReactNode } from 'react';
 import type { PillState } from '@/components/ui/pill';
+import type { StatusBoardCopy } from '@/content/i18n/en/status';
 import type { Incident, Service, ServiceState, UptimeDay, UptimeReport } from '@/lib/stealth/uptime';
 import { CheckCircle, Pause, Question, Warning, XCircle } from '@phosphor-icons/react/dist/ssr';
 import { Card, CardContent } from '@/components/ui/card';
@@ -13,23 +14,21 @@ import styles from './StatusBoard.module.css';
  * (30 on phones), then the recent incidents. Server-rendered from getUptimeReport().
  */
 
-const states: Record<ServiceState, { label: string; pill: PillState; icon: ReactNode }> = {
-  up: { label: 'Operational', pill: 'ok', icon: <CheckCircle size={15} weight="fill" aria-hidden="true" /> },
-  down: { label: 'Down', pill: 'bad', icon: <XCircle size={15} weight="fill" aria-hidden="true" /> },
-  paused: { label: 'Paused', pill: 'unknown', icon: <Pause size={15} weight="fill" aria-hidden="true" /> },
-  unknown: { label: 'Unknown', pill: 'neutral', icon: <Question size={15} weight="fill" aria-hidden="true" /> },
+const states: Record<ServiceState, { pill: PillState; icon: ReactNode }> = {
+  up: { pill: 'ok', icon: <CheckCircle size={15} weight="fill" aria-hidden="true" /> },
+  down: { pill: 'bad', icon: <XCircle size={15} weight="fill" aria-hidden="true" /> },
+  paused: { pill: 'unknown', icon: <Pause size={15} weight="fill" aria-hidden="true" /> },
+  unknown: { pill: 'neutral', icon: <Question size={15} weight="fill" aria-hidden="true" /> },
 };
 
-const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-/** "12 Sep 2026" in UTC. */
-function day(iso: string): string {
+/** "12 Sep 2026" in UTC, in the page's language. */
+function day(iso: string, t: StatusBoardCopy): string {
   const date = new Date(iso);
-  return `${date.getUTCDate()} ${months[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
+  return t.day(date.getUTCDate(), t.months[date.getUTCMonth()] ?? '', date.getUTCFullYear());
 }
 
-function percent(value: number | null, digits = 3): string {
-  return value === null ? '—' : `${value.toFixed(digits)}%`;
+function percent(value: number | null, t: StatusBoardCopy, digits = 3): string {
+  return value === null ? '—' : t.percent(value.toFixed(digits).replace('.', t.decimal));
 }
 
 function duration(seconds: number): string {
@@ -44,8 +43,8 @@ function duration(seconds: number): string {
   return minutes % 60 ? `${hours} h ${minutes % 60} min` : `${hours} h`;
 }
 
-function when(iso: string): string {
-  return `${day(iso)}, ${new Date(iso).toISOString().slice(11, 16)} UTC`;
+function when(iso: string, t: StatusBoardCopy): string {
+  return `${day(iso, t)}, ${new Date(iso).toISOString().slice(11, 16)} UTC`;
 }
 
 /* UptimeRobot's own day colours: 100% green, 99–100% pale green, 95–99% orange, under 95% red. */
@@ -62,16 +61,16 @@ function level(ratio: number | null): string {
   return ratio >= 95 ? 'degraded' : 'down';
 }
 
-function dayTitle(uptimeDay: UptimeDay): string {
-  const date = day(`${uptimeDay.date}T00:00:00Z`);
+function dayTitle(uptimeDay: UptimeDay, t: StatusBoardCopy): string {
+  const date = day(`${uptimeDay.date}T00:00:00Z`, t);
   if (uptimeDay.ratio === null) {
-    return `${date}: no records`;
+    return t.noRecords(date);
   }
-  const down = uptimeDay.downSeconds ? `, ${duration(uptimeDay.downSeconds)} down` : '';
-  return `${date}: ${percent(uptimeDay.ratio)}${down}`;
+  const down = uptimeDay.downSeconds ? t.downFor(duration(uptimeDay.downSeconds)) : '';
+  return `${date}: ${percent(uptimeDay.ratio, t)}${down}`;
 }
 
-function ServiceRow({ service }: { service: Service }) {
+function ServiceRow({ service, t }: { service: Service; t: StatusBoardCopy }) {
   const state = states[service.state];
   const troubledDays = service.days.filter(uptimeDay => uptimeDay.ratio !== null && uptimeDay.ratio < 100).length;
 
@@ -79,7 +78,7 @@ function ServiceRow({ service }: { service: Service }) {
     <li className={styles.service}>
       <div className={styles.serviceHead}>
         <h3>{service.name}</h3>
-        <Pill state={state.pill} icon={state.icon}>{state.label}</Pill>
+        <Pill state={state.pill} icon={state.icon}>{t.states[service.state]}</Pill>
       </div>
 
       {service.days.length
@@ -88,44 +87,44 @@ function ServiceRow({ service }: { service: Service }) {
               <div
                 className={styles.bars}
                 role="img"
-                aria-label={`${service.name}: ${percent(service.uptime90)} uptime in 90 days; ${troubledDays} of ${service.days.length} days had downtime.`}
+                aria-label={t.barsLabel(service.name, percent(service.uptime90, t), troubledDays, service.days.length)}
               >
                 {service.days.map(uptimeDay => (
-                  <span key={uptimeDay.date} data-level={level(uptimeDay.ratio)} title={dayTitle(uptimeDay)} />
+                  <span key={uptimeDay.date} data-level={level(uptimeDay.ratio)} title={dayTitle(uptimeDay, t)} />
                 ))}
               </div>
               <div className={styles.axis} aria-hidden="true">
                 <span>
-                  <span className={styles.wide}>{`${service.days.length} days ago`}</span>
-                  <span className={styles.narrow}>{`${Math.min(30, service.days.length)} days ago`}</span>
+                  <span className={styles.wide}>{t.daysAgo(service.days.length)}</span>
+                  <span className={styles.narrow}>{t.daysAgo(Math.min(30, service.days.length))}</span>
                 </span>
-                <span>Today</span>
+                <span>{t.today}</span>
               </div>
             </>
           )
-        : <p className={styles.noHistory}>Daily history is not available right now.</p>}
+        : <p className={styles.noHistory}>{t.noHistory}</p>}
 
       <dl className={styles.facts}>
         <div>
-          <dt>Uptime, 30 days</dt>
-          <dd>{percent(service.uptime30)}</dd>
+          <dt>{t.uptime30}</dt>
+          <dd>{percent(service.uptime30, t)}</dd>
         </div>
         <div>
-          <dt>Uptime, 90 days</dt>
-          <dd>{percent(service.uptime90)}</dd>
+          <dt>{t.uptime90}</dt>
+          <dd>{percent(service.uptime90, t)}</dd>
         </div>
         {service.responseMs !== null && (
           <div>
-            <dt>Average response</dt>
+            <dt>{t.averageResponse}</dt>
             <dd>{`${service.responseMs} ms`}</dd>
           </div>
         )}
         <div>
-          <dt>Last incident</dt>
+          <dt>{t.lastIncident}</dt>
           <dd>
             {service.lastIncident
-              ? `${day(service.lastIncident.startedAt)} · ${duration(service.lastIncident.durationSeconds)}`
-              : 'None recorded'}
+              ? `${day(service.lastIncident.startedAt, t)} · ${duration(service.lastIncident.durationSeconds)}`
+              : t.noneRecorded}
           </dd>
         </div>
       </dl>
@@ -133,12 +132,12 @@ function ServiceRow({ service }: { service: Service }) {
   );
 }
 
-function IncidentList({ incidents, latestOnly }: { incidents: Incident[]; latestOnly: boolean }) {
+function IncidentList({ incidents, latestOnly, t }: { incidents: Incident[]; latestOnly: boolean; t: StatusBoardCopy }) {
   return (
     <Card className={styles.incidents}>
       <div className={styles.sectionHead}>
-        <h2>Recent incidents</h2>
-        <span>{latestOnly ? 'Latest incident for each service, last 90 days' : 'Last 90 days'}</span>
+        <h2>{t.recentIncidents}</h2>
+        <span>{latestOnly ? t.latestOnly : t.last90}</span>
       </div>
       {incidents.length
         ? (
@@ -151,7 +150,7 @@ function IncidentList({ incidents, latestOnly }: { incidents: Incident[]; latest
                   <div>
                     <strong>{incident.service}</strong>
                     <span>
-                      {`Down for ${duration(incident.durationSeconds)} · started ${when(incident.startedAt)}`}
+                      {t.incident(duration(incident.durationSeconds), when(incident.startedAt, t))}
                       {incident.reason ? ` · ${incident.reason}` : ''}
                     </span>
                   </div>
@@ -159,12 +158,12 @@ function IncidentList({ incidents, latestOnly }: { incidents: Incident[]; latest
               ))}
             </ol>
           )
-        : <p className={styles.empty}>No incidents in the last 90 days.</p>}
+        : <p className={styles.empty}>{t.noIncidents}</p>}
     </Card>
   );
 }
 
-export function StatusBoard({ report, children }: { report: UptimeReport; children: ReactNode }) {
+export function StatusBoard({ report, t, children }: { report: UptimeReport; t: StatusBoardCopy; children: ReactNode }) {
   const { services } = report;
   const down = services.filter(service => service.state === 'down').length;
   const up = services.filter(service => service.state === 'up').length;
@@ -175,15 +174,15 @@ export function StatusBoard({ report, children }: { report: UptimeReport; childr
     .map(name => ({ name, members: services.filter(service => service.group === name) }))
     .filter(group => group.members.length);
 
-  let headline = `All ${services.length} services operational`;
+  let headline = t.allUp(services.length);
   if (down) {
-    headline = `${down} of ${services.length} services down`;
+    headline = t.someDown(down, services.length);
   } else if (up < services.length) {
-    headline = `${up} of ${services.length} services operational`;
+    headline = t.someUp(up, services.length);
   }
   const checked = report.source === 'snapshot'
-    ? `Live data is unavailable. Showing the snapshot from ${day(report.checkedAt)}.`
-    : `Checked ${when(report.checkedAt)} · refreshed every 5 minutes`;
+    ? t.snapshot(day(report.checkedAt, t))
+    : t.checked(when(report.checkedAt, t));
 
   return (
     <>
@@ -204,16 +203,16 @@ export function StatusBoard({ report, children }: { report: UptimeReport; childr
 
           <dl className={styles.summary}>
             <div className={styles.summaryMain}>
-              <dt>Average uptime, 90 days</dt>
-              <dd>{percent(average, 2)}</dd>
+              <dt>{t.averageUptime}</dt>
+              <dd>{percent(average, t, 2)}</dd>
             </div>
             <div>
-              <dt>Services up</dt>
+              <dt>{t.servicesUp}</dt>
               <dd>{`${up} / ${services.length}`}</dd>
             </div>
             <div>
-              <dt>Last incident</dt>
-              <dd>{lastIncident ? day(lastIncident.startedAt) : 'None in 90 days'}</dd>
+              <dt>{t.lastIncident}</dt>
+              <dd>{lastIncident ? day(lastIncident.startedAt, t) : t.noneIn90}</dd>
             </div>
           </dl>
         </div>
@@ -224,37 +223,35 @@ export function StatusBoard({ report, children }: { report: UptimeReport; childr
           {groups.map(group => (
             <Card key={group.name} className={styles.group}>
               <div className={styles.sectionHead}>
-                <h2>{group.name}</h2>
-                <span>{`${group.members.length} service${group.members.length === 1 ? '' : 's'}`}</span>
+                <h2>{t.groups[group.name] ?? group.name}</h2>
+                <span>{t.serviceCount(group.members.length)}</span>
               </div>
               <ul className={styles.services}>
-                {group.members.map(service => <ServiceRow key={service.id} service={service} />)}
+                {group.members.map(service => <ServiceRow key={service.id} service={service} t={t} />)}
               </ul>
             </Card>
           ))}
 
-          <ul className={styles.legend} aria-label="Bar colours">
-            <li data-level="up">100%</li>
-            <li data-level="minor">99% to 100%</li>
-            <li data-level="degraded">95% to 99%</li>
-            <li data-level="down">Under 95%</li>
-            <li data-level="none">No records</li>
+          <ul className={styles.legend} aria-label={t.legendLabel}>
+            {(['up', 'minor', 'degraded', 'down', 'none'] as const).map((level, index) => (
+              <li key={level} data-level={level}>{t.legend[index]}</li>
+            ))}
           </ul>
 
-          <IncidentList incidents={report.incidents} latestOnly={report.source === 'public'} />
+          <IncidentList incidents={report.incidents} latestOnly={report.source === 'public'} t={t} />
 
           <Card className="srv-status-v2-help">
             <CardContent>
               <div>
-                <strong>Something looks wrong on your server?</strong>
-                <span>Status covers shared infrastructure. Account or server-specific issues still need support.</span>
+                <strong>{t.help.title}</strong>
+                <span>{t.help.text}</span>
               </div>
               <div>
                 <a href="https://wa.me/447441426993" target="_blank" rel="noopener noreferrer">
-                  WhatsApp support
+                  {t.help.whatsapp}
                 </a>
                 <a href="https://dash.stealthrdp.com/submitticket.php">
-                  Open a ticket
+                  {t.help.ticket}
                 </a>
               </div>
             </CardContent>

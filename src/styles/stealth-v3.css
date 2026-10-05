@@ -6660,3 +6660,127 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
     grid-column: 2;
   }
 }
+
+/* ==========================================================================
+   Header actions and WhatsApp, Oct 2026 (owner review).
+   - The WhatsApp link in the bar reads like Log In: a green glyph and quiet text, no pill.
+   - The floating WhatsApp button is one round green button, without a text label.
+   Last in the file so it wins over the earlier WhatsApp rules.
+   ========================================================================== */
+
+.srv3-whatsapp-link {
+  min-height: 0 !important;
+  gap: 6px !important;
+  border: 0 !important;
+  border-radius: var(--radius-md) !important;
+  background: transparent !important;
+  padding: 10px 12px !important;
+  color: var(--text-muted) !important;
+  font-size: 0.8125rem !important;
+  font-weight: 600 !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.srv3-whatsapp-link:hover {
+  background: color-mix(in srgb, var(--text) 4%, transparent) !important;
+  color: var(--foreground) !important;
+}
+
+.srv3-whatsapp-link .sr-wa-mark {
+  background: transparent;
+  color: var(--sr-raw-16a34a);
+  box-shadow: none;
+}
+
+.srv-whatsapp-float,
+.srv-whatsapp-float:hover {
+  min-height: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.srv-whatsapp-float .sr-wa-mark {
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--sr-raw-000000) 22%, transparent);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.srv-whatsapp-float:hover .sr-wa-mark {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px color-mix(in srgb, var(--sr-raw-000000) 26%, transparent);
+}
+
+@media (max-width: 520px) {
+  .srv-whatsapp-float .sr-wa-mark {
+    width: 52px;
+    height: 52px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv-whatsapp-float .sr-wa-mark {
+    transition: none;
+    transform: none !important;
+  }
+}
+
+/* Header labels never wrap. The WhatsApp link shortens as the bar gets tight: the full label from
+   1400px, "WhatsApp" from 1180px, the icon alone below that (the label stays for screen readers).
+   Spacing tightens below 1500px so German and Spanish fit. */
+.srv3-nav a,
+.srv3-header-actions a {
+  white-space: nowrap;
+}
+
+.srv3-wa-short {
+  display: none;
+}
+
+@media (max-width: 1499px) {
+  .srv3-header-row {
+    gap: 20px;
+  }
+
+  .srv3-nav a,
+  .srv3-login {
+    padding-inline: 9px;
+  }
+}
+
+@media (max-width: 1399px) {
+  .srv3-wa-long {
+    display: none;
+  }
+
+  .srv3-wa-short {
+    display: inline;
+  }
+}
+
+@media (max-width: 1179px) {
+  .srv3-header-row {
+    gap: 12px;
+  }
+
+  .srv3-nav a,
+  .srv3-login {
+    padding-inline: 7px;
+  }
+
+  .srv3-whatsapp-link {
+    padding-inline: 8px !important;
+  }
+
+  .srv3-wa-short {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

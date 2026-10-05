@@ -18,7 +18,8 @@ import { createElement } from 'react';
 
 /* Jump tiles at the top of the resource index pages: one per collection. */
 
-export type ResourceTopic = { id: string; title: string; count: number; unit: string; description?: string };
+/* `iconHint` is an English title to pick the icon from when `title` is in another language. */
+export type ResourceTopic = { id: string; title: string; count: number; unit: string; description?: string; iconHint?: string };
 
 const icons: Array<[RegExp, Icon]> = [
   [/start|introduction|getting/i, RocketLaunch],
@@ -43,7 +44,7 @@ export function ResourceTopics({ topics, label = 'Browse by topic' }: { topics: 
     <nav className="sr-topics" aria-label={label}>
       <ul>
         {topics.map((topic) => {
-          const glyph = createElement(iconFor(topic.title), { 'size': 20, 'weight': 'duotone', 'aria-hidden': true });
+          const glyph = createElement(iconFor(topic.iconHint ?? topic.title), { 'size': 20, 'weight': 'duotone', 'aria-hidden': true });
           return (
             <li key={topic.id}>
               <a href={`#${topic.id}`}>

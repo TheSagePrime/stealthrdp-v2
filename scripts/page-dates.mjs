@@ -6,7 +6,11 @@
    markup, class names, imports and comments removed.
 
    pnpm page-dates          update the file (the pre-commit hook runs this)
-   pnpm check:page-dates    fail when the file is stale (CI runs this) */
+   pnpm check:page-dates    fail when the file is stale (CI runs this)
+   pnpm page-dates --keep-dates
+                            refresh fingerprints but keep every date. Only for code changes that
+                            change no page's words (a refactor, a new prop), and only after the
+                            built HTML of every affected page was compared and found unchanged. */
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -18,24 +22,28 @@ const src = relative => pathToFileURL(path.join(root, relative)).href;
 const manifestFile = 'src/content/page-dates.json';
 
 const marketing = 'src/app/[locale]/(marketing)';
-const osPage = ['src/components/site/os/OsSections.tsx', 'src/components/site/os/OsSession.tsx', 'src/components/site/PricingExplorer.tsx', 'src/content/plans.json'];
+/* The words of a page in one language: shared components plus that language's copy files in
+   src/content/i18n/<language>/. Each language version keeps its own date. */
+const copy = (locale, name) => `src/content/i18n/${locale}/${name}`;
+const osPage = locale => ['src/components/site/os/OsSections.tsx', 'src/components/site/os/OsSession.tsx', 'src/components/site/PricingExplorer.tsx', 'src/content/plans.json', copy(locale, 'os.tsx'), copy(locale, 'pricing.ts')];
 const citadelComponents = fs.readdirSync(path.join(root, 'src/components/site/citadel'))
   .filter(file => file.endsWith('.tsx'))
   .map(file => `src/components/site/citadel/${file}`);
 
 /* Every indexable page that is not a guide or a doc declares the files its words come from.
    A new marketing route fails the check until it is listed here or in pagesWithoutDates. */
-const marketingSources = {
-  '/': [`${marketing}/page.tsx`, 'src/components/site/HomeHero.tsx', 'src/components/site/HomePricing.tsx', 'src/content/plans.json', 'src/content/testimonials.json'],
-  '/plans': [`${marketing}/plans/page.tsx`, ...osPage],
-  '/windows-vps': [`${marketing}/windows-vps/page.tsx`, ...osPage],
-  '/linux-vps': [`${marketing}/linux-vps/page.tsx`, ...osPage],
-  '/citadel': [`${marketing}/citadel/page.tsx`, ...citadelComponents],
-  '/about': [`${marketing}/about/page.tsx`, 'src/components/site/about/AboutMap.tsx', 'src/content/testimonials.json'],
-  '/faq': [`${marketing}/faq/page.tsx`, 'src/components/site/FaqExplorer.tsx', 'src/content/faqs.json'],
-  '/privacy': [`${marketing}/privacy/page.tsx`],
+const marketingSourcesFor = locale => ({
+  '/': [`${marketing}/page.tsx`, 'src/components/site/HomeHero.tsx', 'src/components/site/HomePricing.tsx', 'src/content/plans.json', 'src/content/testimonials.json', copy(locale, 'home.ts'), copy(locale, 'pricing.ts')],
+  '/plans': [`${marketing}/plans/page.tsx`, ...osPage(locale), copy(locale, 'plans.tsx')],
+  '/windows-vps': [`${marketing}/windows-vps/page.tsx`, ...osPage(locale), copy(locale, 'windows-vps.tsx')],
+  '/linux-vps': [`${marketing}/linux-vps/page.tsx`, ...osPage(locale), copy(locale, 'linux-vps.tsx')],
+  '/citadel': [`${marketing}/citadel/page.tsx`, ...citadelComponents, copy(locale, 'citadel.ts')],
+  '/about': [`${marketing}/about/page.tsx`, 'src/components/site/about/AboutMap.tsx', 'src/content/testimonials.json', copy(locale, 'about.ts')],
+  '/faq': [`${marketing}/faq/page.tsx`, 'src/components/site/FaqExplorer.tsx', locale === 'en' ? 'src/content/faqs.json' : copy(locale, 'faqs.ts'), copy(locale, 'faq.ts')],
+  '/privacy': [`${marketing}/privacy/page.tsx`, copy(locale, 'privacy.tsx')],
   '/rdp-vps': [`${marketing}/rdp-vps/page.tsx`, 'src/content/rdp-vps.ts'],
-};
+});
+const marketingSources = marketingSourcesFor('en');
 
 /* Live status data and index pages: their own content rarely changes, and every guide and doc
    they list already carries its own date in the sitemap. */
@@ -44,7 +52,16 @@ const pagesWithoutDates = new Set(['/status', '/blog', '/docs', '/resources', '/
 export async function pageSources() {
   const { articlePath, blogArticles, citadelDocsArticles, docPublicSlug, helpDocsArticles } = await import(src('src/lib/stealth/articles.ts'));
   const { defaultSeoConfig } = await import(src('src/config/seo.ts'));
+  const { AllLocales, routeLocales } = await import(src('src/config/i18n.ts'));
   const sources = new Map(Object.entries(marketingSources));
+  /* German and Spanish versions of the pages published in those languages. */
+  for (const locale of AllLocales.filter(item => item !== 'en')) {
+    for (const [route, files] of Object.entries(marketingSourcesFor(locale))) {
+      if (routeLocales(route).includes(locale)) {
+        sources.set(`/${locale}${route === '/' ? '' : route}`, files);
+      }
+    }
+  }
 
   for (const article of blogArticles) {
     sources.set(articlePath(article), [`src/content/guides/${article.slug}.html`]);
@@ -88,6 +105,7 @@ function fingerprint(files) {
 
 async function main() {
   const check = process.argv.includes('--check');
+  const keepDates = process.argv.includes('--keep-dates');
   const { sources, undeclared } = await pageSources();
   if (undeclared.length) {
     console.error(`[page-dates] declare the source files of ${undeclared.join(', ')} in scripts/page-dates.mjs`);
@@ -103,6 +121,9 @@ async function main() {
     const entry = previous[publicPath];
     if (entry?.fingerprint === current) {
       next[publicPath] = entry;
+    } else if (keepDates && entry) {
+      next[publicPath] = { updated: entry.updated, fingerprint: current };
+      changed.push(publicPath);
     } else {
       next[publicPath] = { updated: today, fingerprint: current };
       changed.push(publicPath);
@@ -122,7 +143,9 @@ async function main() {
 
   fs.writeFileSync(path.join(root, manifestFile), `${JSON.stringify(next, null, 2)}\n`);
   for (const publicPath of changed) {
-    console.log(`[page-dates] ${publicPath} updated ${today}`);
+    console.log(keepDates && previous[publicPath]
+      ? `[page-dates] ${publicPath} fingerprint refreshed, date kept`
+      : `[page-dates] ${publicPath} updated ${today}`);
   }
   for (const publicPath of removed) {
     console.log(`[page-dates] ${publicPath} removed`);

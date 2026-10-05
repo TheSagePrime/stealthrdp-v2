@@ -20,19 +20,29 @@ Never invent reviews, numbers, stock, deadlines, guarantees or live data.
 | Regions | USA and Europe. Data centers: Phoenix, Arizona (USA plans) and Amsterdam, Netherlands (EU plans). | `src/content/plans.json`; locations: owner, Oct 2026 |
 | Access | Full Administrator access on Windows, full Root access on Linux. | FAQ |
 | IP address | Every server has a dedicated IPv4 address. An IP change costs €5 per change, requested through support. | Owner, Oct 2026 |
-| Windows licensing | Microsoft licensing is not included. Windows Server Evaluation may be provided for evaluation only. The customer is responsible for licensing. | `/docs/windows-licensing` |
+| Windows licensing | Microsoft licensing is not included. Windows Server Evaluation may be provided for evaluation only. The customer is responsible for licensing. No licence add-on is offered. | `/docs/windows-licensing`; no add-on: owner, Oct 2026 |
+| GDPR | Hosting in both data centers (Amsterdam and Phoenix) is GDPR-compliant. German: "DSGVO-konform". Spanish: "conforme al RGPD". | Owner, Oct 2026 |
 | Windows versions | Windows Server 2019, 2022 and 2025. | `src/app/[locale]/(marketing)/windows-vps/page.tsx` |
 | Linux distributions | The list on `/linux-vps` (`distros` in its page file). | WHMCS order form |
 | VPS prices | EUR. The values in `src/content/plans.json` (verified from WHMCS; see `source.verifiedAt`). | WHMCS store |
 | VPS stock | Read live from the WHMCS store pages every 6 hours. Never type stock numbers into copy. | `src/lib/stealth/live-plans.ts` |
 | Citadel | A separate Layer 7 HTTP/HTTPS protection product. It does not need a StealthRDP VPS. Plans: Starter €0, Growth €49, Scale €149 per month. | `src/app/[locale]/(marketing)/citadel/page.tsx`, WHMCS |
+| Network | 250 Mbps standard, optional 1 Gbps upgrade. Unlimited bandwidth under a fair-usage policy. | `src/content/faqs.json`; owner, Oct 2026 |
+| Billing cycles | Monthly, quarterly, semi-annual, annual and biannual (2 years); the whole period is charged up front. Savings against 12 × monthly etc. are built into each cycle price in WHMCS: on most plans 4-7% quarterly, 10-13% semi-annual, 15-18% annual and 25-32% biannual; Starter plans save less. For a specific plan, show its `discountLabel` from `plans.json`. Do not state fixed percentages for all plans. | WHMCS prices (checked Oct 2026: all 65 prices in `plans.json` match WHMCS) |
+| Payment methods | Major credit and debit cards (Visa, Mastercard, American Express, Discover) and selected cryptocurrencies; wire transfer and purchase orders possible for enterprise customers. | `src/content/faqs.json`; owner, Oct 2026 |
+| Plan changes | Upgrade any time in the client area, charged the prorated difference; downgrades usually at the end of the billing cycle. | `src/content/faqs.json`; owner, Oct 2026 |
+| Cancellation | Cancel any time in the client area; monthly plans run to the end of the paid period; all data is deleted when the service ends. | `src/content/faqs.json`; owner, Oct 2026 |
+| Data-centre security | Biometric access control and 24/7 surveillance, enterprise-grade firewalls, regular host security patches, encrypted storage on request. | `src/content/faqs.json`; owner, Oct 2026 |
+| Site copy | Every claim on the English site as of Oct 2026 is confirmed by the owner, including the home page's "Enterprise hardware", "No hidden fees" and "Cancel anytime". | Owner, Oct 2026 |
 | Reviews | Only real reviews with a source (Trustpilot or Discord), stored in `src/content/testimonials.json` and `reviews.json`. | Public review pages |
 
 ## Words to avoid
 
 - "guaranteed", "99.99% uptime", "100% uptime", "SLA" (there is no SLA)
 - "instant" without the 60-second wording above
-- "cheap" and "cheapest", in copy, titles and meta descriptions (owner, Oct 2026)
+- "cheap" and "cheapest", in copy, titles and meta descriptions (owner, Oct 2026). This applies to the
+  English pages only: the German "günstig" and the Spanish "barato" and "económico" are allowed (owner,
+  Oct 2026).
 - "priority support", and any promised response time
 - "SSD" alone (all storage is NVMe), "dedicated CPU", "no overselling", "guaranteed RAM"
 - any customer count, rating or revenue number that is not in the table

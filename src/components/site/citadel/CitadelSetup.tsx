@@ -1,5 +1,9 @@
+import type { SiteLocale } from '@/config/i18n';
+import type { CitadelCopy } from '@/content/i18n/en/citadel';
 import { CloudArrowUp, Globe, HardDrives, ShieldCheck } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
+import { localeHref } from '@/lib/stealth/i18n';
+import { linkLabel } from '@/lib/stealth/link-label';
 import styles from './CitadelSetup.module.css';
 
 /*
@@ -7,52 +11,37 @@ import styles from './CitadelSetup.module.css';
  * Facts follow the Citadel docs: getting started, Cloudflare setup, DNS.
  */
 
-const hops = [
-  { name: 'Visitor', note: 'Browser, bot or flood', icon: Globe },
-  { name: 'Cloudflare edge', note: 'Proxied (orange cloud) A record', icon: CloudArrowUp },
-  { name: 'Citadel', note: 'Reverse proxy checks every request', icon: ShieldCheck },
-  { name: 'Your origin', note: 'Receives clean traffic only', icon: HardDrives },
-];
+/* Icons for the hops in the copy: visitor, Cloudflare edge, Citadel, origin. */
+const hopIcons = [Globe, CloudArrowUp, ShieldCheck, HardDrives];
+const CORE_HOP = 2;
 
-const steps = [
-  {
-    title: 'Add the domain in the Citadel portal',
-    text: 'Enter the origin IP or hostname, the port and the TLS-to-origin setting.',
-  },
-  {
-    title: 'Point a proxied A record at Citadel',
-    text: 'Copy the ingress IP from the domain page. In Cloudflare DNS, point the apex and each protected hostname to it with Proxied on, and set SSL/TLS to Full.',
-  },
-  {
-    title: 'Citadel confirms the connection',
-    text: 'It checks about every minute, or select Check connection. The domain changes from Awaiting DNS to Active.',
-  },
-];
+export function CitadelSetup({ copy, locale = 'en' }: { copy: CitadelCopy['setup']; locale?: SiteLocale }) {
+  const records = [
+    { type: 'A', name: '@', content: copy.ingress, proxy: copy.proxied, protected: true },
+    { type: 'A', name: 'www', content: copy.ingress, proxy: copy.proxied, protected: true },
+    { type: 'MX', name: '@', content: copy.mail, proxy: copy.dnsOnly, protected: false },
+  ];
 
-const records = [
-  { type: 'A', name: '@', content: 'Citadel ingress IP', proxy: 'Proxied', protected: true },
-  { type: 'A', name: 'www', content: 'Citadel ingress IP', proxy: 'Proxied', protected: true },
-  { type: 'MX', name: '@', content: 'Your mail server', proxy: 'DNS only', protected: false },
-];
-
-export function CitadelSetup() {
   return (
     <div className={styles.setup}>
-      <ol className={styles.flow} aria-label="Request path">
-        {hops.map(({ name, note, icon: Icon }) => (
-          <li key={name} className={styles.hop} data-core={name === 'Citadel' || undefined}>
-            <span className={styles.hopIcon}>
-              <Icon size={22} weight="duotone" aria-hidden="true" />
-            </span>
-            <strong>{name}</strong>
-            <span>{note}</span>
-          </li>
-        ))}
+      <ol className={styles.flow} aria-label={copy.pathLabel}>
+        {copy.hops.map(({ name, note }, index) => {
+          const Icon = hopIcons[index] ?? Globe;
+          return (
+            <li key={name} className={styles.hop} data-core={index === CORE_HOP || undefined}>
+              <span className={styles.hopIcon}>
+                <Icon size={22} weight="duotone" aria-hidden="true" />
+              </span>
+              <strong>{name}</strong>
+              <span>{note}</span>
+            </li>
+          );
+        })}
       </ol>
 
       <div className={styles.grid}>
         <ol className={styles.steps}>
-          {steps.map(step => (
+          {copy.steps.map(step => (
             <li key={step.title}>
               <strong>{step.title}</strong>
               <p>{step.text}</p>
@@ -62,16 +51,13 @@ export function CitadelSetup() {
 
         <figure className={styles.dns}>
           <figcaption>
-            <span>Cloudflare DNS</span>
-            <span className={styles.dnsNote}>Your zone stays in Cloudflare</span>
+            <span>{copy.dnsTitle}</span>
+            <span className={styles.dnsNote}>{copy.dnsNote}</span>
           </figcaption>
           <table>
             <thead>
               <tr>
-                <th scope="col">Type</th>
-                <th scope="col">Name</th>
-                <th scope="col">Content</th>
-                <th scope="col">Proxy status</th>
+                {copy.columns.map(column => <th key={column} scope="col">{column}</th>)}
               </tr>
             </thead>
             <tbody>
@@ -86,16 +72,17 @@ export function CitadelSetup() {
             </tbody>
           </table>
           <p className={styles.dnsFoot}>
-            Mail, TXT and other non-web records do not change. A DNS-only (grey cloud) web
-            record skips Citadel.
+            {copy.dnsFoot}
             {' '}
-            <Link href="/citadel/docs/cloudflare-setup">Cloudflare setup guide</Link>
+            <Link href={localeHref('/citadel/docs/cloudflare-setup', locale)}>
+              {linkLabel(copy.dnsGuide, '/citadel/docs/cloudflare-setup', locale)}
+            </Link>
           </p>
         </figure>
       </div>
 
       <p className={styles.scope}>
-        Citadel protects Layer 7 HTTP/HTTPS traffic. Network-layer mitigation is a separate edge task.
+        {copy.scope}
       </p>
     </div>
   );

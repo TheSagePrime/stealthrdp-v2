@@ -1,0 +1,32 @@
+.links {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-product-1);
+  font-size: var(--text-small);
+  font-weight: 600;
+}
+
+.link,
+.current {
+  border-radius: var(--radius-sm);
+  padding: 6px 8px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.link {
+  color: var(--text-muted);
+  transition:
+    color 160ms ease,
+    background-color 160ms ease;
+}
+
+.link:hover {
+  background: color-mix(in srgb, var(--text) 5%, transparent);
+  color: var(--foreground);
+}
+
+.current {
+  color: var(--foreground);
+  box-shadow: inset 0 0 0 1px var(--border);
+}

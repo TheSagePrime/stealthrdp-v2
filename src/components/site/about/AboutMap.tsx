@@ -1,4 +1,5 @@
 import type { Icon } from '@phosphor-icons/react';
+import type { AboutCopy } from '@/content/i18n/en/about';
 import type { Plan } from '@/lib/stealth/content';
 import {
   GlobeHemisphereEast,
@@ -17,19 +18,20 @@ import styles from './AboutMap.module.css';
  */
 
 type Part = { name: string; note: string; icon: Icon };
+type MapWords = AboutCopy['map'];
 
-function parts(plans: Plan[]): Part[] {
+function parts(plans: Plan[], t: MapWords): Part[] {
   const from = (region: Plan['location']) => {
     const prices = plans.filter(plan => plan.location === region).map(plan => plan.pricing.monthly.amount);
-    return prices.length ? `From €${Math.min(...prices).toFixed(2)}/mo` : 'Plans listed per region';
+    return prices.length ? t.from(Math.min(...prices)) : t.noPlans;
   };
   return [
-    { name: 'USA region', note: from('USA'), icon: GlobeHemisphereWest },
+    { name: t.usa, note: from('USA'), icon: GlobeHemisphereWest },
     { name: 'Windows Server', note: '2019 · 2022 · 2025', icon: WindowsLogo },
-    { name: 'Citadel', note: 'Layer 7 DDoS shield', icon: ShieldCheck },
-    { name: 'EU region', note: from('EU'), icon: GlobeHemisphereEast },
-    { name: 'Linux', note: 'Ubuntu, Debian +3', icon: LinuxLogo },
-    { name: 'Client area', note: 'Billing and tickets', icon: UserCircle },
+    { name: 'Citadel', note: t.citadelNote, icon: ShieldCheck },
+    { name: t.eu, note: from('EU'), icon: GlobeHemisphereEast },
+    { name: 'Linux', note: t.linuxNote, icon: LinuxLogo },
+    { name: t.clientArea, note: t.clientAreaNote, icon: UserCircle },
   ];
 }
 
@@ -49,7 +51,7 @@ function Satellite({ part, x, y, width }: { part: Part; x: number; y: number; wi
   );
 }
 
-function Core({ x, y, r, count, id }: { x: number; y: number; r: number; count: number; id: string }) {
+function Core({ x, y, r, note, id }: { x: number; y: number; r: number; note: string; id: string }) {
   return (
     <g>
       <defs>
@@ -64,7 +66,7 @@ function Core({ x, y, r, count, id }: { x: number; y: number; r: number; count: 
       <circle cx={x} cy={y} r={r - 8} className={styles.inner} />
       <circle cx={x} cy={y} r={r} className={styles.pulse} />
       <text x={x} y={y + 2} textAnchor="middle" className={styles.coreName}>StealthRDP</text>
-      <text x={x} y={y + 19} textAnchor="middle" className={styles.coreNote}>{`${count} live plans`}</text>
+      <text x={x} y={y + 19} textAnchor="middle" className={styles.coreNote}>{note}</text>
     </g>
   );
 }
@@ -77,8 +79,8 @@ function Comet({ d, index }: { d: string; index: number }) {
   );
 }
 
-export function AboutMap({ plans }: { plans: Plan[] }) {
-  const list = parts(plans);
+export function AboutMap({ plans, words }: { plans: Plan[]; words: MapWords }) {
+  const list = parts(plans, words);
 
   /* Wide: three parts on each side of the core. */
   const core = { x: 300, y: 200, r: 56 };
@@ -112,7 +114,7 @@ export function AboutMap({ plans }: { plans: Plan[] }) {
             <Comet d={item.d} index={index} />
           </g>
         ))}
-        <Core {...core} count={plans.length} id="about-halo-wide" />
+        <Core {...core} note={words.livePlans(plans.length)} id="about-halo-wide" />
         {wide.map(item => <Satellite key={item.part.name} part={item.part} x={item.x} y={item.y} width={WIDTH} />)}
       </svg>
 
@@ -123,7 +125,7 @@ export function AboutMap({ plans }: { plans: Plan[] }) {
             <Comet d={item.d} index={index} />
           </g>
         ))}
-        <Core {...top} count={plans.length} id="about-halo-tall" />
+        <Core {...top} note={words.livePlans(plans.length)} id="about-halo-tall" />
         {tall.map(item => <Satellite key={item.part.name} part={item.part} x={item.x} y={item.y} width={tallWidth} />)}
       </svg>
     </div>

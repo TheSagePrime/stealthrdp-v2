@@ -3,20 +3,25 @@ import { DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/p
 import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { FaqExplorer } from '@/components/site/FaqExplorer';
 import { ResourceTopics } from '@/components/site/ResourceTopics';
-import { faqs } from '@/lib/stealth/content';
+import { faqPageCopy, faqsByLocale } from '@/content/i18n/faq';
 import { faqCategoryId } from '@/lib/stealth/faq-topics';
+import { localizedPageMetadata, requirePageLocale } from '@/lib/stealth/i18n-server';
 import { faqJsonLd } from '@/lib/stealth/structured-data';
-import { createPageMetadata } from '@/libs/seo/metadata';
 
-export const metadata: Metadata = createPageMetadata({
-  path: '/faq',
-  title: 'Common Questions — StealthRDP Resources',
-  description:
-    'Quick answers about StealthRDP VPS plans, setup, operating systems, upgrades, refunds, billing, security, and support.',
-  ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
-});
+const ogImage = 'https://www.stealthrdp.com/assets/og-cover.png';
 
-export default function FaqPage() {
+export async function generateMetadata(): Promise<Metadata> {
+  return localizedPageMetadata('/faq', {
+    en: { ...faqPageCopy.en.meta, ogImage },
+    de: { ...faqPageCopy.de.meta, ogImage },
+    es: { ...faqPageCopy.es.meta, ogImage },
+  });
+}
+
+export default async function FaqPage() {
+  const locale = await requirePageLocale('/faq');
+  const t = faqPageCopy[locale];
+  const faqs = faqsByLocale[locale];
   const toc = Array.from(new Set(faqs.map(item => item.category))).map(category => ({
     title: category,
     url: `#${faqCategoryId(category)}`,
@@ -25,19 +30,16 @@ export default function FaqPage() {
 
   return (
     <DocsPage toc={toc} tableOfContent={{ style: 'clerk' }}>
-      <DocsTitle>Common questions</DocsTitle>
-      <DocsDescription>
-        Plans, setup, billing, operating systems, security, refunds, and support.
-        Search from the resource bar above or jump to a topic.
-      </DocsDescription>
+      <DocsTitle>{t.title}</DocsTitle>
+      <DocsDescription>{t.description}</DocsDescription>
       <ResourceTopics
-        label="FAQ topics"
+        label={t.topicsLabel}
         topics={toc.map((item) => {
           const count = faqs.filter(faq => `#${faqCategoryId(faq.category)}` === item.url).length;
-          return { id: item.url.slice(1), title: item.title, count, unit: count === 1 ? 'answer' : 'answers' };
+          return { id: item.url.slice(1), title: item.title, count, unit: t.unit(count), iconHint: t.iconHints[item.title] };
         })}
       />
-      <FaqExplorer faqs={faqs} />
+      <FaqExplorer faqs={faqs} copy={{ licensingPhrase: t.licensingPhrase, support: t.support }} locale={locale} />
       <ProductionJsonLd data={faqJsonLd(faqs)} />
     </DocsPage>
   );

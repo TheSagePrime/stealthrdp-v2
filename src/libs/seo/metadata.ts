@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
 import type { SeoConfig } from '../../config/seo';
-import { AllLocales, I18nConfig } from '../../config/i18n';
+import { I18nConfig } from '../../config/i18n';
 import { resolveSeoSite } from '../../config/seo';
 import { classifyPath, robotsForClass } from './classify';
 import { getSeoConfig } from './config';
-import { localizedPath } from './locale';
+import { hreflangAlternates, localizedPath } from './locale';
 import { canonicalUrlForPath } from './normalize';
 
 export type PageMetadataInput = {
@@ -45,8 +45,9 @@ export function createPageMetadata(input: PageMetadataInput): Metadata {
     };
   }
 
+  /* Only the languages this page is published in, plus x-default; none for an English-only page. */
   const languages = Object.fromEntries(
-    AllLocales.map(item => [item, canonicalUrlForPath(localizedPath(input.path, item, config), site, config)]),
+    Object.entries(hreflangAlternates(input.path, config)).map(([lang, path]) => [lang, canonicalUrlForPath(path, site, config)]),
   );
 
   const metadata: Metadata = {
@@ -55,7 +56,7 @@ export function createPageMetadata(input: PageMetadataInput): Metadata {
     robots: robotsMetadata(robots),
     alternates: {
       canonical,
-      ...(AllLocales.length > 1 ? { languages } : {}),
+      ...(Object.keys(languages).length > 0 ? { languages } : {}),
       types: { 'application/rss+xml': `${site.origin}${config.articles.feedPath}` },
     },
     openGraph: {

@@ -1,6 +1,8 @@
 'use client';
 
+import type { CitadelCopy } from '@/content/i18n/en/citadel';
 import { useState } from 'react';
+import { fill } from '@/lib/stealth/i18n';
 import styles from './CitadelIncident.module.css';
 
 /*
@@ -14,12 +16,8 @@ const SPAN = 30; // minutes on the x axis
 const START_HOUR = 14;
 const attack = { start: 4, escalate: 5, end: 21 } as const;
 
-const events = [
-  { at: attack.start, label: 'Attack started' },
-  { at: attack.escalate, label: 'Auto raised the level to JS' },
-  { at: attack.end, label: `Attack ended · ${attack.end - attack.start} min` },
-  { at: 24.5, label: 'Auto healed to baseline' },
-] as const;
+/* When each event in the copy happens: started, escalated, ended, healed. */
+const eventTimes = [attack.start, attack.escalate, attack.end, 24.5];
 
 function seeded(seed: number) {
   let state = seed;
@@ -65,8 +63,10 @@ const totalBlocked = attackWindow.reduce((sum, sample) => sum + sample.blocked, 
 const EDGE_MAX = 20000;
 const ORIGIN_MAX = 2500;
 
-function compact(value: number) {
-  return value >= 1000 ? `${(value / 1000).toFixed(1)}k` : String(Math.round(value));
+type IncidentWords = CitadelCopy['incident'];
+
+function compact(value: number, t: IncidentWords) {
+  return value >= 1000 ? `${(value / 1000).toFixed(1).replace('.', t.decimal)}${t.thousand}` : String(Math.round(value));
 }
 
 function clock(t: number) {
@@ -93,9 +93,13 @@ const originShape = area(samples.map(sample => sample.proxy), ORIGIN_MAX);
 
 const ticks = [0, 5, 10, 15, 20, 25, 30];
 
-export function CitadelIncident() {
+export function CitadelIncident({ copy: t }: { copy: IncidentWords }) {
   const [hover, setHover] = useState<number | null>(null);
   const active = hover === null ? null : samples[hover]!;
+  const events = t.events.map((label, index) => ({
+    at: eventTimes[index] ?? 0,
+    label: fill(label, { minutes: attack.end - attack.start }),
+  }));
 
   const onMove = (event: React.PointerEvent<HTMLDivElement>) => {
     const box = event.currentTarget.getBoundingClientRect();
@@ -109,13 +113,13 @@ export function CitadelIncident() {
     <figure className={styles.card} aria-labelledby="citadel-incident-caption">
       <div className={styles.head}>
         <div>
-          <strong>A 17-minute HTTP flood</strong>
-          <span>Example attack · 14:00 to 14:30</span>
+          <strong>{t.title}</strong>
+          <span>{t.subtitle}</span>
         </div>
-        <ul className={styles.legend} aria-label="Series">
-          <li data-series="edge">Edge requests</li>
-          <li data-series="blocked">Blocked at the edge</li>
-          <li data-series="proxy">Proxied to origin</li>
+        <ul className={styles.legend} aria-label={t.seriesLabel}>
+          <li data-series="edge">{t.series.edge}</li>
+          <li data-series="blocked">{t.series.blocked}</li>
+          <li data-series="proxy">{t.series.proxy}</li>
         </ul>
       </div>
 
@@ -138,9 +142,9 @@ export function CitadelIncident() {
             ))}
 
             <div className={styles.panel} data-panel="edge">
-              <span className={styles.panelLabel}>At the Citadel edge · requests/s</span>
-              <span className={styles.axis} data-at="top">20k</span>
-              <span className={styles.axis} data-at="mid">10k</span>
+              <span className={styles.panelLabel}>{t.edgePanel}</span>
+              <span className={styles.axis} data-at="top">{t.axes.edgeTop}</span>
+              <span className={styles.axis} data-at="mid">{t.axes.edgeMid}</span>
               <svg viewBox="0 0 1000 100" preserveAspectRatio="none">
                 <path d={edgeShape.fill} className={styles.blockedFill} />
                 <path d={edgeProxy.fill} className={styles.proxyFill} />
@@ -149,8 +153,8 @@ export function CitadelIncident() {
             </div>
 
             <div className={styles.panel} data-panel="origin">
-              <span className={styles.panelLabel}>At your origin · requests/s</span>
-              <span className={styles.axis} data-at="top">2.5k</span>
+              <span className={styles.panelLabel}>{t.originPanel}</span>
+              <span className={styles.axis} data-at="top">{t.axes.originTop}</span>
               <svg viewBox="0 0 1000 100" preserveAspectRatio="none">
                 <path d={originShape.fill} className={styles.proxyFill} />
                 <path d={originShape.line} className={styles.proxyLine} />
@@ -162,9 +166,9 @@ export function CitadelIncident() {
                 <i className={styles.crosshair} style={{ left: left(active.t) }} />
                 <div className={styles.tooltip} data-flip={active.t > SPAN * 0.62 || undefined} style={{ left: left(active.t) }}>
                   <strong>{clock(active.t)}</strong>
-                  <span data-series="edge">{`Edge ${compact(active.edge)} r/s`}</span>
-                  <span data-series="blocked">{`Blocked ${compact(active.blocked)} r/s`}</span>
-                  <span data-series="proxy">{`Origin ${compact(active.proxy)} r/s`}</span>
+                  <span data-series="edge">{fill(t.tooltip.edge, { value: compact(active.edge, t) })}</span>
+                  <span data-series="blocked">{fill(t.tooltip.blocked, { value: compact(active.blocked, t) })}</span>
+                  <span data-series="proxy">{fill(t.tooltip.origin, { value: compact(active.proxy, t) })}</span>
                 </div>
               </>
             )}
@@ -179,38 +183,42 @@ export function CitadelIncident() {
 
         <dl className={styles.stats}>
           <div>
-            <dt>Peak at the edge</dt>
+            <dt>{t.stats.peakEdge}</dt>
             <dd>
-              {compact(peakEdge)}
-              <small>r/s</small>
+              {compact(peakEdge, t)}
+              <small>{t.rate}</small>
             </dd>
           </div>
           <div>
-            <dt>Peak at the origin after Auto escalated</dt>
+            <dt>{t.stats.peakOrigin}</dt>
             <dd>
-              {compact(originDuringAttack)}
-              <small>r/s</small>
+              {compact(originDuringAttack, t)}
+              <small>{t.rate}</small>
             </dd>
           </div>
           <div>
-            <dt>Attack requests stopped at the edge</dt>
+            <dt>{t.stats.stopped}</dt>
             <dd>
-              {(stoppedShare * 100).toFixed(1)}
+              {(stoppedShare * 100).toFixed(1).replace('.', t.decimal)}
               <small>%</small>
             </dd>
           </div>
           <div>
-            <dt>Requests the origin never saw</dt>
+            <dt>{t.stats.neverSaw}</dt>
             <dd>
-              {`${(totalBlocked / 1e6).toFixed(1)}M`}
+              {`${(totalBlocked / 1e6).toFixed(1).replace('.', t.decimal)}${t.million}`}
             </dd>
           </div>
         </dl>
       </div>
 
       <figcaption id="citadel-incident-caption" className={styles.caption}>
-        {`Requests at the edge climb from about 500 to ${compact(peakEdge)} per second at ${clock(attack.start)}. `}
-        {`For one minute some of the flood reaches the origin, then Auto raises the challenge level to JS and origin traffic falls back to about ${compact(originDuringAttack)} requests per second until the attack ends at ${clock(attack.end)}.`}
+        {fill(t.caption, {
+          peak: compact(peakEdge, t),
+          start: clock(attack.start),
+          origin: compact(originDuringAttack, t),
+          end: clock(attack.end),
+        })}
       </figcaption>
     </figure>
   );

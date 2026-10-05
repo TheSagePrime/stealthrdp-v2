@@ -1,7 +1,10 @@
 'use client';
 
+import type { SiteLocale } from '@/config/i18n';
+import type { OsCopy } from '@/content/i18n/en/os';
 import { Laptop } from '@phosphor-icons/react';
 import { useEffect, useRef, useState } from 'react';
+import { osCopy } from '@/content/i18n/os';
 import styles from './OsSession.module.css';
 
 /*
@@ -17,42 +20,44 @@ type Kind = 'windows' | 'linux' | 'plans';
 /* An image may override how you connect to it; /plans mixes Windows and Linux. */
 type Image = { label: string; logo: string; client?: string; session?: string; access?: string };
 
-const content: Record<Kind, { client: string; session: string; access: string; images: Image[]; facts: string[] }> = {
-  windows: {
-    client: 'Remote Desktop',
-    session: 'RDP session',
-    access: 'Administrator',
-    images: [
-      { label: 'Windows Server 2019', logo: '/brand/windows.svg' },
-      { label: 'Windows Server 2022', logo: '/brand/windows.svg' },
-      { label: 'Windows Server 2025', logo: '/brand/windows.svg' },
-    ],
-    facts: ['Live in about 60 seconds', 'Dedicated IPv4', 'Unlimited bandwidth'],
-  },
-  linux: {
-    client: 'SSH client',
-    session: 'SSH session',
-    access: 'root',
-    images: [
-      { label: 'Ubuntu 24.04 LTS', logo: '/brand/ubuntu.svg' },
-      { label: 'Debian 13', logo: '/brand/debian.svg' },
-      { label: 'AlmaLinux 10', logo: '/brand/almalinux.svg' },
-      { label: 'Fedora 44', logo: '/brand/fedora.svg' },
-      { label: 'CentOS Stream 9', logo: '/brand/centos.svg' },
-    ],
-    facts: ['Live in about 60 seconds', 'Dedicated IPv4', 'Unlimited bandwidth'],
-  },
-  plans: {
-    client: 'Remote Desktop',
-    session: 'RDP session',
-    access: 'Administrator',
-    images: [
-      { label: 'Windows Server', logo: '/brand/windows.svg' },
-      { label: 'Linux', logo: '/brand/linux.svg', client: 'SSH client', session: 'SSH session', access: 'root' },
-    ],
-    facts: ['Live in about 60 seconds', 'Dedicated IPv4', 'Unlimited bandwidth'],
-  },
-};
+function sessionContent(t: OsCopy['session']): Record<Kind, { client: string; session: string; access: string; images: Image[]; facts: string[] }> {
+  return {
+    windows: {
+      client: t.windows.client,
+      session: t.windows.session,
+      access: 'Administrator',
+      images: [
+        { label: 'Windows Server 2019', logo: '/brand/windows.svg' },
+        { label: 'Windows Server 2022', logo: '/brand/windows.svg' },
+        { label: 'Windows Server 2025', logo: '/brand/windows.svg' },
+      ],
+      facts: t.facts,
+    },
+    linux: {
+      client: t.linux.client,
+      session: t.linux.session,
+      access: 'root',
+      images: [
+        { label: 'Ubuntu 24.04 LTS', logo: '/brand/ubuntu.svg' },
+        { label: 'Debian 13', logo: '/brand/debian.svg' },
+        { label: 'AlmaLinux 10', logo: '/brand/almalinux.svg' },
+        { label: 'Fedora 44', logo: '/brand/fedora.svg' },
+        { label: 'CentOS Stream 9', logo: '/brand/centos.svg' },
+      ],
+      facts: t.facts,
+    },
+    plans: {
+      client: t.windows.client,
+      session: t.windows.session,
+      access: 'Administrator',
+      images: [
+        { label: 'Windows Server', logo: '/brand/windows.svg' },
+        { label: t.linuxImage, logo: '/brand/linux.svg', client: t.linux.client, session: t.linux.session, access: 'root' },
+      ],
+      facts: t.facts,
+    },
+  };
+}
 
 const regions = ['USA', 'EU'] as const;
 
@@ -92,7 +97,7 @@ function useCycle(length: number, ms: number, root: React.RefObject<Element | nu
   return index;
 }
 
-function Core({ x, y, r, image, access, prefix, labelBelow = false }: {
+function Core({ x, y, r, image, access, prefix, signedInAs, labelBelow = false }: {
   x: number;
   y: number;
   r: number;
@@ -100,6 +105,7 @@ function Core({ x, y, r, image, access, prefix, labelBelow = false }: {
   image: Image;
   access: string;
   prefix: string;
+  signedInAs: string;
 }) {
   return (
     <g>
@@ -112,7 +118,7 @@ function Core({ x, y, r, image, access, prefix, labelBelow = false }: {
       <image key={image.logo} href={image.logo} x={x - r * 0.42} y={y - r * 0.42} width={r * 0.84} height={r * 0.84} className={styles.logo} />
       <text key={image.label} x={x} y={labelBelow ? y + r + 28 : y - r - 18} textAnchor="middle" className={styles.version}>{image.label}</text>
       <text x={x} y={labelBelow ? y + r + 50 : y + r + 26} textAnchor="middle" className={styles.access}>
-        Signed in as
+        {signedInAs}
         {' '}
         <tspan className={styles.accessUser}>{access}</tspan>
       </text>
@@ -181,8 +187,9 @@ function Defs({ prefix }: { prefix: string }) {
 }
 
 /* `imageIndex` lets a caller pick the image, so the homepage hero shows Windows or Linux in step with its headline. */
-export function OsSession({ kind, imageIndex }: { kind: Kind; imageIndex?: number }) {
-  const data = content[kind];
+export function OsSession({ kind, imageIndex, locale = 'en' }: { kind: Kind; imageIndex?: number; locale?: SiteLocale }) {
+  const t = osCopy[locale].session;
+  const data = sessionContent(t)[kind];
   const root = useRef<HTMLDivElement>(null);
   const cycledIndex = useCycle(imageIndex === undefined ? data.images.length : 1, 2600, root);
   const regionIndex = useCycle(regions.length, 3900, root);
@@ -210,11 +217,11 @@ export function OsSession({ kind, imageIndex }: { kind: Kind; imageIndex?: numbe
           <rect x="6" y="177" width="176" height="56" rx="28" className={styles.pill} />
           <circle cx="36" cy="205" r="18" className={styles.pillIcon} />
           <Laptop x={25} y={194} size={22} weight="duotone" className={styles.icon} />
-          <text x="62" y="201" className={styles.name}>Your computer</text>
+          <text x="62" y="201" className={styles.name}>{t.computer}</text>
           <text x="62" y="218" className={styles.note}>{client}</text>
         </g>
 
-        <Core x={420} y={205} r={66} image={image} access={access} prefix={`${kind}-w`} />
+        <Core x={420} y={205} r={66} image={image} access={access} prefix={`${kind}-w`} signedInAs={t.signedInAs} />
 
         {data.facts.map((fact, index) => {
           const y = 150 + index * 55;
@@ -235,7 +242,7 @@ export function OsSession({ kind, imageIndex }: { kind: Kind; imageIndex?: numbe
             <text x={390 + index * 62} y="369" textAnchor="middle">{item}</text>
           </g>
         ))}
-        <text x="420" y="404" textAnchor="middle" className={styles.note}>Region chosen per plan</text>
+        <text x="420" y="404" textAnchor="middle" className={styles.note}>{t.regionNote}</text>
       </svg>
 
       {/* Tall: computer on top, VPS core below, for phones. */}
@@ -254,11 +261,11 @@ export function OsSession({ kind, imageIndex }: { kind: Kind; imageIndex?: numbe
           <rect x="92" y="20" width="176" height="56" rx="28" className={styles.pill} />
           <circle cx="122" cy="48" r="18" className={styles.pillIcon} />
           <Laptop x={111} y={37} size={22} weight="duotone" className={styles.icon} />
-          <text x="148" y="44" className={styles.name}>Your computer</text>
+          <text x="148" y="44" className={styles.name}>{t.computer}</text>
           <text x="148" y="61" className={styles.note}>{client}</text>
         </g>
 
-        <Core x={180} y={262} r={58} image={image} access={access} prefix={`${kind}-t`} labelBelow />
+        <Core x={180} y={262} r={58} image={image} access={access} prefix={`${kind}-t`} signedInAs={t.signedInAs} labelBelow />
 
         {data.facts.map((fact, index) => {
           /* Two on the first row, one centred below. */
@@ -284,7 +291,7 @@ export function OsSession({ kind, imageIndex }: { kind: Kind; imageIndex?: numbe
             <text x={150 + index * 62} y="511" textAnchor="middle">{item}</text>
           </g>
         ))}
-        <text x="180" y="546" textAnchor="middle" className={styles.note}>Region chosen per plan</text>
+        <text x="180" y="546" textAnchor="middle" className={styles.note}>{t.regionNote}</text>
       </svg>
     </div>
   );

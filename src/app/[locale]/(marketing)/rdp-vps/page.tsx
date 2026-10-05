@@ -5,6 +5,7 @@ import { RelatedArticles } from '@/components/site/RelatedArticles';
 import { ResourceDocsLayout } from '@/components/site/ResourceDocsLayout';
 import { articleHeadings, TrustedArticleBody } from '@/components/site/TrustedArticleBody';
 import { rdpVpsGuide } from '@/content/rdp-vps';
+import { requirePageLocale } from '@/lib/stealth/i18n-server';
 import { formatUpdated, pageUpdated } from '@/lib/stealth/page-dates';
 import { guidePageTree } from '@/lib/stealth/resource-tree';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
@@ -17,7 +18,8 @@ export const metadata: Metadata = createPageMetadata({
   ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
-export default function RdpVpsPage() {
+export default async function RdpVpsPage() {
+  await requirePageLocale('/rdp-vps');
   const canonical = 'https://www.stealthrdp.com/rdp-vps';
   const dateModified = pageUpdated('/rdp-vps') ?? rdpVpsGuide.datePublished;
   const toc = articleHeadings(rdpVpsGuide.html).map(heading => ({

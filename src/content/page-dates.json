@@ -1,11 +1,11 @@
 {
   "/": {
     "updated": "2026-10-02",
-    "fingerprint": "476d44e706581e74"
+    "fingerprint": "03292df78d2c7e41"
   },
   "/about": {
     "updated": "2026-10-02",
-    "fingerprint": "e9717a0471862d93"
+    "fingerprint": "fdc86f2d27c4fc5e"
   },
   "/blog/5-ways-to-optimize-your-rdp-performance-for-remote-work.html": {
     "updated": "2026-10-02",
@@ -73,7 +73,7 @@
   },
   "/citadel": {
     "updated": "2026-10-02",
-    "fingerprint": "ae8f3f9b5bb799de"
+    "fingerprint": "ee3982cc8632856d"
   },
   "/citadel/docs/allowlists": {
     "updated": "2026-09-27",
@@ -150,6 +150,38 @@
   "/citadel/docs/settings": {
     "updated": "2026-09-27",
     "fingerprint": "bd4d8f0637fab6a9"
+  },
+  "/de": {
+    "updated": "2026-10-05",
+    "fingerprint": "e60e82e22ac45563"
+  },
+  "/de/about": {
+    "updated": "2026-10-05",
+    "fingerprint": "cd34ed5dc02ecee5"
+  },
+  "/de/citadel": {
+    "updated": "2026-10-05",
+    "fingerprint": "a17e43a5f60bf0c6"
+  },
+  "/de/faq": {
+    "updated": "2026-10-05",
+    "fingerprint": "8824663adaf7f509"
+  },
+  "/de/linux-vps": {
+    "updated": "2026-10-05",
+    "fingerprint": "c3251162ea9f8330"
+  },
+  "/de/plans": {
+    "updated": "2026-10-05",
+    "fingerprint": "e5dedbc4842c098b"
+  },
+  "/de/privacy": {
+    "updated": "2026-10-05",
+    "fingerprint": "90efd6deef637556"
+  },
+  "/de/windows-vps": {
+    "updated": "2026-10-05",
+    "fingerprint": "2574151a92494657"
   },
   "/docs/10-ways-to-optimize-your-word-press-website-for-speed": {
     "updated": "2026-10-02",
@@ -239,25 +271,57 @@
     "updated": "2026-10-02",
     "fingerprint": "7d46b672c7af0437"
   },
+  "/es": {
+    "updated": "2026-10-05",
+    "fingerprint": "c91aa6fe898ff69e"
+  },
+  "/es/about": {
+    "updated": "2026-10-05",
+    "fingerprint": "8ea4a382aa16b0ee"
+  },
+  "/es/citadel": {
+    "updated": "2026-10-05",
+    "fingerprint": "755d93abe5181348"
+  },
+  "/es/faq": {
+    "updated": "2026-10-05",
+    "fingerprint": "e61951d2a95e0629"
+  },
+  "/es/linux-vps": {
+    "updated": "2026-10-05",
+    "fingerprint": "8ccc0902e03c8f94"
+  },
+  "/es/plans": {
+    "updated": "2026-10-05",
+    "fingerprint": "9fcd94f36c0de051"
+  },
+  "/es/privacy": {
+    "updated": "2026-10-05",
+    "fingerprint": "b8bed597ab37b28b"
+  },
+  "/es/windows-vps": {
+    "updated": "2026-10-05",
+    "fingerprint": "2c9340e91c89edfc"
+  },
   "/faq": {
-    "updated": "2026-10-02",
-    "fingerprint": "457139f2916ec2b0"
+    "updated": "2026-10-05",
+    "fingerprint": "fdf10abd600f1e1b"
   },
   "/linux-vps": {
-    "updated": "2026-10-02",
-    "fingerprint": "e2fddf37ab897447"
+    "updated": "2026-10-05",
+    "fingerprint": "f33d745cc1a1a340"
   },
   "/plans": {
     "updated": "2026-10-02",
-    "fingerprint": "a380e44651594cf2"
+    "fingerprint": "d237771f377cecae"
   },
   "/privacy": {
     "updated": "2026-10-01",
-    "fingerprint": "380f9cf4be8a9892"
+    "fingerprint": "3d92e89f787d5c53"
   },
   "/rdp-vps": {
     "updated": "2026-10-04",
-    "fingerprint": "00a14d746115600c"
+    "fingerprint": "65e113c481b8d47f"
   },
   "/vps-hosting-minecraft": {
     "updated": "2026-10-02",
@@ -265,6 +329,6 @@
   },
   "/windows-vps": {
     "updated": "2026-10-02",
-    "fingerprint": "073116dcbc4f3a33"
+    "fingerprint": "5ee1eee62bf77dcf"
   }
 }

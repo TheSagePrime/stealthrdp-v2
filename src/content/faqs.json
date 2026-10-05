@@ -68,7 +68,7 @@
   {
     "_id": "6824a1e3105d77ad34fbf0a3",
     "question": "What billing cycles do you offer?",
-    "answer": "We offer flexible billing cycles to suit different needs: Monthly (5% discount compared to standard rates), Quarterly (10% discount), Annual (20% discount), and BiAnnual/2-year (30% discount). The longer the billing cycle you choose, the greater your savings.",
+    "answer": "We offer five billing cycles: monthly, quarterly, semi-annual, annual and biannual (2 years). The longer the cycle, the more you save compared with paying monthly: on most plans 4-7% quarterly, 10-13% semi-annual, 15-18% annual and 25-32% biannual. Savings differ by plan, and the Starter plans save less. Each plan shows its exact saving for the cycle you select on the plans page.",
     "category": "Pricing & Billing",
     "displayOrder": 7,
     "isPublished": true,
@@ -79,7 +79,7 @@
   {
     "_id": "6824a1f8105d77ad34fbf0a8",
     "question": "How do the discounts work?",
-    "answer": "Discounts are automatically applied based on your selected billing cycle. For example, if a plan costs $100/month at standard rates, you would pay $95/month on the monthly cycle (5% off), $90/month on the quarterly cycle (10% off), $80/month on the annual cycle (20% off), or $70/month on the biannual cycle (30% off). The total amount charged will be for the entire period (e.g., 3 months for quarterly billing).",
+    "answer": "The saving is built into the price of each billing cycle, so you see the final amount before you order. You pay for the whole period up front. For example, if a plan costs €100 per month, a 16% annual saving means €1,008 for the year instead of €1,200, or €84 per month. The monthly price is the base price; there is no extra discount on monthly billing.",
     "category": "Pricing & Billing",
     "displayOrder": 8,
     "isPublished": true,

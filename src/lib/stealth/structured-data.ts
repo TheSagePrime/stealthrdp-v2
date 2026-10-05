@@ -57,7 +57,16 @@ function aggregateOffer(plans: Plan[]): Node {
   };
 }
 
-export function homeJsonLd(siteUrl: string, plans: Plan[]): Node[] {
+export function homeJsonLd(
+  siteUrl: string,
+  plans: Plan[],
+  words: { name: string; serviceType: string; description: string } = {
+    name: 'StealthRDP VPS hosting',
+    serviceType: 'Windows and Linux VPS hosting',
+    description: 'Windows and Linux VPS and RDP hosting with USA and EU regions.',
+  },
+  plansPath = '/plans',
+): Node[] {
   return [
     {
       '@context': 'https://schema.org',
@@ -69,10 +78,10 @@ export function homeJsonLd(siteUrl: string, plans: Plan[]): Node[] {
     {
       '@context': 'https://schema.org',
       '@type': 'Service',
-      'name': 'StealthRDP VPS hosting',
-      'serviceType': 'Windows and Linux VPS hosting',
-      'description': 'Windows and Linux VPS and RDP hosting with USA and EU regions.',
-      'url': `${siteUrl}/plans`,
+      'name': words.name,
+      'serviceType': words.serviceType,
+      'description': words.description,
+      'url': `${siteUrl}${plansPath}`,
       'areaServed': ['US', 'EU'],
       'provider': provider(siteUrl),
       'offers': aggregateOffer(plans),
@@ -88,8 +97,11 @@ export function osPageJsonLd(input: {
   description: string;
   plans: Plan[];
   questions: ReadonlyArray<readonly [string, string]>;
+  /* German and Spanish pages: the breadcrumb's first step in that language and its home URL. */
+  home?: { name: string; path: string };
 }): Node[] {
   const url = `${input.siteUrl}${input.path}`;
+  const home = input.home ?? { name: 'Home', path: '' };
   return [
     {
       '@context': 'https://schema.org',
@@ -106,7 +118,7 @@ export function osPageJsonLd(input: {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       'itemListElement': [
-        { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': input.siteUrl },
+        { '@type': 'ListItem', 'position': 1, 'name': home.name, 'item': `${input.siteUrl}${home.path}` },
         { '@type': 'ListItem', 'position': 2, 'name': input.name, 'item': url },
       ],
     },
@@ -114,11 +126,18 @@ export function osPageJsonLd(input: {
   ];
 }
 
-export function plansJsonLd(siteUrl: string, plans: Plan[]): Node {
+export function plansJsonLd(
+  siteUrl: string,
+  plans: Plan[],
+  words: { listName: string; describe: (plan: Plan) => string } = {
+    listName: 'StealthRDP VPS plans',
+    describe: plan => `${plan.specs.cpu}, ${plan.specs.ram} RAM, ${plan.specs.storage}, ${plan.location} region`,
+  },
+): Node {
   return {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    'name': 'StealthRDP VPS plans',
+    'name': words.listName,
     'itemListElement': plans.map((plan, index) => ({
       '@type': 'ListItem',
       'position': index + 1,
@@ -126,7 +145,7 @@ export function plansJsonLd(siteUrl: string, plans: Plan[]): Node {
         '@type': 'Service',
         'name': plan.name,
         'serviceType': 'VPS hosting',
-        'description': `${plan.specs.cpu}, ${plan.specs.ram} RAM, ${plan.specs.storage}, ${plan.location} region`,
+        'description': words.describe(plan),
         'provider': provider(siteUrl),
         'offers': offer(plan),
       },
@@ -184,14 +203,24 @@ export function techArticleJsonLd(input: {
 type CitadelPlan = { name: string; price: number; domains: string; bandwidth: string; checkout: string };
 
 /** Citadel as a service with one monthly offer per plan, from the same data the page shows. */
-export function citadelJsonLd(siteUrl: string, plans: CitadelPlan[]): Node {
+export function citadelJsonLd(
+  siteUrl: string,
+  plans: CitadelPlan[],
+  words: { name: string; serviceType: string; description: string; offer: (plan: CitadelPlan) => string; path: string } = {
+    name: 'Citadel Layer 7 DDoS protection',
+    serviceType: 'DDoS protection',
+    description: 'Layer 7 protection for HTTP/HTTPS applications: browser challenges, rate limits, allowlists, lockdown mode, caching and request logs.',
+    offer: plan => `${plan.domains}, ${plan.bandwidth} clean bandwidth, monthly billing`,
+    path: '/citadel',
+  },
+): Node {
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    'name': 'Citadel Layer 7 DDoS protection',
-    'serviceType': 'DDoS protection',
-    'description': 'Layer 7 protection for HTTP/HTTPS applications: browser challenges, rate limits, allowlists, lockdown mode, caching and request logs.',
-    'url': `${siteUrl}/citadel`,
+    'name': words.name,
+    'serviceType': words.serviceType,
+    'description': words.description,
+    'url': `${siteUrl}${words.path}`,
     'provider': provider(siteUrl),
     'offers': plans.map(plan => ({
       '@type': 'Offer',
@@ -199,19 +228,29 @@ export function citadelJsonLd(siteUrl: string, plans: CitadelPlan[]): Node {
       'price': plan.price,
       'priceCurrency': 'EUR',
       'url': plan.checkout,
-      'description': `${plan.domains}, ${plan.bandwidth} clean bandwidth, monthly billing`,
+      'description': words.offer(plan),
     })),
   };
 }
 
 /** The about page, describing the company: logo, social profiles and the 24/7 support contact. */
-export function aboutJsonLd(siteUrl: string, brand: { logoUrl?: string; socialProfiles?: string[] } = {}): Node[] {
-  const url = `${siteUrl}/about`;
+export function aboutJsonLd(
+  siteUrl: string,
+  brand: { logoUrl?: string; socialProfiles?: string[] } = {},
+  words: { pageName: string; description: string; crumb: string; path: string; home: { name: string; path: string } } = {
+    pageName: 'About StealthRDP',
+    description: 'Windows and Linux VPS hosting from data centers in Phoenix, Arizona and Amsterdam, Netherlands, and Citadel Layer 7 DDoS protection.',
+    crumb: 'About',
+    path: '/about',
+    home: { name: 'Home', path: '' },
+  },
+): Node[] {
+  const url = `${siteUrl}${words.path}`;
   return [
     {
       '@context': 'https://schema.org',
       '@type': 'AboutPage',
-      'name': 'About StealthRDP',
+      'name': words.pageName,
       'url': url,
       'mainEntity': {
         '@type': 'Organization',
@@ -220,7 +259,7 @@ export function aboutJsonLd(siteUrl: string, brand: { logoUrl?: string; socialPr
         'url': siteUrl,
         ...(brand.logoUrl ? { logo: brand.logoUrl } : {}),
         ...(brand.socialProfiles?.length ? { sameAs: brand.socialProfiles } : {}),
-        'description': 'Windows and Linux VPS hosting from data centers in Phoenix, Arizona and Amsterdam, Netherlands, and Citadel Layer 7 DDoS protection.',
+        'description': words.description,
         'contactPoint': {
           '@type': 'ContactPoint',
           'contactType': 'customer support',
@@ -238,8 +277,8 @@ export function aboutJsonLd(siteUrl: string, brand: { logoUrl?: string; socialPr
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       'itemListElement': [
-        { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': siteUrl },
-        { '@type': 'ListItem', 'position': 2, 'name': 'About', 'item': url },
+        { '@type': 'ListItem', 'position': 1, 'name': words.home.name, 'item': `${siteUrl}${words.home.path}` },
+        { '@type': 'ListItem', 'position': 2, 'name': words.crumb, 'item': url },
       ],
     },
   ];

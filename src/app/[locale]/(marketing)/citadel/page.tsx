@@ -19,59 +19,55 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { citadelCopy } from '@/content/i18n/citadel';
+import { portalDocHref, portalSectionIds } from '@/lib/stealth/citadel-portal';
+import { fill, localeHref } from '@/lib/stealth/i18n';
+import { localizedPageMetadata, requirePageLocale } from '@/lib/stealth/i18n-server';
+import { linkLabel } from '@/lib/stealth/link-label';
 import { citadelJsonLd } from '@/lib/stealth/structured-data';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
-import { createPageMetadata } from '@/libs/seo/metadata';
 import { buildPageJsonLd } from '@/libs/seo/schema';
 
-export const metadata: Metadata = createPageMetadata({
-  path: '/citadel',
-  title: 'Layer 7 DDoS Protection — Citadel by StealthRDP',
-  description:
-    'Layer 7 DDoS protection for websites and HTTP/HTTPS apps: adaptive challenges, rate limits, lockdown mode and origin protection. Starter plan from €0.',
-  ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
-});
+const ogImage = 'https://www.stealthrdp.com/assets/og-cover.png';
 
+export async function generateMetadata(): Promise<Metadata> {
+  return localizedPageMetadata('/citadel', {
+    en: { ...citadelCopy.en.meta, ogImage },
+    de: { ...citadelCopy.de.meta, ogImage },
+    es: { ...citadelCopy.es.meta, ogImage },
+  });
+}
+
+/* Plan names, prices (EUR per month) and WHMCS store links. The words are in the page copy. */
 const plans = [
-  {
-    name: 'Starter',
-    price: '€0',
-    domains: '2 domains',
-    bandwidth: '10 GB / month',
-    text: 'For smaller websites that want the same core request controls.',
-    checkout: 'https://dash.stealthrdp.com/store/layer-7-ddos-protection/citadel-starter',
-    featured: false,
-  },
-  {
-    name: 'Growth',
-    price: '€49',
-    domains: '5 domains',
-    bandwidth: '50 GB / month',
-    text: 'For production sites that need more protected domains and traffic.',
-    checkout: 'https://dash.stealthrdp.com/store/layer-7-ddos-protection/citadel-business',
-    featured: true,
-  },
-  {
-    name: 'Scale',
-    price: '€149',
-    domains: '10 domains',
-    bandwidth: '100 GB / month',
-    text: 'For multi-site deployments and larger clean-traffic allowances.',
-    checkout: 'https://dash.stealthrdp.com/store/layer-7-ddos-protection/citadel-enterprise',
-    featured: false,
-  },
+  { name: 'Starter', price: 0, checkout: 'https://dash.stealthrdp.com/store/layer-7-ddos-protection/citadel-starter', featured: false },
+  { name: 'Growth', price: 49, checkout: 'https://dash.stealthrdp.com/store/layer-7-ddos-protection/citadel-business', featured: true },
+  { name: 'Scale', price: 149, checkout: 'https://dash.stealthrdp.com/store/layer-7-ddos-protection/citadel-enterprise', featured: false },
 ] as const;
 
-export default function CitadelPage() {
+export default async function CitadelPage() {
+  const locale = await requirePageLocale('/citadel');
+  const t = citadelCopy[locale];
   const jsonLd = buildPageJsonLd(getSeoConfig());
+  const planCards = plans.map((plan, index) => ({ ...plan, ...t.plans[index]! }));
+  const guide = '/citadel/docs/getting-started';
+  const portalLinks = portalSectionIds.map((id, index) => ({
+    href: localeHref(portalDocHref(id), locale),
+    label: linkLabel(fill(t.portal.guide, { name: t.portal.sections[index]?.name ?? '' }), portalDocHref(id), locale),
+  }));
 
   return (
     <div className="srv-page srv-page-citadel srv-citadel-v2">
       <ProductionJsonLd
         data={citadelJsonLd(
           getSeoConfig().siteUrl,
-          plans.map(plan => ({ ...plan, price: Number(plan.price.replace(/[^\d.]/g, '')) })),
+          planCards.map(({ name, price, domains, bandwidth, checkout }) => ({ name, price, domains, bandwidth, checkout })),
+          {
+            ...t.jsonLd,
+            offer: plan => fill(t.jsonLd.offer, { domains: plan.domains, bandwidth: plan.bandwidth }),
+            path: localeHref('/citadel', locale),
+          },
         )}
       />
       {jsonLd.map(block => (
@@ -87,49 +83,37 @@ export default function CitadelPage() {
           <div className="srv-citadel-v2-copy">
             <Badge variant="outline" className="srv-citadel-v2-eyebrow">
               <ShieldCheck size={14} weight="fill" aria-hidden="true" />
-              Citadel · Layer 7 DDoS protection
+              {t.hero.badge}
             </Badge>
             <h1>
-              Make every request
+              {t.hero.title}
               {' '}
-              <span>earn its way to the origin.</span>
+              <span>{t.hero.titleSpan}</span>
             </h1>
-            <p>
-              Citadel sits in front of HTTP/HTTPS applications and decides what should
-              pass, be challenged, slowed, cached, escalated or blocked — before your
-              origin spends CPU, database work and bandwidth.
-            </p>
+            <p>{t.hero.text}</p>
             <div className="srv-citadel-v2-actions">
               <Button asChild size="lg">
                 <a href="#citadel-plans">
-                  Choose protection
+                  {t.hero.choose}
                   <ArrowRight size={16} aria-hidden="true" />
                 </a>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link href="/citadel/docs/getting-started">Read Citadel setup guide</Link>
+                <Link href={localeHref(guide, locale)}>{linkLabel(t.hero.guide, guide, locale)}</Link>
               </Button>
             </div>
             <div className="srv-citadel-v2-facts">
-              <span>
-                <strong>€0</strong>
-                {' '}
-                starter tier
-              </span>
-              <span>
-                <strong>6</strong>
-                {' '}
-                challenge modes
-              </span>
-              <span>
-                <strong>Per-path</strong>
-                {' '}
-                policy
-              </span>
+              {t.hero.facts.map(([value, label]) => (
+                <span key={label}>
+                  <strong>{value}</strong>
+                  {' '}
+                  {label}
+                </span>
+              ))}
             </div>
           </div>
 
-          <CitadelGate />
+          <CitadelGate copy={t.gate} />
         </div>
       </section>
 
@@ -137,16 +121,13 @@ export default function CitadelPage() {
         <div className="sr-container">
           <div className="srv-citadel-v2-heading">
             <div>
-              <p className="sr-kicker">How it connects</p>
-              <h2 id="citadel-setup-title">Point one A record. Citadel protects the site.</h2>
+              <p className="sr-kicker">{t.setupSection.kicker}</p>
+              <h2 id="citadel-setup-title">{t.setupSection.title}</h2>
             </div>
-            <p>
-              Cloudflare stays your DNS and edge. Citadel is the reverse proxy behind it that
-              decides which requests reach your origin.
-            </p>
+            <p>{t.setupSection.text}</p>
           </div>
 
-          <CitadelSetup />
+          <CitadelSetup copy={t.setup} locale={locale} />
         </div>
       </section>
 
@@ -154,16 +135,13 @@ export default function CitadelPage() {
         <div className="sr-container">
           <div className="srv-citadel-v2-heading">
             <div>
-              <p className="sr-kicker">Attack timeline</p>
-              <h2 id="citadel-incident-title">The edge takes the flood. The origin barely notices.</h2>
+              <p className="sr-kicker">{t.incidentSection.kicker}</p>
+              <h2 id="citadel-incident-title">{t.incidentSection.title}</h2>
             </div>
-            <p>
-              A 17-minute HTTP flood, drawn with the Edge, Proxy and Blocked series
-              that Citadel Analytics uses. Move across the chart to read each moment.
-            </p>
+            <p>{t.incidentSection.text}</p>
           </div>
 
-          <CitadelIncident />
+          <CitadelIncident copy={t.incident} />
         </div>
       </section>
 
@@ -171,18 +149,13 @@ export default function CitadelPage() {
         <div className="sr-container">
           <div className="srv-citadel-v2-heading">
             <div>
-              <p className="sr-kicker">Why Layer 7 is different</p>
-              <h2>Attack traffic can look normal until you inspect what it is doing.</h2>
+              <p className="sr-kicker">{t.threatsSection.kicker}</p>
+              <h2>{t.threatsSection.title}</h2>
             </div>
-            <p>
-              A Layer 7 DDoS attack floods a website with HTTP requests that look like
-              real visitors: page loads, logins, searches and API calls. Bandwidth filters
-              alone do not stop it. That is why Citadel focuses on requests, paths and
-              sessions instead of pretending every DDoS problem is just a bandwidth problem.
-            </p>
+            <p>{t.threatsSection.text}</p>
           </div>
 
-          <CitadelThreats />
+          <CitadelThreats copy={t.threats} />
         </div>
       </section>
 
@@ -190,16 +163,13 @@ export default function CitadelPage() {
         <div className="sr-container">
           <div className="srv-citadel-v2-heading">
             <div>
-              <p className="sr-kicker">Control surface</p>
-              <h2>Strong defaults, explicit exceptions, visible outcomes.</h2>
+              <p className="sr-kicker">{t.controlsSection.kicker}</p>
+              <h2>{t.controlsSection.title}</h2>
             </div>
-            <p>
-              Citadel is designed so an operator can understand why traffic changed
-              state without guessing what an invisible black box decided.
-            </p>
+            <p>{t.controlsSection.text}</p>
           </div>
 
-          <CitadelControls />
+          <CitadelControls copy={t.controls} />
         </div>
       </section>
 
@@ -207,16 +177,13 @@ export default function CitadelPage() {
         <div className="sr-container">
           <div className="srv-citadel-v2-heading">
             <div>
-              <p className="sr-kicker">Citadel portal</p>
-              <h2 id="citadel-portal-title">Run your protection yourself, from one portal.</h2>
+              <p className="sr-kicker">{t.portalSection.kicker}</p>
+              <h2 id="citadel-portal-title">{t.portalSection.title}</h2>
             </div>
-            <p>
-              Every setting on this page is self-serve. Billing, invoices and tickets stay in
-              the StealthRDP client area.
-            </p>
+            <p>{t.portalSection.text}</p>
           </div>
 
-          <CitadelPortal />
+          <CitadelPortal copy={t.portal} links={portalLinks} />
         </div>
       </section>
 
@@ -224,53 +191,50 @@ export default function CitadelPage() {
         <div className="sr-container">
           <div className="srv-citadel-v2-heading">
             <div>
-              <p className="sr-kicker">Plans</p>
-              <h2>Same protection model. Choose the domain and bandwidth allowance.</h2>
+              <p className="sr-kicker">{t.plansSection.kicker}</p>
+              <h2>{t.plansSection.title}</h2>
             </div>
-            <p>
-              Start free, then scale the allowance when the number of protected
-              properties or clean traffic grows.
-            </p>
+            <p>{t.plansSection.text}</p>
           </div>
 
           <div className="srv-citadel-v2-plans">
-            {plans.map(plan => (
+            {planCards.map(plan => (
               <Card key={plan.name} className="srv-citadel-v2-plan" data-featured={plan.featured}>
                 <CardHeader>
                   <div>
-                    <Badge variant="outline">{plan.featured ? 'Most popular' : 'Citadel'}</Badge>
+                    <Badge variant="outline">{plan.featured ? t.plansSection.mostPopular : 'Citadel'}</Badge>
                     <CardTitle>{plan.name}</CardTitle>
                   </div>
                   <div className="srv-citadel-v2-price">
-                    <strong>{plan.price}</strong>
-                    <span>/mo</span>
+                    <strong>{plan.priceLabel}</strong>
+                    <span>{t.plansSection.perMonth}</span>
                   </div>
                 </CardHeader>
                 <CardContent>
                   <p>{plan.text}</p>
                   <dl>
                     <div>
-                      <dt>Protected domains</dt>
+                      <dt>{t.plansSection.domains}</dt>
                       <dd>{plan.domains}</dd>
                     </div>
                     <div>
-                      <dt>Clean bandwidth</dt>
+                      <dt>{t.plansSection.bandwidth}</dt>
                       <dd>{plan.bandwidth}</dd>
                     </div>
                     <div>
-                      <dt>Challenge modes</dt>
-                      <dd>Cookie · JS · Interaction · Auto</dd>
+                      <dt>{t.plansSection.challengeModes}</dt>
+                      <dd>{t.plansSection.challengeModesValue}</dd>
                     </div>
                     <div>
-                      <dt>Attack mode</dt>
-                      <dd>Lockdown + allowlists</dd>
+                      <dt>{t.plansSection.attackMode}</dt>
+                      <dd>{t.plansSection.attackModeValue}</dd>
                     </div>
                   </dl>
                 </CardContent>
                 <CardFooter>
                   <Button asChild variant={plan.featured ? 'default' : 'outline'}>
-                    <a href={plan.checkout} aria-label={`Order Now: Citadel ${plan.name}`}>
-                      Order Now
+                    <a href={plan.checkout} aria-label={fill(t.plansSection.orderAria, { plan: plan.name })}>
+                      {t.plansSection.order}
                       <ArrowRight size={15} aria-hidden="true" />
                     </a>
                   </Button>
@@ -279,7 +243,7 @@ export default function CitadelPage() {
             ))}
           </div>
 
-          <CitadelIncluded />
+          <CitadelIncluded copy={t.included} />
         </div>
       </section>
 
@@ -292,19 +256,19 @@ export default function CitadelPage() {
                 {' '}
                 Citadel
               </Badge>
-              <h2>Protect the origin without turning the website into a CAPTCHA wall.</h2>
-              <p>Start with the free tier, then tune protection by domain and path as traffic changes.</p>
+              <h2>{t.final.title}</h2>
+              <p>{t.final.text}</p>
             </div>
             <div>
               <Button asChild size="lg">
                 <a href="https://dash.stealthrdp.com/store/layer-7-ddos-protection">
-                  View protection plans
+                  {t.final.plans}
                   {' '}
                   <ArrowRight size={16} aria-hidden="true" />
                 </a>
               </Button>
               <Button asChild size="lg" variant="outline">
-                <Link href="/status">See infrastructure status</Link>
+                <Link href={localeHref('/status', locale)}>{linkLabel(t.final.status, '/status', locale)}</Link>
               </Button>
             </div>
           </Card>
