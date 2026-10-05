@@ -171,6 +171,10 @@
     "updated": "2026-10-05",
     "fingerprint": "e5dedbc4842c098b"
   },
+  "/de/privacy": {
+    "updated": "2026-10-05",
+    "fingerprint": "90efd6deef637556"
+  },
   "/de/windows-vps": {
     "updated": "2026-10-05",
     "fingerprint": "2574151a92494657"
@@ -283,6 +287,10 @@
     "updated": "2026-10-05",
     "fingerprint": "9fcd94f36c0de051"
   },
+  "/es/privacy": {
+    "updated": "2026-10-05",
+    "fingerprint": "b8bed597ab37b28b"
+  },
   "/es/windows-vps": {
     "updated": "2026-10-05",
     "fingerprint": "2c9340e91c89edfc"
@@ -301,7 +309,7 @@
   },
   "/privacy": {
     "updated": "2026-10-01",
-    "fingerprint": "d090a5a5bd29a86c"
+    "fingerprint": "3d92e89f787d5c53"
   },
   "/rdp-vps": {
     "updated": "2026-10-04",

@@ -40,7 +40,7 @@ const marketingSourcesFor = locale => ({
   '/citadel': [`${marketing}/citadel/page.tsx`, ...citadelComponents],
   '/about': [`${marketing}/about/page.tsx`, 'src/components/site/about/AboutMap.tsx', 'src/content/testimonials.json', copy(locale, 'about.ts')],
   '/faq': [`${marketing}/faq/page.tsx`, 'src/components/site/FaqExplorer.tsx', locale === 'en' ? 'src/content/faqs.json' : copy(locale, 'faqs.ts'), copy(locale, 'faq.ts')],
-  '/privacy': [`${marketing}/privacy/page.tsx`],
+  '/privacy': [`${marketing}/privacy/page.tsx`, copy(locale, 'privacy.tsx')],
   '/rdp-vps': [`${marketing}/rdp-vps/page.tsx`, 'src/content/rdp-vps.ts'],
 });
 const marketingSources = marketingSourcesFor('en');
