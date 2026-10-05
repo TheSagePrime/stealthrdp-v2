@@ -28,8 +28,9 @@
   "Product facts come only from PRODUCT_FACTS.md. Plan names, prices and specs come from src/content/plans.json.",
   "Do not claim 'best'. Words in owner_decision stay out of copy until the owner decides.",
   "Say plainly that the Windows Server licence is not included (PRODUCT_FACTS: Windows licensing). German competitors advertise 'Lizenz inklusive'.",
-  "Name the data centres as Amsterdam (EU) and Phoenix (USA). Never imply a German data centre. Do not write 'DSGVO-konform' until the owner approves that claim.",
-  "'günstig' is the German equivalent of 'cheap' and is held for the owner's decision."
+  "Name the data centres as Amsterdam (EU) and Phoenix (USA). Never imply a German data centre.",
+  "'DSGVO-konform' is approved for both data centres (PRODUCT_FACTS: GDPR).",
+  "'günstig' is allowed (owner, Oct 2026). Back it with the real price from plans.json."
  ],
  "pages": [
   {
@@ -96,6 +97,24 @@
      "keyword": "cloud server mieten",
      "volume": 260,
      "kd": 33,
+     "source": "openseo"
+    },
+    {
+     "keyword": "vserver günstig",
+     "volume": 320,
+     "kd": 48,
+     "source": "openseo"
+    },
+    {
+     "keyword": "vps günstig",
+     "volume": 320,
+     "kd": 44,
+     "source": "openseo"
+    },
+    {
+     "keyword": "vps server günstig",
+     "volume": 170,
+     "kd": 48,
      "source": "openseo"
     }
    ]
@@ -372,33 +391,7 @@
    "source": "openseo"
   }
  ],
- "owner_decision": {
-  "question": "May localized copy use the local word for cheap?",
-  "keywords": [
-   {
-    "keyword": "vserver günstig",
-    "volume": 320,
-    "kd": 48,
-    "source": "openseo"
-   },
-   {
-    "keyword": "vps günstig",
-    "volume": 320,
-    "kd": 44,
-    "source": "openseo"
-   },
-   {
-    "keyword": "günstige vserver",
-    "volume": 320,
-    "kd": 49,
-    "source": "openseo"
-   },
-   {
-    "keyword": "vps server günstig",
-    "volume": 170,
-    "kd": 48,
-    "source": "openseo"
-   }
-  ]
- }
+ "decisions": [
+  "2026-10-05 owner: no Windows licence add-on; DSGVO-konform approved for Amsterdam and Phoenix; 'günstig' allowed."
+ ]
 }

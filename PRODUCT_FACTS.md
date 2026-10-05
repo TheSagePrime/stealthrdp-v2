@@ -20,7 +20,8 @@ Never invent reviews, numbers, stock, deadlines, guarantees or live data.
 | Regions | USA and Europe. Data centers: Phoenix, Arizona (USA plans) and Amsterdam, Netherlands (EU plans). | `src/content/plans.json`; locations: owner, Oct 2026 |
 | Access | Full Administrator access on Windows, full Root access on Linux. | FAQ |
 | IP address | Every server has a dedicated IPv4 address. An IP change costs €5 per change, requested through support. | Owner, Oct 2026 |
-| Windows licensing | Microsoft licensing is not included. Windows Server Evaluation may be provided for evaluation only. The customer is responsible for licensing. | `/docs/windows-licensing` |
+| Windows licensing | Microsoft licensing is not included. Windows Server Evaluation may be provided for evaluation only. The customer is responsible for licensing. No licence add-on is offered. | `/docs/windows-licensing`; no add-on: owner, Oct 2026 |
+| GDPR | Hosting in both data centers (Amsterdam and Phoenix) is GDPR-compliant. German: "DSGVO-konform". Spanish: "conforme al RGPD". | Owner, Oct 2026 |
 | Windows versions | Windows Server 2019, 2022 and 2025. | `src/app/[locale]/(marketing)/windows-vps/page.tsx` |
 | Linux distributions | The list on `/linux-vps` (`distros` in its page file). | WHMCS order form |
 | VPS prices | EUR. The values in `src/content/plans.json` (verified from WHMCS; see `source.verifiedAt`). | WHMCS store |
@@ -32,7 +33,9 @@ Never invent reviews, numbers, stock, deadlines, guarantees or live data.
 
 - "guaranteed", "99.99% uptime", "100% uptime", "SLA" (there is no SLA)
 - "instant" without the 60-second wording above
-- "cheap" and "cheapest", in copy, titles and meta descriptions (owner, Oct 2026)
+- "cheap" and "cheapest", in copy, titles and meta descriptions (owner, Oct 2026). This applies to the
+  English pages only: the German "günstig" and the Spanish "barato" and "económico" are allowed (owner,
+  Oct 2026).
 - "priority support", and any promised response time
 - "SSD" alone (all storage is NVMe), "dedicated CPU", "no overselling", "guaranteed RAM"
 - any customer count, rating or revenue number that is not in the table

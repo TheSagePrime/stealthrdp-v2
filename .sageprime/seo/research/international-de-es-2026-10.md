@@ -48,16 +48,18 @@ profesionalhosting.com. Comparison sites: bitcatcha.com, geekflare.com.
 | Competitor message | StealthRDP position | Action |
 |---|---|---|
 | "Windows-Lizenz inklusive" (German Windows vServer pages) | Licence **not** included (PRODUCT_FACTS) | State it plainly. Owner: is a licence add-on possible? |
-| "Deutsche Rechenzentren", "DSGVO-konform" | Data centre in Amsterdam (EU) | Say "Amsterdam (EU)". "DSGVO-konform" needs owner approval |
+| "Deutsche Rechenzentren", "DSGVO-konform" | Data centres in Amsterdam (EU) and Phoenix (USA), GDPR-compliant | Say "Amsterdam (EU)" and "DSGVO-konform"; never imply Germany |
 | "IP española", "centro de datos en España" | No Spanish location | Never imply one |
 | "ab 3,95 €/Monat" | Plans from 4.59 € (`plans.json`) | Show real prices from `plans.json` |
 
-## Decisions for the owner
+## Owner decisions (2026-10-05)
 
-1. **The local word for "cheap".** PRODUCT_FACTS bans "cheap". Does the ban cover "günstig" (about 1,100
-   searches/month) and "barato"/"económico" (about 2,000)? Until decided, these keywords stay unused.
-2. **"DSGVO-konform" (GDPR-compliant).** Approve the claim, with wording, or keep it out.
-3. **Windows licence.** Keep "not included", or offer a licence add-on that the German market expects.
+1. **The local word for "cheap" is allowed.** "günstig" (about 1,100 searches/month) now sits on
+   `/de/plans`; "barato" (about 2,000) is the primary keyword of `/es/plans`. The English ban on
+   "cheap" is unchanged.
+2. **GDPR compliance is approved for both data centres**, Amsterdam and Phoenix ("DSGVO-konform",
+   "conforme al RGPD"). Recorded in PRODUCT_FACTS.
+3. **No Windows licence add-on.** The pages keep saying plainly that the licence is not included.
 
 ## Guide backlog (for the 2-3 day batches)
 

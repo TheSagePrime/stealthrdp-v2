@@ -28,9 +28,10 @@
   "Product facts come only from PRODUCT_FACTS.md. Plan names, prices and specs come from src/content/plans.json.",
   "Do not claim 'best'. Words in owner_decision stay out of copy until the owner decides.",
   "Say plainly that the Windows Server licence is not included (PRODUCT_FACTS: Windows licensing).",
-  "Name the data centres as Amsterdam (EU) and Phoenix (USA). Never imply a Spanish data centre or a Spanish IP ('vps españa' searchers expect one).",
-  "'barato' and 'económico' are the Spanish equivalents of 'cheap' and are held for the owner's decision.",
-  "Write neutral Spanish for Spain. Mexico was researched (5 seeds) and is too small to target separately; in Mexico 'rdp' is mostly a vitamin C medicine brand."
+  "Write neutral Spanish for Spain. Mexico was researched (5 seeds) and is too small to target separately; in Mexico 'rdp' is mostly a vitamin C medicine brand.",
+  "Name the data centres as Amsterdam (EU) and Phoenix (USA). Never imply a Spanish data centre or a Spanish IP ('vps españa' and 'vps barato españa' are not targeted).",
+  "'conforme al RGPD' is approved for both data centres (PRODUCT_FACTS: GDPR).",
+  "'barato' and 'económico' are allowed (owner, Oct 2026). Back them with the real price from plans.json."
  ],
  "pages": [
   {
@@ -67,8 +68,26 @@
   {
    "page": "/es/plans",
    "english_page": "/plans",
-   "primary": "vps precios",
+   "primary": "vps barato",
    "keywords": [
+    {
+     "keyword": "vps barato",
+     "volume": 880,
+     "kd": 16,
+     "source": "openseo"
+    },
+    {
+     "keyword": "vps baratos",
+     "volume": 880,
+     "kd": 14,
+     "source": "openseo"
+    },
+    {
+     "keyword": "servidor vps barato",
+     "volume": 90,
+     "kd": 18,
+     "source": "openseo"
+    },
     {
      "keyword": "vps precios",
      "volume": 110,
@@ -122,6 +141,12 @@
      "keyword": "windows vps hosting",
      "volume": 30,
      "kd": 12,
+     "source": "openseo"
+    },
+    {
+     "keyword": "vps windows barato",
+     "volume": 90,
+     "kd": 8,
      "source": "openseo"
     }
    ]
@@ -301,39 +326,7 @@
    "source": "openseo"
   }
  ],
- "owner_decision": {
-  "question": "May localized copy use the local word for cheap?",
-  "keywords": [
-   {
-    "keyword": "vps barato",
-    "volume": 880,
-    "kd": 16,
-    "source": "openseo"
-   },
-   {
-    "keyword": "vps baratos",
-    "volume": 880,
-    "kd": 14,
-    "source": "openseo"
-   },
-   {
-    "keyword": "vps windows barato",
-    "volume": 90,
-    "kd": 8,
-    "source": "openseo"
-   },
-   {
-    "keyword": "servidor vps barato",
-    "volume": 90,
-    "kd": 18,
-    "source": "openseo"
-   },
-   {
-    "keyword": "vps barato españa",
-    "volume": 90,
-    "kd": 36,
-    "source": "openseo"
-   }
-  ]
- }
+ "decisions": [
+  "2026-10-05 owner: no Windows licence add-on; GDPR compliance approved for Amsterdam and Phoenix; 'barato' allowed."
+ ]
 }
