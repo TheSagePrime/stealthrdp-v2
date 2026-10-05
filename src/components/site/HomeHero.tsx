@@ -1,7 +1,9 @@
 'use client';
+import type { SiteLocale } from '@/config/i18n';
 import { ArrowRight } from '@phosphor-icons/react';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { homeCopy } from '@/content/i18n/home';
 import styles from './HomeHero.module.css';
 import { OsSession } from './os/OsSession';
 
@@ -15,11 +17,12 @@ const systems = {
 /* The headline and the animation show Windows and Linux in turn. */
 const CYCLE_MS = 6000;
 
-export function HomeHero({ from }: { from: number }) {
+export function HomeHero({ from, locale = 'en' }: { from: number; locale?: SiteLocale }) {
+  const t = homeCopy[locale].hero;
   const [mode, setMode] = useState<OsMode>('windows');
   const showcaseRef = useRef<HTMLDivElement>(null);
   const system = systems[mode];
-  const price = `€${from.toFixed(2)}`;
+  const price = t.price(from);
 
   /* Animate only while the hero is on screen, the tab is visible and motion is allowed. */
   useEffect(() => {
@@ -55,36 +58,34 @@ export function HomeHero({ from }: { from: number }) {
   }, []);
 
   return (
-    <section className={styles.hero} aria-label="Windows and Linux VPS">
+    <section className={styles.hero} aria-label={t.aria}>
       <div className={styles.heroGrid}>
         <div className={styles.copy}>
-          <span className={styles.badge}>Windows &amp; Linux VPS · Instant setup</span>
+          <span className={styles.badge}>{t.badge}</span>
           <h1>
-            {`Your ${system.name} VPS. `}
-            <span>Live in 60 seconds.</span>
+            {t.title(system.name)}
+            <span>{t.titleSpan}</span>
           </h1>
           <p className={styles.lede}>
-            {`High-performance ${mode === 'windows' ? 'remote desktop' : 'Linux server'} infrastructure without the complexity. Enterprise hardware, full administrative access, and 24/7 uptime monitoring.`}
+            {t.lede(mode)}
           </p>
           <div className={styles.actions}>
             <Link className={styles.primaryButton} href="#plans">
-              Choose your server
+              {t.choose}
               <ArrowRight size={18} aria-hidden="true" />
             </Link>
-            <Link className={styles.secondaryButton} href="https://dash.stealthrdp.com/submitticket.php">Ask a pre-sales question</Link>
+            <Link className={styles.secondaryButton} href="https://dash.stealthrdp.com/submitticket.php">{t.presales}</Link>
           </div>
-          <div className={styles.meta} aria-label="Plan benefits">
+          <div className={styles.meta} aria-label={t.metaAria}>
             <span>
-              {'Starting from '}
-              <strong>{`${price}/month`}</strong>
+              {t.startingFrom}
+              <strong>{t.perMonth(price)}</strong>
             </span>
-            <span>24/7 support</span>
-            <span>No hidden fees</span>
-            <span>Cancel anytime</span>
+            {t.benefits.map(benefit => <span key={benefit}>{benefit}</span>)}
           </div>
         </div>
         <div ref={showcaseRef} className={styles.showcase}>
-          <OsSession kind="plans" imageIndex={mode === 'windows' ? 0 : 1} />
+          <OsSession kind="plans" imageIndex={mode === 'windows' ? 0 : 1} locale={locale} />
         </div>
       </div>
     </section>

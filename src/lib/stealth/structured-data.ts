@@ -57,7 +57,16 @@ function aggregateOffer(plans: Plan[]): Node {
   };
 }
 
-export function homeJsonLd(siteUrl: string, plans: Plan[]): Node[] {
+export function homeJsonLd(
+  siteUrl: string,
+  plans: Plan[],
+  words: { name: string; serviceType: string; description: string } = {
+    name: 'StealthRDP VPS hosting',
+    serviceType: 'Windows and Linux VPS hosting',
+    description: 'Windows and Linux VPS and RDP hosting with USA and EU regions.',
+  },
+  plansPath = '/plans',
+): Node[] {
   return [
     {
       '@context': 'https://schema.org',
@@ -69,10 +78,10 @@ export function homeJsonLd(siteUrl: string, plans: Plan[]): Node[] {
     {
       '@context': 'https://schema.org',
       '@type': 'Service',
-      'name': 'StealthRDP VPS hosting',
-      'serviceType': 'Windows and Linux VPS hosting',
-      'description': 'Windows and Linux VPS and RDP hosting with USA and EU regions.',
-      'url': `${siteUrl}/plans`,
+      'name': words.name,
+      'serviceType': words.serviceType,
+      'description': words.description,
+      'url': `${siteUrl}${plansPath}`,
       'areaServed': ['US', 'EU'],
       'provider': provider(siteUrl),
       'offers': aggregateOffer(plans),

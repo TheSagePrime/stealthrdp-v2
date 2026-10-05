@@ -12,15 +12,6 @@ export const billingCycles: Record<BillingCycle, { label: string; urlKey: string
   biannual: { label: 'Biannual', urlKey: 'biennially' },
 };
 
-/* Button labels for the billing switch. Phones show the short form; screen readers always get the full one. */
-export const cycleLabels: Record<BillingCycle, { full: string; short: string }> = {
-  monthly: { full: 'Monthly', short: '1 mo' },
-  quarterly: { full: 'Quarterly', short: '3 mo' },
-  semiannual: { full: '6-month', short: '6 mo' },
-  annual: { full: 'Annual', short: '1 yr' },
-  biannual: { full: '2-year', short: '2 yr' },
-};
-
 /* WHMCS language names. German and Spanish visitors land in a checkout in their language when
    WHMCS has that language enabled; WHMCS ignores the parameter otherwise. */
 const whmcsLanguages: Record<string, string> = { de: 'german', es: 'spanish' };

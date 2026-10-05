@@ -33,7 +33,7 @@ const citadelComponents = fs.readdirSync(path.join(root, 'src/components/site/ci
 /* Every indexable page that is not a guide or a doc declares the files its words come from.
    A new marketing route fails the check until it is listed here or in pagesWithoutDates. */
 const marketingSourcesFor = locale => ({
-  '/': [`${marketing}/page.tsx`, 'src/components/site/HomeHero.tsx', 'src/components/site/HomePricing.tsx', 'src/content/plans.json', 'src/content/testimonials.json'],
+  '/': [`${marketing}/page.tsx`, 'src/components/site/HomeHero.tsx', 'src/components/site/HomePricing.tsx', 'src/content/plans.json', 'src/content/testimonials.json', copy(locale, 'home.ts'), copy(locale, 'pricing.ts')],
   '/plans': [`${marketing}/plans/page.tsx`, ...osPage(locale), copy(locale, 'plans.tsx')],
   '/windows-vps': [`${marketing}/windows-vps/page.tsx`, ...osPage(locale), copy(locale, 'windows-vps.tsx')],
   '/linux-vps': [`${marketing}/linux-vps/page.tsx`, ...osPage(locale), copy(locale, 'linux-vps.tsx')],

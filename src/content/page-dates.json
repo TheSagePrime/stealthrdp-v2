@@ -1,7 +1,7 @@
 {
   "/": {
     "updated": "2026-10-02",
-    "fingerprint": "a040facbaca6b461"
+    "fingerprint": "c756cf839c221f0a"
   },
   "/about": {
     "updated": "2026-10-02",
@@ -151,6 +151,10 @@
     "updated": "2026-09-27",
     "fingerprint": "bd4d8f0637fab6a9"
   },
+  "/de": {
+    "updated": "2026-10-05",
+    "fingerprint": "ed6a1e6ca527c0a1"
+  },
   "/de/linux-vps": {
     "updated": "2026-10-05",
     "fingerprint": "c933a7a0b6a47d53"
@@ -250,6 +254,10 @@
   "/docs/windows-licensing": {
     "updated": "2026-10-02",
     "fingerprint": "7d46b672c7af0437"
+  },
+  "/es": {
+    "updated": "2026-10-05",
+    "fingerprint": "942666f8a332c0c5"
   },
   "/es/linux-vps": {
     "updated": "2026-10-05",
