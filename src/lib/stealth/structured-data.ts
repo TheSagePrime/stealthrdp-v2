@@ -203,14 +203,24 @@ export function techArticleJsonLd(input: {
 type CitadelPlan = { name: string; price: number; domains: string; bandwidth: string; checkout: string };
 
 /** Citadel as a service with one monthly offer per plan, from the same data the page shows. */
-export function citadelJsonLd(siteUrl: string, plans: CitadelPlan[]): Node {
+export function citadelJsonLd(
+  siteUrl: string,
+  plans: CitadelPlan[],
+  words: { name: string; serviceType: string; description: string; offer: (plan: CitadelPlan) => string; path: string } = {
+    name: 'Citadel Layer 7 DDoS protection',
+    serviceType: 'DDoS protection',
+    description: 'Layer 7 protection for HTTP/HTTPS applications: browser challenges, rate limits, allowlists, lockdown mode, caching and request logs.',
+    offer: plan => `${plan.domains}, ${plan.bandwidth} clean bandwidth, monthly billing`,
+    path: '/citadel',
+  },
+): Node {
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    'name': 'Citadel Layer 7 DDoS protection',
-    'serviceType': 'DDoS protection',
-    'description': 'Layer 7 protection for HTTP/HTTPS applications: browser challenges, rate limits, allowlists, lockdown mode, caching and request logs.',
-    'url': `${siteUrl}/citadel`,
+    'name': words.name,
+    'serviceType': words.serviceType,
+    'description': words.description,
+    'url': `${siteUrl}${words.path}`,
     'provider': provider(siteUrl),
     'offers': plans.map(plan => ({
       '@type': 'Offer',
@@ -218,7 +228,7 @@ export function citadelJsonLd(siteUrl: string, plans: CitadelPlan[]): Node {
       'price': plan.price,
       'priceCurrency': 'EUR',
       'url': plan.checkout,
-      'description': `${plan.domains}, ${plan.bandwidth} clean bandwidth, monthly billing`,
+      'description': words.offer(plan),
     })),
   };
 }

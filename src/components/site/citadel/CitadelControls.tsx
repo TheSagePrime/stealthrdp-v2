@@ -1,6 +1,8 @@
 'use client';
 
+import type { CitadelCopy } from '@/content/i18n/en/citadel';
 import { useState } from 'react';
+import { fill } from '@/lib/stealth/i18n';
 import styles from './CitadelControls.module.css';
 
 /*
@@ -8,79 +10,42 @@ import styles from './CitadelControls.module.css';
  * comes from the Citadel docs (src/content/docs/citadel-*.md).
  */
 
-type Outcome = { text: string; tone: 'pass' | 'check' | 'stop' };
+type Tone = 'pass' | 'check' | 'stop';
+type ControlWords = CitadelCopy['controls'];
 
 type Level = {
+  /* Product names, shown as they are in every language. */
   name: string;
   /* Friction on a 0–5 scale; Auto spans a range because it adapts. */
   friction: [number, number];
-  text: string;
-  visitors: Outcome;
-  machines: Outcome;
+  visitors: Tone;
+  machines: Tone;
 };
 
-const pass = (text: string): Outcome => ({ text, tone: 'pass' });
-const check = (text: string): Outcome => ({ text, tone: 'check' });
-const stop = (text: string): Outcome => ({ text, tone: 'stop' });
-
+/* Same order as the levels in the page copy. */
 const levels: Level[] = [
-  {
-    name: 'Off',
-    friction: [0, 0],
-    text: 'No browser challenge. Configured rate limits and blocklists still apply.',
-    visitors: pass('Pass'),
-    machines: pass('Pass'),
-  },
-  {
-    name: 'Cookie',
-    friction: [1, 1],
-    text: 'A lightweight browser check.',
-    visitors: check('Light check'),
-    machines: check('May be interrupted'),
-  },
-  {
-    name: 'JS',
-    friction: [2, 2],
-    text: 'A lightweight JavaScript check in the browser.',
-    visitors: check('Light check'),
-    machines: check('May be interrupted'),
-  },
-  {
-    name: 'Interaction',
-    friction: [4, 4],
-    text: 'Requires a human click. Use it during active abuse when Auto is not enough.',
-    visitors: check('One click'),
-    machines: stop('Interrupted'),
-  },
-  {
-    name: 'Auto',
-    friction: [1, 4],
-    text: 'Starts at a calm baseline, escalates during an attack and heals when traffic calms. The starting point for public websites.',
-    visitors: pass('Calm until attacked'),
-    machines: check('May be interrupted under attack'),
-  },
-  {
-    name: 'Lockdown',
-    friction: [5, 5],
-    text: 'Emergency mode. Only allowlisted clients pass.',
-    visitors: stop('Blocked'),
-    machines: stop('Blocked'),
-  },
+  { name: 'Off', friction: [0, 0], visitors: 'pass', machines: 'pass' },
+  { name: 'Cookie', friction: [1, 1], visitors: 'check', machines: 'check' },
+  { name: 'JS', friction: [2, 2], visitors: 'check', machines: 'check' },
+  { name: 'Interaction', friction: [4, 4], visitors: 'check', machines: 'stop' },
+  { name: 'Auto', friction: [1, 4], visitors: 'pass', machines: 'check' },
+  { name: 'Lockdown', friction: [5, 5], visitors: 'stop', machines: 'stop' },
 ];
 
-function LevelDial() {
+function LevelDial({ t }: { t: ControlWords }) {
   const [selected, setSelected] = useState(4);
   const level = levels[selected]!;
+  const words = t.levels[selected]!;
   const [low, high] = level.friction;
 
   return (
     <article className={styles.tile} data-span="wide">
       <header>
-        <h3>Six challenge levels, one per domain</h3>
-        <p>Pick how much friction a domain adds. Select a level to see who gets through.</p>
+        <h3>{t.dialTitle}</h3>
+        <p>{t.dialText}</p>
       </header>
 
-      <div className={styles.levels} role="group" aria-label="Challenge level">
+      <div className={styles.levels} role="group" aria-label={t.levelLabel}>
         {levels.map((item, index) => (
           <button
             key={item.name}
@@ -89,33 +54,33 @@ function LevelDial() {
             onClick={() => setSelected(index)}
           >
             {item.name}
-            {item.name === 'Auto' && <small>Default</small>}
+            {item.name === 'Auto' && <small>{t.default}</small>}
           </button>
         ))}
       </div>
 
       <div className={styles.levelBody} aria-live="polite">
         <div className={styles.friction}>
-          <span>Friction</span>
-          <div role="img" aria-label={low === high ? `${low} of 5` : `${low} to ${high} of 5`}>
+          <span>{t.friction}</span>
+          <div role="img" aria-label={low === high ? fill(t.frictionOne, { low }) : fill(t.frictionRange, { low, high })}>
             {[1, 2, 3, 4, 5].map(step => (
               <i key={step} data-on={step <= low || undefined} data-range={(step > low && step <= high) || undefined} />
             ))}
           </div>
         </div>
-        <p>{level.text}</p>
+        <p>{words.text}</p>
         <dl className={styles.outcomes}>
           <div>
-            <dt>Visitors in a browser</dt>
-            <dd data-tone={level.visitors.tone}>{level.visitors.text}</dd>
+            <dt>{t.visitors}</dt>
+            <dd data-tone={level.visitors}>{words.visitors}</dd>
           </div>
           <div>
-            <dt>APIs and webhooks</dt>
-            <dd data-tone={level.machines.tone}>{level.machines.text}</dd>
+            <dt>{t.machines}</dt>
+            <dd data-tone={level.machines}>{words.machines}</dd>
           </div>
           <div>
-            <dt>Allowlisted clients</dt>
-            <dd data-tone="pass">Bypass</dd>
+            <dt>{t.allowlisted}</dt>
+            <dd data-tone="pass">{t.bypass}</dd>
           </div>
         </dl>
       </div>
@@ -126,46 +91,38 @@ function LevelDial() {
 type LogType = 'Access' | 'Security' | 'Error';
 
 /* Example rows that show what each log type records. */
-const logRows: Array<{ id: string; type: LogType; method: string; path: string; status: string; result: string; tone: Outcome['tone'] }> = [
-  { id: 'r-7f3a', type: 'Access', method: 'GET', path: '/pricing', status: '200', result: 'Proxied', tone: 'pass' },
-  { id: 'r-81c2', type: 'Security', method: 'POST', path: '/login', status: '403', result: 'Challenge failed', tone: 'stop' },
-  { id: 'r-9d04', type: 'Security', method: 'GET', path: '/search?q=[redacted]', status: '429', result: 'Rate limited', tone: 'stop' },
-  { id: 'r-a6e1', type: 'Security', method: 'POST', path: '/api/webhook', status: '200', result: 'Allowlisted bypass', tone: 'pass' },
-  { id: 'r-b257', type: 'Error', method: 'GET', path: '/checkout', status: '502', result: 'Origin unreachable', tone: 'stop' },
-  { id: 'r-c9f8', type: 'Error', method: 'GET', path: '/reports', status: '504', result: 'Origin timeout', tone: 'stop' },
+const logRows: Array<{ id: string; type: LogType; method: string; path: string; status: string; result: keyof ControlWords['logResults']; tone: Tone }> = [
+  { id: 'r-7f3a', type: 'Access', method: 'GET', path: '/pricing', status: '200', result: 'proxied', tone: 'pass' },
+  { id: 'r-81c2', type: 'Security', method: 'POST', path: '/login', status: '403', result: 'challengeFailed', tone: 'stop' },
+  { id: 'r-9d04', type: 'Security', method: 'GET', path: '/search?q=[redacted]', status: '429', result: 'rateLimited', tone: 'stop' },
+  { id: 'r-a6e1', type: 'Security', method: 'POST', path: '/api/webhook', status: '200', result: 'allowlisted', tone: 'pass' },
+  { id: 'r-b257', type: 'Error', method: 'GET', path: '/checkout', status: '502', result: 'unreachable', tone: 'stop' },
+  { id: 'r-c9f8', type: 'Error', method: 'GET', path: '/reports', status: '504', result: 'timeout', tone: 'stop' },
 ];
 
-function LogsTile() {
+function LogsTile({ t }: { t: ControlWords }) {
   const [filter, setFilter] = useState<LogType | 'All'>('All');
   const rows = logRows.filter(row => filter === 'All' || row.type === filter);
 
   return (
     <article className={styles.tile} data-span="full">
       <header>
-        <h3>Access, security and error logs</h3>
-        <p>
-          Access entries with method, path, status, IP, ASN, country and latency. Security entries for
-          challenges, blocks, rate limits and bypasses. Error entries for origin 502, 503 and 504. Trace one
-          request by its ID. Kept for 15 days, with sensitive query values redacted.
-        </p>
+        <h3>{t.logsTitle}</h3>
+        <p>{t.logsText}</p>
       </header>
       <div className={styles.logTools}>
-        <span className={styles.search} aria-hidden="true">Search IP, path, host or request ID</span>
-        <div className={styles.filters} role="group" aria-label="Log type">
+        <span className={styles.search} aria-hidden="true">{t.logSearch}</span>
+        <div className={styles.filters} role="group" aria-label={t.logTypeLabel}>
           {(['All', 'Access', 'Security', 'Error'] as const).map(item => (
             <button key={item} type="button" aria-pressed={filter === item} onClick={() => setFilter(item)}>
-              {item}
+              {t.logTypes[item]}
             </button>
           ))}
         </div>
       </div>
-      <div className={styles.logs} role="table" aria-label="Example log rows">
+      <div className={styles.logs} role="table" aria-label={t.logTableLabel}>
         <div role="row">
-          <span role="columnheader">Request ID</span>
-          <span role="columnheader">Method</span>
-          <span role="columnheader">Path</span>
-          <span role="columnheader">Status</span>
-          <span role="columnheader">Result</span>
+          {t.logColumns.map(column => <span key={column} role="columnheader">{column}</span>)}
         </div>
         {rows.map(row => (
           <div role="row" key={row.id}>
@@ -173,7 +130,7 @@ function LogsTile() {
             <code role="cell">{row.method}</code>
             <code role="cell">{row.path}</code>
             <code role="cell" data-tone={row.tone}>{row.status}</code>
-            <span role="cell">{row.result}</span>
+            <span role="cell">{t.logResults[row.result]}</span>
           </div>
         ))}
       </div>
@@ -181,27 +138,29 @@ function LogsTile() {
   );
 }
 
-export function CitadelControls() {
+export function CitadelControls({ copy: t }: { copy: ControlWords }) {
+  const [path, cidr, agent] = t.allowlistKinds;
+  const [strike1, strike2, ban, recovers] = t.strikes;
   return (
     <div className={styles.bento}>
-      <LevelDial />
+      <LevelDial t={t} />
 
       <article className={styles.tile}>
         <header>
-          <h3>Allowlists</h3>
-          <p>Matching clients bypass challenges, including Lockdown.</p>
+          <h3>{t.allowlistsTitle}</h3>
+          <p>{t.allowlistsText}</p>
         </header>
         <ul className={styles.rules}>
           <li>
-            <span>Path</span>
+            <span>{path}</span>
             <code>/api/</code>
           </li>
           <li>
-            <span>IP or CIDR</span>
+            <span>{cidr}</span>
             <code>203.0.113.0/24</code>
           </li>
           <li>
-            <span>User-Agent</span>
+            <span>{agent}</span>
             <code>StatusMonitor/2.1</code>
           </li>
         </ul>
@@ -209,31 +168,31 @@ export function CitadelControls() {
 
       <article className={styles.tile}>
         <header>
-          <h3>Rate limits and strikes</h3>
-          <p>Repeat offenders escalate step by step instead of one blunt rule.</p>
+          <h3>{t.strikesTitle}</h3>
+          <p>{t.strikesText}</p>
         </header>
         <ol className={styles.strikes}>
-          <li data-tone="check">Strike 1</li>
-          <li data-tone="check">Strike 2</li>
-          <li data-tone="stop">Temporary ban</li>
-          <li data-tone="pass">Recovers</li>
+          <li data-tone="check">{strike1}</li>
+          <li data-tone="check">{strike2}</li>
+          <li data-tone="stop">{ban}</li>
+          <li data-tone="pass">{recovers}</li>
         </ol>
       </article>
 
       <article className={styles.tile}>
         <header>
-          <h3>Cache before origin</h3>
-          <p>Eligible static responses come from cache, so repeat requests skip origin work.</p>
+          <h3>{t.cacheTitle}</h3>
+          <p>{t.cacheText}</p>
         </header>
         <div className={styles.chips}>
-          <span>Cached</span>
+          <span>{t.cached}</span>
           <code>.css</code>
           <code>.js</code>
-          <code>images</code>
-          <code>fonts</code>
+          <code>{t.images}</code>
+          <code>{t.fonts}</code>
         </div>
         <div className={styles.chips} data-muted>
-          <span>Bypassed</span>
+          <span>{t.bypassed}</span>
           <code>/api/</code>
           <code>/admin/</code>
         </div>
@@ -241,52 +200,42 @@ export function CitadelControls() {
 
       <article className={styles.tile}>
         <header>
-          <h3>Alerts and origin health</h3>
-          <p>Email and webhook events, plus health probes with latency and status.</p>
+          <h3>{t.alertsTitle}</h3>
+          <p>{t.alertsText}</p>
         </header>
         <ul className={styles.alerts}>
-          <li data-tone="stop">
-            <b>Webhook</b>
-            Attack started
-          </li>
-          <li data-tone="pass">
-            <b>Email</b>
-            Attack ended
-          </li>
-          <li data-tone="pass">
-            <b>Health</b>
-            Origin probe 200
-          </li>
+          {t.alerts.map(([channel, event], index) => (
+            <li key={channel} data-tone={index === 0 ? 'stop' : 'pass'}>
+              <b>{channel}</b>
+              {event}
+            </li>
+          ))}
         </ul>
       </article>
 
       <article className={styles.tile} data-span="wide">
         <header>
-          <h3>Your own challenge and error pages</h3>
-          <p>Paste an HTML shell per page type. Citadel injects the real verification controls.</p>
+          <h3>{t.pagesTitle}</h3>
+          <p>{t.pagesText}</p>
         </header>
         <div className={styles.pages}>
           <div>
-            <span>Challenge pages</span>
+            <span>{t.challengePages}</span>
             <ul>
-              <li>JS challenge</li>
-              <li>Interaction</li>
-              <li>Lockdown</li>
+              {t.challengePageItems.map(item => <li key={item}>{item}</li>)}
             </ul>
           </div>
           <div>
-            <span>Error pages</span>
+            <span>{t.errorPages}</span>
             <ul>
-              <li>403 Blocked</li>
-              <li>429 Rate limited</li>
-              <li>502 · 503 · 504</li>
+              {t.errorPageItems.map(item => <li key={item}>{item}</li>)}
             </ul>
           </div>
         </div>
         <pre className={styles.shell}><code>{'<h1>{{BRAND}}</h1>\n<p>{{MESSAGE}}</p>'}</code></pre>
       </article>
 
-      <LogsTile />
+      <LogsTile t={t} />
     </div>
   );
 }

@@ -1,6 +1,5 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
-import type { SiteLocale } from '@/config/i18n';
 import {
   ArrowRight,
   ClockCounterClockwise,
@@ -16,13 +15,12 @@ import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { AboutMap } from '@/components/site/about/AboutMap';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { isRouteLocalized } from '@/config/i18n';
 import { aboutCopy } from '@/content/i18n/about';
 import { homeCrumb } from '@/content/i18n/home-crumb';
-import { siteCopy } from '@/content/i18n/site';
 import { testimonials } from '@/lib/stealth/content';
 import { localeHref } from '@/lib/stealth/i18n';
 import { localizedPageMetadata, requirePageLocale } from '@/lib/stealth/i18n-server';
+import { linkLabel } from '@/lib/stealth/link-label';
 import { getPlans } from '@/lib/stealth/live-plans';
 import { aboutJsonLd } from '@/lib/stealth/structured-data';
 import { getSeoConfig } from '@/libs/seo/config';
@@ -46,11 +44,6 @@ const regions = ['USA', 'EU'] as const;
 const quotes = testimonials.filter(item => item.sourceUrl?.includes('trustpilot.com')).slice(0, 3);
 
 export const revalidate = 21600;
-
-/* A link label, marked as English when the target page has no version in this language. */
-function linkLabel(label: string, href: string, locale: SiteLocale): string {
-  return isRouteLocalized(href, locale) ? label : `${label}${siteCopy[locale].footer.englishOnly}`;
-}
 
 export default async function AboutPage() {
   const locale = await requirePageLocale('/about');

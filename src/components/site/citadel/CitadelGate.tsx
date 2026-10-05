@@ -1,6 +1,7 @@
 'use client';
 
 import type { Icon } from '@phosphor-icons/react';
+import type { CitadelCopy } from '@/content/i18n/en/citadel';
 import { Browser, Lightning, MagnifyingGlass, Robot } from '@phosphor-icons/react';
 import { useEffect, useId, useRef, useState } from 'react';
 import styles from './CitadelGate.module.css';
@@ -20,6 +21,9 @@ import styles from './CitadelGate.module.css';
 
 type Outcome = 'pass' | 'challenge' | 'limit';
 
+type GateWords = CitadelCopy['gate'];
+
+/* `name` is the English label and the React key; the page copy gives the shown label by index. */
 type Lane = {
   name: string;
   request: string;
@@ -458,7 +462,7 @@ function useBeamCanvas(
   }, [name, canvas, flashes]);
 }
 
-function Scene({ name, prefix }: { name: LayoutName; prefix: string }) {
+function Scene({ name, prefix, t }: { name: LayoutName; prefix: string; t: GateWords }) {
   const layout = layouts[name];
   const wide = name === 'wide';
   const { core, radius, origin } = layout;
@@ -472,14 +476,16 @@ function Scene({ name, prefix }: { name: LayoutName; prefix: string }) {
     ? { x1: core[0], y1: 0, x2: origin[0], y2: 0 }
     : { x1: 0, y1: core[1], x2: 0, y2: origin[1] };
 
+  const [blocked, limited] = t.wideTags;
+  const [blockedShort, limitedShort] = t.tallTags;
   const tags = wide
     ? [
-        { text: '403 · Challenge failed', x: core[0] - 76, y: core[1] + radius + 38, width: 152 },
-        { text: '429 · Rate limited', x: core[0] - 64, y: core[1] + radius + 66, width: 128 },
+        { text: blocked?.text ?? '', x: core[0] - (blocked?.width ?? 0) / 2, y: core[1] + radius + 38, width: blocked?.width ?? 0 },
+        { text: limited?.text ?? '', x: core[0] - (limited?.width ?? 0) / 2, y: core[1] + radius + 66, width: limited?.width ?? 0 },
       ]
     : [
-        { text: '403 Blocked', x: core[0] - 132, y: core[1] + radius + 28, width: 96 },
-        { text: '429 Limited', x: core[0] + 36, y: core[1] + radius + 28, width: 96 },
+        { text: blockedShort ?? '', x: core[0] - 132, y: core[1] + radius + 28, width: 96 },
+        { text: limitedShort ?? '', x: core[0] + 36, y: core[1] + radius + 28, width: 96 },
       ];
 
   return (
@@ -557,7 +563,7 @@ function Scene({ name, prefix }: { name: LayoutName; prefix: string }) {
                   <rect x="0" y={sy - 23} width="160" height="46" rx="23" className={styles.pill} />
                   <circle cx="23" cy={sy} r="15" className={styles.pillIcon} />
                   <LaneIcon x={14} y={sy - 9} size={18} weight="duotone" className={styles.icon} />
-                  <text x="46" y={sy - 3} className={styles.name}>{lane.name}</text>
+                  <text x="46" y={sy - 3} className={styles.name}>{t.lanes[index] ?? lane.name}</text>
                   <text x="46" y={sy + 12} className={styles.request}>{lane.request}</text>
                 </g>
               )
@@ -566,7 +572,7 @@ function Scene({ name, prefix }: { name: LayoutName; prefix: string }) {
                   <circle cx={sx} cy="34" r="22" className={styles.pill} />
                   <circle cx={sx} cy="34" r="15" className={styles.pillIcon} />
                   <LaneIcon x={sx - 9} y={25} size={18} weight="duotone" className={styles.icon} />
-                  <text x={sx} y="78" textAnchor="middle" className={styles.name}>{lane.name}</text>
+                  <text x={sx} y="78" textAnchor="middle" className={styles.name}>{t.lanes[index] ?? lane.name}</text>
                   <text x={sx} y="93" textAnchor="middle" className={styles.request}>{lane.request.split(' ')[1]}</text>
                 </g>
               );
@@ -579,9 +585,9 @@ function Scene({ name, prefix }: { name: LayoutName; prefix: string }) {
                 <rect x="0" y="-23" width="150" height="46" rx="23" className={styles.origin} />
                 <circle cx="23" cy="0" r="15" className={styles.originTile} />
                 <Browser x={14} y={-9} size={18} weight="duotone" className={styles.originIcon} />
-                <text x="46" y="-3" className={styles.name}>Your origin</text>
+                <text x="46" y="-3" className={styles.name}>{t.origin}</text>
                 <circle cx="50" cy="10" r="3" className={styles.okDot} />
-                <text x="58" y="14" className={styles.note}>Clean traffic</text>
+                <text x="58" y="14" className={styles.note}>{t.clean}</text>
               </g>
             )
           : (
@@ -589,9 +595,9 @@ function Scene({ name, prefix }: { name: LayoutName; prefix: string }) {
                 <circle r="22" className={styles.origin} />
                 <circle r="15" className={styles.originTile} />
                 <Browser x={-9} y={-9} size={18} weight="duotone" className={styles.originIcon} />
-                <text y="44" textAnchor="middle" className={styles.name}>Your origin</text>
+                <text y="44" textAnchor="middle" className={styles.name}>{t.origin}</text>
                 <circle cx="-38" cy="56" r="3" className={styles.okDot} />
-                <text x="-30" y="60" className={styles.note}>Clean traffic</text>
+                <text x="-30" y="60" className={styles.note}>{t.clean}</text>
               </g>
             )}
       </svg>
@@ -599,22 +605,22 @@ function Scene({ name, prefix }: { name: LayoutName; prefix: string }) {
   );
 }
 
-type Decision = { verdict: 'Pass' | 'Challenge' | 'Block' | 'Limit'; request: string; reason: string };
+type Decision = { verdict: 'Pass' | 'Challenge' | 'Block' | 'Limit'; request: string; reason: keyof GateWords['reasons'] };
 
 const decisions: Decision[] = [
-  { verdict: 'Pass', request: 'GET /pricing', reason: 'Browser session verified' },
-  { verdict: 'Limit', request: 'GET /search?q=…', reason: '429 · over the rate-limit preset' },
-  { verdict: 'Challenge', request: 'POST /login', reason: 'JS challenge issued' },
-  { verdict: 'Pass', request: 'GET /sitemap.xml', reason: 'Search crawler' },
-  { verdict: 'Block', request: 'POST /login', reason: '403 · challenge failed, strike added' },
-  { verdict: 'Limit', request: 'GET /search?q=…', reason: '429 · over the rate-limit preset' },
-  { verdict: 'Pass', request: 'GET /assets/app.css', reason: 'Served from cache' },
-  { verdict: 'Pass', request: 'POST /api/webhook', reason: 'Path allowlisted' },
+  { verdict: 'Pass', request: 'GET /pricing', reason: 'verified' },
+  { verdict: 'Limit', request: 'GET /search?q=…', reason: 'rateLimited' },
+  { verdict: 'Challenge', request: 'POST /login', reason: 'challenged' },
+  { verdict: 'Pass', request: 'GET /sitemap.xml', reason: 'crawler' },
+  { verdict: 'Block', request: 'POST /login', reason: 'blocked' },
+  { verdict: 'Limit', request: 'GET /search?q=…', reason: 'rateLimited' },
+  { verdict: 'Pass', request: 'GET /assets/app.css', reason: 'cached' },
+  { verdict: 'Pass', request: 'POST /api/webhook', reason: 'allowlisted' },
 ];
 
 const verdictTone = { Pass: 'pass', Challenge: 'challenge', Block: 'block', Limit: 'block' } as const;
 
-export function CitadelGate() {
+export function CitadelGate({ copy: t }: { copy: GateWords }) {
   const prefix = useId().replace(/[^a-z0-9]/gi, '');
   const root = useRef<HTMLElement>(null);
   const [tick, setTick] = useState(0);
@@ -659,26 +665,25 @@ export function CitadelGate() {
   return (
     <figure ref={root} className={styles.figure} aria-labelledby={`${prefix}-caption`}>
       <div className={styles.stage}>
-        <Scene name="wide" prefix={prefix} />
-        <Scene name="tall" prefix={prefix} />
+        <Scene name="wide" prefix={prefix} t={t} />
+        <Scene name="tall" prefix={prefix} t={t} />
       </div>
 
       <div className={styles.log}>
-        <p className={styles.logHead}>Decision log</p>
+        <p className={styles.logHead}>{t.logHead}</p>
         <ol aria-hidden="true">
           {rows.map(row => (
             <li key={row.key} data-tone={verdictTone[row.verdict]}>
-              <b>{row.verdict}</b>
+              <b>{t.verdicts[row.verdict]}</b>
               <code>{row.request}</code>
-              <span>{row.reason}</span>
+              <span>{t.reasons[row.reason]}</span>
             </li>
           ))}
         </ol>
       </div>
 
       <figcaption id={`${prefix}-caption`} className={styles.caption}>
-        How Citadel handles requests: visitors and search crawlers pass through Citadel to the
-        origin, a headless bot fails a JS challenge and is blocked with 403, and an HTTP flood is rate-limited with 429.
+        {t.caption}
       </figcaption>
     </figure>
   );

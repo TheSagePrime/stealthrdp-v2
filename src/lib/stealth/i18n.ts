@@ -62,3 +62,9 @@ export function formatEuro(amount: number, locale: SiteLocale): string {
     minimumFractionDigits: 2,
   }).format(amount).replace(/\xA0/g, ' ');
 }
+
+/* Fills {name} placeholders in a translated string. Client components get plain strings, not
+   functions, so templated words use placeholders. */
+export function fill(template: string, values: Record<string, string | number>): string {
+  return template.replace(/\{(\w+)\}/g, (match, key: string) => (key in values ? String(values[key]) : match));
+}

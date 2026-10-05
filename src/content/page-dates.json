@@ -5,7 +5,7 @@
   },
   "/about": {
     "updated": "2026-10-02",
-    "fingerprint": "8bc9e81317fb1755"
+    "fingerprint": "fdc86f2d27c4fc5e"
   },
   "/blog/5-ways-to-optimize-your-rdp-performance-for-remote-work.html": {
     "updated": "2026-10-02",
@@ -73,7 +73,7 @@
   },
   "/citadel": {
     "updated": "2026-10-02",
-    "fingerprint": "dc4afb863786aa9e"
+    "fingerprint": "ee3982cc8632856d"
   },
   "/citadel/docs/allowlists": {
     "updated": "2026-09-27",
@@ -157,7 +157,11 @@
   },
   "/de/about": {
     "updated": "2026-10-05",
-    "fingerprint": "2a6a32c1cc3ef213"
+    "fingerprint": "cd34ed5dc02ecee5"
+  },
+  "/de/citadel": {
+    "updated": "2026-10-05",
+    "fingerprint": "a17e43a5f60bf0c6"
   },
   "/de/faq": {
     "updated": "2026-10-05",
@@ -273,7 +277,11 @@
   },
   "/es/about": {
     "updated": "2026-10-05",
-    "fingerprint": "3b7645e783eb83c9"
+    "fingerprint": "8ea4a382aa16b0ee"
+  },
+  "/es/citadel": {
+    "updated": "2026-10-05",
+    "fingerprint": "755d93abe5181348"
   },
   "/es/faq": {
     "updated": "2026-10-05",
