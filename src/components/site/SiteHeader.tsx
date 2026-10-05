@@ -50,10 +50,11 @@ export function SiteHeader({ locale = 'en', copy = siteCopy.en }: { locale?: Sit
             href="https://wa.me/447441426993"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={copy.whatsapp.chatLabel}
           >
             <WhatsAppMark size={28} />
-            <span>WhatsApp</span>
+            {/* The full label on wide screens, the short one where the bar gets tight. */}
+            <span className="srv3-wa-long">{t.whatsapp}</span>
+            <span className="srv3-wa-short">WhatsApp</span>
           </a>
           <LanguageLinks label={copy.languageLabel} />
           <a className="srv3-login" href={LOGIN_URL}>

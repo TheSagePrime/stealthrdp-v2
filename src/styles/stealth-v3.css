@@ -6727,3 +6727,60 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
     transform: none !important;
   }
 }
+
+/* Header labels never wrap. The WhatsApp link shortens as the bar gets tight: the full label from
+   1400px, "WhatsApp" from 1180px, the icon alone below that (the label stays for screen readers).
+   Spacing tightens below 1500px so German and Spanish fit. */
+.srv3-nav a,
+.srv3-header-actions a {
+  white-space: nowrap;
+}
+
+.srv3-wa-short {
+  display: none;
+}
+
+@media (max-width: 1499px) {
+  .srv3-header-row {
+    gap: 20px;
+  }
+
+  .srv3-nav a,
+  .srv3-login {
+    padding-inline: 9px;
+  }
+}
+
+@media (max-width: 1399px) {
+  .srv3-wa-long {
+    display: none;
+  }
+
+  .srv3-wa-short {
+    display: inline;
+  }
+}
+
+@media (max-width: 1179px) {
+  .srv3-header-row {
+    gap: 12px;
+  }
+
+  .srv3-nav a,
+  .srv3-login {
+    padding-inline: 7px;
+  }
+
+  .srv3-whatsapp-link {
+    padding-inline: 8px !important;
+  }
+
+  .srv3-wa-short {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

@@ -166,7 +166,8 @@ Do not introduce heavy WebGL or scroll choreography.
 ## Shared site elements
 
 - Header: logo, navigation (DDoS Protection, Server Status, Resources, About), WhatsApp (green glyph
-  and quiet text, like Log In), language switch, Log In, and a VPS Plans button. VPS plans appear once,
+  and quiet text like Log In: "Message us on WhatsApp", shortened to "WhatsApp" below 1400px and to the
+  icon below 1180px so the bar never wraps), language switch, Log In, and a VPS Plans button. VPS plans appear once,
   as the button. Below 1040px a Menu button holds the same links, then Support and Log In, then the
   VPS Plans button. Both menus read one list (`mainLinks` in `SiteHeader.tsx`).
 - Floating WhatsApp button bottom-right (`.srv-whatsapp-float`): one round green button, no text.
