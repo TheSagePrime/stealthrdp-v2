@@ -4,6 +4,22 @@ One entry per change that affects search. Newest first. Each entry: date, what c
 why, and when to measure it (see `.claude/skills/measurement-discipline`). Judge a change on Search
 Console clicks, at least 60 days after it went live.
 
+## 2026-10-05 — German and Spanish core pages live
+
+- Pages: `/de`, `/es` and under each `/plans`, `/windows-vps`, `/linux-vps`, `/faq`, `/about`,
+  `/status`, `/privacy`, `/citadel` (18 new URLs).
+- What: language routing behind a publish list (`localizedRoutes`), hreflang with `x-default`,
+  sitemap entries per language, a language switch in the header and footer, WHMCS checkout in the
+  visitor's language. Titles and H1s follow the keyword maps (DE: "vps server", "windows vserver",
+  "vserver mieten", "linux vserver", "ddos schutz"; ES: "servidor vps", "vps windows", "vps barato",
+  "vps linux", "protección ddos").
+- English pages: unchanged except the hreflang tags and the language switch (built HTML compared).
+- Not yet translated, linked as English: guides, Help Center, Citadel docs, the resource index pages,
+  `/rdp-vps`, `/vps-hosting-minecraft`. They follow in batches every 2-3 days.
+- Measure: Search Console, filter by URL prefix `/de/` and `/es/` and by country (Germany, Austria,
+  Switzerland; Spain). First check of indexing after 2 weeks; clicks from 2026-12-05 (60 days).
+  Baseline: 0 German and Spanish URLs.
+
 ## 2026-10-05 — German and Spanish research and keyword maps
 
 - Added `keyword-map-de-de.json`, `keyword-map-es-es.json` and `research/international-de-es-2026-10.md`.

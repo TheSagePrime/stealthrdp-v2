@@ -20,7 +20,7 @@ The website links into WHMCS. It does not copy WHMCS authentication, billing or 
 ## Stack
 
 Next.js 16 App Router, React 19, strict TypeScript, Tailwind CSS 4, shadcn/ui + Radix, next-intl
-(one locale, `en`), fumadocs (Help Center layout), CSS Modules plus global CSS layers, pnpm, Node 24 LTS.
+(`en`, `de`, `es`; see "Languages"), fumadocs (Help Center layout), CSS Modules plus global CSS layers, pnpm, Node 24 LTS.
 Neon/Drizzle/PGlite stay available for future public-site data. No page reads a database today; only
 the `/api/ready` probe runs `select 1` when `DATABASE_URL` is set. It is not a customer or tenant
 database.
@@ -45,7 +45,9 @@ indexable robots) checks this, so a preview can never publish it.
    - answers `Accept: text/markdown` on `/` with `llms.txt`;
    - sets the `sr_region` cookie (`eea` or `other`) from Vercel's `x-vercel-ip-country` header for
      the consent rules;
-   - rewrites every page to the `en` locale (next-intl).
+   - routes languages with next-intl: English pages stay at the root and are rewritten to the `en`
+     locale; `/de/...` and `/es/...` render German and Spanish. `/en/...` redirects to the root URL.
+     No redirect by country or browser language, and no language cookie.
 2. **`next.config.ts`** adds security headers (CSP, HSTS, frame denial and others) and the
    permanent redirects for old v1 and WHMCS-era URLs.
 3. **The page** renders on the server. Most pages are static; pages that show stock revalidate every
@@ -63,6 +65,8 @@ src/app/rss.xml, search-index.json
 src/components/site/             StealthRDP components (header, footer, pricing, status, citadel/, os/, home/ …)
 src/components/ui/               shadcn/Radix primitives — reuse, do not fork
 src/content/                     all editable content (see "Data")
+src/content/i18n/<lang>/         page words per language (en, de, es); see "Languages"
+src/config/i18n.ts               languages and the publish list (`localizedRoutes`)
 src/lib/stealth/                 content loaders, plan stock, checkout URLs, structured data, routes
 src/libs/seo/                    SEO engine: metadata, canonical URLs, articles, audits (protected)
 src/config/seo.ts                route list for sitemap/audit, legacy links, brand data
@@ -89,6 +93,27 @@ All content is in files under `src/content/`, reviewed through pull requests:
 | Archive (not rendered) | `features.json` | migration test only |
 
 Checkout links are built by `checkoutUrl()` in `src/lib/stealth/checkout.ts`.
+
+## Languages
+
+English is the default and stays at the root URLs. German (`/de`) and Spanish (`/es`) are written
+from local keyword research (`.sageprime/seo/keyword-map-*.json`), not translated line by line.
+
+- **Publish list.** `localizedRoutes` in `src/config/i18n.ts` lists the pages that exist in each
+  language. A page outside the list returns 404 under `/de` or `/es` (`requirePageLocale()` in
+  `src/lib/stealth/i18n-server.ts`), has no hreflang tag and is not in the sitemap. Guides and docs
+  are added to the list in batches.
+- **Words.** `src/content/i18n/en/<page>.ts(x)` holds the English words of a page and its type;
+  `de/` and `es/` hold the same shape. Pages and components read `copy[locale]`; the shared frame
+  (header, footer, cookie banner) reads `src/content/i18n/site.ts`.
+- **Links.** `localeHref()` (`src/lib/stealth/i18n.ts`) keeps a visitor in their language when the
+  target page is published in it, and falls back to the English URL; `linkLabel()` marks such links
+  as English.
+- **hreflang.** `hreflangAlternates()` (`src/libs/seo/locale.ts`) gives each published language plus
+  `x-default` (English). Metadata and the sitemap use it; the post-build audit fails on a missing or
+  extra language and on an unpublished language URL that does not return 404.
+- **Checkout.** `checkoutUrl()` adds `language=german` or `language=spanish`, so WHMCS opens in the
+  visitor's language.
 
 ## SEO pipeline
 

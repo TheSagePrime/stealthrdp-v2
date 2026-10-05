@@ -14,6 +14,9 @@ guides and docs. The pre-commit hook runs `pnpm page-dates`, which moves a page'
 text changes, not on markup, class name or formatting edits. CI runs `pnpm check:page-dates` and
 fails when the file is stale; if you committed without the hook, run `pnpm page-dates` and commit
 the file. Never type a date into it, and never change front matter `date` to signal an update.
+Only when a change moves code but no words (a refactor, a new prop) run `pnpm page-dates --keep-dates`
+before you commit, and only after you compared the built HTML of every affected page and found it
+unchanged. It refreshes the fingerprints and keeps every date.
 
 ---
 
@@ -118,8 +121,11 @@ Do not change how plan cards look. Plan-card styles are frozen by the owner.
    - first line `/* eslint-disable better-tailwindcss/no-unknown-classes */` when you use the global
      `sr-*`/`srv-*` classes;
    - `export const metadata = createPageMetadata({ path: '/<route>', title, description, ogImage })`
-     (title up to about 60 characters, description 70–160);
-   - one `<h1>`; sections use `sr-container` for width and gutters.
+     (title up to about 60 characters, description 70–160). A page that will also exist in German
+     or Spanish uses `generateMetadata` with `localizedPageMetadata` instead (recipe 12);
+   - one `<h1>`; sections use `sr-container` for width and gutters;
+   - `await requirePageLocale('/<route>')` at the top of the page function, so `/de/<route>` and
+     `/es/<route>` return 404 until the page is published in that language.
 2. Add `'/<route>'` to `routes.publicMarketing` in `src/config/seo.ts`. This puts it in the sitemap
    and the SEO audit. A page that must not be indexed goes in `publicUtility` instead.
    Then list the files its words come from in `marketingSources` in `scripts/page-dates.mjs`, so
@@ -173,3 +179,33 @@ Use permanent (308) redirects. Never redirect to a page that redirects again.
 3. Component styles go in a CSS module next to the component (`Thing.module.css`). Shared marketing
    classes are in `src/styles/stealth-v3.css`.
 4. Check desktop (1366 px) and mobile (375 px) before you open the pull request.
+
+## 12. Write or publish a page in German or Spanish
+
+English stays at the root (`/plans`); German lives under `/de` and Spanish under `/es`. A language
+version exists only when the page is in the publish list, so a half-done page never goes live.
+
+1. **Words live in copy files, not in the page.** `src/content/i18n/en/<page>.ts(x)` holds the English
+   words and exports the type (`export type PlansCopy = typeof plans`). `de/` and `es/` hold the same
+   shape. `src/content/i18n/<page>.ts` maps each language to its copy. Pages and components read
+   `copy[locale]`. Client components get plain strings: write templates as `'{count} left'` and fill
+   them with `fill()` from `src/lib/stealth/i18n.ts`, not as functions.
+2. **Write from research, not line by line.** Use the page's entry in
+   `.sageprime/seo/keyword-map-de-de.json` or `keyword-map-es-es.json` for the title, H1 and sections.
+   Every claim must still be in [PRODUCT_FACTS.md](PRODUCT_FACTS.md). German says "Sie", Spanish
+   (Spain) says "tú". "günstig", "barato" and "económico" are allowed; "cheap" stays banned in English.
+3. **Links.** Use `localeHref('/x', locale)`: it returns `/de/x` when that page is published in German
+   and the English URL otherwise. Label a link to an English-only page with `linkLabel()` from
+   `src/lib/stealth/link-label.ts`, which adds "(Englisch)" or "(en inglés)" while the target is not
+   translated. Quote reviews as written and mark them `lang="en"`.
+4. **Numbers.** Prices with `formatEuro(amount, locale)` (`4,59 €`). Write a literal amount with a
+   non-breaking space (`5\u00A0€`) so the sign never wraps alone.
+5. **Publish.** Add the route to `localizedRoutes` in `src/config/i18n.ts`. That one list turns on the
+   page, its hreflang tags, its sitemap entry and the language switch. List the copy file among the
+   page's sources in `scripts/page-dates.mjs` (`copy(locale, '<file>')`).
+6. **Check.** `pnpm build` must pass with 0 audit failures; the audit checks every hreflang set and
+   that unpublished language URLs return 404. Compare the English HTML with a build from `main`: an
+   English page may only gain its hreflang tags and the language switch. Look at the new page on
+   desktop and mobile; German words are long, so check buttons, tags and chart labels.
+7. **Log it.** Add an entry to `.sageprime/seo/changelog.md`.
+

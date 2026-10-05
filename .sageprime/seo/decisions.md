@@ -2,6 +2,23 @@
 
 Judgment calls, with the reason, so a later session does not re-argue them. Newest first.
 
+## 2026-10-05 — How the German and Spanish pages are written
+
+- **German says "Sie", Spanish (Spain) says "tú"**, the usual register of hosting sites in each market.
+- **Only approved facts.** English FAQ answers that conflict with `PRODUCT_FACTS.md` or `plans.json`
+  (billing-cycle discount percentages, payment methods, upgrade and cancellation terms, 250 Mbps /
+  1 Gbps bandwidth, biometric data-centre security) are left out of `/de/faq` and `/es/faq` until the
+  owner confirms them. A GDPR answer was added instead.
+- **The privacy policy is translated, not rewritten**, and says that the English version is binding.
+- **Product names stay as the product shows them**: Citadel's challenge levels (Off, Cookie, JS,
+  Interaction, Auto, Lockdown) and portal sections, plan names, WHMCS button names.
+- **Reviews stay in English**, quoted as written and marked `lang="en"`; headings say "(auf Englisch)" /
+  "(en inglés)".
+- **Links to English-only pages say so** ("(Englisch)", "(en inglés)"), and the label disappears by
+  itself once the target is published in that language.
+- **Deferred to the guide batches:** `/rdp-vps` and `/vps-hosting-minecraft` (long guides), the resource
+  index pages, and all guides and docs.
+
 ## 2026-10-05 — Owner decisions for German and Spanish
 
 - **No Windows licence add-on.** Pages say plainly that the licence is not included, even though German
