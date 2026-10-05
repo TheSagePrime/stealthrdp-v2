@@ -4,6 +4,13 @@ One entry per change that affects search. Newest first. Each entry: date, what c
 why, and when to measure it (see `.claude/skills/measurement-discipline`). Judge a change on Search
 Console clicks, at least 60 days after it went live.
 
+## 2026-10-05 — robots.txt: Content-Signal line removed
+
+- What: removed `Content-Signal: ai-train=no, search=yes, ai-input=yes` from `robots.txt`.
+- Why: Bing Webmaster Tools' robots.txt tester reports it as "syntax not understood", and no major
+  crawler (GPTBot, Googlebot, ClaudeBot, CCBot) acts on it, so crawling does not change. Owner decision.
+- Measure: Bing robots.txt tester shows no errors.
+
 ## 2026-10-05 — IndexNow submission after production deploys
 
 - What: `scripts/indexnow.mjs` and `.github/workflows/indexnow.yml`. After each successful production

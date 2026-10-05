@@ -128,8 +128,10 @@ from local keyword research (`.sageprime/seo/keyword-map-*.json`), not translate
 - Structured data (production only): Organization `@id` `https://www.stealthrdp.com/#organization`,
   WebSite, Service + offers (home, plans, Windows/Linux VPS, Citadel), FAQPage, BlogPosting,
   TechArticle, BreadcrumbList. Helpers: `src/lib/stealth/structured-data.ts`, `src/libs/seo/`.
-- AI search: `robots.txt` allows all crawlers and sets `Content-Signal: ai-train=no, search=yes,
-  ai-input=yes`; `/llms.txt` and `/llms-full.txt` give plain-text summaries.
+- AI search: `robots.txt` allows all crawlers, AI crawlers included, and has no `Content-Signal`
+  line (no major crawler reads it, and Bing's tester reports it as an error); `/llms.txt` and
+  `/llms-full.txt` give plain-text summaries. `.github/workflows/indexnow.yml` sends pages whose
+  words changed to IndexNow after each production deploy.
 
 ## Analytics, ads and consent
 
