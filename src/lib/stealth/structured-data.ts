@@ -224,13 +224,23 @@ export function citadelJsonLd(siteUrl: string, plans: CitadelPlan[]): Node {
 }
 
 /** The about page, describing the company: logo, social profiles and the 24/7 support contact. */
-export function aboutJsonLd(siteUrl: string, brand: { logoUrl?: string; socialProfiles?: string[] } = {}): Node[] {
-  const url = `${siteUrl}/about`;
+export function aboutJsonLd(
+  siteUrl: string,
+  brand: { logoUrl?: string; socialProfiles?: string[] } = {},
+  words: { pageName: string; description: string; crumb: string; path: string; home: { name: string; path: string } } = {
+    pageName: 'About StealthRDP',
+    description: 'Windows and Linux VPS hosting from data centers in Phoenix, Arizona and Amsterdam, Netherlands, and Citadel Layer 7 DDoS protection.',
+    crumb: 'About',
+    path: '/about',
+    home: { name: 'Home', path: '' },
+  },
+): Node[] {
+  const url = `${siteUrl}${words.path}`;
   return [
     {
       '@context': 'https://schema.org',
       '@type': 'AboutPage',
-      'name': 'About StealthRDP',
+      'name': words.pageName,
       'url': url,
       'mainEntity': {
         '@type': 'Organization',
@@ -239,7 +249,7 @@ export function aboutJsonLd(siteUrl: string, brand: { logoUrl?: string; socialPr
         'url': siteUrl,
         ...(brand.logoUrl ? { logo: brand.logoUrl } : {}),
         ...(brand.socialProfiles?.length ? { sameAs: brand.socialProfiles } : {}),
-        'description': 'Windows and Linux VPS hosting from data centers in Phoenix, Arizona and Amsterdam, Netherlands, and Citadel Layer 7 DDoS protection.',
+        'description': words.description,
         'contactPoint': {
           '@type': 'ContactPoint',
           'contactType': 'customer support',
@@ -257,8 +267,8 @@ export function aboutJsonLd(siteUrl: string, brand: { logoUrl?: string; socialPr
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       'itemListElement': [
-        { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': siteUrl },
-        { '@type': 'ListItem', 'position': 2, 'name': 'About', 'item': url },
+        { '@type': 'ListItem', 'position': 1, 'name': words.home.name, 'item': `${siteUrl}${words.home.path}` },
+        { '@type': 'ListItem', 'position': 2, 'name': words.crumb, 'item': url },
       ],
     },
   ];

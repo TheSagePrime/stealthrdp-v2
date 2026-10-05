@@ -76,6 +76,8 @@ export default async function HomePage({ params }: Props) {
   setRequestLocale(asSiteLocale(locale));
   const lang = asSiteLocale(locale);
   const t = homeCopy[lang];
+  /* Reviews are quoted as written, in English. */
+  const quoteLang = lang === 'en' ? undefined : 'en';
   const plans = await getPlans();
   const lowest = Math.min(...plans.map(plan => plan.pricing.monthly.amount));
   /* Review badges keep the English source key for styling (data-source); the label is translated. */
@@ -342,7 +344,7 @@ export default async function HomePage({ params }: Props) {
               <Badge variant="outline">{t.reviews.featured}</Badge>
             </div>
 
-            <blockquote>
+            <blockquote lang={quoteLang}>
               “
               {testimonials[0]?.quote}
               ”
@@ -419,7 +421,7 @@ export default async function HomePage({ params }: Props) {
                               )
                             : null}
                         </div>
-                        <blockquote>{item.quote}</blockquote>
+                        <blockquote lang={quoteLang}>{item.quote}</blockquote>
                         <div className="srv-review-chip-author">
                           <strong>{item.authorName}</strong>
                           <span>{item.publishedOn || item.authorCompany || t.reviews.customer}</span>

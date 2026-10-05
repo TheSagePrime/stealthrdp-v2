@@ -1,11 +1,11 @@
 {
   "/": {
     "updated": "2026-10-02",
-    "fingerprint": "c756cf839c221f0a"
+    "fingerprint": "03292df78d2c7e41"
   },
   "/about": {
     "updated": "2026-10-02",
-    "fingerprint": "24e58eb267584b51"
+    "fingerprint": "8bc9e81317fb1755"
   },
   "/blog/5-ways-to-optimize-your-rdp-performance-for-remote-work.html": {
     "updated": "2026-10-02",
@@ -153,11 +153,15 @@
   },
   "/de": {
     "updated": "2026-10-05",
-    "fingerprint": "ed6a1e6ca527c0a1"
+    "fingerprint": "e60e82e22ac45563"
+  },
+  "/de/about": {
+    "updated": "2026-10-05",
+    "fingerprint": "2a6a32c1cc3ef213"
   },
   "/de/faq": {
     "updated": "2026-10-05",
-    "fingerprint": "e828e91ff688be75"
+    "fingerprint": "093e693a62c67d59"
   },
   "/de/linux-vps": {
     "updated": "2026-10-05",
@@ -261,11 +265,15 @@
   },
   "/es": {
     "updated": "2026-10-05",
-    "fingerprint": "942666f8a332c0c5"
+    "fingerprint": "c91aa6fe898ff69e"
+  },
+  "/es/about": {
+    "updated": "2026-10-05",
+    "fingerprint": "3b7645e783eb83c9"
   },
   "/es/faq": {
     "updated": "2026-10-05",
-    "fingerprint": "55d1616212793e17"
+    "fingerprint": "f88aabd9b38569ff"
   },
   "/es/linux-vps": {
     "updated": "2026-10-05",
