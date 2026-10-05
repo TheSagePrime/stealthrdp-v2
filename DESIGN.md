@@ -169,6 +169,10 @@ Do not introduce heavy WebGL or scroll choreography.
   ("Message us on WhatsApp", "WhatsApp" on phones), the language switch on the right (a globe and
   English · Deutsch · Español, codes on phones). Every language links somewhere: to this page in that
   language, or to that language's home page when the page is English only.
+- Service notice (`SiteNotice`, words in `src/content/i18n/notices.ts`): while a notice is active,
+  a moving ticker sits in the top bar between WhatsApp and the languages (its own row on phones),
+  links to the status page, pauses on hover and stands still with reduced motion. It renders in the
+  browser only and hides itself after its end date; remove it from the code once it has ended.
 - Header (sticky): logo, navigation (DDoS Protection, Server Status, Resources, About), Log In and a
   VPS Plans button. VPS plans appear once, as the button. Below 1040px a Menu button holds the same
   links, then Support and Log In, then the VPS Plans button. Both menus read one list (`mainLinks` in
