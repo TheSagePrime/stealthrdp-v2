@@ -1,5 +1,6 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
+import { requirePageLocale } from '@/lib/stealth/i18n-server';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
@@ -88,7 +89,8 @@ const keyPoints = [
   'You can ask support to access, correct, or delete your data.',
 ];
 
-export default function PrivacyPage() {
+export default async function PrivacyPage() {
+  await requirePageLocale('/privacy');
   return (
     <div className="srv-page srv-page-legal sr-legal">
       <div className="sr-container sr-legal-grid">

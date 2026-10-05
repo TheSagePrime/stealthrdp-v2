@@ -6,7 +6,11 @@
    markup, class names, imports and comments removed.
 
    pnpm page-dates          update the file (the pre-commit hook runs this)
-   pnpm check:page-dates    fail when the file is stale (CI runs this) */
+   pnpm check:page-dates    fail when the file is stale (CI runs this)
+   pnpm page-dates --keep-dates
+                            refresh fingerprints but keep every date. Only for code changes that
+                            change no page's words (a refactor, a new prop), and only after the
+                            built HTML of every affected page was compared and found unchanged. */
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -88,6 +92,7 @@ function fingerprint(files) {
 
 async function main() {
   const check = process.argv.includes('--check');
+  const keepDates = process.argv.includes('--keep-dates');
   const { sources, undeclared } = await pageSources();
   if (undeclared.length) {
     console.error(`[page-dates] declare the source files of ${undeclared.join(', ')} in scripts/page-dates.mjs`);
@@ -103,6 +108,9 @@ async function main() {
     const entry = previous[publicPath];
     if (entry?.fingerprint === current) {
       next[publicPath] = entry;
+    } else if (keepDates && entry) {
+      next[publicPath] = { updated: entry.updated, fingerprint: current };
+      changed.push(publicPath);
     } else {
       next[publicPath] = { updated: today, fingerprint: current };
       changed.push(publicPath);
@@ -122,7 +130,9 @@ async function main() {
 
   fs.writeFileSync(path.join(root, manifestFile), `${JSON.stringify(next, null, 2)}\n`);
   for (const publicPath of changed) {
-    console.log(`[page-dates] ${publicPath} updated ${today}`);
+    console.log(keepDates && previous[publicPath]
+      ? `[page-dates] ${publicPath} fingerprint refreshed, date kept`
+      : `[page-dates] ${publicPath} updated ${today}`);
   }
   for (const publicPath of removed) {
     console.log(`[page-dates] ${publicPath} removed`);

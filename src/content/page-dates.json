@@ -1,11 +1,11 @@
 {
   "/": {
     "updated": "2026-10-02",
-    "fingerprint": "476d44e706581e74"
+    "fingerprint": "a040facbaca6b461"
   },
   "/about": {
     "updated": "2026-10-02",
-    "fingerprint": "e9717a0471862d93"
+    "fingerprint": "24e58eb267584b51"
   },
   "/blog/5-ways-to-optimize-your-rdp-performance-for-remote-work.html": {
     "updated": "2026-10-02",
@@ -73,7 +73,7 @@
   },
   "/citadel": {
     "updated": "2026-10-02",
-    "fingerprint": "ae8f3f9b5bb799de"
+    "fingerprint": "dc4afb863786aa9e"
   },
   "/citadel/docs/allowlists": {
     "updated": "2026-09-27",
@@ -241,23 +241,23 @@
   },
   "/faq": {
     "updated": "2026-10-02",
-    "fingerprint": "457139f2916ec2b0"
+    "fingerprint": "72d4248c71701470"
   },
   "/linux-vps": {
     "updated": "2026-10-02",
-    "fingerprint": "e2fddf37ab897447"
+    "fingerprint": "6b131da17fbc21ee"
   },
   "/plans": {
     "updated": "2026-10-02",
-    "fingerprint": "a380e44651594cf2"
+    "fingerprint": "3da1c8f717f3093b"
   },
   "/privacy": {
     "updated": "2026-10-01",
-    "fingerprint": "380f9cf4be8a9892"
+    "fingerprint": "d090a5a5bd29a86c"
   },
   "/rdp-vps": {
     "updated": "2026-10-04",
-    "fingerprint": "00a14d746115600c"
+    "fingerprint": "65e113c481b8d47f"
   },
   "/vps-hosting-minecraft": {
     "updated": "2026-10-02",
@@ -265,6 +265,6 @@
   },
   "/windows-vps": {
     "updated": "2026-10-02",
-    "fingerprint": "073116dcbc4f3a33"
+    "fingerprint": "647b04349a030410"
   }
 }

@@ -5,6 +5,7 @@ import { FaqExplorer } from '@/components/site/FaqExplorer';
 import { ResourceTopics } from '@/components/site/ResourceTopics';
 import { faqs } from '@/lib/stealth/content';
 import { faqCategoryId } from '@/lib/stealth/faq-topics';
+import { requirePageLocale } from '@/lib/stealth/i18n-server';
 import { faqJsonLd } from '@/lib/stealth/structured-data';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
@@ -16,7 +17,8 @@ export const metadata: Metadata = createPageMetadata({
   ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
-export default function FaqPage() {
+export default async function FaqPage() {
+  await requirePageLocale('/faq');
   const toc = Array.from(new Set(faqs.map(item => item.category))).map(category => ({
     title: category,
     url: `#${faqCategoryId(category)}`,

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { ResourceTopics } from '@/components/site/ResourceTopics';
 import { articlePath, blogArticles } from '@/lib/stealth/articles';
 import { helpCollectionId } from '@/lib/stealth/help-center';
+import { requirePageLocale } from '@/lib/stealth/i18n-server';
 import { buildArticleIndexJsonLd } from '@/libs/seo/articles';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
@@ -17,7 +18,8 @@ export const metadata: Metadata = createPageMetadata({
   ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
-export default function BlogPage() {
+export default async function BlogPage() {
+  await requirePageLocale('/blog');
   const config = getSeoConfig();
   const articleIndexJsonLd = buildArticleIndexJsonLd(config);
   const categories = Array.from(new Set(blogArticles.map(article => article.category)));

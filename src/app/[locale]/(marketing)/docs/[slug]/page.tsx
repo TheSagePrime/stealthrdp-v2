@@ -7,6 +7,7 @@ import { DocBody, docHeadings } from '@/components/site/DocBody';
 import { RelatedArticles } from '@/components/site/RelatedArticles';
 import { docPublicSlug, findDocByPublicSlug, helpDocsArticles } from '@/lib/stealth/articles';
 import { helpArticleHref, helpCollectionForArticle } from '@/lib/stealth/help-center';
+import { requirePageLocale } from '@/lib/stealth/i18n-server';
 import { formatUpdated, pageUpdated } from '@/lib/stealth/page-dates';
 import { techArticleJsonLd } from '@/lib/stealth/structured-data';
 import { getSeoConfig } from '@/libs/seo/config';
@@ -32,6 +33,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function DocPageRoute({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  await requirePageLocale(`/docs/${slug}`);
   const article = findDocByPublicSlug(slug);
   if (!article) {
     notFound();

@@ -7,6 +7,7 @@ import { OsFaq, OsJourney, OsRegions, OsResources, OsSupport, WindowsVersions } 
 import { OsSession } from '@/components/site/os/OsSession';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
 import { Button } from '@/components/ui/button';
+import { requirePageLocale } from '@/lib/stealth/i18n-server';
 import { getPlans } from '@/lib/stealth/live-plans';
 import { osPageJsonLd } from '@/lib/stealth/structured-data';
 import { getSeoConfig } from '@/libs/seo/config';
@@ -40,6 +41,7 @@ const questions = [
 export const revalidate = 21600;
 
 export default async function WindowsVpsPage() {
+  await requirePageLocale('/windows-vps');
   const plans = await getPlans();
 
   return (

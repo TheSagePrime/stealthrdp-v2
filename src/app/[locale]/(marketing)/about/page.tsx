@@ -16,6 +16,7 @@ import { AboutMap } from '@/components/site/about/AboutMap';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { testimonials } from '@/lib/stealth/content';
+import { requirePageLocale } from '@/lib/stealth/i18n-server';
 import { getPlans } from '@/lib/stealth/live-plans';
 import { aboutJsonLd } from '@/lib/stealth/structured-data';
 import { getSeoConfig } from '@/libs/seo/config';
@@ -93,6 +94,7 @@ const quotes = testimonials.filter(item => item.sourceUrl?.includes('trustpilot.
 export const revalidate = 21600;
 
 export default async function AboutPage() {
+  await requirePageLocale('/about');
   const plans = await getPlans();
   const seo = getSeoConfig();
   const from = (region: 'USA' | 'EU') => {

@@ -18,6 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { requirePageLocale } from '@/lib/stealth/i18n-server';
 import { getPlans } from '@/lib/stealth/live-plans';
 import { plansJsonLd } from '@/lib/stealth/structured-data';
 import { getSeoConfig } from '@/libs/seo/config';
@@ -53,6 +54,7 @@ const cardLinkClass = 'inline-flex min-h-11 items-center gap-2 text-small font-s
 export const revalidate = 21600;
 
 export default async function PlansPage() {
+  await requirePageLocale('/plans');
   const plans = await getPlans();
   const lowest = Math.min(...plans.map(plan => plan.pricing.monthly.amount));
   const inStock = plans.reduce((sum, plan) => sum + (plan.source.stock ?? 0), 0);

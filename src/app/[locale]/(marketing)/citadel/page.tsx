@@ -19,6 +19,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { requirePageLocale } from '@/lib/stealth/i18n-server';
 import { citadelJsonLd } from '@/lib/stealth/structured-data';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
@@ -63,7 +64,8 @@ const plans = [
   },
 ] as const;
 
-export default function CitadelPage() {
+export default async function CitadelPage() {
+  await requirePageLocale('/citadel');
   const jsonLd = buildPageJsonLd(getSeoConfig());
 
   return (

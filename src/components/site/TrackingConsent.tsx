@@ -1,9 +1,11 @@
 'use client';
 
+import type { SiteCopy } from '@/content/i18n/site';
 import Link from 'next/link';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { siteCopy } from '@/content/i18n/site';
 import styles from './TrackingConsent.module.css';
 
 /*
@@ -57,7 +59,7 @@ function revokeLoadedTags() {
   }));
 }
 
-export function TrackingConsent() {
+export function TrackingConsent({ copy = siteCopy.en.consent, privacyHref = '/privacy#cookies' }: { copy?: SiteCopy['consent']; privacyHref?: string }) {
   const [load, setLoad] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -103,16 +105,15 @@ export function TrackingConsent() {
       {open
         ? (
             <section className={styles.banner} aria-labelledby="sr-consent-title">
-              <p id="sr-consent-title" className={styles.title}>Cookies for analytics and ads</p>
+              <p id="sr-consent-title" className={styles.title}>{copy.title}</p>
               <p className={styles.text}>
-                With your consent we use Google Analytics, Google Ads, the Meta pixel and DataFast to
-                measure visits and ads. The site works the same if you reject them.
+                {copy.text}
                 {' '}
-                <Link href="/privacy#cookies">Read the details</Link>
+                <Link href={privacyHref}>{copy.details}</Link>
               </p>
               <div className={styles.actions}>
-                <Button size="sm" variant="outline" onClick={() => decide('denied')}>Reject</Button>
-                <Button size="sm" onClick={() => decide('granted')}>Accept</Button>
+                <Button size="sm" variant="outline" onClick={() => decide('denied')}>{copy.reject}</Button>
+                <Button size="sm" onClick={() => decide('granted')}>{copy.accept}</Button>
               </div>
             </section>
           )
@@ -122,10 +123,10 @@ export function TrackingConsent() {
 }
 
 /** Footer control that opens the consent choice again. */
-export function CookieSettingsButton({ className }: { className?: string }) {
+export function CookieSettingsButton({ className, label = siteCopy.en.consent.settings }: { className?: string; label?: string }) {
   return (
     <button type="button" className={className} onClick={() => window.dispatchEvent(new Event(OPEN_EVENT))}>
-      Cookie settings
+      {label}
     </button>
   );
 }

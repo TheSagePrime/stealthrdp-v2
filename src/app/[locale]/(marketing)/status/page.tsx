@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { Pulse } from '@phosphor-icons/react/dist/ssr';
 import { StatusBoard } from '@/components/site/status/StatusBoard';
 import { Badge } from '@/components/ui/badge';
+import { requirePageLocale } from '@/lib/stealth/i18n-server';
 import { getUptimeReport } from '@/lib/stealth/uptime';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
@@ -17,6 +18,7 @@ export const metadata: Metadata = createPageMetadata({
 });
 
 export default async function StatusPage() {
+  await requirePageLocale('/status');
   const report = await getUptimeReport();
 
   return (

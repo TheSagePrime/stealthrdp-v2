@@ -10,6 +10,7 @@ import {
   helpCollectionId,
   helpCollections,
 } from '@/lib/stealth/help-center';
+import { requirePageLocale } from '@/lib/stealth/i18n-server';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
 export const metadata: Metadata = createPageMetadata({
@@ -19,7 +20,8 @@ export const metadata: Metadata = createPageMetadata({
   ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
 });
 
-export default function DocsPageRoute() {
+export default async function DocsPageRoute() {
+  await requirePageLocale('/docs');
   return (
     <DocsPage>
       <DocsTitle>StealthRDP Help Center</DocsTitle>

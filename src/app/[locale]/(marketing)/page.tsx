@@ -22,24 +22,24 @@ import { HomePricing } from '@/components/site/HomePricing';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { testimonials } from '@/lib/stealth/content';
+import { asSiteLocale } from '@/lib/stealth/i18n';
+import { localizedPageMetadata, requirePageLocale } from '@/lib/stealth/i18n-server';
 import { getPlans } from '@/lib/stealth/live-plans';
 import { homeJsonLd } from '@/lib/stealth/structured-data';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
-import { createPageMetadata } from '@/libs/seo/metadata';
 import { buildPageJsonLd } from '@/libs/seo/schema';
 
 type Props = { params: Promise<{ locale: string }> };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params;
-  return createPageMetadata({
-    path: '/',
-    locale,
-    title: 'StealthRDP — Windows RDP & Linux VPS Hosting',
-    description:
-      'Deploy Windows or Linux VPS hosting with NVMe storage, full administrative access, USA and EU locations, and flexible billing.',
-    ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
+export async function generateMetadata(): Promise<Metadata> {
+  return localizedPageMetadata('/', {
+    en: {
+      title: 'StealthRDP — Windows RDP & Linux VPS Hosting',
+      description:
+        'Deploy Windows or Linux VPS hosting with NVMe storage, full administrative access, USA and EU locations, and flexible billing.',
+      ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
+    },
   });
 }
 
@@ -124,8 +124,9 @@ function reviewSource(item: (typeof testimonials)[number]) {
 export const revalidate = 21600;
 
 export default async function HomePage({ params }: Props) {
+  await requirePageLocale('/');
   const { locale } = await params;
-  setRequestLocale(locale);
+  setRequestLocale(asSiteLocale(locale));
   const plans = await getPlans();
   const jsonLd = buildPageJsonLd(getSeoConfig());
 

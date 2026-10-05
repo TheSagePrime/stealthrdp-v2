@@ -4,6 +4,8 @@ import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { DocsRootProvider } from '@/components/site/DocsRootProvider';
 import { TrackingConsent } from '@/components/site/TrackingConsent';
+import { siteCopy } from '@/content/i18n/site';
+import { asSiteLocale, localeHref } from '@/lib/stealth/i18n';
 import { routing } from '@/libs/I18nRouting';
 import { isProductionDeployEnv, resolveDeployEnv } from '@/libs/seo/env';
 import '@/styles/global.css';
@@ -50,7 +52,9 @@ export default async function RootLayout(props: {
             {props.children}
           </DocsRootProvider>
         </NextIntlClientProvider>
-        {production ? <TrackingConsent /> : null}
+        {production
+          ? <TrackingConsent copy={siteCopy[asSiteLocale(locale)].consent} privacyHref={`${localeHref('/privacy', asSiteLocale(locale))}#cookies`} />
+          : null}
       </body>
     </html>
   );

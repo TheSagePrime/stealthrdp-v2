@@ -8,6 +8,7 @@ import { DocBody, docHeadings } from '@/components/site/DocBody';
 import { RelatedArticles } from '@/components/site/RelatedArticles';
 import { citadelDocsArticles, docPublicSlug, findCitadelDocByPublicSlug } from '@/lib/stealth/articles';
 import { citadelArticleHref, citadelCollectionForArticle } from '@/lib/stealth/help-center';
+import { requirePageLocale } from '@/lib/stealth/i18n-server';
 import { formatUpdated, pageUpdated } from '@/lib/stealth/page-dates';
 import { techArticleJsonLd } from '@/lib/stealth/structured-data';
 import { getSeoConfig } from '@/libs/seo/config';
@@ -36,6 +37,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function CitadelDocPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  await requirePageLocale(`/citadel/docs/${slug}`);
   const article = findCitadelDocByPublicSlug(slug);
   if (!article) {
     notFound();

@@ -7,6 +7,7 @@ import { LinuxDistros, OsFaq, OsJourney, OsRegions, OsResources, OsSupport } fro
 import { OsSession } from '@/components/site/os/OsSession';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
 import { Button } from '@/components/ui/button';
+import { requirePageLocale } from '@/lib/stealth/i18n-server';
 import { getPlans } from '@/lib/stealth/live-plans';
 import { osPageJsonLd } from '@/lib/stealth/structured-data';
 import { getSeoConfig } from '@/libs/seo/config';
@@ -49,6 +50,7 @@ const questions = [
 export const revalidate = 21600;
 
 export default async function LinuxVpsPage() {
+  await requirePageLocale('/linux-vps');
   const plans = await getPlans();
   const bronze = plans.filter(plan => plan.name.startsWith('Bronze '));
   const bronzePrice = `€${(bronze[0]?.pricing.monthly.amount ?? 9.5).toFixed(2)}`;
