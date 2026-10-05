@@ -10,11 +10,6 @@ on:
 permissions:
   contents: read
 
-# One submission at a time; a later deploy waits for the earlier one instead of overlapping it.
-concurrency:
-  group: indexnow
-  cancel-in-progress: false
-
 jobs:
   submit:
     if: github.event_name == 'workflow_dispatch' || (github.event.deployment_status.state == 'success' && startsWith(github.event.deployment_status.environment, 'Production'))

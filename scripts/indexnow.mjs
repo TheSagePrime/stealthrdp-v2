@@ -88,15 +88,23 @@ if (dryRun) {
   process.exit(0);
 }
 
-const response = await fetch('https://api.indexnow.org/indexnow', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json; charset=utf-8' },
-  body: JSON.stringify({ host, key, keyLocation: `https://${host}/${key}.txt`, urlList }),
-});
-
-/* 200 and 202 both mean accepted; 202 while the key is still being checked. */
-if (response.status !== 200 && response.status !== 202) {
-  console.error(`[indexnow] submission failed: HTTP ${response.status} ${await response.text()}`);
-  process.exit(1);
+/* 200 and 202 both mean accepted; 202 while the key is still being checked. A rate limit (429)
+   or a server error is retried twice, 10 and 20 seconds apart. */
+const body = JSON.stringify({ host, key, keyLocation: `https://${host}/${key}.txt`, urlList });
+for (let attempt = 1; ; attempt++) {
+  const response = await fetch('https://api.indexnow.org/indexnow', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json; charset=utf-8' },
+    body,
+  });
+  if (response.status === 200 || response.status === 202) {
+    console.log(`[indexnow] accepted (HTTP ${response.status})`);
+    break;
+  }
+  const retry = (response.status === 429 || response.status >= 500) && attempt < 3;
+  console.error(`[indexnow] HTTP ${response.status} ${await response.text()}${retry ? '; retrying' : ''}`);
+  if (!retry) {
+    process.exit(1);
+  }
+  await new Promise(resolve => setTimeout(resolve, attempt * 10_000));
 }
-console.log(`[indexnow] accepted (HTTP ${response.status})`);
