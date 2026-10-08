@@ -4,11 +4,11 @@
 // Source and permitted end-product use: THIRD_PARTY_NOTICES.md.
 import type { SiteLocale } from '@/config/i18n';
 import type { SiteCopy } from '@/content/i18n/site';
+import { SiWhatsapp } from '@icons-pack/react-simple-icons';
 import { List, X } from '@phosphor-icons/react';
 import Link from 'next/link';
 import { useRef } from 'react';
 import { LanguageLinks } from '@/components/site/LanguageLinks';
-import { WhatsAppMark } from '@/components/site/WhatsAppMark';
 import { Button } from '@/components/ui/button';
 import { localeHref } from '@/lib/stealth/i18n';
 import styles from './navbar1.module.css';
@@ -27,7 +27,7 @@ export function Navbar1({ locale, copy }: { locale: SiteLocale; copy: SiteCopy }
   );
   const whatsapp = (
     <a href="https://wa.me/447441426993" target="_blank" rel="noopener noreferrer" className={styles.whatsapp} aria-label={t.whatsapp}>
-      <WhatsAppMark size={22} />
+      <SiWhatsapp size={20} className={styles.whatsappIcon} aria-hidden="true" title="" />
       <span>WhatsApp</span>
     </a>
   );

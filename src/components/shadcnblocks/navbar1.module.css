@@ -57,12 +57,21 @@
   gap: 4px;
 }
 .whatsapp {
+  padding-inline: 8px;
+  border-radius: var(--radius-sm);
   display: inline-flex;
   gap: 8px;
   min-height: 44px;
   align-items: center;
   font-size: 14px;
   font-weight: 500;
+}
+.whatsapp:hover {
+  background: var(--muted);
+}
+.whatsappIcon {
+  flex-shrink: 0;
+  color: var(--sr-raw-16a34a);
 }
 .menuButton {
   display: none;
@@ -123,6 +132,13 @@
   .desktopNav,
   .desktopAuth {
     display: none;
+  }
+  .whatsapp:hover {
+    background: var(--muted);
+  }
+  .whatsappIcon {
+    flex-shrink: 0;
+    color: var(--sr-raw-16a34a);
   }
   .menuButton {
     display: inline-flex;
