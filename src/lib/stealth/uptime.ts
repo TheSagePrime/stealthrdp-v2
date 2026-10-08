@@ -5,7 +5,7 @@ import 'server-only';
 
 /* Service status for /status and /api/uptime.
    1. UptimeRobot API (UPTIMEROBOT_API_KEY, production): daily uptime, downtime, response time, incident log.
-   2. Public status page feed (no key, for preview and local): daily uptime and the last incident.
+   2. Public status page feed: recovers missing/suspect API history; also works without a key.
    3. The dated snapshot in src/content/uptime.json when both are unreachable.
    Days are UTC calendar days; the last one is today so far. */
 
@@ -51,6 +51,9 @@ function groupFor(name: string): string {
 const DAY = 86_400;
 
 function percent(value: unknown): number | null {
+  if (typeof value !== 'number' && (typeof value !== 'string' || value.trim() === '')) {
+    return null;
+  }
   const number = Number(value);
   return Number.isFinite(number) && number >= 0 && number <= 100 ? number : null;
 }
@@ -86,8 +89,7 @@ const apiMonitor = z.object({
   friendly_name: z.string(),
   status: z.number(),
   create_datetime: z.number().optional(),
-  custom_uptime_ranges: z.string().optional(),
-  custom_down_durations: z.string().optional(),
+  custom_uptime_ranges: z.string().nullish(),
   average_response_time: z.union([z.string(), z.number()]).optional(),
   logs: z.array(z.object({
     type: z.number(),
@@ -120,15 +122,17 @@ function apiIncidents(monitor: ApiMonitor): Incident[] {
     .map(log => ({
       service: monitor.friendly_name,
       startedAt: new Date(log.datetime * 1000).toISOString(),
-      durationSeconds: log.duration,
+      durationSeconds: log.duration === 0 && apiState(monitor.status) === 'down'
+        ? Math.max(0, Math.floor(Date.now() / 1000) - log.datetime)
+        : log.duration,
       reason: log.reason?.detail ?? null,
-    }));
+    }))
+    .sort((a, b) => Date.parse(b.startedAt) - Date.parse(a.startedAt));
 }
 
 function fromApi(monitors: ApiMonitor[], ranges: Array<[string, number, number]>): Service[] {
   return monitors.map((monitor) => {
     const uptimes = (monitor.custom_uptime_ranges ?? '').split('-');
-    const downs = (monitor.custom_down_durations ?? '').split('-');
     const response = Number(monitor.average_response_time);
     return {
       id: String(monitor.id),
@@ -140,8 +144,8 @@ function fromApi(monitors: ApiMonitor[], ranges: Array<[string, number, number]>
         if (end < (monitor.create_datetime ?? 0)) {
           return { date, ratio: null, downSeconds: null };
         }
-        const down = Number(downs[index]);
-        return { date, ratio: percent(uptimes[index]), downSeconds: Number.isFinite(down) ? down : null };
+        // custom_down_durations belongs to custom_uptime_ratios, not these date ranges.
+        return { date, ratio: percent(uptimes[index]), downSeconds: null };
       }),
       uptime30: percent(uptimes[HISTORY_DAYS]),
       uptime90: percent(uptimes[HISTORY_DAYS + 1]),
@@ -149,6 +153,38 @@ function fromApi(monitors: ApiMonitor[], ranges: Array<[string, number, number]>
       lastIncident: apiIncidents(monitor)[0] ?? null,
     };
   });
+}
+
+function hasOnlyZeroHistory(service: Service): boolean {
+  const ratios = service.days.map(day => day.ratio)
+    .filter(ratio => ratio !== null);
+  return service.uptime30 === 0 && service.uptime90 === 0
+    && ratios.length > 0 && ratios.every(ratio => ratio === 0);
+}
+
+function needsHistoryFallback(service: Service, createdAt: number): boolean {
+  return service.uptime30 === null || service.uptime90 === null || hasOnlyZeroHistory(service)
+    || service.days.some(day => day.ratio === null && Date.parse(day.date) / 1000 + DAY > createdAt);
+}
+
+/** Recover history by monitor ID and UTC date; keep API state, responses and incidents. */
+function withPublicHistory(service: Service, fallback: Service, createdAt: number): Service {
+  // A full zero history can be real. Replace it only with independently measured history.
+  const replaceZeros = hasOnlyZeroHistory(service) && !hasOnlyZeroHistory(fallback)
+    && [fallback.uptime30, fallback.uptime90, ...fallback.days.map(day => day.ratio)]
+      .some(ratio => ratio !== null && ratio > 0);
+  const daysByDate = new Map(fallback.days.map(day => [day.date, day]));
+  return {
+    ...service,
+    uptime30: replaceZeros ? fallback.uptime30 : service.uptime30 ?? fallback.uptime30,
+    uptime90: replaceZeros ? fallback.uptime90 : service.uptime90 ?? fallback.uptime90,
+    days: service.days.map((day) => {
+      if (Date.parse(day.date) / 1000 + DAY <= createdAt || (!replaceZeros && day.ratio !== null)) {
+        return day;
+      }
+      return { ...day, ratio: daysByDate.get(day.date)?.ratio ?? null, downSeconds: null };
+    }),
+  };
 }
 
 async function fromUptimeRobotApi(apiKey: string): Promise<UptimeReport> {
@@ -164,7 +200,6 @@ async function fromUptimeRobotApi(apiKey: string): Promise<UptimeReport> {
     logs_limit: '20',
     response_times: '1',
     response_times_limit: '1',
-    custom_down_durations: '1',
     custom_uptime_ranges: [...ranges.map(([, start, end]) => [start, end]), ...extra]
       .map(([start, end]) => `${start}_${end}`)
       .join('-'),
@@ -179,23 +214,38 @@ async function fromUptimeRobotApi(apiKey: string): Promise<UptimeReport> {
     throw new Error(`UptimeRobot API returned ${response.status}`);
   }
   const { monitors } = apiResponse.parse(await response.json());
+  const createdAtById = new Map(monitors.map(monitor => [String(monitor.id), monitor.create_datetime ?? 0]));
+  let services = sortServices(fromApi(monitors, ranges));
+  if (services.some(service => needsHistoryFallback(service, createdAtById.get(service.id) ?? 0))) {
+    try {
+      const fallback = await fromPublicStatusPage();
+      const byId = new Map(fallback.services.map(service => [service.id, service]));
+      services = services.map((service) => {
+        const history = byId.get(service.id);
+        return history ? withPublicHistory(service, history, createdAtById.get(service.id) ?? 0) : service;
+      });
+    } catch {
+      // History recovery must not discard fresh API state or invent missing measurements.
+    }
+  }
   return {
     source: 'api',
     checkedAt: now.toISOString(),
-    services: sortServices(fromApi(monitors, ranges)),
+    services,
     incidents: recentIncidents(monitors.flatMap(apiIncidents)),
   };
 }
 
 /* 2. Public status page feed -------------------------------------------------------------------- */
 
-const ratioObject = z.object({ ratio: z.union([z.string(), z.number()]) });
+const ratioValue = z.union([z.string(), z.number()]).nullish();
+const ratioObject = z.object({ ratio: ratioValue }).nullish();
 
 const publicMonitor = z.object({
   'monitorId': z.number(),
   'name': z.string(),
   'statusClass': z.string(),
-  'dailyRatios': z.array(z.object({ date: z.string(), ratio: z.union([z.string(), z.number()]), label: z.string().optional() })).optional(),
+  'dailyRatios': z.array(z.object({ date: z.string(), ratio: ratioValue, label: z.string().optional() })).optional(),
   '30dRatio': ratioObject.optional(),
   '90dRatio': ratioObject.optional(),
   'lastDowntime': z.object({ date: z.string(), duration: z.number(), reason: z.string().optional() }).nullable().optional(),
