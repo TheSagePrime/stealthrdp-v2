@@ -1,14 +1,6 @@
-import type { Icon } from '@phosphor-icons/react';
 import type { AboutCopy } from '@/content/i18n/en/about';
 import type { Plan } from '@/lib/stealth/content';
-import {
-  GlobeHemisphereEast,
-  GlobeHemisphereWest,
-  LinuxLogo,
-  ShieldCheck,
-  UserCircle,
-  WindowsLogo,
-} from '@phosphor-icons/react/dist/ssr';
+import { osLogos } from '@/config/os-logos';
 import styles from './AboutMap.module.css';
 
 /*
@@ -17,7 +9,8 @@ import styles from './AboutMap.module.css';
  * catalogue. Static SVG with SMIL comets, so it needs no client JavaScript.
  */
 
-type Part = { name: string; note: string; icon: Icon };
+/* Each part's artwork: the country flags, the panel's Windows mark, our Linux and Citadel marks, and a Fluent icon. */
+type Part = { name: string; note: string; icon: string };
 type MapWords = AboutCopy['map'];
 
 function parts(plans: Plan[], t: MapWords): Part[] {
@@ -26,12 +19,12 @@ function parts(plans: Plan[], t: MapWords): Part[] {
     return prices.length ? t.from(Math.min(...prices)) : t.noPlans;
   };
   return [
-    { name: t.usa, note: from('USA'), icon: GlobeHemisphereWest },
-    { name: 'Windows Server', note: '2019 · 2022 · 2025', icon: WindowsLogo },
-    { name: 'Citadel', note: t.citadelNote, icon: ShieldCheck },
-    { name: t.eu, note: from('EU'), icon: GlobeHemisphereEast },
-    { name: 'Linux', note: t.linuxNote, icon: LinuxLogo },
-    { name: t.clientArea, note: t.clientAreaNote, icon: UserCircle },
+    { name: t.usa, note: from('USA'), icon: '/images/flags/us-circle.svg' },
+    { name: 'Windows Server', note: '2019 · 2022 · 2025', icon: osLogos.windows },
+    { name: 'Citadel', note: t.citadelNote, icon: '/brand/citadel-shield.svg' },
+    { name: t.eu, note: from('EU'), icon: '/images/flags/nl-circle.svg' },
+    { name: 'Linux', note: t.linuxNote, icon: '/brand/linux.svg' },
+    { name: t.clientArea, note: t.clientAreaNote, icon: '/images/fluent-color/receipt.svg' },
   ];
 }
 
@@ -39,12 +32,11 @@ const WIDTH = 186;
 const HEIGHT = 52;
 
 function Satellite({ part, x, y, width }: { part: Part; x: number; y: number; width: number }) {
-  const Glyph = part.icon;
   return (
     <g>
       <rect x={x} y={y - HEIGHT / 2} width={width} height={HEIGHT} rx={HEIGHT / 2} className={styles.pill} />
       <circle cx={x + 26} cy={y} r="17" className={styles.pillIcon} />
-      <Glyph x={x + 15} y={y - 11} size={22} weight="duotone" className={styles.icon} />
+      <image href={part.icon} x={x + 14} y={y - 12} width={24} height={24} preserveAspectRatio="xMidYMid meet" />
       <text x={x + 52} y={y - 3} className={styles.name}>{part.name}</text>
       <text x={x + 52} y={y + 14} className={styles.note}>{part.note}</text>
     </g>
