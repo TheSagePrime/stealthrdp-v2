@@ -83,6 +83,9 @@ const status = {
     snapshot: (date: string) => `Live data is unavailable. Showing the snapshot from ${date}.`,
     checked: (time: string) => `Checked ${time} · refreshes every minute`,
     averageUptime: 'Average uptime, 90 days',
+    overview: 'Overview',
+    totalServices: 'Total services',
+    otherServices: 'Paused / unknown',
     servicesUp: 'Services up',
     noneIn90: 'None in 90 days',
     /* Display names of the groups in src/lib/stealth/uptime.ts groupOrder. */

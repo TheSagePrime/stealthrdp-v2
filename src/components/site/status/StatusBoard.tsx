@@ -156,7 +156,7 @@ export function StatusBoard({
     >
       <header className="grid max-w-3xl gap-3">{children}</header>
       <Status1
-        title={t.servicesUp}
+        title={t.overview}
         summary={headline}
         description={
           report.source === 'snapshot'
@@ -167,16 +167,13 @@ export function StatusBoard({
                 <MeasurementTime at={report.checkedAt} locale={locale} updated />
               )
         }
-        services={services.map(service => ({
-          name: service.name,
-          status: state(service),
-          statusLabel:
-            t.states[service.state],
-          description:
-            euMaintenance.active && service.id === euMaintenance.serviceId
-              ? t.maintenance.summary
-              : (t.groups[service.group] ?? service.group),
-        }))}
+        statuses={services.map(state)}
+        stats={[
+          { label: t.totalServices, value: services.length },
+          { label: t.states.up, value: up },
+          { label: t.states.down, value: down },
+          { label: t.otherServices, value: services.length - up - down },
+        ]}
       />
       {groups.map((group) => {
         const members = services.filter(service => service.group === group);

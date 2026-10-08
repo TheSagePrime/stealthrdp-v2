@@ -279,6 +279,6 @@ function UptimeBar({ className, days, label }: UptimeBarProps) {
   );
 }
 
-export { StatusBadge, StatusIndicator, StatusLegend, UptimeBar };
+export { StatusBadge, StatusLegend, UptimeBar };
 
 export type { StatusLevel, UptimeDay };

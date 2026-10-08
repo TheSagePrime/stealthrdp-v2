@@ -60,7 +60,12 @@ describe('public status information', () => {
       </StatusBoard>,
     );
 
-    expect(page.getByText(en.board.maintenance.summary)).toBeVisible();
+    const overview = page.getByRole('region', { name: en.board.overview });
+
+    expect(overview.getByText(service.name)).not.toBeInTheDocument();
+    expect(overview.getByText(en.board.totalServices)).toBeVisible();
+    expect(Array.from(document.querySelector('[aria-label="Overview"]')?.querySelectorAll('dd') ?? [], item => item.textContent)).toEqual(['1', '0', '1', '0']);
+    expect(page.getByText(`${en.board.maintenance.description} ${en.board.maintenance.timing}`)).toBeVisible();
     expect(page.getByText('Down', { exact: true })).toBeVisible();
     expect(page.getByText('99.700%', { exact: true })).toBeVisible();
     expect(document.querySelector('summary')).toBeNull();
