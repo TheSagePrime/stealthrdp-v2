@@ -1,5 +1,5 @@
 /* The status page in English: hero words and the status board (src/components/site/status).
-   Service names and incident reasons come from UptimeRobot and are shown as they are. */
+   Service names come from UptimeRobot. Incident reasons are public-safe categories. */
 
 const status = {
   meta: {
@@ -28,7 +28,33 @@ const status = {
     averageResponse: 'Average response',
     lastIncident: 'Last incident',
     noneRecorded: 'None recorded',
-    recentIncidents: 'Recent incidents',
+    recentIncidents: 'Recent history',
+    historyCount: (count: number) => `${count} update${count === 1 ? '' : 's'}`,
+    serviceDetails: 'Monitoring details',
+    uptime24: 'Uptime, 24 hours',
+    uptime7: 'Uptime, 7 days',
+    checkMethod: 'Availability check',
+    checkFrequency: 'Check frequency',
+    lastResponse: 'Latest recorded response',
+    monitorKinds: { http: 'Web availability', network: 'Network availability', ping: 'Ping', heartbeat: 'Heartbeat', unknown: 'Not available' },
+    noMetrics: 'Additional metrics are unavailable from the current data source.',
+    ongoing: 'Ongoing',
+    resolved: 'Resolved',
+    started: 'Started',
+    resolvedAt: 'Recovered',
+    incidentDuration: 'Downtime',
+    recorded: 'Monitoring record',
+    updated: 'Published',
+    reasons: { timeout: 'Availability check timed out', connection: 'Connection unavailable', response: 'Unexpected service response', unavailable: 'Availability check failed' },
+    maintenance: {
+      status: 'Maintenance in progress',
+      title: 'EU server maintenance and migration',
+      summary: 'EU 4 NL Server is being retired. Affected users are migrating to a new server with better hardware.',
+      description: 'The EU server is unavailable during maintenance as we retire the existing server and migrate affected users to a new server with better hardware.',
+      impact: 'Affected service',
+      timing: 'A completion time has not yet been confirmed.',
+      serviceNote: 'Maintenance and migration in progress',
+    },
     latestOnly: 'Latest incident for each service, last 90 days',
     last90: 'Last 90 days',
     incident: (duration: string, started: string) => `Down for ${duration} · started ${started}`,

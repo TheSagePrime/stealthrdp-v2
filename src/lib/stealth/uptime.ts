@@ -15,17 +15,25 @@ export type ServiceState = 'up' | 'down' | 'paused' | 'unknown';
 
 export type UptimeDay = { date: string; ratio: number | null; downSeconds: number | null };
 
-export type Incident = { service: string; startedAt: string; durationSeconds: number; reason: string | null };
+type IncidentReason = 'timeout' | 'connection' | 'response' | 'unavailable';
+type MonitorKind = 'http' | 'network' | 'ping' | 'heartbeat' | 'unknown';
+
+export type Incident = { serviceId: string; service: string; startedAt: string; durationSeconds: number; ongoing: boolean; reason: IncidentReason | null };
 
 export type Service = {
   id: string;
   name: string;
   group: string;
   state: ServiceState;
+  uptime24: number | null;
+  uptime7: number | null;
   uptime30: number | null;
   uptime90: number | null;
   days: UptimeDay[];
   responseMs: number | null;
+  monitorKind: MonitorKind;
+  checkIntervalSeconds: number | null;
+  lastResponseAt: string | null;
   lastIncident: Incident | null;
 };
 
@@ -49,6 +57,13 @@ function groupFor(name: string): string {
 }
 
 const DAY = 86_400;
+
+function publicServiceName(name: string, id: string): string {
+  // Friendly names are normally public labels. Fail closed if one contains a target or credential.
+  return /[:/@]|\b(?:\d{1,3}\.){3}\d{1,3}\b|\b(?:[a-z0-9-]+\.)+[a-z]{2,}\b|api[_ -]?key|password|token\s*=/i.test(name)
+    ? `Service ${id}`
+    : name;
+}
 
 function percent(value: unknown): number | null {
   if (typeof value !== 'number' && (typeof value !== 'string' || value.trim() === '')) {
@@ -89,8 +104,12 @@ const apiMonitor = z.object({
   friendly_name: z.string(),
   status: z.number(),
   create_datetime: z.number().optional(),
+  type: z.number().optional(),
+  interval: z.number().positive().optional(),
+  custom_uptime_ratios: z.string().nullish(),
   custom_uptime_ranges: z.string().nullish(),
   average_response_time: z.union([z.string(), z.number()]).optional(),
+  response_times: z.array(z.object({ datetime: z.number() })).optional(),
   logs: z.array(z.object({
     type: z.number(),
     datetime: z.number(),
@@ -116,29 +135,56 @@ function apiState(status: number): ServiceState {
 
 type ApiMonitor = z.infer<typeof apiMonitor>;
 
+/** Publish only a small reason code. Provider diagnostics may contain targets or credentials. */
+function publicReason(detail: string | undefined): IncidentReason | null {
+  if (!detail) {
+    return null;
+  }
+  if (/timed?\s*out/i.test(detail)) {
+    return 'timeout';
+  }
+  if (/connection|connect|refused|unreachable/i.test(detail)) {
+    return 'connection';
+  }
+  if (/response|status code|keyword/i.test(detail)) {
+    return 'response';
+  }
+  return 'unavailable';
+}
+
+function monitorKind(type: number | undefined): MonitorKind {
+  return ({ 1: 'http', 2: 'http', 3: 'ping', 4: 'network', 5: 'heartbeat' } as Record<number, MonitorKind>)[type ?? 0] ?? 'unknown';
+}
+
 function apiIncidents(monitor: ApiMonitor): Incident[] {
   return (monitor.logs ?? [])
     .filter(log => log.type === 1)
-    .map(log => ({
-      service: monitor.friendly_name,
+    .sort((a, b) => b.datetime - a.datetime)
+    .map((log, index) => ({
+      serviceId: String(monitor.id),
+      service: publicServiceName(monitor.friendly_name, String(monitor.id)),
       startedAt: new Date(log.datetime * 1000).toISOString(),
-      durationSeconds: log.duration === 0 && apiState(monitor.status) === 'down'
+      durationSeconds: log.duration === 0 && index === 0 && apiState(monitor.status) === 'down'
         ? Math.max(0, Math.floor(Date.now() / 1000) - log.datetime)
         : log.duration,
-      reason: log.reason?.detail ?? null,
-    }))
-    .sort((a, b) => Date.parse(b.startedAt) - Date.parse(a.startedAt));
+      ongoing: log.duration === 0 && index === 0 && apiState(monitor.status) === 'down',
+      reason: publicReason(log.reason?.detail),
+    }));
 }
 
 function fromApi(monitors: ApiMonitor[], ranges: Array<[string, number, number]>): Service[] {
   return monitors.map((monitor) => {
     const uptimes = (monitor.custom_uptime_ranges ?? '').split('-');
+    const shortUptimes = (monitor.custom_uptime_ratios ?? '').split('-');
     const response = Number(monitor.average_response_time);
+    const lastResponse = Math.max(0, ...(monitor.response_times ?? []).map(response => response.datetime));
     return {
       id: String(monitor.id),
-      name: monitor.friendly_name,
+      name: publicServiceName(monitor.friendly_name, String(monitor.id)),
       group: groupFor(monitor.friendly_name),
       state: apiState(monitor.status),
+      uptime24: percent(shortUptimes[0]),
+      uptime7: percent(shortUptimes[1]),
       days: ranges.map(([date, , end], index) => {
         // Days before the monitor existed have no data.
         if (end < (monitor.create_datetime ?? 0)) {
@@ -150,6 +196,9 @@ function fromApi(monitors: ApiMonitor[], ranges: Array<[string, number, number]>
       uptime30: percent(uptimes[HISTORY_DAYS]),
       uptime90: percent(uptimes[HISTORY_DAYS + 1]),
       responseMs: Number.isFinite(response) && response > 0 ? Math.round(response) : null,
+      monitorKind: monitorKind(monitor.type),
+      checkIntervalSeconds: monitor.interval ?? null,
+      lastResponseAt: lastResponse > 0 ? new Date(lastResponse * 1000).toISOString() : null,
       lastIncident: apiIncidents(monitor)[0] ?? null,
     };
   });
@@ -200,6 +249,7 @@ async function fromUptimeRobotApi(apiKey: string): Promise<UptimeReport> {
     logs_limit: '20',
     response_times: '1',
     response_times_limit: '1',
+    custom_uptime_ratios: '1-7',
     custom_uptime_ranges: [...ranges.map(([, start, end]) => [start, end]), ...extra]
       .map(([start, end]) => `${start}_${end}`)
       .join('-'),
@@ -245,6 +295,7 @@ const publicMonitor = z.object({
   'monitorId': z.number(),
   'name': z.string(),
   'statusClass': z.string(),
+  'type': z.string().optional(),
   'dailyRatios': z.array(z.object({ date: z.string(), ratio: ratioValue, label: z.string().optional() })).optional(),
   '30dRatio': ratioObject.optional(),
   '90dRatio': ratioObject.optional(),
@@ -271,9 +322,11 @@ function fromPublicFeed(body: unknown): Service[] {
     const last = monitor.lastDowntime;
     return {
       id: String(monitor.monitorId),
-      name: monitor.name,
+      name: publicServiceName(monitor.name, String(monitor.monitorId)),
       group: groupFor(monitor.name),
       state: publicState(monitor.statusClass),
+      uptime24: null,
+      uptime7: null,
       // "black" marks days with no data (before the monitor existed, or paused).
       days: (monitor.dailyRatios ?? []).slice(-HISTORY_DAYS).map(day => ({
         date: day.date,
@@ -283,11 +336,16 @@ function fromPublicFeed(body: unknown): Service[] {
       uptime30: percent(monitor['30dRatio']?.ratio),
       uptime90: percent(monitor['90dRatio']?.ratio),
       responseMs: null,
+      monitorKind: monitor.type === 'Port' ? 'network' : monitor.type === 'Ping' ? 'ping' : monitor.type?.startsWith('HTTP') ? 'http' : 'unknown',
+      checkIntervalSeconds: null,
+      lastResponseAt: null,
       lastIncident: last
         ? {
-            service: monitor.name,
+            serviceId: String(monitor.monitorId),
+            service: publicServiceName(monitor.name, String(monitor.monitorId)),
             startedAt: new Date(`${last.date.replace(' ', 'T')}Z`).toISOString(),
             durationSeconds: last.duration,
+            ongoing: false,
             reason: null,
           }
         : null,
@@ -316,13 +374,18 @@ function fromSnapshot(): UptimeReport {
     checkedAt: snapshot.checkedAt,
     services: sortServices(snapshot.monitors.map((monitor, index) => ({
       id: `snapshot-${index}`,
-      name: monitor.label,
+      name: publicServiceName(monitor.label, `snapshot-${index}`),
       group: groupFor(monitor.region),
       state: monitor.status === 'up' ? 'up' : 'unknown',
+      uptime24: null,
+      uptime7: null,
       days: [],
       uptime30: null,
       uptime90: percent(monitor.uptimeRatio),
       responseMs: null,
+      monitorKind: 'unknown',
+      checkIntervalSeconds: null,
+      lastResponseAt: null,
       lastIncident: null,
     }))),
     incidents: [],

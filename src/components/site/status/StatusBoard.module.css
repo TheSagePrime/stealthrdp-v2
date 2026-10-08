@@ -209,58 +209,191 @@
   content: '';
 }
 
-/* Incidents ------------------------------------------------------------------------------------- */
+/* Monitoring details and history --------------------------------------------------------------- */
 
-.incidents {
-  gap: 0;
-  padding-block: 0;
+.monitorDetails {
+  padding: 0;
+  border: 0;
+  border-top: 1px solid var(--border-divider);
+  border-radius: 0;
+  background: transparent;
 }
 
-.incidentList {
+.monitorDetails > summary {
+  padding-block: var(--spacing-product-2);
+  color: var(--primary);
+  font-size: 0.875rem;
+}
+
+.monitorDetails > div {
+  padding-bottom: var(--spacing-product-1);
+}
+
+.monitorDetails > summary:focus-visible,
+.incidents > summary:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+
+.detailGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-product-3) var(--spacing-product-4);
   margin: 0;
+}
+
+.detailGrid div {
+  display: grid;
+  align-content: start;
+  gap: var(--spacing-product-1);
+}
+
+.detailGrid dt {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+
+.detailGrid dd {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.incidents {
+  padding-inline: 20px;
+  border-radius: var(--radius-lg);
+}
+
+.incidents > summary {
+  color: var(--foreground);
+  font-size: 1rem;
+}
+
+.incidentGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-product-4);
+  margin: var(--spacing-product-4) 0 0;
   padding: 0;
   list-style: none;
 }
 
-.incidentList li {
+.incidentCard,
+.maintenanceCard {
+  display: grid;
+  align-content: start;
+  gap: var(--spacing-product-3);
+  min-width: 0;
+  padding: var(--spacing-product-5);
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-md);
+  background: var(--surface-1);
+}
+
+.maintenanceCard {
+  grid-column: 1 / -1;
+  border-color: color-mix(in srgb, var(--status-warn) 24%, var(--border-divider));
+  background: color-mix(in srgb, var(--status-warn) 4%, var(--surface-1));
+  scroll-margin-top: 100px;
+}
+
+.incidentCardHead {
   display: flex;
-  gap: 12px;
-  padding: 14px 20px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-product-2);
 }
 
-.incidentList li + li {
-  border-top: 1px solid var(--border-divider);
+.incidentCardHead > span:not([data-slot='pill']) {
+  color: var(--text-dim);
+  font-size: 0.75rem;
 }
 
-.incidentIcon {
-  display: inline-grid;
-  flex: none;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  border-radius: var(--radius-full);
-  background: color-mix(in srgb, var(--status-warn) 12%, transparent);
+.incidentCard h3,
+.maintenanceCard h3 {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.incidentCard p,
+.maintenanceCard p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.sourceNote,
+.maintenanceCard .sourceNote {
+  margin: var(--spacing-product-2) 0 0;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+
+.maintenanceBanner {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: var(--spacing-product-4);
+  padding: var(--spacing-product-5);
+  border: 1px solid color-mix(in srgb, var(--status-warn) 24%, var(--border-divider));
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--status-warn) 5%, var(--surface-1));
+}
+
+.maintenanceBanner > svg,
+.serviceNotice {
   color: var(--status-warn);
 }
 
-.incidentList li > div {
+.maintenanceBanner > div {
   display: grid;
-  gap: 2px;
+  gap: var(--spacing-product-2);
 }
 
-.incidentList strong {
+.maintenanceBanner span {
+  color: var(--status-warn);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.maintenanceBanner h2 {
+  margin: 0;
   color: var(--foreground);
+  font-size: var(--text-card-title);
+  font-weight: 600;
+}
+
+.maintenanceBanner p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+.serviceNotice {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-product-2);
+  margin: 0;
   font-size: 0.875rem;
 }
 
-.incidentList li > div > span {
-  color: var(--text-muted);
-  font-size: 0.8125rem;
+.serviceNotice svg {
+  flex: none;
 }
 
 .empty {
   margin: 0;
-  padding: 16px 20px;
+  padding-block: var(--spacing-product-4);
   color: var(--text-muted);
   font-size: 0.875rem;
 }
@@ -291,12 +424,22 @@
 
   .service,
   .sectionHead,
-  .incidentList li {
+  .incidents {
     padding-inline: 16px;
   }
 
   .facts {
     gap: 4px 18px;
+  }
+
+  .incidentGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .incidentCard,
+  .maintenanceCard,
+  .maintenanceBanner {
+    padding: var(--spacing-product-4);
   }
 
   .summary > div {

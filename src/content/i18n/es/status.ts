@@ -1,7 +1,7 @@
 import type { StatusCopy } from '../en/status';
 
-/* /es/status. No keyword target in keyword-map-es-es.json. Service names and incident reasons
-   come from UptimeRobot in English and are shown as they are. */
+/* /es/status. No keyword target in keyword-map-es-es.json. Service names come from UptimeRobot.
+   Incident reasons use localized public-safe categories. */
 
 const status: StatusCopy = {
   meta: {
@@ -29,7 +29,33 @@ const status: StatusCopy = {
     averageResponse: 'Respuesta media',
     lastIncident: 'Última incidencia',
     noneRecorded: 'Ninguna registrada',
-    recentIncidents: 'Incidencias recientes',
+    recentIncidents: 'Historial reciente',
+    historyCount: count => `${count} ${count === 1 ? 'actualización' : 'actualizaciones'}`,
+    serviceDetails: 'Detalles de monitorización',
+    uptime24: 'Disponibilidad, 24 horas',
+    uptime7: 'Disponibilidad, 7 días',
+    checkMethod: 'Comprobación de disponibilidad',
+    checkFrequency: 'Frecuencia de comprobación',
+    lastResponse: 'Última respuesta registrada',
+    monitorKinds: { http: 'Disponibilidad web', network: 'Disponibilidad de red', ping: 'Ping', heartbeat: 'Heartbeat', unknown: 'No disponible' },
+    noMetrics: 'La fuente de datos actual no ofrece métricas adicionales.',
+    ongoing: 'En curso',
+    resolved: 'Resuelta',
+    started: 'Inicio',
+    resolvedAt: 'Recuperación',
+    incidentDuration: 'Tiempo de caída',
+    recorded: 'Registro de monitorización',
+    updated: 'Publicado',
+    reasons: { timeout: 'La comprobación de disponibilidad agotó el tiempo de espera', connection: 'Conexión no disponible', response: 'Respuesta inesperada del servicio', unavailable: 'Falló la comprobación de disponibilidad' },
+    maintenance: {
+      status: 'Mantenimiento en curso',
+      title: 'Mantenimiento y migración del servidor de la UE',
+      summary: 'EU 4 NL Server se está retirando. Los usuarios afectados están migrando a un nuevo servidor con mejor hardware.',
+      description: 'El servidor de la UE no está disponible durante el mantenimiento. Estamos retirando el servidor actual y migrando a los usuarios afectados a un nuevo servidor con mejor hardware.',
+      impact: 'Servicio afectado',
+      timing: 'Todavía no se ha confirmado una hora de finalización.',
+      serviceNote: 'Mantenimiento y migración en curso',
+    },
     latestOnly: 'Última incidencia de cada servicio, últimos 90 días',
     last90: 'Últimos 90 días',
     incident: (duration, started) => `Caído durante ${duration} · inicio ${started}`,

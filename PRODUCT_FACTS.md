@@ -13,6 +13,7 @@ Never invent reviews, numbers, stock, deadlines, guarantees or live data.
 | Refunds | 7-day refund, paid as account credit to the website wallet (not to the card). | `src/content/docs/1737944184-payment-terms.md`, `…-termination-of-service.md` |
 | Uptime guarantee | There is **no SLA**. Show measured uptime only, from the status page. | Owner |
 | Status data | Per monitored service: state, daily uptime for 90 days, 30- and 90-day uptime and incidents, from the UptimeRobot API (`UPTIMEROBOT_API_KEY`, production). Without the key: the public UptimeRobot page. When both fail: the snapshot in `src/content/uptime.json`. | `src/lib/stealth/uptime.ts` |
+| EU maintenance and migration | EU 4 NL Server is undergoing maintenance and is being retired while affected users migrate to a new server with better hardware. No completion time has been confirmed. Keep measured downtime visible alongside the maintenance explanation. | Owner, 8 Oct 2026; `src/content/status-updates.ts` |
 | Scale | 12,000+ VPS deployed. | Owner. Do **not** say "10,000 customers" or similar. |
 | Support | 24/7 support through WhatsApp, client-area tickets and support@stealthrdp.com. | Owner, confirmed Oct 2026. Do **not** offer "priority support" or promise a response time. |
 | Backups | Weekly backups. | Owner. An on-demand backup add-on is planned — do **not** mention it until it launches. |

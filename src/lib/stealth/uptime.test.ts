@@ -27,6 +27,41 @@ afterEach(() => {
 });
 
 describe('uptime report', () => {
+  it('exposes useful metrics while withholding targets, ports, contacts and raw diagnostics', async () => {
+    stub({ [API]: { stat: 'ok', monitors: [{
+      id: 77,
+      friendly_name: 'EU private.example.invalid:2222',
+      status: 9,
+      type: 4,
+      interval: 60,
+      custom_uptime_ratios: '75.123-96.789',
+      custom_uptime_ranges: Array.from({ length: 92 }).fill('99.000').join('-'),
+      average_response_time: '57',
+      response_times: [{ datetime: NOW.getTime() / 1000 - 3600, value: 57, region: 'private-probe' }],
+      url: '203.0.113.42',
+      port: '2222',
+      http_username: 'private-user',
+      http_password: 'private-value',
+      alert_contacts: [{ value: 'private-contact@example.invalid' }],
+      logs: [
+        { type: 1, datetime: NOW.getTime() / 1000 - 120, duration: 0, reason: { detail: 'Connection timed out to 203.0.113.42:2222 with private-value' } },
+        { type: 1, datetime: NOW.getTime() / 1000 - 3600, duration: 60, reason: { detail: 'private-diagnostic' } },
+      ],
+    }] } });
+
+    const report = await getUptimeReport();
+
+    expect(report.services[0]).toMatchObject({ name: 'Service 77', group: 'Europe servers', monitorKind: 'network', checkIntervalSeconds: 60, uptime24: 75.123, uptime7: 96.789, lastResponseAt: '2026-10-01T11:00:00.000Z' });
+    expect(report.incidents[0]).toMatchObject({ serviceId: '77', service: 'Service 77', ongoing: true, reason: 'timeout', durationSeconds: 120 });
+    expect(report.incidents[1]).toMatchObject({ ongoing: false, reason: 'unavailable', durationSeconds: 60 });
+
+    for (const privateValue of ['203.0.113.42', '2222', 'private.example.invalid', 'private-probe', 'private-user', 'private-value', 'private-contact', 'private-diagnostic', 'http_password', 'alert_contacts']) {
+      expect(JSON.stringify(report)).not.toContain(privateValue);
+    }
+
+    expect(vi.mocked(fetch).mock.calls[0]?.[1]?.body?.toString()).toContain('custom_uptime_ratios=1-7');
+  });
+
   it('maps the 90 daily ranges, then the 30- and 90-day ranges, from the API', async () => {
     const daily = Array.from({ length: 90 }, (_, index) => (index === 89 ? '98.500' : '100.000'));
     const downs = Array.from({ length: 92 }, (_, index) => (index === 89 ? '1296' : '0'));
@@ -56,7 +91,7 @@ describe('uptime report', () => {
     expect(service?.days.slice(0, 3).map(day => day.ratio)).toEqual([null, null, 100]);
     // API custom_down_durations is not indexed by custom_uptime_ranges.
     expect(service?.days.at(-1)).toEqual({ date: '2026-10-01', ratio: 98.5, downSeconds: null });
-    expect(report.incidents).toEqual([{ service: 'USA Server 9742', startedAt: '2026-10-01T03:00:00.000Z', durationSeconds: 1296, reason: 'Connection Timeout' }]);
+    expect(report.incidents).toEqual([{ serviceId: '1', service: 'USA Server 9742', startedAt: '2026-10-01T03:00:00.000Z', durationSeconds: 1296, ongoing: false, reason: 'timeout' }]);
   });
 
   it('falls back to the public status feed when the API fails', async () => {
@@ -144,7 +179,7 @@ describe('uptime report', () => {
     expect(service).toMatchObject({ name: 'EU new future monitor', state: 'down', responseMs: 82, uptime30: 96.667, uptime90: 98.889 });
     expect(service?.days.slice(-3).map(day => day.ratio)).toEqual([100, 50, 0]);
     expect(service?.days[0]?.ratio).toBeNull();
-    expect(service?.lastIncident).toMatchObject({ startedAt: '2026-09-30T12:00:00.000Z', durationSeconds: 86400, reason: 'Timeout' });
+    expect(service?.lastIncident).toMatchObject({ startedAt: '2026-09-30T12:00:00.000Z', durationSeconds: 86400, ongoing: true, reason: 'timeout' });
     expect(report.incidents[0]).toEqual(service?.lastIncident);
     expect(report.services.find(service => service.id === '43')).toMatchObject({ state: 'up', uptime30: 100, uptime90: 100 });
   });

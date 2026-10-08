@@ -1,7 +1,7 @@
 import type { StatusCopy } from '../en/status';
 
-/* /de/status. No keyword target in keyword-map-de-de.json. Service names and incident reasons
-   come from UptimeRobot in English and are shown as they are. */
+/* /de/status. No keyword target in keyword-map-de-de.json. Service names come from UptimeRobot.
+   Incident reasons use localized public-safe categories. */
 
 const status: StatusCopy = {
   meta: {
@@ -29,7 +29,33 @@ const status: StatusCopy = {
     averageResponse: 'Mittlere Antwortzeit',
     lastIncident: 'Letzte Störung',
     noneRecorded: 'Keine erfasst',
-    recentIncidents: 'Letzte Störungen',
+    recentIncidents: 'Letzte Ereignisse',
+    historyCount: count => `${count} ${count === 1 ? 'Meldung' : 'Meldungen'}`,
+    serviceDetails: 'Monitoring-Details',
+    uptime24: 'Verfügbarkeit, 24 Stunden',
+    uptime7: 'Verfügbarkeit, 7 Tage',
+    checkMethod: 'Verfügbarkeitsprüfung',
+    checkFrequency: 'Prüfintervall',
+    lastResponse: 'Letzte erfasste Antwort',
+    monitorKinds: { http: 'Web-Verfügbarkeit', network: 'Netzwerkverfügbarkeit', ping: 'Ping', heartbeat: 'Heartbeat', unknown: 'Nicht verfügbar' },
+    noMetrics: 'Zusätzliche Messwerte sind über die aktuelle Datenquelle nicht verfügbar.',
+    ongoing: 'Aktiv',
+    resolved: 'Behoben',
+    started: 'Beginn',
+    resolvedAt: 'Wieder erreichbar',
+    incidentDuration: 'Ausfallzeit',
+    recorded: 'Monitoring-Ereignis',
+    updated: 'Veröffentlicht',
+    reasons: { timeout: 'Zeitüberschreitung bei der Verfügbarkeitsprüfung', connection: 'Verbindung nicht verfügbar', response: 'Unerwartete Antwort des Dienstes', unavailable: 'Verfügbarkeitsprüfung fehlgeschlagen' },
+    maintenance: {
+      status: 'Wartung läuft',
+      title: 'Wartung und Migration des EU-Servers',
+      summary: 'EU 4 NL Server wird außer Betrieb genommen. Betroffene Nutzer werden auf einen neuen Server mit leistungsfähigerer Hardware migriert.',
+      description: 'Der EU-Server ist während der Wartung nicht erreichbar. Wir nehmen den bisherigen Server außer Betrieb und migrieren betroffene Nutzer auf einen neuen Server mit leistungsfähigerer Hardware.',
+      impact: 'Betroffener Dienst',
+      timing: 'Ein Zeitpunkt für den Abschluss steht noch nicht fest.',
+      serviceNote: 'Wartung und Migration laufen',
+    },
     latestOnly: 'Letzte Störung je Dienst, letzte 90 Tage',
     last90: 'Letzte 90 Tage',
     incident: (duration, started) => `${duration} ausgefallen · Beginn ${started}`,
