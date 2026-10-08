@@ -7,9 +7,9 @@
     "centos.svg": "Simple Icons: CentOS",
     "debian.svg": "File:Openlogo-debianV2.svg",
     "fedora.svg": "File:Fedora icon (2021).svg",
-    "linux.svg": "Simple Icons: Linux",
+    "linux.svg": "Gilbarbara Logos: linux-tux (CC0 1.0)",
     "ubuntu.svg": "File:UbuntuCoF.svg",
-    "windows.svg": "File:Windows 11 start button icon.svg"
+    "windows.svg": "Gilbarbara Logos: microsoft-windows-icon (CC0 1.0)"
   },
   "records": [
     {
@@ -52,13 +52,13 @@
     },
     {
       "file": "linux.svg",
-      "source": "Simple Icons (path from @icons-pack/react-simple-icons)",
-      "page": "https://simpleicons.org/",
+      "source": "Gilbarbara Logos (Iconify logos set, icon linux-tux)",
+      "page": "https://github.com/gilbarbara/logos",
       "licence": "CC0 1.0",
-      "artist": "Simple Icons contributors",
+      "artist": "Gilbarbara and contributors",
       "attributionRequired": false,
-      "fill": "#000000; the Simple Icons brand colour #FCC624 is unreadable on white",
-      "replaces": "File:Tux-simple.svg (Attribution (CC BY-SA 3.0), needed visible credit; replaced 2026-10-02)"
+      "fill": "full colour, unmodified",
+      "replaces": "Simple Icons Linux glyph (CC0), replaced 2026-10-08 to match the colour style of the other OS marks"
     },
     {
       "file": "ubuntu.svg",
@@ -72,13 +72,13 @@
     },
     {
       "file": "windows.svg",
-      "commonsFile": "File:Windows 11 start button icon.svg",
-      "page": "https://commons.wikimedia.org/wiki/File:Windows_11_start_button_icon.svg",
-      "licence": "Public domain",
-      "artist": "Microsoft",
+      "source": "Gilbarbara Logos (Iconify logos set, icon microsoft-windows-icon)",
+      "page": "https://github.com/gilbarbara/logos",
+      "licence": "CC0 1.0",
+      "artist": "Gilbarbara and contributors",
       "attributionRequired": false,
-      "sha1": "e68c879a9b8e03eb77dfe58f1621fa5af4a632b9",
-      "replaces": "File:Windows logo - 2021.svg (flat single-tone pane mark; replaced 2026-09-25)"
+      "fill": "#0078D4, unmodified",
+      "replaces": "File:Windows 11 start button icon.svg (public domain), replaced 2026-10-08 with a same-licence colour set"
     }
   ]
 }
