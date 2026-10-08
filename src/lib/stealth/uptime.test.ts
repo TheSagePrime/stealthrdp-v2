@@ -1,6 +1,8 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { getUptimeReport } from './uptime';
 
+vi.mock('next/cache', () => ({ unstable_cache: (loader: () => Promise<unknown>) => loader }));
+
 vi.mock('@/libs/Env', () => ({ Env: { UPTIMEROBOT_API_KEY: 'test-key' } }));
 
 const API = 'https://api.uptimerobot.com/v2/getMonitors';
@@ -34,7 +36,7 @@ describe('uptime report', () => {
       status: 9,
       type: 4,
       interval: 60,
-      custom_uptime_ratios: '75.123-96.789',
+      custom_uptime_ratios: '75.123-96.789-99.981',
       custom_uptime_ranges: Array.from({ length: 92 }).fill('99.000').join('-'),
       average_response_time: '57',
       response_times: [{ datetime: NOW.getTime() / 1000 - 3600, value: 57, region: 'private-probe' }],
@@ -51,7 +53,7 @@ describe('uptime report', () => {
 
     const report = await getUptimeReport();
 
-    expect(report.services[0]).toMatchObject({ name: 'Service 77', group: 'Europe servers', monitorKind: 'network', checkIntervalSeconds: 60, uptime24: 75.123, uptime7: 96.789, lastResponseAt: '2026-10-01T11:00:00.000Z' });
+    expect(report.services[0]).toMatchObject({ name: 'Service 77', group: 'Europe servers', monitorKind: 'network', checkIntervalSeconds: 60, uptime24: 75.123, uptime7: 96.789, uptime365: 99.981, responseSamples: [{ at: '2026-10-01T11:00:00.000Z', ms: 57 }], lastResponseAt: '2026-10-01T11:00:00.000Z' });
     expect(report.incidents[0]).toMatchObject({ serviceId: '77', service: 'Service 77', ongoing: true, reason: 'timeout', durationSeconds: 120 });
     expect(report.incidents[1]).toMatchObject({ ongoing: false, reason: 'unavailable', durationSeconds: 60 });
 
@@ -59,7 +61,39 @@ describe('uptime report', () => {
       expect(JSON.stringify(report)).not.toContain(privateValue);
     }
 
-    expect(vi.mocked(fetch).mock.calls[0]?.[1]?.body?.toString()).toContain('custom_uptime_ratios=1-7');
+    expect(vi.mocked(fetch).mock.calls[0]?.[1]?.body?.toString()).toContain('custom_uptime_ratios=1-7-365');
+  });
+
+  it('keeps annual ratios measured and response samples ordered, bounded and private', async () => {
+    const at = NOW.getTime() / 1000;
+    stub({ [API]: { stat: 'ok', monitors: [{
+      id: 5,
+      friendly_name: 'USA example',
+      status: 2,
+      custom_uptime_ratios: '100-99.5-0',
+      custom_uptime_ranges: Array.from({ length: 92 }).fill('100').join('-'),
+      response_times: [
+        { datetime: at - 300, value: 0, location: 'private-region' },
+        { datetime: at - 600, value: '85' },
+        { datetime: at - 900, value: '' },
+        { datetime: at - 1200, value: -10 },
+        { datetime: at - 86401, value: 100 },
+        { datetime: at + 1, value: 100 },
+      ],
+    }] } });
+
+    const report = await getUptimeReport();
+
+    expect(report.services[0]?.uptime365).toBe(0);
+    expect(report.services[0]?.responseSamples.map(sample => sample.ms)).toEqual([null, null, 85, null]);
+    expect(report.services[0]?.lastResponseAt).toBe('2026-10-01T11:55:00.000Z');
+    expect(JSON.stringify(report)).not.toContain('private-region');
+
+    const body = new URLSearchParams(vi.mocked(fetch).mock.calls[0]?.[1]?.body?.toString());
+
+    expect(body.get('response_times_average')).toBe('5');
+    expect(body.get('response_times_limit')).toBe('288');
+    expect(Number(body.get('response_times_end_date')) - Number(body.get('response_times_start_date'))).toBe(86400);
   });
 
   it('maps the 90 daily ranges, then the 30- and 90-day ranges, from the API', async () => {

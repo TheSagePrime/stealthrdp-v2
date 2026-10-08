@@ -1,15 +1,19 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { ReactNode } from 'react';
 import type { PillState } from '@/components/ui/pill';
+import type { SiteLocale } from '@/config/i18n';
 import type { StatusBoardCopy } from '@/content/i18n/en/status';
-import type { Incident, Service, ServiceState, UptimeDay, UptimeReport } from '@/lib/stealth/uptime';
+import type { Incident, Service, ServiceState, UptimeReport } from '@/lib/stealth/uptime';
 import { CheckCircle, Pause, Question, Warning, Wrench, XCircle } from '@phosphor-icons/react/dist/ssr';
 import { Accordion, AccordionItem } from '@/components/ui/accordion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Pill } from '@/components/ui/pill';
 import { euMaintenance } from '@/content/status-updates';
 import { groupOrder } from '@/lib/stealth/uptime';
+import { ResponseChart } from './ResponseChart';
 import styles from './StatusBoard.module.css';
+import { MeasurementTime } from './StatusLive';
+import { UptimeHistory } from './UptimeHistory';
 
 /*
  * /status: one row per monitored service with a bar for each of the last 90 days
@@ -49,32 +53,8 @@ function when(iso: string, t: StatusBoardCopy): string {
   return `${day(iso, t)}, ${new Date(iso).toISOString().slice(11, 16)} UTC`;
 }
 
-/* UptimeRobot's own day colours: 100% green, 99–100% pale green, 95–99% orange, under 95% red. */
-function level(ratio: number | null): string {
-  if (ratio === null) {
-    return 'none';
-  }
-  if (ratio >= 100) {
-    return 'up';
-  }
-  if (ratio >= 99) {
-    return 'minor';
-  }
-  return ratio >= 95 ? 'degraded' : 'down';
-}
-
-function dayTitle(uptimeDay: UptimeDay, t: StatusBoardCopy): string {
-  const date = day(`${uptimeDay.date}T00:00:00Z`, t);
-  if (uptimeDay.ratio === null) {
-    return t.noRecords(date);
-  }
-  const down = uptimeDay.downSeconds ? t.downFor(duration(uptimeDay.downSeconds)) : '';
-  return `${date}: ${percent(uptimeDay.ratio, t)}${down}`;
-}
-
-function ServiceRow({ service, t }: { service: Service; t: StatusBoardCopy }) {
+function ServiceRow({ service, t, locale }: { service: Service; t: StatusBoardCopy; locale: SiteLocale }) {
   const state = states[service.state];
-  const troubledDays = service.days.filter(uptimeDay => uptimeDay.ratio !== null && uptimeDay.ratio < 100).length;
 
   return (
     <li className={styles.service}>
@@ -92,24 +72,7 @@ function ServiceRow({ service, t }: { service: Service; t: StatusBoardCopy }) {
 
       {service.days.length
         ? (
-            <>
-              <div
-                className={styles.bars}
-                role="img"
-                aria-label={t.barsLabel(service.name, percent(service.uptime90, t), troubledDays, service.days.length)}
-              >
-                {service.days.map(uptimeDay => (
-                  <span key={uptimeDay.date} data-level={level(uptimeDay.ratio)} title={dayTitle(uptimeDay, t)} />
-                ))}
-              </div>
-              <div className={styles.axis} aria-hidden="true">
-                <span>
-                  <span className={styles.wide}>{t.daysAgo(service.days.length)}</span>
-                  <span className={styles.narrow}>{t.daysAgo(Math.min(30, service.days.length))}</span>
-                </span>
-                <span>{t.today}</span>
-              </div>
-            </>
+            <UptimeHistory days={service.days} locale={locale} name={service.name} />
           )
         : <p className={styles.noHistory}>{t.noHistory}</p>}
 
@@ -121,6 +84,10 @@ function ServiceRow({ service, t }: { service: Service; t: StatusBoardCopy }) {
         <div>
           <dt>{t.uptime90}</dt>
           <dd>{percent(service.uptime90, t)}</dd>
+        </div>
+        <div>
+          <dt>{t.uptime365}</dt>
+          <dd>{percent(service.uptime365, t)}</dd>
         </div>
         {service.responseMs !== null && (
           <div>
@@ -159,11 +126,12 @@ function ServiceRow({ service, t }: { service: Service; t: StatusBoardCopy }) {
           {service.lastResponseAt && (
             <div>
               <dt>{t.lastResponse}</dt>
-              <dd>{when(service.lastResponseAt, t)}</dd>
+              <dd><MeasurementTime at={service.lastResponseAt} locale={locale} /></dd>
             </div>
           )}
         </dl>
         {service.uptime24 === null && service.uptime7 === null && service.checkIntervalSeconds === null && <p className={styles.sourceNote}>{t.noMetrics}</p>}
+        <ResponseChart samples={service.responseSamples} service={service.name} locale={locale} />
       </AccordionItem>
     </li>
   );
@@ -248,7 +216,7 @@ export function IncidentHistory({ incidents, latestOnly, t }: { incidents: Incid
   );
 }
 
-export function StatusBoard({ report, t, children }: { report: UptimeReport; t: StatusBoardCopy; children: ReactNode }) {
+export function StatusBoard({ report, t, children, locale = 'en' }: { report: UptimeReport; t: StatusBoardCopy; children: ReactNode; locale?: SiteLocale }) {
   const { services } = report;
   const down = services.filter(service => service.state === 'down').length;
   const up = services.filter(service => service.state === 'up').length;
@@ -267,7 +235,7 @@ export function StatusBoard({ report, t, children }: { report: UptimeReport; t: 
   }
   const checked = report.source === 'snapshot'
     ? t.snapshot(day(report.checkedAt, t))
-    : t.checked(when(report.checkedAt, t));
+    : <MeasurementTime at={report.checkedAt} locale={locale} updated />;
 
   return (
     <>
@@ -322,7 +290,7 @@ export function StatusBoard({ report, t, children }: { report: UptimeReport; t: 
                 <span>{t.serviceCount(group.members.length)}</span>
               </div>
               <ul className={styles.services}>
-                {group.members.map(service => <ServiceRow key={service.id} service={service} t={t} />)}
+                {group.members.map(service => <ServiceRow key={service.id} service={service} t={t} locale={locale} />)}
               </ul>
             </Card>
           ))}

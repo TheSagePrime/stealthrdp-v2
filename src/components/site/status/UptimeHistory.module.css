@@ -1,0 +1,166 @@
+.history {
+  display: grid;
+  gap: var(--spacing-product-2);
+  min-width: 0;
+}
+.bars {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  gap: 2px;
+}
+.barTip,
+.barTip > span {
+  display: flex;
+  min-width: 0;
+  width: 100%;
+}
+.dayBar {
+  width: 100%;
+  min-width: 0;
+  height: 44px;
+  padding: 0;
+  border-radius: var(--radius-full);
+}
+.dayBar,
+.calendarDay {
+  background: var(--uptime-up);
+  color: var(--foreground);
+}
+.dayBar[data-level='minor'],
+.calendarDay[data-level='minor'] {
+  background: color-mix(in srgb, var(--uptime-up) 50%, var(--surface-1));
+}
+.dayBar[data-level='degraded'],
+.calendarDay[data-level='degraded'] {
+  background: var(--uptime-degraded);
+}
+.dayBar[data-level='down'],
+.calendarDay[data-level='down'] {
+  background: var(--uptime-down);
+}
+.dayBar[data-level='none'],
+.calendarDay[data-level='none'] {
+  background: var(--uptime-none);
+}
+.dayBar:hover,
+.calendarDay:hover {
+  filter: brightness(0.94);
+}
+.dayBar[aria-pressed='true'],
+.calendarDay[aria-pressed='true'] {
+  outline: 2px solid var(--foreground);
+  outline-offset: 2px;
+}
+.axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--spacing-product-2);
+  color: var(--text-dim);
+  font-size: 0.75rem;
+}
+.months {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-product-4);
+}
+.month {
+  min-width: 0;
+  padding: var(--spacing-product-3);
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-md);
+}
+.month h4 {
+  margin: 0 0 var(--spacing-product-3);
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+.calendarGrid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--spacing-product-1);
+}
+.calendarTip,
+.calendarTip > span {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+}
+.calendarDay {
+  width: 100%;
+  height: 44px;
+  min-width: 0;
+  padding: 0;
+  border: 1px solid color-mix(in srgb, var(--foreground) 12%, transparent);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+}
+.weekday,
+.outsideDay {
+  display: grid;
+  place-items: center;
+  color: var(--text-dim);
+  font-size: 0.6875rem;
+}
+.outsideDay {
+  min-height: 44px;
+  opacity: 0.6;
+}
+.hint {
+  margin: 0;
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  line-height: 1.6;
+}
+.selection {
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+@media (max-width: 1040px) {
+  .months {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 768px) {
+  .months {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .bars > span:nth-last-child(n + 31) {
+    display: none;
+  }
+  .bars {
+    gap: 3px;
+  }
+}
+/* Anchor tooltips to the view, keeping every date readable near its edges. */
+.bars,
+.calendarGrid {
+  position: relative;
+}
+.barTip,
+.calendarTip {
+  position: static;
+}
+.barTip [role='tooltip'],
+.calendarTip [role='tooltip'] {
+  left: 0;
+  bottom: 100%;
+  --tw-translate-x: 0%;
+  --tw-translate-y: 0%;
+  transform: none;
+  max-width: 100%;
+}
+.narrowDate {
+  display: none;
+}
+@media (max-width: 768px) {
+  .wideDate {
+    display: none;
+  }
+  .narrowDate {
+    display: inline;
+  }
+}

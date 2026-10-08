@@ -1,7 +1,7 @@
 import { getUptimeReport } from '@/lib/stealth/uptime';
 
-// Same data as /status. Rebuilt at most every 5 minutes, so visitors never spend the UptimeRobot rate limit.
-export const revalidate = 300;
+// Same shared 60-second report as /status; avoid a second route cache hiding refreshed data.
+export const revalidate = 0;
 
 export async function GET() {
   return Response.json(await getUptimeReport());

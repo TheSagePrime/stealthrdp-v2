@@ -1,3 +1,4 @@
+import { unstable_cache } from 'next/cache';
 import { z } from 'zod';
 import { uptime as snapshot } from '@/lib/stealth/content';
 import { Env } from '@/libs/Env';
@@ -20,6 +21,8 @@ type MonitorKind = 'http' | 'network' | 'ping' | 'heartbeat' | 'unknown';
 
 export type Incident = { serviceId: string; service: string; startedAt: string; durationSeconds: number; ongoing: boolean; reason: IncidentReason | null };
 
+export type ResponseSample = { at: string; ms: number | null };
+
 export type Service = {
   id: string;
   name: string;
@@ -27,10 +30,12 @@ export type Service = {
   state: ServiceState;
   uptime24: number | null;
   uptime7: number | null;
+  uptime365: number | null;
   uptime30: number | null;
   uptime90: number | null;
   days: UptimeDay[];
   responseMs: number | null;
+  responseSamples: ResponseSample[];
   monitorKind: MonitorKind;
   checkIntervalSeconds: number | null;
   lastResponseAt: string | null;
@@ -109,7 +114,7 @@ const apiMonitor = z.object({
   custom_uptime_ratios: z.string().nullish(),
   custom_uptime_ranges: z.string().nullish(),
   average_response_time: z.union([z.string(), z.number()]).optional(),
-  response_times: z.array(z.object({ datetime: z.number() })).optional(),
+  response_times: z.array(z.object({ datetime: z.number().nonnegative(), value: z.union([z.number(), z.string()]).nullish() })).optional(),
   logs: z.array(z.object({
     type: z.number(),
     datetime: z.number(),
@@ -177,7 +182,15 @@ function fromApi(monitors: ApiMonitor[], ranges: Array<[string, number, number]>
     const uptimes = (monitor.custom_uptime_ranges ?? '').split('-');
     const shortUptimes = (monitor.custom_uptime_ratios ?? '').split('-');
     const response = Number(monitor.average_response_time);
-    const lastResponse = Math.max(0, ...(monitor.response_times ?? []).map(response => response.datetime));
+    const samples = (monitor.response_times ?? [])
+      .filter(sample => sample.datetime >= Date.now() / 1000 - DAY && sample.datetime <= Date.now() / 1000)
+      .sort((a, b) => a.datetime - b.datetime)
+      .slice(-288);
+    const responseSamples = samples.map((sample) => {
+      const value = Number(sample.value);
+      return { at: new Date(sample.datetime * 1000).toISOString(), ms: Number.isFinite(value) && value > 0 ? value : null };
+    });
+    const lastResponse = samples.at(-1)?.datetime ?? 0;
     return {
       id: String(monitor.id),
       name: publicServiceName(monitor.friendly_name, String(monitor.id)),
@@ -185,6 +198,7 @@ function fromApi(monitors: ApiMonitor[], ranges: Array<[string, number, number]>
       state: apiState(monitor.status),
       uptime24: percent(shortUptimes[0]),
       uptime7: percent(shortUptimes[1]),
+      uptime365: percent(shortUptimes[2]),
       days: ranges.map(([date, , end], index) => {
         // Days before the monitor existed have no data.
         if (end < (monitor.create_datetime ?? 0)) {
@@ -196,6 +210,7 @@ function fromApi(monitors: ApiMonitor[], ranges: Array<[string, number, number]>
       uptime30: percent(uptimes[HISTORY_DAYS]),
       uptime90: percent(uptimes[HISTORY_DAYS + 1]),
       responseMs: Number.isFinite(response) && response > 0 ? Math.round(response) : null,
+      responseSamples,
       monitorKind: monitorKind(monitor.type),
       checkIntervalSeconds: monitor.interval ?? null,
       lastResponseAt: lastResponse > 0 ? new Date(lastResponse * 1000).toISOString() : null,
@@ -248,8 +263,11 @@ async function fromUptimeRobotApi(apiKey: string): Promise<UptimeReport> {
     log_types: '1',
     logs_limit: '20',
     response_times: '1',
-    response_times_limit: '1',
-    custom_uptime_ratios: '1-7',
+    response_times_limit: '288',
+    response_times_average: '5',
+    response_times_start_date: String(nowUnix - DAY),
+    response_times_end_date: String(nowUnix),
+    custom_uptime_ratios: '1-7-365',
     custom_uptime_ranges: [...ranges.map(([, start, end]) => [start, end]), ...extra]
       .map(([start, end]) => `${start}_${end}`)
       .join('-'),
@@ -327,6 +345,7 @@ function fromPublicFeed(body: unknown): Service[] {
       state: publicState(monitor.statusClass),
       uptime24: null,
       uptime7: null,
+      uptime365: null,
       // "black" marks days with no data (before the monitor existed, or paused).
       days: (monitor.dailyRatios ?? []).slice(-HISTORY_DAYS).map(day => ({
         date: day.date,
@@ -336,6 +355,7 @@ function fromPublicFeed(body: unknown): Service[] {
       uptime30: percent(monitor['30dRatio']?.ratio),
       uptime90: percent(monitor['90dRatio']?.ratio),
       responseMs: null,
+      responseSamples: [],
       monitorKind: monitor.type === 'Port' ? 'network' : monitor.type === 'Ping' ? 'ping' : monitor.type?.startsWith('HTTP') ? 'http' : 'unknown',
       checkIntervalSeconds: null,
       lastResponseAt: null,
@@ -379,10 +399,12 @@ function fromSnapshot(): UptimeReport {
       state: monitor.status === 'up' ? 'up' : 'unknown',
       uptime24: null,
       uptime7: null,
+      uptime365: null,
       days: [],
       uptime30: null,
       uptime90: percent(monitor.uptimeRatio),
       responseMs: null,
+      responseSamples: [],
       monitorKind: 'unknown',
       checkIntervalSeconds: null,
       lastResponseAt: null,
@@ -392,7 +414,7 @@ function fromSnapshot(): UptimeReport {
   };
 }
 
-export async function getUptimeReport(): Promise<UptimeReport> {
+async function loadUptimeReport(): Promise<UptimeReport> {
   const apiKey = Env.UPTIMEROBOT_API_KEY;
   if (apiKey) {
     try {
@@ -406,4 +428,12 @@ export async function getUptimeReport(): Promise<UptimeReport> {
   } catch {
     return fromSnapshot();
   }
+}
+
+// A minute bucket shares requests across visitors while blocking for a fresh report each minute.
+// A fixed cache key would serve stale data during background revalidation and delay the visible update.
+const getMinuteReport = unstable_cache(async (_minute: number) => loadUptimeReport(), ['public-uptime-report-v4'], { revalidate: 60 });
+
+export async function getUptimeReport(): Promise<UptimeReport> {
+  return getMinuteReport(Math.floor(Date.now() / 60_000));
 }

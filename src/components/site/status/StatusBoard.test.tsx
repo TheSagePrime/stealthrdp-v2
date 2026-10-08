@@ -17,6 +17,8 @@ const service: Service = {
   state: 'down',
   uptime24: 75,
   uptime7: 96,
+  uptime365: 99.9,
+  responseSamples: [],
   uptime30: 99,
   uptime90: 99.7,
   days: [{ date: '2026-10-07', ratio: 100, downSeconds: null }, { date: '2026-10-08', ratio: 75, downSeconds: null }],
@@ -65,7 +67,7 @@ describe('public status information', () => {
     expect(page.getByText(en.board.monitorKinds.network)).toBeVisible();
     expect(page.getByText('75.000%', { exact: true })).toBeVisible();
     expect(page.getByText('1 min', { exact: true })).toBeVisible();
-    expect(page.getByText('7 Oct 2026, 23:59 UTC')).toBeVisible();
+    expect(page.getByText('7 Oct 2026, 23:59:00 UTC')).toBeVisible();
   });
 
   it('does not invent an outage start time when only the public feed is available', async () => {

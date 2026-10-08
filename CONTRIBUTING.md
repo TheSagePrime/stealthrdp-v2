@@ -150,7 +150,7 @@ Use permanent (308) redirects. Never redirect to a page that redirects again.
 ## 9. Add or change a status monitor
 
 1. Add or rename the monitor in UptimeRobot. `/status` and `/api/uptime` show every monitor of the
-   account, with its UptimeRobot name, within 5 minutes. No code change is needed.
+   account, with its UptimeRobot name, on the next one-minute refresh (with shared server caching for 60 seconds). No code change is needed.
 2. Names decide the group (`groupFor()` in `src/lib/stealth/uptime.ts`): `USA …` goes to USA servers,
    `EU …` or a name with `NL` to Europe servers, everything else to Platform. A new region needs a
    new group there and in `groupOrder`.
