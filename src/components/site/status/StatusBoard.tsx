@@ -11,6 +11,7 @@ import { Pill } from '@/components/ui/pill';
 import { euMaintenance } from '@/content/status-updates';
 import { groupOrder } from '@/lib/stealth/uptime';
 import { ResponseChart } from './ResponseChart';
+import { DashboardBlocksUptimeBar } from './DashboardBlocksUptimeBar';
 import styles from './StatusBoard.module.css';
 import { MeasurementTime } from './StatusLive';
 import { UptimeHistory } from './UptimeHistory';
@@ -68,13 +69,7 @@ function ServiceRow({ service, t, locale }: { service: Service; t: StatusBoardCo
       )}
 
       {service.days.length > 0 && (
-        <UptimeHistory
-          days={service.days}
-          locale={locale}
-          name={service.name}
-          view="bars"
-          uptimeLabel={service.uptime90 === null ? null : percent(service.uptime90, t)}
-        />
+        <DashboardBlocksUptimeBar days={service.days} locale={locale} name={service.name} />
       )}
 
       <dl className={styles.facts}>
