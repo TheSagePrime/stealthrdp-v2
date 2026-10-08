@@ -61,6 +61,10 @@
   color: var(--text-dim);
   font-size: 0.75rem;
 }
+.axis strong {
+  color: var(--foreground);
+  font-weight: 600;
+}
 .months {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

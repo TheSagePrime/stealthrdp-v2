@@ -67,6 +67,16 @@ function ServiceRow({ service, t, locale }: { service: Service; t: StatusBoardCo
         </p>
       )}
 
+      {service.days.length > 0 && (
+        <UptimeHistory
+          days={service.days}
+          locale={locale}
+          name={service.name}
+          view="bars"
+          uptimeLabel={service.uptime90 === null ? null : percent(service.uptime90, t)}
+        />
+      )}
+
       <dl className={styles.facts}>
         <div>
           <dt>{t.uptime30}</dt>
@@ -76,10 +86,12 @@ function ServiceRow({ service, t, locale }: { service: Service; t: StatusBoardCo
           <dt>{t.uptime90}</dt>
           <dd>{percent(service.uptime90, t)}</dd>
         </div>
-        <div>
-          <dt>{t.uptime365}</dt>
-          <dd>{percent(service.uptime365, t)}</dd>
-        </div>
+        {service.uptime365 !== null && (
+          <div>
+            <dt>{t.uptime365}</dt>
+            <dd>{percent(service.uptime365, t)}</dd>
+          </div>
+        )}
         {service.responseMs !== null && (
           <div>
             <dt>{t.averageResponse}</dt>
@@ -98,7 +110,7 @@ function ServiceRow({ service, t, locale }: { service: Service; t: StatusBoardCo
 
       <AccordionItem title={t.historyDisclosure} className={styles.historyDetails}>
         {service.days.length
-          ? <UptimeHistory days={service.days} locale={locale} name={service.name} />
+          ? <UptimeHistory days={service.days} locale={locale} name={service.name} view="calendar" />
           : <p className={styles.noHistory}>{t.noHistory}</p>}
       </AccordionItem>
 

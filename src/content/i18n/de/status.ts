@@ -26,6 +26,7 @@ const status: StatusCopy = {
     noHistory: 'Der Tagesverlauf ist gerade nicht verfügbar.',
     uptime30: 'Verfügbarkeit, 30 Tage',
     uptime90: 'Verfügbarkeit, 90 Tage',
+    historyUptimeLabel: 'Verfügbarkeit',
     averageResponse: 'Mittlere Antwortzeit',
     lastIncident: 'Letzte Störung',
     noneRecorded: 'Keine erfasst',

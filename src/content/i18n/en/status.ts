@@ -25,6 +25,7 @@ const status = {
     noHistory: 'Daily history is not available right now.',
     uptime30: 'Uptime, 30 days',
     uptime90: 'Uptime, 90 days',
+    historyUptimeLabel: 'uptime',
     averageResponse: 'Average response',
     lastIncident: 'Last incident',
     noneRecorded: 'None recorded',

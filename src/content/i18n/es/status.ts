@@ -26,6 +26,7 @@ const status: StatusCopy = {
     noHistory: 'El historial diario no está disponible ahora mismo.',
     uptime30: 'Disponibilidad, 30 días',
     uptime90: 'Disponibilidad, 90 días',
+    historyUptimeLabel: 'de disponibilidad',
     averageResponse: 'Respuesta media',
     lastIncident: 'Última incidencia',
     noneRecorded: 'Ninguna registrada',

@@ -3,7 +3,6 @@
 import type { SiteLocale } from '@/config/i18n';
 import type { UptimeDay } from '@/lib/stealth/uptime';
 import { Button } from '@/components/ui/button';
-import { Tabs } from '@/components/ui/tabs';
 import { Tooltip } from '@/components/ui/tooltip';
 import { statusCopy } from '@/content/i18n/status';
 import styles from './UptimeHistory.module.css';
@@ -21,7 +20,13 @@ function level(ratio: number | null): string {
   return ratio >= 95 ? 'degraded' : 'down';
 }
 
-export function UptimeHistory({ days, locale, name }: { days: UptimeDay[]; locale: SiteLocale; name: string }) {
+export function UptimeHistory({ days, locale, name, view = 'bars', uptimeLabel = null }: {
+  days: UptimeDay[];
+  locale: SiteLocale;
+  name: string;
+  view?: 'bars' | 'calendar';
+  uptimeLabel?: string | null;
+}) {
   const t = statusCopy[locale].board;
   const describe = (day: UptimeDay) => {
     const date = new Date(`${day.date}T00:00:00Z`);
@@ -39,42 +44,40 @@ export function UptimeHistory({ days, locale, name }: { days: UptimeDay[]; local
   );
   return (
     <div className={styles.history}>
-      <Tabs items={[
-        { id: 'bars', label: t.historyBars, content: (
-          <>
-            <div className={styles.bars} aria-label={name}>{days.map(day => dayButton(day))}</div>
-            <div className={styles.axis}>
-              <span className={styles.wideDate}>{days[0]?.date}</span>
-              <span className={styles.narrowDate}>{days.at(-30)?.date ?? days[0]?.date}</span>
-              <span>{t.today}</span>
+      {view === 'bars'
+        ? (
+            <>
+              <div className={styles.bars} aria-label={name}>{days.map(day => dayButton(day))}</div>
+              <div className={styles.axis}>
+                <span>{t.daysAgo(days.length)}</span>
+                {uptimeLabel && <strong>{uptimeLabel} {t.historyUptimeLabel}</strong>}
+                <span>{t.today}</span>
+              </div>
+            </>
+          )
+        : (
+            <div className={styles.months}>
+              {months.map((month) => {
+                const first = new Date(`${month}-01T00:00:00Z`);
+                const offset = (first.getUTCDay() + 6) % 7;
+                const length = new Date(Date.UTC(first.getUTCFullYear(), first.getUTCMonth() + 1, 0)).getUTCDate();
+                return (
+                  <section className={styles.month} key={month} aria-label={`${t.months[first.getUTCMonth()]} ${first.getUTCFullYear()}`}>
+                    <h4>{`${t.months[first.getUTCMonth()]} ${first.getUTCFullYear()}`}</h4>
+                    <div className={styles.calendarGrid}>
+                      {t.weekdays.map(weekday => <span className={styles.weekday} key={weekday}>{weekday}</span>)}
+                      {Array.from({ length: offset }, (_, index) => <span key={`blank-${index}`} />)}
+                      {Array.from({ length }, (_, index) => {
+                        const date = `${month}-${String(index + 1).padStart(2, '0')}`;
+                        const day = byDate.get(date);
+                        return day ? dayButton(day, true) : <span className={styles.outsideDay} key={date}>{index + 1}</span>;
+                      })}
+                    </div>
+                  </section>
+                );
+              })}
             </div>
-          </>
-        ) },
-        { id: 'calendar', label: t.historyCalendar, content: (
-          <div className={styles.months}>
-            {months.map((month) => {
-              const first = new Date(`${month}-01T00:00:00Z`);
-              const offset = (first.getUTCDay() + 6) % 7;
-              const length = new Date(Date.UTC(first.getUTCFullYear(), first.getUTCMonth() + 1, 0)).getUTCDate();
-              return (
-                <section className={styles.month} key={month} aria-label={`${t.months[first.getUTCMonth()]} ${first.getUTCFullYear()}`}>
-                  <h4>{`${t.months[first.getUTCMonth()]} ${first.getUTCFullYear()}`}</h4>
-                  <div className={styles.calendarGrid}>
-                    {t.weekdays.map(weekday => <span className={styles.weekday} key={weekday}>{weekday}</span>)}
-                    {Array.from({ length: offset }, (_, index) => <span key={`blank-${index}`} />)}
-                    {Array.from({ length }, (_, index) => {
-                      const date = `${month}-${String(index + 1).padStart(2, '0')}`;
-                      const day = byDate.get(date);
-                      return day ? dayButton(day, true) : <span className={styles.outsideDay} key={date}>{index + 1}</span>;
-                    })}
-                  </div>
-                </section>
-              );
-            })}
-          </div>
-        ) },
-      ]}
-      />
+          )}
     </div>
   );
 }
