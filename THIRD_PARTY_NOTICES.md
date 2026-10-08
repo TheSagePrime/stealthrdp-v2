@@ -77,3 +77,17 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## Shadcnblocks Navbar 1 (free block)
+
+`src/components/shadcnblocks/navbar1.tsx` adapts Navbar 1's desktop navigation,
+action grouping and mobile sheet layout for StealthRDP. Copyright Shadcnblocks.com.
+Source: https://www.shadcnblocks.com/r/navbar1.json
+Component: https://www.shadcnblocks.com/block/navbar1
+
+Used under the Free Blocks / End products permission in
+https://www.shadcnblocks.com/terms (accessed 8 October 2026), which permits
+installation, modification and retention in this end product's public repository.
+This block is not represented as MIT-licensed or redistributed as a component library.
+The adaptation uses existing project primitives and native modal behavior, removes
+demo content and unused nested menus, and uses project icons, tokens and translations.

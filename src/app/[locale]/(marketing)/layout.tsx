@@ -1,7 +1,6 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 import { SiteFooter } from '@/components/site/SiteFooter';
 import { SiteHeader } from '@/components/site/SiteHeader';
-import { SiteTopBar } from '@/components/site/SiteTopBar';
 import { WhatsAppMark } from '@/components/site/WhatsAppMark';
 import { siteCopy } from '@/content/i18n/site';
 import { pageLocale } from '@/lib/stealth/i18n-server';
@@ -13,7 +12,6 @@ export default async function MarketingLayout({ children }: { children: React.Re
   return (
     <div className="sr-site">
       <a className="sr-skip-link" href="#main">{copy.skipToContent}</a>
-      <SiteTopBar copy={copy} locale={locale} />
       <SiteHeader locale={locale} copy={copy} />
       <main id="main">{children}</main>
       <SiteFooter locale={locale} copy={copy} />

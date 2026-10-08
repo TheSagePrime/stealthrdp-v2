@@ -1,6 +1,6 @@
 'use client';
 
-import { Globe } from '@phosphor-icons/react';
+import { CaretDown, Globe } from '@phosphor-icons/react';
 import { usePathname } from 'next/navigation';
 import { languageLinks, logicalPath } from '@/lib/stealth/i18n';
 import styles from './LanguageLinks.module.css';
@@ -11,9 +11,50 @@ import styles from './LanguageLinks.module.css';
    resolve to the same page.
    `names` (the top bar) shows a globe and the language names, shortened to codes on phones;
    `codes` (the footer) shows EN, DE, ES. */
-export function LanguageLinks({ label, variant = 'codes', className }: { label: string; variant?: 'codes' | 'names'; className?: string }) {
+export function LanguageLinks({ label, variant = 'codes', className }: { label: string; variant?: 'codes' | 'names' | 'dropdown'; className?: string }) {
   const { path, locale } = logicalPath(usePathname() || '/');
   const links = languageLinks(path);
+
+  if (variant === 'dropdown') {
+    return (
+      <details
+        className={styles.dropdown}
+        onKeyDown={(event) => {
+          if (event.key === 'Escape') {
+            event.currentTarget.removeAttribute('open');
+            event.currentTarget.querySelector('summary')?.focus();
+          }
+        }}
+        onBlur={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) {
+            event.currentTarget.removeAttribute('open');
+          }
+        }}
+      >
+        <summary aria-label={label}>
+          <Globe size={18} aria-hidden="true" />
+          <span>{links.find(link => link.locale === locale)?.name}</span>
+          <CaretDown size={14} aria-hidden="true" />
+        </summary>
+        <nav className={styles.dropdownPanel} aria-label={label}>
+          {links.map(link => (
+            <a
+              key={link.locale}
+              href={link.href}
+              hrefLang={link.locale}
+              lang={link.locale}
+              aria-current={link.locale === locale ? 'page' : undefined}
+              onClick={(event) => {
+                event.currentTarget.closest('details')?.removeAttribute('open');
+              }}
+            >
+              {link.name}
+            </a>
+          ))}
+        </nav>
+      </details>
+    );
+  }
 
   return (
     <nav

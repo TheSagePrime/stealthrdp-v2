@@ -165,21 +165,15 @@ Do not introduce heavy WebGL or scroll choreography.
 
 ## Shared site elements
 
-- Top bar (`SiteTopBar`): a thin strip above the header that scrolls away. WhatsApp on the left
-  ("Message us on WhatsApp", "WhatsApp" on phones), the language switch on the right (a globe and
-  English · Deutsch · Español, codes on phones). Every language links somewhere: to this page in that
-  language, or to that language's home page when the page is English only.
-- Service notice (`SiteNotice`, words in `src/content/i18n/notices.ts`): while a notice is active,
-  a moving ticker sits in the top bar between WhatsApp and the languages (its own row on phones),
-  links to the status page, pauses on hover and stands still with reduced motion. It renders in the
-  browser only and hides itself after its end date; remove it from the code once it has ended.
-- Header (sticky): logo, navigation (DDoS Protection, Server Status, Resources, About), Log In and a
-  VPS Plans button. VPS plans appear once, as the button. Below 1040px a Menu button holds the same
-  links, then Support and Log In, then the VPS Plans button. Both menus read one list (`mainLinks` in
-  `SiteHeader.tsx`). On phones and tablets the header also shows a round WhatsApp icon next to Menu.
-- Floating WhatsApp button bottom-right (`.srv-whatsapp-float`): one round green button, no text.
-  Hidden on phones (the header icon replaces it) so it never covers pricing or order buttons. Keep
-  content clear of it.
+- Header: adapted Shadcnblocks Navbar 1 with the StealthRDP logo and shared navigation on
+  the left, a language dropdown, Log In and VPS Plans on the right. WhatsApp appears inline
+  on wide desktops and inside the mobile sheet. The retired top bar and completed service
+  notice have been removed. The header stays sticky.
+- Below 1040px the same navigation and actions appear in a native modal side sheet, with
+  keyboard focus trapping, Escape and an explicit close button. Language links remain in
+  the header and link to the corresponding page or the language home page.
+- The existing desktop floating WhatsApp support button remains hidden on phones to keep
+  pricing and order buttons clear.
 - Consent banner bottom-left (`TrackingConsent`), shown only where consent is needed. Reject and
   Accept stay the same size.
 - Footer: product, resource and company links, Privacy, Cookie settings, legal links.
