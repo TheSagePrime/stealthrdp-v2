@@ -6,6 +6,7 @@ import { Wrench } from '@phosphor-icons/react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { maintenanceNotice } from '@/content/i18n/notices';
+import { euMaintenance } from '@/content/status-updates';
 import { localeHref } from '@/lib/stealth/i18n';
 
 /* The service notice in the top bar: a ticker that scrolls like the OS band and links to the
@@ -17,7 +18,7 @@ export function SiteNotice({ locale }: { locale: SiteLocale }) {
 
   useEffect(() => {
     const now = Date.now();
-    setActive(now >= Date.parse(maintenanceNotice.start) && now < Date.parse(maintenanceNotice.end));
+    setActive(euMaintenance.active && now >= Date.parse(maintenanceNotice.start) && now < Date.parse(maintenanceNotice.end));
   }, []);
 
   if (!active) {
