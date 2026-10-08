@@ -2,12 +2,12 @@
 import type { ReactNode } from 'react';
 import type { SiteLocale } from '@/config/i18n';
 import type { Plan } from '@/lib/stealth/content';
-import { SiAlpinelinux, SiArchlinux, SiFreebsd, SiOpensuse, SiRockylinux } from '@icons-pack/react-simple-icons';
-import { ArrowRight, Scales, WhatsappLogo } from '@phosphor-icons/react/dist/ssr';
+import { ArrowRight, WhatsappLogo } from '@phosphor-icons/react/dist/ssr';
 import Image from 'next/image';
 import Link from 'next/link';
 import iconStyles from '@/components/site/IconArtwork.module.css';
 import { Accordion, AccordionItem } from '@/components/ui/accordion';
+import { osLogos } from '@/config/os-logos';
 import { osCopy } from '@/content/i18n/os';
 import { formatEuro, localeHref } from '@/lib/stealth/i18n';
 import styles from './OsSections.module.css';
@@ -83,7 +83,7 @@ export function WindowsVersions({ versions, locale = 'en' }: { versions: string[
         <ul className={styles.versions}>
           {versions.map(version => (
             <li key={version}>
-              <img src="/brand/windows.svg" alt="" width={28} height={28} />
+              <img src={osLogos.windows} alt="" width={28} height={28} />
               <span>{t.product}</span>
               <strong>{version}</strong>
               <small>{t.selected}</small>
@@ -91,7 +91,7 @@ export function WindowsVersions({ versions, locale = 'en' }: { versions: string[
           ))}
         </ul>
         <div className={styles.notice}>
-          <Scales size={20} aria-hidden="true" />
+          <Image className={iconStyles.artwork} src="/images/fluent-color/certificate.svg" width={24} height={24} alt="" />
           <p>
             {t.licensing}
           </p>
@@ -103,17 +103,19 @@ export function WindowsVersions({ versions, locale = 'en' }: { versions: string[
 
 /* Linux distributions ------------------------------------------------------ */
 
-const distroMarks: Record<string, string | typeof SiRockylinux> = {
-  'Ubuntu': '/brand/ubuntu.svg',
-  'Debian': '/brand/debian.svg',
-  'CentOS': '/brand/centos.svg',
-  'AlmaLinux': '/brand/almalinux.svg',
-  'Fedora': '/brand/fedora.svg',
-  'Rocky Linux': SiRockylinux,
-  'Alpine Linux': SiAlpinelinux,
-  'FreeBSD': SiFreebsd,
-  'openSUSE': SiOpensuse,
-  'Arch Linux': SiArchlinux,
+const distroMarks: Record<string, string> = {
+  'Ubuntu': osLogos.ubuntu,
+  'Debian': osLogos.debian,
+  'CentOS': osLogos.centos,
+  'AlmaLinux': osLogos.almalinux,
+  'Fedora': osLogos.fedora,
+  'Rocky Linux': osLogos.rockylinux,
+  'Alpine Linux': osLogos.alpinelinux,
+  'FreeBSD': osLogos.freebsd,
+  'openSUSE': osLogos.opensuse,
+  'Arch Linux': osLogos.archlinux,
+  'CloudLinux': osLogos.cloudlinux,
+  'Oracle Linux': osLogos.oraclelinux,
 };
 
 export function LinuxDistros({ distros, locale = 'en' }: { distros: ReadonlyArray<{ name: string; versions: string }>; locale?: SiteLocale }) {
@@ -127,15 +129,12 @@ export function LinuxDistros({ distros, locale = 'en' }: { distros: ReadonlyArra
         <ul className={styles.distros}>
           {distros.map((distro) => {
             const mark = distroMarks[distro.name];
-            const Mark = typeof mark === 'string' ? null : mark;
             return (
               <li key={distro.name}>
                 <span className={styles.distroMark}>
-                  {typeof mark === 'string'
+                  {mark
                     ? <img src={mark} alt="" width={26} height={26} />
-                    : Mark
-                      ? <Mark size={24} color="default" aria-hidden="true" />
-                      : <b>{distro.name.split(' ').map(word => word[0]).join('')}</b>}
+                    : <b>{distro.name.split(' ').map(word => word[0]).join('')}</b>}
                 </span>
                 <strong>{distro.name}</strong>
                 <span className={styles.distroVersions}>
@@ -159,8 +158,8 @@ export function LinuxDistros({ distros, locale = 'en' }: { distros: ReadonlyArra
 const number = (value: string) => Number.parseFloat(value);
 
 const resources = [
-  { key: 'cpu', icon: 'board' },
-  { key: 'ram', icon: 'settings' },
+  { key: 'cpu', icon: 'gauge' },
+  { key: 'ram', icon: 'data-bar-vertical-ascending' },
   { key: 'storage', icon: 'database' },
 ] as const satisfies ReadonlyArray<{ key: 'cpu' | 'ram' | 'storage'; icon: string }>;
 
@@ -277,7 +276,7 @@ export function OsSupport({ kind, locale = 'en' }: { kind: Kind; locale?: SiteLo
         <Head kicker={t.kicker} title={t.title} id={`${kind}-support`} />
         <div className={styles.support}>
           <article>
-            <span className={styles.supportIcon}><Image className={iconStyles.artwork} src="/images/fluent-color/chat.svg" width={32} height={32} alt="" /></span>
+            <span className={styles.supportIcon}><Image className={iconStyles.artwork} src="/images/fluent-color/headset.svg" width={32} height={32} alt="" /></span>
             <h3>{t.heading}</h3>
             <ul className={styles.channels}>
               <li>
@@ -299,7 +298,7 @@ export function OsSupport({ kind, locale = 'en' }: { kind: Kind; locale?: SiteLo
             </Link>
           </article>
           <article>
-            <span className={styles.supportIcon}><Image className={iconStyles.artwork} src="/images/fluent-color/shield-checkmark.svg" width={32} height={32} alt="" /></span>
+            <span className={styles.supportIcon}><Image className={iconStyles.artwork} src="/images/fluent-color/person-key.svg" width={32} height={32} alt="" /></span>
             <h3>{t.responsibilities}</h3>
             <p>
               {windows ? t.access.windows : t.access.linux}

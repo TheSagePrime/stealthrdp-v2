@@ -3,82 +3,109 @@
   "usage": "Nominative use in a supported-operating-system list. Not modified except where noted.",
   "verified": "sha1 compared against the Commons original at download time",
   "assets": {
-    "almalinux.svg": "Simple Icons: AlmaLinux",
-    "centos.svg": "Simple Icons: CentOS",
-    "debian.svg": "File:Openlogo-debianV2.svg",
-    "fedora.svg": "File:Fedora icon (2021).svg",
-    "linux.svg": "Simple Icons: Linux",
-    "ubuntu.svg": "File:UbuntuCoF.svg",
-    "windows.svg": "File:Windows 11 start button icon.svg"
+    "linux.svg": "Gilbarbara Logos: linux-tux (CC0 1.0)"
   },
   "records": [
     {
-      "file": "almalinux.svg",
-      "source": "Simple Icons (path from @icons-pack/react-simple-icons)",
-      "page": "https://simpleicons.org/",
-      "licence": "CC0 1.0",
-      "artist": "Simple Icons contributors",
-      "attributionRequired": false,
-      "fill": "#000000, the Simple Icons brand colour",
-      "replaces": "File:AlmaLinux Icon Logo.svg (CC BY-SA 4.0, needed visible credit; replaced 2026-10-02)"
-    },
-    {
-      "file": "centos.svg",
-      "source": "Simple Icons (path from @icons-pack/react-simple-icons)",
-      "page": "https://simpleicons.org/",
-      "licence": "CC0 1.0",
-      "artist": "Simple Icons contributors",
-      "attributionRequired": false,
-      "fill": "#262577, the Simple Icons brand colour",
-      "replaces": "File:CentOS Linux color logo (2020).svg (CC BY-SA 4.0, needed visible credit; replaced 2026-10-02)"
-    },
-    {
-      "file": "debian.svg",
-      "commonsFile": "File:Openlogo-debianV2.svg",
-      "page": "https://commons.wikimedia.org/wiki/File:Openlogo-debianV2.svg",
-      "licence": "Public domain",
-      "artist": "Debian Project",
-      "attributionRequired": false,
-      "sha1": "31c4628593d3a059945dc7dfca28d54dc7c8e6c1"
-    },
-    {
-      "file": "fedora.svg",
-      "commonsFile": "File:Fedora icon (2021).svg",
-      "page": "https://commons.wikimedia.org/wiki/File:Fedora_icon_(2021).svg",
-      "licence": "Public domain",
-      "artist": "Red Hat",
-      "attributionRequired": false,
-      "sha1": "86d88f9ad5e499fb5b4ce68de10864e33cb6e3e5"
-    },
-    {
       "file": "linux.svg",
-      "source": "Simple Icons (path from @icons-pack/react-simple-icons)",
-      "page": "https://simpleicons.org/",
+      "source": "Gilbarbara Logos (Iconify logos set, icon linux-tux)",
+      "page": "https://github.com/gilbarbara/logos",
       "licence": "CC0 1.0",
-      "artist": "Simple Icons contributors",
+      "artist": "Gilbarbara and contributors",
       "attributionRequired": false,
-      "fill": "#000000; the Simple Icons brand colour #FCC624 is unreadable on white",
-      "replaces": "File:Tux-simple.svg (Attribution (CC BY-SA 3.0), needed visible credit; replaced 2026-10-02)"
+      "fill": "full colour, unmodified",
+      "replaces": "Simple Icons Linux glyph (CC0), replaced 2026-10-08 to match the colour style of the other OS marks"
     },
     {
-      "file": "ubuntu.svg",
-      "commonsFile": "File:UbuntuCoF.svg",
-      "page": "https://commons.wikimedia.org/wiki/File:UbuntuCoF.svg",
-      "licence": "Public domain",
-      "artist": "Canonical Ltd",
-      "attributionRequired": false,
-      "sha1": "e2fabf8eb1e894652a06ae3d110cdb4ca445ee8a",
-      "replaces": "File:Ubuntu-logo-no-wordmark-2022.svg (opaque #e9500e canvas 1038x1600, mark low in frame, rendered as a tall orange slab at 28px; replaced 2026-09-25)"
+      "file": "https://servers.stealthrdp.com/img/logo/windows_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
     },
     {
-      "file": "windows.svg",
-      "commonsFile": "File:Windows 11 start button icon.svg",
-      "page": "https://commons.wikimedia.org/wiki/File:Windows_11_start_button_icon.svg",
-      "licence": "Public domain",
-      "artist": "Microsoft",
-      "attributionRequired": false,
-      "sha1": "e68c879a9b8e03eb77dfe58f1621fa5af4a632b9",
-      "replaces": "File:Windows logo - 2021.svg (flat single-tone pane mark; replaced 2026-09-25)"
+      "file": "https://servers.stealthrdp.com/img/logo/ubuntu_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
+    },
+    {
+      "file": "https://servers.stealthrdp.com/img/logo/debian_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
+    },
+    {
+      "file": "https://servers.stealthrdp.com/img/logo/centos_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
+    },
+    {
+      "file": "https://servers.stealthrdp.com/img/logo/almalinux_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
+    },
+    {
+      "file": "https://servers.stealthrdp.com/img/logo/fedora_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
+    },
+    {
+      "file": "https://servers.stealthrdp.com/img/logo/rocky_linux_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
+    },
+    {
+      "file": "https://servers.stealthrdp.com/img/logo/alpine_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
+    },
+    {
+      "file": "https://servers.stealthrdp.com/img/logo/freebsd_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
+    },
+    {
+      "file": "https://servers.stealthrdp.com/img/logo/opensuse_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
+    },
+    {
+      "file": "https://servers.stealthrdp.com/img/logo/archlinux_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
+    },
+    {
+      "file": "https://servers.stealthrdp.com/img/logo/cloudlinux_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
+    },
+    {
+      "file": "https://servers.stealthrdp.com/img/logo/oracle_linux_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
     }
   ]
 }

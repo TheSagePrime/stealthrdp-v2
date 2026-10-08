@@ -2,7 +2,7 @@
 /* eslint-disable next/no-img-element */
 import type { SiteLocale } from '@/config/i18n';
 import type { SiteCopy } from '@/content/i18n/site';
-import { SiDiscord, SiInstagram, SiTelegram, SiX } from '@icons-pack/react-simple-icons';
+import { SiDiscord, SiInstagram, SiTelegram, SiWhatsapp, SiX } from '@icons-pack/react-simple-icons';
 import Image from 'next/image';
 import Link from 'next/link';
 import { PageHeader, PageHeaderHeading, PageHeaderRow } from '@/components/dashboardblocks/footer-header';
@@ -14,12 +14,14 @@ import { siteCopy } from '@/content/i18n/site';
 import { localeHref } from '@/lib/stealth/i18n';
 import { CookieSettingsButton } from './TrackingConsent';
 
-/* Same four profiles the brand schema declares in src/config/seo.ts. Official marks from Simple Icons. */
+/* The four profiles the brand schema declares in src/config/seo.ts, plus WhatsApp support beside Instagram.
+   Official marks from Simple Icons. */
 const socials = [
   ['Discord', 'https://discord.gg/9JJFs4DDyF', SiDiscord],
   ['Telegram', 'https://t.me/StealthRDP', SiTelegram],
   ['X', 'https://x.com/stealthrdp', SiX],
   ['Instagram', 'https://www.instagram.com/stealth_rdp', SiInstagram],
+  ['WhatsApp', 'https://wa.me/447441426993', SiWhatsapp],
 ] as const;
 
 export function SiteFooter({ locale = 'en', copy = siteCopy.en }: { locale?: SiteLocale; copy?: SiteCopy }) {

@@ -1,6 +1,5 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
-import { SiAlpinelinux, SiFreebsd, SiRockylinux } from '@icons-pack/react-simple-icons';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -18,6 +17,7 @@ import { HomePricing } from '@/components/site/HomePricing';
 import iconStyles from '@/components/site/IconArtwork.module.css';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { osLogos } from '@/config/os-logos';
 import { homeCopy } from '@/content/i18n/home';
 import { testimonials } from '@/lib/stealth/content';
 import { asSiteLocale, localeHref } from '@/lib/stealth/i18n';
@@ -40,19 +40,19 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const operatingSystems = [
-  { name: 'Windows Server', logo: '/brand/windows.svg' },
-  { name: 'Ubuntu', logo: '/brand/ubuntu.svg' },
-  { name: 'Debian', logo: '/brand/debian.svg' },
-  { name: 'Rocky Linux', icon: SiRockylinux },
-  { name: 'AlmaLinux', logo: '/brand/almalinux.svg' },
-  { name: 'CentOS', logo: '/brand/centos.svg' },
-  { name: 'Fedora', logo: '/brand/fedora.svg' },
-  { name: 'Alpine Linux', icon: SiAlpinelinux },
-  { name: 'FreeBSD', icon: SiFreebsd },
+  { name: 'Windows Server', logo: osLogos.windows },
+  { name: 'Ubuntu', logo: osLogos.ubuntu },
+  { name: 'Debian', logo: osLogos.debian },
+  { name: 'Rocky Linux', logo: osLogos.rockylinux },
+  { name: 'AlmaLinux', logo: osLogos.almalinux },
+  { name: 'CentOS', logo: osLogos.centos },
+  { name: 'Fedora', logo: osLogos.fedora },
+  { name: 'Alpine Linux', logo: osLogos.alpinelinux },
+  { name: 'FreeBSD', logo: osLogos.freebsd },
 ] as const;
 
 /* Icons of the four infrastructure cards; their words are in the copy files. */
-const infrastructureIcons = ['database', 'board', 'globe', 'shield-checkmark'];
+const infrastructureIcons = ['database', 'person-key', 'location-ripple', 'data-trending'];
 
 function reviewSource(item: (typeof testimonials)[number]) {
   if (item.sourceLabel?.includes('Discord') || item.sourceType === 'community review') {
@@ -104,18 +104,9 @@ export default async function HomePage({ params }: Props) {
               {[false, true].map(clone => (
                 <div className="srv-os-marquee-copy" data-clone={clone ? 'true' : 'false'} key={String(clone)}>
                   {operatingSystems.map((item) => {
-                    const Icon = 'icon' in item ? item.icon : null;
                     return (
                       <div className="srv-os-logo" key={`${clone ? 'clone-' : ''}${item.name}`}>
-                        {'logo' in item
-                          ? (
-                              <Image src={item.logo} alt="" width={26} height={26} />
-                            )
-                          : Icon
-                            ? (
-                                <Icon aria-hidden="true" />
-                              )
-                            : null}
+                        <img src={item.logo} alt="" width={26} height={26} loading="lazy" />
                         <span>{item.name}</span>
                       </div>
                     );

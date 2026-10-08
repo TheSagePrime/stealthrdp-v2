@@ -1,18 +1,11 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
-import {
-  ArrowRight,
-  ClockCounterClockwise,
-  Globe,
-  HardDrive,
-  Lightning,
-  MapPin,
-  Pulse,
-  TerminalWindow,
-} from '@phosphor-icons/react/dist/ssr';
+import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { AboutMap } from '@/components/site/about/AboutMap';
+import iconStyles from '@/components/site/IconArtwork.module.css';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { aboutCopy } from '@/content/i18n/about';
@@ -35,10 +28,13 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-/* Icons for the standards in the page copy, in the same order. */
-const standardIcons = [Lightning, TerminalWindow, Globe, HardDrive, ClockCounterClockwise, Pulse];
+/* Fluent Color icons for the standards in the page copy, in the same order. */
+const standardIcons = ['clock-alarm', 'person-key', 'globe', 'database', 'lock-shield', 'data-trending'];
 
 const regions = ['USA', 'EU'] as const;
+
+/* Country flags for the region cards. */
+const regionFlags = { USA: '/images/flags/us-circle.svg', EU: '/images/flags/nl-circle.svg' } as const;
 
 /* Three real Trustpilot reviews, each linked to its source. */
 const quotes = testimonials.filter(item => item.sourceUrl?.includes('trustpilot.com')).slice(0, 3);
@@ -162,11 +158,11 @@ export default async function AboutPage() {
 
           <ul className="srv-why-grid" data-columns="3">
             {t.standards.items.map(({ label, title, text }, index) => {
-              const Icon = standardIcons[index] ?? Lightning;
+              const icon = standardIcons[index] ?? 'settings';
               return (
                 <li key={title} className="srv-why-card">
                   <span className="srv-why-icon">
-                    <Icon aria-hidden="true" weight="fill" />
+                    <Image className={iconStyles.artwork} src={`/images/fluent-color/${icon}.svg`} width={40} height={40} alt="" />
                   </span>
                   <span className="srv-why-label">{label}</span>
                   <h3>{title}</h3>
@@ -194,7 +190,7 @@ export default async function AboutPage() {
               return (
                 <li key={city} className="srv-why-card">
                   <span className="srv-why-icon">
-                    <MapPin aria-hidden="true" weight="fill" />
+                    <Image className={iconStyles.artwork} src={regionFlags[region]} width={40} height={40} alt="" />
                   </span>
                   <span className="srv-why-label">{t.regions.label(region)}</span>
                   <h3>{city}</h3>

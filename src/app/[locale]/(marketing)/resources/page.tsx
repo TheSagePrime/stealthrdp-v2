@@ -44,7 +44,7 @@ const destinations = [
     href: '/faq',
     count: `${faqs.length} answers`,
     description: 'Quick answers about plans, billing, setup, operating systems, refunds, and support.',
-    icon: 'chat',
+    icon: 'chat-bubbles-question',
   },
 ] as const;
 

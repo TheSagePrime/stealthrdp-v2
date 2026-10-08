@@ -4,6 +4,7 @@ import type { SiteLocale } from '@/config/i18n';
 import type { OsCopy } from '@/content/i18n/en/os';
 import { Laptop } from '@phosphor-icons/react';
 import { useEffect, useRef, useState } from 'react';
+import { osLogos } from '@/config/os-logos';
 import { osCopy } from '@/content/i18n/os';
 import styles from './OsSession.module.css';
 
@@ -27,9 +28,9 @@ function sessionContent(t: OsCopy['session']): Record<Kind, { client: string; se
       session: t.windows.session,
       access: 'Administrator',
       images: [
-        { label: 'Windows Server 2019', logo: '/brand/windows.svg' },
-        { label: 'Windows Server 2022', logo: '/brand/windows.svg' },
-        { label: 'Windows Server 2025', logo: '/brand/windows.svg' },
+        { label: 'Windows Server 2019', logo: osLogos.windows },
+        { label: 'Windows Server 2022', logo: osLogos.windows },
+        { label: 'Windows Server 2025', logo: osLogos.windows },
       ],
       facts: t.facts,
     },
@@ -38,11 +39,11 @@ function sessionContent(t: OsCopy['session']): Record<Kind, { client: string; se
       session: t.linux.session,
       access: 'root',
       images: [
-        { label: 'Ubuntu 24.04 LTS', logo: '/brand/ubuntu.svg' },
-        { label: 'Debian 13', logo: '/brand/debian.svg' },
-        { label: 'AlmaLinux 10', logo: '/brand/almalinux.svg' },
-        { label: 'Fedora 44', logo: '/brand/fedora.svg' },
-        { label: 'CentOS Stream 9', logo: '/brand/centos.svg' },
+        { label: 'Ubuntu 24.04 LTS', logo: osLogos.ubuntu },
+        { label: 'Debian 13', logo: osLogos.debian },
+        { label: 'AlmaLinux 10', logo: osLogos.almalinux },
+        { label: 'Fedora 44', logo: osLogos.fedora },
+        { label: 'CentOS Stream 9', logo: osLogos.centos },
       ],
       facts: t.facts,
     },
@@ -51,7 +52,7 @@ function sessionContent(t: OsCopy['session']): Record<Kind, { client: string; se
       session: t.windows.session,
       access: 'Administrator',
       images: [
-        { label: 'Windows Server', logo: '/brand/windows.svg' },
+        { label: 'Windows Server', logo: osLogos.windows },
         { label: t.linuxImage, logo: '/brand/linux.svg', client: t.linux.client, session: t.linux.session, access: 'root' },
       ],
       facts: t.facts,
