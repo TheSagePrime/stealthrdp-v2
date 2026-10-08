@@ -2,7 +2,6 @@
 import type { ReactNode } from 'react';
 import type { SiteLocale } from '@/config/i18n';
 import type { Plan } from '@/lib/stealth/content';
-import { SiAlpinelinux, SiArchlinux, SiFreebsd, SiOpensuse, SiRockylinux } from '@icons-pack/react-simple-icons';
 import { ArrowRight, WhatsappLogo } from '@phosphor-icons/react/dist/ssr';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -83,7 +82,7 @@ export function WindowsVersions({ versions, locale = 'en' }: { versions: string[
         <ul className={styles.versions}>
           {versions.map(version => (
             <li key={version}>
-              <img src="/brand/windows.svg" alt="" width={28} height={28} />
+              <img src="/brand/windows.png" alt="" width={28} height={28} />
               <span>{t.product}</span>
               <strong>{version}</strong>
               <small>{t.selected}</small>
@@ -103,17 +102,19 @@ export function WindowsVersions({ versions, locale = 'en' }: { versions: string[
 
 /* Linux distributions ------------------------------------------------------ */
 
-const distroMarks: Record<string, string | typeof SiRockylinux> = {
-  'Ubuntu': '/brand/ubuntu.svg',
-  'Debian': '/brand/debian.svg',
-  'CentOS': '/brand/centos.svg',
-  'AlmaLinux': '/brand/almalinux.svg',
-  'Fedora': '/brand/fedora.svg',
-  'Rocky Linux': SiRockylinux,
-  'Alpine Linux': SiAlpinelinux,
-  'FreeBSD': SiFreebsd,
-  'openSUSE': SiOpensuse,
-  'Arch Linux': SiArchlinux,
+const distroMarks: Record<string, string> = {
+  'Ubuntu': '/brand/ubuntu.png',
+  'Debian': '/brand/debian.png',
+  'CentOS': '/brand/centos.png',
+  'AlmaLinux': '/brand/almalinux.png',
+  'Fedora': '/brand/fedora.png',
+  'Rocky Linux': '/brand/rockylinux.png',
+  'Alpine Linux': '/brand/alpinelinux.png',
+  'FreeBSD': '/brand/freebsd.png',
+  'openSUSE': '/brand/opensuse.png',
+  'Arch Linux': '/brand/archlinux.png',
+  'CloudLinux': '/brand/cloudlinux.png',
+  'Oracle Linux': '/brand/oraclelinux.png',
 };
 
 export function LinuxDistros({ distros, locale = 'en' }: { distros: ReadonlyArray<{ name: string; versions: string }>; locale?: SiteLocale }) {
@@ -127,15 +128,12 @@ export function LinuxDistros({ distros, locale = 'en' }: { distros: ReadonlyArra
         <ul className={styles.distros}>
           {distros.map((distro) => {
             const mark = distroMarks[distro.name];
-            const Mark = typeof mark === 'string' ? null : mark;
             return (
               <li key={distro.name}>
                 <span className={styles.distroMark}>
-                  {typeof mark === 'string'
+                  {mark
                     ? <img src={mark} alt="" width={26} height={26} />
-                    : Mark
-                      ? <Mark size={24} color="default" aria-hidden="true" />
-                      : <b>{distro.name.split(' ').map(word => word[0]).join('')}</b>}
+                    : <b>{distro.name.split(' ').map(word => word[0]).join('')}</b>}
                 </span>
                 <strong>{distro.name}</strong>
                 <span className={styles.distroVersions}>

@@ -1,6 +1,5 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
-import { SiAlpinelinux, SiFreebsd, SiRockylinux } from '@icons-pack/react-simple-icons';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -40,15 +39,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const operatingSystems = [
-  { name: 'Windows Server', logo: '/brand/windows.svg' },
-  { name: 'Ubuntu', logo: '/brand/ubuntu.svg' },
-  { name: 'Debian', logo: '/brand/debian.svg' },
-  { name: 'Rocky Linux', icon: SiRockylinux },
-  { name: 'AlmaLinux', logo: '/brand/almalinux.svg' },
-  { name: 'CentOS', logo: '/brand/centos.svg' },
-  { name: 'Fedora', logo: '/brand/fedora.svg' },
-  { name: 'Alpine Linux', icon: SiAlpinelinux },
-  { name: 'FreeBSD', icon: SiFreebsd },
+  { name: 'Windows Server', logo: '/brand/windows.png' },
+  { name: 'Ubuntu', logo: '/brand/ubuntu.png' },
+  { name: 'Debian', logo: '/brand/debian.png' },
+  { name: 'Rocky Linux', logo: '/brand/rockylinux.png' },
+  { name: 'AlmaLinux', logo: '/brand/almalinux.png' },
+  { name: 'CentOS', logo: '/brand/centos.png' },
+  { name: 'Fedora', logo: '/brand/fedora.png' },
+  { name: 'Alpine Linux', logo: '/brand/alpinelinux.png' },
+  { name: 'FreeBSD', logo: '/brand/freebsd.png' },
 ] as const;
 
 /* Icons of the four infrastructure cards; their words are in the copy files. */
@@ -104,18 +103,9 @@ export default async function HomePage({ params }: Props) {
               {[false, true].map(clone => (
                 <div className="srv-os-marquee-copy" data-clone={clone ? 'true' : 'false'} key={String(clone)}>
                   {operatingSystems.map((item) => {
-                    const Icon = 'icon' in item ? item.icon : null;
                     return (
                       <div className="srv-os-logo" key={`${clone ? 'clone-' : ''}${item.name}`}>
-                        {'logo' in item
-                          ? (
-                              <Image src={item.logo} alt="" width={26} height={26} />
-                            )
-                          : Icon
-                            ? (
-                                <Icon aria-hidden="true" />
-                              )
-                            : null}
+                        <Image src={item.logo} alt="" width={26} height={26} />
                         <span>{item.name}</span>
                       </div>
                     );

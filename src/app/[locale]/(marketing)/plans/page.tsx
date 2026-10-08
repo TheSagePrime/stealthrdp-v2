@@ -129,7 +129,7 @@ export default async function PlansPage() {
             >
               <CardHeader>
                 <span className="srv-plan-os-mark" aria-hidden="true">
-                  <Image src="/brand/windows.svg" alt="" width={34} height={34} />
+                  <Image src="/brand/windows.png" alt="" width={34} height={34} />
                 </span>
                 <Badge variant="outline" className="w-fit text-body-muted">{t.os.windows.badge}</Badge>
                 <CardTitle className="text-heading-4 text-body-text">
