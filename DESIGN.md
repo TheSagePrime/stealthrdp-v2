@@ -166,10 +166,10 @@ Do not introduce heavy WebGL or scroll choreography.
 ## Shared site elements
 
 - Header: adapted Shadcnblocks Navbar 1 with the StealthRDP logo and shared navigation on
-  the left, a language dropdown, Log In and VPS Plans on the right. WhatsApp appears inline
-  on wide desktops and inside the mobile sheet. The retired top bar and completed service
+  the left, centered product/navigation links including VPS Plans, and language flags, Contact
+  and a primary-colored Log In pill on the right. WhatsApp remains available through the desktop floating button. The retired top bar and completed service
   notice have been removed. The header stays sticky.
-- Below 1040px the same navigation and actions appear in a native modal side sheet, with
+- Below 1200px the same navigation and actions appear in a native modal side sheet, with
   keyboard focus trapping, Escape and an explicit close button. Language links remain in
   the header and link to the corresponding page or the language home page.
 - The existing desktop floating WhatsApp support button remains hidden on phones to keep
@@ -181,3 +181,20 @@ Do not introduce heavy WebGL or scroll choreography.
 ## Quality bar
 
 A redesign is complete only when desktop and mobile renders look intentionally designed, hierarchy is obvious, spacing stays consistent, pages do not all use the same composition, product information remains easy to compare, and accessibility/SEO/security/performance gates pass.
+
+### Contact directory
+
+The localized Contact page adapts the free Shadcnblocks Contact 7 grid with existing
+shadcn Card and Button primitives. Support methods and community links are separate
+sections. Contact is available in desktop/mobile navigation and the footer; WhatsApp
+is a contact method rather than an extra header action. No form or response-time
+promise is introduced.
+
+### Shared footer
+
+The footer composes adapted Dashboardblocks Page Header and ChoiceCards primitives
+with existing shadcn Button components. An open logo-and-social row sits
+above unboxed link groups; Products includes Windows and Linux VPS. A compact
+legal row follows, without nested cards or tinted panels. Header actions, the brand description
+and the language picker are not repeated in the footer.
+Contact us is the support destination. No live status or form controls are added.

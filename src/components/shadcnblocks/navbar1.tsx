@@ -4,7 +4,6 @@
 // Source and permitted end-product use: THIRD_PARTY_NOTICES.md.
 import type { SiteLocale } from '@/config/i18n';
 import type { SiteCopy } from '@/content/i18n/site';
-import { SiWhatsapp } from '@icons-pack/react-simple-icons';
 import { List, X } from '@phosphor-icons/react';
 import Link from 'next/link';
 import { useRef } from 'react';
@@ -18,6 +17,8 @@ const LOGIN_URL = 'https://dash.stealthrdp.com/index.php?rp=/login';
 export function Navbar1({ locale, copy }: { locale: SiteLocale; copy: SiteCopy }) {
   const t = copy.header;
   const menu = t.links.map(([title, url]) => ({ title, url: localeHref(url, locale) }));
+  const contact = menu.find(item => item.url === localeHref('/contact', locale));
+  const primaryMenu = menu.filter(item => item !== contact);
   const dialogRef = useRef<HTMLDialogElement>(null);
   const close = () => dialogRef.current?.close();
   const logo = (
@@ -25,29 +26,28 @@ export function Navbar1({ locale, copy }: { locale: SiteLocale; copy: SiteCopy }
       <img src="https://cdn.stealthrdp.com/images/new/6.png" width="700" height="170" alt="StealthRDP" />
     </Link>
   );
-  const whatsapp = (
-    <a href="https://wa.me/447441426993" target="_blank" rel="noopener noreferrer" className={styles.whatsapp} aria-label={t.whatsapp}>
-      <SiWhatsapp size={20} className={styles.whatsappIcon} aria-hidden="true" title="" />
-      <span>{t.whatsapp}</span>
-    </a>
-  );
 
   return (
     <header className={styles.header}>
       <div className={styles.container}>
-        {/* Navbar 1: logo and navigation together; actions on the right. */}
-        <div className={styles.leading}>
-          {logo}
-          <nav className={styles.desktopNav} aria-label={t.navLabel}>
-            {menu.map(item => <Link key={item.url} href={item.url}>{item.title}</Link>)}
-          </nav>
-        </div>
+        {/* Navbar 1 adapted into logo, centered navigation and account actions. */}
+        {logo}
+        <nav className={styles.desktopNav} aria-label={t.navLabel}>
+          <Link href={localeHref('/plans', locale)}>{t.viewPlans}</Link>
+          {primaryMenu.map(item => <Link key={item.url} href={item.url}>{item.title}</Link>)}
+        </nav>
         <div className={styles.actions}>
-          <div className={styles.desktopSupport}>{whatsapp}</div>
           <LanguageLinks label={copy.languageLabel} variant="dropdown" />
           <div className={styles.desktopAuth}>
-            <Button asChild variant="ghost" size="sm"><a href={LOGIN_URL}>{t.login}</a></Button>
-            <Button asChild size="sm"><Link href={localeHref('/plans', locale)}>{t.viewPlans}</Link></Button>
+            {contact && <Link className={styles.contact} href={contact.url}>{contact.title}</Link>}
+            <Button
+              asChild
+              variant="default"
+              size="sm"
+              className="rounded-full px-6 shadow-none"
+            >
+              <a href={LOGIN_URL}>{t.login}</a>
+            </Button>
           </div>
           <Button variant="outline" size="icon" className={styles.menuButton} aria-label={t.menu} aria-haspopup="dialog" onClick={() => dialogRef.current?.showModal()}>
             <List size={22} aria-hidden="true" />
@@ -74,7 +74,6 @@ export function Navbar1({ locale, copy }: { locale: SiteLocale; copy: SiteCopy }
           <a href="https://dash.stealthrdp.com/submitticket.php" onClick={close}>{t.support}</a>
         </nav>
         <div className={styles.sheetFooter}>
-          {whatsapp}
           <Button asChild variant="outline"><a href={LOGIN_URL}>{t.login}</a></Button>
           <Button asChild><Link href={localeHref('/plans', locale)} onClick={close}>{t.viewPlans}</Link></Button>
         </div>

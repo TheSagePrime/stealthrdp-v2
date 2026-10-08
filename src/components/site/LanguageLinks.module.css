@@ -140,7 +140,18 @@
   background: var(--muted);
 }
 @media (max-width: 640px) {
-  .dropdown summary > span {
+  .dropdown summary > span:not(.flag) {
     display: none;
   }
+}
+
+.flag {
+  display: inline-block;
+  font-size: 20px;
+  line-height: 1;
+}
+.dropdownPanel a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }

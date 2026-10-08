@@ -14,6 +14,7 @@ import styles from './LanguageLinks.module.css';
 export function LanguageLinks({ label, variant = 'codes', className }: { label: string; variant?: 'codes' | 'names' | 'dropdown'; className?: string }) {
   const { path, locale } = logicalPath(usePathname() || '/');
   const links = languageLinks(path);
+  const flags = { en: '🇬🇧', de: '🇩🇪', es: '🇪🇸' };
 
   if (variant === 'dropdown') {
     return (
@@ -32,7 +33,7 @@ export function LanguageLinks({ label, variant = 'codes', className }: { label: 
         }}
       >
         <summary aria-label={label}>
-          <Globe size={18} aria-hidden="true" />
+          <span className={styles.flag} aria-hidden="true">{flags[locale]}</span>
           <span>{links.find(link => link.locale === locale)?.name}</span>
           <CaretDown size={14} aria-hidden="true" />
         </summary>
@@ -48,6 +49,7 @@ export function LanguageLinks({ label, variant = 'codes', className }: { label: 
                 event.currentTarget.closest('details')?.removeAttribute('open');
               }}
             >
+              <span className={styles.flag} aria-hidden="true">{flags[link.locale]}</span>
               {link.name}
             </a>
           ))}

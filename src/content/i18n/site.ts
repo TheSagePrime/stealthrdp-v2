@@ -18,6 +18,7 @@ const en = {
       ['Server Status', '/status'],
       ['Resources', '/resources'],
       ['About', '/about'],
+      ['Contact', '/contact'],
     ] as [string, string][],
     navLabel: 'Main navigation',
     mobileNavLabel: 'Mobile navigation',
@@ -41,7 +42,8 @@ const en = {
       {
         title: 'Products',
         links: [
-          ['VPS plans', '/plans'],
+          ['Windows VPS', '/windows-vps'],
+          ['Linux VPS', '/linux-vps'],
           ['DDoS protection', '/citadel'],
           ['Build your own VPS', 'https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps'],
         ],
@@ -61,6 +63,7 @@ const en = {
         title: 'Company',
         links: [
           ['About', '/about'],
+          ['Contact', '/contact'],
           ['Support', 'https://dash.stealthrdp.com/submitticket.php'],
           ['WhatsApp support', 'https://wa.me/447441426993'],
           ['Privacy', '/privacy'],
@@ -102,6 +105,7 @@ const de: SiteCopy = {
       ['Serverstatus', '/status'],
       ['Ressourcen', '/resources'],
       ['Über uns', '/about'],
+      ['Kontakt', '/contact'],
     ],
     navLabel: 'Hauptnavigation',
     mobileNavLabel: 'Mobile Navigation',
@@ -124,7 +128,8 @@ const de: SiteCopy = {
       {
         title: 'Produkte',
         links: [
-          ['VPS-Tarife', '/plans'],
+          ['Windows VPS', '/windows-vps'],
+          ['Linux VPS', '/linux-vps'],
           ['DDoS-Schutz', '/citadel'],
           ['Eigenen VPS zusammenstellen', 'https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps'],
         ],
@@ -144,6 +149,7 @@ const de: SiteCopy = {
         title: 'Unternehmen',
         links: [
           ['Über uns', '/about'],
+          ['Kontakt', '/contact'],
           ['Support', 'https://dash.stealthrdp.com/submitticket.php'],
           ['WhatsApp-Support', 'https://wa.me/447441426993'],
           ['Datenschutz', '/privacy'],
@@ -183,6 +189,7 @@ const es: SiteCopy = {
       ['Estado del servicio', '/status'],
       ['Recursos', '/resources'],
       ['Nosotros', '/about'],
+      ['Contacto', '/contact'],
     ],
     navLabel: 'Navegación principal',
     mobileNavLabel: 'Navegación móvil',
@@ -205,7 +212,8 @@ const es: SiteCopy = {
       {
         title: 'Productos',
         links: [
-          ['Planes VPS', '/plans'],
+          ['VPS Windows', '/windows-vps'],
+          ['VPS Linux', '/linux-vps'],
           ['Protección DDoS', '/citadel'],
           ['Configura tu propio VPS', 'https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps'],
         ],
@@ -225,6 +233,7 @@ const es: SiteCopy = {
         title: 'Empresa',
         links: [
           ['Sobre nosotros', '/about'],
+          ['Contacto', '/contact'],
           ['Soporte', 'https://dash.stealthrdp.com/submitticket.php'],
           ['Soporte por WhatsApp', 'https://wa.me/447441426993'],
           ['Privacidad', '/privacy'],

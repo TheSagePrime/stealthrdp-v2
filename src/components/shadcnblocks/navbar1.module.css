@@ -6,15 +6,14 @@
   background: var(--card);
 }
 .container {
-  max-width: 1240px;
+  max-width: 1440px;
   margin-inline: auto;
-  padding: 12px 32px;
-  display: flex;
+  padding: 14px 32px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   gap: 24px;
 }
-.leading,
 .actions,
 .desktopAuth,
 .desktopNav {
@@ -22,11 +21,8 @@
   align-items: center;
   gap: 16px;
 }
-.leading {
-  gap: 32px;
-  min-width: 0;
-}
 .logo {
+  justify-self: start;
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
@@ -40,39 +36,28 @@
   gap: 4px;
 }
 .desktopNav a {
-  padding: 12px;
+  padding: 12px 10px;
   border-radius: var(--radius-sm);
+  color: var(--muted-foreground);
+  transition:
+    color 150ms ease,
+    background 150ms ease;
   font-size: 14px;
   font-weight: 500;
   white-space: nowrap;
 }
-.desktopNav a:hover,
+.desktopNav a:hover {
+  color: var(--foreground);
+}
 .mobileNav a:hover {
   background: var(--muted);
 }
 .actions {
-  gap: 8px;
+  justify-self: end;
+  gap: 16px;
 }
 .desktopAuth {
-  gap: 4px;
-}
-.whatsapp {
-  padding-inline: 8px;
-  border-radius: var(--radius-sm);
-  display: inline-flex;
-  gap: 8px;
-  min-height: 44px;
-  white-space: nowrap;
-  align-items: center;
-  font-size: 14px;
-  font-weight: 500;
-}
-.whatsapp:hover {
-  background: var(--muted);
-}
-.whatsappIcon {
-  flex-shrink: 0;
-  color: var(--sr-raw-16a34a);
+  gap: 20px;
 }
 .menuButton {
   display: none;
@@ -118,28 +103,14 @@
   outline: 2px solid var(--ring);
   outline-offset: 4px;
 }
-@media (max-width: 1360px) {
-  .desktopSupport {
-    display: none;
-  }
-  .leading {
-    gap: 16px;
-  }
-}
-@media (max-width: 1040px) {
+@media (max-width: 1200px) {
   .container {
+    grid-template-columns: 1fr auto;
     padding-inline: 20px;
   }
   .desktopNav,
   .desktopAuth {
     display: none;
-  }
-  .whatsapp:hover {
-    background: var(--muted);
-  }
-  .whatsappIcon {
-    flex-shrink: 0;
-    color: var(--sr-raw-16a34a);
   }
   .menuButton {
     display: inline-flex;
@@ -154,4 +125,16 @@
     filter: brightness(0);
     width: 140px;
   }
+}
+
+.contact {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+.contact:hover {
+  color: var(--foreground);
 }

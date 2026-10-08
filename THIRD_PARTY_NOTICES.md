@@ -91,3 +91,29 @@ installation, modification and retention in this end product's public repository
 This block is not represented as MIT-licensed or redistributed as a component library.
 The adaptation uses existing project primitives and native modal behavior, removes
 demo content and unused nested menus, and uses project icons, tokens and translations.
+
+## Shadcnblocks Contact 7 (free block)
+
+`src/components/shadcnblocks/contact7.tsx` adapts Contact 7's information-only
+contact grid. Copyright Shadcnblocks.com.
+Source: https://www.shadcnblocks.com/r/contact7.json
+Component: https://www.shadcnblocks.com/block/contact7
+
+Used under the Free Blocks / End products permission in
+https://www.shadcnblocks.com/terms (accessed 8 October 2026), permitting installation,
+modification and retention in this end product's public repository. This is not
+represented as MIT-licensed or redistributed as a component library. The adaptation
+uses existing shadcn Card and Button primitives, project icons, tokens, translations
+and real support channels instead of demo office and phone details.
+
+## Dashboardblocks footer adaptations
+
+The footer composes adapted Page Header and ChoiceCards primitives from:
+https://www.dashboardblocks.com/r/page-header.json
+https://www.dashboardblocks.com/r/onboarding.json
+
+`footer-header.tsx` keeps the heading/actions layout, uses a brand element instead
+of a page h1, and removes unused primitives. `footer-navigation.tsx` adapts the
+choice-card icon/content hierarchy into navigation groups, replacing form choices
+with links and unboxed semantic navigation groups. Both are covered by the
+Dashboardblocks MIT notice above. No Flowbite runtime or components remain.
