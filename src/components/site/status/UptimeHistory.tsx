@@ -2,7 +2,6 @@
 
 import type { SiteLocale } from '@/config/i18n';
 import type { UptimeDay } from '@/lib/stealth/uptime';
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Tabs } from '@/components/ui/tabs';
 import { Tooltip } from '@/components/ui/tooltip';
@@ -24,18 +23,16 @@ function level(ratio: number | null): string {
 
 export function UptimeHistory({ days, locale, name }: { days: UptimeDay[]; locale: SiteLocale; name: string }) {
   const t = statusCopy[locale].board;
-  const [selected, setSelected] = useState<string | null>(null);
-  const active = days.find(day => day.date === selected) ?? days.at(-1);
   const describe = (day: UptimeDay) => {
     const date = new Date(`${day.date}T00:00:00Z`);
     const dateLabel = t.day(date.getUTCDate(), t.months[date.getUTCMonth()] ?? '', date.getUTCFullYear());
     return day.ratio === null ? t.noRecords(dateLabel) : `${dateLabel}: ${t.percent(day.ratio.toFixed(3).replace('.', t.decimal))}`;
   };
-  const months = [...new Set(days.map(day => day.date.slice(0, 7)))].reverse();
+  const months = [...new Set(days.map(day => day.date.slice(0, 7)))];
   const byDate = new Map(days.map(day => [day.date, day]));
   const dayButton = (day: UptimeDay, calendar = false) => (
     <Tooltip key={day.date} label={describe(day)} className={calendar ? styles.calendarTip : styles.barTip}>
-      <Button variant="ghost" type="button" className={calendar ? styles.calendarDay : styles.dayBar} data-level={level(day.ratio)} aria-label={describe(day)} aria-pressed={active?.date === day.date} onClick={() => setSelected(day.date)}>
+      <Button variant="ghost" type="button" className={calendar ? styles.calendarDay : styles.dayBar} data-level={level(day.ratio)} aria-label={describe(day)}>
         {calendar ? Number(day.date.slice(8)) : <span className="sr-only">{day.date}</span>}
       </Button>
     </Tooltip>
@@ -78,8 +75,6 @@ export function UptimeHistory({ days, locale, name }: { days: UptimeDay[]; local
         ) },
       ]}
       />
-      <p className={styles.hint}>{t.historyHint}</p>
-      {active && <output className={styles.selection} aria-label={t.dayDetail}>{describe(active)}</output>}
     </div>
   );
 }

@@ -15,10 +15,7 @@ import styles from './StatusBoard.module.css';
 import { MeasurementTime } from './StatusLive';
 import { UptimeHistory } from './UptimeHistory';
 
-/*
- * /status: one row per monitored service with a bar for each of the last 90 days
- * (30 on phones), then the recent incidents. Server-rendered from getUptimeReport().
- */
+/* /status: concise live rows with historical uptime and the incident timeline on demand. */
 
 const states: Record<ServiceState, { pill: PillState; icon: ReactNode }> = {
   up: { pill: 'ok', icon: <CheckCircle size={15} weight="fill" aria-hidden="true" /> },
@@ -70,12 +67,6 @@ function ServiceRow({ service, t, locale }: { service: Service; t: StatusBoardCo
         </p>
       )}
 
-      {service.days.length
-        ? (
-            <UptimeHistory days={service.days} locale={locale} name={service.name} />
-          )
-        : <p className={styles.noHistory}>{t.noHistory}</p>}
-
       <dl className={styles.facts}>
         <div>
           <dt>{t.uptime30}</dt>
@@ -104,6 +95,12 @@ function ServiceRow({ service, t, locale }: { service: Service; t: StatusBoardCo
           </dd>
         </div>
       </dl>
+
+      <AccordionItem title={t.historyDisclosure} className={styles.historyDetails}>
+        {service.days.length
+          ? <UptimeHistory days={service.days} locale={locale} name={service.name} />
+          : <p className={styles.noHistory}>{t.noHistory}</p>}
+      </AccordionItem>
 
       <AccordionItem title={t.serviceDetails} className={styles.monitorDetails}>
         <dl className={styles.detailGrid}>
@@ -164,6 +161,19 @@ export function IncidentHistory({ incidents, latestOnly, t }: { incidents: Incid
     : undefined;
   const history = incidents.filter(incident => incident !== currentMaintenance);
   const count = history.length + (euMaintenance.active ? 1 : 0);
+  const entries = [
+    ...(euMaintenance.active
+      ? [{ key: euMaintenance.id, at: euMaintenance.publishedOn, maintenance: true as const, incident: undefined }]
+      : []),
+    ...history.map(incident => ({
+      key: `${incident.serviceId}-${incident.startedAt}`,
+      at: incident.startedAt,
+      maintenance: false as const,
+      incident,
+    })),
+  ].sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
+  const days = [...new Set(entries.map(entry => entry.at.slice(0, 10)))];
+  const entriesByDay = new Map(days.map(date => [date, entries.filter(entry => entry.at.slice(0, 10) === date)]));
   return (
     <Accordion>
       <AccordionItem
@@ -174,40 +184,45 @@ export function IncidentHistory({ incidents, latestOnly, t }: { incidents: Incid
         <p className={styles.sourceNote}>{latestOnly ? t.latestOnly : t.last90}</p>
         {count
           ? (
-              <ol className={styles.incidentGrid}>
-                {euMaintenance.active && (
-                  <li id={euMaintenance.id} className={styles.maintenanceCard}>
-                    <div className={styles.incidentCardHead}>
-                      <Pill state="warn" icon={<Wrench size={16} weight="fill" aria-hidden="true" />}>{t.maintenance.status}</Pill>
-                      <span>
-                        {t.updated}
-                        {' '}
-                        <time dateTime={euMaintenance.publishedOn}>{day(euMaintenance.publishedOn, t)}</time>
-                      </span>
-                    </div>
-                    <h3>{t.maintenance.title}</h3>
-                    <p>{t.maintenance.description}</p>
-                    <dl className={styles.detailGrid}>
-                      <div>
-                        <dt>{t.maintenance.impact}</dt>
-                        <dd>{euMaintenance.serviceName}</dd>
-                      </div>
-                    </dl>
-                    {currentMaintenance && <IncidentFacts incident={currentMaintenance} t={t} />}
-                    <p className={styles.sourceNote}>{t.maintenance.timing}</p>
-                  </li>
-                )}
-                {history.map(incident => (
-                  <li className={styles.incidentCard} key={`${incident.serviceId}-${incident.startedAt}`}>
-                    <div className={styles.incidentCardHead}>
-                      <Pill state={incident.ongoing ? 'bad' : 'ok'} icon={incident.ongoing ? <Warning size={16} weight="fill" aria-hidden="true" /> : <CheckCircle size={16} weight="fill" aria-hidden="true" />}>{incident.ongoing ? t.ongoing : t.resolved}</Pill>
-                      <span>{t.recorded}</span>
-                    </div>
-                    <h3>{incident.service}</h3>
-                    {incident.reason && <p>{t.reasons[incident.reason]}</p>}
-                    <IncidentFacts incident={incident} t={t} />
-                  </li>
-                ))}
+              <ol className={styles.incidentDays}>
+                {days.map((date) => {
+                  const dateObj = new Date(`${date}T00:00:00Z`);
+                  const dateLabel = `${t.weekdays[(dateObj.getUTCDay() + 6) % 7]}, ${day(date, t)}`;
+                  return (
+                    <li className={styles.incidentDay} key={date}>
+                      <h3>{dateLabel}</h3>
+                      <ol className={styles.incidentEvents}>
+                        {entriesByDay.get(date)?.map((entry) => (
+                          entry.maintenance
+                            ? (
+                                <li id={euMaintenance.id} className={styles.incidentEvent} key={entry.key}>
+                                  <time dateTime={entry.at}>{t.updated}</time>
+                                  <div className={styles.incidentEventBody}>
+                                    <Pill state="warn" icon={<Wrench size={16} weight="fill" aria-hidden="true" />}>{t.maintenance.status}</Pill>
+                                    <h4>{t.maintenance.title}</h4>
+                                    <p>{t.maintenance.description}</p>
+                                    <p><strong>{t.maintenance.impact}:</strong> {euMaintenance.serviceName}</p>
+                                    {currentMaintenance && <IncidentFacts incident={currentMaintenance} t={t} />}
+                                    <p className={styles.sourceNote}>{t.maintenance.timing}</p>
+                                  </div>
+                                </li>
+                              )
+                            : entry.incident && (
+                                <li className={styles.incidentEvent} key={entry.key}>
+                                  <time dateTime={entry.at}>{new Date(entry.at).toISOString().slice(11, 16)} UTC</time>
+                                  <div className={styles.incidentEventBody}>
+                                    <Pill state={entry.incident.ongoing ? 'bad' : 'ok'} icon={entry.incident.ongoing ? <Warning size={16} weight="fill" aria-hidden="true" /> : <CheckCircle size={16} weight="fill" aria-hidden="true" />}>{entry.incident.ongoing ? t.ongoing : t.resolved}</Pill>
+                                    <h4>{entry.incident.service}</h4>
+                                    {entry.incident.reason && <p>{t.reasons[entry.incident.reason]}</p>}
+                                    <IncidentFacts incident={entry.incident} t={t} />
+                                  </div>
+                                </li>
+                              )
+                        ))}
+                      </ol>
+                    </li>
+                  );
+                })}
               </ol>
             )
           : <p className={styles.empty}>{t.noIncidents}</p>}

@@ -18,9 +18,9 @@
 .dayBar {
   width: 100%;
   min-width: 0;
-  height: 44px;
+  height: 30px;
   padding: 0;
-  border-radius: var(--radius-full);
+  border-radius: 5px;
 }
 .dayBar,
 .calendarDay {
@@ -47,10 +47,12 @@
 .calendarDay:hover {
   filter: brightness(0.94);
 }
-.dayBar[aria-pressed='true'],
-.calendarDay[aria-pressed='true'] {
-  outline: 2px solid var(--foreground);
+.dayBar:focus-visible,
+.calendarDay:focus-visible {
+  border-color: var(--focus-ring);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
+  box-shadow: none;
 }
 .axis {
   display: flex;
@@ -89,11 +91,11 @@
 }
 .calendarDay {
   width: 100%;
-  height: 44px;
+  height: 36px;
   min-width: 0;
   padding: 0;
-  border: 1px solid color-mix(in srgb, var(--foreground) 12%, transparent);
-  border-radius: var(--radius-sm);
+  border: 0;
+  border-radius: 5px;
   font-size: 0.75rem;
   font-variant-numeric: tabular-nums;
 }
@@ -105,19 +107,8 @@
   font-size: 0.6875rem;
 }
 .outsideDay {
-  min-height: 44px;
+  min-height: 36px;
   opacity: 0.6;
-}
-.hint {
-  margin: 0;
-  color: var(--text-dim);
-  font-size: 0.75rem;
-  line-height: 1.6;
-}
-.selection {
-  color: var(--foreground);
-  font-size: 0.8125rem;
-  font-weight: 600;
 }
 @media (max-width: 1040px) {
   .months {
@@ -135,23 +126,21 @@
     gap: 3px;
   }
 }
-/* Anchor tooltips to the view, keeping every date readable near its edges. */
-.bars,
-.calendarGrid {
-  position: relative;
-}
+/* Each tooltip belongs to its day, so its label stays beside the hovered bar. */
 .barTip,
 .calendarTip {
-  position: static;
+  position: relative;
+  min-width: 0;
 }
 .barTip [role='tooltip'],
 .calendarTip [role='tooltip'] {
-  left: 0;
+  left: 50%;
   bottom: 100%;
-  --tw-translate-x: 0%;
+  --tw-translate-x: -50%;
   --tw-translate-y: 0%;
-  transform: none;
-  max-width: 100%;
+  max-width: min(16rem, 80vw);
+  white-space: nowrap;
+  pointer-events: none;
 }
 .narrowDate {
   display: none;

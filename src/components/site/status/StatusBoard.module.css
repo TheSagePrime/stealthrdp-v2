@@ -111,6 +111,33 @@
   font-size: 0.8125rem;
 }
 
+.historyDetails {
+  padding: 0;
+  border: 0;
+  border-top: 1px solid var(--border-divider);
+  border-radius: 0;
+  background: transparent;
+}
+
+.historyDetails > summary {
+  min-height: 40px;
+  padding-block: var(--spacing-product-2);
+  color: var(--primary);
+  font-size: 0.875rem;
+}
+
+.historyDetails > summary:focus-visible,
+.monitorDetails > summary:focus-visible,
+.incidents > summary:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 4px;
+  border-radius: var(--radius-sm);
+}
+
+.historyDetails > div {
+  padding-bottom: var(--spacing-product-3);
+}
+
 .facts {
   display: flex;
   flex-wrap: wrap;
@@ -193,13 +220,6 @@
   padding-bottom: var(--spacing-product-1);
 }
 
-.monitorDetails > summary:focus-visible,
-.incidents > summary:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 4px;
-  border-radius: var(--radius-sm);
-}
-
 .detailGrid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -237,57 +257,69 @@
   font-size: 1rem;
 }
 
-.incidentGrid {
+.incidentDays {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--spacing-product-4);
+  gap: var(--spacing-product-5);
   margin: var(--spacing-product-4) 0 0;
   padding: 0;
   list-style: none;
 }
 
-.incidentCard,
-.maintenanceCard {
+.incidentDay {
   display: grid;
-  align-content: start;
-  gap: var(--spacing-product-3);
-  min-width: 0;
-  padding: var(--spacing-product-5);
-  border: 1px solid var(--border-divider);
-  border-radius: var(--radius-md);
-  background: var(--surface-1);
+  grid-template-columns: minmax(120px, 180px) minmax(0, 1fr);
+  gap: var(--spacing-product-4);
+  padding-top: var(--spacing-product-4);
+  border-top: 1px solid var(--border-divider);
 }
 
-.maintenanceCard {
-  grid-column: 1 / -1;
-  border-color: color-mix(in srgb, var(--status-warn) 24%, var(--border-divider));
-  background: color-mix(in srgb, var(--status-warn) 4%, var(--surface-1));
-  scroll-margin-top: 100px;
-}
-
-.incidentCardHead {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--spacing-product-2);
-}
-
-.incidentCardHead > span:not([data-slot='pill']) {
-  color: var(--text-dim);
-  font-size: 0.75rem;
-}
-
-.incidentCard h3,
-.maintenanceCard h3 {
+.incidentDay > h3 {
   margin: 0;
   color: var(--foreground);
-  font-size: 1rem;
+  font-size: 0.875rem;
+  font-weight: 650;
+}
+
+.incidentEvents {
+  display: grid;
+  gap: var(--spacing-product-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.incidentEvent {
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr);
+  align-items: start;
+  gap: var(--spacing-product-3);
+  min-width: 0;
+}
+
+.incidentEvent > time {
+  color: var(--text-dim);
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  padding-top: 4px;
+}
+
+.incidentEventBody {
+  display: grid;
+  justify-items: start;
+  gap: var(--spacing-product-2);
+  min-width: 0;
+  padding: 0 0 var(--spacing-product-4) var(--spacing-product-4);
+  border-left: 2px solid var(--border-divider);
+}
+
+.incidentEventBody h4 {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 0.9375rem;
   font-weight: 600;
 }
 
-.incidentCard p,
-.maintenanceCard p {
+.incidentEventBody p {
   margin: 0;
   color: var(--text-muted);
   font-size: 0.875rem;
@@ -295,8 +327,8 @@
 }
 
 .sourceNote,
-.maintenanceCard .sourceNote {
-  margin: var(--spacing-product-2) 0 0;
+.incidentEventBody .sourceNote {
+  margin: 0;
   color: var(--text-dim);
   font-size: 0.75rem;
   line-height: 1.6;
@@ -379,12 +411,15 @@
     gap: 4px 18px;
   }
 
-  .incidentGrid {
+  .incidentDay {
     grid-template-columns: minmax(0, 1fr);
+    gap: var(--spacing-product-3);
   }
 
-  .incidentCard,
-  .maintenanceCard,
+  .incidentEvent {
+    grid-template-columns: 68px minmax(0, 1fr);
+  }
+
   .maintenanceBanner {
     padding: var(--spacing-product-4);
   }
