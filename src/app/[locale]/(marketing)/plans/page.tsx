@@ -41,8 +41,8 @@ export async function generateMetadata(): Promise<Metadata> {
 /* Token utilities for the card link rows, replacing the bespoke .sr-inline-links hook. */
 const cardLinkClass = 'inline-flex min-h-11 items-center gap-2 text-small font-semibold text-primary transition-colors hover:text-accent-hover';
 
-/* Stock is read live from WHMCS; see src/lib/stealth/live-plans.ts. Must be a literal: 6 hours. */
-export const revalidate = 21600;
+/* Stock is read live from WHMCS; see src/lib/stealth/live-plans.ts. Must be a literal: 15 minutes. */
+export const revalidate = 900;
 
 export default async function PlansPage() {
   const locale = await requirePageLocale('/plans');

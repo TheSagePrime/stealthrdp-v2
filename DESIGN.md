@@ -198,3 +198,7 @@ above unboxed link groups; Products includes Windows and Linux VPS. A compact
 legal row follows, without nested cards or tinted panels. Header actions, the brand description
 and the language picker are not repeated in the footer.
 Contact us is the support destination. No live status or form controls are added.
+
+## Color icon artwork
+
+Use locally hosted Microsoft Fluent Color SVGs for feature, resource, support and product illustrations across marketing pages, Citadel, Windows/Linux pages and the shared footer. Social marks retain their official Simple Icons brand colors. Small controls and semantic status indicators retain their existing readable icons. Artwork may lift subtly on hover; reduced-motion disables transforms. Do not recolor multicolor assets or add continuous decorative animation.

@@ -26,7 +26,7 @@ Never invent reviews, numbers, stock, deadlines, guarantees or live data.
 | Windows versions | Windows Server 2019, 2022 and 2025. | `src/app/[locale]/(marketing)/windows-vps/page.tsx` |
 | Linux distributions | The list on `/linux-vps` (`distros` in its page file). | WHMCS order form |
 | VPS prices | EUR. The values in `src/content/plans.json` (verified from WHMCS; see `source.verifiedAt`). | WHMCS store |
-| VPS stock | Read live from the WHMCS store pages every 6 hours. Never type stock numbers into copy. | `src/lib/stealth/live-plans.ts` |
+| VPS stock | Read live from the WHMCS store pages every 15 minutes on incoming requests. Never type stock numbers into copy. | `src/lib/stealth/live-plans.ts` |
 | Citadel | A separate Layer 7 HTTP/HTTPS protection product. It does not need a StealthRDP VPS. Plans: Starter €0, Growth €49, Scale €149 per month. | `src/app/[locale]/(marketing)/citadel/page.tsx`, WHMCS |
 | Network | 250 Mbps on every plan except Starter USA (100 Mbps). The 250 Mbps plans have an optional 1 Gbps upgrade; Starter USA lists none. Unlimited bandwidth under a fair-usage policy. | WHMCS product descriptions, checked Oct 2026 |
 | Billing cycles | Monthly, quarterly, semi-annual, annual and biannual (2 years); the whole period is charged up front. Savings against 12 × monthly etc. are built into each cycle price in WHMCS: on most plans 4-7% quarterly, 10-13% semi-annual, 15-18% annual and 25-32% biannual; Starter plans save less. For a specific plan, show its `discountLabel` from `plans.json`. Do not state fixed percentages for all plans. | WHMCS prices (checked Oct 2026: all 65 prices in `plans.json` match WHMCS) |

@@ -36,6 +36,14 @@ describe('live WHMCS stock', () => {
 
     const byName = Object.fromEntries((await getPlans()).map(plan => [plan.name, plan.source]));
 
+    expect(fetch).toHaveBeenCalledTimes(2);
+
+    for (const [url] of vi.mocked(fetch).mock.calls) {
+      expect(fetch).toHaveBeenCalledWith(url, expect.objectContaining({
+        next: { revalidate: 900 },
+      }));
+    }
+
     expect(byName['Starter USA']).toMatchObject({ stock: 7, availability: 'in-stock' });
     expect(byName['Bronze USA']).toMatchObject({ stock: 0, availability: 'out-of-stock' });
     expect(byName['Starter EU']).toMatchObject({ stock: 3, availability: 'in-stock' });

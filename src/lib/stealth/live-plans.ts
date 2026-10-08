@@ -5,15 +5,15 @@ import 'server-only';
 
 /* Live stock for the plan catalogue.
    Prices and specs stay in src/content/plans.json. Only the WHMCS stock count is read live, from
-   the public store pages. Pages that call getPlans() set `export const revalidate = 21600`
-   (6 hours), so stock refreshes on its own schedule with no deploy, cron job or commit. */
+   the public store pages. Pages that call getPlans() set `export const revalidate = 900`
+   (15 minutes), so stock refreshes on its own schedule with no deploy, cron job or commit. */
 
 const STORE_PAGES = [
   'https://dash.stealthrdp.com/store/standard-usa-rdp-vps',
   'https://dash.stealthrdp.com/store/eu',
 ];
 
-const REVALIDATE_SECONDS = 21_600;
+const REVALIDATE_SECONDS = 900;
 
 const stockByName = z.record(z.string(), z.number().int().min(0).max(100_000));
 

@@ -110,7 +110,7 @@ Only real reviews with a public source.
 2. Edit the plan in `src/content/plans.json` and set `source.verifiedAt` to the time you checked.
 3. Keep `name` exactly as WHMCS shows it (for example `Bronze USA`): the live stock reader matches
    plans by this name (`src/lib/stealth/live-plans.ts`).
-4. Do not type stock numbers. Stock is read live from WHMCS every 6 hours.
+4. Do not type stock numbers. Stock is read live from WHMCS every 15 minutes on incoming requests.
 
 Do not change how plan cards look. Plan-card styles are frozen by the owner.
 

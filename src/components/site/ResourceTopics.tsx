@@ -1,50 +1,36 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
-import type { Icon } from '@phosphor-icons/react';
-import {
-  BookOpenText,
-  ChartLineUp,
-  Gear,
-  Globe,
-  HardDrives,
-  Lifebuoy,
-  Lock,
-  Receipt,
-  RocketLaunch,
-  ShieldCheck,
-  Sliders,
-  WindowsLogo,
-} from '@phosphor-icons/react/dist/ssr';
-import { createElement } from 'react';
+import Image from 'next/image';
+import iconStyles from '@/components/site/IconArtwork.module.css';
 
 /* Jump tiles at the top of the resource index pages: one per collection. */
 
 /* `iconHint` is an English title to pick the icon from when `title` is in another language. */
 export type ResourceTopic = { id: string; title: string; count: number; unit: string; description?: string; iconHint?: string };
 
-const icons: Array<[RegExp, Icon]> = [
-  [/start|introduction|getting/i, RocketLaunch],
-  [/windows|rdp/i, WindowsLogo],
-  [/network|vpn|dns|domain/i, Globe],
-  [/hosting|panel|web/i, HardDrives],
-  [/account|billing|polic|pricing|payment/i, Receipt],
-  [/protect|security|challenge|threat/i, ShieldCheck],
-  [/traffic|analytic|log|insight|monitor/i, ChartLineUp],
-  [/team|alert|support|help/i, Lifebuoy],
-  [/manage|server|operation/i, Gear],
-  [/use case|choos|decision/i, Sliders],
-  [/secur|privacy/i, Lock],
+const icons: Array<[RegExp, string]> = [
+  [/start|introduction|getting/i, 'cloud'],
+  [/windows|rdp/i, 'board'],
+  [/network|vpn|dns|domain/i, 'globe'],
+  [/hosting|panel|web/i, 'database'],
+  [/account|billing|polic|pricing|payment/i, 'receipt'],
+  [/protect|security|challenge|threat/i, 'shield-checkmark'],
+  [/traffic|analytic|log|insight|monitor/i, 'data-trending'],
+  [/team|alert|support|help/i, 'chat'],
+  [/manage|server|operation/i, 'settings'],
+  [/use case|choos|decision/i, 'gauge'],
+  [/secur|privacy/i, 'lock-shield'],
 ];
 
-function iconFor(title: string): Icon {
-  return icons.find(([pattern]) => pattern.test(title))?.[1] ?? BookOpenText;
+function iconFor(title: string): string {
+  return icons.find(([pattern]) => pattern.test(title))?.[1] ?? 'book-open';
 }
 
 export function ResourceTopics({ topics, label = 'Browse by topic' }: { topics: ResourceTopic[]; label?: string }) {
   return (
-    <nav className="sr-topics" aria-label={label}>
+    <nav className="sr-topics not-prose" aria-label={label}>
       <ul>
         {topics.map((topic) => {
-          const glyph = createElement(iconFor(topic.iconHint ?? topic.title), { 'size': 20, 'weight': 'duotone', 'aria-hidden': true });
+          const glyph = <Image className={iconStyles.artwork} src={`/images/fluent-color/${iconFor(topic.iconHint ?? topic.title)}.svg`} width={28} height={28} alt="" />;
           return (
             <li key={topic.id}>
               <a href={`#${topic.id}`}>
