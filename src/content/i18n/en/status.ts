@@ -65,6 +65,8 @@ const status = {
     updated: 'Published',
     reasons: { timeout: 'Availability check timed out', connection: 'Connection unavailable', response: 'Unexpected service response', unavailable: 'Availability check failed' },
     maintenance: {
+      completed: 'Maintenance completed',
+      completion: 'Maintenance for EU 4 NL Server is complete.',
       status: 'Maintenance in progress',
       title: 'EU server maintenance and migration',
       summary: 'EU 4 NL Server is being retired. Affected users are migrating to a new server with better hardware.',

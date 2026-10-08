@@ -65,21 +65,31 @@ describe('public status information', () => {
     expect(overview.getByText(service.name)).not.toBeInTheDocument();
     expect(overview.getByText(en.board.totalServices)).toBeVisible();
     expect(Array.from(document.querySelector('[aria-label="Overview"]')?.querySelectorAll('dd') ?? [], item => item.textContent)).toEqual(['1', '0', '1', '0']);
-    expect(page.getByText(`${en.board.maintenance.description} ${en.board.maintenance.timing}`)).toBeVisible();
+    expect(page.getByText(en.board.maintenance.completion)).toBeVisible();
+    expect(page.getByText(en.board.maintenance.timing)).not.toBeInTheDocument();
     expect(page.getByText('Down', { exact: true })).toBeVisible();
     expect(page.getByText('99.700%', { exact: true })).toBeVisible();
     expect(document.querySelector('summary')).toBeNull();
     expect(page.getByText(en.board.serviceDetails, { exact: true })).not.toBeInTheDocument();
     expect(page.getByRole('slider')).toHaveAttribute('aria-valuemax', '2');
+    expect(page.getByRole('slider')).toHaveAttribute('aria-valuetext', '8 Oct 2026, Maintenance, 75.00% uptime');
+
+    const bars = document.querySelector('[role="slider"]')?.querySelectorAll(':scope > span');
+
+    expect(bars?.[0]?.className).toContain('bg-[var(--uptime-up)]');
+    expect(bars?.[1]?.className).toContain('bg-primary');
   });
 
   it('shows recovery and maintenance timelines using only recorded facts', async () => {
-    await render(<IncidentHistory incidents={[current, resolved]} latestOnly={false} t={en.board} />);
+    await render(<IncidentHistory incidents={[{ ...current, ongoing: false }, resolved]} latestOnly={false} t={en.board} />);
 
     expect(page.getByText(en.board.resolved, { exact: true }).first()).toBeVisible();
     expect(page.getByText(en.board.reasons.connection)).toBeVisible();
-    expect(page.getByText(`${en.board.maintenance.description} ${en.board.maintenance.timing}`)).toBeVisible();
+    expect(page.getByText(en.board.maintenance.completion)).toBeVisible();
+    expect(page.getByText(en.board.maintenance.timing)).not.toBeInTheDocument();
     expect(page.getByText('Subscribe to updates')).not.toBeInTheDocument();
+    expect(document.querySelectorAll('[data-slot="card"]')).toHaveLength(2);
+    expect(page.getByText('Downtime: 1 h')).toBeVisible();
   });
 
   it('keeps missing rolling uptime distinct from a measured zero', async () => {
@@ -101,5 +111,9 @@ describe('public status information', () => {
     expect(page.getByText('—', { exact: true })).toBeVisible();
     expect(page.getByText('0.000%', { exact: true })).toBeVisible();
     expect(page.getByText(en.board.latestOnly)).toBeVisible();
+
+    const otherServiceBars = document.querySelector('[role="slider"]')?.querySelectorAll(':scope > span');
+
+    expect(otherServiceBars?.[1]?.className).toContain('bg-[var(--uptime-down)]');
   });
 });

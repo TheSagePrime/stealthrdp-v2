@@ -54,8 +54,8 @@ const statusConfig: Record<StatusLevel, StatusConfig> = {
     fill: 'bg-primary',
     icon: <Wrench aria-hidden />,
     label: 'Maintenance',
-    soft: 'bg-muted text-foreground',
-    text: 'text-foreground',
+    soft: 'bg-primary/10 text-primary',
+    text: 'text-primary',
   },
   unknown: {
     fill: 'bg-muted-foreground/25',

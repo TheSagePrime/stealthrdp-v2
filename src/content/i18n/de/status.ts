@@ -66,6 +66,8 @@ const status: StatusCopy = {
     updated: 'Veröffentlicht',
     reasons: { timeout: 'Zeitüberschreitung bei der Verfügbarkeitsprüfung', connection: 'Verbindung nicht verfügbar', response: 'Unerwartete Antwort des Dienstes', unavailable: 'Verfügbarkeitsprüfung fehlgeschlagen' },
     maintenance: {
+      completed: 'Wartung abgeschlossen',
+      completion: 'Die Wartung für EU 4 NL Server ist abgeschlossen.',
       status: 'Wartung läuft',
       title: 'Wartung und Migration des EU-Servers',
       summary: 'EU 4 NL Server wird außer Betrieb genommen. Betroffene Nutzer werden auf einen neuen Server mit leistungsfähigerer Hardware migriert.',

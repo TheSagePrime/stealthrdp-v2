@@ -66,6 +66,8 @@ const status: StatusCopy = {
     updated: 'Publicado',
     reasons: { timeout: 'La comprobación de disponibilidad agotó el tiempo de espera', connection: 'Conexión no disponible', response: 'Respuesta inesperada del servicio', unavailable: 'Falló la comprobación de disponibilidad' },
     maintenance: {
+      completed: 'Mantenimiento completado',
+      completion: 'El mantenimiento de EU 4 NL Server ha finalizado.',
       status: 'Mantenimiento en curso',
       title: 'Mantenimiento y migración del servidor de la UE',
       summary: 'EU 4 NL Server se está retirando. Los usuarios afectados están migrando a un nuevo servidor con mejor hardware.',

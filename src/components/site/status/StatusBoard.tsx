@@ -43,15 +43,17 @@ function history(service: Service, t: StatusBoardCopy): UptimeDay[] {
   return service.days.map(item => ({
     label: day(item.date, t),
     status:
-      item.ratio === null
-        ? 'unknown'
-        : item.ratio >= 100
-          ? 'operational'
-          : item.ratio >= 99
-            ? 'degraded'
-            : item.ratio >= 95
-              ? 'partial'
-              : 'major',
+      item.ratio !== null && service.id === euMaintenance.serviceId && euMaintenance.affectedDates.includes(item.date)
+        ? 'maintenance'
+        : item.ratio === null
+          ? 'unknown'
+          : item.ratio >= 100
+            ? 'operational'
+            : item.ratio >= 99
+              ? 'degraded'
+              : item.ratio >= 95
+                ? 'partial'
+                : 'major',
     uptime: item.ratio ?? undefined,
     note: item.downSeconds === null ? undefined : `${t.incidentDuration}: ${duration(item.downSeconds)}`,
   }));
@@ -66,28 +68,43 @@ export function IncidentHistory({
   latestOnly: boolean;
   t: StatusBoardCopy;
 }) {
-  const history = incidents.filter(
-    incident => !(euMaintenance.active && incident.serviceId === euMaintenance.serviceId && incident.ongoing),
+  const maintenanceIncident = incidents.find(
+    incident => incident.serviceId === euMaintenance.serviceId && incident.startedAt === euMaintenance.startedAt,
   );
+  const history = incidents.filter(incident => incident !== maintenanceIncident);
   return (
     <section className="grid gap-5" aria-label={t.recentIncidents}>
       <div>
         <h2 className="text-xl font-semibold">{t.recentIncidents}</h2>
         <p className="text-sm text-muted-foreground">{latestOnly ? t.latestOnly : t.last90}</p>
       </div>
-      {euMaintenance.active && (
+      {(euMaintenance.active || euMaintenance.completedOn) && (
         <Status3
           title={t.maintenance.title}
           severity="maintenance"
-          statusLabel={t.maintenance.status}
+          statusLabel={euMaintenance.active ? t.maintenance.status : t.maintenance.completed}
           affected={[euMaintenance.serviceName]}
           affectedLabel={t.maintenance.impact}
           started={`${t.updated}: ${day(euMaintenance.publishedOn, t)}`}
           updates={[
+            ...(!euMaintenance.active
+              ? [{
+                  stage: t.maintenance.completed,
+                  time: day(euMaintenance.completedOn, t),
+                  message: t.maintenance.completion,
+                }]
+              : []),
+            ...(maintenanceIncident && !maintenanceIncident.ongoing
+              ? [{
+                  stage: t.recorded,
+                  time: when(maintenanceIncident.startedAt, t),
+                  message: `${t.incidentDuration}: ${duration(maintenanceIncident.durationSeconds)}`,
+                }]
+              : []),
             {
               stage: t.maintenance.status,
               time: day(euMaintenance.publishedOn, t),
-              message: `${t.maintenance.description} ${t.maintenance.timing}`,
+              message: euMaintenance.active ? `${t.maintenance.description} ${t.maintenance.timing}` : t.maintenance.description,
             },
           ]}
         />
@@ -122,7 +139,7 @@ export function IncidentHistory({
           ]}
         />
       ))}
-      {!history.length && !euMaintenance.active && <p>{t.noIncidents}</p>}
+      {!history.length && !euMaintenance.active && !euMaintenance.completedOn && <p>{t.noIncidents}</p>}
     </section>
   );
 }

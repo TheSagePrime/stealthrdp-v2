@@ -71,7 +71,11 @@ const Status3 = (props: Status3Props) => {
                       relative mt-1 size-2.75 shrink-0 rounded-full ring-4
                       ring-card
                     `,
-                    isLatest ? 'bg-foreground' : 'bg-muted-foreground/40',
+                    isLatest
+                      ? (severity === 'maintenance'
+                          ? 'bg-primary'
+                          : `bg-foreground`)
+                      : `bg-muted-foreground/40`,
                   )}
                 />
                 <div className="flex min-w-0 flex-col gap-1">
