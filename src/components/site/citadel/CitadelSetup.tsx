@@ -1,7 +1,8 @@
 import type { SiteLocale } from '@/config/i18n';
 import type { CitadelCopy } from '@/content/i18n/en/citadel';
-import { CloudArrowUp, Globe, HardDrives, ShieldCheck } from '@phosphor-icons/react/dist/ssr';
+import Image from 'next/image';
 import Link from 'next/link';
+import iconStyles from '@/components/site/IconArtwork.module.css';
 import { localeHref } from '@/lib/stealth/i18n';
 import { linkLabel } from '@/lib/stealth/link-label';
 import styles from './CitadelSetup.module.css';
@@ -12,7 +13,7 @@ import styles from './CitadelSetup.module.css';
  */
 
 /* Icons for the hops in the copy: visitor, Cloudflare edge, Citadel, origin. */
-const hopIcons = [Globe, CloudArrowUp, ShieldCheck, HardDrives];
+const hopIcons = ['globe', 'cloud', 'shield-checkmark', 'database'];
 const CORE_HOP = 2;
 
 export function CitadelSetup({ copy, locale = 'en' }: { copy: CitadelCopy['setup']; locale?: SiteLocale }) {
@@ -26,11 +27,11 @@ export function CitadelSetup({ copy, locale = 'en' }: { copy: CitadelCopy['setup
     <div className={styles.setup}>
       <ol className={styles.flow} aria-label={copy.pathLabel}>
         {copy.hops.map(({ name, note }, index) => {
-          const Icon = hopIcons[index] ?? Globe;
+          const icon = hopIcons[index] ?? 'globe';
           return (
             <li key={name} className={styles.hop} data-core={index === CORE_HOP || undefined}>
               <span className={styles.hopIcon}>
-                <Icon size={22} weight="duotone" aria-hidden="true" />
+                <Image className={iconStyles.artwork} src={`/images/fluent-color/${icon}.svg`} width={32} height={32} alt="" />
               </span>
               <strong>{name}</strong>
               <span>{note}</span>

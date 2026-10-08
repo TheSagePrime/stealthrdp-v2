@@ -1,11 +1,12 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
-import type { Icon } from '@phosphor-icons/react';
 import type { ReactNode } from 'react';
 import type { SiteLocale } from '@/config/i18n';
 import type { Plan } from '@/lib/stealth/content';
 import { SiAlpinelinux, SiArchlinux, SiFreebsd, SiOpensuse, SiRockylinux } from '@icons-pack/react-simple-icons';
-import { ArrowRight, BookOpenText, ChatCircleText, Cpu, EnvelopeSimple, HardDrive, Lifebuoy, Memory, Scales, ShieldCheck, WhatsappLogo } from '@phosphor-icons/react/dist/ssr';
+import { ArrowRight, Scales, WhatsappLogo } from '@phosphor-icons/react/dist/ssr';
+import Image from 'next/image';
 import Link from 'next/link';
+import iconStyles from '@/components/site/IconArtwork.module.css';
 import { Accordion, AccordionItem } from '@/components/ui/accordion';
 import { osCopy } from '@/content/i18n/os';
 import { formatEuro, localeHref } from '@/lib/stealth/i18n';
@@ -158,10 +159,10 @@ export function LinuxDistros({ distros, locale = 'en' }: { distros: ReadonlyArra
 const number = (value: string) => Number.parseFloat(value);
 
 const resources = [
-  { key: 'cpu', icon: Cpu },
-  { key: 'ram', icon: Memory },
-  { key: 'storage', icon: HardDrive },
-] as const satisfies ReadonlyArray<{ key: 'cpu' | 'ram' | 'storage'; icon: Icon }>;
+  { key: 'cpu', icon: 'board' },
+  { key: 'ram', icon: 'settings' },
+  { key: 'storage', icon: 'database' },
+] as const satisfies ReadonlyArray<{ key: 'cpu' | 'ram' | 'storage'; icon: string }>;
 
 export function OsResources({ plans, kind, children, locale = 'en' }: { plans: Plan[]; kind: Kind; children: ReactNode; locale?: SiteLocale }) {
   const t = osCopy[locale].resources;
@@ -182,11 +183,11 @@ export function OsResources({ plans, kind, children, locale = 'en' }: { plans: P
               const min = values[0] ?? 0;
               const max = values.at(-1) ?? 1;
               const at = (value: number) => `${((value - min) / (max - min || 1)) * 100}%`;
-              const Glyph = resource.icon;
+              const glyph = resource.icon;
               return (
                 <li key={resource.key}>
                   <div className={styles.scaleHead}>
-                    <span className={styles.scaleIcon}><Glyph size={18} weight="duotone" aria-hidden="true" /></span>
+                    <span className={styles.scaleIcon}><Image className={iconStyles.artwork} src={`/images/fluent-color/${glyph}.svg`} width={28} height={28} alt="" /></span>
                     <div>
                       <strong>{resource.carries}</strong>
                       {' '}
@@ -276,19 +277,19 @@ export function OsSupport({ kind, locale = 'en' }: { kind: Kind; locale?: SiteLo
         <Head kicker={t.kicker} title={t.title} id={`${kind}-support`} />
         <div className={styles.support}>
           <article>
-            <span className={styles.supportIcon}><Lifebuoy size={20} weight="duotone" aria-hidden="true" /></span>
+            <span className={styles.supportIcon}><Image className={iconStyles.artwork} src="/images/fluent-color/chat.svg" width={32} height={32} alt="" /></span>
             <h3>{t.heading}</h3>
             <ul className={styles.channels}>
               <li>
-                <WhatsappLogo size={18} aria-hidden="true" />
+                <WhatsappLogo size={22} weight="fill" aria-hidden="true" />
                 <a href="https://wa.me/447441426993">{t.whatsapp}</a>
               </li>
               <li>
-                <ChatCircleText size={18} aria-hidden="true" />
+                <Image className={iconStyles.artwork} src="/images/fluent-color/chat.svg" width={24} height={24} alt="" />
                 {t.tickets}
               </li>
               <li>
-                <EnvelopeSimple size={18} aria-hidden="true" />
+                <Image className={iconStyles.artwork} src="/images/fluent-color/mail.svg" width={24} height={24} alt="" />
                 {t.email}
               </li>
             </ul>
@@ -298,7 +299,7 @@ export function OsSupport({ kind, locale = 'en' }: { kind: Kind; locale?: SiteLo
             </Link>
           </article>
           <article>
-            <span className={styles.supportIcon}><ShieldCheck size={20} weight="duotone" aria-hidden="true" /></span>
+            <span className={styles.supportIcon}><Image className={iconStyles.artwork} src="/images/fluent-color/shield-checkmark.svg" width={32} height={32} alt="" /></span>
             <h3>{t.responsibilities}</h3>
             <p>
               {windows ? t.access.windows : t.access.linux}
@@ -312,7 +313,7 @@ export function OsSupport({ kind, locale = 'en' }: { kind: Kind; locale?: SiteLo
             </Link>
           </article>
           <article>
-            <span className={styles.supportIcon}><BookOpenText size={20} weight="duotone" aria-hidden="true" /></span>
+            <span className={styles.supportIcon}><Image className={iconStyles.artwork} src="/images/fluent-color/book-open.svg" width={32} height={32} alt="" /></span>
             <h3>{t.guides}</h3>
             <ul className={styles.guides}>
               {(windows ? t.windowsGuides : t.linuxGuides).map(guide => (

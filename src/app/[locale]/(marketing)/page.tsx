@@ -4,21 +4,18 @@ import { SiAlpinelinux, SiFreebsd, SiRockylinux } from '@icons-pack/react-simple
 import {
   ArrowRight,
   ArrowUpRight,
-  Cpu,
-  GlobeHemisphereWest,
-  HardDrive,
   Headset,
   Lightning,
-  ShieldCheck,
 } from '@phosphor-icons/react/dist/ssr';
 import { setRequestLocale } from 'next-intl/server';
 import Image from 'next/image';
 import Link from 'next/link';
-
 import { Section } from '@/components/launchui/section';
+
 import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { HomeHero } from '@/components/site/HomeHero';
 import { HomePricing } from '@/components/site/HomePricing';
+import iconStyles from '@/components/site/IconArtwork.module.css';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { homeCopy } from '@/content/i18n/home';
@@ -55,7 +52,7 @@ const operatingSystems = [
 ] as const;
 
 /* Icons of the four infrastructure cards; their words are in the copy files. */
-const infrastructureIcons = [HardDrive, Cpu, GlobeHemisphereWest, ShieldCheck];
+const infrastructureIcons = ['database', 'board', 'globe', 'shield-checkmark'];
 
 function reviewSource(item: (typeof testimonials)[number]) {
   if (item.sourceLabel?.includes('Discord') || item.sourceType === 'community review') {
@@ -67,8 +64,8 @@ function reviewSource(item: (typeof testimonials)[number]) {
   return item.sourceUrl.includes('trustpilot.com') ? 'Trustpilot' : 'Third-party review';
 }
 
-/* Stock is read live from WHMCS; see src/lib/stealth/live-plans.ts. Must be a literal: 6 hours. */
-export const revalidate = 21600;
+/* Stock is read live from WHMCS; see src/lib/stealth/live-plans.ts. Must be a literal: 15 minutes. */
+export const revalidate = 900;
 
 export default async function HomePage({ params }: Props) {
   await requirePageLocale('/');
@@ -242,11 +239,11 @@ export default async function HomePage({ params }: Props) {
 
           <ul className="srv-why-grid">
             {t.infra.items.map(({ title, text, label }, index) => {
-              const Icon = infrastructureIcons[index] ?? ShieldCheck;
+              const icon = infrastructureIcons[index] ?? 'shield-checkmark';
               return (
                 <li key={title} className="srv-why-card">
                   <span className="srv-why-icon">
-                    <Icon aria-hidden="true" weight="fill" />
+                    <Image className={iconStyles.artwork} src={`/images/fluent-color/${icon}.svg`} width={40} height={40} alt="" />
                   </span>
                   <span className="srv-why-label">{label}</span>
                   <h3>{title}</h3>
@@ -292,7 +289,7 @@ export default async function HomePage({ params }: Props) {
           <div className="srv-product-flow" aria-label={t.products.flowAria}>
             <Link href={localeHref('/plans', lang)} className="srv-product-node" data-tone="hosting">
               <span className="srv-product-node-icon">
-                <HardDrive aria-hidden="true" weight="fill" />
+                <Image className={iconStyles.artwork} src="/images/fluent-color/cloud.svg" width={40} height={40} alt="" />
               </span>
               <span className="srv-product-node-kicker">{t.products.hosting.kicker}</span>
               <strong>{t.products.hosting.title}</strong>
@@ -309,7 +306,7 @@ export default async function HomePage({ params }: Props) {
               data-tone="protection"
             >
               <span className="srv-product-node-icon">
-                <ShieldCheck aria-hidden="true" weight="fill" />
+                <Image className={iconStyles.artwork} src="/images/fluent-color/shield-checkmark.svg" width={40} height={40} alt="" />
               </span>
               <span className="srv-product-node-kicker">{t.products.protection.kicker}</span>
               <strong>{t.products.protection.title}</strong>

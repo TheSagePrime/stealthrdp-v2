@@ -43,8 +43,8 @@ const distros = [
   { name: 'Oracle Linux', versions: '8, 9', text: 'Use when the stack asks for Oracle Linux.' },
 ];
 
-/* Stock is read live from WHMCS; see src/lib/stealth/live-plans.ts. Must be a literal: 6 hours. */
-export const revalidate = 21600;
+/* Stock is read live from WHMCS; see src/lib/stealth/live-plans.ts. Must be a literal: 15 minutes. */
+export const revalidate = 900;
 
 export default async function LinuxVpsPage() {
   const locale = await requirePageLocale('/linux-vps');

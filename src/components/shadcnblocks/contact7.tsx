@@ -38,9 +38,23 @@ export function Contact7({ title, description, eyebrow, primary = false, items }
         "
         >
           {items.map(item => (
-            <Card key={item.href} className="h-full gap-0 py-6 shadow-none">
+            <Card
+              key={item.href}
+              className="group h-full gap-0 py-6 shadow-none"
+            >
               <CardContent className="flex h-full flex-col items-start gap-4">
-                <div className="text-primary" aria-hidden="true">{item.icon}</div>
+                <div
+                  className="
+                    flex size-16 items-center justify-center rounded-2xl border
+                    border-border bg-muted/30 text-primary shadow-sm
+                    transition-transform
+                    group-hover:-translate-y-1
+                    motion-reduce:transform-none motion-reduce:transition-none
+                  "
+                  aria-hidden="true"
+                >
+                  {item.icon}
+                </div>
                 <div>
                   <h3 className="mb-2 font-semibold">{item.title}</h3>
                   <p className="text-sm text-muted-foreground">{item.description}</p>

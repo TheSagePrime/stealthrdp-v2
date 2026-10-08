@@ -3,10 +3,11 @@
 import type { SiteLocale } from '@/config/i18n';
 import type { SiteCopy } from '@/content/i18n/site';
 import { SiDiscord, SiInstagram, SiTelegram, SiX } from '@icons-pack/react-simple-icons';
-import { BookOpen, Buildings, Stack } from '@phosphor-icons/react/dist/ssr';
+import Image from 'next/image';
 import Link from 'next/link';
 import { PageHeader, PageHeaderHeading, PageHeaderRow } from '@/components/dashboardblocks/footer-header';
 import { FooterNavigation } from '@/components/dashboardblocks/footer-navigation';
+import iconStyles from '@/components/site/IconArtwork.module.css';
 import { Button } from '@/components/ui/button';
 import { isRouteLocalized } from '@/config/i18n';
 import { siteCopy } from '@/content/i18n/site';
@@ -38,7 +39,7 @@ export function SiteFooter({ locale = 'en', copy = siteCopy.en }: { locale?: Sit
   const legalUrls = new Set(t.legal.map(([, href]) => href));
   const columns = t.columns.map(column => ({ title: column.title, links: column.links.filter(([, href]) => !legalUrls.has(href) && !href.includes('submitticket.php') && !href.includes('wa.me/')).map(([label, href]) => localLink([href === '/contact' ? ({ en: 'Contact us', de: 'Kontakt', es: 'Contáctanos' }[locale]) : label, href])) }));
 
-  const icons = [<Stack key="products" size={20} />, <BookOpen key="resources" size={20} />, <Buildings key="company" size={20} />];
+  const icons = [<Image key="products" className={iconStyles.artwork} src="/images/fluent-color/cloud.svg" width={24} height={24} alt="" />, <Image key="resources" className={iconStyles.artwork} src="/images/fluent-color/book-open.svg" width={24} height={24} alt="" />, <Image key="company" className={iconStyles.artwork} src="/images/fluent-color/building.svg" width={24} height={24} alt="" />];
   return (
     <footer className="
       border-t border-border bg-muted/20 py-6
@@ -85,7 +86,7 @@ export function SiteFooter({ locale = 'en', copy = siteCopy.en }: { locale?: Sit
                         hover:bg-primary/10 hover:text-primary
                       "
                     >
-                      <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}><Mark size={20} aria-hidden="true" /></a>
+                      <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}><Mark size={22} color="default" aria-hidden="true" /></a>
                     </Button>
                   </li>
                 ))}

@@ -43,7 +43,7 @@ const regions = ['USA', 'EU'] as const;
 /* Three real Trustpilot reviews, each linked to its source. */
 const quotes = testimonials.filter(item => item.sourceUrl?.includes('trustpilot.com')).slice(0, 3);
 
-export const revalidate = 21600;
+export const revalidate = 900;
 
 export default async function AboutPage() {
   const locale = await requirePageLocale('/about');

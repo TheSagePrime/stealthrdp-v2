@@ -27,8 +27,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const windowsVersions = ['2019', '2022', '2025'];
 
-/* Stock is read live from WHMCS; see src/lib/stealth/live-plans.ts. Must be a literal: 6 hours. */
-export const revalidate = 21600;
+/* Stock is read live from WHMCS; see src/lib/stealth/live-plans.ts. Must be a literal: 15 minutes. */
+export const revalidate = 900;
 
 export default async function WindowsVpsPage() {
   const locale = await requirePageLocale('/windows-vps');

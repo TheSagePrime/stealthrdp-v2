@@ -1,8 +1,10 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
 import { DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
-import { ArrowRight, BookOpen, LifeBuoy, MessageCircleQuestion, ShieldCheck } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
+import iconStyles from '@/components/site/IconArtwork.module.css';
 import { blogArticles, citadelDocsArticles, helpDocsArticles } from '@/lib/stealth/articles';
 import { faqs } from '@/lib/stealth/content';
 import { requirePageLocale } from '@/lib/stealth/i18n-server';
@@ -21,28 +23,28 @@ const destinations = [
     href: '/blog',
     count: `${blogArticles.length} guides`,
     description: 'VPS use cases, security, performance, backups, and infrastructure decisions.',
-    icon: BookOpen,
+    icon: 'book-open',
   },
   {
     title: 'Help Center',
     href: '/docs',
     count: `${helpDocsArticles.length} articles`,
     description: 'Setup, troubleshooting, networking, Windows access, panels, licensing, and policies.',
-    icon: LifeBuoy,
+    icon: 'chat',
   },
   {
     title: 'Citadel Docs',
     href: '/citadel/docs',
     count: `${citadelDocsArticles.length} articles`,
     description: 'Cloudflare routing, protected domains, challenges, allowlists, and traffic visibility.',
-    icon: ShieldCheck,
+    icon: 'shield-checkmark',
   },
   {
     title: 'Common Questions',
     href: '/faq',
     count: `${faqs.length} answers`,
     description: 'Quick answers about plans, billing, setup, operating systems, refunds, and support.',
-    icon: MessageCircleQuestion,
+    icon: 'chat',
   },
 ] as const;
 
@@ -66,9 +68,9 @@ export default async function ResourcesPage() {
       </DocsDescription>
 
       <div className="sr-res-cards not-prose">
-        {destinations.map(({ title, href, count, description, icon: Icon }) => (
+        {destinations.map(({ title, href, count, description, icon }) => (
           <Link className="sr-res-card" href={href} key={href}>
-            <span className="sr-res-card-icon" aria-hidden="true"><Icon /></span>
+            <span className="sr-res-card-icon not-prose" aria-hidden="true"><Image className={iconStyles.artwork} src={`/images/fluent-color/${icon}.svg`} width={36} height={36} alt="" /></span>
             <h2>{title}</h2>
             <p>{description}</p>
             <span className="sr-res-card-foot">

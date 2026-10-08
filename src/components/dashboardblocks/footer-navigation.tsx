@@ -32,7 +32,7 @@ export function FooterNavigation({ label, options }: FooterNavigationProps) {
               <span
                 aria-hidden="true"
                 className="
-                  flex size-5 shrink-0 items-center justify-center text-primary
+                  flex size-6 shrink-0 items-center justify-center text-primary
                 "
               >
                 {option.icon}

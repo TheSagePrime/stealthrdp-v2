@@ -1,21 +1,11 @@
 'use client';
 
-import type { Icon } from '@phosphor-icons/react';
 import type { CitadelCopy } from '@/content/i18n/en/citadel';
 import type { PortalSectionId } from '@/lib/stealth/citadel-portal';
-import {
-  ChartLine,
-  Gauge,
-  GearSix,
-  Heartbeat,
-  Lightning,
-  ListMagnifyingGlass,
-  PaintBrush,
-  ShieldCheck,
-  SquaresFour,
-} from '@phosphor-icons/react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
+import iconStyles from '@/components/site/IconArtwork.module.css';
 import { portalSectionIds } from '@/lib/stealth/citadel-portal';
 import styles from './CitadelPortal.module.css';
 
@@ -24,16 +14,16 @@ import styles from './CitadelPortal.module.css';
  * Citadel doc says it does and links to that doc. No invented numbers.
  */
 
-const icons: Record<PortalSectionId, Icon> = {
-  overview: SquaresFour,
-  analytics: ChartLine,
-  insights: Lightning,
-  logs: ListMagnifyingGlass,
-  security: ShieldCheck,
-  branding: PaintBrush,
-  cache: Gauge,
-  health: Heartbeat,
-  settings: GearSix,
+const icons: Record<PortalSectionId, string> = {
+  overview: 'board',
+  analytics: 'data-trending',
+  insights: 'cloud',
+  logs: 'clipboard',
+  security: 'shield-checkmark',
+  branding: 'megaphone-loud',
+  cache: 'gauge',
+  health: 'heart',
+  settings: 'settings',
 };
 
 const sections = portalSectionIds.map(id => ({ id, icon: icons[id] }));
@@ -46,7 +36,7 @@ export function CitadelPortal({ copy, links }: { copy: CitadelCopy['portal']; li
   const section = sections[active]!;
   const words = copy.sections[active]!;
   const link = links[active]!;
-  const Glyph = section.icon;
+  const glyph = section.icon;
 
   const onKeyDown = (event: React.KeyboardEvent) => {
     const step = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[event.key];
@@ -71,7 +61,7 @@ export function CitadelPortal({ copy, links }: { copy: CitadelCopy['portal']; li
       <div className={styles.body}>
         <div className={styles.nav} role="tablist" aria-label={copy.sectionsLabel} aria-orientation="vertical" onKeyDown={onKeyDown}>
           {sections.map((item, index) => {
-            const ItemIcon = item.icon;
+            const itemIcon = item.icon;
             return (
               <button
                 key={item.id}
@@ -86,7 +76,7 @@ export function CitadelPortal({ copy, links }: { copy: CitadelCopy['portal']; li
                 tabIndex={index === active ? 0 : -1}
                 onClick={() => setActive(index)}
               >
-                <ItemIcon size={17} weight={index === active ? 'fill' : 'regular'} aria-hidden="true" />
+                <Image className={iconStyles.artwork} src={`/images/fluent-color/${itemIcon}.svg`} width={22} height={22} alt="" />
                 {copy.sections[index]?.name}
               </button>
             );
@@ -95,7 +85,7 @@ export function CitadelPortal({ copy, links }: { copy: CitadelCopy['portal']; li
 
         <div className={styles.panel} role="tabpanel" id="portal-panel" aria-labelledby={`portal-tab-${section.id}`} key={section.id}>
           <span className={styles.panelIcon}>
-            <Glyph size={26} weight="duotone" aria-hidden="true" />
+            <Image className={iconStyles.artwork} src={`/images/fluent-color/${glyph}.svg`} width={40} height={40} alt="" />
           </span>
           <h3>{words.title}</h3>
           <ul>
