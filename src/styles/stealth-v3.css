@@ -3417,7 +3417,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 
 .srv-page-os .sr-os-hero-grid,
 .srv-page-plans .sr-os-hero-grid,
-.srv-page-status .sr-os-hero-grid,
 .srv-page-about .sr-os-hero-grid {
   grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
   gap: clamp(32px, 4vw, 56px);
@@ -3426,7 +3425,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 @media (max-width: 1040px) {
   .srv-page-os .sr-os-hero-grid,
   .srv-page-plans .sr-os-hero-grid,
-  .srv-page-status .sr-os-hero-grid,
   .srv-page-about .sr-os-hero-grid {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -4448,111 +4446,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   }
   .srv-whatsapp-float span {
     display: none;
-  }
-}
-
-/* Status v2 ------------------------------------------------------------- */
-
-.srv-status-v2 {
-  background:
-    radial-gradient(circle at 82% 8%, color-mix(in srgb, var(--primary) 6%, transparent), transparent 26rem),
-    var(--background);
-}
-
-.srv-status-v2-hero {
-  border-bottom: 1px solid var(--border-divider);
-  padding: 64px 0 42px;
-}
-
-.srv-status-v2-copy {
-  max-width: 720px;
-}
-.srv-status-v2-badge {
-  gap: 7px;
-  margin-bottom: 18px;
-}
-
-.srv-status-v2-copy h1 {
-  max-width: 720px;
-  margin: 0;
-  font-size: clamp(2.5rem, 4.5vw, 4.5rem) !important;
-  line-height: 0.98 !important;
-  letter-spacing: -0.05em !important;
-}
-
-.srv-status-v2-copy > p {
-  max-width: 620px;
-  margin: 20px 0 0;
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  line-height: 1.7;
-}
-
-.srv-status-v2-body {
-  padding: 36px 0 clamp(48px, 7vw, 88px);
-}
-.srv-status-v2-console {
-  display: grid;
-  gap: 18px;
-}
-
-.srv-status-v2-help {
-  gap: 0;
-  padding-block: 0;
-}
-
-.srv-status-v2-help [data-slot='card-content'] {
-  display: flex;
-  min-height: 72px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding-block: 14px;
-}
-
-.srv-status-v2-help [data-slot='card-content'] > div:first-child {
-  display: grid;
-  gap: 4px;
-}
-.srv-status-v2-help strong {
-  font-size: 0.8125rem;
-}
-.srv-status-v2-help span {
-  color: var(--text-dim);
-  font-size: 0.6875rem;
-}
-.srv-status-v2-help [data-slot='card-content'] > div:last-child {
-  display: flex;
-  gap: 10px;
-}
-
-.srv-status-v2-help a {
-  min-height: 38px;
-  display: inline-flex;
-  align-items: center;
-  border: 1px solid var(--border-divider);
-  border-radius: var(--radius-sm);
-  padding: 0 12px;
-  color: var(--text);
-  font-size: 0.75rem;
-  font-weight: 700;
-}
-
-.srv-status-v2-help a:first-child {
-  border-color: color-mix(in srgb, var(--sr-raw-22c55e) 35%, var(--border-divider));
-  color: var(--sr-raw-15803d);
-}
-
-@media (max-width: 560px) {
-  .srv-status-v2-hero {
-    padding-top: 46px;
-  }
-  .srv-status-v2-help [data-slot='card-content'] {
-    align-items: stretch;
-    flex-direction: column;
-  }
-  .srv-status-v2-help [data-slot='card-content'] > div:last-child {
-    flex-wrap: wrap;
   }
 }
 
@@ -5959,35 +5852,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
     grid-template-columns: minmax(0, 1fr);
     gap: 14px;
   }
-}
-
-/* Status hero: state line under the lede; the fleet map sits on the right. */
-.srv-page-status .sr-os-hero-grid {
-  align-items: center;
-}
-.srv-status-v2-state {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  margin-top: 28px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border-divider);
-  color: var(--status-ok);
-}
-.srv-status-v2-state[data-state='attention'] {
-  color: var(--status-warn);
-}
-.srv-status-v2-state > div {
-  display: grid;
-  gap: 4px;
-}
-.srv-status-v2-state strong {
-  color: var(--foreground);
-  font-size: 1rem;
-}
-.srv-status-v2-state span {
-  color: var(--text-muted);
-  font-size: 0.8125rem;
 }
 
 /* WhatsApp mark: the real glyph in a green disc ---------------------------- */

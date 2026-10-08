@@ -49,10 +49,11 @@ Regenerate this notice after dependency changes.
 
 Keep this notice and all required upstream notices when distributing products.
 Legal review is required before public distribution.
-# DashboardBlocks
+## DashboardBlocks
 
-The status uptime bar interaction in `src/components/site/status/DashboardBlocksUptimeBar.tsx`
-is adapted from DashboardBlocks' `status-02` block:
+The status primitives and Service List, Uptime Bars, and Incident blocks in
+`src/components/dashboardblocks/` are copied from DashboardBlocks' official registry
+and adapted for StealthRDP data, localization, theme tokens, and existing icons:
 https://www.dashboardblocks.com/docs/components/status
 
 MIT License

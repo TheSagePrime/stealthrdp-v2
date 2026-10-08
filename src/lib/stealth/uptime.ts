@@ -12,16 +12,16 @@ import 'server-only';
 
 const HISTORY_DAYS = 90;
 
-export type ServiceState = 'up' | 'down' | 'paused' | 'unknown';
+type ServiceState = 'up' | 'down' | 'paused' | 'unknown';
 
-export type UptimeDay = { date: string; ratio: number | null; downSeconds: number | null };
+type UptimeDay = { date: string; ratio: number | null; downSeconds: number | null };
 
 type IncidentReason = 'timeout' | 'connection' | 'response' | 'unavailable';
 type MonitorKind = 'http' | 'network' | 'ping' | 'heartbeat' | 'unknown';
 
 export type Incident = { serviceId: string; service: string; startedAt: string; durationSeconds: number; ongoing: boolean; reason: IncidentReason | null };
 
-export type ResponseSample = { at: string; ms: number | null };
+type ResponseSample = { at: string; ms: number | null };
 
 export type Service = {
   id: string;

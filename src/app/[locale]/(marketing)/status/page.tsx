@@ -27,15 +27,15 @@ export default async function StatusPage() {
   const report = await getUptimeReport();
 
   return (
-    <div className="srv-page srv-page-status srv-status-v2">
+    <div className="srv-page">
       <StatusLive>
         <StatusBoard report={report} t={t.board} locale={locale}>
-          <Badge variant="outline" className="srv-status-v2-badge">
+          <Badge variant="outline" className="w-fit">
             <Pulse size={14} weight="fill" aria-hidden="true" />
             {t.badge}
           </Badge>
           <h1>{t.title}</h1>
-          <p>{t.text}</p>
+          <p className="text-muted-foreground">{t.text}</p>
         </StatusBoard>
       </StatusLive>
     </div>
