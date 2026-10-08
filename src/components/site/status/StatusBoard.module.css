@@ -105,28 +105,21 @@
   font-weight: 650;
 }
 
-.noHistory {
-  margin: 0;
-  color: var(--text-dim);
-  font-size: 0.8125rem;
+.historyOverviewWrap {
+  margin-bottom: 2px;
 }
 
-.historyDetails {
-  padding: 0;
-  border: 0;
-  border-top: 1px solid var(--border-divider);
-  border-radius: 0;
-  background: transparent;
+.historyOverview {
+  padding-inline: 20px;
+  border-radius: var(--radius-lg);
 }
 
-.historyDetails > summary {
-  min-height: 40px;
-  padding-block: var(--spacing-product-2);
+.historyOverview > summary {
   color: var(--primary);
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
 }
 
-.historyDetails > summary:focus-visible,
+.historyOverview > summary:focus-visible,
 .monitorDetails > summary:focus-visible,
 .incidents > summary:focus-visible {
   outline: 2px solid var(--focus-ring);
@@ -134,8 +127,24 @@
   border-radius: var(--radius-sm);
 }
 
-.historyDetails > div {
-  padding-bottom: var(--spacing-product-3);
+.historicalServices {
+  display: grid;
+  gap: var(--spacing-product-5);
+}
+
+.historicalService {
+  display: grid;
+  gap: var(--spacing-product-3);
+  min-width: 0;
+  padding-top: var(--spacing-product-4);
+  border-top: 1px solid var(--border-divider);
+}
+
+.historicalService h3 {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 0.9375rem;
+  font-weight: 650;
 }
 
 .facts {
@@ -403,7 +412,8 @@
 @media (max-width: 768px) {
   .service,
   .sectionHead,
-  .incidents {
+  .incidents,
+  .historyOverview {
     padding-inline: 16px;
   }
 

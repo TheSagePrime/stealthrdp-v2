@@ -108,12 +108,6 @@ function ServiceRow({ service, t, locale }: { service: Service; t: StatusBoardCo
         </div>
       </dl>
 
-      <AccordionItem title={t.historyDisclosure} className={styles.historyDetails}>
-        {service.days.length
-          ? <UptimeHistory days={service.days} locale={locale} name={service.name} view="calendar" />
-          : <p className={styles.noHistory}>{t.noHistory}</p>}
-      </AccordionItem>
-
       <AccordionItem title={t.serviceDetails} className={styles.monitorDetails}>
         <dl className={styles.detailGrid}>
           <div>
@@ -309,6 +303,20 @@ export function StatusBoard({ report, t, children, locale = 'en' }: { report: Up
                 <p>{t.maintenance.summary}</p>
               </div>
             </aside>
+          )}
+          {services.some(service => service.days.length > 0) && (
+            <Accordion className={styles.historyOverviewWrap}>
+              <AccordionItem title={t.historyDisclosure} className={styles.historyOverview}>
+                <div className={styles.historicalServices}>
+                  {services.filter(service => service.days.length > 0).map(service => (
+                    <section className={styles.historicalService} key={service.id} aria-label={service.name}>
+                      <h3>{service.name}</h3>
+                      <UptimeHistory days={service.days} locale={locale} name={service.name} view="calendar" />
+                    </section>
+                  ))}
+                </div>
+              </AccordionItem>
+            </Accordion>
           )}
           {groups.map(group => (
             <Card key={group.name} className={styles.group}>
