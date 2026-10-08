@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import type { SiteLocale } from '@/config/i18n';
 import type { Plan } from '@/lib/stealth/content';
 import { SiAlpinelinux, SiArchlinux, SiFreebsd, SiOpensuse, SiRockylinux } from '@icons-pack/react-simple-icons';
-import { ArrowRight, Scales, WhatsappLogo } from '@phosphor-icons/react/dist/ssr';
+import { ArrowRight, WhatsappLogo } from '@phosphor-icons/react/dist/ssr';
 import Image from 'next/image';
 import Link from 'next/link';
 import iconStyles from '@/components/site/IconArtwork.module.css';
@@ -91,7 +91,7 @@ export function WindowsVersions({ versions, locale = 'en' }: { versions: string[
           ))}
         </ul>
         <div className={styles.notice}>
-          <Scales size={20} aria-hidden="true" />
+          <Image className={iconStyles.artwork} src="/images/fluent-color/clipboard.svg" width={24} height={24} alt="" />
           <p>
             {t.licensing}
           </p>

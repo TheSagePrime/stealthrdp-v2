@@ -6598,6 +6598,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 }
 
 .srv-whatsapp-float .sr-wa-mark {
+  background: var(--sr-raw-ffffff);
   box-shadow: 0 10px 28px color-mix(in srgb, var(--sr-raw-000000) 22%, transparent);
   transition:
     transform 160ms ease,

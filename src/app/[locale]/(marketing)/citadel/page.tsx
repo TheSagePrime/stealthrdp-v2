@@ -1,6 +1,7 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
-import { ArrowRight, ShieldCheck } from '@phosphor-icons/react/dist/ssr';
+import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
+import Image from 'next/image';
 import Link from 'next/link';
 import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { CitadelControls } from '@/components/site/citadel/CitadelControls';
@@ -10,6 +11,7 @@ import { CitadelIncluded } from '@/components/site/citadel/CitadelIncluded';
 import { CitadelPortal } from '@/components/site/citadel/CitadelPortal';
 import { CitadelSetup } from '@/components/site/citadel/CitadelSetup';
 import { CitadelThreats } from '@/components/site/citadel/CitadelThreats';
+import iconStyles from '@/components/site/IconArtwork.module.css';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -82,7 +84,7 @@ export default async function CitadelPage() {
         <div className="sr-container srv-citadel-v2-hero-grid">
           <div className="srv-citadel-v2-copy">
             <Badge variant="outline" className="srv-citadel-v2-eyebrow">
-              <ShieldCheck size={14} weight="fill" aria-hidden="true" />
+              <Image className={iconStyles.artwork} src="/images/fluent-color/shield-checkmark.svg" width={16} height={16} alt="" />
               {t.hero.badge}
             </Badge>
             <h1>
@@ -252,7 +254,7 @@ export default async function CitadelPage() {
           <Card className="srv-citadel-v2-final-card">
             <div>
               <Badge variant="outline">
-                <ShieldCheck size={13} weight="fill" />
+                <Image className={iconStyles.artwork} src="/images/fluent-color/shield-checkmark.svg" width={16} height={16} alt="" />
                 {' '}
                 Citadel
               </Badge>
