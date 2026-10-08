@@ -3,20 +3,7 @@
   "usage": "Nominative use in a supported-operating-system list. Not modified except where noted.",
   "verified": "sha1 compared against the Commons original at download time",
   "assets": {
-    "linux.svg": "Gilbarbara Logos: linux-tux (CC0 1.0)",
-    "windows.png": "Microsoft Windows logo from the StealthRDP panel set (windows_logo.png)",
-    "ubuntu.png": "Ubuntu logo from the StealthRDP panel set (ubuntu_logo.png)",
-    "debian.png": "Debian logo from the StealthRDP panel set (debian_logo.png)",
-    "centos.png": "CentOS logo from the StealthRDP panel set (centos_logo.png)",
-    "almalinux.png": "AlmaLinux logo from the StealthRDP panel set (almalinux_logo.png)",
-    "fedora.png": "Fedora logo from the StealthRDP panel set (fedora_logo.png)",
-    "rockylinux.png": "Rocky Linux logo from the StealthRDP panel set (rocky_linux_logo.png)",
-    "alpinelinux.png": "Alpine Linux logo from the StealthRDP panel set (alpine_logo.png)",
-    "freebsd.png": "FreeBSD logo from the StealthRDP panel set (freebsd_logo.png)",
-    "opensuse.png": "openSUSE logo from the StealthRDP panel set (opensuse_logo.png)",
-    "archlinux.png": "Arch Linux logo from the StealthRDP panel set (archlinux_logo.png)",
-    "cloudlinux.png": "CloudLinux logo from the StealthRDP panel set (cloudlinux_logo.png)",
-    "oraclelinux.png": "Oracle Linux (resized to 600 px wide) logo from the StealthRDP panel set (oracle_linux_logo.png)"
+    "linux.svg": "Gilbarbara Logos: linux-tux (CC0 1.0)"
   },
   "records": [
     {
@@ -30,121 +17,95 @@
       "replaces": "Simple Icons Linux glyph (CC0), replaced 2026-10-08 to match the colour style of the other OS marks"
     },
     {
-      "file": "windows.png",
-      "source": "StealthRDP panel logo set, servers.stealthrdp.com/img/logo, supplied by the StealthRDP backend team (windows_logo.png)",
-      "page": "https://servers.stealthrdp.com/img/logo/windows_logo.png",
-      "licence": "Trademark of the respective owner. Panel artwork used per StealthRDP owner direction; permission from the artwork provider not independently verified.",
-      "artist": "Microsoft Windows trademark owner",
-      "attributionRequired": "unknown; confirm with artwork provider",
-      "replaces": "previous SVG for this OS, replaced 2026-10-08"
+      "file": "https://servers.stealthrdp.com/img/logo/windows_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
     },
     {
-      "file": "ubuntu.png",
-      "source": "StealthRDP panel logo set, servers.stealthrdp.com/img/logo, supplied by the StealthRDP backend team (ubuntu_logo.png)",
-      "page": "https://servers.stealthrdp.com/img/logo/ubuntu_logo.png",
-      "licence": "Trademark of the respective owner. Panel artwork used per StealthRDP owner direction; permission from the artwork provider not independently verified.",
-      "artist": "Ubuntu trademark owner",
-      "attributionRequired": "unknown; confirm with artwork provider",
-      "replaces": "previous SVG for this OS, replaced 2026-10-08"
+      "file": "https://servers.stealthrdp.com/img/logo/ubuntu_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
     },
     {
-      "file": "debian.png",
-      "source": "StealthRDP panel logo set, servers.stealthrdp.com/img/logo, supplied by the StealthRDP backend team (debian_logo.png)",
-      "page": "https://servers.stealthrdp.com/img/logo/debian_logo.png",
-      "licence": "Trademark of the respective owner. Panel artwork used per StealthRDP owner direction; permission from the artwork provider not independently verified.",
-      "artist": "Debian trademark owner",
-      "attributionRequired": "unknown; confirm with artwork provider",
-      "replaces": "previous SVG for this OS, replaced 2026-10-08"
+      "file": "https://servers.stealthrdp.com/img/logo/debian_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
     },
     {
-      "file": "centos.png",
-      "source": "StealthRDP panel logo set, servers.stealthrdp.com/img/logo, supplied by the StealthRDP backend team (centos_logo.png)",
-      "page": "https://servers.stealthrdp.com/img/logo/centos_logo.png",
-      "licence": "Trademark of the respective owner. Panel artwork used per StealthRDP owner direction; permission from the artwork provider not independently verified.",
-      "artist": "CentOS trademark owner",
-      "attributionRequired": "unknown; confirm with artwork provider",
-      "replaces": "previous SVG for this OS, replaced 2026-10-08"
+      "file": "https://servers.stealthrdp.com/img/logo/centos_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
     },
     {
-      "file": "almalinux.png",
-      "source": "StealthRDP panel logo set, servers.stealthrdp.com/img/logo, supplied by the StealthRDP backend team (almalinux_logo.png)",
-      "page": "https://servers.stealthrdp.com/img/logo/almalinux_logo.png",
-      "licence": "Trademark of the respective owner. Panel artwork used per StealthRDP owner direction; permission from the artwork provider not independently verified.",
-      "artist": "AlmaLinux trademark owner",
-      "attributionRequired": "unknown; confirm with artwork provider",
-      "replaces": "previous SVG for this OS, replaced 2026-10-08"
+      "file": "https://servers.stealthrdp.com/img/logo/almalinux_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
     },
     {
-      "file": "fedora.png",
-      "source": "StealthRDP panel logo set, servers.stealthrdp.com/img/logo, supplied by the StealthRDP backend team (fedora_logo.png)",
-      "page": "https://servers.stealthrdp.com/img/logo/fedora_logo.png",
-      "licence": "Trademark of the respective owner. Panel artwork used per StealthRDP owner direction; permission from the artwork provider not independently verified.",
-      "artist": "Fedora trademark owner",
-      "attributionRequired": "unknown; confirm with artwork provider",
-      "replaces": "previous SVG for this OS, replaced 2026-10-08"
+      "file": "https://servers.stealthrdp.com/img/logo/fedora_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
     },
     {
-      "file": "rockylinux.png",
-      "source": "StealthRDP panel logo set, servers.stealthrdp.com/img/logo, supplied by the StealthRDP backend team (rocky_linux_logo.png)",
-      "page": "https://servers.stealthrdp.com/img/logo/rocky_linux_logo.png",
-      "licence": "Trademark of the respective owner. Panel artwork used per StealthRDP owner direction; permission from the artwork provider not independently verified.",
-      "artist": "Rocky Linux trademark owner",
-      "attributionRequired": "unknown; confirm with artwork provider",
-      "replaces": "previous SVG for this OS, replaced 2026-10-08"
+      "file": "https://servers.stealthrdp.com/img/logo/rocky_linux_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
     },
     {
-      "file": "alpinelinux.png",
-      "source": "StealthRDP panel logo set, servers.stealthrdp.com/img/logo, supplied by the StealthRDP backend team (alpine_logo.png)",
-      "page": "https://servers.stealthrdp.com/img/logo/alpine_logo.png",
-      "licence": "Trademark of the respective owner. Panel artwork used per StealthRDP owner direction; permission from the artwork provider not independently verified.",
-      "artist": "Alpine Linux trademark owner",
-      "attributionRequired": "unknown; confirm with artwork provider",
-      "replaces": "previous SVG for this OS, replaced 2026-10-08"
+      "file": "https://servers.stealthrdp.com/img/logo/alpine_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
     },
     {
-      "file": "freebsd.png",
-      "source": "StealthRDP panel logo set, servers.stealthrdp.com/img/logo, supplied by the StealthRDP backend team (freebsd_logo.png)",
-      "page": "https://servers.stealthrdp.com/img/logo/freebsd_logo.png",
-      "licence": "Trademark of the respective owner. Panel artwork used per StealthRDP owner direction; permission from the artwork provider not independently verified.",
-      "artist": "FreeBSD trademark owner",
-      "attributionRequired": "unknown; confirm with artwork provider",
-      "replaces": "previous SVG for this OS, replaced 2026-10-08"
+      "file": "https://servers.stealthrdp.com/img/logo/freebsd_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
     },
     {
-      "file": "opensuse.png",
-      "source": "StealthRDP panel logo set, servers.stealthrdp.com/img/logo, supplied by the StealthRDP backend team (opensuse_logo.png)",
-      "page": "https://servers.stealthrdp.com/img/logo/opensuse_logo.png",
-      "licence": "Trademark of the respective owner. Panel artwork used per StealthRDP owner direction; permission from the artwork provider not independently verified.",
-      "artist": "openSUSE trademark owner",
-      "attributionRequired": "unknown; confirm with artwork provider",
-      "replaces": "previous SVG for this OS, replaced 2026-10-08"
+      "file": "https://servers.stealthrdp.com/img/logo/opensuse_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
     },
     {
-      "file": "archlinux.png",
-      "source": "StealthRDP panel logo set, servers.stealthrdp.com/img/logo, supplied by the StealthRDP backend team (archlinux_logo.png)",
-      "page": "https://servers.stealthrdp.com/img/logo/archlinux_logo.png",
-      "licence": "Trademark of the respective owner. Panel artwork used per StealthRDP owner direction; permission from the artwork provider not independently verified.",
-      "artist": "Arch Linux trademark owner",
-      "attributionRequired": "unknown; confirm with artwork provider",
-      "replaces": "previous SVG for this OS, replaced 2026-10-08"
+      "file": "https://servers.stealthrdp.com/img/logo/archlinux_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
     },
     {
-      "file": "cloudlinux.png",
-      "source": "StealthRDP panel logo set, servers.stealthrdp.com/img/logo, supplied by the StealthRDP backend team (cloudlinux_logo.png)",
-      "page": "https://servers.stealthrdp.com/img/logo/cloudlinux_logo.png",
-      "licence": "Trademark of the respective owner. Panel artwork used per StealthRDP owner direction; permission from the artwork provider not independently verified.",
-      "artist": "CloudLinux trademark owner",
-      "attributionRequired": "unknown; confirm with artwork provider",
-      "replaces": "letter fallback, added 2026-10-08"
+      "file": "https://servers.stealthrdp.com/img/logo/cloudlinux_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
     },
     {
-      "file": "oraclelinux.png",
-      "source": "StealthRDP panel logo set, servers.stealthrdp.com/img/logo, supplied by the StealthRDP backend team (oracle_linux_logo.png)",
-      "page": "https://servers.stealthrdp.com/img/logo/oracle_linux_logo.png",
-      "licence": "Trademark of the respective owner. Panel artwork used per StealthRDP owner direction; permission from the artwork provider not independently verified.",
-      "artist": "Oracle Linux (resized to 600 px wide) trademark owner",
-      "attributionRequired": "unknown; confirm with artwork provider",
-      "replaces": "letter fallback, added 2026-10-08"
+      "file": "https://servers.stealthrdp.com/img/logo/oracle_linux_logo.png",
+      "hosting": "hotlinked from src/config/os-logos.ts, not copied into the repo",
+      "source": "StealthRDP custom artwork, served by the StealthRDP panel",
+      "licence": "StealthRDP custom artwork; used by the owner of the site",
+      "attributionRequired": false
     }
   ]
 }

@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import iconStyles from '@/components/site/IconArtwork.module.css';
 import { Accordion, AccordionItem } from '@/components/ui/accordion';
+import { osLogos } from '@/config/os-logos';
 import { osCopy } from '@/content/i18n/os';
 import { formatEuro, localeHref } from '@/lib/stealth/i18n';
 import styles from './OsSections.module.css';
@@ -82,7 +83,7 @@ export function WindowsVersions({ versions, locale = 'en' }: { versions: string[
         <ul className={styles.versions}>
           {versions.map(version => (
             <li key={version}>
-              <img src="/brand/windows.png" alt="" width={28} height={28} />
+              <img src={osLogos.windows} alt="" width={28} height={28} />
               <span>{t.product}</span>
               <strong>{version}</strong>
               <small>{t.selected}</small>
@@ -103,18 +104,18 @@ export function WindowsVersions({ versions, locale = 'en' }: { versions: string[
 /* Linux distributions ------------------------------------------------------ */
 
 const distroMarks: Record<string, string> = {
-  'Ubuntu': '/brand/ubuntu.png',
-  'Debian': '/brand/debian.png',
-  'CentOS': '/brand/centos.png',
-  'AlmaLinux': '/brand/almalinux.png',
-  'Fedora': '/brand/fedora.png',
-  'Rocky Linux': '/brand/rockylinux.png',
-  'Alpine Linux': '/brand/alpinelinux.png',
-  'FreeBSD': '/brand/freebsd.png',
-  'openSUSE': '/brand/opensuse.png',
-  'Arch Linux': '/brand/archlinux.png',
-  'CloudLinux': '/brand/cloudlinux.png',
-  'Oracle Linux': '/brand/oraclelinux.png',
+  'Ubuntu': osLogos.ubuntu,
+  'Debian': osLogos.debian,
+  'CentOS': osLogos.centos,
+  'AlmaLinux': osLogos.almalinux,
+  'Fedora': osLogos.fedora,
+  'Rocky Linux': osLogos.rockylinux,
+  'Alpine Linux': osLogos.alpinelinux,
+  'FreeBSD': osLogos.freebsd,
+  'openSUSE': osLogos.opensuse,
+  'Arch Linux': osLogos.archlinux,
+  'CloudLinux': osLogos.cloudlinux,
+  'Oracle Linux': osLogos.oraclelinux,
 };
 
 export function LinuxDistros({ distros, locale = 'en' }: { distros: ReadonlyArray<{ name: string; versions: string }>; locale?: SiteLocale }) {

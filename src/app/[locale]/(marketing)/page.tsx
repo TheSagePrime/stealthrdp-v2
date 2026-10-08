@@ -17,6 +17,7 @@ import { HomePricing } from '@/components/site/HomePricing';
 import iconStyles from '@/components/site/IconArtwork.module.css';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { osLogos } from '@/config/os-logos';
 import { homeCopy } from '@/content/i18n/home';
 import { testimonials } from '@/lib/stealth/content';
 import { asSiteLocale, localeHref } from '@/lib/stealth/i18n';
@@ -39,15 +40,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const operatingSystems = [
-  { name: 'Windows Server', logo: '/brand/windows.png' },
-  { name: 'Ubuntu', logo: '/brand/ubuntu.png' },
-  { name: 'Debian', logo: '/brand/debian.png' },
-  { name: 'Rocky Linux', logo: '/brand/rockylinux.png' },
-  { name: 'AlmaLinux', logo: '/brand/almalinux.png' },
-  { name: 'CentOS', logo: '/brand/centos.png' },
-  { name: 'Fedora', logo: '/brand/fedora.png' },
-  { name: 'Alpine Linux', logo: '/brand/alpinelinux.png' },
-  { name: 'FreeBSD', logo: '/brand/freebsd.png' },
+  { name: 'Windows Server', logo: osLogos.windows },
+  { name: 'Ubuntu', logo: osLogos.ubuntu },
+  { name: 'Debian', logo: osLogos.debian },
+  { name: 'Rocky Linux', logo: osLogos.rockylinux },
+  { name: 'AlmaLinux', logo: osLogos.almalinux },
+  { name: 'CentOS', logo: osLogos.centos },
+  { name: 'Fedora', logo: osLogos.fedora },
+  { name: 'Alpine Linux', logo: osLogos.alpinelinux },
+  { name: 'FreeBSD', logo: osLogos.freebsd },
 ] as const;
 
 /* Icons of the four infrastructure cards; their words are in the copy files. */
@@ -105,7 +106,7 @@ export default async function HomePage({ params }: Props) {
                   {operatingSystems.map((item) => {
                     return (
                       <div className="srv-os-logo" key={`${clone ? 'clone-' : ''}${item.name}`}>
-                        <Image src={item.logo} alt="" width={26} height={26} />
+                        <img src={item.logo} alt="" width={26} height={26} loading="lazy" />
                         <span>{item.name}</span>
                       </div>
                     );

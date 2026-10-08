@@ -18,6 +18,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { osLogos } from '@/config/os-logos';
 import { plansCopy } from '@/content/i18n/plans';
 import { pricingCopy } from '@/content/i18n/pricing';
 import { localeHref } from '@/lib/stealth/i18n';
@@ -129,7 +130,7 @@ export default async function PlansPage() {
             >
               <CardHeader>
                 <span className="srv-plan-os-mark" aria-hidden="true">
-                  <Image src="/brand/windows.png" alt="" width={34} height={34} />
+                  <img src={osLogos.windows} alt="" width={34} height={34} />
                 </span>
                 <Badge variant="outline" className="w-fit text-body-muted">{t.os.windows.badge}</Badge>
                 <CardTitle className="text-heading-4 text-body-text">
