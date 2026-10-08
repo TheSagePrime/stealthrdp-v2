@@ -137,9 +137,9 @@ test.describe('responsive public-site audit', () => {
             };
           });
 
-        const siteMobileNav = visible(document.querySelector('.srv3-mobile-nav'));
-        const siteDesktopNav = visible(document.querySelector('.srv3-nav'));
-        const siteHeaderActions = visible(document.querySelector('.srv3-header-actions'));
+        const siteMobileNav = visible(document.querySelector('[data-site-mobile-menu]'));
+        const siteDesktopNav = visible(document.querySelector('[data-site-desktop-nav]'));
+        const siteHeaderActions = visible(document.querySelector('[data-site-header-actions]'));
 
         return {
           documentOverflow,
@@ -178,7 +178,7 @@ test.describe('responsive public-site audit', () => {
         });
       }
 
-      const shouldUseMobileHeader = viewport.width <= 1040;
+      const shouldUseMobileHeader = viewport.width <= 1200;
       if (result.siteMobileNav !== shouldUseMobileHeader) {
         issues.push({
           route,

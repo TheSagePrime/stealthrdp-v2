@@ -165,21 +165,15 @@ Do not introduce heavy WebGL or scroll choreography.
 
 ## Shared site elements
 
-- Top bar (`SiteTopBar`): a thin strip above the header that scrolls away. WhatsApp on the left
-  ("Message us on WhatsApp", "WhatsApp" on phones), the language switch on the right (a globe and
-  English · Deutsch · Español, codes on phones). Every language links somewhere: to this page in that
-  language, or to that language's home page when the page is English only.
-- Service notice (`SiteNotice`, words in `src/content/i18n/notices.ts`): while a notice is active,
-  a moving ticker sits in the top bar between WhatsApp and the languages (its own row on phones),
-  links to the status page, pauses on hover and stands still with reduced motion. It renders in the
-  browser only and hides itself after its end date; remove it from the code once it has ended.
-- Header (sticky): logo, navigation (DDoS Protection, Server Status, Resources, About), Log In and a
-  VPS Plans button. VPS plans appear once, as the button. Below 1040px a Menu button holds the same
-  links, then Support and Log In, then the VPS Plans button. Both menus read one list (`mainLinks` in
-  `SiteHeader.tsx`). On phones and tablets the header also shows a round WhatsApp icon next to Menu.
-- Floating WhatsApp button bottom-right (`.srv-whatsapp-float`): one round green button, no text.
-  Hidden on phones (the header icon replaces it) so it never covers pricing or order buttons. Keep
-  content clear of it.
+- Header: adapted Shadcnblocks Navbar 1 with the StealthRDP logo and shared navigation on
+  the left, centered product/navigation links including VPS Plans, and language flags, Contact
+  and a primary-colored Log In pill on the right. WhatsApp remains available through the desktop floating button. The retired top bar and completed service
+  notice have been removed. The header stays sticky.
+- Below 1200px the same navigation and actions appear in a native modal side sheet, with
+  keyboard focus trapping, Escape and an explicit close button. Language links remain in
+  the header and link to the corresponding page or the language home page.
+- The existing desktop floating WhatsApp support button remains hidden on phones to keep
+  pricing and order buttons clear.
 - Consent banner bottom-left (`TrackingConsent`), shown only where consent is needed. Reject and
   Accept stay the same size.
 - Footer: product, resource and company links, Privacy, Cookie settings, legal links.
@@ -187,3 +181,20 @@ Do not introduce heavy WebGL or scroll choreography.
 ## Quality bar
 
 A redesign is complete only when desktop and mobile renders look intentionally designed, hierarchy is obvious, spacing stays consistent, pages do not all use the same composition, product information remains easy to compare, and accessibility/SEO/security/performance gates pass.
+
+### Contact directory
+
+The localized Contact page adapts the free Shadcnblocks Contact 7 grid with existing
+shadcn Card and Button primitives. Support methods and community links are separate
+sections. Contact is available in desktop/mobile navigation and the footer; WhatsApp
+is a contact method rather than an extra header action. No form or response-time
+promise is introduced.
+
+### Shared footer
+
+The footer composes adapted Dashboardblocks Page Header and ChoiceCards primitives
+with existing shadcn Button components. An open logo-and-social row sits
+above unboxed link groups; Products includes Windows and Linux VPS. A compact
+legal row follows, without nested cards or tinted panels. Header actions, the brand description
+and the language picker are not repeated in the footer.
+Contact us is the support destination. No live status or form controls are added.
