@@ -53,12 +53,6 @@
   box-shadow: 0 14px 30px color-mix(in srgb, var(--primary) 14%, transparent);
 }
 
-.hop[data-core] .hopIcon {
-  border-color: var(--primary);
-  background: var(--primary);
-  color: var(--primary-foreground);
-}
-
 /* Connector between hops, with one packet moving along it. */
 .hop:not(:last-child)::after,
 .hop:not(:last-child)::before {
