@@ -28,7 +28,7 @@ export function Navbar1({ locale, copy }: { locale: SiteLocale; copy: SiteCopy }
   const whatsapp = (
     <a href="https://wa.me/447441426993" target="_blank" rel="noopener noreferrer" className={styles.whatsapp} aria-label={t.whatsapp}>
       <SiWhatsapp size={20} className={styles.whatsappIcon} aria-hidden="true" title="" />
-      <span>WhatsApp</span>
+      <span>{t.whatsapp}</span>
     </a>
   );
 
