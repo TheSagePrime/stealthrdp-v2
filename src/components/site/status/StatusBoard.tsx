@@ -6,7 +6,7 @@ import type { Incident, Service, ServiceState, UptimeDay, UptimeReport } from '@
 import { CheckCircle, Pause, Question, Warning, XCircle } from '@phosphor-icons/react/dist/ssr';
 import { Card, CardContent } from '@/components/ui/card';
 import { Pill } from '@/components/ui/pill';
-import { groupOrder } from '@/lib/stealth/uptime';
+import { formatDuration, groupOrder } from '@/lib/stealth/uptime';
 import styles from './StatusBoard.module.css';
 
 /*
@@ -29,18 +29,6 @@ function day(iso: string, t: StatusBoardCopy): string {
 
 function percent(value: number | null, t: StatusBoardCopy, digits = 3): string {
   return value === null ? '—' : t.percent(value.toFixed(digits).replace('.', t.decimal));
-}
-
-function duration(seconds: number): string {
-  if (seconds < 60) {
-    return `${seconds} s`;
-  }
-  const minutes = Math.round(seconds / 60);
-  if (minutes < 60) {
-    return `${minutes} min`;
-  }
-  const hours = Math.floor(minutes / 60);
-  return minutes % 60 ? `${hours} h ${minutes % 60} min` : `${hours} h`;
 }
 
 function when(iso: string, t: StatusBoardCopy): string {
@@ -66,7 +54,7 @@ function dayTitle(uptimeDay: UptimeDay, t: StatusBoardCopy): string {
   if (uptimeDay.ratio === null) {
     return t.noRecords(date);
   }
-  const down = uptimeDay.downSeconds ? t.downFor(duration(uptimeDay.downSeconds)) : '';
+  const down = uptimeDay.downSeconds ? t.downFor(formatDuration(uptimeDay.downSeconds)) : '';
   return `${date}: ${percent(uptimeDay.ratio, t)}${down}`;
 }
 
@@ -123,7 +111,7 @@ function ServiceRow({ service, t }: { service: Service; t: StatusBoardCopy }) {
           <dt>{t.lastIncident}</dt>
           <dd>
             {service.lastIncident
-              ? `${day(service.lastIncident.startedAt, t)} · ${duration(service.lastIncident.durationSeconds)}`
+              ? `${day(service.lastIncident.startedAt, t)} · ${formatDuration(service.lastIncident.durationSeconds, service.lastIncident.startedAt)}`
               : t.noneRecorded}
           </dd>
         </div>
@@ -150,7 +138,7 @@ function IncidentList({ incidents, latestOnly, t }: { incidents: Incident[]; lat
                   <div>
                     <strong>{incident.service}</strong>
                     <span>
-                      {t.incident(duration(incident.durationSeconds), when(incident.startedAt, t))}
+                      {t.incident(formatDuration(incident.durationSeconds, incident.startedAt), when(incident.startedAt, t))}
                       {incident.reason ? ` · ${incident.reason}` : ''}
                     </span>
                   </div>

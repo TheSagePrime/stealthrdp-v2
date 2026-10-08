@@ -30,7 +30,7 @@ export type Service = {
 };
 
 export type UptimeReport = {
-  source: 'api' | 'public' | 'snapshot';
+  source: 'api' | 'public' | 'snapshot' | 'reconciled';
   checkedAt: string;
   services: Service[];
   incidents: Incident[];
@@ -55,6 +55,42 @@ function percent(value: unknown): number | null {
   return Number.isFinite(number) && number >= 0 && number <= 100 ? number : null;
 }
 
+/** Returns true when every real ratio (non-null) in the days array is exactly 0.
+ *  Null ratios (pre-monitor-creation) do not count as suspicious. */
+function hasZeroHistory(days: UptimeDay[]): boolean {
+  const realRatios = days.filter(d => d.ratio !== null);
+  return realRatios.length > 0 && realRatios.every(d => d.ratio === 0);
+}
+
+/**
+ * When the UptimeRobot v2 API returns all-zero custom_uptime_ranges for a
+ * monitor, reconcile that monitor's data with the public status feed (which
+ * has correct data for the same monitor id). Returns the reconciled services
+ * array and a boolean flag.
+ */
+export function reconcileServices(
+  apiServices: Service[],
+  publicServices: Service[],
+): { services: Service[]; reconciled: boolean } {
+  const publicById = new Map(publicServices.map(s => [s.id, s]));
+  let changed = false;
+
+  const reconciled = apiServices.map((service) => {
+    if (!hasZeroHistory(service.days)) return service;
+    const pub = publicById.get(service.id);
+    if (!pub) return service;
+    changed = true;
+    return {
+      ...service,
+      days: pub.days,
+      uptime30: pub.uptime30,
+      uptime90: pub.uptime90,
+    };
+  });
+
+  return { services: changed ? reconciled : apiServices, reconciled: changed };
+}
+
 /** The last HISTORY_DAYS UTC days, oldest first, as [date, startUnix, endUnix]. */
 function historyRanges(now = new Date()): Array<[string, number, number]> {
   const nowUnix = Math.floor(now.getTime() / 1000);
@@ -77,6 +113,23 @@ function recentIncidents(incidents: Incident[], now = Date.now()): Incident[] {
     .filter(incident => Date.parse(incident.startedAt) >= since)
     .sort((a, b) => Date.parse(b.startedAt) - Date.parse(a.startedAt))
     .slice(0, 12);
+}
+
+/** Formats a duration in seconds to a human-readable string.
+ *  When seconds is 0 and startedAt is provided, calculates elapsed time (ongoing incident). */
+export function formatDuration(seconds: number, startedAt?: string): string {
+  const secs = seconds === 0 && startedAt
+    ? Math.floor((Date.now() - Date.parse(startedAt)) / 1000)
+    : seconds;
+  if (secs < 60) {
+    return `${secs} s`;
+  }
+  const minutes = Math.round(secs / 60);
+  if (minutes < 60) {
+    return `${minutes} min`;
+  }
+  const hours = Math.floor(minutes / 60);
+  return minutes % 60 ? `${hours} h ${minutes % 60} min` : `${hours} h`;
 }
 
 /* 1. UptimeRobot API v2 ------------------------------------------------------------------------ */
@@ -283,7 +336,27 @@ export async function getUptimeReport(): Promise<UptimeReport> {
   const apiKey = Env.UPTIMEROBOT_API_KEY;
   if (apiKey) {
     try {
-      return await fromUptimeRobotApi(apiKey);
+      // Fetch the API and public feed in parallel when the key is available.
+      // The public feed is a reconciliation source: if the API returns
+      // suspicious all-zero data for a monitor, we substitute that monitor's
+      // data from the public feed.
+      const [apiReport, publicFeed] = await Promise.all([
+        fromUptimeRobotApi(apiKey),
+        fromPublicStatusPage().catch(() => null),
+      ]);
+
+      if (publicFeed) {
+        const { services, reconciled } = reconcileServices(apiReport.services, publicFeed.services);
+        if (reconciled) {
+          return {
+            ...apiReport,
+            source: 'reconciled',
+            services,
+          };
+        }
+      }
+
+      return apiReport;
     } catch {
       // Fall through to the public feed.
     }
