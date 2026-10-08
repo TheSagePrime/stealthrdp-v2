@@ -9,13 +9,13 @@ export type ResourceTopic = { id: string; title: string; count: number; unit: st
 
 const icons: Array<[RegExp, string]> = [
   [/start|introduction|getting/i, 'cloud'],
-  [/windows|rdp/i, 'board'],
+  [/windows|rdp/i, 'laptop'],
   [/network|vpn|dns|domain/i, 'globe'],
   [/hosting|panel|web/i, 'database'],
   [/account|billing|polic|pricing|payment/i, 'receipt'],
   [/protect|security|challenge|threat/i, 'shield-checkmark'],
   [/traffic|analytic|log|insight|monitor/i, 'data-trending'],
-  [/team|alert|support|help/i, 'chat'],
+  [/team|alert|support|help/i, 'headset'],
   [/manage|server|operation/i, 'settings'],
   [/use case|choos|decision/i, 'gauge'],
   [/secur|privacy/i, 'lock-shield'],

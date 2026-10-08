@@ -17,8 +17,8 @@ import styles from './CitadelPortal.module.css';
 const icons: Record<PortalSectionId, string> = {
   overview: 'board',
   analytics: 'data-trending',
-  insights: 'cloud',
-  logs: 'clipboard',
+  insights: 'book-open-lightbulb',
+  logs: 'notebook',
   security: 'shield-checkmark',
   branding: 'megaphone-loud',
   cache: 'gauge',

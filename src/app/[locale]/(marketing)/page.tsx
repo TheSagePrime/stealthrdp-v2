@@ -52,7 +52,7 @@ const operatingSystems = [
 ] as const;
 
 /* Icons of the four infrastructure cards; their words are in the copy files. */
-const infrastructureIcons = ['database', 'board', 'globe', 'shield-checkmark'];
+const infrastructureIcons = ['database', 'person-key', 'location-ripple', 'data-trending'];
 
 function reviewSource(item: (typeof testimonials)[number]) {
   if (item.sourceLabel?.includes('Discord') || item.sourceType === 'community review') {

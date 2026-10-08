@@ -91,7 +91,7 @@ export function WindowsVersions({ versions, locale = 'en' }: { versions: string[
           ))}
         </ul>
         <div className={styles.notice}>
-          <Image className={iconStyles.artwork} src="/images/fluent-color/clipboard.svg" width={24} height={24} alt="" />
+          <Image className={iconStyles.artwork} src="/images/fluent-color/certificate.svg" width={24} height={24} alt="" />
           <p>
             {t.licensing}
           </p>
@@ -159,8 +159,8 @@ export function LinuxDistros({ distros, locale = 'en' }: { distros: ReadonlyArra
 const number = (value: string) => Number.parseFloat(value);
 
 const resources = [
-  { key: 'cpu', icon: 'board' },
-  { key: 'ram', icon: 'settings' },
+  { key: 'cpu', icon: 'gauge' },
+  { key: 'ram', icon: 'data-bar-vertical-ascending' },
   { key: 'storage', icon: 'database' },
 ] as const satisfies ReadonlyArray<{ key: 'cpu' | 'ram' | 'storage'; icon: string }>;
 
@@ -277,7 +277,7 @@ export function OsSupport({ kind, locale = 'en' }: { kind: Kind; locale?: SiteLo
         <Head kicker={t.kicker} title={t.title} id={`${kind}-support`} />
         <div className={styles.support}>
           <article>
-            <span className={styles.supportIcon}><Image className={iconStyles.artwork} src="/images/fluent-color/chat.svg" width={32} height={32} alt="" /></span>
+            <span className={styles.supportIcon}><Image className={iconStyles.artwork} src="/images/fluent-color/headset.svg" width={32} height={32} alt="" /></span>
             <h3>{t.heading}</h3>
             <ul className={styles.channels}>
               <li>
@@ -299,7 +299,7 @@ export function OsSupport({ kind, locale = 'en' }: { kind: Kind; locale?: SiteLo
             </Link>
           </article>
           <article>
-            <span className={styles.supportIcon}><Image className={iconStyles.artwork} src="/images/fluent-color/shield-checkmark.svg" width={32} height={32} alt="" /></span>
+            <span className={styles.supportIcon}><Image className={iconStyles.artwork} src="/images/fluent-color/person-key.svg" width={32} height={32} alt="" /></span>
             <h3>{t.responsibilities}</h3>
             <p>
               {windows ? t.access.windows : t.access.linux}
