@@ -32,13 +32,13 @@ export function Navbar1({ locale, copy }: { locale: SiteLocale; copy: SiteCopy }
       <div className={styles.container}>
         {/* Navbar 1 adapted into logo, centered navigation and account actions. */}
         {logo}
-        <nav className={styles.desktopNav} aria-label={t.navLabel}>
+        <nav data-site-desktop-nav className={styles.desktopNav} aria-label={t.navLabel}>
           <Link href={localeHref('/plans', locale)}>{t.viewPlans}</Link>
           {primaryMenu.map(item => <Link key={item.url} href={item.url}>{item.title}</Link>)}
         </nav>
         <div className={styles.actions}>
           <LanguageLinks label={copy.languageLabel} variant="dropdown" />
-          <div className={styles.desktopAuth}>
+          <div data-site-header-actions className={styles.desktopAuth}>
             {contact && <Link className={styles.contact} href={contact.url}>{contact.title}</Link>}
             <Button
               asChild
@@ -49,7 +49,7 @@ export function Navbar1({ locale, copy }: { locale: SiteLocale; copy: SiteCopy }
               <a href={LOGIN_URL}>{t.login}</a>
             </Button>
           </div>
-          <Button variant="outline" size="icon" className={styles.menuButton} aria-label={t.menu} aria-haspopup="dialog" onClick={() => dialogRef.current?.showModal()}>
+          <Button data-site-mobile-menu variant="outline" size="icon" className={styles.menuButton} aria-label={t.menu} aria-haspopup="dialog" onClick={() => dialogRef.current?.showModal()}>
             <List size={22} aria-hidden="true" />
           </Button>
         </div>
