@@ -93,7 +93,7 @@ sources:
 <h2 id="3-control-network-access-with-firewall-rules" tabindex="-1" class="sb h2-sbb-cls">3. Control Network Access with Firewall Rules</h2>
 <p>Setting up your firewall to block unauthorized <a href="https://dash.stealthrdp.com/index.php?rp=/login">RDP connections</a> is a critical step in securing your network. A strong firewall configuration provides a vital layer of defense for protecting RDP services. According to <a href="https://www.sophos.com/en-us/press/press-releases/2024/04/cybercriminals-abuse-remote-desktop-protocol-rdp-90-attacks-handled" target="_blank" rel="nofollow noopener noreferrer">Sophos</a> incident response data, <strong>RDP abuse appeared in 90% of the attacks it handled in 2023</strong>.</p>
 <blockquote>
-<p>&quot;Businesses should remove RDP from the public internet to decrease the risk of being targeted by cybercriminals.&quot;<br>
+<p>Businesses should remove RDP from the public internet to decrease the risk of being targeted by cybercriminals.<br>
 – Ryan Gregory, Coalition </p>
 </blockquote>
 <p>Firewalls can limit access to remote desktop listening ports, such as the default TCP 3389. By correctly configuring these settings, you can prevent unauthorized external traffic while still allowing approved users to connect to your network.</p>
@@ -166,7 +166,7 @@ New-NetFirewallRule -DisplayName &quot;RDP New Port UDP&quot; -Profile Public -D
 <h3 id="how-rdp-gateways-enhance-security" tabindex="-1">How RDP Gateways Enhance Security</h3>
 <p>RDP Gateways reroute remote desktop traffic through HTTPS on port 443 instead of the standard RDP port 3389. By tunneling RDP over HTTPS, this approach protects sensitive data from man-in-the-middle attacks while keeping your internal network shielded. Users can only access authorized resources, which significantly reduces the potential for vulnerabilities.</p>
 <blockquote>
-<p>&quot;RD Gateway encapsulates Remote Desktop Protocol (RDP) within RPC, within HTTP over a Secure Sockets Layer (SSL) connection.&quot; - Microsoft </p>
+<p>RD Gateway encapsulates Remote Desktop Protocol (RDP) within RPC, within HTTP over a Secure Sockets Layer (SSL) connection. - Microsoft </p>
 </blockquote>
 <p>Another key benefit is centralized authentication and auditing. The gateway logs and monitors every connection attempt, making it easier to track user activity and spot unusual behavior. To maximize security, it's critical to configure gateway policies correctly.</p>
 <h3 id="tips-for-proper-gateway-configuration" tabindex="-1">Tips for Proper Gateway Configuration</h3>
@@ -183,7 +183,7 @@ New-NetFirewallRule -DisplayName &quot;RDP New Port UDP&quot; -Profile Public -D
 <li><strong>Monitor Logs</strong>: Log all connection attempts and review them regularly to detect any anomalies.</li>
 </ul>
 <blockquote>
-<p>&quot;The RD Gateway server acts as a middleman between the remote client and the RDSH, providing an added layer of security by authenticating the user and encrypting the traffic.&quot; - Limitless Technology </p>
+<p>The RD Gateway server acts as a middleman between the remote client and the RDSH, providing an added layer of security by authenticating the user and encrypting the traffic. - Limitless Technology </p>
 </blockquote>
 <h2 id="6-add-encryption-and-tunneling" tabindex="-1" class="sb h2-sbb-cls">6. Add Encryption and Tunneling</h2>
 <p>To safeguard your Remote Desktop Protocol (RDP) sessions from unauthorized interception or monitoring, encryption and tunneling technologies are essential. By layering encryption, you can create a strong shield against eavesdropping and potential attacks. A key step to achieving this is strengthening authentication methods, such as enabling Network Level Authentication (NLA).</p>
@@ -201,7 +201,7 @@ New-NetFirewallRule -DisplayName &quot;RDP New Port UDP&quot; -Profile Public -D
 </ul>
 <p>As Chrissy LeMaire, SQL &amp; PowerShell MVP, puts it:</p>
 <blockquote>
-<p>&quot;If you've been exposing insecure protocols to the net, please consider wrapping them in the loving arms of SSH&quot;.</p>
+<p>If you've been exposing insecure protocols to the net, please consider wrapping them in the loving arms of SSH.</p>
 </blockquote>
 <p>For added security, use non-default SSH ports and custom internal port forwarding to make your setup less predictable. With OpenSSH now integrated into Windows 10, implementing this method has become even easier. You can also enhance this approach by using a bastion host or jump server, which acts as an additional checkpoint, controlling access to sensitive resources within your secure network. This layered tunneling strategy significantly strengthens your RDP security.</p>
 <h2 id="7-apply-zero-trust-security-principles" tabindex="-1" class="sb h2-sbb-cls">7. Apply Zero Trust Security Principles</h2>
@@ -238,7 +238,7 @@ New-NetFirewallRule -DisplayName &quot;RDP New Port UDP&quot; -Profile Public -D
 <h3 id="give-minimum-required-access" tabindex="-1">Give Minimum Required Access</h3>
 <p>Another cornerstone of Zero Trust is the principle of least privilege. This means that users and applications should only have access to the resources they absolutely need to perform their roles. As Hubert Brychczynski puts it:</p>
 <blockquote>
-<p>&quot;Zero Trust means that every person within the organization might be a potential vector of attack - whether intentional or not.&quot; </p>
+<p>Zero Trust means that every person within the organization might be a potential vector of attack - whether intentional or not. </p>
 </blockquote>
 <p>To enforce least privilege:</p>
 <ul>
