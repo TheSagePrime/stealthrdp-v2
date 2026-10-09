@@ -46,7 +46,7 @@ type MdNode = {
 type Positioned = { position?: { start: { offset?: number }; end: { offset?: number } } };
 type HastNode = { type: string; tagName?: string; value?: string; properties?: Record<string, unknown>; children?: HastNode[] };
 
-const CUSTOM_HEADING_ID = /\s*\[#([A-Z][\w-]*)\]\s*$/i;
+const CUSTOM_HEADING_ID = /\s*\[#([A-Z0-9][\w-]*)\]\s*$/i;
 
 /* hast property names that differ from their HTML attribute names. */
 const ATTRIBUTE_NAMES: Record<string, string> = {

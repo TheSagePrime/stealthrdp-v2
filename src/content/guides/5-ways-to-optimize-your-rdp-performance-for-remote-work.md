@@ -44,7 +44,7 @@ These steps ensure faster, more reliable remote access while keeping your data s
 
 <iframe class="sb-iframe" src="https://www.youtube.com/embed/aD91AirsMIE" frameborder="0" loading="lazy" allowfullscreen style="width: 100%; height: auto; aspect-ratio: 16/9;"></iframe>
 
-<h2 id="1-network-settings-to-speed-up-rdp">1. Network Settings to Speed Up RDP</h2>
+## 1. Network Settings to Speed Up RDP [#1-network-settings-to-speed-up-rdp]
 
 Fine-tuning your network settings can make a big difference in reducing latency and ensuring stable RDP sessions.
 
@@ -81,7 +81,7 @@ Here’s how to implement QoS:
 
 With these network optimizations in place, you’re ready to dive into refining client and server settings for even better RDP performance.
 
-<h2 id="2-rdp-client-and-server-configuration">2. RDP Client and Server Configuration</h2>
+## 2. RDP Client and Server Configuration [#2-rdp-client-and-server-configuration]
 
 Fine-tuning both client and server settings can significantly improve RDP performance. These adjustments establish a solid foundation for achieving a balance between speed and security.
 
@@ -112,7 +112,7 @@ Registry edits can further enhance the stability and responsiveness of RDP sessi
 
 These registry tweaks, combined with earlier network and visual adjustments, can make a noticeable difference in your RDP experience.
 
-<h2 id="3-hardware-and-software-requirements">3. Hardware and Software Requirements</h2>
+## 3. Hardware and Software Requirements [#3-hardware-and-software-requirements]
 
 Fine-tuning your hardware and software setup is key to achieving smooth RDP performance while minimizing lag.
 
@@ -155,7 +155,7 @@ Keeping your system components up to date ensures a stable and efficient remote 
 
 These upgrades not only enhance performance but also set the stage for advanced monitoring and security measures discussed in later sections.
 
-<h2 id="4-performance-monitoring-setup">4. Performance Monitoring Setup</h2>
+## 4. Performance Monitoring Setup [#4-performance-monitoring-setup]
 
 Keeping an eye on key metrics is essential to spotting and fixing RDP issues before they start affecting productivity.
 
@@ -199,7 +199,7 @@ If you're managing an enterprise setup, consider robust tools like [**Remote Des
 
 With a solid monitoring system in place, you'll be able to make adjustments as needed to keep your RDP sessions running smoothly and efficiently.
 
-<h2 id="5-security-without-speed-loss">5. Security Without Speed Loss</h2>
+## 5. Security Without Speed Loss [#5-security-without-speed-loss]
 
 You don't have to choose between security and performance when it comes to your RDP connection. These measures are designed to keep your connection secure without slowing it down.
 

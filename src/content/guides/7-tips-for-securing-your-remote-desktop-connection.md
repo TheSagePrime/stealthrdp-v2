@@ -62,7 +62,7 @@ sources:
 
 <iframe class="sb-iframe" src="https://www.youtube.com/embed/-u2ZuGfixHM" frameborder="0" loading="lazy" allowfullscreen style="width: 100%; height: auto; aspect-ratio: 16/9;"></iframe>
 
-<h2 id="1-set-up-strong-authentication">1. Set Up Strong Authentication</h2>
+## 1. Set Up Strong Authentication [#1-set-up-strong-authentication]
 
 When it comes to securing Remote Desktop Protocol (RDP), strong authentication is your first and most critical line of defense. Weak passwords leave your connection vulnerable to automated attacks designed to crack login credentials. By strengthening authentication, you significantly reduce the chances of a breach.
 
@@ -88,7 +88,7 @@ There are several ways to integrate MFA into your RDP setup. You can use Microso
 
 To further strengthen your MFA setup, ensure you’re using TLS 1.2 or higher and enable Network Level Authentication (NLA) for better encryption. Adding logging and monitoring tools can also help you track access attempts and detect any suspicious activity.
 
-<h2 id="2-keep-your-rdp-software-updated">2. Keep Your RDP Software Updated</h2>
+## 2. Keep Your RDP Software Updated [#2-keep-your-rdp-software-updated]
 
 Running outdated software is like leaving your front door unlocked - attackers know exactly where to find the weak spots. When your RDP software isn't up to date, you're essentially handing cybercriminals a roadmap to exploit vulnerabilities. Keeping your software updated with the latest security patches is critical, as attackers are always on the lookout for new vulnerabilities to exploit.
 
@@ -120,7 +120,7 @@ When selecting third-party RDP clients, prioritize those that align with modern 
 
 To reduce exposure, limit the number of RDP clients used within your environment. Standardizing on a single, well-maintained client simplifies update management and minimizes potential attack vectors. If vulnerabilities are identified in third-party clients, focus on patching those with known public exploits first. These are particularly dangerous because attackers already have the tools to exploit them.
 
-<h2 id="3-control-network-access-with-firewall-rules">3. Control Network Access with Firewall Rules</h2>
+## 3. Control Network Access with Firewall Rules [#3-control-network-access-with-firewall-rules]
 
 Setting up your firewall to block unauthorized [RDP connections](https://dash.stealthrdp.com/index.php?rp=/login) is a critical step in securing your network. A strong firewall configuration provides a vital layer of defense for protecting RDP services. According to [Sophos](https://www.sophos.com/en-us/press/press-releases/2024/04/cybercriminals-abuse-remote-desktop-protocol-rdp-90-attacks-handled) incident response data, **RDP abuse appeared in 90% of the attacks it handled in 2023**.
 
@@ -181,7 +181,7 @@ netstat -an | find "<new_port>"
 
 Using Network Address Translation (NAT) is another option for securing your RDP setup. With NAT, you can map an external port to your internal RDP port, adding an extra layer of obscurity and making it harder for attackers to locate your connection. This approach, combined with firewall rules, strengthens your overall [RDP security](/docs) strategy.
 
-<h2 id="4-use-a-vpn-for-secure-remote-access">4. Use a VPN for Secure Remote Access</h2>
+## 4. Use a VPN for Secure Remote Access [#4-use-a-vpn-for-secure-remote-access]
 
 A VPN creates an encrypted tunnel between your device and the network, ensuring that any intercepted data remains unreadable. Setting up a VPN connection before starting your RDP session provides an extra layer of protection against potential cyberattacks. Here’s how you can establish VPN access for your remote desktop connection.
 
@@ -213,7 +213,7 @@ Once your VPN is up and running, take these important steps to secure it further
 
 **Connecting Through Your VPN**
 
-<h2 id="5-set-up-an-rdp-gateway">5. Set Up an RDP Gateway</h2>
+## 5. Set Up an RDP Gateway [#5-set-up-an-rdp-gateway]
 
 An RDP Gateway serves as an essential checkpoint, adding an extra layer of security to your network. It ensures that all external access to your internal systems is tightly controlled, authenticating users and encrypting traffic before granting access to specific resources.
 
@@ -241,7 +241,7 @@ Other important steps include:
 
 > The RD Gateway server acts as a middleman between the remote client and the RDSH, providing an added layer of security by authenticating the user and encrypting the traffic. - Limitless Technology
 
-<h2 id="6-add-encryption-and-tunneling">6. Add Encryption and Tunneling</h2>
+## 6. Add Encryption and Tunneling [#6-add-encryption-and-tunneling]
 
 To safeguard your Remote Desktop Protocol (RDP) sessions from unauthorized interception or monitoring, encryption and tunneling technologies are essential. By layering encryption, you can create a strong shield against eavesdropping and potential attacks. A key step to achieving this is strengthening authentication methods, such as enabling Network Level Authentication (NLA).
 
@@ -269,7 +269,7 @@ As Chrissy LeMaire, SQL &amp; PowerShell MVP, puts it:
 
 For added security, use non-default SSH ports and custom internal port forwarding to make your setup less predictable. With OpenSSH now integrated into Windows 10, implementing this method has become even easier. You can also enhance this approach by using a bastion host or jump server, which acts as an additional checkpoint, controlling access to sensitive resources within your secure network. This layered tunneling strategy significantly strengthens your RDP security.
 
-<h2 id="7-apply-zero-trust-security-principles">7. Apply Zero Trust Security Principles</h2>
+## 7. Apply Zero Trust Security Principles [#7-apply-zero-trust-security-principles]
 
 When it comes to modern RDP security, relying solely on encryption and controlled access isn’t enough. To truly address internal risks, a Zero Trust approach is essential. This model operates on a simple but powerful rule: **"Never trust, always verify"**.
 

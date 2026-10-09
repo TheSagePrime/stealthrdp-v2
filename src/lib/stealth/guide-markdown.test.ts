@@ -8,6 +8,13 @@ describe('guide Markdown', () => {
     expect(html).toBe('<h2 id="choose-a-region">Choose a region</h2>\n<p>Text.</p>');
   });
 
+  it('accepts a heading id that starts with a digit, as in numbered guide sections', async () => {
+    const html = await guideMarkdownToHtml('## 1. Title [#1-title]\n');
+
+    expect(html).toContain('id="1-title"');
+    expect(html).toContain('1. Title');
+  });
+
   it('leaves headings without an id for the article page to name', async () => {
     const html = await guideMarkdownToHtml('## Windows or Linux?\n');
 
