@@ -2,6 +2,7 @@
 import type { TOCItemType } from 'fumadocs-core/toc';
 import { withCopyableCode } from '@/components/site/code/code-block-markup';
 import { CodeCopyListener } from '@/components/site/code/CodeCopyListener';
+import { highlightGuideCode } from '@/components/site/code/highlight-guide-code';
 import { withClickToPlayVideos } from '@/components/site/video/video-embed-markup';
 import { VideoPlayListener } from '@/components/site/video/VideoPlayListener';
 
@@ -89,12 +90,14 @@ function withLazyImages(html: string): string {
     /\bloading\s*=/i.test(attrs) ? tag : `<img loading="lazy" decoding="async"${attrs}>`);
 }
 
-export function TrustedArticleBody({ html }: { html: string }) {
+export async function TrustedArticleBody({ html }: { html: string }) {
+  // Code is coloured on the server (Shiki, as in the Help Center), then framed for copying.
+  const body = await highlightGuideCode(withClickToPlayVideos(withHeadingIds(html)));
   return (
     <>
       <div
         className="sr-guide-body"
-        dangerouslySetInnerHTML={{ __html: withCopyableCode(withAccessibleEmbeds(withLazyImages(withClickToPlayVideos(withHeadingIds(html))))) }}
+        dangerouslySetInnerHTML={{ __html: withCopyableCode(withAccessibleEmbeds(withLazyImages(body))) }}
       />
       <CodeCopyListener />
       <VideoPlayListener />
