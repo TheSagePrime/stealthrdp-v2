@@ -5,18 +5,16 @@
   color: var(--citadel-ink);
 }
 
+/* The homepage grid: same lines and opacity, so every animated scene shares one background. */
 .figure::before {
   position: absolute;
   z-index: -1;
-  inset: -6% -4%;
-  background-image: radial-gradient(
-    circle at 1px 1px,
-    color-mix(in srgb, var(--citadel-muted) 28%, transparent) 1px,
-    transparent 0
-  );
-  background-size: 16px 16px;
+  inset: -20% -10%;
   content: '';
-  mask-image: radial-gradient(ellipse 50% 60% at 50% 50%, black 20%, transparent 76%);
+  background-image:
+    linear-gradient(to right, rgb(32 56 200 / 4%) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(32 56 200 / 4%) 1px, transparent 1px);
+  background-size: 64px 64px;
 }
 
 .scene {
@@ -159,10 +157,6 @@
 
   .scene[data-layout='tall'] {
     display: block;
-  }
-
-  .figure::before {
-    mask-image: radial-gradient(ellipse 60% 50% at 50% 40%, black 20%, transparent 76%);
   }
 }
 

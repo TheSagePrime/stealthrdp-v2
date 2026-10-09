@@ -2,7 +2,6 @@
 
 import type { SiteLocale } from '@/config/i18n';
 import type { OsCopy } from '@/content/i18n/en/os';
-import { Laptop } from '@phosphor-icons/react';
 import { useEffect, useRef, useState } from 'react';
 import { osLogos } from '@/config/os-logos';
 import { osCopy } from '@/content/i18n/os';
@@ -110,8 +109,6 @@ function Core({ x, y, r, image, access, prefix, signedInAs, labelBelow = false }
 }) {
   return (
     <g>
-      <circle cx={x} cy={y} r={r + 110} fill={`url(#${prefix}-halo)`} />
-      <circle cx={x} cy={y} r={r + 10} className={styles.aura} />
       <circle cx={x} cy={y} r={r} className={styles.disc} />
       <circle cx={x} cy={y} r={r} className={styles.rim} stroke={`url(#${prefix}-rim)`} />
       <circle cx={x} cy={y} r={r - 9} className={styles.inner} />
@@ -174,11 +171,6 @@ function Comets({ axis, from, to, at, direction, count, prefix }: {
 function Defs({ prefix }: { prefix: string }) {
   return (
     <defs>
-      <radialGradient id={`${prefix}-halo`}>
-        <stop offset="0%" className={styles.haloInner} />
-        <stop offset="55%" className={styles.haloMid} />
-        <stop offset="100%" className={styles.haloOuter} />
-      </radialGradient>
       <linearGradient id={`${prefix}-rim`} x1="0" y1="0" x2="1" y2="1">
         <stop offset="0%" className={styles.stopPrimary} />
         <stop offset="100%" className={styles.stopGlow} />
@@ -217,7 +209,7 @@ export function OsSession({ kind, imageIndex, locale = 'en' }: { kind: Kind; ima
         <g>
           <rect x="6" y="177" width="176" height="56" rx="28" className={styles.pill} />
           <circle cx="36" cy="205" r="18" className={styles.pillIcon} />
-          <Laptop x={25} y={194} size={22} weight="duotone" className={styles.icon} />
+          <image href="/images/fluent-color/laptop.svg" x="24" y="193" width="24" height="24" />
           <text x="62" y="201" className={styles.name}>{t.computer}</text>
           <text x="62" y="218" className={styles.note}>{client}</text>
         </g>
@@ -261,7 +253,7 @@ export function OsSession({ kind, imageIndex, locale = 'en' }: { kind: Kind; ima
         <g>
           <rect x="92" y="20" width="176" height="56" rx="28" className={styles.pill} />
           <circle cx="122" cy="48" r="18" className={styles.pillIcon} />
-          <Laptop x={111} y={37} size={22} weight="duotone" className={styles.icon} />
+          <image href="/images/fluent-color/laptop.svg" x="110" y="36" width="24" height="24" />
           <text x="148" y="44" className={styles.name}>{t.computer}</text>
           <text x="148" y="61" className={styles.note}>{client}</text>
         </g>

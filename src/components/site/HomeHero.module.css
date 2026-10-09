@@ -124,6 +124,11 @@
 .showcase *::after {
   box-sizing: border-box;
 }
+
+/* The hero already draws this grid; the diagram's own grid layer would double it. */
+.showcase > *::before {
+  display: none;
+}
 .actions a:focus-visible {
   outline: 3px solid #3154ec;
   outline-offset: 3px;
