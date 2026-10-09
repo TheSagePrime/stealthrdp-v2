@@ -9,67 +9,67 @@
   },
   "/blog/5-ways-to-optimize-your-rdp-performance-for-remote-work.html": {
     "updated": "2026-10-09",
-    "fingerprint": "ac8e1a2d99d274fc"
+    "fingerprint": "1c28950bcaa72e9b"
   },
   "/blog/7-best-tools-for-server-uptime-monitoring-2025.html": {
     "updated": "2026-10-09",
-    "fingerprint": "bf2081aa1525bbc8"
+    "fingerprint": "81f62b2831b09612"
   },
   "/blog/7-tips-for-securing-your-remote-desktop-connection.html": {
     "updated": "2026-10-09",
-    "fingerprint": "afa073495cb1b2f6"
+    "fingerprint": "6378d207b4dbb864"
   },
   "/blog/8-signs-you-need-to-upgrade-your-vps-resources.html": {
     "updated": "2026-10-09",
-    "fingerprint": "fb11e981e2ebdfa3"
+    "fingerprint": "5ffa5ecb72c95c25"
   },
   "/blog/common-vps-hosting-issues-and-their-solutions.html": {
     "updated": "2026-10-09",
-    "fingerprint": "7484451feb54710f"
+    "fingerprint": "771be9c1424cca7d"
   },
   "/blog/common-vps-performance-bottlenecks.html": {
     "updated": "2026-10-09",
-    "fingerprint": "ba3bd8c50e3fc0d8"
+    "fingerprint": "d30092ead7952120"
   },
   "/blog/ddos-protection-for-vps-essential-setup-checklist.html": {
     "updated": "2026-10-09",
-    "fingerprint": "a4f32c6f6791dfd8"
+    "fingerprint": "d5cfc6654fa3f974"
   },
   "/blog/designing-automated-high-availability-vps.html": {
     "updated": "2026-10-09",
-    "fingerprint": "923c3906455ee6c5"
+    "fingerprint": "62790c4497f7d4b0"
   },
   "/blog/how-to-set-up-automated-backups-for-vps-hosting.html": {
     "updated": "2026-10-09",
-    "fingerprint": "dce7b121a8bb1d8f"
+    "fingerprint": "281be7b05d77c9aa"
   },
   "/blog/top-6-vps-management-tools-for-small-businesses.html": {
     "updated": "2026-10-09",
-    "fingerprint": "5cd600953582d064"
+    "fingerprint": "5191ef884f4b18bc"
   },
   "/blog/vps-for-automation-bots.html": {
     "updated": "2026-10-09",
-    "fingerprint": "d92dc568a8b50e8a"
+    "fingerprint": "35f56ad48f8cb2a2"
   },
   "/blog/vps-for-backups-storage.html": {
-    "updated": "2026-10-02",
-    "fingerprint": "cfbf72eaac8b2259"
+    "updated": "2026-10-09",
+    "fingerprint": "ccfd8506d3115d4c"
   },
   "/blog/vps-for-remote-desktop.html": {
     "updated": "2026-10-09",
-    "fingerprint": "2aac6adf45e51b72"
+    "fingerprint": "93f645a3e7d99d41"
   },
   "/blog/vps-for-trading.html": {
     "updated": "2026-10-02",
     "fingerprint": "6adabfbe9dbcea44"
   },
   "/blog/vps-for-web-hosting.html": {
-    "updated": "2026-10-02",
-    "fingerprint": "5b2a894a3c345304"
+    "updated": "2026-10-09",
+    "fingerprint": "7d7761e7a25b3e17"
   },
   "/blog/windows-vs-linux-vps-which-os-best-fits-your-business.html": {
     "updated": "2026-10-09",
-    "fingerprint": "7bc22113fedc3e51"
+    "fingerprint": "111b2c7132e568a5"
   },
   "/citadel": {
     "updated": "2026-10-09",
@@ -324,8 +324,8 @@
     "fingerprint": "d8e54542a822f275"
   },
   "/vps-hosting-minecraft": {
-    "updated": "2026-10-02",
-    "fingerprint": "cd8cc47593061cc4"
+    "updated": "2026-10-09",
+    "fingerprint": "7551534202210e49"
   },
   "/windows-vps": {
     "updated": "2026-10-09",
