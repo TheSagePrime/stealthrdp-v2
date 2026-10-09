@@ -4,11 +4,10 @@ import type { SiteLocale } from '@/config/i18n';
 import type { HelpCollection } from '@/lib/stealth/help-center';
 import { createElement } from 'react';
 import { FluentIcon, WindowsMark } from '@/components/site/docs/DocsIcon';
-import { faqPageCopy, faqsByLocale } from '@/content/i18n/faq';
+import { faqPageCopy } from '@/content/i18n/faq';
 import { resourcesCopy } from '@/content/i18n/resources';
 import { rdpVpsGuide } from '@/content/rdp-vps';
 import { articlePath, blogArticles, citadelDocsArticles, helpDocsArticles } from '@/lib/stealth/articles';
-import { faqCategoryId } from '@/lib/stealth/faq-topics';
 import {
   articlesForCollection,
   citadelArticleHref,
@@ -21,7 +20,7 @@ import { localeHref } from '@/lib/stealth/i18n';
 /* The sidebar of every resource page: Help Center, Citadel docs, guides and common questions.
    Each is a root folder, so Fumadocs shows them as tabs in the sidebar switcher and each keeps
    its own page list. Help Center and Citadel groups follow the curated collections in
-   help-center.ts; guides are grouped by category; questions link to their topics on /faq.
+   help-center.ts; guides are grouped by category; common questions is a single link to /faq.
 
    Every folder carries a stable `$id`. Fumadocs matches a switcher tab to its root folder by
    `$id` (see collectTabs in fumadocs-ui/contexts/tree): without one, every root folder has
@@ -110,7 +109,6 @@ export function docsTree(locale: SiteLocale = 'en'): PageTree.Root {
   const t = resourcesCopy[locale];
   const faq = faqPageCopy[locale];
   const faqUrl = localeHref('/faq', locale);
-  const faqCategories = Array.from(new Set(faqsByLocale[locale].map(item => item.category)));
   const rootId = (key: string) => `${locale}:docs:${key}`;
 
   return {
@@ -123,10 +121,7 @@ export function docsTree(locale: SiteLocale = 'en'): PageTree.Root {
         { group: 'Remote Desktop', page: { name: rdpVpsGuide.h1, url: '/rdp-vps' } },
         ...blogArticles.map(article => ({ group: article.category, page: { name: sidebarName(article), url: articlePath(article) } })),
       ])),
-      root(rootId('faq'), t.tabs.faq, faq.topicsLabel, { name: faq.title, url: faqUrl }, faqCategories.map(category => ({
-        ...page({ name: category, url: `${faqUrl}#${faqCategoryId(category)}` }),
-        icon: iconFor(category),
-      }))),
+      root(rootId('faq'), t.tabs.faq, faq.topicsLabel, { name: faq.title, url: faqUrl }, []),
     ],
   };
 }
