@@ -132,7 +132,8 @@ function palette(element: Element) {
     glow: token('--citadel-glow'),
     /* Same red as the status page's down bars. */
     bad: token('--uptime-down'),
-    warn: token('--status-warn'),
+    /* Same orange as the status page's degraded bars. */
+    warn: token('--uptime-degraded'),
     surface: token('--citadel-surface'),
     neutral: mix(token('--citadel-muted'), primary, 0.72),
   };
@@ -210,6 +211,11 @@ function useBeamCanvas(
     block.addColorStop(at(core[axis] - radius - 90), rgba(colors.neutral));
     block.addColorStop(at(core[axis] - radius), rgba(colors.bad));
     block.addColorStop(1, rgba(colors.bad));
+    const challenge = gradient();
+    challenge.addColorStop(0, rgba(colors.neutral));
+    challenge.addColorStop(at(core[axis] - radius - 90), rgba(colors.neutral));
+    challenge.addColorStop(at(core[axis] - radius), rgba(colors.warn));
+    challenge.addColorStop(1, rgba(colors.warn));
     const out = gradient();
     out.addColorStop(at(core[axis]), rgba(colors.primary));
     out.addColorStop(1, rgba(colors.glow));
@@ -281,7 +287,7 @@ function useBeamCanvas(
       context.clip('evenodd');
 
       shapes.forEach((shape, index) => {
-        const style = lanes[index]!.outcome === 'pass' ? pass : block;
+        const style = lanes[index]!.outcome === 'pass' ? pass : lanes[index]!.outcome === 'challenge' ? challenge : block;
         stroke(shape.lanePath, style, 1.25, 0.35, [], 0);
       });
       stroke(laser, out, 2, 0.9, [], 0);
@@ -304,7 +310,7 @@ function useBeamCanvas(
             const share = Math.min(1, phase / BLOCK_HIT);
             const alpha = envelope(phase, 0.03, BLOCK_HIT + hold, BLOCK_HIT + hold + 0.06);
             if (alpha > 0) {
-              comet(shape.laneSampler, share, block, alpha);
+              comet(shape.laneSampler, share, lane.outcome === 'challenge' ? challenge : block, alpha);
             }
           }
         }
