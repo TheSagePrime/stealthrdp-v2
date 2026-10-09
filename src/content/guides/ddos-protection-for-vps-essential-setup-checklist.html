@@ -8,8 +8,21 @@ author: StealthRDP Team
 date: 2025-09-04
 readingTime: 13
 image: https://assets.seobotai.com/cdn-cgi/image/quality=75,w=1536,h=1024/stealthrdp.com/68b981c768bb5e3832c3cd37-1756990765927.jpg
+sources:
+  - title: "Ubuntu Manpage: ufw - program for managing a netfilter firewall"
+    url: https://manpages.ubuntu.com/manpages/noble/en/man8/ufw.8.html
+    publisher: Ubuntu Manpages
+    accessedAt: 2026-10-09
+  - title: Security Level · Cloudflare Web Application Firewall (WAF) docs
+    url: https://developers.cloudflare.com/waf/tools/security-level/
+    publisher: Cloudflare
+    accessedAt: 2026-10-09
+  - title: Overview · Cloudflare DDoS Protection docs
+    url: https://developers.cloudflare.com/ddos-protection/
+    publisher: Cloudflare
+    accessedAt: 2026-10-09
 ---
-<p><strong>Note:</strong> StealthRDP does not include DDoS protection. This article is a general setup checklist for adding your own mitigation, such as a third-party service.</p>
+<p><strong>Note:</strong> StealthRDP EU plans (Amsterdam) include network-level DDoS protection; USA plans do not. This article is a general setup checklist for adding your own layers of mitigation on any VPS.</p>
 <ol>
 <li><strong>Start with your VPS provider’s defenses</strong>: Check for built-in DDoS protection like traffic filtering, load balancing, and Web Application Firewalls (WAFs). These can block many attacks before they reach your server.</li>
 <li><strong>Secure server access</strong>: Use SSH key authentication, disable password logins, and enable Multi-Factor Authentication (MFA) for stronger security.</li>
@@ -63,7 +76,7 @@ image: https://assets.seobotai.com/cdn-cgi/image/quality=75,w=1536,h=1024/stealt
 <li><strong>443 (HTTPS)</strong></li>
 </ul>
 <p>This ensures that only the services you need are accessible from the internet. Avoid exposing common attack vectors like <strong>FTP (21)</strong> or <strong>Telnet (23)</strong>. If you're running a database server, never expose ports like <strong>3306 (MySQL)</strong> or <strong>5432 (PostgreSQL)</strong> directly to the internet. Instead, use <strong>SSH tunneling</strong> for secure remote access.</p>
-<p>For added security, consider using <strong>port knocking</strong> or switching to a non-standard SSH port (e.g., 2222 or 2048). While this won’t stop determined attackers, it can reduce automated scans targeting default ports. Additionally, implement rate limiting to restrict SSH connections to six attempts per minute per IP. This helps protect against brute-force attacks and connection flooding.</p>
+<p>For added security, consider using <strong>port knocking</strong> or switching to a non-standard SSH port (e.g., 2222 or 2048). While this won’t stop determined attackers, it can reduce automated scans targeting default ports. Additionally, add a UFW limit rule for SSH (<code>ufw limit 22/tcp</code>). It allows connections normally but denies an IP address that attempts six or more connections within 30 seconds. <a class="seo-article-citation" href="#source-1" aria-label="Source 1">[1]</a> This helps protect against brute-force attacks and connection flooding.</p>
 <h3 id="use-fail2ban-to-block-brute-force-attacks" tabindex="-1">Use <a href="https://en.wikipedia.org/wiki/Fail2ban" target="_blank" rel="nofollow noopener noreferrer">Fail2Ban</a> to Block Brute-Force Attacks</h3>
 <p>After setting up your firewall, strengthen your defenses further by blocking repeated malicious attempts. <strong>Fail2Ban</strong> is an effective tool for this - it monitors log files and automatically bans IPs showing harmful behavior.</p>
 <p>For example, configure Fail2Ban to monitor SSH logs (e.g., <code>/var/log/auth.log</code>) and ban IPs after five failed login attempts within 10 minutes. The ban duration can be tailored to your needs. A 24-hour ban works well for SSH attacks, while shorter bans (1–2 hours) might suit web application attacks to avoid locking out legitimate users.</p>
@@ -71,8 +84,8 @@ image: https://assets.seobotai.com/cdn-cgi/image/quality=75,w=1536,h=1024/stealt
 <p>The <strong>recidive jail</strong> feature is particularly useful - it tracks repeat offenders and enforces longer bans for persistent threats. To stay informed, set up email alerts for bans. A sudden spike in ban activity could signal the early stages of a coordinated attack.</p>
 <h3 id="add-cloud-based-traffic-filtering" tabindex="-1">Add Cloud-Based Traffic Filtering</h3>
 <p>While host-based protections are essential, cloud-based traffic filtering offers scalable protection to handle larger attacks. Services like <strong>Cloudflare</strong> provide robust DDoS protection and global traffic filtering.</p>
-<p>Cloudflare’s free tier includes basic DDoS protection, and its <strong>&quot;I'm Under Attack&quot; mode</strong> is a handy feature during active attacks. This mode challenges visitors with a verification page, allowing legitimate users through while blocking automated requests.</p>
-<p>Adjust security levels based on your traffic patterns. For example, the &quot;Medium&quot; setting typically blocks most malicious traffic while allowing legitimate visitors. During high-risk periods, you can temporarily raise the setting to &quot;High&quot;, though this might inconvenience some users.</p>
+<p>Cloudflare’s free tier includes basic DDoS protection, and its <strong>&quot;I'm Under Attack&quot; mode</strong> is a handy feature during active attacks. This mode challenges visitors with a verification page, allowing legitimate users through while blocking automated requests. <a class="seo-article-citation" href="#source-3" aria-label="Source 3">[3]</a></p>
+<p>Adjust security levels based on your traffic patterns. For example, the &quot;Medium&quot; setting typically blocks most malicious traffic while allowing legitimate visitors. During high-risk periods, you can temporarily raise the setting to &quot;High&quot;, though this might inconvenience some users. <a class="seo-article-citation" href="#source-2" aria-label="Source 2">[2]</a></p>
 <p>At the cloud level, rate limiting is another effective strategy. For example:</p>
 <ul>
 <li>Limit login page requests to <strong>10 per minute per IP</strong></li>
@@ -111,7 +124,7 @@ image: https://assets.seobotai.com/cdn-cgi/image/quality=75,w=1536,h=1024/stealt
 <li><strong>What happens during a large attack?</strong> Some providers null-route the IP address, which takes the server offline until the attack ends.</li>
 <li><strong>Is it included or an add-on?</strong> Check the price and the capacity limit before you rely on it.</li>
 </ul>
-<p>StealthRDP VPS plans do not include DDoS protection. For websites and HTTP/HTTPS applications, <a href="/citadel">Citadel</a> is a separate Layer 7 protection product that sits in front of your site. It does not need a StealthRDP VPS.</p>
+<p>StealthRDP EU plans (Amsterdam) include network-level DDoS protection; USA plans do not. For websites and HTTP/HTTPS applications, <a href="/citadel">Citadel</a> is a separate Layer 7 protection product that sits in front of your site. It does not need a StealthRDP VPS.</p>
 <h2 id="conclusion-key-points-for-ddos-protected-vps-hosting" tabindex="-1" class="sb h2-sbb-cls">Conclusion: Key Points for DDoS-Protected VPS Hosting</h2>
 <p>Protecting your VPS from DDoS attacks requires a layered, proactive approach. By following the five-step strategy outlined here, you can build a defense system that effectively blocks malicious traffic while allowing legitimate users to access your services without disruption.</p>
 <p>Start with the protections your hosting provider offers and strengthen them with additional server-level measures. Combining your provider's infrastructure defenses with your own configurations - like firewalls, authentication systems, and monitoring tools - creates a robust shield against attacks. While built-in protections are a great starting point, they work best when reinforced by your own security practices.</p>

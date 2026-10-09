@@ -25,7 +25,13 @@ In this tutorial, we will be installing CyberPanel on a Linux server, and I will
 - Community support
 - OpenLiteSpeed server
 
-Make sure you have Python installed.
+CyberPanel needs a fresh installation of one of these systems, with at least 1024 MB of RAM and 10 GB of disk space:
+
+- Ubuntu 18.04, 20.04 or 22.04
+- AlmaLinux 8 or 9
+- CloudLinux 8
+
+CyberPanel's install guide does not list Ubuntu 24.04 or AlmaLinux 10, so choose one of the systems above at checkout.
 
 ## Step 1: Update and refresh repository lists
 
@@ -35,41 +41,7 @@ Open a terminal window, and enter the following:
 sudo apt update
 ```
 
-## Step 2: Install supporting software
-
-The software-properties-common package gives you better control over your package manager by letting you add PPA (Personal Package Archive) repositories. Install the supporting software with the command:
-
-```bash title="Install software-properties-common"
-sudo apt install software-properties-common
-```
-
-## Step 3: Add the Deadsnakes PPA
-
-Deadsnakes is a PPA with newer releases than the default Ubuntu repositories. Add the PPA by entering the following:
-
-```bash title="Add Deadsnakes PPA"
-sudo add-apt-repository ppa:deadsnakes/ppa
-```
-
-The system will prompt you to press Enter to continue. Do so, and allow it to finish. Refresh the package lists again:
-
-```bash title="Refresh package lists"
-sudo apt update
-```
-
-## Step 4: Install Python 3
-
-Now you can start the installation of Python 3.8 with the command:
-
-```bash title="Install Python 3.8"
-sudo apt install python3.8
-```
-
-Allow the process to complete and verify the Python version was installed successfully:
-
-```bash title="Check Python version"
-python3 --version
-```
+On AlmaLinux 8 or 9, update the packages with `sudo yum update` instead.
 
 ## Install CyberPanel
 

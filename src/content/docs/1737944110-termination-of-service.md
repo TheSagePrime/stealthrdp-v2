@@ -16,11 +16,11 @@ relatedSlugs: []
 ---
 1. **Right to Terminate:** StealthRDP reserves the right to suspend or terminate your service with immediate effect for any breach of these Terms and Conditions, including, but not limited to, non-payment of fees, violation of the Acceptable Use Policy, or any illegal activities.
 
-2. **User-Initiated Termination:** You may terminate your service with StealthRDP at any time. A new service can be refunded within 7 days of payment, as account credit to your StealthRDP site wallet. After 7 days, payments are non-refundable (see Payment Terms).
+2. **User-Initiated Termination:** You may cancel your service at any time in the [client area](https://dash.stealthrdp.com). Monthly plans run to the end of the paid period. A new service can be refunded within 7 days of payment, as account credit to your StealthRDP site wallet. After 7 days, payments are non-refundable (see Payment Terms).
 
 3. **Notification of Termination:** In the event of termination by StealthRDP, we will endeavor to provide you with prior notice. However, in cases of serious violations, termination may be immediate and without notice.
 
-4. **Data Retention Post-Termination:** Upon termination, your data may be retained or deleted in accordance with our data retention policy. It is the responsibility of the user to ensure that their data is appropriately backed up.
+4. **Data Retention Post-Termination:** When a service ends, all data stored on its server is permanently deleted. It is the responsibility of the user to ensure that their data is backed up before the service ends. Account and billing records are retained as described in our [Privacy Policy](/privacy).
 
 5. **Outstanding Payments:** Any outstanding balances owed to StealthRDP must be settled upon termination of service. Failure to do so may result in legal action.
 

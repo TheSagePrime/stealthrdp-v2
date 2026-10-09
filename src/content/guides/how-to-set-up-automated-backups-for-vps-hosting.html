@@ -8,6 +8,27 @@ author: StealthRDP Team
 date: 2025-08-01
 readingTime: 15
 image: https://assets.seobotai.com/cdn-cgi/image/quality=75,w=1536,h=1024/stealthrdp.com/688c06e90d660161d1d30a21-1754019821550.jpg
+sources:
+  - title: Preparing a new repository (restic documentation)
+    url: https://restic.readthedocs.io/en/stable/030_preparing_a_new_repo.html
+    publisher: restic
+    accessedAt: 2026-10-09
+  - title: Installation — Borg - Deduplicating Archiver 1.4.5 documentation
+    url: https://borgbackup.readthedocs.io/en/stable/installation.html
+    publisher: BorgBackup
+    accessedAt: 2026-10-09
+  - title: borg key change-passphrase — Borg - Deduplicating Archiver 1.4.5 documentation
+    url: https://borgbackup.readthedocs.io/en/stable/usage/key.html
+    publisher: BorgBackup
+    accessedAt: 2026-10-09
+  - title: Rclone
+    url: https://rclone.org/
+    publisher: rclone
+    accessedAt: 2026-10-09
+  - title: 2025 Data Breach Investigations Report
+    url: https://verizon.com/about/news/2025-data-breach-investigations-report
+    publisher: Verizon
+    accessedAt: 2026-10-09
 ---
 <p>Automated backups are your safety net for VPS hosting, ensuring your data is secure and recoverable in case of hardware failures, cyberattacks, or errors. Here's how to get started:</p>
 <p>If the server hosts a private Minecraft world, the <a href="/vps-hosting-minecraft">Minecraft VPS guide</a> adds world backup and restore questions to this checklist.</p>
@@ -53,7 +74,7 @@ image: https://assets.seobotai.com/cdn-cgi/image/quality=75,w=1536,h=1024/stealt
 <h3 id="setting-backup-schedules-and-storage-rules" tabindex="-1">Setting Backup Schedules and Storage Rules</h3>
 <p>Your backup schedule and retention policy define when backups occur and how long you keep them. A retention policy outlines what data to back up, where to store it, and how long to retain it - ensuring compliance with legal and business requirements.</p>
 <p>Start by identifying which data needs backing up and how frequently it changes. For instance, a Forex trading VPS may require hourly backups during trading hours, while a development server could be backed up daily without issue.</p>
-<p>Retention policies guide how many versions of backups to keep. A common practice is to retain daily backups for 30 days, weekly backups for three months, and monthly backups for a year. This approach is especially crucial in light of rising ransomware threats, which increased by 29% in 2022, with 89% involving data exfiltration <a href="https://www.cohesity.com/glossary/321-backup-rule" target="_blank" style="text-decoration: none;" rel="nofollow noopener noreferrer"><sup>[1]</sup></a>. Keeping multiple backup versions ensures you can recover data from a point before an incident occurred.</p>
+<p>Retention policies guide how many versions of backups to keep. A common practice is to retain daily backups for 30 days, weekly backups for three months, and monthly backups for a year. This approach is especially crucial in light of ransomware, which was present in 44% of breaches in Verizon's 2025 Data Breach Investigations Report <a class="seo-article-citation" href="#source-5" aria-label="Source 5">[5]</a>. Keeping multiple backup versions ensures you can recover data from a point before an incident occurred.</p>
 <p>Organizing data by its lifecycle is equally important. Critical records may need to be stored for years to meet compliance standards, while temporary files can be deleted after a short period. Automating these policies and regularly testing your backups helps ensure your data is secure and recoverable when needed.</p>
 <p>With your schedule and retention policy set, the next consideration is where to store your backups.</p>
 <h3 id="where-to-store-your-backups" tabindex="-1">Where to Store Your Backups</h3>
@@ -74,7 +95,7 @@ image: https://assets.seobotai.com/cdn-cgi/image/quality=75,w=1536,h=1024/stealt
 <li><strong>Backup type</strong>: Opt for full backups or incremental ones.</li>
 <li><strong>Storage location</strong>: Specify where the backups will be stored.</li>
 </ul>
-<p>For instance, in February 2021, Namecheap provided a guide for using the Interworx control panel. Users accessed the &quot;Backups&quot; menu in Siteworx, selected &quot;Full backup&quot; with FTP storage, and entered details such as email notifications, domain options, and FTP credentials (username, password, hostname, port, and passive mode settings). After setting these parameters, clicking &quot;Backup&quot; initiated the process.</p>
+<p>For instance, Namecheap provided a guide for using the Interworx control panel. Users accessed the &quot;Backups&quot; menu in Siteworx, selected &quot;Full backup&quot; with FTP storage, and entered details such as email notifications, domain options, and FTP credentials (username, password, hostname, port, and passive mode settings). After setting these parameters, clicking &quot;Backup&quot; initiated the process.</p>
 <p><strong>Technical Tip:</strong> If your control panel uses snapshot-based backups, ensure the QEMU agent is configured correctly. This helps maintain system consistency during snapshots and prevents incomplete or corrupted backups <a href="https://support.us.ovhcloud.com/hc/en-us/articles/360012678619-How-to-Use-Automated-Backup-on-a-VPS" target="_blank" style="text-decoration: none;" rel="nofollow noopener noreferrer"><sup>[2]</sup></a><a href="https://help.ovhcloud.com/csm/en-vps-using-automated-backups?id=kb_article_view&amp;sysparm_article=KB0047746" target="_blank" style="text-decoration: none;" rel="nofollow noopener noreferrer"><sup>[4]</sup></a>.</p>
 <p>Control panels often let you set storage limits to avoid backups consuming too much disk space. Adjust these limits based on your storage capacity and retention policies <a href="https://www.namecheap.com/support/knowledgebase/article.aspx/10085/48/how-to-set-up-automated-backups-for-vps-and-dedicated-server" target="_blank" style="text-decoration: none;" rel="nofollow noopener noreferrer"><sup>[3]</sup></a>.</p>
 <h3 id="creating-backup-scripts-and-scheduled-tasks" tabindex="-1">Creating Backup Scripts and Scheduled Tasks</h3>
@@ -88,7 +109,7 @@ image: https://assets.seobotai.com/cdn-cgi/image/quality=75,w=1536,h=1024/stealt
 <li><strong><code>tar</code></strong>: For creating archives.</li>
 <li><strong><code>duplicity</code></strong>: For encrypted backups.</li>
 </ul>
-<p>In July 2025, <a href="https://www.geeksforgeeks.org/" target="_blank" rel="nofollow noopener noreferrer">GeeksforGeeks</a> shared a guide on creating Linux backup scripts. Their example showed how to back up directories like the Downloads folder and specific program files using <code>tar</code>. The script defined the directories, set a destination, generated an archive filename based on the current date, and executed the backup command.</p>
+<p><a href="https://www.geeksforgeeks.org/" target="_blank" rel="nofollow noopener noreferrer">GeeksforGeeks</a> shared a guide on creating Linux backup scripts. Their example showed how to back up directories like the Downloads folder and specific program files using <code>tar</code>. The script defined the directories, set a destination, generated an archive filename based on the current date, and executed the backup command.</p>
 <p>Here’s a simple example of a backup script for web files:</p>
 <pre><code class="language-bash">#!/bin/bash
 tar -czf /backup/www/website-$(date +%Y%m%d).tar.gz /var/www/html/
@@ -117,7 +138,7 @@ tar -czf /backup/www/website-$(date +%Y%m%d).tar.gz /var/www/html/
 <td><strong><a href="https://www.borgbackup.org/" target="_blank" rel="nofollow noopener noreferrer">BorgBackup</a></strong></td>
 <td>Encrypted, deduplicated and compressed archives</td>
 <td>Local disk, or another server over SSH that has Borg installed</td>
-<td>Linux, macOS, BSD (Windows only through WSL)</td>
+<td>Linux, macOS, BSD (Windows only through WSL, which Borg lists as experimental) <a class="seo-article-citation" href="#source-2" aria-label="Source 2">[2]</a></td>
 </tr>
 <tr>
 <td><strong><a href="https://rclone.org/" target="_blank" rel="nofollow noopener noreferrer">rclone</a></strong></td>
@@ -133,15 +154,15 @@ restic -r sftp:backup@backup-host:/srv/restic backup /var/www /etc
 restic -r sftp:backup@backup-host:/srv/restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 6 --prune
 restic -r sftp:backup@backup-host:/srv/restic check
 </code></pre>
-<p>Set the repository password in the <code>RESTIC_PASSWORD_FILE</code> environment variable so cron can run it unattended, and store a copy of that password somewhere other than the server. Without it, the backup cannot be restored.</p>
+<p>Set the repository password in the <code>RESTIC_PASSWORD_FILE</code> environment variable so cron can run it unattended, and store a copy of that password somewhere other than the server. Without it, the backup cannot be restored. <a class="seo-article-citation" href="#source-1" aria-label="Source 1">[1]</a></p>
 <p><strong>BorgBackup example.</strong> Borg works the same way over SSH:</p>
 <pre><code class="language-bash">borg init --encryption=repokey ssh://backup@backup-host/./borg-repo
 borg create --stats ssh://backup@backup-host/./borg-repo::'{hostname}-{now}' /var/www /etc
 borg prune --keep-daily 7 --keep-weekly 4 --keep-monthly 6 ssh://backup@backup-host/./borg-repo
 borg compact ssh://backup@backup-host/./borg-repo
 </code></pre>
-<p>Export the repository key with <code>borg key export</code> and keep it off the server. <a href="https://torsion.org/borgmatic/" target="_blank" rel="nofollow noopener noreferrer">borgmatic</a> wraps these commands in one configuration file if you prefer not to write the script yourself.</p>
-<p><strong>Where rclone fits.</strong> Use rclone to copy finished archives to object storage, or point restic at an rclone remote (<code>restic -r rclone:remote:bucket</code>) to reach providers restic does not support directly. A plain <code>rclone sync</code> mirrors deletions too, so on its own it is a copy, not a versioned backup.</p>
+<p>Export the repository key with <code>borg key export</code> and keep it off the server. <a class="seo-article-citation" href="#source-3" aria-label="Source 3">[3]</a> <a href="https://torsion.org/borgmatic/" target="_blank" rel="nofollow noopener noreferrer">borgmatic</a> wraps these commands in one configuration file if you prefer not to write the script yourself.</p>
+<p><strong>Where rclone fits.</strong> Use rclone to copy finished archives to object storage, or point restic at an rclone remote (<code>restic -r rclone:remote:bucket</code>) to reach providers restic does not support directly. A plain <code>rclone sync</code> mirrors deletions too, so on its own it is a copy, not a versioned backup. <a class="seo-article-citation" href="#source-4" aria-label="Source 4">[4]</a></p>
 <p>Whichever server backup software you choose, schedule it with cron or a systemd timer, write a log, and alert on failure, as covered below.</p>
 <h3 id="configuring-backups-on-stealthrdp-vps" tabindex="-1">Configuring Backups on a StealthRDP VPS</h3>
 <p><img src="https://assets.seobotai.com/stealthrdp.com/688c06e90d660161d1d30a21/60b3d0a0cd41408f4eab799549db166b.jpg" alt="StealthRDP"></p>
@@ -153,7 +174,7 @@ borg compact ssh://backup@backup-host/./borg-repo
 <li><strong>Database backups (daily):</strong> <code>00 3 * * * root sh /backup/mysql-backup.sh</code></li>
 </ul>
 <p>Cron picks up changes to <code>/etc/crontab</code> and to files edited with <code>crontab -e</code> automatically, so you do not need to restart it.</p>
-<p>StealthRDP servers in the USA and Europe allow you to choose backup storage locations that balance regulatory compliance and latency. Off-site backups in these locations ensure better data protection, while their 24/7 technical support can assist with any complex configurations or troubleshooting.</p>
+<p>StealthRDP servers run in the USA and Europe, so you can keep off-site backup copies in a different location from the server. 24/7 technical support is available through WhatsApp, client-area tickets and email.</p>
 <h2 id="testing-and-monitoring-your-backup-system" tabindex="-1" class="sb h2-sbb-cls">Testing and Monitoring Your Backup System</h2>
 <p>Setting up automated backups is just the first step in safeguarding your data. To ensure your backups are reliable and ready when you need them, regular testing and continuous monitoring are essential.</p>
 <h3 id="checking-that-your-backups-work" tabindex="-1">Checking That Your Backups Work</h3>

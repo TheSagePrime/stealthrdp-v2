@@ -33,7 +33,7 @@ New installations of cPanel & WHM default to the fast installation mode. To disa
 Before you install cPanel & WHM or cPanel DNSOnly®, make certain that your system meets all of our minimum requirements for new installations. Minimum requirements differ depending on what operating system your server uses:
 
 - [System Requirements for AlmaLinux](https://docs.cpanel.net/installation-guide/system-requirements-almalinux)
-- [System Requirements for CentOS](https://docs.cpanel.net/installation-guide/system-requirements-centos)
+- [System Requirements for Ubuntu](https://docs.cpanel.net/installation-guide/system-requirements-ubuntu/)
 - [System Requirements for CloudLinux™](https://docs.cpanel.net/installation-guide/system-requirements-cloudlinux)
 
 ## Installation

@@ -8,56 +8,56 @@
     "fingerprint": "9adcefd2dd9e7260"
   },
   "/blog/5-ways-to-optimize-your-rdp-performance-for-remote-work.html": {
-    "updated": "2026-10-05",
-    "fingerprint": "b6106fd6252b8d3b"
+    "updated": "2026-10-09",
+    "fingerprint": "ac8e1a2d99d274fc"
   },
   "/blog/7-best-tools-for-server-uptime-monitoring-2025.html": {
-    "updated": "2026-10-02",
-    "fingerprint": "00bff9d2ef31a383"
+    "updated": "2026-10-09",
+    "fingerprint": "bf2081aa1525bbc8"
   },
   "/blog/7-tips-for-securing-your-remote-desktop-connection.html": {
-    "updated": "2026-10-05",
-    "fingerprint": "38afcf36766821b1"
+    "updated": "2026-10-09",
+    "fingerprint": "ab70f1c1c75b28e2"
   },
   "/blog/8-signs-you-need-to-upgrade-your-vps-resources.html": {
-    "updated": "2026-10-02",
-    "fingerprint": "51df9b21f4ea3eb0"
+    "updated": "2026-10-09",
+    "fingerprint": "a07e4f972d369fe9"
   },
   "/blog/common-vps-hosting-issues-and-their-solutions.html": {
-    "updated": "2026-10-05",
-    "fingerprint": "6cf3e6c8e591e698"
+    "updated": "2026-10-09",
+    "fingerprint": "06c87622350e4f28"
   },
   "/blog/common-vps-performance-bottlenecks.html": {
-    "updated": "2026-10-05",
-    "fingerprint": "a65501d471cd1f2c"
+    "updated": "2026-10-09",
+    "fingerprint": "df246254f0566f15"
   },
   "/blog/ddos-protection-for-vps-essential-setup-checklist.html": {
-    "updated": "2026-10-05",
-    "fingerprint": "08acf910a2e44036"
+    "updated": "2026-10-09",
+    "fingerprint": "a4f32c6f6791dfd8"
   },
   "/blog/designing-automated-high-availability-vps.html": {
-    "updated": "2026-10-05",
-    "fingerprint": "9a846f5c59c87166"
+    "updated": "2026-10-09",
+    "fingerprint": "923c3906455ee6c5"
   },
   "/blog/how-to-set-up-automated-backups-for-vps-hosting.html": {
-    "updated": "2026-10-05",
-    "fingerprint": "a59aaed765b8926b"
+    "updated": "2026-10-09",
+    "fingerprint": "a6498c0653977124"
   },
   "/blog/top-6-vps-management-tools-for-small-businesses.html": {
-    "updated": "2026-10-05",
-    "fingerprint": "f1448a324fe43b35"
+    "updated": "2026-10-09",
+    "fingerprint": "3c470332414a13c6"
   },
   "/blog/vps-for-automation-bots.html": {
-    "updated": "2026-10-02",
-    "fingerprint": "a16ebe355e5380b6"
+    "updated": "2026-10-09",
+    "fingerprint": "d92dc568a8b50e8a"
   },
   "/blog/vps-for-backups-storage.html": {
     "updated": "2026-10-02",
     "fingerprint": "cfbf72eaac8b2259"
   },
   "/blog/vps-for-remote-desktop.html": {
-    "updated": "2026-10-02",
-    "fingerprint": "979948a70693d441"
+    "updated": "2026-10-09",
+    "fingerprint": "2aac6adf45e51b72"
   },
   "/blog/vps-for-trading.html": {
     "updated": "2026-10-02",
@@ -68,8 +68,8 @@
     "fingerprint": "5b2a894a3c345304"
   },
   "/blog/windows-vs-linux-vps-which-os-best-fits-your-business.html": {
-    "updated": "2026-10-05",
-    "fingerprint": "02cdff98007b1007"
+    "updated": "2026-10-09",
+    "fingerprint": "7bc22113fedc3e51"
   },
   "/citadel": {
     "updated": "2026-10-09",
@@ -185,7 +185,7 @@
   },
   "/docs/10-ways-to-optimize-your-word-press-website-for-speed": {
     "updated": "2026-10-09",
-    "fingerprint": "0eaeef362759669e"
+    "fingerprint": "86562b04ceb6bb30"
   },
   "/docs/how-do-i-log-into-windows": {
     "updated": "2026-10-09",
@@ -197,11 +197,11 @@
   },
   "/docs/how-to-install-centos-web-panel-cwp-free-web-panel": {
     "updated": "2026-10-09",
-    "fingerprint": "7511953a42712491"
+    "fingerprint": "f66e0157fc362226"
   },
   "/docs/how-to-install-direct-admin-in-a-linux-server": {
     "updated": "2026-10-09",
-    "fingerprint": "4a4a7e728a02271d"
+    "fingerprint": "78e1c62c77ca9d0f"
   },
   "/docs/how-to-re-activate-and-extend-your-180-day-windows-trial": {
     "updated": "2026-10-09",
@@ -221,11 +221,11 @@
   },
   "/docs/install-cpanel-and-whm-in-linux-you-need-a-license": {
     "updated": "2026-10-09",
-    "fingerprint": "edc02fc26174bf64"
+    "fingerprint": "778c9af3b68e5f15"
   },
   "/docs/install-cyber-panel-with-open-lite-speed-in-linux": {
     "updated": "2026-10-09",
-    "fingerprint": "f9f2050b322fb16c"
+    "fingerprint": "9365f7ae96b0184d"
   },
   "/docs/install-fast-panel-in-linux-good-web-hosting-free-panel": {
     "updated": "2026-10-09",
@@ -233,11 +233,11 @@
   },
   "/docs/introduction": {
     "updated": "2026-10-09",
-    "fingerprint": "861fbdbd228924d3"
+    "fingerprint": "87253186b5632ae6"
   },
   "/docs/payment-terms": {
     "updated": "2026-10-09",
-    "fingerprint": "c913c3c90b74ae64"
+    "fingerprint": "87f6268df68f3cab"
   },
   "/docs/server-stops-randomly": {
     "updated": "2026-10-09",
@@ -253,19 +253,19 @@
   },
   "/docs/termination-of-service": {
     "updated": "2026-10-09",
-    "fingerprint": "dd8fb1aef34a98ed"
+    "fingerprint": "c2524bc21b6413b5"
   },
   "/docs/use-of-service": {
     "updated": "2026-10-09",
-    "fingerprint": "185964ab93ea4bdd"
+    "fingerprint": "0d331b2bfee5ed99"
   },
   "/docs/user-responsibilities": {
     "updated": "2026-10-09",
-    "fingerprint": "9f719cdcbae0b772"
+    "fingerprint": "29fefba3a4fd3127"
   },
   "/docs/why-you-should-redirect-all-http-traffic-to-https": {
     "updated": "2026-10-09",
-    "fingerprint": "10d4e4a80a036253"
+    "fingerprint": "37f35112def26b2b"
   },
   "/docs/windows-licensing": {
     "updated": "2026-10-09",
@@ -320,8 +320,8 @@
     "fingerprint": "3d92e89f787d5c53"
   },
   "/rdp-vps": {
-    "updated": "2026-10-04",
-    "fingerprint": "101d4f77b65f7bf0"
+    "updated": "2026-10-09",
+    "fingerprint": "c1a1921104476a3a"
   },
   "/vps-hosting-minecraft": {
     "updated": "2026-10-02",

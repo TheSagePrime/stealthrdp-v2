@@ -8,6 +8,31 @@ author: StealthRDP Team
 date: 2025-09-05
 readingTime: 9
 image: https://assets.seobotai.com/cdn-cgi/image/quality=75,w=1536,h=1024/stealthrdp.com/687d89ef84572425aeda4574-1753100719828.jpg
+sources:
+  - title: "UptimeRobot: Free Website Monitoring Service"
+    url: https://uptimerobot.com/
+    publisher: UptimeRobot
+    accessedAt: 2026-10-09
+  - title: Uptime Monitoring by Better Stack
+    url: https://betterstack.com/uptime
+    publisher: Better Stack
+    accessedAt: 2026-10-09
+  - title: "StatusCake - Uptime monitoring, Page speed monitoring, and more"
+    url: https://www.statuscake.com/
+    publisher: StatusCake
+    accessedAt: 2026-10-09
+  - title: Uptime Kuma README
+    url: https://raw.githubusercontent.com/louislam/uptime-kuma/master/README.md
+    publisher: GitHub (louislam/uptime-kuma)
+    accessedAt: 2026-10-09
+  - title: louislam/uptime-kuma - Docker Image
+    url: https://hub.docker.com/r/louislam/uptime-kuma/tags
+    publisher: Docker Hub
+    accessedAt: 2026-10-09
+  - title: "Zabbix: The enterprise-class open source observability solution"
+    url: https://www.zabbix.com/
+    publisher: Zabbix
+    accessedAt: 2026-10-09
 ---
 <p>Server uptime monitoring checks your server or website from the outside at a fixed interval and alerts you when it stops responding. It answers one question fast: <strong>is the service up right now?</strong> This guide compares seven uptime monitoring tools, from hosted services that need no setup to self-hosted options you run on your own VPS.</p>
 <h2 id="what-server-uptime-monitoring-checks" tabindex="-1">What Server Uptime Monitoring Checks</h2>
@@ -42,22 +67,22 @@ image: https://assets.seobotai.com/cdn-cgi/image/quality=75,w=1536,h=1024/stealt
 </table>
 <p>Pricing and free-plan limits change often, so check each vendor's current pricing page before you choose.</p>
 <h3 id="1-uptimerobot" tabindex="-1">1. UptimeRobot</h3>
-<p><a href="https://uptimerobot.com/" target="_blank" rel="nofollow noopener noreferrer">UptimeRobot</a> is a hosted service with HTTP(S), keyword, ping, port and heartbeat monitors, public status pages, and alerts by email, SMS, voice and chat integrations. It has a free plan, which makes it a common first monitor for small sites and single servers. StealthRDP's own <a href="/status">status page</a> reads its measured uptime from UptimeRobot.</p>
+<p><a href="https://uptimerobot.com/" target="_blank" rel="nofollow noopener noreferrer">UptimeRobot</a> is a hosted service with HTTP(S), keyword, ping, port and heartbeat monitors, public status pages, and alerts by email, SMS, voice and chat integrations. It has a free plan, which makes it a common first monitor for small sites and single servers. StealthRDP's own <a href="/status">status page</a> reads its measured uptime from UptimeRobot. <a class="seo-article-citation" href="#source-1" aria-label="Source 1">[1]</a></p>
 <h3 id="2-better-stack" tabindex="-1">2. Better Stack</h3>
-<p><a href="https://betterstack.com/uptime" target="_blank" rel="nofollow noopener noreferrer">Better Stack</a> combines uptime monitoring with on-call scheduling, phone and SMS alerts, incident timelines and status pages. Choose it when more than one person is responsible for responding to outages.</p>
+<p><a href="https://betterstack.com/uptime" target="_blank" rel="nofollow noopener noreferrer">Better Stack</a> combines uptime monitoring with on-call scheduling, phone and SMS alerts, incident timelines and status pages. Choose it when more than one person is responsible for responding to outages. <a class="seo-article-citation" href="#source-2" aria-label="Source 2">[2]</a></p>
 <h3 id="3-pingdom" tabindex="-1">3. Pingdom</h3>
 <p><a href="https://www.pingdom.com/" target="_blank" rel="nofollow noopener noreferrer">Pingdom</a> offers uptime checks from many locations, transaction checks that walk through steps such as a login or checkout, and real user monitoring. It suits websites where a broken user flow matters as much as a down server.</p>
 <h3 id="4-statuscake" tabindex="-1">4. StatusCake</h3>
-<p><a href="https://www.statuscake.com/" target="_blank" rel="nofollow noopener noreferrer">StatusCake</a> covers uptime, page speed, SSL certificate and domain expiry monitoring in one hosted service, with status pages and common alert integrations.</p>
+<p><a href="https://www.statuscake.com/" target="_blank" rel="nofollow noopener noreferrer">StatusCake</a> covers uptime, page speed, SSL certificate and domain expiry monitoring in one hosted service, with status pages and common alert integrations. <a class="seo-article-citation" href="#source-3" aria-label="Source 3">[3]</a></p>
 <h3 id="5-uptime-kuma" tabindex="-1">5. Uptime Kuma</h3>
-<p><a href="https://github.com/louislam/uptime-kuma" target="_blank" rel="nofollow noopener noreferrer">Uptime Kuma</a> is an open-source, self-hosted uptime monitor. It supports HTTP(S), keyword, JSON query, TCP, ping, DNS, push and Docker container monitors, status pages, and notifications to Telegram, Discord, Slack, email and 90+ other services. On a Linux VPS with Docker, one command starts it:</p>
+<p><a href="https://github.com/louislam/uptime-kuma" target="_blank" rel="nofollow noopener noreferrer">Uptime Kuma</a> is an open-source, self-hosted uptime monitor. It supports HTTP(S), keyword, JSON query, TCP, ping, DNS, push and Docker container monitors, status pages, and notifications to Telegram, Discord, Slack, email and 90+ other services. <a class="seo-article-citation" href="#source-4" aria-label="Source 4">[4]</a> On a Linux VPS with Docker, one command starts it:</p>
 <pre><code class="language-bash">docker run -d --restart=always -p 3001:3001 -v uptime-kuma:/app/data --name uptime-kuma louislam/uptime-kuma:2
 </code></pre>
-<p>Then open <code>http://your-server-ip:3001</code>, create the admin account, and put the dashboard behind HTTPS or a firewall rule before you rely on it.</p>
+<p>Then open <code>http://<var>your-server-ip</var>:3001</code>, create the admin account, and put the dashboard behind HTTPS or a firewall rule before you rely on it. <a class="seo-article-citation" href="#source-5" aria-label="Source 5">[5]</a></p>
 <h3 id="6-prometheus-blackbox-exporter" tabindex="-1">6. Prometheus with Blackbox Exporter</h3>
 <p><a href="https://github.com/prometheus/blackbox_exporter" target="_blank" rel="nofollow noopener noreferrer">Blackbox Exporter</a> lets <a href="https://prometheus.io/" target="_blank" rel="nofollow noopener noreferrer">Prometheus</a> probe endpoints over HTTP(S), DNS, TCP and ICMP. Alertmanager sends the alerts and Grafana draws the dashboards. It takes more setup than the hosted tools, but it fits naturally if you already collect server metrics with Prometheus and node_exporter.</p>
 <h3 id="7-zabbix" tabindex="-1">7. Zabbix</h3>
-<p><a href="https://www.zabbix.com/" target="_blank" rel="nofollow noopener noreferrer">Zabbix</a> is an open-source monitoring platform that uses agents on each server plus network checks and web scenarios. It handles uptime and resource monitoring for many Linux and Windows servers from one place, with templates, triggers and escalation rules. It is the heaviest option here and suits teams that run many servers.</p>
+<p><a href="https://www.zabbix.com/" target="_blank" rel="nofollow noopener noreferrer">Zabbix</a> is an open-source monitoring platform that uses agents on each server plus network checks and web scenarios. It handles uptime and resource monitoring for many Linux and Windows servers from one place, with templates, triggers and escalation rules. It is the heaviest option here and suits teams that run many servers. <a class="seo-article-citation" href="#source-6" aria-label="Source 6">[6]</a></p>
 <h2 id="self-hosted-uptime-monitoring" tabindex="-1">Self-hosted Uptime Monitoring and UptimeRobot Alternatives</h2>
 <p>Hosted services such as UptimeRobot check your sites from outside your network and need no server of your own. A self-hosted uptime monitor such as Uptime Kuma, Blackbox Exporter or Zabbix runs on a server you control instead, with no per-monitor limits.</p>
 <p>Run a self-hosted monitor on a different server, and ideally a different provider and region, from the systems it watches. If the monitor shares the failure, it cannot tell you about it. A small <a href="/linux-vps">Linux VPS</a> in another region is enough for Uptime Kuma.</p>

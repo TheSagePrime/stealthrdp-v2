@@ -20,13 +20,15 @@ This guide shows how to install DirectAdmin on your Linux server.
 
 Make sure that you meet the system requirements: a clean OS install and at least one external IP address.
 
-### Supported OS and versions
+- At least 4 GB of memory and 4 GB of swap, plus 2 GB of free disk space after the OS is installed.
 
-- **CloudLinux:** 6.x 64-bit, 7.x 64-bit, 8.x 64-bit
-- **AlmaLinux / RHEL / CentOS:** 7.x 64-bit, 8.x 64-bit
-- **Debian:** 8.x 64-bit, 9.x 64-bit, 10.x 64-bit, 11.x 64-bit ALPHA
-- **Ubuntu:** 16.04 64-bit, 18.04 64-bit, 20.04 64-bit
-- **FreeBSD:** 11.x 64-bit, 12.x 64-bit
+### Supported OS
+
+- **Red Hat Enterprise Linux and its derivatives:** CentOS Stream, Rocky Linux and AlmaLinux
+- **Debian**
+- **Ubuntu**
+
+DirectAdmin lists the supported versions and their end-of-life dates on its system requirements page. Use a 64-bit (amd64 or arm64) system.
 
 ## Step 2: Make sure your license information is correct
 
@@ -38,11 +40,15 @@ Verify that the server IP address and operating system is correct. Also make sur
 
 Log in as root to your server, download the installation script, and run it:
 
-```bash title="Run the DirectAdmin setup script"
-bash <(curl -Ss https://www.directadmin.com/setup.sh || wget -O - https://www.directadmin.com/setup.sh) auto
+```bash title="Run the DirectAdmin web-based installer"
+sh <(curl -fsSL https://download.directadmin.com/setup.sh)
 ```
 
-The auto method will be best for most people. It automatically installs everything for you, including the CSF firewall. It can also be called without the 'auto' option, which requires input but allows for customization.
+The script performs the initial system setup and prints a URL. Open that URL in your browser to finish the installation. To install from the command line instead, add your licence key, which uses the default configuration options:
+
+```bash title="Run the DirectAdmin command-line installer"
+sh <(curl -fsSL https://download.directadmin.com/setup.sh) 'YOUR-LICENSE-KEY'
+```
 
 :::warn
 The hostname should not be the same as the primary domain name. For example, gary.com is not a good hostname, where server.gary.com is. Having the same host/main domain name will cause e-mail and FTP problems. Also, make sure the hostname resolves once you set up DNS.
@@ -50,7 +56,7 @@ The hostname should not be the same as the primary domain name. For example, gar
 
 ## Access the control panel
 
-DirectAdmin can be accessed at `http://server.ip.address:2222`. Use the Admin username/password from the output information provided by setup.sh (the same information is specified in the `/usr/local/directadmin/scripts/setup.txt` file).
+DirectAdmin can be accessed at `http://server.ip.address:2222`. Use the Admin username/password from the output information provided by setup.sh (the same information is saved in the `/usr/local/directadmin/conf/setup.txt` file).
 
 ## DirectAdmin vs cPanel
 

@@ -16,7 +16,7 @@ relatedSlugs: []
 ---
 ## General use
 
-Customers are permitted to use StealthRDP's services, including Remote Desktop Protocols (RDPs), Virtual Private Servers (VPS), and web hosting solutions, for lawful purposes as intended under these Terms and Conditions. The services are to be used in a manner that is consistent with the intended purpose and should not interfere with the use and enjoyment of others.
+Customers are permitted to use StealthRDP's services, including Remote Desktop Protocol (RDP) servers and Virtual Private Servers (VPS), for lawful purposes as intended under these Terms and Conditions. The services are to be used in a manner that is consistent with the intended purpose and should not interfere with the use and enjoyment of others.
 
 ## Permitted activities
 
@@ -47,7 +47,7 @@ StealthRDP retains the right to suspend or terminate your services without prior
 
 ## Bandwidth usage policy
 
-- **Allocated bandwidth:** Usage is confined to the limits specified on the product page.
+- **Allocated bandwidth:** Bandwidth is unlimited under our fair-usage policy. Network speed is 250 Mbps on every plan except Starter USA (100 Mbps). The 250 Mbps plans can be upgraded to 1 Gbps.
 - **Fair share policy:** We operate a fair share policy to ensure service quality for all users. Excessive use of bandwidth that affects others is not permitted.
 - **Usage monitoring:** We monitor usage to prevent network congestion and maintain service quality.
 - **Consequences of excessive use:** Excessive usage may result in bandwidth throttling, service suspension, or mandatory upgrades at additional costs.

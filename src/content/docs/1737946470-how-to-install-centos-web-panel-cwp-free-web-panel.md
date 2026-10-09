@@ -1,7 +1,7 @@
 ---
 order: 5
-title: 'How to Install CentOS Web Panel (CWP) on Linux'
-sidebarTitle: Install CentOS Web Panel
+title: 'How to Install Control Web Panel (CWP) on Linux'
+sidebarTitle: Install Control Web Panel
 category: Web panels
 date: Jan 27, 2025
 sourceTitle: How to install Centos Web Panel (CWP) (Free Web Panel)
@@ -11,13 +11,13 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: 'Install the free CentOS Web Panel (CWP) control panel on a Linux VPS over SSH, then log in to manage websites, email and DNS.'
+summary: 'Install the free Control Web Panel (CWP) on an AlmaLinux 8 or 9 VPS over SSH, then log in to manage websites, email and DNS.'
 relatedSlugs: []
 ---
-In this tutorial, we will be installing CWP on a Linux CentOS server, and I will try to make the tutorial as easy as possible. We are going to use the free plan, which offers:
+In this tutorial, we will be installing CWP on a Linux AlmaLinux server, and I will try to make the tutorial as easy as possible. We are going to use the free plan, which offers:
 
 - Apache web server (ModSecurity + automatic updated rules optional)
-- PHP 5.6 (suPHP, SuExec + PHP version switcher)
+- PHP version switcher (on AlmaLinux 9, PHP 7.4 to 8.4 and later)
 - MySQL/MariaDB + phpMyAdmin
 - Postfix + Dovecot + Roundcube webmail (antivirus, SpamAssassin optional)
 - CSF firewall
@@ -44,7 +44,7 @@ Some features are only available in CWP Pro, a paid upgrade.
 - Only install CWP on a freshly installed operating system without any configuration changes.
 :::
 
-For best performance, we suggest you order a VPS or dedicated server from eFlame.
+To start from a supported system, choose AlmaLinux 8 or 9 at checkout on a [StealthRDP Linux VPS](/plans).
 
 ## System requirements
 
@@ -52,7 +52,7 @@ Make sure that you complete the following tasks before you start the installatio
 
 ### Hostname
 
-Set the server hostname:
+Set a fully qualified hostname that does not match any domain on the server:
 
 ```bash title="Set hostname"
 hostname srv1.example.com
@@ -62,29 +62,23 @@ hostname srv1.example.com
 
 You must have a clean, fresh installation of a supported operating system:
 
-- **CentOS 6, RedHat 6 or CloudLinux 6:** MINIMAL installation and English version only. Not recommended for new installations, as we don't develop new features for it.
-- **CentOS 7 minimal (recommended):** The best version to be used with CWP, as it provides the most features and the CWP Secure Kernel.
-- **CentOS 8 (Stream):** Also supported. We have our own custom repositories, which make CentOS 8 Stream a stable version.
+- **AlmaLinux 8 or 9, minimal (recommended):** the best-supported choice for CWP. AlmaLinux 10 is not on CWP's list.
+- **Rocky Linux 8 or 9, minimal:** supported, but CWP reports some issues and prefers AlmaLinux.
+- **CentOS 7:** not recommended. CentOS 7 reached end of life in June 2024, so do not use it for a new CWP server.
 
 ### Hardware requirements
 
-64-bit operating systems require a minimum of 1024 MB RAM (recommended).
+64-bit systems require at least 2 GB of RAM.
 
 **Recommended system:** 4 GB+ RAM, so you have the full functionality, such as antivirus scanning of emails.
 
 ## Prepare the server
 
-1. Install wget:
+1. Install EPEL and wget:
 
-   ```bash title="Install wget"
-   yum -y install wget
-   ```
-
-   For CentOS 8, you may need to install the EPEL repository to be able to install tools like wget:
-
-   ```bash title="Install EPEL and wget (CentOS 8)"
-   yum install https://dl.fedoraproject.org/pub/epel/epel-release-latest-8.noarch.rpm
-   dnf install wget -y
+   ```bash title="Install EPEL and wget"
+   dnf install epel-release -y
+   dnf -y install wget
    ```
 
 2. Update the server:
@@ -103,48 +97,42 @@ You must have a clean, fresh installation of a supported operating system:
 
 Now you are ready to start the CWP installation. The CWP installer can run for more than 30 minutes because it needs to compile Apache and PHP from source.
 
-### CentOS 6: new installer with MariaDB 10 latest (not recommended)
+### AlmaLinux 9 (EL9 installer)
 
-```bash title="Install CWP on CentOS 6"
+```bash title="Install CWP on AlmaLinux 9"
 cd /usr/local/src
-wget http://centos-webpanel.com/cwp-latest
-sh cwp-latest
+wget http://centos-webpanel.com/cwp-el9-latest
+sh cwp-el9-latest
 ```
 
-### CentOS 7: installer for CentOS 7 (recommended)
+### AlmaLinux 8 (EL8 installer)
 
-```bash title="Install CWP on CentOS 7"
-cd /usr/local/src
-wget http://centos-webpanel.com/cwp-el7-latest
-sh cwp-el7-latest
-```
-
-### CentOS 8: installer for CentOS 8
-
-```bash title="Install CWP on CentOS 8"
+```bash title="Install CWP on AlmaLinux 8"
 cd /usr/local/src
 wget http://centos-webpanel.com/cwp-el8-latest
 sh cwp-el8-latest
 ```
+
+Rocky Linux 8 and 9 use the same installers: `cwp-el8-latest` and `cwp-el9-latest`.
 
 ## Optional arguments
 
 Available long-name arguments:
 
 - `--restart yes` for an automatic restart after a successful install
-- `--phpfpm [5.3|5.4|5.5|5.6|7.0|7.1|7.2|7.3|7.4]` (you can use only one)
+- `--phpfpm <version>` (you can use only one). On the EL9 installer, PHP 7.4 to 8.4 and later are supported.
 - `--softaculous yes` to install Softaculous, the script installer
 
 Available short-name arguments:
 
 - `-r yes` for an automatic restart after a successful install
-- `-p [5.3|5.4|5.5|5.6|7.0|7.1|7.2|7.3|7.4]` (you can use only one)
+- `-p <version>` (you can use only one)
 - `-s yes` to install Softaculous, the script installer
 
-Example for CentOS 7 (you can combine short and long name arguments):
+Example for AlmaLinux 9 (you can combine short and long name arguments):
 
-```bash title="Install CWP on CentOS 7 with options"
-sh cwp-el7-latest -r yes --phpfpm 7.3 --softaculous yes
+```bash title="Install CWP on AlmaLinux 9 with options"
+sh cwp-el9-latest -r yes -s yes
 ```
 
 Any of these additions can also be installed later from the CWP GUI.

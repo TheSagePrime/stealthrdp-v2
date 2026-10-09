@@ -25,6 +25,6 @@ relatedSlugs: []
 9. **Updates and notifications:** Keep your contact information up to date and respond to notifications or inquiries from StealthRDP in a timely manner.
 10. **Weekly backups:** We have weekly backups for disaster recovery. However, please DO NOT use your server as a storage server for really important data. There is always a chance of servers being unresponsive or having hardware issues. Do regular backups; this is really important. We are not able to restore files, for example if the server has any hardware issues. It is your job to keep your data safe.
 
-By creating an account and using StealthRDP's services, you accept these responsibilities and agree to adhere to them as part of our service agreement.
-
 11. **Microsoft licensing:** StealthRDP provides the infrastructure only. Microsoft Windows licensing is not included and is not supplied by StealthRDP. Customers using Windows are responsible for obtaining and maintaining any Microsoft licences required for their intended use. Customers may use their own eligible Microsoft licences where permitted by Microsoft's applicable licensing terms. Customers are responsible for determining whether their licence is valid for their intended hosted deployment. See [Windows licensing](/docs/windows-licensing).
+
+By creating an account and using StealthRDP's services, you accept these responsibilities and agree to adhere to them as part of our service agreement.

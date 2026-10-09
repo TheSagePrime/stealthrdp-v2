@@ -50,7 +50,7 @@ Consider the following factors when deciding between **HTTP vs HTTPS**.
 
 ### Security
 
-Having strong security measures and providing a secure browsing experience on your website is crucial. A GlobalSign survey found that 77% of visitors have concerns about unauthorized parties misusing or intercepting user data.
+Having strong security measures and providing a secure browsing experience on your website is crucial.
 
 In regards to HTTP vs HTTPS, the latter outperforms in terms of security.
 
@@ -80,11 +80,9 @@ Users can easily check if a website uses SSL/TLS. First, a padlock icon should b
 
 Not only does Google recommend that all websites use HTTPS for higher security, but it also rewards these sites with a minor ranking boost on the search engine results pages (SERPs).
 
-In fact, a study by Rank Ranger found that by 2018, 70% of Google’s first page results were sites that use HTTPS.
-
 Let’s consider this in practical terms. For example, a competitor’s site may be similar to yours in many aspects, such as content, speed, and backlinks. However, the competitor site uses HTTPS while you don’t.
 
-Add the fact that HTTPS sites receive higher browsing times, which is beneficial for SEO, and the winner is clear. Considering Google’s algorithm, your competitor will most likely rank higher than your site, which will lead them to receive higher traffic volumes and other SEO benefits.
+Considering Google’s algorithm, your competitor will most likely rank higher than your site, which will lead them to receive higher traffic volumes and other SEO benefits.
 
 ### Speed and performance
 
@@ -93,10 +91,6 @@ Another benefit of using **HTTPS** compared to **HTTP** is that websites will lo
 HTTP/2 supports HTTPS encryption and complements its security protocols. Among other functions, HTTP/2 reduces latency by having low resource consumption and maximizing bandwidth efficiency.
 
 This results in faster site speeds and smoother performance compared to using the standard HTTP protocol.
-
-HTTPS is also a better option when loading websites on mobile devices, especially when using Accelerated Mobile Pages (AMP). AMP is a Google-made web component framework that, among other functions, creates a more streamlined user experience for mobile users by loading the website content much faster.
-
-A secure encrypted connection is required for a website’s AMP version to show up on search engines. Considering that by the end of 2019, 61% of Google search queries came from mobile devices, the performance benefits of using HTTPS outweigh HTTP.
 
 ## How to redirect HTTP to HTTPS
 

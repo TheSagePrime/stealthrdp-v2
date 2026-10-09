@@ -8,6 +8,27 @@ author: StealthRDP Team
 date: 2025-05-16
 readingTime: 11
 image: https://assets.seobotai.com/cdn-cgi/image/quality=75,w=1536,h=1024/stealthrdp.com/68266a700209458b3ff4ce90-1747350245342.jpg
+sources:
+  - title: Configure Network Level Authentication for Remote Desktop Services Connections
+    url: https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc732713(v=ws.11)
+    publisher: Microsoft Learn
+    accessedAt: 2026-10-09
+  - title: RemoteDesktopServices Policy CSP
+    url: https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-remotedesktopservices
+    publisher: Microsoft Learn
+    accessedAt: 2026-10-09
+  - title: RDP Shortpath - Azure Virtual Desktop
+    url: https://learn.microsoft.com/en-us/azure/virtual-desktop/shortpath
+    publisher: Microsoft Learn
+    accessedAt: 2026-10-09
+  - title: Remote Desktop Commander Suite – Terminal Server and RDS Session Management and Reporting
+    url: https://www.rdpsoft.com/products/remote-desktop-commander/suite/
+    publisher: RDPSoft
+    accessedAt: 2026-10-09
+  - title: Remote Desktop Canary
+    url: https://www.rdpsoft.com/products/remote-desktop-canary/
+    publisher: RDPSoft
+    accessedAt: 2026-10-09
 ---
 <p><strong>Want smoother remote desktop sessions?</strong> Here’s how you can fix common RDP issues like lag, freezes, and slow application performance. These five strategies will help you optimize your RDP for better speed, stability, and security:</p>
 <ul>
@@ -15,7 +36,7 @@ image: https://assets.seobotai.com/cdn-cgi/image/quality=75,w=1536,h=1024/stealt
 <strong>Improve Network Settings</strong>: Use bandwidth limits, enable RDP-UDP, and configure QoS to reduce latency and stabilize connections.
 </li>
 <li>
-<strong>Adjust Client/Server Settings</strong>: Lower display resolution, reduce visual effects, and enable <a href="https://en.wikipedia.org/wiki/RemoteFX" target="_blank" rel="nofollow noopener noreferrer">RemoteFX</a> for better performance.
+<strong>Adjust Client/Server Settings</strong>: Lower display resolution and reduce visual effects for better performance.
 </li>
 <li>
 <strong>Upgrade Hardware</strong>: Switch to SSDs, add more RAM, and ensure your CPU can handle workloads efficiently.
@@ -60,12 +81,8 @@ image: https://assets.seobotai.com/cdn-cgi/image/quality=75,w=1536,h=1024/stealt
 </tr>
 </tbody>
 </table>
-<p>You can apply these adjustments using Group Policy or PowerShell. For instance, to set a throttle rate on your session host, use the following PowerShell command:</p>
-<blockquote>
-<p>New-NetQosPolicy -Name &quot;RDP Shortpath for managed networks&quot; -AppPathNameMatchCondition &quot;svchost.exe&quot; -IPProtocolMatchCondition UDP -IPSrcPortStartMatchCondition 3390 -IPSrcPortEndMatchCondition 3390 -ThrottleRateActionBitsPerSecond 10mb -NetworkProfile All </p>
-</blockquote>
 <h3 id="set-up-rdp-udp" tabindex="-1">Set Up RDP-UDP</h3>
-<p>Adding UDP support alongside TCP can dramatically improve RDP performance. In fact, RDP over UDP can handle 2 to 8 times more data throughput compared to TCP.</p>
+<p>Adding UDP support alongside TCP can improve RDP performance on networks where UDP is allowed.</p>
 <p>To enable RDP-UDP:</p>
 <ul>
 <li>
@@ -79,14 +96,11 @@ Verify the UDP connection status to confirm proper setup.
 </li>
 </ul>
 <h3 id="configure-qos-settings" tabindex="-1">Configure QoS Settings</h3>
-<p>Quality of Service (QoS) prioritizes RDP traffic over less critical data, ensuring smoother performance. Microsoft suggests using a DSCP value of 46 (Expedited Forwarding) for RDP traffic.</p>
+<p>Quality of Service (QoS) prioritizes RDP traffic over less critical data, ensuring smoother performance. RDP Shortpath for managed networks supports DSCP marks for QoS priority on RDP connections. <a class="seo-article-citation" href="#source-3" aria-label="Source 3">[3]</a></p>
 <p>Here’s how to implement QoS:</p>
 <ul>
 <li>
-<strong>Set Priority Levels</strong>: Use TCP port 3389 to create dedicated queues for RDP traffic, helping maintain steady performance even during high usage periods.
-</li>
-<li>
-<strong>Configure DSCP Markers</strong>: Assign DSCP markers to session hosts via Group Policy Objects, allowing network devices to recognize and prioritize RDP traffic.
+<strong>Configure DSCP Markers</strong>: Use DSCP marks so network devices can recognize and prioritize RDP traffic.
 </li>
 <li>
 <strong>Enable RDP Shortpath</strong>: Activate RDP Shortpath for managed networks to ensure QoS policies are effectively enforced.
@@ -131,22 +145,6 @@ Verify the UDP connection status to confirm proper setup.
 <p>To make these changes, open the Group Policy Editor and go to:<br>
 <strong>Computer Configuration &gt; Administrative Templates &gt; Windows Components &gt; Remote Desktop Services &gt; Remote Session Environment.</strong><br>
 From there, disable resource-heavy features like &quot;Desktop Composition&quot; and &quot;Show window contents while dragging&quot;.</p>
-<h3 id="set-up-remotefx" tabindex="-1">Set Up <a href="https://en.wikipedia.org/wiki/RemoteFX" target="_blank" rel="nofollow noopener noreferrer">RemoteFX</a></h3>
-<p>Once you've optimized visual settings, you can take graphical performance to the next level with RemoteFX. This feature enhances remote desktop sessions by enabling high-quality video, synchronized audio, and even 3D graphics.</p>
-<p>To enable RemoteFX:</p>
-<ul>
-<li>
-Open the <strong>Local Group Policy Editor</strong>.
-</li>
-<li>
-Navigate to:<br>
-<strong>Computer Configuration &gt; Administrative Templates &gt; Windows Components &gt; Remote Desktop Services &gt; Remote Desktop Session Host &gt; Remote Session Environment.</strong>
-</li>
-<li>
-Enable the &quot;Configure RemoteFX&quot; option.
-</li>
-</ul>
-<p>For the best results, set your Remote Desktop Connection client to &quot;LAN (10 megabits per second or higher).&quot; RemoteFX dynamically adjusts based on factors like graphic intensity, CPU usage, and available network bandwidth.</p>
 <h3 id="apply-registry-changes" tabindex="-1">Apply Registry Changes</h3>
 <p>Registry edits can further enhance the stability and responsiveness of RDP sessions. Key adjustments include:</p>
 <ul>
@@ -312,9 +310,8 @@ Storage controller drivers for smoother I/O operations.
 </tr>
 </tbody>
 </table>
-<p>For context, the use of monitoring tools is growing. By 2025, about 70% of large employers are expected to use monitoring solutions for remote employees, up from 60% in 2021.</p>
 <p>Be sure to configure alerts for issues like slow logins, connection failures, high latency, and resource spikes. This ensures you're notified before small problems turn into major disruptions.</p>
-<p>If you're managing an enterprise setup, consider robust tools like <a href="https://www.rdpsoft.com/products/remote-desktop-commander/suite/" target="_blank" rel="nofollow noopener noreferrer"><strong>Remote Desktop Commander Suite</strong></a>, which offers real-time session management and licensing tracking at $12.99 per session host per month. Another option is <a href="https://www.rdpsoft.com/products/remote-desktop-canary/" target="_blank" rel="nofollow noopener noreferrer"><strong>Remote Desktop Canary</strong></a>, which provides synthetic monitoring and screenshot recording for up to 10 servers at $699.99 annually.</p>
+<p>If you're managing an enterprise setup, consider robust tools like <a href="https://www.rdpsoft.com/products/remote-desktop-commander/suite/" target="_blank" rel="nofollow noopener noreferrer"><strong>Remote Desktop Commander Suite</strong></a>, which offers real-time session management and licensing tracking at $14.99 per server per month. <a class="seo-article-citation" href="#source-4" aria-label="Source 4">[4]</a> Another option is <a href="https://www.rdpsoft.com/products/remote-desktop-canary/" target="_blank" rel="nofollow noopener noreferrer"><strong>Remote Desktop Canary</strong></a>, which provides synthetic monitoring and screenshot recording for up to 10 servers at $699.99 annually. <a class="seo-article-citation" href="#source-5" aria-label="Source 5">[5]</a></p>
 <p>With a solid monitoring system in place, you'll be able to make adjustments as needed to keep your RDP sessions running smoothly and efficiently.</p>
 <h2 id="5-security-without-speed-loss" tabindex="-1" class="sb h2-sbb-cls">5. Security Without Speed Loss</h2>
 <p>You don't have to choose between security and performance when it comes to your RDP connection. These measures are designed to keep your connection secure without slowing it down.</p>
@@ -332,7 +329,7 @@ Click on “Remote settings.”
 Check the option for “Allow connections only from computers running Remote Desktop with Network Level Authentication.”
 </li>
 <li>
-For Group Policy settings, go to <strong>Computer Configuration &gt; Policies &gt; Windows Settings &gt; Security Options</strong>, and enable “Require user authentication for remote connections by using Network Level Authentication.”
+For Group Policy settings, go to <strong>Computer Configuration &gt; Administrative Templates &gt; Windows Components &gt; Remote Desktop Services &gt; Remote Desktop Session Host &gt; Security</strong>, and enable “Require user authentication for remote connections by using Network Level Authentication.” <a class="seo-article-citation" href="#source-1" aria-label="Source 1">[1]</a>
 </li>
 </ul>
 <p>With NLA in place, you can shift your focus to configuring encryption settings to strike the right balance between safety and speed.</p>
@@ -377,7 +374,7 @@ Use <strong>TLS 1.2 or higher</strong>.
 Apply <strong>128-bit encryption</strong> for general use.
 </li>
 <li>
-Opt for <strong>256-bit AES encryption</strong> when handling sensitive data.
+Use the <strong>FIPS Compliant</strong> level when handling regulated data. <a class="seo-article-citation" href="#source-2" aria-label="Source 2">[2]</a>
 </li>
 </ul>
 <h3 id="use-dedicated-rdp-servers" tabindex="-1">Use Dedicated RDP Servers</h3>
@@ -404,7 +401,7 @@ Implement account lockout policies to prevent unauthorized access.
 </ul>
 <p>Regularly monitor your server's performance and keep your operating system and RDP software updated to maintain a secure, high-speed environment.</p>
 <h2 id="conclusion-main-points-for-rdp-speed" tabindex="-1" class="sb h2-sbb-cls">Conclusion: Main Points for RDP Speed</h2>
-<p>Improving RDP performance involves a combination of network settings, hardware upgrades, and system optimizations. For starters, fine-tuning network configurations - like setting up QoS on TCP port 3389 - ensures low-latency, stable connections, which are crucial for seamless remote work. A wired Ethernet connection is another simple yet effective step to achieve a more reliable and faster connection.</p>
+<p>Improving RDP performance involves a combination of network settings, hardware upgrades, and system optimizations. For starters, fine-tuning network configurations - like setting up QoS - ensures low-latency, stable connections, which are crucial for seamless remote work. A wired Ethernet connection is another simple yet effective step to achieve a more reliable and faster connection.</p>
 <p>On the server and client sides, adjustments like reducing display settings and enabling bitmap caching can significantly lower the data load without sacrificing too much visual quality. Hardware upgrades, such as switching to SSDs and increasing RAM, directly enhance application performance and multitasking capabilities.</p>
 <p>Here’s a quick overview of key optimization areas:</p>
 <table>
