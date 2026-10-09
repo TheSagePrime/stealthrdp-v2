@@ -140,6 +140,10 @@ test.describe('responsive public-site audit', () => {
         const siteMobileNav = visible(document.querySelector('[data-site-mobile-menu]'));
         const siteDesktopNav = visible(document.querySelector('[data-site-desktop-nav]'));
         const siteHeaderActions = visible(document.querySelector('[data-site-header-actions]'));
+        // Resource pages (Help Center, Citadel docs, guides, FAQ) use the Fumadocs docs shell:
+        // a sidebar on wide screens and a sub-navigation bar with the menu toggle on small ones.
+        const docsShell = Boolean(document.querySelector('.sr-docs-root'));
+        const docsNav = visible(document.querySelector('#nd-sidebar')) || visible(document.querySelector('#nd-subnav'));
 
         return {
           documentOverflow,
@@ -148,6 +152,8 @@ test.describe('responsive public-site audit', () => {
           siteMobileNav,
           siteDesktopNav,
           siteHeaderActions,
+          docsShell,
+          docsNav,
         };
       }, { width: viewport.width });
 
@@ -176,6 +182,18 @@ test.describe('responsive public-site audit', () => {
           kind: 'media-overflow',
           detail: JSON.stringify(result.unsafeMedia),
         });
+      }
+
+      if (result.docsShell) {
+        if (!result.docsNav) {
+          issues.push({
+            route,
+            viewport,
+            kind: 'docs-navigation',
+            detail: 'neither the docs sidebar nor the docs sub-navigation is visible',
+          });
+        }
+        continue;
       }
 
       const shouldUseMobileHeader = viewport.width <= 1200;

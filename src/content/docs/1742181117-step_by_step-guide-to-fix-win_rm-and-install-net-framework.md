@@ -1,6 +1,7 @@
 ---
 order: 21
 title: Fix WinRM and Install .NET Framework
+sidebarTitle: Fix WinRM and .NET
 category: Server management
 date: Mar 17, 2025
 sourceTitle: Step-by-Step Guide to Fix WinRM and Install .NET Framework
@@ -13,73 +14,49 @@ migration:
 summary: "Follow these steps to configure WinRM and resolve the .NET Framework installation issue:"
 relatedSlugs: []
 ---
-Fix WinRM and Install .NET Framework
+Follow these steps to configure WinRM and resolve the .NET Framework installation issue.
 
-Fix WinRM and Install .NET Framework
-====================================
+## 1. Open Command Prompt as Administrator
 
-Last updated on Mar 17, 2025
+1. Press `Windows + X` and select **Command Prompt (Admin)** or **Windows PowerShell (Admin)** from the menu.
 
-## **Fix WinRM and Install .NET Framework**
+2. If prompted by User Account Control (UAC), click **Yes** to proceed.
 
-Follow these steps to configure WinRM and resolve the .NET Framework installation issue:
+## 2. Check the Current WinRM Configuration
 
-### **Step 1: Open Command Prompt as Administrator**
+1. In the Command Prompt window, type the following command and press **Enter**:
 
-1.  Press `Windows + X` and select **Command Prompt (Admin)** or **Windows PowerShell (Admin)** from the menu.
-    
-2.  If prompted by User Account Control (UAC), click **Yes** to proceed.
-    
+   ```cmd title="Show the WinRM configuration"
+   winrm get winrm/config
+   ```
 
-### **Step 2: Check the Current WinRM Configuration**
+2. This command will display the current configuration of WinRM. Look for any errors or misconfigurations in the output.
 
-1.  In the Command Prompt window, type the following command and press **Enter**:
-    
+## 3. Configure WinRM (Recommended)
 
-```cmd
-winrm get winrm/config
-```
-        
-    
-2.  This command will display the current configuration of WinRM. Look for any errors or misconfigurations in the output.
-    
+If the output indicates that WinRM isn't configured properly, you can quickly configure it by running the following command:
 
-### **Step 3: Configure WinRM (Recommended)**
-
-If the output indicates that WinRM isn’t configured properly, you can quickly configure it by running the following command:
-
-
-```cmd
+```cmd title="Quick-configure WinRM"
 winrm quickconfig
 ```
-    
 
-*   This command will set up WinRM with default settings, including enabling the WinRM service and creating a firewall exception.
-    
-*   Follow the on-screen prompts to complete the configuration.
-    
+- This command will set up WinRM with default settings, including enabling the WinRM service and creating a firewall exception.
+- Follow the on-screen prompts to complete the configuration.
 
-### **Step 4: Verify WinRM is Running**
+## 4. Verify WinRM is Running
 
-1.  After configuring WinRM, verify that it’s running by executing the following command:
-    
+1. After configuring WinRM, verify that it's running by executing the following command:
 
-```cmd
-winrm enumerate winrm/config/listener
-```
-        
-    
-2.  This command should return details about the WinRM listener. If it doesn’t, there may still be an issue with the configuration.
-    
+   ```cmd title="List the WinRM listeners"
+   winrm enumerate winrm/config/listener
+   ```
 
-### **Step 5: Retry the .NET Framework Installation**
+2. This command should return details about the WinRM listener. If it doesn't, there may still be an issue with the configuration.
 
-1.  Once WinRM is configured correctly, retry installing the .NET Framework.
-    
-2.  The installation should now proceed without any issues related to WinRM.
-    
+## 5. Retry the .NET Framework Installation
 
-* * *
+1. Once WinRM is configured correctly, retry installing the .NET Framework.
 
-Regards - [StealthRDP](/)
- Team 💙
+2. The installation should now proceed without any issues related to WinRM.
+
+Regards, [StealthRDP](/) team

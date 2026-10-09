@@ -7,6 +7,11 @@ import type { SiteLocale } from '../../config/i18n';
 type DocsUiCopy = Record<string, string>;
 
 const de: DocsUiCopy = {
+  'Search(search trigger)': 'Suchen',
+  'Search(search dialog)': 'Suchen',
+  'Open Search(search trigger)(aria-label)': 'Suche öffnen',
+  'Close Search(search dialog)(aria-label)': 'Suche schließen',
+  'No results found(search dialog)': 'Keine Ergebnisse',
   'On this page(table of contents)': 'Auf dieser Seite',
   'Table of Contents(inline table of contents)': 'Inhalt',
   'No Headings(table of contents)': 'Keine Überschriften',
@@ -29,6 +34,11 @@ const de: DocsUiCopy = {
 };
 
 const es: DocsUiCopy = {
+  'Search(search trigger)': 'Buscar',
+  'Search(search dialog)': 'Buscar',
+  'Open Search(search trigger)(aria-label)': 'Abrir búsqueda',
+  'Close Search(search dialog)(aria-label)': 'Cerrar búsqueda',
+  'No results found(search dialog)': 'No hay resultados',
   'On this page(table of contents)': 'En esta página',
   'Table of Contents(inline table of contents)': 'Índice',
   'No Headings(table of contents)': 'Sin encabezados',

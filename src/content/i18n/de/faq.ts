@@ -11,14 +11,7 @@ const faq: FaqPageCopy = {
   title: 'Häufige Fragen',
   description: 'Tarife, Einrichtung, Abrechnung, Betriebssysteme, Sicherheit und Support. Springen Sie direkt zu einem Thema.',
   topicsLabel: 'FAQ-Themen',
-  unit: count => (count === 1 ? 'Antwort' : 'Antworten'),
   licensingPhrase: 'Seite zur Windows-Lizenzierung (Englisch)',
-  iconHints: {
-    'Leistungen und Tarife': 'Services & Plans',
-    'Abrechnung': 'Pricing & Billing',
-    'Konto': 'Account Management',
-    'Support und Sicherheit': 'Technical Support & Security',
-  },
   support: {
     title: 'Noch Fragen?',
     text: 'Fragen zu Ihrem Konto, zur Abrechnung oder zu einem bestimmten Server beantwortet der Support.',

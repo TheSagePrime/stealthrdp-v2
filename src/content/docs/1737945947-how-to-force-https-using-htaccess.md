@@ -1,6 +1,7 @@
 ---
 order: 13
 title: How to Force HTTPS with .htaccess
+sidebarTitle: Force HTTPS
 category: Web panels
 date: Jan 27, 2025
 sourceTitle: How to Force HTTPS using .htaccess
@@ -25,9 +26,12 @@ After you install an SSL/TLS certificate, your site answers on both `http://` an
 
 Open `.htaccess` in your site's document root (for example `public_html`). Create the file if it does not exist. Add these lines near the top:
 
-```apache
+```apache title=".htaccess"
+# [!code ++]
 RewriteEngine On
+# [!code ++]
 RewriteCond %{HTTPS} off
+# [!code ++]
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 ```
 
@@ -37,7 +41,7 @@ RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 If two domains serve the same site and you only want to redirect one of them:
 
-```apache
+```apache title=".htaccess"
 RewriteEngine On
 RewriteCond %{HTTP_HOST} ^yourdomain1\.com$ [NC]
 RewriteCond %{HTTPS} off
@@ -50,7 +54,7 @@ Replace `yourdomain1.com` with your domain.
 
 To redirect only some folders, list them in the rule:
 
-```apache
+```apache title=".htaccess"
 RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^(folder1|folder2|folder3)(/.*)?$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
@@ -62,7 +66,7 @@ Replace the folder names with your own.
 
 If Cloudflare or a load balancer ends TLS before Apache, `%{HTTPS}` is always off and the rule above loops. Check the forwarded header instead:
 
-```apache
+```apache title=".htaccess"
 RewriteEngine On
 RewriteCond %{HTTP:X-Forwarded-Proto} !https
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
@@ -74,11 +78,16 @@ With Cloudflare, also set SSL/TLS to **Full** or **Full (strict)**, not **Flexib
 
 Nginx does not read `.htaccess`. Add a separate server block for port 80 that redirects everything:
 
-```nginx
+```nginx title="Nginx server block"
+# [!code ++]
 server {
+# [!code ++]
     listen 80;
+# [!code ++]
     server_name yourdomain.com www.yourdomain.com;
+# [!code ++]
     return 301 https://$host$request_uri;
+# [!code ++]
 }
 ```
 
@@ -88,7 +97,7 @@ Test the configuration with `sudo nginx -t`, then reload with `sudo systemctl re
 
 Run this from any computer:
 
-```bash
+```bash title="Check the redirect"
 curl -I http://yourdomain.com/
 ```
 

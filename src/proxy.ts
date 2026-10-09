@@ -216,6 +216,12 @@ export default async function proxy(request: NextRequest) {
     return seoRedirect;
   }
 
+  /* Markdown copies of the articles (src/app/docs-md) sit outside the [locale] segment, so they
+     are served without a language prefix. */
+  if (request.nextUrl.pathname.startsWith('/docs-md/')) {
+    return NextResponse.next();
+  }
+
   /* Production only, as on the v1 site: an agent that asks for Markdown on the homepage gets
      llms.txt, the Markdown overview of the site. */
   if (

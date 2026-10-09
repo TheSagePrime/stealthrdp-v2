@@ -39,6 +39,10 @@ function htmlToText(html: string): string {
 
 function markdownToText(markdown: string): string {
   return clean(markdown
+    // Fence lines carry the language and title ("```bash title=..."), and callouts carry ":::info";
+    // neither is reader text. The code and the callout text stay.
+    .replace(/^```.*$/gm, '')
+    .replace(/^:::.*$/gm, '')
     .replace(/^[=-]{3,}\s*$/gm, '')
     .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
     .replace(/[*_`]/g, ''));

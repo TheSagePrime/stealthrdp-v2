@@ -22,6 +22,8 @@ const src = relative => pathToFileURL(path.join(root, relative)).href;
 const manifestFile = 'src/content/page-dates.json';
 
 const marketing = 'src/app/[locale]/(marketing)';
+// Guides, FAQ and the resources hub share the docs shell with the Help Center.
+const docsShell = 'src/app/[locale]/(docs)';
 /* The words of a page in one language: shared components plus that language's copy files in
    src/content/i18n/<language>/. Each language version keeps its own date. */
 const copy = (locale, name) => `src/content/i18n/${locale}/${name}`;
@@ -39,9 +41,9 @@ const marketingSourcesFor = locale => ({
   '/linux-vps': [`${marketing}/linux-vps/page.tsx`, ...osPage(locale), copy(locale, 'linux-vps.tsx')],
   '/citadel': [`${marketing}/citadel/page.tsx`, ...citadelComponents, copy(locale, 'citadel.ts')],
   '/about': [`${marketing}/about/page.tsx`, 'src/components/site/about/AboutMap.tsx', 'src/content/testimonials.json', copy(locale, 'about.ts')],
-  '/faq': [`${marketing}/faq/page.tsx`, 'src/components/site/FaqExplorer.tsx', locale === 'en' ? 'src/content/faqs.json' : copy(locale, 'faqs.ts'), copy(locale, 'faq.ts')],
+  '/faq': [`${docsShell}/faq/page.tsx`, 'src/components/site/FaqExplorer.tsx', locale === 'en' ? 'src/content/faqs.json' : copy(locale, 'faqs.ts'), copy(locale, 'faq.ts')],
   '/privacy': [`${marketing}/privacy/page.tsx`, copy(locale, 'privacy.tsx')],
-  '/rdp-vps': [`${marketing}/rdp-vps/page.tsx`, 'src/content/rdp-vps.ts'],
+  '/rdp-vps': [`${docsShell}/rdp-vps/page.tsx`, 'src/content/rdp-vps.ts'],
 });
 const marketingSources = marketingSourcesFor('en');
 
@@ -64,7 +66,7 @@ export async function pageSources() {
   }
 
   for (const article of blogArticles) {
-    sources.set(articlePath(article), [`src/content/guides/${article.slug}.html`]);
+    sources.set(articlePath(article), [article.source]);
   }
   for (const article of helpDocsArticles) {
     sources.set(`/docs/${docPublicSlug(article)}`, [`src/content/docs/${article.slug}.md`]);

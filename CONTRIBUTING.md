@@ -25,7 +25,10 @@ unchanged. It refreshes the fingerprints and keeps every date.
 URL: `/blog/<slug>.html`. Nothing else to register: the sitemap, RSS feed, `llms-full.txt`, search
 index, structured data and blog list read the folder.
 
-1. Create `src/content/guides/<slug>.html`. Use lowercase words and hyphens for `<slug>`.
+Write new guides in Markdown. HTML guides (`<slug>.html`) still work, see "Legacy HTML guides" below.
+A slug has one file: `<slug>.md` or `<slug>.html`, never both (the build fails).
+
+1. Create `src/content/guides/<slug>.md`. Use lowercase words and hyphens for `<slug>`.
 2. Start the file with front matter:
 
    ```yaml
@@ -45,12 +48,95 @@ index, structured data and blog list read the folder.
    ---
    ```
 
-3. Write the body in HTML after the second `---`. Use `<h2>`/`<h3>` (the page adds the H1 from
-   `title`). Link to our pages with root paths (`/plans`, `/windows-vps`). External links use
-   `target="_blank" rel="nofollow noopener noreferrer"`.
-4. Copy the structure of an existing guide, for example `vps-for-trading.html`.
+3. Write the body in Markdown after the second `---`:
+
+   - **Headings.** Use `##` and `###` (the page adds the H1 from `title`). Each heading gets its
+     anchor id from its text. To keep an id that a link already uses, end the heading with it:
+     `## Choose a region [#choose-a-region]`. Use only ids that are already linked.
+   - **Paragraphs, lists, tables, code.** Standard GitHub-flavoured Markdown. Put a language on
+     each code fence (` ```bash `), so it is highlighted and gets a copy button.
+   - **Links to our pages** use root paths: `[VPS plans](/plans)`. **Links to other sites** are
+     normal Markdown links: `[Source](https://example.com/page)`. The page opens them in a new tab
+     and marks them `nofollow`. A bare URL in the text stays plain text, so write links with brackets.
+   - **Images** are `![alt text](https://…)`. The page loads them lazily.
+   - **Citations** point at `sources`, in order: the first source is `[1]`. Write the marker as raw
+     HTML: `<a class="seo-article-citation" href="#source-1" aria-label="Source 1">[1]</a>`.
+   - **Raw HTML** works inline and as a block (leave a blank line before and after a block). Use it
+     for citations, a YouTube embed (copy the `<iframe>` from an existing guide, including its
+     `frameborder`, `loading` and `allowfullscreen`), and tables with merged cells (`colspan`).
+   - **Callouts.** A `:::info`, `:::warn` or `:::tip` block, with a blank line before and after it.
+     Close it with `:::` on its own line. The text inside is Markdown. A tip shows a lightbulb.
+     A title goes in brackets: `:::info[Before you start]`. `:::note`, `:::warning` and `:::danger`
+     work too. Callouts look the same as in the Help Center.
+
+     ```md
+     :::warn
+     Back up the file before you change it.
+     :::
+     ```
+
+   - **Code titles.** Put `title="..."` after the language. The bar above the code shows the title
+     with an icon: a terminal for `bash`, a file for other languages.
+
+     ````md
+     ```apache title=".htaccess"
+     RewriteEngine On
+     ```
+     ````
+
+   - **Code tabs.** Put two or more code blocks one after another, each with `tab="Name"` after the
+     language. They become one tabbed block with the first tab open. Every tab is in the HTML, so
+     search engines read all of them.
+
+     ````md
+     ```bash tab="Ubuntu"
+     sudo apt update
+     ```
+
+     ```bash tab="AlmaLinux"
+     sudo dnf update
+     ```
+     ````
+
+   - **Line highlights.** `// [!code ++]` (or `#`) marks the next line as added, `// [!code --]`
+     marks it as removed, and `// [!code highlight]` highlights it. A marker on a line of its own
+     applies to the line below it (the marker line is not shown); a marker at the end of a line
+     applies to that line.
+
+   - **Numbered steps.** `###` headings that start with a number and a dot form a step timeline,
+     in order, at one heading level. A heading without a number ends the timeline. Keep the number in
+     the heading: the timeline shows it, and the heading text and its id stay `1. Install`.
+
+     ```md
+     ### 1. Install the panel
+
+     Run the installer as root.
+
+     ### 2. Open the panel
+
+     Visit the panel in a browser.
+     ```
+
+   - **Not supported.** A `:::` line that is not one of the callouts above fails the build. Other
+     code fence options are ignored.
+
+4. Check the page: `pnpm build` must end with `SEO post-build passed with 0 warning(s)`. Open the
+   page on desktop and on a phone width. The "Copy Markdown" button serves the guide at
+   `/docs-md/guide-<slug>`; nothing needs registering for that.
+5. Run `pnpm page-dates` and commit `src/content/page-dates.json` with the guide.
 
 Do not: invent statistics, quote customers, or link to a source you did not open.
+
+**Example.** Copy `src/content/guides/vps-for-trading.md`: headings, a bulleted and a numbered list,
+citations and a link to a product page.
+
+**Legacy HTML guides.** The guides that are still `<slug>.html` keep their HTML body (the same
+front matter). When you convert one, write `<slug>.md`, delete the `.html` in the same commit and
+keep every word, link and citation: the visible text, the heading texts and ids, the links and the
+citation markers must be the same. A numbered heading (`### 1. Install`) stays `### 1. Install`: it
+becomes a step timeline and its text is unchanged. Keep the `date` in the front matter. `pnpm page-dates` then
+records the new file's fingerprint; if the words did not change, run `pnpm page-dates --keep-dates`
+so the date stays.
 
 ## 2. Add a Help Center article
 
@@ -70,9 +156,78 @@ URL: `/docs/<slug>`.
    ---
    ```
 
-2. Write the body in Markdown. Commands go in fenced code blocks (they get a copy button).
-3. If the article is a policy or account page that must not be indexed, add its path to
+2. Write the body in standard Markdown (GitHub-flavoured: tables and task lists work). Start with
+   the first paragraph; the page adds the title and the date. Use `##`/`###` headings: they form
+   the "On this page" list. Commands go in fenced code blocks with a language (` ```bash `): they
+   are highlighted and get a copy button.
+3. Add the file name (without `.md`) to a collection in `helpCollections` in
+   `src/lib/stealth/help-center.ts`. The collections build the Help Center home page and the docs
+   sidebar; an article in no collection does not appear in either.
+4. If the article is a policy or account page that must not be indexed, add its path to
    `noindexDocPaths` in `src/lib/stealth/routes.ts`.
+
+**Formatting beyond plain Markdown.** These work in Help Center articles and Citadel docs. Each one
+was checked in the browser; use the exact syntax.
+
+- **Numbered steps.** `###` headings that start with a number and a dot become a step timeline. Use
+  the same heading level for every step, in order. A heading without a number ends the timeline.
+
+  ````md
+  ### 1. Install the panel
+
+  Run the installer as root.
+
+  ### 2. Open the panel
+
+  Visit the panel in a browser.
+  ````
+
+  Any existing article with numbered `###` headings shows a timeline, so do not number headings you
+  do not want as steps.
+
+- **Code tabs.** Put two or more code blocks one after another, each with a `tab="Name"` after the
+  language. They become one tabbed block, with the first tab open.
+
+  ````md
+  ```bash tab="Ubuntu"
+  sudo apt update
+  ```
+
+  ```bash tab="AlmaLinux"
+  sudo dnf update
+  ```
+  ````
+
+- **File titles.** Put `title="..."` after the language. The bar above the code shows the title with
+  an icon: a terminal icon for `bash`, a file icon for other languages.
+
+  ````md
+  ```apache title=".htaccess"
+  RewriteEngine On
+  ```
+  ````
+
+- **Line highlights.** Use the comment style of the language. A marker on a line of its own affects
+  the line below it; a marker at the end of a line affects that line.
+
+  - `// [!code ++]` or `# [!code ++]`: the next line is added (green, with a `+`).
+  - `// [!code --]` or `# [!code --]`: the next line is removed (red, with a `-`).
+  - `// [!code highlight]` or `# [!code highlight]` at the end of a line: the line is highlighted.
+
+  The marker line itself is not shown. The examples above show the marker in shell and in
+  JavaScript.
+
+- **Callouts.** A `:::info`, `:::warn` or `:::tip` block. Leave a blank line before and after the
+  block. Text inside is Markdown. A tip shows a lightbulb.
+
+  ```md
+  :::warn
+  Back up the file before you change it.
+  :::
+  ```
+
+Raw HTML in these articles is dropped, so write Markdown. Every article's Markdown is also served at
+`/docs-md/<slug>` (the "Copy Markdown" and "Open" buttons use it); nothing needs registering for that.
 
 Old articles have numeric file names (`1737944013-use-of-service.md`); `docsPublicSlugs` in
 `src/lib/stealth/articles.ts` maps them to their public URLs. Do not rename them — the URLs are indexed.
@@ -84,7 +239,9 @@ URL: `/citadel/docs/<name>`.
 1. Create `src/content/docs/citadel-<name>.md`. The `citadel-` prefix sends it to the Citadel docs.
 2. Use the same front matter as a Help Center article, with a category that starts with `Citadel:`,
    for example `"Citadel: Start here"`.
-3. Optional illustration: put the SVG in `public/citadel-docs/` and add the `illustration` block
+3. Add the file name to a collection in `citadelCollections` in `src/lib/stealth/help-center.ts`, so
+   it appears on the Citadel docs home page and in the sidebar.
+4. Optional illustration: put the SVG in `public/citadel-docs/` and add the `illustration` block
    (copy it from `citadel-overview.md`).
 
 ## 4. Add or edit a FAQ
