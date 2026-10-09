@@ -5,5 +5,5 @@ import { resourcesTree } from '@/lib/stealth/resource-tree';
 
 export default async function FaqLayoutRoute({ children }: { children: ReactNode }) {
   const locale = await pageLocale();
-  return <ResourceDocsLayout area="faq" locale={locale} tree={resourcesTree(locale)}>{children}</ResourceDocsLayout>;
+  return <ResourceDocsLayout locale={locale} tree={resourcesTree(locale)}>{children}</ResourceDocsLayout>;
 }

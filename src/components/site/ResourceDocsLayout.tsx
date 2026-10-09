@@ -1,9 +1,10 @@
+import type { LayoutTab } from 'fumadocs-ui/layouts/shared';
 import type { ReactNode } from 'react';
-import type { ResourceArea } from '@/components/site/ResourcesBar';
 import type { SiteLocale } from '@/config/i18n';
 import type { citadelPageTree, guidePageTree, productDocsPageTree, resourcesPageTree } from '@/lib/stealth/resource-tree';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
-import { ResourcesBar } from '@/components/site/ResourcesBar';
+import { resourcesCopy } from '@/content/i18n/resources';
+import { localeHref } from '@/lib/stealth/i18n';
 
 type ResourceTree
   = | typeof citadelPageTree
@@ -11,29 +12,37 @@ type ResourceTree
     | typeof productDocsPageTree
     | typeof resourcesPageTree;
 
+/* The resource areas, as fumadocs layout tabs above the sidebar. */
+const areas = [
+  { href: '/resources', key: 'resources' },
+  { href: '/blog', key: 'guides' },
+  { href: '/docs', key: 'help' },
+  { href: '/citadel/docs', key: 'citadel' },
+  { href: '/faq', key: 'faq' },
+] as const;
+
 export function ResourceDocsLayout({
-  area,
   children,
   locale = 'en',
   tree,
 }: {
-  area: ResourceArea;
   children: ReactNode;
   locale?: SiteLocale;
   tree: ResourceTree;
 }) {
+  const t = resourcesCopy[locale];
+  const tabs: LayoutTab[] = areas.map(area => ({ title: t.tabs[area.key], url: localeHref(area.href, locale) }));
+
   return (
-    <>
-      <ResourcesBar active={area} locale={locale} />
-      <DocsLayout
-        tree={tree}
-        nav={{ enabled: false, title: <span className="sr-only">StealthRDP home</span> }}
-        searchToggle={{ enabled: false }}
-        themeSwitch={{ enabled: false }}
-        sidebar={{ defaultOpenLevel: 1, prefetch: false }}
-      >
-        {children}
-      </DocsLayout>
-    </>
+    <DocsLayout
+      tree={tree}
+      tabs={tabs}
+      nav={{ enabled: false }}
+      searchToggle={{ enabled: false }}
+      themeSwitch={{ enabled: false }}
+      sidebar={{ defaultOpenLevel: 1, prefetch: false }}
+    >
+      {children}
+    </DocsLayout>
   );
 }

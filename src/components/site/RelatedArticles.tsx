@@ -1,6 +1,4 @@
-/* eslint-disable better-tailwindcss/no-unknown-classes */
-import { ArrowRight } from 'lucide-react';
-import Link from 'next/link';
+import { Card, Cards } from 'fumadocs-ui/components/card';
 
 export type RelatedArticle = { href: string; title: string; description: string };
 
@@ -18,21 +16,13 @@ export function RelatedArticles({
   }
 
   return (
-    <section className="sr-res-related not-prose" aria-labelledby={id}>
+    <section aria-labelledby={id}>
       <h2 id={id}>{heading}</h2>
-      <ul>
+      <Cards>
         {items.map(item => (
-          <li key={item.href}>
-            <Link href={item.href}>
-              <span>
-                <strong>{item.title}</strong>
-                <small>{item.description}</small>
-              </span>
-              <ArrowRight aria-hidden="true" />
-            </Link>
-          </li>
+          <Card key={item.href} href={item.href} title={item.title} description={item.description} />
         ))}
-      </ul>
+      </Cards>
     </section>
   );
 }

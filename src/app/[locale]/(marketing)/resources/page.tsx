@@ -1,7 +1,7 @@
-/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
-import { DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
-import { ArrowRight } from 'lucide-react';
+import { Callout } from 'fumadocs-ui/components/callout';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import Image from 'next/image';
 import Link from 'next/link';
 import iconStyles from '@/components/site/IconArtwork.module.css';
@@ -66,49 +66,40 @@ export default async function ResourcesPage() {
         One searchable place for VPS guides, setup help, troubleshooting, Citadel documentation,
         and common questions.
       </DocsDescription>
-
-      <div className="sr-res-cards not-prose">
-        {destinations.map(({ title, href, count, description, icon }) => (
-          <Link className="sr-res-card" href={href} key={href}>
-            <span className="sr-res-card-icon not-prose" aria-hidden="true"><Image className={iconStyles.artwork} src={`/images/fluent-color/${icon}.svg`} width={36} height={36} alt="" /></span>
-            <h2>{title}</h2>
-            <p>{description}</p>
-            <span className="sr-res-card-foot">
-              <span>{count}</span>
-              <ArrowRight aria-hidden="true" />
-            </span>
-          </Link>
-        ))}
-      </div>
-
-      <section className="sr-res-block not-prose" aria-labelledby="resources-popular">
-        <h2 id="resources-popular">Popular right now</h2>
-        <ul className="sr-res-links">
-          {popular.map(item => (
-            <li key={item.href}>
-              <Link href={item.href}>
-                <span>{item.title}</span>
-                <small>{item.kind}</small>
-              </Link>
-            </li>
+      <DocsBody>
+        <Cards>
+          {destinations.map(({ title, href, count, description, icon }) => (
+            <Card
+              key={href}
+              href={href}
+              icon={<Image className={iconStyles.artwork} src={`/images/fluent-color/${icon}.svg`} width={28} height={28} alt="" />}
+              title={title}
+              description={`${description} ${count}`}
+            />
           ))}
-        </ul>
-      </section>
+        </Cards>
 
-      <aside className="sr-res-support not-prose">
-        <div>
-          <h2>Can&rsquo;t find it?</h2>
-          <p>
-            Account, billing, and server-specific requests are handled by support.
-            Check live infrastructure health on the status page.
-          </p>
-        </div>
-        <div className="sr-res-support-actions">
-          <a href="https://dash.stealthrdp.com/submitticket.php">Open a support ticket</a>
-          <a href="https://wa.me/447441426993">WhatsApp support</a>
-          <Link href="/status">Service status</Link>
-        </div>
-      </aside>
+        <h2 id="resources-popular">Popular right now</h2>
+        <Cards>
+          {popular.map(item => (
+            <Card key={item.href} href={item.href} title={item.title} description={item.kind} />
+          ))}
+        </Cards>
+
+        <Callout title="Can&rsquo;t find it?">
+          Account, billing, and server-specific requests are handled by support. Check live infrastructure health on the
+          {' '}
+          <Link href="/status">status page</Link>
+          , or
+          {' '}
+          <a href="https://dash.stealthrdp.com/submitticket.php">open a support ticket</a>
+          {' '}
+          or
+          {' '}
+          <a href="https://wa.me/447441426993">message us on WhatsApp</a>
+          .
+        </Callout>
+      </DocsBody>
     </DocsPage>
   );
 }

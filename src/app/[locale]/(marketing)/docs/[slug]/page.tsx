@@ -1,5 +1,5 @@
-/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
+import { Callout } from 'fumadocs-ui/components/callout';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { notFound } from 'next/navigation';
 import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
@@ -66,10 +66,10 @@ export default async function DocPageRoute({ params }: { params: Promise<{ slug:
       />
       <DocsTitle>{article.title}</DocsTitle>
       <DocsDescription>{article.summary}</DocsDescription>
-      <div className="sr-docs-article-meta">
-        <span>{`Updated ${updated ? formatUpdated(updated) : article.date}`}</span>
-        {collection ? <span>{collection.title}</span> : null}
-      </div>
+      <p>
+        {`Updated ${updated ? formatUpdated(updated) : article.date}`}
+        {collection ? ` · ${collection.title}` : null}
+      </p>
 
       <DocsBody>
         <DocBody content={article.content} title={article.title} />
@@ -85,16 +85,16 @@ export default async function DocPageRoute({ params }: { params: Promise<{ slug:
         }))}
       />
 
-      <aside className="sr-res-support not-prose">
-        <div>
-          <h2>Still need a hand?</h2>
-          <p>Account, billing, and server-specific requests are handled in the client portal.</p>
-        </div>
-        <div className="sr-res-support-actions">
-          <a href="https://dash.stealthrdp.com/submitticket.php">Contact support</a>
-          <a href="https://wa.me/447441426993">WhatsApp support</a>
-        </div>
-      </aside>
+      <Callout title="Still need a hand?">
+        Account, billing, and server-specific requests are handled in the client portal.
+        {' '}
+        <a href="https://dash.stealthrdp.com/submitticket.php">Contact support</a>
+        {' '}
+        or
+        {' '}
+        <a href="https://wa.me/447441426993">message us on WhatsApp</a>
+        .
+      </Callout>
     </DocsPage>
   );
 }
