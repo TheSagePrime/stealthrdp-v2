@@ -166,7 +166,7 @@ Here’s how to change the RDP port:
   `Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp' -name "PortNumber" -Value <new_port>`
 - Add firewall rules for the new port:
 
-  ```
+  ```powershell title="PowerShell"
   New-NetFirewallRule -DisplayName "RDP New Port TCP" -Profile Public -Direction Inbound -Action Allow -Protocol TCP -LocalPort <new_port>  
   New-NetFirewallRule -DisplayName "RDP New Port UDP" -Profile Public -Direction Inbound -Action Allow -Protocol UDP -LocalPort <new_port>  
   ```
@@ -326,7 +326,7 @@ On a single machine, open **Settings → System → Remote Desktop** and switch 
 
 On a server or a remote machine, PowerShell is faster. Run these commands in an elevated session. The first allows RDP connections, and the second opens the built-in Windows Firewall rules for Remote Desktop:
 
-```
+```powershell title="PowerShell"
 Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' -Name "fDenyTSConnections" -Value 0
 Enable-NetFirewallRule -DisplayGroup "Remote Desktop"
 ```

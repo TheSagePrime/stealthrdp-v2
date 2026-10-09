@@ -271,7 +271,7 @@ ls -la /path/to/your/webroot
 
 If permissions need adjustment, these commands can help:
 
-```bash
+```bash title="Terminal"
 sudo chmod 644 /path/to/files
 sudo chmod 755 /path/to/directories
 sudo chown -R www-data:www-data /path/to/webroot
@@ -311,14 +311,14 @@ Manually configuring servers can be tedious and prone to errors. Automation tool
 
 Install Ansible on your control machine to get started:
 
-```bash
+```bash title="Terminal"
 sudo apt update
 sudo apt install ansible
 ```
 
 **Version Control for Configurations** helps you track changes and easily roll back to a stable state if something goes wrong. Use Git to manage your configuration files:
 
-```bash
+```bash title="Terminal"
 git init /etc/nginx/
 cd /etc/nginx/
 git add .
@@ -327,7 +327,7 @@ git commit -m "Initial nginx configuration"
 
 Before making changes, commit the current state:
 
-```bash
+```bash title="Terminal"
 git add .
 git commit -m "Working configuration before changes"
 ```
@@ -340,7 +340,7 @@ git reset --hard HEAD
 
 **SSH Key Authentication** improves security and simplifies automation. Generate SSH keys, copy them to your VPS, and disable password authentication by editing `/etc/ssh/sshd_config`:
 
-```
+```text title="/etc/ssh/sshd_config"
 PasswordAuthentication no
 ```
 
@@ -370,7 +370,7 @@ psql -U username -h localhost -d database_name -c "SELECT 1;"
 
 **Application Performance Monitoring** tools like [PM2](https://pm2.keymetrics.io/) can help identify configuration problems in Node.js apps. Install and monitor your application with:
 
-```bash
+```bash title="Terminal"
 npm install -g pm2
 pm2 start app.js --name "myapp"
 pm2 monit
@@ -380,7 +380,7 @@ PM2 provides real-time insights into CPU usage, memory consumption, and restart 
 
 **Load Testing** shows how your application handles traffic. Use Apache Bench to simulate user activity:
 
-```bash
+```bash title="Terminal"
 DOMAIN=your-website.com
 ab -n 1000 -c 10 http://$DOMAIN/
 ```
@@ -389,7 +389,7 @@ This sends 1,000 requests with 10 concurrent connections, helping you identify b
 
 **Log Analysis** is essential for diagnosing issues. Regularly review your server logs for errors or warnings:
 
-```bash
+```bash title="Terminal"
 tail -f /var/log/nginx/error.log
 tail -f /var/log/apache2/error.log
 ```

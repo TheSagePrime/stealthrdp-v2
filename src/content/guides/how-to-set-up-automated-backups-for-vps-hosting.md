@@ -147,7 +147,7 @@ Regular testing is critical. Scripts can fail due to permission issues, disk spa
 
 **restic backup example.** Create an encrypted repository on a second server over SFTP, back up web files and configuration, keep a rolling history, and check the repository:
 
-```bash
+```bash title="Terminal"
 restic -r sftp:backup@backup-host:/srv/restic init
 restic -r sftp:backup@backup-host:/srv/restic backup /var/www /etc
 restic -r sftp:backup@backup-host:/srv/restic forget --keep-daily 7 --keep-weekly 4 --keep-monthly 6 --prune
@@ -158,7 +158,7 @@ Set the repository password in the `RESTIC_PASSWORD_FILE` environment variable s
 
 **BorgBackup example.** Borg works the same way over SSH:
 
-```bash
+```bash title="Terminal"
 borg init --encryption=repokey ssh://backup@backup-host/./borg-repo
 borg create --stats ssh://backup@backup-host/./borg-repo::'{hostname}-{now}' /var/www /etc
 borg prune --keep-daily 7 --keep-weekly 4 --keep-monthly 6 ssh://backup@backup-host/./borg-repo
