@@ -21,7 +21,13 @@ import { localeHref } from '@/lib/stealth/i18n';
 /* The sidebar of every resource page: Help Center, Citadel docs, guides and common questions.
    Each is a root folder, so Fumadocs shows them as tabs in the sidebar switcher and each keeps
    its own page list. Help Center and Citadel groups follow the curated collections in
-   help-center.ts; guides are grouped by category; questions link to their topics on /faq. */
+   help-center.ts; guides are grouped by category; questions link to their topics on /faq.
+
+   Every folder carries a stable `$id`. Fumadocs matches a switcher tab to its root folder by
+   `$id` (see collectTabs in fumadocs-ui/contexts/tree): without one, every root folder has
+   `undefined` as its id and matches the first tab, so the switcher repeats the first section's
+   name, description and icon. Ids must be unique across all page trees, so they start with the
+   locale, as Fumadocs does for its own generated ids. */
 
 type Page = { name: string; url: string };
 
@@ -59,13 +65,15 @@ const page = ({ name, url }: Page, glyph?: FluentIconName): PageTree.Item => ({
   icon: glyph ? icon(glyph) : undefined,
 });
 
-/* One collapsible folder per group. Fumadocs opens the folder that holds the current page. */
-function groups(entries: { group: string; page: Page }[]): PageTree.Node[] {
+/* One collapsible folder per group. Fumadocs opens the folder that holds the current page.
+   `scope` is the id of the root folder the groups belong to. */
+function groups(scope: string, entries: { group: string; page: Page }[]): PageTree.Node[] {
   const byGroup = new Map<string, Page[]>();
   for (const entry of entries) {
     byGroup.set(entry.group, [...(byGroup.get(entry.group) ?? []), entry.page]);
   }
   return Array.from(byGroup, ([name, pages]): PageTree.Folder => ({
+    $id: `${scope}/${name}`,
     type: 'folder',
     name,
     icon: iconFor(name),
@@ -77,18 +85,25 @@ function groups(entries: { group: string; page: Page }[]): PageTree.Node[] {
 const sidebarName = (article: { title: string; sidebarTitle?: string }) => article.sidebarTitle ?? article.title;
 
 function collections(
+  scope: string,
   list: HelpCollection[],
   articles: typeof helpDocsArticles,
   href: (article: (typeof helpDocsArticles)[number]) => string,
 ): PageTree.Node[] {
-  return groups(list.flatMap(collection => articlesForCollection(collection, articles).map(article => ({
+  return groups(scope, list.flatMap(collection => articlesForCollection(collection, articles).map(article => ({
     group: collection.title.replace(/^Citadel:\s*/, ''),
     page: { name: sidebarName(article), url: href(article) },
   }))));
 }
 
-function root(name: string, description: string, overview: Page, children: PageTree.Node[]): PageTree.Folder {
-  return { type: 'folder', name, description, root: true, children: [page(overview, 'notebook'), ...children] };
+function root(
+  $id: string,
+  name: string,
+  description: string,
+  overview: Page,
+  children: PageTree.Node[],
+): PageTree.Folder {
+  return { $id, type: 'folder', name, description, root: true, children: [page(overview, 'notebook'), ...children] };
 }
 
 export function docsTree(locale: SiteLocale = 'en'): PageTree.Root {
@@ -96,17 +111,19 @@ export function docsTree(locale: SiteLocale = 'en'): PageTree.Root {
   const faq = faqPageCopy[locale];
   const faqUrl = localeHref('/faq', locale);
   const faqCategories = Array.from(new Set(faqsByLocale[locale].map(item => item.category)));
+  const rootId = (key: string) => `${locale}:docs:${key}`;
 
   return {
+    $id: `${locale}:docs`,
     name: t.tabs.resources,
     children: [
-      root(t.tabs.help, 'StealthRDP servers', { name: 'Overview', url: '/docs' }, collections(helpCollections, helpDocsArticles, helpArticleHref)),
-      root(t.tabs.citadel, 'Layer 7 DDoS protection', { name: 'Overview', url: '/citadel/docs' }, collections(citadelCollections, citadelDocsArticles, citadelArticleHref)),
-      root(t.tabs.guides, 'VPS use cases and operations', { name: 'All guides', url: '/blog' }, groups([
+      root(rootId('help'), t.tabs.help, 'StealthRDP servers', { name: 'Overview', url: '/docs' }, collections(rootId('help'), helpCollections, helpDocsArticles, helpArticleHref)),
+      root(rootId('citadel'), t.tabs.citadel, 'Layer 7 DDoS protection', { name: 'Overview', url: '/citadel/docs' }, collections(rootId('citadel'), citadelCollections, citadelDocsArticles, citadelArticleHref)),
+      root(rootId('guides'), t.tabs.guides, 'VPS use cases and operations', { name: 'All guides', url: '/blog' }, groups(rootId('guides'), [
         { group: 'Remote Desktop', page: { name: rdpVpsGuide.h1, url: '/rdp-vps' } },
         ...blogArticles.map(article => ({ group: article.category, page: { name: sidebarName(article), url: articlePath(article) } })),
       ])),
-      root(t.tabs.faq, faq.topicsLabel, { name: faq.title, url: faqUrl }, faqCategories.map(category => ({
+      root(rootId('faq'), t.tabs.faq, faq.topicsLabel, { name: faq.title, url: faqUrl }, faqCategories.map(category => ({
         ...page({ name: category, url: `${faqUrl}#${faqCategoryId(category)}` }),
         icon: iconFor(category),
       }))),
