@@ -1,7 +1,7 @@
-/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
-import Link from 'next/link';
+import { Card, Cards } from 'fumadocs-ui/components/card';
+import { ResourcePage } from '@/components/site/guides/ResourcePage';
+import { ResourcesBar } from '@/components/site/ResourcesBar';
 import { ResourceTopics } from '@/components/site/ResourceTopics';
 import { articlePath, blogArticles } from '@/lib/stealth/articles';
 import { helpCollectionId } from '@/lib/stealth/help-center';
@@ -26,52 +26,39 @@ export default async function BlogPage() {
 
   return (
     <>
+      <ResourcesBar active="guides" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleIndexJsonLd) }}
       />
-      <DocsPage>
-        <DocsTitle>VPS Guides</DocsTitle>
-        <DocsDescription>
-          VPS use cases, security, performance, backups, infrastructure decisions, and practical operations.
-        </DocsDescription>
-        <DocsBody>
-          <ResourceTopics
-            topics={categories.map((category) => {
-              const count = blogArticles.filter(article => article.category === category).length;
-              return { id: helpCollectionId(category), title: category, count, unit: count === 1 ? 'guide' : 'guides' };
-            })}
-          />
-          <div className="sr-docs-overview">
-            {categories.map((category) => {
-              const articles = blogArticles.filter(article => article.category === category);
-              return (
-                <section className="sr-docs-collection" id={helpCollectionId(category)} key={category}>
-                  <div className="sr-docs-collection-heading">
-                    <h2>{category}</h2>
-                    <span>
-                      {articles.length}
-                      {' '}
-                      {articles.length === 1 ? 'guide' : 'guides'}
-                    </span>
-                  </div>
-                  <ul>
-                    {articles.map(article => (
-                      <li key={article.slug}>
-                        <Link href={articlePath(article)}>
-                          <span>{article.title}</span>
-                          <small>{article.excerpt}</small>
-                          <span aria-hidden="true">→</span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              );
-            })}
-          </div>
-        </DocsBody>
-      </DocsPage>
+      <ResourcePage
+        title="VPS Guides"
+        description="VPS use cases, security, performance, backups, infrastructure decisions, and practical operations."
+      >
+        <ResourceTopics
+          topics={categories.map((category) => {
+            const count = blogArticles.filter(article => article.category === category).length;
+            return { id: helpCollectionId(category), title: category, count, unit: count === 1 ? 'guide' : 'guides' };
+          })}
+        />
+        {categories.map(category => (
+          <section className="mt-12 scroll-mt-24" id={helpCollectionId(category)} key={category} aria-labelledby={`${helpCollectionId(category)}-title`}>
+            <h2
+              id={`${helpCollectionId(category)}-title`}
+              className="mb-4 text-xl font-semibold tracking-tight"
+            >
+              {category}
+            </h2>
+            <Cards>
+              {blogArticles
+                .filter(article => article.category === category)
+                .map(article => (
+                  <Card key={article.slug} href={articlePath(article)} title={article.title} description={article.excerpt} />
+                ))}
+            </Cards>
+          </section>
+        ))}
+      </ResourcePage>
     </>
   );
 }

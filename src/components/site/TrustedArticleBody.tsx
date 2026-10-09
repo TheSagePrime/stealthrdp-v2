@@ -1,10 +1,11 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes, react-refresh/only-export-components */
+import type { TOCItemType } from 'fumadocs-core/toc';
 import { withCopyableCode } from '@/components/site/code/code-block-markup';
 import { CodeCopyListener } from '@/components/site/code/CodeCopyListener';
 import { withClickToPlayVideos } from '@/components/site/video/video-embed-markup';
 import { VideoPlayListener } from '@/components/site/video/VideoPlayListener';
 
-export type ResourceHeading = {
+type ResourceHeading = {
   id: string;
   text: string;
   level?: 2 | 3;
@@ -29,7 +30,7 @@ function slugify(value: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
-export function articleHeadings(html: string): ResourceHeading[] {
+function articleHeadings(html: string): ResourceHeading[] {
   const seen = new Map<string, number>();
   const headings: ResourceHeading[] = [];
 
@@ -51,6 +52,11 @@ export function articleHeadings(html: string): ResourceHeading[] {
   }
 
   return headings;
+}
+
+/* The headings as Fumadocs table-of-contents items. */
+export function headingToc(html: string): TOCItemType[] {
+  return articleHeadings(html).map(heading => ({ title: heading.text, url: `#${heading.id}`, depth: heading.level ?? 2 }));
 }
 
 function withHeadingIds(html: string): string {
@@ -87,7 +93,7 @@ export function TrustedArticleBody({ html }: { html: string }) {
   return (
     <>
       <div
-        className="sr-richtext"
+        className="sr-guide-body"
         dangerouslySetInnerHTML={{ __html: withCopyableCode(withAccessibleEmbeds(withLazyImages(withClickToPlayVideos(withHeadingIds(html))))) }}
       />
       <CodeCopyListener />

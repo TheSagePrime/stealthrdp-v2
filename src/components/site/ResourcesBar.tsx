@@ -1,7 +1,7 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { SiteLocale } from '@/config/i18n';
+import { FullSearchTrigger } from 'fumadocs-ui/layouts/shared/slots/search-trigger';
 import Link from 'next/link';
-import { ResourceSearch } from '@/components/site/ResourceSearch';
 import { isRouteLocalized } from '@/config/i18n';
 import { resourcesCopy } from '@/content/i18n/resources';
 import { localeHref } from '@/lib/stealth/i18n';
@@ -35,7 +35,7 @@ export function ResourcesBar({ active = 'help', locale = 'en' }: { active?: Reso
           ))}
         </nav>
 
-        <ResourceSearch words={t.search} />
+        <FullSearchTrigger className="sr-res-search" aria-label={t.search.label} />
       </div>
     </div>
   );

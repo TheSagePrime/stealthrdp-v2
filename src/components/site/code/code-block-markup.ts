@@ -1,4 +1,4 @@
-/* Labels for fenced code languages and the markup shared by docs and guides. */
+/* Labels for fenced code languages in the copyable code frame of guide articles. */
 
 const labels: Record<string, string> = {
   bash: 'Shell',
@@ -14,7 +14,7 @@ const labels: Record<string, string> = {
   text: 'Text',
 };
 
-export function codeLabel(language?: string) {
+function codeLabel(language?: string) {
   return (language && labels[language.toLowerCase()]) || 'Command';
 }
 

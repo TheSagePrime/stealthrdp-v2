@@ -1,11 +1,10 @@
-/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/notebook/page';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
-import { DocBody, docHeadings } from '@/components/site/DocBody';
-import { RelatedArticles } from '@/components/site/RelatedArticles';
+import { DocMarkdown, docToc } from '@/components/site/docs/DocMarkdown';
+import { DocsArticleMeta, DocsRelated, DocsSupport } from '@/components/site/docs/DocsParts';
 import { citadelDocsArticles, docPublicSlug, findCitadelDocByPublicSlug } from '@/lib/stealth/articles';
 import { citadelArticleHref, citadelCollectionForArticle } from '@/lib/stealth/help-center';
 import { requirePageLocale } from '@/lib/stealth/i18n-server';
@@ -43,21 +42,15 @@ export default async function CitadelDocPage({ params }: { params: Promise<{ slu
     notFound();
   }
 
-  const toc = docHeadings(article.content, article.title).map(heading => ({
-    title: heading.text,
-    url: `#${heading.id}`,
-    depth: heading.level ?? 2,
-  }));
   const collection = citadelCollectionForArticle(article);
   const related = article.relatedSlugs
     .map(relatedSlug => citadelDocsArticles.find(item => item.slug === relatedSlug))
     .filter((item): item is (typeof citadelDocsArticles)[number] => Boolean(item))
     .slice(0, 4);
-
   const updated = pageUpdated(`/citadel/docs/${slug}`);
 
   return (
-    <DocsPage toc={toc} tableOfContent={{ style: 'clerk' }}>
+    <DocsPage toc={docToc(article.content, article.title)} tableOfContent={{ style: 'clerk' }}>
       <ProductionJsonLd
         data={techArticleJsonLd({
           siteUrl: getSeoConfig().siteUrl,
@@ -70,15 +63,15 @@ export default async function CitadelDocPage({ params }: { params: Promise<{ slu
       />
       <DocsTitle>{article.title}</DocsTitle>
       <DocsDescription>{article.summary}</DocsDescription>
-      <div className="sr-docs-article-meta">
-        <span>{`Updated ${updated ? formatUpdated(updated) : article.date}`}</span>
-        {collection ? <span>{collection.title.replace(/^Citadel:\s*/, '')}</span> : null}
-      </div>
+      <DocsArticleMeta
+        updated={`Updated ${updated ? formatUpdated(updated) : article.date}`}
+        section={collection?.title.replace(/^Citadel:\s*/, '')}
+      />
 
       <DocsBody>
         {article.illustration
           ? (
-              <figure className="sr-res-figure not-prose">
+              <figure>
                 <Image
                   src={article.illustration.src}
                   alt={article.illustration.alt}
@@ -91,28 +84,18 @@ export default async function CitadelDocPage({ params }: { params: Promise<{ slu
             )
           : null}
 
-        <DocBody content={article.content} title={article.title} />
+        <DocMarkdown content={article.content} title={article.title} />
       </DocsBody>
 
-      <RelatedArticles
+      <DocsRelated
         heading="Continue with a related task"
-        id="related-citadel-title"
-        items={related.map(item => ({
-          href: citadelArticleHref(item),
-          title: item.title,
-          description: item.summary,
-        }))}
+        items={related.map(item => ({ href: citadelArticleHref(item), title: item.title, description: item.summary }))}
       />
-
-      <aside className="sr-res-support not-prose">
-        <div>
-          <h2>Need help with Citadel?</h2>
-          <p>Send the protected domain, approximate time, request path, and any relevant error or screenshot.</p>
-        </div>
-        <div className="sr-res-support-actions">
-          <a href="https://dash.stealthrdp.com/submitticket.php">Open support ticket</a>
-        </div>
-      </aside>
+      <DocsSupport
+        title="Need help with Citadel?"
+        text="Send the protected domain, approximate time, request path, and any relevant error or screenshot."
+        actions={[{ href: 'https://dash.stealthrdp.com/submitticket.php', label: 'Open support ticket' }]}
+      />
     </DocsPage>
   );
 }

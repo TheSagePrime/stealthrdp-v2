@@ -70,8 +70,14 @@ URL: `/docs/<slug>`.
    ---
    ```
 
-2. Write the body in Markdown. Commands go in fenced code blocks (they get a copy button).
-3. If the article is a policy or account page that must not be indexed, add its path to
+2. Write the body in standard Markdown (GitHub-flavoured: tables and task lists work). Start with
+   the first paragraph; the page adds the title and the date. Use `##`/`###` headings: they form
+   the "On this page" list. Commands go in fenced code blocks with a language (` ```bash `): they
+   are highlighted and get a copy button.
+3. Add the file name (without `.md`) to a collection in `helpCollections` in
+   `src/lib/stealth/help-center.ts`. The collections build the Help Center home page and the docs
+   sidebar; an article in no collection does not appear in either.
+4. If the article is a policy or account page that must not be indexed, add its path to
    `noindexDocPaths` in `src/lib/stealth/routes.ts`.
 
 Old articles have numeric file names (`1737944013-use-of-service.md`); `docsPublicSlugs` in
@@ -84,7 +90,9 @@ URL: `/citadel/docs/<name>`.
 1. Create `src/content/docs/citadel-<name>.md`. The `citadel-` prefix sends it to the Citadel docs.
 2. Use the same front matter as a Help Center article, with a category that starts with `Citadel:`,
    for example `"Citadel: Start here"`.
-3. Optional illustration: put the SVG in `public/citadel-docs/` and add the `illustration` block
+3. Add the file name to a collection in `citadelCollections` in `src/lib/stealth/help-center.ts`, so
+   it appears on the Citadel docs home page and in the sidebar.
+4. Optional illustration: put the SVG in `public/citadel-docs/` and add the `illustration` block
    (copy it from `citadel-overview.md`).
 
 ## 4. Add or edit a FAQ

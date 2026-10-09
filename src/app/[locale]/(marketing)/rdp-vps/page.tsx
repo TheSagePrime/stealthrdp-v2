@@ -1,13 +1,10 @@
-/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
-import { RelatedArticles } from '@/components/site/RelatedArticles';
-import { ResourceDocsLayout } from '@/components/site/ResourceDocsLayout';
-import { articleHeadings, TrustedArticleBody } from '@/components/site/TrustedArticleBody';
+import { GuideArticle } from '@/components/site/guides/GuideArticle';
+import { ResourcesBar } from '@/components/site/ResourcesBar';
+import { headingToc, TrustedArticleBody } from '@/components/site/TrustedArticleBody';
 import { rdpVpsGuide } from '@/content/rdp-vps';
 import { requirePageLocale } from '@/lib/stealth/i18n-server';
 import { formatUpdated, pageUpdated } from '@/lib/stealth/page-dates';
-import { guidePageTree } from '@/lib/stealth/resource-tree';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
@@ -22,11 +19,6 @@ export default async function RdpVpsPage() {
   await requirePageLocale('/rdp-vps');
   const canonical = 'https://www.stealthrdp.com/rdp-vps';
   const dateModified = pageUpdated('/rdp-vps') ?? rdpVpsGuide.datePublished;
-  const toc = articleHeadings(rdpVpsGuide.html).map(heading => ({
-    title: heading.text,
-    url: `#${heading.id}`,
-    depth: heading.level ?? 2,
-  }));
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -81,7 +73,8 @@ export default async function RdpVpsPage() {
   ];
 
   return (
-    <ResourceDocsLayout area="guides" tree={guidePageTree}>
+    <>
+      <ResourcesBar active="guides" />
       {jsonLd.map((block, index) => (
         <script
           key={index}
@@ -89,35 +82,34 @@ export default async function RdpVpsPage() {
           dangerouslySetInnerHTML={{ __html: serializeJsonLd(block) }}
         />
       ))}
-      <DocsPage toc={toc} tableOfContent={{ style: 'clerk' }}>
-        <DocsTitle>{rdpVpsGuide.h1}</DocsTitle>
-        <DocsDescription>{rdpVpsGuide.description}</DocsDescription>
-        <div className="sr-docs-article-meta">
-          <span>{`Published ${formatUpdated(rdpVpsGuide.datePublished)}`}</span>
-          {dateModified > rdpVpsGuide.datePublished ? <span>{`Updated ${formatUpdated(dateModified)}`}</span> : null}
-          <span>{rdpVpsGuide.author}</span>
-        </div>
-        <DocsBody>
-          <TrustedArticleBody html={rdpVpsGuide.html} />
-        </DocsBody>
-
-        <RelatedArticles
-          heading="Keep reading"
-          id="related-rdp-title"
-          items={[
-            {
-              href: '/blog/vps-for-remote-desktop.html',
-              title: 'VPS for Remote Desktop: What to Check Before You Choose',
-              description: 'What affects remote desktop responsiveness and how much CPU and RAM you need.',
-            },
-            {
-              href: '/plans',
-              title: 'Current VPS plans',
-              description: 'Compare USA and EU plans, operating systems, and availability.',
-            },
-          ]}
-        />
-      </DocsPage>
-    </ResourceDocsLayout>
+      <GuideArticle
+        section={{ label: 'Guides', href: '/blog' }}
+        title={rdpVpsGuide.h1}
+        description={rdpVpsGuide.description}
+        meta={(
+          <>
+            <span>{`Published ${formatUpdated(rdpVpsGuide.datePublished)}`}</span>
+            {dateModified > rdpVpsGuide.datePublished ? <span>{`Updated ${formatUpdated(dateModified)}`}</span> : null}
+            <span>{rdpVpsGuide.author}</span>
+          </>
+        )}
+        toc={headingToc(rdpVpsGuide.html)}
+        relatedHeading="Keep reading"
+        related={[
+          {
+            href: '/blog/vps-for-remote-desktop.html',
+            title: 'VPS for Remote Desktop: What to Check Before You Choose',
+            description: 'What affects remote desktop responsiveness and how much CPU and RAM you need.',
+          },
+          {
+            href: '/plans',
+            title: 'Current VPS plans',
+            description: 'Compare USA and EU plans, operating systems, and availability.',
+          },
+        ]}
+      >
+        <TrustedArticleBody html={rdpVpsGuide.html} />
+      </GuideArticle>
+    </>
   );
 }

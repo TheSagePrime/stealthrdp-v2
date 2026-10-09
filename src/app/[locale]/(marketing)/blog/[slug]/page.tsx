@@ -1,10 +1,9 @@
-/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { notFound } from 'next/navigation';
 import { ArticleJsonLd, ArticlePublicationMeta, ArticleSources } from '@/components/seo/Article';
-import { RelatedArticles } from '@/components/site/RelatedArticles';
-import { articleHeadings, TrustedArticleBody } from '@/components/site/TrustedArticleBody';
+import { GuideArticle } from '@/components/site/guides/GuideArticle';
+import { ResourcesBar } from '@/components/site/ResourcesBar';
+import { headingToc, TrustedArticleBody } from '@/components/site/TrustedArticleBody';
 import { articlePath, blogArticles, findBlog } from '@/lib/stealth/articles';
 import { requirePageLocale } from '@/lib/stealth/i18n-server';
 import { createArticleMetadata } from '@/libs/seo/articles';
@@ -35,45 +34,31 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
     notFound();
   }
 
-  const toc = articleHeadings(article.html).map(heading => ({
-    title: heading.text,
-    url: `#${heading.id}`,
-    depth: heading.level ?? 2,
-  }));
   const related = blogArticles
     .filter(item => item.slug !== article.slug && item.category === article.category)
     .slice(0, 3);
 
   return (
     <>
+      <ResourcesBar active="guides" />
       <ArticleJsonLd article={publication} config={config} />
-      <DocsPage toc={toc} tableOfContent={{ style: 'clerk' }}>
-        <DocsTitle>{article.title}</DocsTitle>
-        <DocsDescription>{article.excerpt}</DocsDescription>
-        <div className="sr-docs-article-meta">
-          <ArticlePublicationMeta article={publication} />
-          <span>
-            {article.readingTime}
-            {' '}
-            min read
-          </span>
-        </div>
-
-        <DocsBody>
-          <TrustedArticleBody html={article.html} />
-          <ArticleSources sources={publication.sources ?? []} />
-        </DocsBody>
-
-        <RelatedArticles
-          heading="Continue learning"
-          id="related-guides-title"
-          items={related.map(item => ({
-            href: articlePath(item),
-            title: item.title,
-            description: item.excerpt,
-          }))}
-        />
-      </DocsPage>
+      <GuideArticle
+        section={{ label: 'Guides', href: '/blog' }}
+        title={article.title}
+        description={article.excerpt}
+        meta={(
+          <>
+            <ArticlePublicationMeta article={publication} />
+            <span>{`${article.readingTime} min read`}</span>
+          </>
+        )}
+        toc={headingToc(article.html)}
+        relatedHeading="Continue learning"
+        related={related.map(item => ({ href: articlePath(item), title: item.title, description: item.excerpt }))}
+      >
+        <TrustedArticleBody html={article.html} />
+        <ArticleSources sources={publication.sources ?? []} />
+      </GuideArticle>
     </>
   );
 }

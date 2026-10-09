@@ -1,21 +1,46 @@
-/* Fumadocs supplies the docs navigation and article layout. These few tokens
-   align its responsive shell with the StealthRDP light visual system. */
-#nd-docs-layout {
-  --fd-layout-width: 90rem;
-  --fd-nav-height: 78px;
-  --fd-sidebar-width: 17rem;
-  background: transparent;
+/* The Help Center and Citadel docs run on the Fumadocs notebook layout (src/app/[locale]/(docs)).
+   Colours come from the shadcn tokens through fumadocs-ui/css/shadcn.css; this file sets the
+   Fumadocs accent tint and the brand mark in the docs navbar. Do not restyle Fumadocs internals here. */
+
+/* The site's --accent is the brand blue (a fill for buttons). Fumadocs uses its accent as a soft
+   hover and selection tint (search results, cards, menus), so it takes the muted surface instead.
+   The site has no --sidebar-* tokens, which fumadocs-ui/css/shadcn.css reads inside the sidebar,
+   so the sidebar gets the same values. */
+:root,
+#nd-sidebar {
+  --color-fd-accent: var(--muted);
+  --color-fd-accent-foreground: var(--foreground);
+  --color-fd-ring: var(--ring);
+  --color-fd-primary-foreground: var(--primary-foreground);
 }
 
-@media (min-width: 768px) and (max-width: 1023px) {
-  #nd-docs-layout {
-    --fd-sidebar-width: 14rem;
-  }
+.sr-docs-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }
 
-@media (max-width: 767px) {
-  #nd-docs-layout {
-    --fd-nav-height: 64px;
-    --fd-sidebar-width: 0px;
-  }
+.sr-docs-brand img {
+  width: 132px;
+  height: auto;
+  filter: brightness(0);
+}
+
+.sr-docs-brand span {
+  border-left: 1px solid var(--border);
+  padding-left: 10px;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* Guide bodies are authored HTML inside Fumadocs typography (.prose). */
+.sr-guide-body > :first-child {
+  margin-top: 0;
+}
+
+/* The protected publication line sits inline with the reading time. */
+.sr-guide-meta .seo-article-publication-meta {
+  display: contents;
+  font-size: inherit;
 }

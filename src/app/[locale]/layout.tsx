@@ -51,7 +51,18 @@ export default async function RootLayout(props: {
       <body>
         <NextIntlClientProvider>
           <DocsRootProvider
-            search={{ enabled: false }}
+            search={{
+              options: {
+                type: 'static',
+                api: '/search-index.json',
+                links: [
+                  ['Help Center', '/docs'],
+                  ['Citadel Docs', '/citadel/docs'],
+                  ['Guides', '/blog'],
+                  ['Common questions', '/faq'],
+                ],
+              },
+            }}
             theme={{ enabled: false, hotKey: false }}
             i18n={docsUi ? { locale, translations: docsUi } : undefined}
           >

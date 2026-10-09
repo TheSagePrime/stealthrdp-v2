@@ -1,10 +1,12 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
-import { DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import Image from 'next/image';
 import Link from 'next/link';
+import { DocsSupport } from '@/components/site/docs/DocsParts';
+import { ResourcePage } from '@/components/site/guides/ResourcePage';
 import iconStyles from '@/components/site/IconArtwork.module.css';
+import { ResourcesBar } from '@/components/site/ResourcesBar';
 import { blogArticles, citadelDocsArticles, helpDocsArticles } from '@/lib/stealth/articles';
 import { faqs } from '@/lib/stealth/content';
 import { requirePageLocale } from '@/lib/stealth/i18n-server';
@@ -60,55 +62,50 @@ const popular = [
 export default async function ResourcesPage() {
   await requirePageLocale('/resources');
   return (
-    <DocsPage>
-      <DocsTitle>Guides, help, and answers</DocsTitle>
-      <DocsDescription>
-        One searchable place for VPS guides, setup help, troubleshooting, Citadel documentation,
-        and common questions.
-      </DocsDescription>
-
-      <div className="sr-res-cards not-prose">
-        {destinations.map(({ title, href, count, description, icon }) => (
-          <Link className="sr-res-card" href={href} key={href}>
-            <span className="sr-res-card-icon not-prose" aria-hidden="true"><Image className={iconStyles.artwork} src={`/images/fluent-color/${icon}.svg`} width={36} height={36} alt="" /></span>
-            <h2>{title}</h2>
-            <p>{description}</p>
-            <span className="sr-res-card-foot">
-              <span>{count}</span>
-              <ArrowRight aria-hidden="true" />
-            </span>
-          </Link>
-        ))}
-      </div>
-
-      <section className="sr-res-block not-prose" aria-labelledby="resources-popular">
-        <h2 id="resources-popular">Popular right now</h2>
-        <ul className="sr-res-links">
-          {popular.map(item => (
-            <li key={item.href}>
-              <Link href={item.href}>
-                <span>{item.title}</span>
-                <small>{item.kind}</small>
-              </Link>
-            </li>
+    <>
+      <ResourcesBar active="resources" />
+      <ResourcePage
+        title="Guides, help, and answers"
+        description="One searchable place for VPS guides, setup help, troubleshooting, Citadel documentation, and common questions."
+      >
+        <div className="sr-res-cards">
+          {destinations.map(({ title, href, count, description, icon }) => (
+            <Link className="sr-res-card" href={href} key={href}>
+              <span className="sr-res-card-icon" aria-hidden="true"><Image className={iconStyles.artwork} src={`/images/fluent-color/${icon}.svg`} width={36} height={36} alt="" /></span>
+              <h2>{title}</h2>
+              <p>{description}</p>
+              <span className="sr-res-card-foot">
+                <span>{count}</span>
+                <ArrowRight aria-hidden="true" />
+              </span>
+            </Link>
           ))}
-        </ul>
-      </section>
+        </div>
 
-      <aside className="sr-res-support not-prose">
-        <div>
-          <h2>Can&rsquo;t find it?</h2>
-          <p>
-            Account, billing, and server-specific requests are handled by support.
-            Check live infrastructure health on the status page.
-          </p>
-        </div>
-        <div className="sr-res-support-actions">
-          <a href="https://dash.stealthrdp.com/submitticket.php">Open a support ticket</a>
-          <a href="https://wa.me/447441426993">WhatsApp support</a>
-          <Link href="/status">Service status</Link>
-        </div>
-      </aside>
-    </DocsPage>
+        <section className="sr-res-block" aria-labelledby="resources-popular">
+          <h2 id="resources-popular">Popular right now</h2>
+          <ul className="sr-res-links">
+            {popular.map(item => (
+              <li key={item.href}>
+                <Link href={item.href}>
+                  <span>{item.title}</span>
+                  <small>{item.kind}</small>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <DocsSupport
+          title="Can’t find it?"
+          text="Account, billing, and server-specific requests are handled by support. Check live infrastructure health on the status page."
+          actions={[
+            { href: 'https://dash.stealthrdp.com/submitticket.php', label: 'Open a support ticket' },
+            { href: 'https://wa.me/447441426993', label: 'WhatsApp support' },
+            { href: '/status', label: 'Service status' },
+          ]}
+        />
+      </ResourcePage>
+    </>
   );
 }

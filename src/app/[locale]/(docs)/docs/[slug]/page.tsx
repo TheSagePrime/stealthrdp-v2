@@ -1,10 +1,9 @@
-/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/notebook/page';
 import { notFound } from 'next/navigation';
 import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
-import { DocBody, docHeadings } from '@/components/site/DocBody';
-import { RelatedArticles } from '@/components/site/RelatedArticles';
+import { DocMarkdown, docToc } from '@/components/site/docs/DocMarkdown';
+import { DocsArticleMeta, DocsRelated, DocsSupport } from '@/components/site/docs/DocsParts';
 import { docPublicSlug, findDocByPublicSlug, helpDocsArticles } from '@/lib/stealth/articles';
 import { helpArticleHref, helpCollectionForArticle } from '@/lib/stealth/help-center';
 import { requirePageLocale } from '@/lib/stealth/i18n-server';
@@ -39,21 +38,15 @@ export default async function DocPageRoute({ params }: { params: Promise<{ slug:
     notFound();
   }
 
-  const toc = docHeadings(article.content, article.title).map(heading => ({
-    title: heading.text,
-    url: `#${heading.id}`,
-    depth: heading.level ?? 2,
-  }));
   const collection = helpCollectionForArticle(article);
   const related = article.relatedSlugs
     .map(relatedSlug => helpDocsArticles.find(item => item.slug === relatedSlug))
     .filter((item): item is (typeof helpDocsArticles)[number] => Boolean(item))
     .slice(0, 3);
-
   const updated = pageUpdated(`/docs/${slug}`);
 
   return (
-    <DocsPage toc={toc} tableOfContent={{ style: 'clerk' }}>
+    <DocsPage toc={docToc(article.content, article.title)} tableOfContent={{ style: 'clerk' }}>
       <ProductionJsonLd
         data={techArticleJsonLd({
           siteUrl: getSeoConfig().siteUrl,
@@ -66,35 +59,24 @@ export default async function DocPageRoute({ params }: { params: Promise<{ slug:
       />
       <DocsTitle>{article.title}</DocsTitle>
       <DocsDescription>{article.summary}</DocsDescription>
-      <div className="sr-docs-article-meta">
-        <span>{`Updated ${updated ? formatUpdated(updated) : article.date}`}</span>
-        {collection ? <span>{collection.title}</span> : null}
-      </div>
+      <DocsArticleMeta updated={`Updated ${updated ? formatUpdated(updated) : article.date}`} section={collection?.title} />
 
       <DocsBody>
-        <DocBody content={article.content} title={article.title} />
+        <DocMarkdown content={article.content} title={article.title} />
       </DocsBody>
 
-      <RelatedArticles
+      <DocsRelated
         heading="Continue with a related task"
-        id="related-help-title"
-        items={related.map(item => ({
-          href: helpArticleHref(item),
-          title: item.title,
-          description: item.summary,
-        }))}
+        items={related.map(item => ({ href: helpArticleHref(item), title: item.title, description: item.summary }))}
       />
-
-      <aside className="sr-res-support not-prose">
-        <div>
-          <h2>Still need a hand?</h2>
-          <p>Account, billing, and server-specific requests are handled in the client portal.</p>
-        </div>
-        <div className="sr-res-support-actions">
-          <a href="https://dash.stealthrdp.com/submitticket.php">Contact support</a>
-          <a href="https://wa.me/447441426993">WhatsApp support</a>
-        </div>
-      </aside>
+      <DocsSupport
+        title="Still need a hand?"
+        text="Account, billing, and server-specific requests are handled in the client portal."
+        actions={[
+          { href: 'https://dash.stealthrdp.com/submitticket.php', label: 'Contact support' },
+          { href: 'https://wa.me/447441426993', label: 'WhatsApp support' },
+        ]}
+      />
     </DocsPage>
   );
 }
