@@ -18,11 +18,19 @@ relatedSlugs: []
 
 Follow these steps to reset your **server password**:
 
-1. **Access your Client Area** _(skip this step if you're already in the Control Panel)._
-2. **Open your server's dashboard.**
-3. **Select your server** and click **Manage.**
-4. **Navigate to the Options menu** and scroll down to find the **Root/Administrator Password** section.
-5. **Click "Reset Password".**
+### 1. Access your Client Area
+
+_(skip this step if you're already in the Control Panel)._
+
+### 2. Open your server's dashboard
+
+### 3. Select your server and click Manage
+
+### 4. Open the Options menu
+
+Navigate to the **Options menu** and scroll down to find the **Root/Administrator Password** section.
+
+### 5. Click "Reset Password"
 
 ### OS-specific instructions
 
@@ -35,15 +43,20 @@ After resetting, you will receive the **new password via email.**
 
 ### To change your password
 
-1. Visit the [Change Password Page](https://dash.stealthrdp.com/index.php?rp=/password/reset).
-2. Enter your **existing password** and **new password**.
-3. Click **Save Changes** to update your credentials.
+### 1. Visit the [Change Password Page](https://dash.stealthrdp.com/index.php?rp=/password/reset)
+
+### 2. Enter your existing password and new password
+
+### 3. Click Save Changes to update your credentials
 
 ### To reset your password
 
-1. **Log out** of your **Client Area.**
-2. Visit the [Password Reset Page](https://dash.stealthrdp.com/index.php?rp=/password/reset).
-3. Enter your **email address**.
-4. Click **Submit**, and a **password reset link** will be sent to your email.
+### 1. Log out of your Client Area
+
+### 2. Visit the [Password Reset Page](https://dash.stealthrdp.com/index.php?rp=/password/reset)
+
+### 3. Enter your email address
+
+### 4. Click Submit, and a password reset link will be sent to your email
 
 Check your email and follow the instructions to reset your password.

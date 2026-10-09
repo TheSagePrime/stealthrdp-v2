@@ -22,7 +22,7 @@ Outline is an open-source VPN from Jigsaw that runs as Docker containers on your
 - A local computer with [Outline Manager](https://getoutline.org/get-started/) installed (Windows, macOS or Linux).
 - Use of a VPN must follow your local law and the [StealthRDP use of service terms](/docs/use-of-service).
 
-## Step 1. Install Docker
+### 1. Install Docker
 
 Outline runs in Docker. If Docker is not installed, install it with Docker's convenience script:
 
@@ -39,7 +39,7 @@ sudo systemctl status docker
 
 The output must show `active (running)`. If you skip this step, the Outline install script offers to install Docker for you.
 
-## Step 2. Run the Outline install script
+### 2. Run the Outline install script
 
 Open Outline Manager, choose **Set up Outline anywhere**, and copy the install command it shows. At the time of writing, it is:
 
@@ -49,7 +49,7 @@ sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/OutlineFoundation/ou
 
 Run it on the server. The script creates secret keys and starts two containers: `shadowbox` (the VPN server) and `watchtower` (which keeps it updated).
 
-## Step 3. Open the firewall ports
+### 3. Open the firewall ports
 
 When the script finishes, it prints the two ports it uses:
 
@@ -64,7 +64,7 @@ sudo ufw allow 23456/tcp
 sudo ufw allow 23456/udp
 ```
 
-## Step 4. Connect Outline Manager
+### 4. Connect Outline Manager
 
 The script ends with a line like this:
 
@@ -78,7 +78,7 @@ Copy the whole line into Outline Manager and click **Done**.
 Keep this line private. Anyone with it can manage your server.
 :::
 
-## Step 5. Share access keys
+### 5. Share access keys
 
 Outline Manager creates a first key called **My access key**. Create one key per person, click **Share**, and send the key. Each user installs the Outline Client on their device and adds the key to connect.
 

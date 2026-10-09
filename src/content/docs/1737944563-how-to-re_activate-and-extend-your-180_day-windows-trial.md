@@ -16,7 +16,7 @@ relatedSlugs: []
 ---
 Windows Server evaluation editions run for 180 days. You can reset that timer with the `slmgr -rearm` command a limited number of times. This guide shows the commands, how to check the rearm count, and what happens when the evaluation expires.
 
-## Step 1: Open PowerShell as Administrator
+## 1. Open PowerShell as Administrator
 
 To begin, you need to run commands with administrator privileges. Here's how:
 
@@ -24,7 +24,7 @@ To begin, you need to run commands with administrator privileges. Here's how:
 
 2. Select **Run as administrator** from the context menu.
 
-## Step 2: Run the Re-arm Command
+## 2. Run the Re-arm Command
 
 Once PowerShell is open with administrative privileges, enter the following command to re-arm the evaluation period:
 
@@ -40,11 +40,11 @@ This command resets the 180-day evaluation timer where Microsoft permits rearmin
 Rearming resets the evaluation activation timer where supported by Microsoft. It does not convert an Evaluation edition into a licensed production edition.
 :::
 
-## Step 3: Reboot Your System
+## 3. Reboot Your System
 
 To complete the process, reboot your computer for the changes to take effect. A restart is necessary for the re-arm to be fully implemented.
 
-## Step 4: Check Evaluation Status
+## 4. Check Evaluation Status
 
 After rebooting, you can check the remaining evaluation period and rearm count by using the following command in PowerShell:
 

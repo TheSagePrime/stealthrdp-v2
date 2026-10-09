@@ -16,12 +16,23 @@ relatedSlugs: []
 ---
 Follow these steps to **rebuild your StealthRDP server** efficiently:
 
-1. **Access your Client Area** _(Skip this step if you're already in the Control Panel.)_
-2. **Open your Server's Dashboard.**
-3. **Click on "Rebuild".**
-4. **Set a Name** _(You can enter your preferred name or generate a random one.)_
-5. **Fill in Hostname / Timezone** _(Optional.)_
-6. **Select Any Listed OS of Your Preference.**
+### 1. Access your Client Area
+
+_(Skip this step if you're already in the Control Panel.)_
+
+### 2. Open your Server's Dashboard
+
+### 3. Click on "Rebuild"
+
+### 4. Set a Name
+
+_(You can enter your preferred name or generate a random one.)_
+
+### 5. Fill in Hostname / Timezone
+
+_(Optional.)_
+
+### 6. Select Any Listed OS of Your Preference
 
 ## OS selection and connection
 

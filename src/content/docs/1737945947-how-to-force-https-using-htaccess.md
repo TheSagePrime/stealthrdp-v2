@@ -27,8 +27,11 @@ After you install an SSL/TLS certificate, your site answers on both `http://` an
 Open `.htaccess` in your site's document root (for example `public_html`). Create the file if it does not exist. Add these lines near the top:
 
 ```apache title=".htaccess"
+# [!code ++]
 RewriteEngine On
+# [!code ++]
 RewriteCond %{HTTPS} off
+# [!code ++]
 RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 ```
 
@@ -76,10 +79,15 @@ With Cloudflare, also set SSL/TLS to **Full** or **Full (strict)**, not **Flexib
 Nginx does not read `.htaccess`. Add a separate server block for port 80 that redirects everything:
 
 ```nginx title="Nginx server block"
+# [!code ++]
 server {
+# [!code ++]
     listen 80;
+# [!code ++]
     server_name yourdomain.com www.yourdomain.com;
+# [!code ++]
     return 301 https://$host$request_uri;
+# [!code ++]
 }
 ```
 

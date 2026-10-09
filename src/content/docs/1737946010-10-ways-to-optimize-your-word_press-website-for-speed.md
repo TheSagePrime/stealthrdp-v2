@@ -30,53 +30,53 @@ We recommend that you give [gtmetrix.com](https://gtmetrix.com) a try. This is a
 
 Let's find out.
 
-### 1. Choose a quality hosting plan
+### Choose a quality hosting plan
 
 Picking the right hosting plan is one of the first and most important choices you'll make for your website. Since your web host is where your site lives, it will do a lot to determine your site's speed, performance, and how well it can cope with high traffic. You can choose a [StealthRDP Linux VPS](/plans) with NVMe storage in a USA or EU region.
 
-### 2. Always keep your plugins, themes, and WordPress software updated
+### Always keep your plugins, themes, and WordPress software updated
 
 It's essential not to ignore updates when they become available, whether they're core updates for your WordPress installation or new versions of your WordPress theme or plugins. The most important reason for this is security, as new updates will ensure that your site is safe against the latest threats.
 
-### 3. Implement caching to reduce the number of requests your site handles
+### Implement caching to reduce the number of requests your site handles
 
 Caching may sound pretty technical, but it's actually easy to implement on a WordPress site. There are several plugins you can use to do this. WP Super Cache is by far the most popular caching plugin; it's both entirely free and very simple to configure.
 
 Link: https://wordpress.org/plugins/wp-super-cache/
 
-### 4. Use image optimization to make your media files smaller
+### Use image optimization to make your media files smaller
 
 Image optimization is a process that compresses the size of an image file without noticeably affecting its quality. This is easy to implement, and you can even automate the process entirely. The first method you can use is to optimize your images before you even upload them to your site. We recommend TinyPNG because it's free and very easy to use.
 
 Link: https://tinypng.com/
 
-### 5. Minify and compress your website's files
+### Minify and compress your website's files
 
 For a WordPress site, the best option is usually a plugin. You have plenty of options at your disposal, but one of our favorites is Fast Velocity Minify. This is a free, open-source, and very user-friendly tool.
 
 Link: https://wordpress.org/plugins/fast-velocity-minify/
 
-### 6. Use a content delivery network to deliver your site's large files
+### Use a content delivery network to deliver your site's large files
 
 Use a content delivery network (CDN) to serve large files, such as images and videos, from servers closer to your visitors.
 
-### 7. Only use high-quality themes and plugins
+### Only use high-quality themes and plugins
 
 Even WordPress themes can affect your site's speed. Many themes may sell themselves as "optimized" or "fast loading" without being either. Some themes include unneeded functionality or require more files than usual to function, which can also cause your site's performance to suffer.
 
 Choosing well-coded themes and high-quality plugins comes down to careful research. Make sure to check out user reviews and ratings, look at the developer's update history, and make sure that each tool is tested to work with your version of WordPress. Adhering to these simple criteria will help ensure that you don't install anything on your site that might slow it down.
 
-### 8. Delete unused themes and plugins
+### Delete unused themes and plugins
 
 This is a site maintenance task you should perform regularly. Even if a theme or plugin isn't active on your site, it will still take up space on your server and cause unnecessary strain. Plus, keeping unnecessary content around can get confusing for administrators.
 
-### 9. Clean up your media library and post revisions (delete unused files)
+### Clean up your media library and post revisions (delete unused files)
 
 We recommend that you use the Media Cleaner plugin.
 
 Link: https://wordpress.org/plugins/media-cleaner/
 
-### 10. Optimize your databases
+### Optimize your databases
 
 This task is technical and requires knowledge about databases. But there's a plugin for almost anything, after all, and this task is no exception. Even if you're a complete newbie, you can use the WP-DBManager plugin to manage your databases. This plugin will optimize, repair, and delete unused databases for you.
 

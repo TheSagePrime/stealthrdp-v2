@@ -16,20 +16,20 @@ relatedSlugs: []
 ---
 Follow the steps below to fix the error: tun needs to be installed.
 
-1. SSH into your VPS.
+### 1. SSH into your VPS
 
-2. Update the system:
+### 2. Update the system
 
-   ```bash title="Update the system"
-   sudo apt-get update && sudo apt-get upgrade -y
-   ```
+```bash title="Update the system"
+sudo apt-get update && sudo apt-get upgrade -y
+```
 
-3. Run the following commands:
+### 3. Run the following commands
 
-   ```bash title="Create the TUN device"
-   mkdir /dev/net
-   mknod /dev/net/tun c 10 200
-   chmod 666 /dev/net/tun
-   ```
+```bash title="Create the TUN device"
+mkdir /dev/net
+mknod /dev/net/tun c 10 200
+chmod 666 /dev/net/tun
+```
 
 After running those commands, install your OpenVPN as normal.

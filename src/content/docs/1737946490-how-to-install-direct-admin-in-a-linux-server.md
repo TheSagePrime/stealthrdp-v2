@@ -16,13 +16,13 @@ relatedSlugs: []
 ---
 This guide shows how to install DirectAdmin on your Linux server.
 
-## Step 1: Check the system requirements
+### 1. Check the system requirements
 
 Make sure that you meet the system requirements: a clean OS install and at least one external IP address.
 
 - At least 4 GB of memory and 4 GB of swap, plus 2 GB of free disk space after the OS is installed.
 
-### Supported OS
+#### Supported OS
 
 - **Red Hat Enterprise Linux and its derivatives:** CentOS Stream, Rocky Linux and AlmaLinux
 - **Debian**
@@ -30,13 +30,13 @@ Make sure that you meet the system requirements: a clean OS install and at least
 
 DirectAdmin lists the supported versions and their end-of-life dates on its system requirements page. Use a 64-bit (amd64 or arm64) system.
 
-## Step 2: Make sure your license information is correct
+### 2. Make sure your license information is correct
 
 Sign in to your client account and click the "view" link next to your license here: [https://www.directadmin.com/clients/](https://www.directadmin.com/clients/)
 
 Verify that the server IP address and operating system is correct. Also make sure that the license is Active and Verified (if it isn't, then DirectAdmin's billing system hasn't processed your order yet).
 
-## Step 3: Begin the installation
+### 3. Begin the installation
 
 Log in as root to your server, download the installation script, and run it:
 

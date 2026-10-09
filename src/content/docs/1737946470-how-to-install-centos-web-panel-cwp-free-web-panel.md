@@ -74,40 +74,36 @@ You must have a clean, fresh installation of a supported operating system:
 
 ## Prepare the server
 
-1. Install EPEL and wget:
+### 1. Install EPEL and wget
 
-   ```bash title="Install EPEL and wget"
-   dnf install epel-release -y
-   dnf -y install wget
-   ```
+```bash title="Install EPEL and wget"
+dnf install epel-release -y
+dnf -y install wget
+```
 
-2. Update the server:
+### 2. Update the server
 
-   ```bash title="Update packages"
-   yum -y update
-   ```
+```bash title="Update packages"
+yum -y update
+```
 
-3. Reboot the server:
+### 3. Reboot the server
 
-   ```bash title="Reboot"
-   reboot
-   ```
+```bash title="Reboot"
+reboot
+```
 
 ## Install CWP
 
 Now you are ready to start the CWP installation. The CWP installer can run for more than 30 minutes because it needs to compile Apache and PHP from source.
 
-### AlmaLinux 9 (EL9 installer)
-
-```bash title="Install CWP on AlmaLinux 9"
+```bash tab="AlmaLinux 9 (EL9 installer)" title="Install CWP on AlmaLinux 9"
 cd /usr/local/src
 wget http://centos-webpanel.com/cwp-el9-latest
 sh cwp-el9-latest
 ```
 
-### AlmaLinux 8 (EL8 installer)
-
-```bash title="Install CWP on AlmaLinux 8"
+```bash tab="AlmaLinux 8 (EL8 installer)" title="Install CWP on AlmaLinux 8"
 cd /usr/local/src
 wget http://centos-webpanel.com/cwp-el8-latest
 sh cwp-el8-latest

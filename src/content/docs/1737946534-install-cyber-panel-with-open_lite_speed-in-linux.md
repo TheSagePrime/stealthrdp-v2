@@ -33,17 +33,19 @@ CyberPanel needs a fresh installation of one of these systems, with at least 102
 
 CyberPanel's install guide does not list Ubuntu 24.04 or AlmaLinux 10, so choose one of the systems above at checkout.
 
-## Step 1: Update and refresh repository lists
+### 1. Update and refresh repository lists
 
 Open a terminal window, and enter the following:
 
-```bash title="Update package lists"
+```bash tab="Ubuntu" title="Update package lists"
 sudo apt update
 ```
 
-On AlmaLinux 8 or 9, update the packages with `sudo yum update` instead.
+```bash tab="AlmaLinux 8 or 9" title="Update package lists"
+sudo yum update
+```
 
-## Install CyberPanel
+### 2. Install CyberPanel
 
 We are ready to install CyberPanel now. Enter this single command, then follow the installer step by step:
 
@@ -67,7 +69,7 @@ After the successful installation, you can access CyberPanel using the details b
 
 If you get a 503 error after installing CyberPanel, you can do one of the following things.
 
-### 1. Check the LSCPD status
+### Check the LSCPD status
 
 ```bash title="Check LSCPD status"
 systemctl status lscpd
@@ -79,7 +81,7 @@ If LSCPD is not running, start it:
 systemctl start lscpd
 ```
 
-### 2. Set up the virtual environment manually
+### Set up the virtual environment manually
 
 ```bash title="Rebuild the CyberCP virtual environment"
 source /usr/local/CyberCP/bin/activate
@@ -89,6 +91,6 @@ virtualenv --system-site-packages /usr/local/CyberCP
 systemctl restart lscpd
 ```
 
-### 3. Check the install logs
+### Check the install logs
 
 If you still have issues, look for errors in the install log at `/var/log/installLogs.txt`.

@@ -22,27 +22,23 @@ FASTPANEL is a free web hosting control panel. It lets you create sites, manage 
 - **A supported OS (64-bit).** FASTPANEL lists Debian 9 to 12, Ubuntu 18.04, 20.04, 22.04 and 24.04, CentOS 7, AlmaLinux 8 and Rocky Linux 8. Check the official site for the current list.
 - **Root access over SSH.**
 
-## Step 1. Connect over SSH
+### 1. Connect over SSH
 
 ```bash title="Connect to the server"
 ssh root@your_server_ip
 ```
 
-## Step 2. Install wget if it is missing
+### 2. Install wget if it is missing
 
-### Debian or Ubuntu
-
-```bash title="Install wget on Debian or Ubuntu"
+```bash tab="Debian or Ubuntu" title="Install wget on Debian or Ubuntu"
 apt-get update && apt-get install -y wget
 ```
 
-### CentOS, AlmaLinux or Rocky Linux
-
-```bash title="Install wget on CentOS, AlmaLinux or Rocky Linux"
+```bash tab="CentOS, AlmaLinux or Rocky Linux" title="Install wget on CentOS, AlmaLinux or Rocky Linux"
 yum makecache && yum install -y wget
 ```
 
-## Step 3. Run the FASTPANEL installer
+### 3. Run the FASTPANEL installer
 
 ```bash title="Run the FASTPANEL installer"
 wget http://repo.fastpanel.direct/install_fastpanel.sh -O - | bash -
@@ -50,7 +46,7 @@ wget http://repo.fastpanel.direct/install_fastpanel.sh -O - | bash -
 
 The installer sets up the web server, PHP, database and mail services. It prints the access details when it finishes.
 
-## Step 4. Log in to the panel
+### 4. Log in to the panel
 
 FASTPANEL uses port **8888**. Open this address in your browser: `https://your_server_ip:8888`
 

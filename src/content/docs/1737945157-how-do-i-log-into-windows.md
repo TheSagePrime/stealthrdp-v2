@@ -21,19 +21,41 @@ You need three things from the email StealthRDP sends after payment: the server 
 
 Remote Desktop Connection is built into Windows 10 and Windows 11.
 
-1. Press the **Windows key**, type **Remote Desktop Connection** and open it. You can also press **Windows + R**, type `mstsc` and press Enter.
-2. In **Computer**, type the server IP address from your email.
-3. Select **Connect**. When Windows asks for credentials, choose **More choices** > **Use a different account**, then type `Administrator` and the password.
-4. On the first connection, Windows shows a certificate warning. Select **Yes** to continue.
+### 1. Open Remote Desktop Connection
+
+Press the **Windows key**, type **Remote Desktop Connection** and open it. You can also press **Windows + R**, type `mstsc` and press Enter.
+
+### 2. Enter the server address
+
+In **Computer**, type the server IP address from your email.
+
+### 3. Connect and sign in
+
+Select **Connect**. When Windows asks for credentials, choose **More choices** > **Use a different account**, then type `Administrator` and the password.
+
+### 4. Accept the certificate warning
+
+On the first connection, Windows shows a certificate warning. Select **Yes** to continue.
 
 ## Mac: Microsoft Remote Desktop (Windows App)
 
 On a Mac, use Microsoft's free client. Microsoft now calls it **Windows App**; older Macs may still show **Microsoft Remote Desktop**.
 
-1. Install **Windows App** from the Mac App Store.
-2. Select **+** > **Add PC**.
-3. In **PC name**, type the server IP address. Add `Administrator` and the password as the user account.
-4. Double-click the PC to connect. Accept the certificate prompt on the first connection.
+### 1. Install Windows App
+
+Install **Windows App** from the Mac App Store.
+
+### 2. Add a PC
+
+Select **+** > **Add PC**.
+
+### 3. Enter the PC details
+
+In **PC name**, type the server IP address. Add `Administrator` and the password as the user account.
+
+### 4. Connect to the PC
+
+Double-click the PC to connect. Accept the certificate prompt on the first connection.
 
 ## iPhone, iPad and Android
 
