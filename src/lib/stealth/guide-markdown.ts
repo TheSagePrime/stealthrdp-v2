@@ -259,6 +259,30 @@ function numberedStep(heading: MdNode, match: RegExpExecArray): MdNode {
   return { ...heading, children: [html(`<span class="sr-only">${match[1]}. </span>`), { ...first, value: match[2] }, ...rest] };
 }
 
+/* A run of numbered headings at one level, from nodes[index]. Each numbered heading starts a step;
+   the content after it belongs to that step until the next heading at the same level or above.
+   A numbered heading at a higher level, or a plain heading at the same level, ends the run. */
+function stepRun(nodes: MdNode[], index: number, depth: number): { steps: { heading: RegExpExecArray; nodes: MdNode[] }[]; next: number } {
+  const steps: { heading: RegExpExecArray; nodes: MdNode[] }[] = [];
+  let next = index;
+  for (; next < nodes.length; next++) {
+    const node = nodes[next];
+    if (!node) {
+      break;
+    }
+    if (node.type === 'heading' && (node.depth ?? 0) <= depth) {
+      const match = (node.depth ?? 0) < depth ? null : stepMatch(node);
+      if (!match) {
+        break;
+      }
+      steps.push({ heading: match, nodes: [numberedStep(node, match)] });
+      continue;
+    }
+    steps.at(-1)?.nodes.push(node);
+  }
+  return { steps, next };
+}
+
 function groupSteps(nodes: MdNode[]): MdNode[] {
   const out: MdNode[] = [];
   let index = 0;
@@ -273,28 +297,18 @@ function groupSteps(nodes: MdNode[]): MdNode[] {
       continue;
     }
     const depth = first.depth ?? 0;
-    const steps: MdNode[][] = [];
-    let current: MdNode[] | undefined;
-    let next = index;
-    for (; next < nodes.length; next++) {
-      const node = nodes[next];
-      if (!node) {
-        break;
-      }
-      if (node.type === 'heading' && (node.depth ?? 0) <= depth) {
-        const match = (node.depth ?? 0) < depth ? null : stepMatch(node);
-        if (!match) {
-          break;
-        }
-        current = [numberedStep(node, match)];
-        steps.push(current);
-        continue;
-      }
-      current?.push(node);
+    const { steps, next } = stepRun(nodes, index, depth);
+    /* A numbered "## N." heading makes a timeline only in a run of two or more that counts up from 1
+       ("## 1.", "## 2."...). A single one stays a plain heading. */
+    const countsUp = steps.every((step, position) => Number(step.heading[1]) === position + 1);
+    if (depth === 2 && (steps.length < 2 || !countsUp)) {
+      out.push(first);
+      index++;
+      continue;
     }
     out.push(html('<div class="fd-steps">'));
     for (const step of steps) {
-      out.push(html('<div class="fd-step">'), ...step, html('</div>'));
+      out.push(html('<div class="fd-step">'), ...step.nodes, html('</div>'));
     }
     out.push(html('</div>'));
     index = next;

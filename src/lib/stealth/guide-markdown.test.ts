@@ -97,9 +97,27 @@ describe('guide Markdown', () => {
   });
 
   it('ends a step run at a heading without a number, and a plain heading is not a step', async () => {
-    const html = await guideMarkdownToHtml('## 1. Overview\n\nText.\n\n## Background\n\nMore.\n');
+    const html = await guideMarkdownToHtml('### 1. Overview\n\nText.\n\n### Background\n\nMore.\n');
 
-    expect(html).toBe('<div class="fd-steps">\n<div class="fd-step">\n<h2><span class="sr-only">1. </span>Overview</h2>\n<p>Text.</p>\n</div>\n</div>\n<h2>Background</h2>\n<p>More.</p>');
+    expect(html).toBe('<div class="fd-steps">\n<div class="fd-step">\n<h3><span class="sr-only">1. </span>Overview</h3>\n<p>Text.</p>\n</div>\n</div>\n<h3>Background</h3>\n<p>More.</p>');
+  });
+
+  it('writes two or more "## N." headings that count up from 1 as a step timeline, keeping the h2 and its id', async () => {
+    const html = await guideMarkdownToHtml('## 1. Install [#install]\n\nRun it.\n\n### Details\n\nMore.\n\n## 2. Open the panel\n\nVisit it.\n\n## Next steps\n\nDone.\n');
+
+    expect(html).toBe(
+      '<div class="fd-steps">\n<div class="fd-step">\n<h2 id="install"><span class="sr-only">1. </span>Install</h2>\n<p>Run it.</p>\n<h3>Details</h3>\n<p>More.</p>\n</div>\n'
+      + '<div class="fd-step">\n<h2><span class="sr-only">2. </span>Open the panel</h2>\n<p>Visit it.</p>\n</div>\n</div>\n'
+      + '<h2>Next steps</h2>\n<p>Done.</p>',
+    );
+  });
+
+  it('keeps a single "## 1." heading, and a run that does not count up from 1, as plain headings', async () => {
+    const single = await guideMarkdownToHtml('## 1. Overview\n\nText.\n');
+    const skipped = await guideMarkdownToHtml('## 2. Second\n\nText.\n\n## 3. Third\n\nMore.\n');
+
+    expect(single).toBe('<h2>1. Overview</h2>\n<p>Text.</p>');
+    expect(skipped).not.toContain('fd-steps');
   });
 
   it('removes Shiki line notation from the code and records the marked lines', async () => {
