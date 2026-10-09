@@ -83,7 +83,11 @@ export function AboutMap({ plans, words }: { plans: Plan[]; words: MapWords }) {
     const edge = left ? WIDTH : 600 - WIDTH;
     const start = left ? core.x - core.r : core.x + core.r;
     const mid = (start + edge) / 2;
-    return { part, x, y, d: `M${start} ${core.y} C${mid} ${core.y} ${mid} ${y} ${edge} ${y}` };
+    /* Left parts send their comets in towards the core; right parts send them out, like the other session maps. */
+    const d = left
+      ? `M${edge} ${y} C${mid} ${y} ${mid} ${core.y} ${start} ${core.y}`
+      : `M${start} ${core.y} C${mid} ${core.y} ${mid} ${y} ${edge} ${y}`;
+    return { part, x, y, d };
   });
 
   /* Tall: core on top, a spine down the middle, parts in two columns. */
@@ -94,7 +98,10 @@ export function AboutMap({ plans, words }: { plans: Plan[]; words: MapWords }) {
     const x = column ? 360 - tallWidth : 0;
     const y = 200 + Math.floor(index / 2) * 76;
     const edge = column ? 360 - tallWidth : tallWidth;
-    return { part, x, y, d: `M${top.x} ${top.y + top.r} L${top.x} ${y} L${edge} ${y}` };
+    const d = column
+      ? `M${top.x} ${top.y + top.r} L${top.x} ${y} L${edge} ${y}`
+      : `M${edge} ${y} L${top.x} ${y} L${top.x} ${top.y + top.r}`;
+    return { part, x, y, d };
   });
 
   return (

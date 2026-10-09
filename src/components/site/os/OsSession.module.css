@@ -1,8 +1,20 @@
-/* Frameless, like the Citadel hero: the scene sits on the hero itself, with no dot grid or glow. */
+/* Frameless, like the Citadel hero: the scene sits on the hero itself, with the homepage grid and no glow. */
 .figure {
   position: relative;
   isolation: isolate;
   color: var(--citadel-ink);
+}
+
+/* The homepage grid: same lines and opacity, so every animated scene shares one background. */
+.figure::before {
+  position: absolute;
+  z-index: -1;
+  inset: -20% -10%;
+  content: '';
+  background-image:
+    linear-gradient(to right, rgb(32 56 200 / 4%) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(32 56 200 / 4%) 1px, transparent 1px);
+  background-size: 64px 64px;
 }
 
 .scene {
@@ -275,10 +287,6 @@
 
   .scene[data-layout='tall'] {
     display: block;
-  }
-
-  .figure::before {
-    mask-image: radial-gradient(ellipse 60% 55% at 50% 50%, black 20%, transparent 76%);
   }
 }
 

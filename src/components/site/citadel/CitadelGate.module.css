@@ -4,10 +4,21 @@
   color: var(--citadel-ink);
 }
 
-/* No frame and no background: the scene sits on the hero, which already has its own grid. */
+/* No frame: the scene sits on the hero. It carries the homepage grid, with the same lines and opacity. */
 .stage {
   position: relative;
   isolation: isolate;
+}
+
+.stage::before {
+  position: absolute;
+  z-index: -1;
+  inset: -20% -10%;
+  content: '';
+  background-image:
+    linear-gradient(to right, rgb(32 56 200 / 4%) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(32 56 200 / 4%) 1px, transparent 1px);
+  background-size: 64px 64px;
 }
 
 .scene {
