@@ -37,7 +37,11 @@ The documented Java server setup applies only to Java Edition.<sup class="citati
 
 Bedrock Dedicated Server supports specified Windows and Linux versions.<sup class="citation-marker"><a href="#source-1" aria-label="Source 1">[1]</a></sup> Check that the provider offers the required image and installation path before paying.
 
+:::warn
+
 Do not assume Java and Bedrock cross-play. Confirm that the exact server software and client combination supports your intended players.
+
+:::
 
 ## Size the workload, not the player cap
 
@@ -83,7 +87,11 @@ More listed vCPUs do not automatically solve a slow game tick. Compare the CPU m
 
 Use the 2 GB and 4 GB figures as baseline references, not guarantees.<sup class="citation-marker"><a href="#source-3" aria-label="Source 3">[3]</a></sup> Allocate enough memory for the server process and leave room for the operating system.
 
+:::warn
+
 Do not hand every available megabyte to Java. The VPS needs memory for system services, monitoring, updates, and recovery work.
+
+:::
 
 ### Storage
 
@@ -105,7 +113,11 @@ Choose a region that keeps most players close to the server. A physical location
 
 If players live across several countries, choose a central location for the group.<sup class="citation-marker"><a href="#source-5" aria-label="Source 5">[5]</a></sup>
 
+:::warn
+
 Do not choose your own region by habit. List the players who will join most often, then compare the available locations. More CPU or RAM cannot move the server closer to a distant player.
+
+:::
 
 ## Plan access, backups, and safety
 

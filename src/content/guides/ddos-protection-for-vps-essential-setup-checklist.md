@@ -22,7 +22,10 @@ sources:
     publisher: Cloudflare
     accessedAt: 2026-10-09
 ---
+
+:::info
 **Note:** StealthRDP EU plans (Amsterdam) include network-level DDoS protection; USA plans do not. This article is a general setup checklist for adding your own layers of mitigation on any VPS.
+:::
 
 1. **Start with your VPS provider’s defenses**: Check for built-in DDoS protection like traffic filtering, load balancing, and Web Application Firewalls (WAFs). These can block many attacks before they reach your server.
 2. **Secure server access**: Use SSH key authentication, disable password logins, and enable Multi-Factor Authentication (MFA) for stronger security.

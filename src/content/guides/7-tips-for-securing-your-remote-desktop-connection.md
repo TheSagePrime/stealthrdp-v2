@@ -312,7 +312,11 @@ To further contain potential breaches, implement **microsegmentation**. This inv
 
 ## How to Enable Remote Desktop Safely on Windows [#how-to-enable-remote-desktop-safely-on-windows]
 
+:::info
+
 Every tip above assumes Remote Desktop is switched on only where you need it. Windows 10 and Windows 11 Pro, Enterprise and Education can accept RDP connections; the Home editions cannot host a session. There are three common ways to turn it on. Whichever you use, keep Network Level Authentication enabled and limit who can connect.
+
+:::
 
 ### Allow Remote Desktop in Windows 11 Settings [#allow-remote-desktop-in-windows-11-settings]
 

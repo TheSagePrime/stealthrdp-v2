@@ -17,7 +17,7 @@
   },
   "/blog/7-tips-for-securing-your-remote-desktop-connection.html": {
     "updated": "2026-10-09",
-    "fingerprint": "6378d207b4dbb864"
+    "fingerprint": "f5262714f7f0b192"
   },
   "/blog/8-signs-you-need-to-upgrade-your-vps-resources.html": {
     "updated": "2026-10-09",
@@ -25,15 +25,15 @@
   },
   "/blog/common-vps-hosting-issues-and-their-solutions.html": {
     "updated": "2026-10-09",
-    "fingerprint": "771be9c1424cca7d"
+    "fingerprint": "542d10b16dc2366c"
   },
   "/blog/common-vps-performance-bottlenecks.html": {
     "updated": "2026-10-09",
-    "fingerprint": "d30092ead7952120"
+    "fingerprint": "10981c39cbcd5381"
   },
   "/blog/ddos-protection-for-vps-essential-setup-checklist.html": {
     "updated": "2026-10-09",
-    "fingerprint": "d5cfc6654fa3f974"
+    "fingerprint": "3be78263dddb6f7f"
   },
   "/blog/designing-automated-high-availability-vps.html": {
     "updated": "2026-10-09",
@@ -41,7 +41,7 @@
   },
   "/blog/how-to-set-up-automated-backups-for-vps-hosting.html": {
     "updated": "2026-10-09",
-    "fingerprint": "281be7b05d77c9aa"
+    "fingerprint": "840b6878a76805e0"
   },
   "/blog/top-6-vps-management-tools-for-small-businesses.html": {
     "updated": "2026-10-09",
@@ -324,8 +324,8 @@
     "fingerprint": "d8e54542a822f275"
   },
   "/vps-hosting-minecraft": {
-    "updated": "2026-10-02",
-    "fingerprint": "7551534202210e49"
+    "updated": "2026-10-09",
+    "fingerprint": "4d88baa6947eeb4e"
   },
   "/windows-vps": {
     "updated": "2026-10-09",

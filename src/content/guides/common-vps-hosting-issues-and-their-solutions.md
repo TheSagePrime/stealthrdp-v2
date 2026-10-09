@@ -34,7 +34,9 @@ sources:
 - **Resource Management Challenges**: Insufficient memory or storage can lead to crashes. Upgrade to SSDs or NVMe drives, clean up unused files, and monitor disk usage with tools like `ncdu`.
 - **Software Configuration Errors**: Misconfigured servers or databases can cause instability. Validate settings with `apachectl configtest` or `nginx -t`, and automate setups with tools like [Ansible](https://www.ansible.com/).
 
+:::tip
 **Pro Tip**: Regular monitoring, backups, and proactive updates are key to maintaining a reliable VPS environment. Always test changes in a staging environment before applying them live.
+:::
 
 ## How to Fix Internet Connection Issues on Windows VPS [#how-to-fix-internet-connection-issues-on-windows-vps]
 

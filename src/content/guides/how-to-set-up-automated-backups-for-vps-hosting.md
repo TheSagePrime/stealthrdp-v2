@@ -104,7 +104,9 @@ To get started, locate the backup settings in your control panel under menu opti
 
 For instance, Namecheap provided a guide for using the Interworx control panel. Users accessed the "Backups" menu in Siteworx, selected "Full backup" with FTP storage, and entered details such as email notifications, domain options, and FTP credentials (username, password, hostname, port, and passive mode settings). After setting these parameters, clicking "Backup" initiated the process.
 
+:::tip
 **Technical Tip:** If your control panel uses snapshot-based backups, ensure the QEMU agent is configured correctly. This helps maintain system consistency during snapshots and prevents incomplete or corrupted backups <a href="https://support.us.ovhcloud.com/hc/en-us/articles/360012678619-How-to-Use-Automated-Backup-on-a-VPS" target="_blank" style="text-decoration: none;" rel="nofollow noopener noreferrer"><sup>[2]</sup></a><a href="https://help.ovhcloud.com/csm/en-vps-using-automated-backups?id=kb_article_view&amp;sysparm_article=KB0047746" target="_blank" style="text-decoration: none;" rel="nofollow noopener noreferrer"><sup>[4]</sup></a>.
+:::
 
 Control panels often let you set storage limits to avoid backups consuming too much disk space. Adjust these limits based on your storage capacity and retention policies <a href="https://www.namecheap.com/support/knowledgebase/article.aspx/10085/48/how-to-set-up-automated-backups-for-vps-and-dedicated-server" target="_blank" style="text-decoration: none;" rel="nofollow noopener noreferrer"><sup>[3]</sup></a>.
 

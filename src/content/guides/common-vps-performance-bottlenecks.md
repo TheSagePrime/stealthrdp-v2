@@ -48,7 +48,9 @@ If you are sizing a private game server, the [Minecraft VPS planning guide](/vps
 
 **Key point:** regular monitoring and maintenance catch many problems before they cause downtime. Tools like `top`, `htop`, and [Zabbix](https://www.zabbix.com/) help you stay ahead of issues.
 
+:::tip
 **Pro Tip:** Upgrade to SSD storage and use a Content Delivery Network (CDN) for faster performance. Regularly update software to patch vulnerabilities and improve efficiency.
+:::
 
 Addressing these bottlenecks ensures your VPS performs reliably, keeping users satisfied and your business running smoothly.
 
