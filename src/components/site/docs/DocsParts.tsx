@@ -1,17 +1,28 @@
+/* eslint-disable better-tailwindcss/no-unknown-classes */
+import type { ReactNode } from 'react';
 import { CalendarBlank, FolderSimple } from '@phosphor-icons/react/dist/ssr';
 import { Card, Cards } from 'fumadocs-ui/components/card';
 import { Button } from '@/components/ui/button';
 
-/* Small pieces shared by the docs and guide pages, built on Fumadocs components so they read
+/* Small pieces shared by every page in the docs shell, built on Fumadocs components so they read
    as part of the docs, not as a second design system. */
+
+/* The line under a page title: dates, section, reading time. */
+export function DocsMeta({ children }: { children: ReactNode }) {
+  return (
+    <div className="
+      sr-docs-meta flex flex-wrap items-center gap-x-5 gap-y-1 border-b pb-5
+      text-sm text-fd-muted-foreground
+    "
+    >
+      {children}
+    </div>
+  );
+}
 
 export function DocsArticleMeta({ updated, section }: { updated: string; section?: string }) {
   return (
-    <div className="
-      flex flex-wrap items-center gap-x-5 gap-y-1 border-b pb-5 text-sm
-      text-fd-muted-foreground
-    "
-    >
+    <DocsMeta>
       <span className="inline-flex items-center gap-1.5">
         <CalendarBlank aria-hidden="true" className="size-4" />
         {updated}
@@ -24,7 +35,7 @@ export function DocsArticleMeta({ updated, section }: { updated: string; section
             </span>
           )
         : null}
-    </div>
+    </DocsMeta>
   );
 }
 
@@ -51,8 +62,8 @@ export function DocsSupport({
   text,
   actions,
 }: {
-  title: string;
-  text: string;
+  title?: string;
+  text?: string;
   actions: { href: string; label: string }[];
 }) {
   return (
@@ -61,10 +72,14 @@ export function DocsSupport({
       sm:flex-row sm:items-center sm:justify-between
     "
     >
-      <div>
-        <h2 className="text-base font-semibold">{title}</h2>
-        <p className="mt-1 text-sm text-fd-muted-foreground">{text}</p>
-      </div>
+      {title
+        ? (
+            <div>
+              <h2 className="text-base font-semibold">{title}</h2>
+              {text ? <p className="mt-1 text-sm text-fd-muted-foreground">{text}</p> : null}
+            </div>
+          )
+        : null}
       <div className="flex shrink-0 flex-wrap gap-2">
         {actions.map((action, index) => (
           <Button asChild key={action.href} variant={index === 0 ? 'default' : 'outline'}>

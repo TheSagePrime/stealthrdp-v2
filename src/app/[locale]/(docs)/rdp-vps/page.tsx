@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
-import { GuideArticle } from '@/components/site/guides/GuideArticle';
-import { ResourcesBar } from '@/components/site/ResourcesBar';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
+import { DocsMeta, DocsRelated } from '@/components/site/docs/DocsParts';
 import { headingToc, TrustedArticleBody } from '@/components/site/TrustedArticleBody';
 import { rdpVpsGuide } from '@/content/rdp-vps';
 import { requirePageLocale } from '@/lib/stealth/i18n-server';
@@ -73,8 +73,7 @@ export default async function RdpVpsPage() {
   ];
 
   return (
-    <>
-      <ResourcesBar active="guides" />
+    <DocsPage toc={headingToc(rdpVpsGuide.html)}>
       {jsonLd.map((block, index) => (
         <script
           key={index}
@@ -82,20 +81,19 @@ export default async function RdpVpsPage() {
           dangerouslySetInnerHTML={{ __html: serializeJsonLd(block) }}
         />
       ))}
-      <GuideArticle
-        section={{ label: 'Guides', href: '/blog' }}
-        title={rdpVpsGuide.h1}
-        description={rdpVpsGuide.description}
-        meta={(
-          <>
-            <span>{`Published ${formatUpdated(rdpVpsGuide.datePublished)}`}</span>
-            {dateModified > rdpVpsGuide.datePublished ? <span>{`Updated ${formatUpdated(dateModified)}`}</span> : null}
-            <span>{rdpVpsGuide.author}</span>
-          </>
-        )}
-        toc={headingToc(rdpVpsGuide.html)}
-        relatedHeading="Keep reading"
-        related={[
+      <DocsTitle>{rdpVpsGuide.h1}</DocsTitle>
+      <DocsDescription>{rdpVpsGuide.description}</DocsDescription>
+      <DocsMeta>
+        <span>{`Published ${formatUpdated(rdpVpsGuide.datePublished)}`}</span>
+        {dateModified > rdpVpsGuide.datePublished ? <span>{`Updated ${formatUpdated(dateModified)}`}</span> : null}
+        <span>{rdpVpsGuide.author}</span>
+      </DocsMeta>
+      <DocsBody>
+        <TrustedArticleBody html={rdpVpsGuide.html} />
+      </DocsBody>
+      <DocsRelated
+        heading="Keep reading"
+        items={[
           {
             href: '/blog/vps-for-remote-desktop.html',
             title: 'VPS for Remote Desktop: What to Check Before You Choose',
@@ -107,9 +105,7 @@ export default async function RdpVpsPage() {
             description: 'Compare USA and EU plans, operating systems, and availability.',
           },
         ]}
-      >
-        <TrustedArticleBody html={rdpVpsGuide.html} />
-      </GuideArticle>
-    </>
+      />
+    </DocsPage>
   );
 }

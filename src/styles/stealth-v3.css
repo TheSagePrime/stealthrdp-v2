@@ -819,15 +819,6 @@ body {
   top: 12px;
 }
 
-.sr-faq-groups {
-  display: grid;
-  gap: 64px;
-}
-
-.sr-faq-group {
-  scroll-margin-top: 128px;
-}
-
 .sr-collection-head {
   display: flex;
   justify-content: space-between;

@@ -90,21 +90,13 @@
   filter: brightness(0);
 }
 
-.sr-docs-brand span {
-  border-left: 1px solid var(--border);
-  padding-left: 10px;
-  color: var(--muted-foreground);
-  font-size: 0.875rem;
-  font-weight: 600;
-}
-
 /* Guide bodies are authored HTML inside Fumadocs typography (.prose). */
 .sr-guide-body > :first-child {
   margin-top: 0;
 }
 
-/* The protected publication line sits inline with the reading time. */
-.sr-guide-meta .seo-article-publication-meta {
+/* The protected publication line of guides sits inline with the reading time. */
+.sr-docs-meta .seo-article-publication-meta {
   display: contents;
   font-size: inherit;
 }

@@ -1,11 +1,9 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { notFound } from 'next/navigation';
 import { ArticleJsonLd, ArticlePublicationMeta, ArticleSources } from '@/components/seo/Article';
-import { GuideArticle } from '@/components/site/guides/GuideArticle';
-import { ResourcesBar } from '@/components/site/ResourcesBar';
+import { DocsMeta, DocsRelated, DocsSupport } from '@/components/site/docs/DocsParts';
 import { headingToc, TrustedArticleBody } from '@/components/site/TrustedArticleBody';
-import { Button } from '@/components/ui/button';
 import { articlePath, blogArticles, findBlog } from '@/lib/stealth/articles';
 import { requirePageLocale } from '@/lib/stealth/i18n-server';
 import { createArticleMetadata } from '@/libs/seo/articles';
@@ -31,36 +29,28 @@ export default async function MinecraftPage() {
     .slice(0, 3);
 
   return (
-    <>
-      <ResourcesBar active="guides" />
+    <DocsPage toc={headingToc(article.html)}>
       <ArticleJsonLd article={publication} config={config} />
-      <GuideArticle
-        section={{ label: 'Guides', href: '/blog' }}
-        title={article.title}
-        description={article.excerpt}
-        meta={(
-          <>
-            <ArticlePublicationMeta article={publication} />
-            {article.readingTime ? <span>{`${article.readingTime} min read`}</span> : null}
-          </>
-        )}
-        toc={headingToc(article.html)}
-        relatedHeading="Continue learning"
-        related={related.map(item => ({ href: articlePath(item), title: item.title, description: item.excerpt }))}
-        after={(
-          <div className="mt-10 flex flex-wrap gap-2">
-            <Button asChild variant="outline">
-              <Link href="/plans">View VPS plans</Link>
-            </Button>
-            <Button asChild>
-              <a href="https://dash.stealthrdp.com/submitticket.php">Ask support</a>
-            </Button>
-          </div>
-        )}
-      >
+      <DocsTitle>{article.title}</DocsTitle>
+      <DocsDescription>{article.excerpt}</DocsDescription>
+      <DocsMeta>
+        <ArticlePublicationMeta article={publication} />
+        {article.readingTime ? <span>{`${article.readingTime} min read`}</span> : null}
+      </DocsMeta>
+      <DocsBody>
         <TrustedArticleBody html={article.html} />
         <ArticleSources sources={publication.sources ?? []} />
-      </GuideArticle>
-    </>
+      </DocsBody>
+      <DocsRelated
+        heading="Continue learning"
+        items={related.map(item => ({ href: articlePath(item), title: item.title, description: item.excerpt }))}
+      />
+      <DocsSupport
+        actions={[
+          { href: '/plans', label: 'View VPS plans' },
+          { href: 'https://dash.stealthrdp.com/submitticket.php', label: 'Ask support' },
+        ]}
+      />
+    </DocsPage>
   );
 }

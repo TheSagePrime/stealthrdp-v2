@@ -164,8 +164,8 @@
     "fingerprint": "2ae2ffea29a66ff0"
   },
   "/de/faq": {
-    "updated": "2026-10-05",
-    "fingerprint": "8366d88b09befaea"
+    "updated": "2026-10-09",
+    "fingerprint": "8e801a551ca87317"
   },
   "/de/linux-vps": {
     "updated": "2026-10-09",
@@ -284,8 +284,8 @@
     "fingerprint": "99da0898ebdfcc04"
   },
   "/es/faq": {
-    "updated": "2026-10-05",
-    "fingerprint": "17412d5642af594a"
+    "updated": "2026-10-09",
+    "fingerprint": "b2daa58a0c93ade3"
   },
   "/es/linux-vps": {
     "updated": "2026-10-09",
@@ -304,8 +304,8 @@
     "fingerprint": "7f07906a1123ad8c"
   },
   "/faq": {
-    "updated": "2026-10-05",
-    "fingerprint": "70e44ad31719fe7c"
+    "updated": "2026-10-09",
+    "fingerprint": "1a074febf69292ad"
   },
   "/linux-vps": {
     "updated": "2026-10-09",
@@ -321,7 +321,7 @@
   },
   "/rdp-vps": {
     "updated": "2026-10-04",
-    "fingerprint": "c2c11da7e5264bf7"
+    "fingerprint": "101d4f77b65f7bf0"
   },
   "/vps-hosting-minecraft": {
     "updated": "2026-10-02",

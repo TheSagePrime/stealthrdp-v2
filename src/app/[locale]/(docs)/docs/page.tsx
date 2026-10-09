@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
-import { collectionsToc, DocsCollections } from '@/components/site/docs/DocsCollections';
+import { cardSectionsToc, collectionSections, DocsCardSections } from '@/components/site/docs/DocsCollections';
 import { DocsSupport } from '@/components/site/docs/DocsParts';
 import { helpDocsArticles } from '@/lib/stealth/articles';
 import { helpArticleHref, helpCollections } from '@/lib/stealth/help-center';
@@ -16,14 +16,15 @@ export const metadata: Metadata = createPageMetadata({
 
 export default async function DocsPageRoute() {
   await requirePageLocale('/docs');
+  const sections = collectionSections(helpCollections, helpDocsArticles, helpArticleHref);
   return (
-    <DocsPage toc={collectionsToc(helpCollections, helpDocsArticles)}>
+    <DocsPage toc={cardSectionsToc(sections)}>
       <DocsTitle>StealthRDP Help Center</DocsTitle>
       <DocsDescription>
         Practical setup and troubleshooting for StealthRDP servers, organized around the task you are trying to complete.
       </DocsDescription>
       <DocsBody className="[&>section:first-child>h2]:mt-4">
-        <DocsCollections collections={helpCollections} articles={helpDocsArticles} href={helpArticleHref} />
+        <DocsCardSections sections={sections} />
       </DocsBody>
       <DocsSupport
         title="Can’t find it?"

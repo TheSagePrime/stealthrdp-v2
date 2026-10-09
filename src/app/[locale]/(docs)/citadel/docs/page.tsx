@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
-import { collectionsToc, DocsCollections } from '@/components/site/docs/DocsCollections';
+import { cardSectionsToc, collectionSections, DocsCardSections } from '@/components/site/docs/DocsCollections';
 import { DocsSupport } from '@/components/site/docs/DocsParts';
 import { citadelDocsArticles } from '@/lib/stealth/articles';
 import { citadelArticleHref, citadelCollections } from '@/lib/stealth/help-center';
@@ -16,15 +16,16 @@ export const metadata: Metadata = createPageMetadata({
 
 export default async function CitadelDocsPage() {
   await requirePageLocale('/citadel/docs');
+  const sections = collectionSections(citadelCollections, citadelDocsArticles, citadelArticleHref);
   return (
-    <DocsPage toc={collectionsToc(citadelCollections, citadelDocsArticles)}>
+    <DocsPage toc={cardSectionsToc(sections)}>
       <DocsTitle>Citadel Docs</DocsTitle>
       <DocsDescription>
         Set up, tune, and operate Citadel: Cloudflare routing, protected domains, challenges,
         allowlists, caching, traffic visibility, bandwidth, alerts, and billing.
       </DocsDescription>
       <DocsBody className="[&>section:first-child>h2]:mt-4">
-        <DocsCollections collections={citadelCollections} articles={citadelDocsArticles} href={citadelArticleHref} />
+        <DocsCardSections sections={sections} />
       </DocsBody>
       <DocsSupport
         title="Need help with Citadel?"

@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { notFound } from 'next/navigation';
 import { ArticleJsonLd, ArticlePublicationMeta, ArticleSources } from '@/components/seo/Article';
-import { GuideArticle } from '@/components/site/guides/GuideArticle';
-import { ResourcesBar } from '@/components/site/ResourcesBar';
+import { DocsMeta, DocsRelated } from '@/components/site/docs/DocsParts';
 import { headingToc, TrustedArticleBody } from '@/components/site/TrustedArticleBody';
 import { articlePath, blogArticles, findBlog } from '@/lib/stealth/articles';
 import { requirePageLocale } from '@/lib/stealth/i18n-server';
@@ -39,26 +39,22 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
     .slice(0, 3);
 
   return (
-    <>
-      <ResourcesBar active="guides" />
+    <DocsPage toc={headingToc(article.html)}>
       <ArticleJsonLd article={publication} config={config} />
-      <GuideArticle
-        section={{ label: 'Guides', href: '/blog' }}
-        title={article.title}
-        description={article.excerpt}
-        meta={(
-          <>
-            <ArticlePublicationMeta article={publication} />
-            <span>{`${article.readingTime} min read`}</span>
-          </>
-        )}
-        toc={headingToc(article.html)}
-        relatedHeading="Continue learning"
-        related={related.map(item => ({ href: articlePath(item), title: item.title, description: item.excerpt }))}
-      >
+      <DocsTitle>{article.title}</DocsTitle>
+      <DocsDescription>{article.excerpt}</DocsDescription>
+      <DocsMeta>
+        <ArticlePublicationMeta article={publication} />
+        <span>{`${article.readingTime} min read`}</span>
+      </DocsMeta>
+      <DocsBody>
         <TrustedArticleBody html={article.html} />
         <ArticleSources sources={publication.sources ?? []} />
-      </GuideArticle>
-    </>
+      </DocsBody>
+      <DocsRelated
+        heading="Continue learning"
+        items={related.map(item => ({ href: articlePath(item), title: item.title, description: item.excerpt }))}
+      />
+    </DocsPage>
   );
 }

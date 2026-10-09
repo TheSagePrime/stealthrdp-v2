@@ -1,7 +1,7 @@
 import type { SiteLocale } from '../../config/i18n';
 
-/* Words of the resource bar above guides, questions and the resources hub. The search dialog
-   itself takes its words from src/content/i18n/docs-ui.ts. */
+/* Section names of the docs shell: the sidebar switcher and the docs title. The rest of the
+   Fumadocs interface takes its words from src/content/i18n/docs-ui.ts. */
 
 const en = {
   tabs: {
@@ -10,10 +10,6 @@ const en = {
     help: 'Help Center',
     citadel: 'Citadel Docs',
     faq: 'Common Questions',
-  },
-  sectionsLabel: 'Resource sections',
-  search: {
-    label: 'Search resources',
   },
 };
 
@@ -27,10 +23,6 @@ const de: ResourcesCopy = {
     citadel: 'Citadel-Doku',
     faq: 'Häufige Fragen',
   },
-  sectionsLabel: 'Ressourcen-Bereiche',
-  search: {
-    label: 'Ressourcen durchsuchen',
-  },
 };
 
 const es: ResourcesCopy = {
@@ -40,10 +32,6 @@ const es: ResourcesCopy = {
     help: 'Centro de ayuda',
     citadel: 'Docs de Citadel',
     faq: 'Preguntas frecuentes',
-  },
-  sectionsLabel: 'Secciones de recursos',
-  search: {
-    label: 'Buscar en los recursos',
   },
 };
 
