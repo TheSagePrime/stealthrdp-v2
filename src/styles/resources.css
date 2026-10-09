@@ -331,26 +331,6 @@
 }
 
 /* Article and index pages (fumadocs) ------------------------------------ */
-#nd-page {
-  max-width: 51rem;
-}
-
-#nd-page > h1 {
-  color: var(--foreground);
-  font-size: clamp(2rem, 4vw, 2.75rem);
-  font-weight: 700;
-  letter-spacing: -0.035em;
-  line-height: 1.1;
-  text-wrap: balance;
-}
-
-#nd-page > h1 + p {
-  margin-bottom: 0;
-  color: var(--text-muted);
-  font-size: 1.1875rem;
-  line-height: 1.6;
-}
-
 .sr-docs-article-meta {
   display: flex;
   flex-wrap: wrap;
@@ -367,25 +347,13 @@
 }
 
 /* Article body ---------------------------------------------------------- */
+/* Colours and content only: sizes, spacing and the page shell come from fumadocs' typography. */
 .sr-richtext {
   overflow-wrap: anywhere;
   color: var(--foreground);
-  font-size: 1.0625rem;
-  line-height: 1.75;
 }
 
-.sr-richtext > :first-child {
-  margin-top: 0;
-}
-
-.sr-richtext p,
-.sr-richtext ul,
-.sr-richtext ol,
-.sr-richtext blockquote,
-.sr-richtext pre {
-  margin: 0 0 1.25rem;
-}
-
+/* Headings are content: our sizes, weights and spacing. */
 .sr-richtext h2 {
   scroll-margin-top: 96px;
   margin: 2.75rem 0 1rem;
