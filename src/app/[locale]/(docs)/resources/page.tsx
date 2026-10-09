@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
-import { BookOpenText, ChatsCircle, Lifebuoy, ShieldCheck } from '@phosphor-icons/react/dist/ssr';
 import { Card, Cards } from 'fumadocs-ui/components/card';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
+import { FluentIcon } from '@/components/site/docs/DocsIcon';
 import { DocsSupport } from '@/components/site/docs/DocsParts';
 import { blogArticles, citadelDocsArticles, helpDocsArticles } from '@/lib/stealth/articles';
 import { faqs } from '@/lib/stealth/content';
@@ -21,28 +21,28 @@ const destinations = [
     href: '/blog',
     count: `${blogArticles.length} guides`,
     description: 'VPS use cases, security, performance, backups, and infrastructure decisions.',
-    icon: <BookOpenText weight="duotone" />,
+    icon: <FluentIcon name="book-open" size={20} />,
   },
   {
     title: 'Help Center',
     href: '/docs',
     count: `${helpDocsArticles.length} articles`,
     description: 'Setup, troubleshooting, networking, Windows access, panels, licensing, and policies.',
-    icon: <Lifebuoy weight="duotone" />,
+    icon: <FluentIcon name="chat" size={20} />,
   },
   {
     title: 'Citadel Docs',
     href: '/citadel/docs',
     count: `${citadelDocsArticles.length} articles`,
     description: 'Cloudflare routing, protected domains, challenges, allowlists, and traffic visibility.',
-    icon: <ShieldCheck weight="duotone" />,
+    icon: <FluentIcon name="shield-checkmark" size={20} />,
   },
   {
     title: 'Common Questions',
     href: '/faq',
     count: `${faqs.length} answers`,
     description: 'Quick answers about plans, billing, setup, operating systems, refunds, and support.',
-    icon: <ChatsCircle weight="duotone" />,
+    icon: <FluentIcon name="chat-bubbles-question" size={20} />,
   },
 ];
 

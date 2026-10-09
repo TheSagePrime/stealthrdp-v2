@@ -1,6 +1,9 @@
 import type * as PageTree from 'fumadocs-core/page-tree';
+import type { FluentIconName } from '@/components/site/docs/DocsIcon';
 import type { SiteLocale } from '@/config/i18n';
 import type { HelpCollection } from '@/lib/stealth/help-center';
+import { createElement } from 'react';
+import { FluentIcon, WindowsMark } from '@/components/site/docs/DocsIcon';
 import { faqPageCopy, faqsByLocale } from '@/content/i18n/faq';
 import { resourcesCopy } from '@/content/i18n/resources';
 import { rdpVpsGuide } from '@/content/rdp-vps';
@@ -22,7 +25,39 @@ import { localeHref } from '@/lib/stealth/i18n';
 
 type Page = { name: string; url: string };
 
-const page = ({ name, url }: Page): PageTree.Item => ({ type: 'page', name, url });
+/* Sidebar icons by group name, from the site's Fluent Color artwork (the same artwork the
+   topic tiles and the footer use) and the real Windows mark. FAQ topics are matched in English,
+   German and Spanish. */
+const icons: [RegExp, FluentIconName | 'windows'][] = [
+  [/getting started|start here/i, 'cloud'],
+  [/windows/i, 'windows'],
+  [/network|vpn|domain/i, 'globe'],
+  [/hosting|panel/i, 'database'],
+  [/protection|security/i, 'shield-checkmark'],
+  [/traffic/i, 'data-trending'],
+  [/remote desktop/i, 'laptop'],
+  [/management/i, 'settings'],
+  [/use case/i, 'gauge'],
+  [/account|konto|cuenta/i, 'person-key'],
+  [/billing|pricing|abrechnung|factur|precio/i, 'receipt'],
+  [/plan|tarif|servic|leistung/i, 'board'],
+  [/support|soporte/i, 'headset'],
+];
+
+function icon(name: FluentIconName | 'windows') {
+  return name === 'windows' ? createElement(WindowsMark) : createElement(FluentIcon, { name });
+}
+
+function iconFor(group: string) {
+  return icon(icons.find(([pattern]) => pattern.test(group))?.[1] ?? 'notebook');
+}
+
+const page = ({ name, url }: Page, glyph?: FluentIconName): PageTree.Item => ({
+  type: 'page',
+  name,
+  url,
+  icon: glyph ? icon(glyph) : undefined,
+});
 
 function groups(entries: { group: string; page: Page }[]): PageTree.Node[] {
   const byGroup = new Map<string, Page[]>();
@@ -30,8 +65,8 @@ function groups(entries: { group: string; page: Page }[]): PageTree.Node[] {
     byGroup.set(entry.group, [...(byGroup.get(entry.group) ?? []), entry.page]);
   }
   return Array.from(byGroup, ([name, pages]) => [
-    { type: 'separator' as const, name },
-    ...pages.map(page),
+    { type: 'separator' as const, name, icon: iconFor(name) },
+    ...pages.map(item => page(item)),
   ]).flat();
 }
 
@@ -47,7 +82,7 @@ function collections(
 }
 
 function root(name: string, description: string, overview: Page, children: PageTree.Node[]): PageTree.Folder {
-  return { type: 'folder', name, description, root: true, children: [page(overview), ...children] };
+  return { type: 'folder', name, description, root: true, children: [page(overview, 'notebook'), ...children] };
 }
 
 export function docsTree(locale: SiteLocale = 'en'): PageTree.Root {
@@ -65,9 +100,9 @@ export function docsTree(locale: SiteLocale = 'en'): PageTree.Root {
         { group: 'Remote Desktop', page: { name: rdpVpsGuide.h1, url: '/rdp-vps' } },
         ...blogArticles.map(article => ({ group: article.category, page: { name: article.title, url: articlePath(article) } })),
       ])),
-      root(t.tabs.faq, faq.topicsLabel, { name: faq.title, url: faqUrl }, faqCategories.map(category => page({
-        name: category,
-        url: `${faqUrl}#${faqCategoryId(category)}`,
+      root(t.tabs.faq, faq.topicsLabel, { name: faq.title, url: faqUrl }, faqCategories.map(category => ({
+        ...page({ name: category, url: `${faqUrl}#${faqCategoryId(category)}` }),
+        icon: iconFor(category),
       }))),
     ],
   };

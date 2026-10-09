@@ -1,7 +1,7 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { ReactNode } from 'react';
-import { BookOpenText, ChatsCircle, Lifebuoy, Pulse, ShieldCheck, SignIn, Tag } from '@phosphor-icons/react/dist/ssr';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
+import { FluentIcon } from '@/components/site/docs/DocsIcon';
 import { siteCopy } from '@/content/i18n/site';
 import { docsTree } from '@/lib/stealth/docs-tree';
 import { asSiteLocale, localeHref } from '@/lib/stealth/i18n';
@@ -23,10 +23,10 @@ export default async function DocsRouteLayout({
   const tree = docsTree(locale);
   const statusLabel = copy.header.links.find(([, url]) => url === '/status')?.[0] ?? 'Server Status';
   const tabIcons: Record<string, ReactNode> = {
-    '/docs': <Lifebuoy weight="duotone" />,
-    '/citadel/docs': <ShieldCheck weight="duotone" />,
-    '/blog': <BookOpenText weight="duotone" />,
-    [localeHref('/faq', locale)]: <ChatsCircle weight="duotone" />,
+    '/docs': <FluentIcon name="chat" size={20} />,
+    '/citadel/docs': <FluentIcon name="shield-checkmark" size={20} />,
+    '/blog': <FluentIcon name="book-open" size={20} />,
+    [localeHref('/faq', locale)]: <FluentIcon name="chat-bubbles-question" size={20} />,
   };
 
   return (
@@ -44,13 +44,13 @@ export default async function DocsRouteLayout({
         }}
         tabs={{ transform: tab => ({ ...tab, icon: tabIcons[tab.url] ?? tab.icon }) }}
         links={[
-          { text: copy.header.viewPlans, url: localeHref('/plans', locale), icon: <Tag /> },
-          { text: statusLabel, url: localeHref('/status', locale), icon: <Pulse /> },
+          { text: copy.header.viewPlans, url: localeHref('/plans', locale), icon: <FluentIcon name="cloud" /> },
+          { text: statusLabel, url: localeHref('/status', locale), icon: <FluentIcon name="data-trending" /> },
           {
             type: 'button',
             text: copy.header.login,
             url: 'https://dash.stealthrdp.com/index.php?rp=/login',
-            icon: <SignIn />,
+            icon: <FluentIcon name="person-key" />,
             external: true,
           },
         ]}
