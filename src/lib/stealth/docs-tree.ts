@@ -59,16 +59,22 @@ const page = ({ name, url }: Page, glyph?: FluentIconName): PageTree.Item => ({
   icon: glyph ? icon(glyph) : undefined,
 });
 
+/* One collapsible folder per group. Fumadocs opens the folder that holds the current page. */
 function groups(entries: { group: string; page: Page }[]): PageTree.Node[] {
   const byGroup = new Map<string, Page[]>();
   for (const entry of entries) {
     byGroup.set(entry.group, [...(byGroup.get(entry.group) ?? []), entry.page]);
   }
-  return Array.from(byGroup, ([name, pages]) => [
-    { type: 'separator' as const, name, icon: iconFor(name) },
-    ...pages.map(item => page(item)),
-  ]).flat();
+  return Array.from(byGroup, ([name, pages]): PageTree.Folder => ({
+    type: 'folder',
+    name,
+    icon: iconFor(name),
+    children: pages.map(item => page(item)),
+  }));
 }
+
+/* The sidebar label is the short sidebarTitle when the article has one, otherwise its title. */
+const sidebarName = (article: { title: string; sidebarTitle?: string }) => article.sidebarTitle ?? article.title;
 
 function collections(
   list: HelpCollection[],
@@ -77,7 +83,7 @@ function collections(
 ): PageTree.Node[] {
   return groups(list.flatMap(collection => articlesForCollection(collection, articles).map(article => ({
     group: collection.title.replace(/^Citadel:\s*/, ''),
-    page: { name: article.title, url: href(article) },
+    page: { name: sidebarName(article), url: href(article) },
   }))));
 }
 
@@ -98,7 +104,7 @@ export function docsTree(locale: SiteLocale = 'en'): PageTree.Root {
       root(t.tabs.citadel, 'Layer 7 DDoS protection', { name: 'Overview', url: '/citadel/docs' }, collections(citadelCollections, citadelDocsArticles, citadelArticleHref)),
       root(t.tabs.guides, 'VPS use cases and operations', { name: 'All guides', url: '/blog' }, groups([
         { group: 'Remote Desktop', page: { name: rdpVpsGuide.h1, url: '/rdp-vps' } },
-        ...blogArticles.map(article => ({ group: article.category, page: { name: article.title, url: articlePath(article) } })),
+        ...blogArticles.map(article => ({ group: article.category, page: { name: sidebarName(article), url: articlePath(article) } })),
       ])),
       root(t.tabs.faq, faq.topicsLabel, { name: faq.title, url: faqUrl }, faqCategories.map(category => ({
         ...page({ name: category, url: `${faqUrl}#${faqCategoryId(category)}` }),

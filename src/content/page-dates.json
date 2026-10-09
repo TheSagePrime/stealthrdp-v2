@@ -76,36 +76,36 @@
     "fingerprint": "bb42f293eef0f781"
   },
   "/citadel/docs/allowlists": {
-    "updated": "2026-09-27",
-    "fingerprint": "ba11fbe8d3480bb8"
+    "updated": "2026-10-09",
+    "fingerprint": "c5b8d4e3cd3d9db7"
   },
   "/citadel/docs/analytics": {
     "updated": "2026-09-27",
     "fingerprint": "542f194b9b99f55c"
   },
   "/citadel/docs/bandwidth": {
-    "updated": "2026-09-27",
-    "fingerprint": "06556d4c71acb4af"
+    "updated": "2026-10-09",
+    "fingerprint": "0c5e3c6f3a979652"
   },
   "/citadel/docs/billing-support": {
     "updated": "2026-09-27",
     "fingerprint": "7178aac9fcd93c19"
   },
   "/citadel/docs/branding": {
-    "updated": "2026-09-27",
-    "fingerprint": "c0fc767ec98f536a"
+    "updated": "2026-10-09",
+    "fingerprint": "7fcdf9ed4615839f"
   },
   "/citadel/docs/cache": {
-    "updated": "2026-09-27",
-    "fingerprint": "a03e3a1dd48378c8"
+    "updated": "2026-10-09",
+    "fingerprint": "daac21c781d6fcb6"
   },
   "/citadel/docs/challenge-levels": {
-    "updated": "2026-10-02",
-    "fingerprint": "8cade005fecc733a"
+    "updated": "2026-10-09",
+    "fingerprint": "d98f542b45053229"
   },
   "/citadel/docs/cloudflare-setup": {
-    "updated": "2026-10-02",
-    "fingerprint": "e999c03eb9387e8a"
+    "updated": "2026-10-09",
+    "fingerprint": "cdee3a23f4e25ac1"
   },
   "/citadel/docs/dns": {
     "updated": "2026-09-27",
@@ -116,8 +116,8 @@
     "fingerprint": "b4e1dfbbc3883d0a"
   },
   "/citadel/docs/domains": {
-    "updated": "2026-09-27",
-    "fingerprint": "7224a45692501cb3"
+    "updated": "2026-10-09",
+    "fingerprint": "a19be2d8401f0fc5"
   },
   "/citadel/docs/getting-started": {
     "updated": "2026-09-27",
@@ -128,8 +128,8 @@
     "fingerprint": "91314a8376b1977b"
   },
   "/citadel/docs/insights": {
-    "updated": "2026-09-27",
-    "fingerprint": "85285f28cc03627d"
+    "updated": "2026-10-09",
+    "fingerprint": "e1a814ece083e1c0"
   },
   "/citadel/docs/logs": {
     "updated": "2026-09-27",
@@ -140,8 +140,8 @@
     "fingerprint": "eec00d21f2301e5c"
   },
   "/citadel/docs/overview": {
-    "updated": "2026-09-27",
-    "fingerprint": "7f24bff1f84dbba6"
+    "updated": "2026-10-09",
+    "fingerprint": "63422804319ca490"
   },
   "/citadel/docs/security": {
     "updated": "2026-09-27",
@@ -184,92 +184,92 @@
     "fingerprint": "ab96e6a2fee9e83f"
   },
   "/docs/10-ways-to-optimize-your-word-press-website-for-speed": {
-    "updated": "2026-10-02",
-    "fingerprint": "81beb3da6c2c1196"
+    "updated": "2026-10-09",
+    "fingerprint": "0eaeef362759669e"
   },
   "/docs/how-do-i-log-into-windows": {
-    "updated": "2026-10-02",
-    "fingerprint": "aca40f45a64c65db"
+    "updated": "2026-10-09",
+    "fingerprint": "5475cf5c9ea76949"
   },
   "/docs/how-to-force-https-using-htaccess": {
-    "updated": "2026-10-02",
-    "fingerprint": "988e333ca8f93e55"
+    "updated": "2026-10-09",
+    "fingerprint": "eedc59f240e69528"
   },
   "/docs/how-to-install-centos-web-panel-cwp-free-web-panel": {
-    "updated": "2026-10-02",
-    "fingerprint": "1b9ebdfef95cbaf2"
+    "updated": "2026-10-09",
+    "fingerprint": "7511953a42712491"
   },
   "/docs/how-to-install-direct-admin-in-a-linux-server": {
-    "updated": "2026-10-02",
-    "fingerprint": "87ee285eb20a1e1d"
+    "updated": "2026-10-09",
+    "fingerprint": "4a4a7e728a02271d"
   },
   "/docs/how-to-re-activate-and-extend-your-180-day-windows-trial": {
-    "updated": "2026-10-02",
-    "fingerprint": "ec2f7fede491796e"
+    "updated": "2026-10-09",
+    "fingerprint": "fe11bcdc84b62465"
   },
   "/docs/how-to-rebuild-a-server": {
-    "updated": "2025-03-13",
-    "fingerprint": "1dca3a084a771b82"
+    "updated": "2026-10-09",
+    "fingerprint": "c367ade77039b33e"
   },
   "/docs/how-to-reset-server-change-or-reset-client-area-password": {
-    "updated": "2026-10-02",
-    "fingerprint": "1a55bf7a59e9ae42"
+    "updated": "2026-10-09",
+    "fingerprint": "5aade41614705b03"
   },
   "/docs/how-to-setup-your-vpn-on-linux-server-using-outline": {
-    "updated": "2026-10-02",
-    "fingerprint": "d2f1fb4379f8c8a4"
+    "updated": "2026-10-09",
+    "fingerprint": "d9727863f0999e65"
   },
   "/docs/install-cpanel-and-whm-in-linux-you-need-a-license": {
-    "updated": "2026-10-02",
-    "fingerprint": "7e5fa5eb62c904cc"
+    "updated": "2026-10-09",
+    "fingerprint": "edc02fc26174bf64"
   },
   "/docs/install-cyber-panel-with-open-lite-speed-in-linux": {
-    "updated": "2026-10-02",
-    "fingerprint": "482c46b63c2390de"
+    "updated": "2026-10-09",
+    "fingerprint": "f9f2050b322fb16c"
   },
   "/docs/install-fast-panel-in-linux-good-web-hosting-free-panel": {
-    "updated": "2026-10-02",
-    "fingerprint": "895d2c070ea40099"
+    "updated": "2026-10-09",
+    "fingerprint": "3f637e479153ed66"
   },
   "/docs/introduction": {
-    "updated": "2026-10-02",
-    "fingerprint": "80b76dd40ff16fe7"
+    "updated": "2026-10-09",
+    "fingerprint": "861fbdbd228924d3"
   },
   "/docs/payment-terms": {
-    "updated": "2026-10-01",
-    "fingerprint": "10cbd4cfe78a8bd1"
+    "updated": "2026-10-09",
+    "fingerprint": "c913c3c90b74ae64"
   },
   "/docs/server-stops-randomly": {
-    "updated": "2026-10-02",
-    "fingerprint": "64ea334140b188e6"
+    "updated": "2026-10-09",
+    "fingerprint": "9fabcd3322612fd1"
   },
   "/docs/setup-tun-tap-for-open-vpn": {
-    "updated": "2025-01-27",
-    "fingerprint": "20f6b74b67351901"
+    "updated": "2026-10-09",
+    "fingerprint": "601a3c66434ba8ca"
   },
   "/docs/step-by-step-guide-to-fix-win-rm-and-install-net-framework": {
-    "updated": "2026-10-02",
-    "fingerprint": "18a3d6677f811fc0"
+    "updated": "2026-10-09",
+    "fingerprint": "852551bac6429205"
   },
   "/docs/termination-of-service": {
-    "updated": "2026-10-02",
-    "fingerprint": "4fb091b5c49df377"
+    "updated": "2026-10-09",
+    "fingerprint": "dd8fb1aef34a98ed"
   },
   "/docs/use-of-service": {
-    "updated": "2025-02-11",
-    "fingerprint": "2472e769398055c8"
+    "updated": "2026-10-09",
+    "fingerprint": "185964ab93ea4bdd"
   },
   "/docs/user-responsibilities": {
-    "updated": "2026-10-02",
-    "fingerprint": "3622fd9a35cdd57e"
+    "updated": "2026-10-09",
+    "fingerprint": "9f719cdcbae0b772"
   },
   "/docs/why-you-should-redirect-all-http-traffic-to-https": {
-    "updated": "2026-10-02",
-    "fingerprint": "20dd8e449d02360f"
+    "updated": "2026-10-09",
+    "fingerprint": "10d4e4a80a036253"
   },
   "/docs/windows-licensing": {
-    "updated": "2026-10-02",
-    "fingerprint": "7d46b672c7af0437"
+    "updated": "2026-10-09",
+    "fingerprint": "3dfe8a461a666dc2"
   },
   "/es": {
     "updated": "2026-10-08",

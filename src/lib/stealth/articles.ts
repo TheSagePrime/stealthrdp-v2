@@ -12,6 +12,8 @@ import { isNoindexDocPath } from './routes';
 export type BlogArticle = {
   slug: string;
   title: string;
+  /* Short label for the sidebar; the page keeps its full title. Falls back to title. */
+  sidebarTitle?: string;
   excerpt: string;
   category: string;
   author: string;
@@ -25,6 +27,8 @@ export type BlogArticle = {
 export type DocArticle = {
   slug: string;
   title: string;
+  /* Short label for the sidebar; the page keeps its full title. Falls back to title. */
+  sidebarTitle?: string;
   category: string;
   date: string;
   summary: string;
