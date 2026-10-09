@@ -12,6 +12,7 @@ import { windowsVpsCopy } from '@/content/i18n/windows-vps';
 import { localeHref } from '@/lib/stealth/i18n';
 import { localizedPageMetadata, requirePageLocale } from '@/lib/stealth/i18n-server';
 import { getPlans } from '@/lib/stealth/live-plans';
+import { windowsVersions } from '@/lib/stealth/os-catalog';
 import { osPageJsonLd } from '@/lib/stealth/structured-data';
 import { getSeoConfig } from '@/libs/seo/config';
 
@@ -24,8 +25,6 @@ export async function generateMetadata(): Promise<Metadata> {
     es: { ...windowsVpsCopy.es.meta, ogImage: 'https://www.stealthrdp.com/assets/og-cover.png' },
   });
 }
-
-const windowsVersions = ['2019', '2022', '2025'];
 
 /* Stock is read live from WHMCS; see src/lib/stealth/live-plans.ts. Must be a literal: 15 minutes. */
 export const revalidate = 900;
