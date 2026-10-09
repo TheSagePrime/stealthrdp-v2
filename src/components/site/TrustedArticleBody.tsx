@@ -1,8 +1,7 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes, react-refresh/only-export-components */
 import type { TOCItemType } from 'fumadocs-core/toc';
-import { withCopyableCode } from '@/components/site/code/code-block-markup';
 import { CodeCopyListener } from '@/components/site/code/CodeCopyListener';
-import { highlightGuideCode } from '@/components/site/code/highlight-guide-code';
+import { renderGuideCode } from '@/components/site/code/highlight-guide-code';
 import { withClickToPlayVideos } from '@/components/site/video/video-embed-markup';
 import { VideoPlayListener } from '@/components/site/video/VideoPlayListener';
 
@@ -75,7 +74,7 @@ function withHeadingIds(html: string): string {
 }
 
 // Article HTML is authored content. Add the small accessibility attribute it often
-// lacks: a title on embedded frames. Code blocks get focus in withCopyableCode.
+// lacks: a title on embedded frames.
 function withAccessibleEmbeds(html: string): string {
   return html
     .replace(/<iframe\b([^>]*)>/gi, (tag, attrs: string) =>
@@ -91,13 +90,13 @@ function withLazyImages(html: string): string {
 }
 
 export async function TrustedArticleBody({ html }: { html: string }) {
-  // Code is coloured on the server (Shiki, as in the Help Center), then framed for copying.
-  const body = await highlightGuideCode(withClickToPlayVideos(withHeadingIds(html)));
+  // Code blocks are highlighted and framed on the server, as Help Center code blocks are.
+  const body = await renderGuideCode(withClickToPlayVideos(withHeadingIds(html)));
   return (
     <>
       <div
         className="sr-guide-body"
-        dangerouslySetInnerHTML={{ __html: withCopyableCode(withAccessibleEmbeds(withLazyImages(body))) }}
+        dangerouslySetInnerHTML={{ __html: withAccessibleEmbeds(withLazyImages(body)) }}
       />
       <CodeCopyListener />
       <VideoPlayListener />

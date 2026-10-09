@@ -80,6 +80,69 @@ URL: `/docs/<slug>`.
 4. If the article is a policy or account page that must not be indexed, add its path to
    `noindexDocPaths` in `src/lib/stealth/routes.ts`.
 
+**Formatting beyond plain Markdown.** These work in Help Center articles and Citadel docs. Each one
+was checked in the browser; use the exact syntax.
+
+- **Numbered steps.** `###` headings that start with a number and a dot become a step timeline. Use
+  the same heading level for every step, in order. A heading without a number ends the timeline.
+
+  ````md
+  ### 1. Install the panel
+
+  Run the installer as root.
+
+  ### 2. Open the panel
+
+  Visit the panel in a browser.
+  ````
+
+  Any existing article with numbered `###` headings shows a timeline, so do not number headings you
+  do not want as steps.
+
+- **Code tabs.** Put two or more code blocks one after another, each with a `tab="Name"` after the
+  language. They become one tabbed block, with the first tab open.
+
+  ````md
+  ```bash tab="Ubuntu"
+  sudo apt update
+  ```
+
+  ```bash tab="AlmaLinux"
+  sudo dnf update
+  ```
+  ````
+
+- **File titles.** Put `title="..."` after the language. The bar above the code shows the title with
+  an icon: a terminal icon for `bash`, a file icon for other languages.
+
+  ````md
+  ```apache title=".htaccess"
+  RewriteEngine On
+  ```
+  ````
+
+- **Line highlights.** Use the comment style of the language. A marker on a line of its own affects
+  the line below it; a marker at the end of a line affects that line.
+
+  - `// [!code ++]` or `# [!code ++]`: the next line is added (green, with a `+`).
+  - `// [!code --]` or `# [!code --]`: the next line is removed (red, with a `-`).
+  - `// [!code highlight]` or `# [!code highlight]` at the end of a line: the line is highlighted.
+
+  The marker line itself is not shown. The examples above show the marker in shell and in
+  JavaScript.
+
+- **Callouts.** A `:::info`, `:::warn` or `:::tip` block. Leave a blank line before and after the
+  block. Text inside is Markdown. A tip shows a lightbulb.
+
+  ```md
+  :::warn
+  Back up the file before you change it.
+  :::
+  ```
+
+Raw HTML in these articles is dropped, so write Markdown. Every article's Markdown is also served at
+`/docs-md/<slug>` (the "Copy Markdown" and "Open" buttons use it); nothing needs registering for that.
+
 Old articles have numeric file names (`1737944013-use-of-service.md`); `docsPublicSlugs` in
 `src/lib/stealth/articles.ts` maps them to their public URLs. Do not rename them — the URLs are indexed.
 

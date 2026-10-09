@@ -7,15 +7,19 @@ import { createMarkdownRenderer } from 'fumadocs-core/content/md';
 import { getTableOfContents } from 'fumadocs-core/content/toc';
 import { rehypeCode } from 'fumadocs-core/mdx-plugins/rehype-code';
 import { remarkAdmonition } from 'fumadocs-core/mdx-plugins/remark-admonition';
+import { remarkCodeTab } from 'fumadocs-core/mdx-plugins/remark-code-tab';
 import { remarkGfm } from 'fumadocs-core/mdx-plugins/remark-gfm';
 import { remarkHeading } from 'fumadocs-core/mdx-plugins/remark-heading';
+import { remarkSteps } from 'fumadocs-core/mdx-plugins/remark-steps';
 import { Callout } from 'fumadocs-ui/components/callout';
+import { CodeBlockTab, CodeBlockTabs, CodeBlockTabsList, CodeBlockTabsTrigger } from 'fumadocs-ui/components/codeblock';
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 
 /* Help Center and Citadel articles go through the Fumadocs Markdown pipeline: GFM tables and
-   lists, heading anchors, a table of contents, Shiki-highlighted code with a copy button and
-   callouts. Callouts are written as ':::info', ':::warn' and ':::tip' blocks and rendered with the
-   Fumadocs Callout component, with Phosphor icons. */
+   lists, heading anchors, a table of contents, Shiki-highlighted code with a copy button, callouts,
+   numbered step timelines and tabbed code blocks. Callouts are written as ':::info', ':::warn' and
+   ':::tip' blocks and rendered with the Fumadocs Callout component, with Phosphor icons. The syntax
+   for steps, tabs, titles and line notation is in CONTRIBUTING.md (recipe 2). */
 
 const calloutIcons: Record<CalloutType, ReactNode> = {
   info: <Info size={20} weight="fill" aria-hidden="true" />,
@@ -37,11 +41,20 @@ function DocCallout({ type = 'info', title, children }: { type?: CalloutType; ti
 type MdNode = { type: string; name?: string | null; children?: MdNode[] };
 
 /* The Markdown renderer resolves only lowercase JSX names from the components map (capitalised
-   names need an MDX evaluator). The admonition plugin emits <Callout>, so rename it to <callout>. */
-const lowercaseCallouts = () => (tree: MdNode) => {
+   names need an MDX evaluator). The admonition and tab plugins emit these capitalised names, so
+   they are renamed to lowercase here and mapped back to their components below. */
+const jsxNames: Record<string, string> = {
+  Callout: 'callout',
+  CodeBlockTabs: 'codeBlockTabs',
+  CodeBlockTabsList: 'codeBlockTabsList',
+  CodeBlockTabsTrigger: 'codeBlockTabsTrigger',
+  CodeBlockTab: 'codeBlockTab',
+};
+
+const lowercaseJsxNames = () => (tree: MdNode) => {
   const walk = (node: MdNode) => {
-    if (node.type === 'mdxJsxFlowElement' && node.name === 'Callout') {
-      node.name = 'callout';
+    if ((node.type === 'mdxJsxFlowElement' || node.type === 'mdxJsxTextElement') && node.name && node.name in jsxNames) {
+      node.name = jsxNames[node.name];
     }
     node.children?.forEach(walk);
   };
@@ -55,14 +68,25 @@ const renderer = createMarkdownRenderer({
     remarkHeading,
     // :::info / :::warn / :::tip ... ::: blocks become <Callout>. A tip is shown as an idea.
     [remarkAdmonition, { typeMap: { info: 'info', note: 'info', tip: 'idea', warn: 'warn', warning: 'warn', danger: 'error' } }],
-    lowercaseCallouts,
+    // Consecutive fences with tab="..." meta become one tabbed code block.
+    remarkCodeTab,
+    // Headings written as "### 1. Title" become a numbered step timeline.
+    remarkSteps,
+    lowercaseJsxNames,
   ],
   rehypePlugins: [[rehypeCode, { themes: { light: 'catppuccin-latte', dark: 'catppuccin-mocha' }, fallbackLanguage: 'text' }]],
   // The admonition creates JSX nodes; pass them through so they reach the components map.
   remarkRehypeOptions: { passThrough: ['mdxJsxFlowElement', 'mdxJsxTextElement'] },
 });
 
-const components = { ...defaultMdxComponents, callout: DocCallout };
+const components = {
+  ...defaultMdxComponents,
+  callout: DocCallout,
+  codeBlockTabs: CodeBlockTabs,
+  codeBlockTabsList: CodeBlockTabsList,
+  codeBlockTabsTrigger: CodeBlockTabsTrigger,
+  codeBlockTab: CodeBlockTab,
+};
 
 /* The admonition plugin reads a callout only when its ':::' markers are paragraphs of their own,
    so a blank line goes before and after each marker. Lines inside code fences are left alone. */

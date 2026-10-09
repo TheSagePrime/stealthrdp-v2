@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { DocMarkdown, docToc } from '@/components/site/docs/DocMarkdown';
-import { DocsArticleMeta, DocsRelated, DocsSupport } from '@/components/site/docs/DocsParts';
+import { DocsArticleMeta, DocsPageActions, DocsRelated, DocsSupport } from '@/components/site/docs/DocsParts';
 import { citadelDocsArticles, docPublicSlug, findCitadelDocByPublicSlug } from '@/lib/stealth/articles';
 import { citadelArticleHref, citadelCollectionForArticle } from '@/lib/stealth/help-center';
 import { requirePageLocale } from '@/lib/stealth/i18n-server';
@@ -63,6 +63,10 @@ export default async function CitadelDocPage({ params }: { params: Promise<{ slu
       />
       <DocsTitle>{article.title}</DocsTitle>
       <DocsDescription>{article.summary}</DocsDescription>
+      <DocsPageActions
+        markdownPath={`/docs-md/${docPublicSlug(article)}`}
+        pageUrl={new URL(`/citadel/docs/${slug}`, getSeoConfig().siteUrl).href}
+      />
       <DocsArticleMeta
         updated={`Updated ${updated ? formatUpdated(updated) : article.date}`}
         section={collection?.title.replace(/^Citadel:\s*/, '')}

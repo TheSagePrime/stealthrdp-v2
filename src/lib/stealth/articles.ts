@@ -65,7 +65,7 @@ function loadArticles<T extends { slug: string }>(dir: string, extension: string
 }
 
 export const blogArticles = loadArticles<BlogArticle>('guides', 'html', 'html');
-const docsArticles = loadArticles<DocArticle>('docs', 'md', 'content');
+export const docsArticles = loadArticles<DocArticle>('docs', 'md', 'content');
 export const citadelDocsArticles = docsArticles.filter(article => article.slug.startsWith('citadel-'));
 export const helpDocsArticles = docsArticles.filter(article => !article.slug.startsWith('citadel-'));
 

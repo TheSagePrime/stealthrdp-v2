@@ -2,6 +2,7 @@
 import type { ReactNode } from 'react';
 import { CalendarBlank, FolderSimple } from '@phosphor-icons/react/dist/ssr';
 import { Card, Cards } from 'fumadocs-ui/components/card';
+import { MarkdownCopyButton, ViewOptionsPopover } from 'fumadocs-ui/layouts/docs/page';
 import { Button } from '@/components/ui/button';
 
 /* Small pieces shared by every page in the docs shell, built on Fumadocs components so they read
@@ -36,6 +37,17 @@ export function DocsArticleMeta({ updated, section }: { updated: string; section
           )
         : null}
     </DocsMeta>
+  );
+}
+
+/* "Copy Markdown" and "Open" (the Markdown view, ChatGPT and Claude) under the title, as on
+   fumadocs.dev. markdownPath serves the article as text/markdown (src/app/[locale]/docs-md). */
+export function DocsPageActions({ markdownPath, pageUrl }: { markdownPath: string; pageUrl: string }) {
+  return (
+    <div className="not-prose flex flex-wrap items-center gap-2">
+      <MarkdownCopyButton markdownUrl={markdownPath} />
+      <ViewOptionsPopover markdownUrl={markdownPath} pageUrl={pageUrl} />
+    </div>
   );
 }
 

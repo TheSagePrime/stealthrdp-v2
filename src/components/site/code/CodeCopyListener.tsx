@@ -3,9 +3,9 @@
 import { useEffect } from 'react';
 
 /*
- * One delegated click handler for every copy button in article bodies. The
- * buttons are plain markup (`[data-copy-code]` inside `[data-code]`), so the
- * same block works in trusted HTML guides and in rendered help docs.
+ * One delegated click handler for the copy button of every guide code block. The block is plain
+ * markup from highlight-guide-code.ts (`[data-copy-code]` inside `[data-code]`); the button shows
+ * the check icon while `data-checked` is set.
  */
 
 let attached = false;
@@ -43,16 +43,11 @@ export function CodeCopyListener() {
         return;
       }
       const ok = await copy(code.textContent ?? '');
-      const label = button.querySelector('span');
-      if (label) {
-        label.textContent = ok ? 'Copied' : 'Copy failed';
-      }
-      button.dataset.state = ok ? 'copied' : 'failed';
+      button.setAttribute('aria-label', ok ? 'Copied' : 'Copy failed');
+      button.toggleAttribute('data-checked', ok);
       window.setTimeout(() => {
-        if (label) {
-          label.textContent = 'Copy';
-        }
-        delete button.dataset.state;
+        button.setAttribute('aria-label', 'Copy code');
+        button.removeAttribute('data-checked');
       }, 1800);
     };
     document.addEventListener('click', onClick);
