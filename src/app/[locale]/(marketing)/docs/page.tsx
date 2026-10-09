@@ -1,7 +1,6 @@
-/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
+import { Card, Cards } from 'fumadocs-ui/components/card';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
-import Link from 'next/link';
 import { ResourceTopics } from '@/components/site/ResourceTopics';
 import { helpDocsArticles } from '@/lib/stealth/articles';
 import {
@@ -41,41 +40,24 @@ export default async function DocsPageRoute() {
               unit: count === 1 ? 'guide' : 'guides',
             }))}
         />
-        <div className="sr-docs-overview">
-          {helpCollections.map((collection) => {
-            const articles = articlesForCollection(collection, helpDocsArticles);
-            if (articles.length === 0) {
-              return null;
-            }
+        {helpCollections.map((collection) => {
+          const articles = articlesForCollection(collection, helpDocsArticles);
+          if (articles.length === 0) {
+            return null;
+          }
 
-            return (
-              <section className="sr-docs-collection" id={helpCollectionId(collection.title)} key={collection.title}>
-                <div className="sr-docs-collection-heading">
-                  <div>
-                    <h2>{collection.title}</h2>
-                    <p>{collection.description}</p>
-                  </div>
-                  <span>
-                    {articles.length}
-                    {' '}
-                    {articles.length === 1 ? 'guide' : 'guides'}
-                  </span>
-                </div>
-                <ul>
-                  {articles.map(article => (
-                    <li key={article.slug}>
-                      <Link href={helpArticleHref(article)}>
-                        <span>{article.title}</span>
-                        <small>{article.summary}</small>
-                        <span aria-hidden="true">→</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            );
-          })}
-        </div>
+          return (
+            <section id={helpCollectionId(collection.title)} key={collection.title}>
+              <h2>{collection.title}</h2>
+              <p>{collection.description}</p>
+              <Cards>
+                {articles.map(article => (
+                  <Card key={article.slug} href={helpArticleHref(article)} title={article.title} description={article.summary} />
+                ))}
+              </Cards>
+            </section>
+          );
+        })}
       </DocsBody>
     </DocsPage>
   );

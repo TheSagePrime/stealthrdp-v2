@@ -39,7 +39,7 @@ export default async function MinecraftPage() {
     .slice(0, 3);
 
   return (
-    <ResourceDocsLayout area="guides" tree={guidePageTree}>
+    <ResourceDocsLayout tree={guidePageTree}>
       <ArticleJsonLd article={publication} config={config} />
       <DocsPage toc={toc} tableOfContent={{ style: 'clerk' }}>
         <DocsTitle>{article.title}</DocsTitle>

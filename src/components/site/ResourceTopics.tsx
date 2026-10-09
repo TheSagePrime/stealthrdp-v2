@@ -1,8 +1,8 @@
-/* eslint-disable better-tailwindcss/no-unknown-classes */
+import { Card, Cards } from 'fumadocs-ui/components/card';
 import Image from 'next/image';
 import iconStyles from '@/components/site/IconArtwork.module.css';
 
-/* Jump tiles at the top of the resource index pages: one per collection. */
+/* Jump cards at the top of the resource index pages: one per collection. */
 
 /* `iconHint` is an English title to pick the icon from when `title` is in another language. */
 export type ResourceTopic = { id: string; title: string; count: number; unit: string; description?: string; iconHint?: string };
@@ -25,24 +25,18 @@ function iconFor(title: string): string {
   return icons.find(([pattern]) => pattern.test(title))?.[1] ?? 'book-open';
 }
 
-export function ResourceTopics({ topics, label = 'Browse by topic' }: { topics: ResourceTopic[]; label?: string }) {
+export function ResourceTopics({ topics }: { topics: ResourceTopic[] }) {
   return (
-    <nav className="sr-topics not-prose" aria-label={label}>
-      <ul>
-        {topics.map((topic) => {
-          const glyph = <Image className={iconStyles.artwork} src={`/images/fluent-color/${iconFor(topic.iconHint ?? topic.title)}.svg`} width={28} height={28} alt="" />;
-          return (
-            <li key={topic.id}>
-              <a href={`#${topic.id}`}>
-                <span className="sr-topics-icon">{glyph}</span>
-                <strong>{topic.title}</strong>
-                {topic.description && <small>{topic.description}</small>}
-                <span className="sr-topics-count">{`${topic.count} ${topic.unit}`}</span>
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-    </nav>
+    <Cards>
+      {topics.map(topic => (
+        <Card
+          key={topic.id}
+          href={`#${topic.id}`}
+          icon={<Image className={iconStyles.artwork} src={`/images/fluent-color/${iconFor(topic.iconHint ?? topic.title)}.svg`} width={28} height={28} alt="" />}
+          title={topic.title}
+          description={[topic.description, `${topic.count} ${topic.unit}`].filter(Boolean).join(' · ')}
+        />
+      ))}
+    </Cards>
   );
 }

@@ -81,7 +81,7 @@ export default async function RdpVpsPage() {
   ];
 
   return (
-    <ResourceDocsLayout area="guides" tree={guidePageTree}>
+    <ResourceDocsLayout tree={guidePageTree}>
       {jsonLd.map((block, index) => (
         <script
           key={index}

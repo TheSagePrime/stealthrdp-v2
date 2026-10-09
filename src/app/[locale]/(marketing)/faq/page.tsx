@@ -33,7 +33,6 @@ export default async function FaqPage() {
       <DocsTitle>{t.title}</DocsTitle>
       <DocsDescription>{t.description}</DocsDescription>
       <ResourceTopics
-        label={t.topicsLabel}
         topics={toc.map((item) => {
           const count = faqs.filter(faq => `#${faqCategoryId(faq.category)}` === item.url).length;
           return { id: item.url.slice(1), title: item.title, count, unit: t.unit(count), iconHint: t.iconHints[item.title] };

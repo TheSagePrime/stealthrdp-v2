@@ -1,9 +1,8 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes, react-refresh/only-export-components */
 import type { ReactNode } from 'react';
 import type { ResourceHeading } from '@/components/site/TrustedArticleBody';
-import { CopySimple } from '@phosphor-icons/react/dist/ssr';
+import { CodeBlock, Pre } from 'fumadocs-ui/components/codeblock';
 import { codeLabel } from '@/components/site/code/code-block-markup';
-import { CodeCopyListener } from '@/components/site/code/CodeCopyListener';
 
 const CODE_INDENT = /^ {4}/;
 const CODE_PREFIXES = ['sudo ', 'winrm ', 'yum ', 'bash ', 'wget '];
@@ -221,7 +220,6 @@ export function DocBody({ content, title }: { content: string; title?: string })
 
   return (
     <div className="sr-richtext">
-      <CodeCopyListener />
       {parse(content, title).map((block, index) => {
         if (block.kind === 'heading') {
           const heading = headings[headingIndex++];
@@ -237,16 +235,9 @@ export function DocBody({ content, title }: { content: string; title?: string })
         }
         if (block.kind === 'code') {
           return (
-            <figure key={index} className="sr-code" data-code>
-              <figcaption className="sr-code-head">
-                <span>{codeLabel(block.language)}</span>
-                <button type="button" className="sr-code-copy" data-copy-code aria-label="Copy code">
-                  <CopySimple size={14} aria-hidden="true" />
-                  <span>Copy</span>
-                </button>
-              </figcaption>
-              <pre tabIndex={0}><code>{block.lines.join('\n')}</code></pre>
-            </figure>
+            <CodeBlock key={index} title={codeLabel(block.language)}>
+              <Pre>{block.lines.join('\n')}</Pre>
+            </CodeBlock>
           );
         }
         if (block.kind === 'label') {
