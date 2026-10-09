@@ -25,7 +25,10 @@ unchanged. It refreshes the fingerprints and keeps every date.
 URL: `/blog/<slug>.html`. Nothing else to register: the sitemap, RSS feed, `llms-full.txt`, search
 index, structured data and blog list read the folder.
 
-1. Create `src/content/guides/<slug>.html`. Use lowercase words and hyphens for `<slug>`.
+Write new guides in Markdown. HTML guides (`<slug>.html`) still work, see "Legacy HTML guides" below.
+A slug has one file: `<slug>.md` or `<slug>.html`, never both (the build fails).
+
+1. Create `src/content/guides/<slug>.md`. Use lowercase words and hyphens for `<slug>`.
 2. Start the file with front matter:
 
    ```yaml
@@ -45,12 +48,42 @@ index, structured data and blog list read the folder.
    ---
    ```
 
-3. Write the body in HTML after the second `---`. Use `<h2>`/`<h3>` (the page adds the H1 from
-   `title`). Link to our pages with root paths (`/plans`, `/windows-vps`). External links use
-   `target="_blank" rel="nofollow noopener noreferrer"`.
-4. Copy the structure of an existing guide, for example `vps-for-trading.html`.
+3. Write the body in Markdown after the second `---`:
+
+   - **Headings.** Use `##` and `###` (the page adds the H1 from `title`). Each heading gets its
+     anchor id from its text. To keep an id that a link already uses, end the heading with it:
+     `## Choose a region [#choose-a-region]`. Use only ids that are already linked.
+   - **Paragraphs, lists, tables, code.** Standard GitHub-flavoured Markdown. Put a language on
+     each code fence (` ```bash `), so it is highlighted and gets a copy button.
+   - **Links to our pages** use root paths: `[VPS plans](/plans)`. **Links to other sites** are
+     normal Markdown links: `[Source](https://example.com/page)`. The page opens them in a new tab
+     and marks them `nofollow`. A bare URL in the text stays plain text, so write links with brackets.
+   - **Images** are `![alt text](https://…)`. The page loads them lazily.
+   - **Citations** point at `sources`, in order: the first source is `[1]`. Write the marker as raw
+     HTML: `<a class="seo-article-citation" href="#source-1" aria-label="Source 1">[1]</a>`.
+   - **Raw HTML** works inline and as a block (leave a blank line before and after a block). Use it
+     for citations, a YouTube embed (copy the `<iframe>` from an existing guide, including its
+     `frameborder`, `loading` and `allowfullscreen`), and tables with merged cells (`colspan`).
+   - **Not supported.** `:::` callouts fail the build. Code fence options such as `title="…"` and
+     `tab="…"`, numbered steps and code tabs are not rendered as they are in the Help Center: use
+     plain paragraphs and separate code blocks.
+
+4. Check the page: `pnpm build` must end with `SEO post-build passed with 0 warning(s)`. Open the
+   page on desktop and on a phone width. The "Copy Markdown" button serves the guide at
+   `/docs-md/guide-<slug>`; nothing needs registering for that.
+5. Run `pnpm page-dates` and commit `src/content/page-dates.json` with the guide.
 
 Do not: invent statistics, quote customers, or link to a source you did not open.
+
+**Example.** Copy `src/content/guides/vps-for-trading.md`: headings, a bulleted and a numbered list,
+citations and a link to a product page.
+
+**Legacy HTML guides.** The guides that are still `<slug>.html` keep their HTML body (the same
+front matter). When you convert one, write `<slug>.md`, delete the `.html` in the same commit and
+keep every word, link and citation: the visible text, the heading texts and ids, the links and the
+citation markers must be the same. Keep the `date` in the front matter. `pnpm page-dates` then
+records the new file's fingerprint; if the words did not change, run `pnpm page-dates --keep-dates`
+so the date stays.
 
 ## 2. Add a Help Center article
 

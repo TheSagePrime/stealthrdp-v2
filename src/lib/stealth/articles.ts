@@ -1,10 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { parse } from 'yaml';
+import { guideMarkdownToHtml } from './guide-markdown';
 import { isNoindexDocPath } from './routes';
 
 /* Articles live one per file:
-   src/content/guides/<slug>.html  front matter + HTML body
+   src/content/guides/<slug>.html  front matter + HTML body (legacy)
+   src/content/guides/<slug>.md    front matter + Markdown body (see CONTRIBUTING.md, recipe 1)
    src/content/docs/<slug>.md      front matter + Markdown body
    `order` in the front matter sets the list order. Relative imports only: the SEO scripts load this
    module outside Next.js. */
@@ -21,7 +23,12 @@ export type BlogArticle = {
   readingTime: number;
   image?: string;
   sources?: { title: string; url: string; publisher?: string; accessedAt?: string }[];
+  /* The article HTML: the .html body as written, or the HTML made from the .md body. */
   html: string;
+  /* The file the words come from, relative to the project root (for scripts/page-dates.mjs). */
+  source: string;
+  /* The Markdown body of a guide written in Markdown (the Copy Markdown button uses it). */
+  markdown?: string;
 };
 
 export type DocArticle = {
@@ -46,25 +53,60 @@ export type DocArticle = {
 
 const FRONT_MATTER = /^---\n([\s\S]*?\n)---\n([\s\S]*)$/;
 
+function readFrontMatter(file: string, source: string): { order: number; meta: Record<string, unknown>; body: string } {
+  const match = FRONT_MATTER.exec(source);
+  if (!match) {
+    throw new Error(`${file} has no front matter`);
+  }
+  const { order, ...meta } = parse(match[1]!) as { order: number } & Record<string, unknown>;
+  return { order, meta, body: match[2]! };
+}
+
 function loadArticles<T extends { slug: string }>(dir: string, extension: string, bodyKey: string): T[] {
   const folder = path.join(process.cwd(), 'src/content', dir);
 
   return fs.readdirSync(folder)
     .filter(file => file.endsWith(`.${extension}`))
     .map((file) => {
-      const source = fs.readFileSync(path.join(folder, file), 'utf8');
-      const match = FRONT_MATTER.exec(source);
-      if (!match) {
-        throw new Error(`${dir}/${file} has no front matter`);
-      }
-      const { order, ...meta } = parse(match[1]!) as { order: number } & Record<string, unknown>;
-      return { order, article: { slug: file.slice(0, -(extension.length + 1)), ...meta, [bodyKey]: match[2] } as unknown as T };
+      const { order, meta, body } = readFrontMatter(`${dir}/${file}`, fs.readFileSync(path.join(folder, file), 'utf8'));
+      return { order, article: { slug: file.slice(0, -(extension.length + 1)), ...meta, [bodyKey]: body } as unknown as T };
     })
     .sort((a, b) => a.order - b.order)
     .map(entry => entry.article);
 }
 
-export const blogArticles = loadArticles<BlogArticle>('guides', 'html', 'html');
+/* Guides are .html or .md, one format per slug. Markdown is converted to the same HTML here. */
+async function loadGuides(): Promise<BlogArticle[]> {
+  const folder = path.join(process.cwd(), 'src/content/guides');
+  const slugs = new Set<string>();
+  const entries: { order: number; article: BlogArticle }[] = [];
+
+  for (const file of fs.readdirSync(folder).filter(item => /\.(?:html|md)$/.test(item)).sort()) {
+    const extension = path.extname(file);
+    const slug = file.slice(0, -extension.length);
+    if (slugs.has(slug)) {
+      throw new Error(`guides/${slug} exists twice (.html and .md); keep only one`);
+    }
+    slugs.add(slug);
+
+    const { order, meta, body } = readFrontMatter(`guides/${file}`, fs.readFileSync(path.join(folder, file), 'utf8'));
+    const html = extension === '.md' ? await guideMarkdownToHtml(body) : body;
+    entries.push({
+      order,
+      article: {
+        slug,
+        ...meta,
+        html,
+        source: `src/content/guides/${file}`,
+        ...(extension === '.md' ? { markdown: body } : {}),
+      } as unknown as BlogArticle,
+    });
+  }
+
+  return entries.sort((a, b) => a.order - b.order).map(entry => entry.article);
+}
+
+export const blogArticles = await loadGuides();
 export const docsArticles = loadArticles<DocArticle>('docs', 'md', 'content');
 export const citadelDocsArticles = docsArticles.filter(article => article.slug.startsWith('citadel-'));
 export const helpDocsArticles = docsArticles.filter(article => !article.slug.startsWith('citadel-'));

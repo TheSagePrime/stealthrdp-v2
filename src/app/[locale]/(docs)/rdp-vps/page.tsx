@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
-import { DocsMeta, DocsRelated } from '@/components/site/docs/DocsParts';
+import { DocsMeta, DocsPageActions, DocsRelated } from '@/components/site/docs/DocsParts';
 import { headingToc, TrustedArticleBody } from '@/components/site/TrustedArticleBody';
 import { rdpVpsGuide } from '@/content/rdp-vps';
 import { requirePageLocale } from '@/lib/stealth/i18n-server';
@@ -83,6 +83,7 @@ export default async function RdpVpsPage() {
       ))}
       <DocsTitle>{rdpVpsGuide.h1}</DocsTitle>
       <DocsDescription>{rdpVpsGuide.description}</DocsDescription>
+      <DocsPageActions markdownPath="/docs-md/rdp-vps" pageUrl={canonical} />
       <DocsMeta>
         <span>{`Published ${formatUpdated(rdpVpsGuide.datePublished)}`}</span>
         {dateModified > rdpVpsGuide.datePublished ? <span>{`Updated ${formatUpdated(dateModified)}`}</span> : null}

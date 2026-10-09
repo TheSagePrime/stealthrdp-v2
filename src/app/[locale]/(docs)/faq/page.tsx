@@ -1,11 +1,13 @@
 import type { Metadata } from 'next';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
+import { DocsPageActions } from '@/components/site/docs/DocsParts';
 import { FaqExplorer } from '@/components/site/FaqExplorer';
 import { faqPageCopy, faqsByLocale } from '@/content/i18n/faq';
 import { faqCategoryId } from '@/lib/stealth/faq-topics';
 import { localizedPageMetadata, requirePageLocale } from '@/lib/stealth/i18n-server';
 import { faqJsonLd } from '@/lib/stealth/structured-data';
+import { getSeoConfig } from '@/libs/seo/config';
 
 const ogImage = 'https://www.stealthrdp.com/assets/og-cover.png';
 
@@ -31,6 +33,9 @@ export default async function FaqPage() {
     <DocsPage toc={toc}>
       <DocsTitle>{t.title}</DocsTitle>
       <DocsDescription>{t.description}</DocsDescription>
+      {locale === 'en'
+        ? <DocsPageActions markdownPath="/docs-md/faq" pageUrl={new URL('/faq', getSeoConfig().siteUrl).href} />
+        : null}
       <DocsBody className="[&>section:first-child>h2]:mt-4">
         <FaqExplorer faqs={faqs} copy={{ licensingPhrase: t.licensingPhrase, support: t.support }} locale={locale} />
       </DocsBody>

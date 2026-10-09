@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { notFound } from 'next/navigation';
 import { ArticleJsonLd, ArticlePublicationMeta, ArticleSources } from '@/components/seo/Article';
-import { DocsMeta, DocsRelated } from '@/components/site/docs/DocsParts';
+import { DocsMeta, DocsPageActions, DocsRelated } from '@/components/site/docs/DocsParts';
 import { headingToc, TrustedArticleBody } from '@/components/site/TrustedArticleBody';
 import { articlePath, blogArticles, findBlog } from '@/lib/stealth/articles';
 import { requirePageLocale } from '@/lib/stealth/i18n-server';
@@ -43,6 +43,10 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
       <ArticleJsonLd article={publication} config={config} />
       <DocsTitle>{article.title}</DocsTitle>
       <DocsDescription>{article.excerpt}</DocsDescription>
+      <DocsPageActions
+        markdownPath={`/docs-md/guide-${article.slug}`}
+        pageUrl={new URL(articlePath(article), config.siteUrl).href}
+      />
       <DocsMeta>
         <ArticlePublicationMeta article={publication} />
         <span>{`${article.readingTime} min read`}</span>

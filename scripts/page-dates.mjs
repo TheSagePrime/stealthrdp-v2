@@ -66,7 +66,7 @@ export async function pageSources() {
   }
 
   for (const article of blogArticles) {
-    sources.set(articlePath(article), [`src/content/guides/${article.slug}.html`]);
+    sources.set(articlePath(article), [article.source]);
   }
   for (const article of helpDocsArticles) {
     sources.set(`/docs/${docPublicSlug(article)}`, [`src/content/docs/${article.slug}.md`]);
