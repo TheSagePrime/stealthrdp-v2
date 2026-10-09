@@ -34,6 +34,13 @@
   --radius-lg: 0.5rem;
   --radius-xl: 0.75rem;
 
+  /* Callouts (:::info, :::warn, :::tip). Brand blue for information and tips, the amber status
+     colour for warnings and the red destructive colour for errors. */
+  --color-fd-info: var(--primary);
+  --color-fd-idea: var(--primary);
+  --color-fd-warning: var(--status-warn);
+  --color-fd-error: var(--destructive);
+
   min-height: 100vh;
   background: var(--color-fd-card);
 }

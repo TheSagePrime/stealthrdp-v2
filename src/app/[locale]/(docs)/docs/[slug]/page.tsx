@@ -46,7 +46,7 @@ export default async function DocPageRoute({ params }: { params: Promise<{ slug:
   const updated = pageUpdated(`/docs/${slug}`);
 
   return (
-    <DocsPage toc={docToc(article.content, article.title)}>
+    <DocsPage toc={docToc(article.content)}>
       <ProductionJsonLd
         data={techArticleJsonLd({
           siteUrl: getSeoConfig().siteUrl,
@@ -62,7 +62,7 @@ export default async function DocPageRoute({ params }: { params: Promise<{ slug:
       <DocsArticleMeta updated={`Updated ${updated ? formatUpdated(updated) : article.date}`} section={collection?.title} />
 
       <DocsBody>
-        <DocMarkdown content={article.content} title={article.title} />
+        <DocMarkdown content={article.content} />
       </DocsBody>
 
       <DocsRelated

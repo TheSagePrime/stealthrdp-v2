@@ -1,6 +1,7 @@
 ---
 order: 2
 title: How to Set Up Outline VPN with Docker
+sidebarTitle: Outline VPN with Docker
 category: VPN and networking
 date: Jan 27, 2025
 sourceTitle: How to Setup your VPN on Linux Server using outline?
@@ -25,14 +26,14 @@ Outline is an open-source VPN from Jigsaw that runs as Docker containers on your
 
 Outline runs in Docker. If Docker is not installed, install it with Docker's convenience script:
 
-```bash
+```bash title="Install and start Docker"
 curl -fsSL https://get.docker.com | sudo sh
 sudo systemctl enable --now docker
 ```
 
 Check that Docker is running:
 
-```bash
+```bash title="Check Docker status"
 sudo systemctl status docker
 ```
 
@@ -42,7 +43,7 @@ The output must show `active (running)`. If you skip this step, the Outline inst
 
 Open Outline Manager, choose **Set up Outline anywhere**, and copy the install command it shows. At the time of writing, it is:
 
-```bash
+```bash title="Outline install command"
 sudo bash -c "$(wget -qO- https://raw.githubusercontent.com/OutlineFoundation/outline-apps/master/server_manager/install_scripts/install_server.sh)"
 ```
 
@@ -57,7 +58,7 @@ When the script finishes, it prints the two ports it uses:
 
 If you use `ufw`, allow both, replacing the numbers with the ones the script printed:
 
-```bash
+```bash title="Allow Outline ports"
 sudo ufw allow 12345/tcp
 sudo ufw allow 23456/tcp
 sudo ufw allow 23456/udp
@@ -67,11 +68,15 @@ sudo ufw allow 23456/udp
 
 The script ends with a line like this:
 
-```json
+```json title="Output from the install script"
 { "apiUrl": "https://[your-server-ip]:12345/xxxxxxxx", "certSha256": "xxxxxxxx" }
 ```
 
-Copy the whole line into Outline Manager and click **Done**. Keep it private: anyone with it can manage your server.
+Copy the whole line into Outline Manager and click **Done**.
+
+:::warn
+Keep this line private. Anyone with it can manage your server.
+:::
 
 ## Step 5. Share access keys
 

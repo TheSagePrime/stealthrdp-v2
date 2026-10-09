@@ -1,6 +1,7 @@
 ---
 order: 16
 title: 'How to Install DirectAdmin on a Linux Server'
+sidebarTitle: Install DirectAdmin
 category: Web panels
 date: Jan 27, 2025
 sourceTitle: How to install Direct admin in a Linux server?
@@ -13,51 +14,43 @@ migration:
 summary: 'Check the DirectAdmin system requirements, install it on a clean Linux VPS, and compare DirectAdmin with cPanel before you buy a licence.'
 relatedSlugs: []
 ---
-How to Install DirectAdmin on a Linux Server
+This guide shows how to install DirectAdmin on your Linux server.
 
-Last updated on Jan 27, 2025
+## Step 1: Check the system requirements
 
-Do you want to install direct admin on your Linux server? Well, I am here to demonstrate how you can install direct admin.
+Make sure that you meet the system requirements: a clean OS install and at least one external IP address.
 
-**Step1: Do you meet the system requirements? Clean OS installs At least one external IP address.** **Supported OS and versions:** **CloudLinux:**
+### Supported OS and versions
 
-6.x 64-bit, 7.x 64-bit, 8.x 64-bit
+- **CloudLinux:** 6.x 64-bit, 7.x 64-bit, 8.x 64-bit
+- **AlmaLinux / RHEL / CentOS:** 7.x 64-bit, 8.x 64-bit
+- **Debian:** 8.x 64-bit, 9.x 64-bit, 10.x 64-bit, 11.x 64-bit ALPHA
+- **Ubuntu:** 16.04 64-bit, 18.04 64-bit, 20.04 64-bit
+- **FreeBSD:** 11.x 64-bit, 12.x 64-bit
 
-**AlmaLinux / RHEL / CentOS:**
+## Step 2: Make sure your license information is correct
 
-7.x 64-bit, 8.x 64-bit
+Sign in to your client account and click the "view" link next to your license here: [https://www.directadmin.com/clients/](https://www.directadmin.com/clients/)
 
-**Debian:**
+Verify that the server IP address and operating system is correct. Also make sure that the license is Active and Verified (if it isn't, then DirectAdmin's billing system hasn't processed your order yet).
 
-8.x 64-bit, 9.x 64-bit, 10.x 64-bit, 11.x 64-bit ALPHA
-
-**Ubuntu:**
-
-16.04 64-bit, 18.04 64-bit, 20.04 64-bit
-
-**FreeBSD:**
-
-11.x 64-bit, 12.x 64-bit
-
-**Step2: Make sure your license information is correct**
-
-Sign in to your client account and click the "view" link next to your license here: https://www.directadmin.com/clients/
-
-Verify that the server IP address and operating system is correct. Also make sure that the license is Active and Verified (if it isn't, then our billing system hasn't processed your order yet).
-
-**Step3: Begin the installation!**
+## Step 3: Begin the installation
 
 Log in as root to your server, download the installation script, and run it:
 
-```bash
+```bash title="Run the DirectAdmin setup script"
 bash <(curl -Ss https://www.directadmin.com/setup.sh || wget -O - https://www.directadmin.com/setup.sh) auto
 ```
 
-The auto method will be best for most people. It automatically installs everything for you, including the CSF firewall. It can also be called without the'auto' option, which requires input but allows for customization. Important: The hostname should not be the same as the primary domain name. e.g. gary.com is not a good hostname, where server.gary.com is. Having the same host/main domain name will cause e-mail and FTP problems. Also, please make sure the hostname resolves once you set up DNS.
+The auto method will be best for most people. It automatically installs everything for you, including the CSF firewall. It can also be called without the 'auto' option, which requires input but allows for customization.
 
-**Accessing the Control Panel**
+:::warn
+The hostname should not be the same as the primary domain name. For example, gary.com is not a good hostname, where server.gary.com is. Having the same host/main domain name will cause e-mail and FTP problems. Also, make sure the hostname resolves once you set up DNS.
+:::
 
-DirectAdmin can be accessed at http://server.ip.address:2222. Use the Admin username/password from the output information provided by setup.sh (the same information is specified in the /usr/local/directadmin/scripts/setup.txt file)
+## Access the control panel
+
+DirectAdmin can be accessed at `http://server.ip.address:2222`. Use the Admin username/password from the output information provided by setup.sh (the same information is specified in the `/usr/local/directadmin/scripts/setup.txt` file).
 
 ## DirectAdmin vs cPanel
 

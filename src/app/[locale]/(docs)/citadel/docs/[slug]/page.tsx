@@ -50,7 +50,7 @@ export default async function CitadelDocPage({ params }: { params: Promise<{ slu
   const updated = pageUpdated(`/citadel/docs/${slug}`);
 
   return (
-    <DocsPage toc={docToc(article.content, article.title)}>
+    <DocsPage toc={docToc(article.content)}>
       <ProductionJsonLd
         data={techArticleJsonLd({
           siteUrl: getSeoConfig().siteUrl,
@@ -84,7 +84,7 @@ export default async function CitadelDocPage({ params }: { params: Promise<{ slu
             )
           : null}
 
-        <DocMarkdown content={article.content} title={article.title} />
+        <DocMarkdown content={article.content} />
       </DocsBody>
 
       <DocsRelated

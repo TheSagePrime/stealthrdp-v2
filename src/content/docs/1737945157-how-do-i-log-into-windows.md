@@ -1,6 +1,7 @@
 ---
 order: 12
 title: 'Log In to Windows RDP from a PC, Mac or Phone'
+sidebarTitle: Connect with RDP
 category: Windows
 date: Jan 27, 2025
 sourceTitle: How do I log into Windows RDP?
@@ -14,8 +15,6 @@ summary: Connect to your Windows VPS with Remote Desktop from Windows 10 or 11, 
 relatedSlugs:
   - 1737944563-how-to-re_activate-and-extend-your-180_day-windows-trial
 ---
-Log In to Windows RDP from a PC, Mac or Phone
-
 You need three things from the email StealthRDP sends after payment: the server IP address, the username (`Administrator`) and the password. Then pick the section for your device.
 
 ## Windows 10 and Windows 11: Remote Desktop Connection
@@ -47,7 +46,7 @@ Two common clients are available in most distribution repositories:
 - **Remmina**: a graphical client. Create a new connection, choose the **RDP** protocol, then enter the IP address, `Administrator` and the password.
 - **FreeRDP**: a command-line client. For example:
 
-```bash
+```bash title="Connect with FreeRDP"
 xfreerdp /v:SERVER_IP /u:Administrator
 ```
 

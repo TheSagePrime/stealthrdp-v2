@@ -1,6 +1,7 @@
 ---
 order: 22
 title: Windows licensing
+sidebarTitle: Windows licensing
 category: Terms and policies
 date: Sep 16, 2026
 sourceTitle: Windows licensing
@@ -15,28 +16,16 @@ relatedSlugs:
   - 1737944204-user-responsibilities
   - 1737944563-how-to-re_activate-and-extend-your-180_day-windows-trial
 ---
-Windows licensing
-
-Windows licensing
-=================
-
-Last updated on Sep 16, 2026
-
 StealthRDP does not provide Microsoft Windows licences, SPLA licences, RDS licences, activation keys, or licensing services, even if requested.
 
 ## What this means
 
-1.  StealthRDP provides the server. StealthRDP does not provide the Microsoft licence.
-
-2.  Microsoft Windows licensing is not included and is not supplied by StealthRDP.
-
-3.  Where Windows Server Evaluation is used, it is Evaluation software. It is not a permanently licensed Windows installation.
-
-4.  Evaluation software is intended for evaluation and testing. It is not licensed for continued or production use without appropriate Microsoft licensing.
-
-5.  Customers using Windows are responsible for obtaining and maintaining any Microsoft licences required for their intended use.
-
-6.  StealthRDP does not obtain, supply, or determine Microsoft licensing for a customer.
+1. StealthRDP provides the server. StealthRDP does not provide the Microsoft licence.
+2. Microsoft Windows licensing is not included and is not supplied by StealthRDP.
+3. Where Windows Server Evaluation is used, it is Evaluation software. It is not a permanently licensed Windows installation.
+4. Evaluation software is intended for evaluation and testing. It is not licensed for continued or production use without appropriate Microsoft licensing.
+5. Customers using Windows are responsible for obtaining and maintaining any Microsoft licences required for their intended use.
+6. StealthRDP does not obtain, supply, or determine Microsoft licensing for a customer.
 
 ## Evaluation software
 

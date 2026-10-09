@@ -1,6 +1,7 @@
 ---
 order: 3
 title: How to Install FASTPANEL on Linux
+sidebarTitle: Install FASTPANEL
 category: Web panels
 date: Jan 27, 2025
 sourceTitle: Install Fast Panel in Linux (Good Web Hosting Free Panel)
@@ -23,27 +24,27 @@ FASTPANEL is a free web hosting control panel. It lets you create sites, manage 
 
 ## Step 1. Connect over SSH
 
-```bash
+```bash title="Connect to the server"
 ssh root@your_server_ip
 ```
 
 ## Step 2. Install wget if it is missing
 
-Debian or Ubuntu:
+### Debian or Ubuntu
 
-```bash
+```bash title="Install wget on Debian or Ubuntu"
 apt-get update && apt-get install -y wget
 ```
 
-CentOS, AlmaLinux or Rocky Linux:
+### CentOS, AlmaLinux or Rocky Linux
 
-```bash
+```bash title="Install wget on CentOS, AlmaLinux or Rocky Linux"
 yum makecache && yum install -y wget
 ```
 
 ## Step 3. Run the FASTPANEL installer
 
-```bash
+```bash title="Run the FASTPANEL installer"
 wget http://repo.fastpanel.direct/install_fastpanel.sh -O - | bash -
 ```
 
@@ -51,11 +52,7 @@ The installer sets up the web server, PHP, database and mail services. It prints
 
 ## Step 4. Log in to the panel
 
-FASTPANEL uses port **8888**. Open this address in your browser:
-
-```text
-https://your_server_ip:8888
-```
+FASTPANEL uses port **8888**. Open this address in your browser: `https://your_server_ip:8888`
 
 - **Username:** `fastuser`
 - **Password:** the password printed at the end of the installation.
