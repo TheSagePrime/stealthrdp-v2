@@ -107,3 +107,11 @@
   display: contents;
   font-size: inherit;
 }
+
+/* Guide quotes end with their attribution ("… - OVHcloud [2]"), so the curly quote marks that
+   Fumadocs typography adds around a blockquote would close after the attribution. The border
+   already marks the quote. */
+.sr-guide-body blockquote p::before,
+.sr-guide-body blockquote p::after {
+  content: none;
+}
