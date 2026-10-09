@@ -48,8 +48,64 @@ describe('guide Markdown', () => {
     expect(html).toContain('<pre><code class="language-bash">sudo nginx -t\n</code></pre>');
   });
 
-  it('rejects callouts, which guide Markdown does not support', async () => {
-    await expect(guideMarkdownToHtml('Intro.\n\n:::warn\nBack up first.\n:::\n')).rejects.toThrow('callouts');
+  it('renders a callout with the Help Center classes, icon and optional title', async () => {
+    const html = await guideMarkdownToHtml('Intro.\n\n:::warn\nBack up first.\n:::\n\n:::info[Before you start]\nYou need root.\n:::\n');
+
+    expect(html).toContain('<div class="my-4 flex gap-2 rounded-xl border bg-fd-card p-3 ps-1 text-sm text-fd-card-foreground shadow-md" style="--callout-color: var(--color-fd-warning, var(--color-fd-muted))">');
+    expect(html).toContain('<div class="text-fd-muted-foreground prose-no-margin empty:hidden">\n<p>Back up first.</p>\n</div></div></div>');
+    expect(html).toContain('<p class="font-medium my-0!">Before you start</p>');
+    expect(html).toContain('<p>You need root.</p>');
+  });
+
+  it('maps a tip to the idea callout', async () => {
+    const html = await guideMarkdownToHtml(':::tip\nUse one region.\n:::\n');
+
+    expect(html).toContain('--callout-color: var(--color-fd-idea, var(--color-fd-muted))');
+    expect(html).not.toContain('<p class="font-medium my-0!">');
+  });
+
+  it('rejects a ":::" line that is not a callout, so it does not reach the page as text', async () => {
+    await expect(guideMarkdownToHtml('Intro.\n\n:::note-ish\nText.\n:::\n')).rejects.toThrow('unknown callout');
+  });
+
+  it('rejects a callout that is never closed', async () => {
+    await expect(guideMarkdownToHtml(':::warn\nBack up first.\n')).rejects.toThrow('not a complete callout');
+  });
+
+  it('writes a titled code fence with its title as text before the block', async () => {
+    const html = await guideMarkdownToHtml('```apache title=".htaccess"\nRewriteEngine On\n```\n');
+
+    expect(html).toBe('<p data-code-title>.htaccess</p><pre><code class="language-apache">RewriteEngine On\n</code></pre>');
+  });
+
+  it('writes consecutive tab fences as one tab group with every panel', async () => {
+    const html = await guideMarkdownToHtml('```bash tab="Ubuntu"\nsudo apt update\n```\n\n```bash tab="AlmaLinux"\nsudo dnf update\n```\n');
+
+    expect(html).toContain('data-code-tabs>');
+    expect(html).toContain('data-code-tab-trigger="0" data-state="active" aria-selected="true"');
+    expect(html).toContain('<span class="absolute inset-x-2 bottom-0 h-px group-data-[state=active]:bg-fd-primary"></span>Ubuntu</button>');
+    expect(html).toContain('data-code-tab-trigger="1" data-state="inactive" aria-selected="false"');
+    expect(html).toContain('<div role="tabpanel" data-code-tab-panel="1" data-state="inactive" class="data-[state=inactive]:hidden">\n<pre data-in-tab><code class="language-bash">sudo dnf update\n</code></pre>');
+  });
+
+  it('writes "1. Title" runs as a step timeline, keeping the number as hidden text and the id', async () => {
+    const html = await guideMarkdownToHtml('### 1. Install the panel\n\nRun it.\n\n### 2. Open the panel [#open]\n\nVisit it.\n\n## Next\n');
+
+    expect(html).toContain('<div class="fd-steps">\n<div class="fd-step">\n<h3><span class="sr-only">1. </span>Install the panel</h3>');
+    expect(html).toContain('<div class="fd-step">\n<h3 id="open"><span class="sr-only">2. </span>Open the panel</h3>');
+    expect(html).toContain('</div>\n<h2>Next</h2>');
+  });
+
+  it('ends a step run at a heading without a number, and a plain heading is not a step', async () => {
+    const html = await guideMarkdownToHtml('## 1. Overview\n\nText.\n\n## Background\n\nMore.\n');
+
+    expect(html).toBe('<div class="fd-steps">\n<div class="fd-step">\n<h2><span class="sr-only">1. </span>Overview</h2>\n<p>Text.</p>\n</div>\n</div>\n<h2>Background</h2>\n<p>More.</p>');
+  });
+
+  it('removes Shiki line notation from the code and records the marked lines', async () => {
+    const html = await guideMarkdownToHtml('```js\n// [!code ++]\nadd();\nkeep(); // [!code highlight]\nold(); // [!code --]\n```\n');
+
+    expect(html).toBe('<pre data-marks="1:add 2:highlight 3:remove"><code class="language-js">add();\nkeep();\nold();\n</code></pre>');
   });
 
   it('ignores ":::" inside a code block', async () => {

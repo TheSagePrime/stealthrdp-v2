@@ -1,6 +1,7 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes, react-refresh/only-export-components */
 import type { TOCItemType } from 'fumadocs-core/toc';
 import { CodeCopyListener } from '@/components/site/code/CodeCopyListener';
+import { CodeTabsListener } from '@/components/site/code/CodeTabsListener';
 import { renderGuideCode } from '@/components/site/code/highlight-guide-code';
 import { withClickToPlayVideos } from '@/components/site/video/video-embed-markup';
 import { VideoPlayListener } from '@/components/site/video/VideoPlayListener';
@@ -99,6 +100,7 @@ export async function TrustedArticleBody({ html }: { html: string }) {
         dangerouslySetInnerHTML={{ __html: withAccessibleEmbeds(withLazyImages(body)) }}
       />
       <CodeCopyListener />
+      <CodeTabsListener />
       <VideoPlayListener />
     </>
   );

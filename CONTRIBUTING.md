@@ -64,9 +64,61 @@ A slug has one file: `<slug>.md` or `<slug>.html`, never both (the build fails).
    - **Raw HTML** works inline and as a block (leave a blank line before and after a block). Use it
      for citations, a YouTube embed (copy the `<iframe>` from an existing guide, including its
      `frameborder`, `loading` and `allowfullscreen`), and tables with merged cells (`colspan`).
-   - **Not supported.** `:::` callouts fail the build. Code fence options such as `title="…"` and
-     `tab="…"`, numbered steps and code tabs are not rendered as they are in the Help Center: use
-     plain paragraphs and separate code blocks.
+   - **Callouts.** A `:::info`, `:::warn` or `:::tip` block, with a blank line before and after it.
+     Close it with `:::` on its own line. The text inside is Markdown. A tip shows a lightbulb.
+     A title goes in brackets: `:::info[Before you start]`. `:::note`, `:::warning` and `:::danger`
+     work too. Callouts look the same as in the Help Center.
+
+     ```md
+     :::warn
+     Back up the file before you change it.
+     :::
+     ```
+
+   - **Code titles.** Put `title="..."` after the language. The bar above the code shows the title
+     with an icon: a terminal for `bash`, a file for other languages.
+
+     ````md
+     ```apache title=".htaccess"
+     RewriteEngine On
+     ```
+     ````
+
+   - **Code tabs.** Put two or more code blocks one after another, each with `tab="Name"` after the
+     language. They become one tabbed block with the first tab open. Every tab is in the HTML, so
+     search engines read all of them.
+
+     ````md
+     ```bash tab="Ubuntu"
+     sudo apt update
+     ```
+
+     ```bash tab="AlmaLinux"
+     sudo dnf update
+     ```
+     ````
+
+   - **Line highlights.** `// [!code ++]` (or `#`) marks the next line as added, `// [!code --]`
+     marks it as removed, and `// [!code highlight]` highlights it. A marker on a line of its own
+     applies to the line below it (the marker line is not shown); a marker at the end of a line
+     applies to that line.
+
+   - **Numbered steps.** `###` headings that start with a number and a dot form a step timeline,
+     in order, at one heading level. A heading without a number ends the timeline. Keep the number in
+     the heading: the timeline shows it, and the heading text and its id stay `1. Install`.
+
+     ```md
+     ### 1. Install the panel
+
+     Run the installer as root.
+
+     ### 2. Open the panel
+
+     Visit the panel in a browser.
+     ```
+
+   - **Not supported.** A `:::` line that is not one of the callouts above fails the build. Other
+     code fence options are ignored.
 
 4. Check the page: `pnpm build` must end with `SEO post-build passed with 0 warning(s)`. Open the
    page on desktop and on a phone width. The "Copy Markdown" button serves the guide at
@@ -81,7 +133,8 @@ citations and a link to a product page.
 **Legacy HTML guides.** The guides that are still `<slug>.html` keep their HTML body (the same
 front matter). When you convert one, write `<slug>.md`, delete the `.html` in the same commit and
 keep every word, link and citation: the visible text, the heading texts and ids, the links and the
-citation markers must be the same. Keep the `date` in the front matter. `pnpm page-dates` then
+citation markers must be the same. A numbered heading (`### 1. Install`) stays `### 1. Install`: it
+becomes a step timeline and its text is unchanged. Keep the `date` in the front matter. `pnpm page-dates` then
 records the new file's fingerprint; if the words did not change, run `pnpm page-dates --keep-dates`
 so the date stays.
 
