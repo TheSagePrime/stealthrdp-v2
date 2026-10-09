@@ -1,8 +1,6 @@
 'use client';
 
-import type { Icon } from '@phosphor-icons/react';
 import type { CitadelCopy } from '@/content/i18n/en/citadel';
-import { Browser, Lightning, MagnifyingGlass, Robot } from '@phosphor-icons/react';
 import { useEffect, useId, useRef, useState } from 'react';
 import styles from './CitadelGate.module.css';
 
@@ -27,7 +25,8 @@ type GateWords = CitadelCopy['gate'];
 type Lane = {
   name: string;
   request: string;
-  icon: Icon;
+  /* Fluent Color artwork, same set as the rest of the site. */
+  icon: string;
   outcome: Outcome;
   comets: number;
   dur: number;
@@ -35,10 +34,10 @@ type Lane = {
 };
 
 const lanes: Lane[] = [
-  { name: 'Visitor', request: 'GET /pricing', icon: Browser, outcome: 'pass', comets: 3, dur: 3.9, offset: 0 },
-  { name: 'Search bot', request: 'GET /sitemap.xml', icon: MagnifyingGlass, outcome: 'pass', comets: 1, dur: 4.4, offset: 1.6 },
-  { name: 'Headless bot', request: 'POST /login', icon: Robot, outcome: 'challenge', comets: 2, dur: 3.4, offset: 0.7 },
-  { name: 'HTTP flood', request: 'GET /search?q=…', icon: Lightning, outcome: 'limit', comets: 4, dur: 2.2, offset: 0.25 },
+  { name: 'Visitor', request: 'GET /pricing', icon: '/images/fluent-color/globe.svg', outcome: 'pass', comets: 3, dur: 3.9, offset: 0 },
+  { name: 'Search bot', request: 'GET /sitemap.xml', icon: '/images/fluent-color/search-visual.svg', outcome: 'pass', comets: 1, dur: 4.4, offset: 1.6 },
+  { name: 'Headless bot', request: 'POST /login', icon: '/images/fluent-color/bot.svg', outcome: 'challenge', comets: 2, dur: 3.4, offset: 0.7 },
+  { name: 'HTTP flood', request: 'GET /search?q=…', icon: '/images/fluent-color/gauge.svg', outcome: 'limit', comets: 4, dur: 2.2, offset: 0.25 },
 ];
 
 /* Share of a pass comet's cycle spent travelling; the rest it is hidden. */
@@ -131,7 +130,8 @@ function palette(element: Element) {
   return {
     primary,
     glow: token('--citadel-glow'),
-    bad: token('--status-bad'),
+    /* Same red as the status page's down bars. */
+    bad: token('--uptime-down'),
     warn: token('--status-warn'),
     surface: token('--citadel-surface'),
     neutral: mix(token('--citadel-muted'), primary, 0.72),
@@ -251,7 +251,7 @@ function useBeamCanvas(
     const comet = (path: ReturnType<typeof sampler>, share: number, style: CanvasGradient, alpha: number) => {
       context.setLineDash([]);
       context.strokeStyle = style;
-      for (const [dash, width, layer] of [[38, 15, 0.14], [26, 8, 0.3], [18, 4.5, 0.75], [8, 2.4, 1]] as const) {
+      for (const [dash, width, layer] of [[34, 3, 1]] as const) {
         context.globalAlpha = alpha * layer;
         context.lineWidth = width;
         path.trace(context, share - dash / path.length, share);
@@ -282,9 +282,9 @@ function useBeamCanvas(
 
       shapes.forEach((shape, index) => {
         const style = lanes[index]!.outcome === 'pass' ? pass : block;
-        stroke(shape.lanePath, style, 2, 0.4, [0.01, 7], -((time * (28 + index * 3)) % 7));
+        stroke(shape.lanePath, style, 1.25, 0.35, [], 0);
       });
-      stroke(laser, out, 2, 0.9, [0.01, 9], -((time * 40) % 9));
+      stroke(laser, out, 2, 0.9, [], 0);
 
       shapes.forEach((shape, index) => {
         const lane = lanes[index]!;
@@ -375,29 +375,6 @@ function useBeamCanvas(
           }
         }
       });
-
-      /* Core: a breathing aura around the disc and a sweep inside it. */
-      const breath = 0.35 + 0.45 * (0.5 - 0.5 * Math.cos((time / 2.8) * Math.PI * 2));
-      const aura = context.createRadialGradient(core[0], core[1], radius - 2, core[0], core[1], radius + 18);
-      aura.addColorStop(0, rgba(colors.glow, 0.5 * breath));
-      aura.addColorStop(1, rgba(colors.glow, 0));
-      context.globalAlpha = 1;
-      context.fillStyle = aura;
-      context.beginPath();
-      context.arc(core[0], core[1], radius + 18, 0, Math.PI * 2);
-      context.arc(core[0], core[1], radius, 0, Math.PI * 2, true);
-      context.fill();
-
-      if ('createConicGradient' in context) {
-        const sweep = context.createConicGradient(((time / 3.6) % 1) * Math.PI * 2, core[0], core[1]);
-        sweep.addColorStop(0, rgba(colors.glow, 0.34));
-        sweep.addColorStop(0.17, rgba(colors.glow, 0));
-        sweep.addColorStop(1, rgba(colors.glow, 0));
-        context.fillStyle = sweep;
-        context.beginPath();
-        context.arc(core[0], core[1], radius - 8, 0, Math.PI * 2);
-        context.fill();
-      }
     };
 
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -493,21 +470,14 @@ function Scene({ name, prefix, t }: { name: LayoutName; prefix: string; t: GateW
       {/* Back layer: light, tracks and the core body */}
       <svg viewBox={viewBox} className={styles.back} aria-hidden="true">
         <defs>
-          <radialGradient id={id('halo')}>
-            <stop offset="0%" className={styles.haloInner} />
-            <stop offset="55%" className={styles.haloMid} />
-            <stop offset="100%" className={styles.haloOuter} />
-          </radialGradient>
           <linearGradient id={id('out')} gradientUnits="userSpaceOnUse" {...outAxis}>
             <stop offset="0%" className={styles.stopPrimary} />
             <stop offset="100%" className={styles.stopGlow} />
           </linearGradient>
         </defs>
-        <circle cx={core[0]} cy={core[1]} r={radius + 120} fill={`url(#${id('halo')})`} />
         {lanes.map((lane, index) => (
           <path key={lane.name} d={beam(name, index).lane} className={styles.track} />
         ))}
-        <path d={`M${fmt(core)} L${fmt(origin)}`} className={styles.laserGlow} stroke={`url(#${id('out')})`} />
         <path d={`M${fmt(core)} L${fmt(origin)}`} className={styles.outTrack} stroke={`url(#${id('out')})`} />
         <circle cx={core[0]} cy={core[1]} r={radius} className={styles.coreDisc} />
         <circle cx={core[0]} cy={core[1]} r={radius - 8} className={styles.coreInner} />
@@ -556,13 +526,12 @@ function Scene({ name, prefix, t }: { name: LayoutName; prefix: string; t: GateW
 
         {lanes.map((lane, index) => {
           const [sx, sy] = layout.source(index);
-          const LaneIcon = lane.icon;
           return wide
             ? (
                 <g key={lane.name}>
                   <rect x="0" y={sy - 23} width="160" height="46" rx="23" className={styles.pill} />
-                  <circle cx="23" cy={sy} r="15" className={styles.pillIcon} />
-                  <LaneIcon x={14} y={sy - 9} size={18} weight="duotone" className={styles.icon} />
+                  <circle cx="23" cy={sy} r="18" className={styles.pillIcon} />
+                  <image href={lane.icon} x="11" y={sy - 12} width="24" height="24" />
                   <text x="46" y={sy - 3} className={styles.name}>{t.lanes[index] ?? lane.name}</text>
                   <text x="46" y={sy + 12} className={styles.request}>{lane.request}</text>
                 </g>
@@ -570,8 +539,8 @@ function Scene({ name, prefix, t }: { name: LayoutName; prefix: string; t: GateW
             : (
                 <g key={lane.name}>
                   <circle cx={sx} cy="34" r="22" className={styles.pill} />
-                  <circle cx={sx} cy="34" r="15" className={styles.pillIcon} />
-                  <LaneIcon x={sx - 9} y={25} size={18} weight="duotone" className={styles.icon} />
+                  <circle cx={sx} cy="34" r="18" className={styles.pillIcon} />
+                  <image href={lane.icon} x={sx - 12} y="22" width="24" height="24" />
                   <text x={sx} y="78" textAnchor="middle" className={styles.name}>{t.lanes[index] ?? lane.name}</text>
                   <text x={sx} y="93" textAnchor="middle" className={styles.request}>{lane.request.split(' ')[1]}</text>
                 </g>
@@ -583,8 +552,8 @@ function Scene({ name, prefix, t }: { name: LayoutName; prefix: string; t: GateW
           ? (
               <g transform={`translate(${origin[0]} ${origin[1]})`}>
                 <rect x="0" y="-23" width="150" height="46" rx="23" className={styles.origin} />
-                <circle cx="23" cy="0" r="15" className={styles.originTile} />
-                <Browser x={14} y={-9} size={18} weight="duotone" className={styles.originIcon} />
+                <circle cx="23" cy="0" r="18" className={styles.originTile} />
+                <image href="/images/fluent-color/database.svg" x="11" y="-12" width="24" height="24" />
                 <text x="46" y="-3" className={styles.name}>{t.origin}</text>
                 <circle cx="50" cy="10" r="3" className={styles.okDot} />
                 <text x="58" y="14" className={styles.note}>{t.clean}</text>
@@ -593,8 +562,8 @@ function Scene({ name, prefix, t }: { name: LayoutName; prefix: string; t: GateW
           : (
               <g transform={`translate(${origin[0]} ${origin[1] + 22})`}>
                 <circle r="22" className={styles.origin} />
-                <circle r="15" className={styles.originTile} />
-                <Browser x={-9} y={-9} size={18} weight="duotone" className={styles.originIcon} />
+                <circle r="18" className={styles.originTile} />
+                <image href="/images/fluent-color/database.svg" x="-12" y="-12" width="24" height="24" />
                 <text y="44" textAnchor="middle" className={styles.name}>{t.origin}</text>
                 <circle cx="-38" cy="56" r="3" className={styles.okDot} />
                 <text x="-30" y="60" className={styles.note}>{t.clean}</text>
