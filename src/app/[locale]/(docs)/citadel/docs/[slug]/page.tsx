@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/notebook/page';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
@@ -50,7 +50,7 @@ export default async function CitadelDocPage({ params }: { params: Promise<{ slu
   const updated = pageUpdated(`/citadel/docs/${slug}`);
 
   return (
-    <DocsPage toc={docToc(article.content, article.title)} tableOfContent={{ style: 'clerk' }}>
+    <DocsPage toc={docToc(article.content, article.title)}>
       <ProductionJsonLd
         data={techArticleJsonLd({
           siteUrl: getSeoConfig().siteUrl,

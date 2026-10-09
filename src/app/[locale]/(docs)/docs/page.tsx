@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/notebook/page';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { collectionsToc, DocsCollections } from '@/components/site/docs/DocsCollections';
 import { DocsSupport } from '@/components/site/docs/DocsParts';
 import { helpDocsArticles } from '@/lib/stealth/articles';
@@ -17,12 +17,12 @@ export const metadata: Metadata = createPageMetadata({
 export default async function DocsPageRoute() {
   await requirePageLocale('/docs');
   return (
-    <DocsPage toc={collectionsToc(helpCollections, helpDocsArticles)} tableOfContent={{ style: 'clerk' }}>
+    <DocsPage toc={collectionsToc(helpCollections, helpDocsArticles)}>
       <DocsTitle>StealthRDP Help Center</DocsTitle>
       <DocsDescription>
         Practical setup and troubleshooting for StealthRDP servers, organized around the task you are trying to complete.
       </DocsDescription>
-      <DocsBody>
+      <DocsBody className="[&>section:first-child>h2]:mt-4">
         <DocsCollections collections={helpCollections} articles={helpDocsArticles} href={helpArticleHref} />
       </DocsBody>
       <DocsSupport

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/notebook/page';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { notFound } from 'next/navigation';
 import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { DocMarkdown, docToc } from '@/components/site/docs/DocMarkdown';
@@ -46,7 +46,7 @@ export default async function DocPageRoute({ params }: { params: Promise<{ slug:
   const updated = pageUpdated(`/docs/${slug}`);
 
   return (
-    <DocsPage toc={docToc(article.content, article.title)} tableOfContent={{ style: 'clerk' }}>
+    <DocsPage toc={docToc(article.content, article.title)}>
       <ProductionJsonLd
         data={techArticleJsonLd({
           siteUrl: getSeoConfig().siteUrl,
