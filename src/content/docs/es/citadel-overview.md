@@ -13,7 +13,7 @@ relatedSlugs:
   - citadel-bandwidth
 translationOf: citadel-overview
 locale: es
-publishAt: 2026-10-22
+publishAt: 2026-10-24
 primaryKeyword: resumen citadel
 illustration:
   src: /citadel-docs/overview-panel.svg

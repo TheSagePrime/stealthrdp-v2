@@ -17,7 +17,7 @@ illustration:
   height: 300
 translationOf: citadel-allowlists
 locale: de
-publishAt: 2026-10-18
+publishAt: 2026-10-17
 primaryKeyword: citadel allowlist
 ---
 ## Bypass in der Citadel-Allowlist anlegen

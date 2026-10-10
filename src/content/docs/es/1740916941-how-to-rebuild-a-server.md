@@ -15,7 +15,7 @@ summary: "Cómo reinstalar un VPS desde el área de cliente: elige nombre y sist
 relatedSlugs: []
 translationOf: 1740916941-how-to-rebuild-a-server
 locale: es
-publishAt: 2026-10-13
+publishAt: 2026-10-10
 primaryKeyword: reinstalar vps
 ---
 Sigue estos pasos para **reinstalar tu VPS** con rapidez:

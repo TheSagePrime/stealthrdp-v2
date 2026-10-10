@@ -15,7 +15,7 @@ summary: 'Control Web Panel installieren: Installieren Sie das kostenlose CWP pe
 relatedSlugs: []
 translationOf: 1737946470-how-to-install-centos-web-panel-cwp-free-web-panel
 locale: de
-publishAt: 2026-10-19
+publishAt: 2026-10-24
 primaryKeyword: control web panel installieren
 ---
 In dieser Anleitung erfahren Sie, wie Sie Control Web Panel (CWP) auf einem Linux-Server mit AlmaLinux installieren. Wir halten jeden Schritt so einfach wie möglich. Die kostenlose Version bietet folgende Funktionen:

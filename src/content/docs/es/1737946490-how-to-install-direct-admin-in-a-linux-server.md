@@ -15,7 +15,7 @@ summary: 'Aprende a instalar DirectAdmin en un VPS Linux limpio: revisa los requ
 relatedSlugs: []
 translationOf: 1737946490-how-to-install-direct-admin-in-a-linux-server
 locale: es
-publishAt: 2026-10-16
+publishAt: 2026-10-17
 primaryKeyword: instalar directadmin
 ---
 Esta guía te muestra cómo instalar DirectAdmin en tu servidor Linux.

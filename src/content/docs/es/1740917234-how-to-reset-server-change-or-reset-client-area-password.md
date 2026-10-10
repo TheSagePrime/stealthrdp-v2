@@ -15,7 +15,7 @@ summary: Restablece la contraseña root o Administrator de tu VPS desde el área
 relatedSlugs: []
 translationOf: 1740917234-how-to-reset-server-change-or-reset-client-area-password
 locale: es
-publishAt: 2026-10-13
+publishAt: 2026-10-10
 primaryKeyword: restablecer contraseña vps
 ---
 ## Restablecer la contraseña del VPS

@@ -23,7 +23,7 @@ sources:
     accessedAt: 2026-10-09
 translationOf: ddos-protection-for-vps-essential-setup-checklist
 locale: de
-publishAt: 2026-10-14
+publishAt: 2026-10-10
 primaryKeyword: ddos schutz vps
 ---
 

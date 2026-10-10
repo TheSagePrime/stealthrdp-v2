@@ -12,7 +12,7 @@ relatedSlugs:
   - citadel-analytics
 translationOf: citadel-logs
 locale: de
-publishAt: 2026-10-18
+publishAt: 2026-10-17
 primaryKeyword: citadel logs durchsuchen
 ---
 ## Log-Typen und Aufbewahrung

@@ -11,7 +11,7 @@ relatedSlugs:
   - citadel-domain-overview
 translationOf: citadel-dns
 locale: de
-publishAt: 2026-10-18
+publishAt: 2026-10-17
 primaryKeyword: cloudflare dns
 ---
 ## A-Record-Modus

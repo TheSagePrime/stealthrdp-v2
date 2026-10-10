@@ -17,7 +17,7 @@ illustration:
   height: 220
 translationOf: citadel-bandwidth
 locale: de
-publishAt: 2026-10-21
+publishAt: 2026-10-24
 primaryKeyword: bandbreite limit
 ---
 ## Verbrauch verstehen

@@ -15,7 +15,7 @@ summary: "Por qué redirigir HTTP a HTTPS por seguridad y SEO, en qué se difere
 relatedSlugs: []
 translationOf: 1737945988-why-you-should-redirect-all-http-traffic-to-https
 locale: es
-publishAt: 2026-10-19
+publishAt: 2026-10-24
 primaryKeyword: redirigir http a https
 ---
 Si estás pensando en redirigir HTTP a HTTPS pero no tienes muy claro cómo afectará a tu sitio web, este artículo te guiará en el proceso.

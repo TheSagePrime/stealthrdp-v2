@@ -18,7 +18,7 @@ illustration:
   height: 260
 translationOf: citadel-origin
 locale: es
-publishAt: 2026-10-18
+publishAt: 2026-10-17
 primaryKeyword: configurar servidor de origen
 ---
 ## Configurar el servidor de origen

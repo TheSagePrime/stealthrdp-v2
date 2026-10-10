@@ -12,7 +12,7 @@ relatedSlugs:
   - citadel-analytics
 translationOf: citadel-logs
 locale: es
-publishAt: 2026-10-18
+publishAt: 2026-10-17
 primaryKeyword: buscar logs citadel
 ---
 ## Tipos de logs y retención

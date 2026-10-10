@@ -15,7 +15,7 @@ summary: "HTTP auf HTTPS umleiten: Warum es für Sicherheit, Browserwarnungen un
 relatedSlugs: []
 translationOf: 1737945988-why-you-should-redirect-all-http-traffic-to-https
 locale: de
-publishAt: 2026-10-19
+publishAt: 2026-10-24
 primaryKeyword: http auf https umleiten
 ---
 Wenn Sie überlegen, HTTP auf HTTPS umzuleiten, aber nicht genau wissen, wie sich das auf Ihre Website auswirkt, führt Sie dieser Artikel durch den Prozess.

@@ -15,7 +15,7 @@ summary: 'VPS neu installieren: Im Kundenbereich Rebuild starten, Name und Betri
 relatedSlugs: []
 translationOf: 1740916941-how-to-rebuild-a-server
 locale: de
-publishAt: 2026-10-13
+publishAt: 2026-10-10
 primaryKeyword: vps neu installieren
 ---
 Um **Ihren VPS neu zu installieren**, gehen Sie mit diesen Schritten vor:

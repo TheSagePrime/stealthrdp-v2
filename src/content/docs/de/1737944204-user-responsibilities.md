@@ -15,7 +15,7 @@ summary: "Pflichten des Kunden bei StealthRDP: Kontosicherheit, zulässige Nutzu
 relatedSlugs: []
 translationOf: 1737944204-user-responsibilities
 locale: de
-publishAt: 2026-10-20
+publishAt: 2026-10-24
 primaryKeyword: pflichten des kunden
 ---
 :::info

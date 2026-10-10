@@ -19,7 +19,7 @@ illustration:
   height: 360
 translationOf: citadel-overview
 locale: de
-publishAt: 2026-10-22
+publishAt: 2026-10-24
 primaryKeyword: citadel übersicht
 ---
 ## Was die Citadel-Übersicht zeigt

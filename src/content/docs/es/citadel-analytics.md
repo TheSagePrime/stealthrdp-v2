@@ -12,7 +12,7 @@ relatedSlugs:
   - citadel-bandwidth
 translationOf: citadel-analytics
 locale: es
-publishAt: 2026-10-21
+publishAt: 2026-10-24
 primaryKeyword: análisis de tráfico web
 ---
 ## Revisar el tráfico

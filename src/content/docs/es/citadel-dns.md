@@ -11,7 +11,7 @@ relatedSlugs:
   - citadel-domain-overview
 translationOf: citadel-dns
 locale: es
-publishAt: 2026-10-18
+publishAt: 2026-10-17
 primaryKeyword: dns cloudflare
 ---
 ## DNS de Cloudflare en modo de registro A

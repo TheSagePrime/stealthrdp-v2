@@ -15,7 +15,7 @@ summary: "FASTPANEL installieren: Richten Sie das kostenlose Webhosting-Panel pe
 relatedSlugs: []
 translationOf: 1737946569-install-fast-panel-in-linux-good-web-hosting-free-panel
 locale: de
-publishAt: 2026-10-16
+publishAt: 2026-10-17
 primaryKeyword: fastpanel installieren
 ---
 Mit dieser Anleitung installieren Sie FASTPANEL, ein kostenloses Webhosting-Panel. Damit erstellen Sie Websites, verwalten E-Mail, Datenbanken, Backups und geplante Aufgaben und sehen Traffic-Statistiken direkt im Browser. Sie können außerdem anderen Benutzern Zugriff auf deren eigene Websites geben. Offizielle Website: [fastpanel.direct](https://fastpanel.direct/).

@@ -15,7 +15,7 @@ summary: "Sigue estos pasos para habilitar WinRM y resolver el problema de insta
 relatedSlugs: []
 translationOf: 1742181117-step_by_step-guide-to-fix-win_rm-and-install-net-framework
 locale: es
-publishAt: 2026-10-16
+publishAt: 2026-10-17
 primaryKeyword: habilitar winrm
 ---
 Sigue estos pasos para habilitar WinRM y resolver el problema de instalación de .NET Framework.

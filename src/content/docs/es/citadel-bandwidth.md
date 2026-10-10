@@ -17,7 +17,7 @@ illustration:
   height: 220
 translationOf: citadel-bandwidth
 locale: es
-publishAt: 2026-10-21
+publishAt: 2026-10-24
 primaryKeyword: ancho de banda
 ---
 ## Entender el uso del ancho de banda

@@ -15,7 +15,7 @@ summary: "Setzen Sie Ihr VPS-Passwort zurück: Root- oder Administrator-Passwort
 relatedSlugs: []
 translationOf: 1740917234-how-to-reset-server-change-or-reset-client-area-password
 locale: de
-publishAt: 2026-10-13
+publishAt: 2026-10-10
 primaryKeyword: vps passwort zurücksetzen
 ---
 Diese Anleitung zeigt Ihnen, wie Sie Ihr VPS-Passwort zurücksetzen: das Root- bzw. Administrator-Passwort Ihres Servers sowie das Passwort für Ihren Kundenbereich.

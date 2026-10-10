@@ -19,7 +19,7 @@ illustration:
   height: 280
 translationOf: citadel-security
 locale: de
-publishAt: 2026-10-15
+publishAt: 2026-10-10
 primaryKeyword: citadel sicherheit konfigurieren
 ---
 ## Challenge-Stufe festlegen

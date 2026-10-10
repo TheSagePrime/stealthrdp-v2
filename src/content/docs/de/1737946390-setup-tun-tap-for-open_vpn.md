@@ -15,7 +15,7 @@ summary: "OpenVPN TUN/TAP einrichten: Folgen Sie den Schritten, um den Fehler �
 relatedSlugs: []
 translationOf: 1737946390-setup-tun-tap-for-open_vpn
 locale: de
-publishAt: 2026-10-19
+publishAt: 2026-10-24
 primaryKeyword: openvpn tun/tap
 ---
 Folgen Sie den nachstehenden Schritten, um den Fehler „tun needs to be installed“ bei OpenVPN TUN/TAP zu beheben.

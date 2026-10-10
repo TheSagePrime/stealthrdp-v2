@@ -15,7 +15,7 @@ summary: "Cómo cancelar tu VPS en StealthRDP: plazos, reembolsos de 7 días, pa
 relatedSlugs: []
 translationOf: 1737944110-termination-of-service
 locale: es
-publishAt: 2026-10-20
+publishAt: 2026-10-24
 primaryKeyword: cancelar vps
 ---
 :::info

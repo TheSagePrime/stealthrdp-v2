@@ -22,7 +22,7 @@ sources:
     accessedAt: 2026-10-02
 translationOf: vps-for-automation-bots
 locale: de
-publishAt: 2026-10-14
+publishAt: 2026-10-10
 primaryKeyword: vps für bots
 ---
 

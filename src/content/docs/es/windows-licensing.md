@@ -17,7 +17,7 @@ relatedSlugs:
   - 1737944563-how-to-re_activate-and-extend-your-180_day-windows-trial
 translationOf: windows-licensing
 locale: es
-publishAt: 2026-10-13
+publishAt: 2026-10-10
 primaryKeyword: licencia windows vps
 ---
 StealthRDP no proporciona licencias de Microsoft Windows, licencias SPLA, licencias RDS, claves de activación ni servicios de licenciamiento para tu VPS, aunque se soliciten.

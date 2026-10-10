@@ -18,7 +18,7 @@ illustration:
   height: 280
 translationOf: citadel-domains
 locale: es
-publishAt: 2026-10-18
+publishAt: 2026-10-17
 primaryKeyword: añadir dominio protección ddos
 ---
 ## Añadir un dominio

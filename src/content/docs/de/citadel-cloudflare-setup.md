@@ -18,7 +18,7 @@ illustration:
   height: 320
 translationOf: citadel-cloudflare-setup
 locale: de
-publishAt: 2026-10-15
+publishAt: 2026-10-10
 primaryKeyword: cloudflare für citadel einrichten
 ---
 Diese Anleitung zeigt Ihnen, wie Sie Cloudflare für Citadel einrichten. Sie setzen die DNS-Einträge Ihrer Domain auf die Ingress-IP von Citadel und stellen SSL/TLS ein.

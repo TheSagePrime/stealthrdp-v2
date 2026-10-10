@@ -12,7 +12,7 @@ relatedSlugs:
   - citadel-allowlists
 translationOf: citadel-branding
 locale: de
-publishAt: 2026-10-22
+publishAt: 2026-10-24
 primaryKeyword: eigene fehlerseiten
 ---
 ## Anpassbare Challenge- und Fehlerseiten

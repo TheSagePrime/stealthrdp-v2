@@ -15,7 +15,7 @@ summary: 'Cómo instalar CyberPanel con OpenLiteSpeed en un VPS Linux nuevo por 
 relatedSlugs: []
 translationOf: 1737946534-install-cyber-panel-with-open_lite_speed-in-linux
 locale: es
-publishAt: 2026-10-16
+publishAt: 2026-10-17
 primaryKeyword: instalar cyberpanel
 ---
 En este tutorial vamos a instalar CyberPanel en un servidor Linux y intentaré que el tutorial sea lo más fácil posible. Usaremos el plan gratuito, que incluye:

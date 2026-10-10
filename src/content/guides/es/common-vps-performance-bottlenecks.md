@@ -39,7 +39,7 @@ sources:
     accessedAt: 2026-10-09
 translationOf: common-vps-performance-bottlenecks
 locale: es
-publishAt: 2026-10-21
+publishAt: 2026-10-24
 primaryKeyword: vps lento
 ---
 **Un VPS lento puede arruinar tu web o tu aplicación: tiempos de respuesta altos, caídas del servicio y usuarios frustrados.** Esto es lo que necesitas saber:

@@ -12,7 +12,7 @@ relatedSlugs:
   - citadel-branding
 translationOf: citadel-challenge-levels
 locale: de
-publishAt: 2026-10-15
+publishAt: 2026-10-10
 primaryKeyword: citadel challenge-stufen
 ---
 ## Warum Citadel-Challenge-Stufen Layer-7-Angriffe stoppen

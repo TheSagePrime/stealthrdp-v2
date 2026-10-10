@@ -15,7 +15,7 @@ summary: "Cómo instalar cPanel y WHM en un servidor Linux nuevo con el instalad
 relatedSlugs: []
 translationOf: 1737946509-install-cpanel-and-whm-in-linux-you-need-a-license
 locale: es
-publishAt: 2026-10-19
+publishAt: 2026-10-24
 primaryKeyword: instalar cpanel
 ---
 En este tutorial vas a aprender a instalar cPanel y WHM en un servidor Linux, de la forma más sencilla posible. Tendrás que comprar la licencia de cPanel en el sitio web de cPanel.

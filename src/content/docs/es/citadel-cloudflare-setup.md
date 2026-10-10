@@ -18,7 +18,7 @@ illustration:
   height: 320
 translationOf: citadel-cloudflare-setup
 locale: es
-publishAt: 2026-10-15
+publishAt: 2026-10-10
 primaryKeyword: configurar cloudflare para citadel
 ---
 ## Configurar Cloudflare para Citadel: DNS y SSL

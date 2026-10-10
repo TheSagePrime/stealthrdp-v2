@@ -28,7 +28,7 @@
           "windows app"
         ]
       },
-      "publishAt": "2026-10-13"
+      "publishAt": "2026-10-10"
     },
     {
       "type": "blog",
@@ -54,7 +54,7 @@
           "vps para trading (30)"
         ]
       },
-      "publishAt": "2026-10-13"
+      "publishAt": "2026-10-10"
     },
     {
       "type": "citadel",
@@ -76,7 +76,7 @@
         ]
       },
       "note": "Generic \"502 bad gateway\" demand (DE 8,100) belongs to a standalone article (step 6), not this product doc. Mention 502 once, naturally.",
-      "publishAt": "2026-10-13"
+      "publishAt": "2026-10-10"
     },
     {
       "type": "help",
@@ -100,7 +100,7 @@
         ]
       },
       "note": "\"windows server lizenz\" results are licence shops (buying intent); this page answers how licensing works on a VPS and that the licence is not included. Use the shop terms only as supporting terms.",
-      "publishAt": "2026-10-13"
+      "publishAt": "2026-10-10"
     },
     {
       "type": "help",
@@ -122,7 +122,7 @@
           "cambiar sistema operativo vps"
         ]
       },
-      "publishAt": "2026-10-13"
+      "publishAt": "2026-10-10"
     },
     {
       "type": "help",
@@ -144,7 +144,7 @@
           "olvidé contraseña root"
         ]
       },
-      "publishAt": "2026-10-13"
+      "publishAt": "2026-10-10"
     },
     {
       "type": "help",
@@ -167,7 +167,7 @@
           "windows server 180 días"
         ]
       },
-      "publishAt": "2026-10-14"
+      "publishAt": "2026-10-10"
     },
     {
       "type": "blog",
@@ -189,7 +189,7 @@
         ]
       },
       "note": "\"discord bot hosting\" is mentioned once in the English post; supporting term only.",
-      "publishAt": "2026-10-14"
+      "publishAt": "2026-10-10"
     },
     {
       "type": "blog",
@@ -213,7 +213,7 @@
           "minecraft vps (30)"
         ]
       },
-      "publishAt": "2026-10-14"
+      "publishAt": "2026-10-10"
     },
     {
       "type": "blog",
@@ -235,7 +235,7 @@
           "vps anti ddos (10)"
         ]
       },
-      "publishAt": "2026-10-14"
+      "publishAt": "2026-10-10"
     },
     {
       "type": "blog",
@@ -258,7 +258,7 @@
           "servidor backup (10)"
         ]
       },
-      "publishAt": "2026-10-14"
+      "publishAt": "2026-10-10"
     },
     {
       "type": "blog",
@@ -283,7 +283,7 @@
         ]
       },
       "note": "\"webmin\" (1,600) is navigational; use it as a supporting term in the Webmin section.",
-      "publishAt": "2026-10-14"
+      "publishAt": "2026-10-10"
     },
     {
       "type": "blog",
@@ -306,7 +306,7 @@
           "habilitar escritorio remoto windows 11 (110)"
         ]
       },
-      "publishAt": "2026-10-15"
+      "publishAt": "2026-10-10"
     },
     {
       "type": "citadel",
@@ -328,7 +328,7 @@
           "protección ddos (40)"
         ]
       },
-      "publishAt": "2026-10-15"
+      "publishAt": "2026-10-10"
     },
     {
       "type": "citadel",
@@ -351,7 +351,7 @@
         ]
       },
       "note": "General Cloudflare DNS terms only as supporting terms.",
-      "publishAt": "2026-10-15"
+      "publishAt": "2026-10-10"
     },
     {
       "type": "citadel",
@@ -373,7 +373,7 @@
         ]
       },
       "note": "\"bot schutz website\" as a supporting term.",
-      "publishAt": "2026-10-15"
+      "publishAt": "2026-10-10"
     },
     {
       "type": "citadel",
@@ -396,7 +396,7 @@
         ]
       },
       "note": "\"rate limiting\" is a definition query; use it as a supporting term where the doc explains rate limits.",
-      "publishAt": "2026-10-15"
+      "publishAt": "2026-10-10"
     },
     {
       "type": "help",
@@ -416,7 +416,7 @@
           "windows server evaluación expirada (10)"
         ]
       },
-      "publishAt": "2026-10-15"
+      "publishAt": "2026-10-17"
     },
     {
       "type": "help",
@@ -438,7 +438,7 @@
           "instalar .net framework 3.5 windows server"
         ]
       },
-      "publishAt": "2026-10-16"
+      "publishAt": "2026-10-17"
     },
     {
       "type": "help",
@@ -460,7 +460,7 @@
           "redireccion https htaccess (10)"
         ]
       },
-      "publishAt": "2026-10-16"
+      "publishAt": "2026-10-17"
     },
     {
       "type": "help",
@@ -484,7 +484,7 @@
           "optimizar velocidad wordpress (10)"
         ]
       },
-      "publishAt": "2026-10-16"
+      "publishAt": "2026-10-17"
     },
     {
       "type": "help",
@@ -504,7 +504,7 @@
           "directadmin (170)"
         ]
       },
-      "publishAt": "2026-10-16"
+      "publishAt": "2026-10-17"
     },
     {
       "type": "help",
@@ -526,7 +526,7 @@
           "openlitespeed (50)"
         ]
       },
-      "publishAt": "2026-10-16"
+      "publishAt": "2026-10-17"
     },
     {
       "type": "help",
@@ -548,7 +548,7 @@
           "panel de hosting gratis"
         ]
       },
-      "publishAt": "2026-10-16"
+      "publishAt": "2026-10-17"
     },
     {
       "type": "blog",
@@ -705,7 +705,7 @@
         ]
       },
       "note": "\"ip whitelisting\" only as a supporting term.",
-      "publishAt": "2026-10-18"
+      "publishAt": "2026-10-17"
     },
     {
       "type": "citadel",
@@ -727,7 +727,7 @@
           "purgar caché"
         ]
       },
-      "publishAt": "2026-10-18"
+      "publishAt": "2026-10-17"
     },
     {
       "type": "citadel",
@@ -750,7 +750,7 @@
         ]
       },
       "note": "\"access log\" only as a supporting term.",
-      "publishAt": "2026-10-18"
+      "publishAt": "2026-10-17"
     },
     {
       "type": "citadel",
@@ -766,7 +766,7 @@
         "primary": "dns cloudflare",
         "supporting": []
       },
-      "publishAt": "2026-10-18"
+      "publishAt": "2026-10-17"
     },
     {
       "type": "citadel",
@@ -782,7 +782,7 @@
         "primary": "añadir dominio protección ddos",
         "supporting": []
       },
-      "publishAt": "2026-10-18"
+      "publishAt": "2026-10-17"
     },
     {
       "type": "citadel",
@@ -798,7 +798,7 @@
         "primary": "configurar servidor de origen",
         "supporting": []
       },
-      "publishAt": "2026-10-18"
+      "publishAt": "2026-10-17"
     },
     {
       "type": "help",
@@ -821,7 +821,7 @@
           "por qué usar https"
         ]
       },
-      "publishAt": "2026-10-19"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "help",
@@ -843,7 +843,7 @@
           "crear servidor vpn propio"
         ]
       },
-      "publishAt": "2026-10-19"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "help",
@@ -865,7 +865,7 @@
           "error tun openvpn"
         ]
       },
-      "publishAt": "2026-10-19"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "help",
@@ -887,7 +887,7 @@
           "control web panel (20)"
         ]
       },
-      "publishAt": "2026-10-19"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "help",
@@ -910,7 +910,7 @@
           "licencia cpanel (20)"
         ]
       },
-      "publishAt": "2026-10-19"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "help",
@@ -926,7 +926,7 @@
         "primary": "términos y condiciones",
         "supporting": []
       },
-      "publishAt": "2026-10-19"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "help",
@@ -942,7 +942,7 @@
         "primary": "condiciones de uso",
         "supporting": []
       },
-      "publishAt": "2026-10-20"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "help",
@@ -958,7 +958,7 @@
         "primary": "cancelar vps",
         "supporting": []
       },
-      "publishAt": "2026-10-20"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "help",
@@ -978,7 +978,7 @@
           "vps pagar con criptomonedas"
         ]
       },
-      "publishAt": "2026-10-20"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "help",
@@ -994,7 +994,7 @@
         "primary": "responsabilidades del cliente",
         "supporting": []
       },
-      "publishAt": "2026-10-20"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "blog",
@@ -1016,7 +1016,7 @@
           "vps alta disponibilidad"
         ]
       },
-      "publishAt": "2026-10-20"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "blog",
@@ -1036,7 +1036,7 @@
           "errores comunes vps"
         ]
       },
-      "publishAt": "2026-10-20"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "blog",
@@ -1058,7 +1058,7 @@
           "mejorar rendimiento servidor"
         ]
       },
-      "publishAt": "2026-10-21"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "blog",
@@ -1080,7 +1080,7 @@
           "vps lento"
         ]
       },
-      "publishAt": "2026-10-21"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "citadel",
@@ -1096,7 +1096,7 @@
         "primary": "estado del dominio citadel",
         "supporting": []
       },
-      "publishAt": "2026-10-21"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "citadel",
@@ -1112,7 +1112,7 @@
         "primary": "análisis de tráfico web",
         "supporting": []
       },
-      "publishAt": "2026-10-21"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "citadel",
@@ -1128,7 +1128,7 @@
         "primary": "analizar ataque ddos",
         "supporting": []
       },
-      "publishAt": "2026-10-21"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "citadel",
@@ -1144,7 +1144,7 @@
         "primary": "ancho de banda",
         "supporting": []
       },
-      "publishAt": "2026-10-21"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "citadel",
@@ -1160,7 +1160,7 @@
         "primary": "páginas de error personalizadas",
         "supporting": []
       },
-      "publishAt": "2026-10-22"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "citadel",
@@ -1176,7 +1176,7 @@
         "primary": "resumen citadel",
         "supporting": []
       },
-      "publishAt": "2026-10-22"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "citadel",
@@ -1192,7 +1192,7 @@
         "primary": "ajustes citadel",
         "supporting": []
       },
-      "publishAt": "2026-10-22"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "citadel",
@@ -1208,7 +1208,7 @@
         "primary": "facturación citadel",
         "supporting": []
       },
-      "publishAt": "2026-10-22"
+      "publishAt": "2026-10-24"
     },
     {
       "type": "blog",
@@ -1241,5 +1241,5 @@
   ],
   "slug_rule": "German and Spanish pages keep the English slug under /de and /es (no hreflang-core change; slug wording carries negligible ranking weight).",
   "rule_intent": "A keyword is primary only if the page fully answers that search. Generic or navigational terms whose searchers want something else are supporting terms at most.",
-  "schedule_rule": "6 pages per day per language, both languages on the same day, priority 1 first; reference pages on day 1."
+  "schedule_rule": "Three weekly batches, German and Spanish on the same day: priority 1 on 2026-10-10 (live with the first deploy), priority 2 on 2026-10-17, priority 3 on 2026-10-24. Check Search Console (indexing, hreflang) before each next batch; hold the batch if problems show."
 }

@@ -18,7 +18,7 @@ illustration:
   height: 280
 translationOf: citadel-domains
 locale: de
-publishAt: 2026-10-18
+publishAt: 2026-10-17
 primaryKeyword: domain ddos schutz hinzufügen
 ---
 ## Domain zum DDoS-Schutz hinzufügen

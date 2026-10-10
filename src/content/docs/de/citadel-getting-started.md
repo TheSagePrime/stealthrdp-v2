@@ -19,7 +19,7 @@ illustration:
   height: 320
 translationOf: citadel-getting-started
 locale: de
-publishAt: 2026-10-15
+publishAt: 2026-10-10
 primaryKeyword: ddos schutz website einrichten
 ---
 ## So erreicht der Datenverkehr Ihre Website

@@ -11,7 +11,7 @@ relatedSlugs:
   - citadel-security
 translationOf: citadel-cache
 locale: de
-publishAt: 2026-10-18
+publishAt: 2026-10-17
 primaryKeyword: citadel cache leeren
 ---
 ## Citadel-Cache konfigurieren

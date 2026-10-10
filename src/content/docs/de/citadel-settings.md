@@ -11,7 +11,7 @@ relatedSlugs:
   - citadel-getting-started
 translationOf: citadel-settings
 locale: de
-publishAt: 2026-10-22
+publishAt: 2026-10-24
 primaryKeyword: citadel einstellungen
 ---
 ## Organisation und Team

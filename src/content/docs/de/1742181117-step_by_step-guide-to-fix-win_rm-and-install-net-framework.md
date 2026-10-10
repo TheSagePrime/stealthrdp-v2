@@ -15,7 +15,7 @@ summary: "WinRM aktivieren und das Problem bei der Installation von .NET Framewo
 relatedSlugs: []
 translationOf: 1742181117-step_by_step-guide-to-fix-win_rm-and-install-net-framework
 locale: de
-publishAt: 2026-10-16
+publishAt: 2026-10-17
 primaryKeyword: winrm aktivieren
 ---
 Mit den folgenden Schritten können Sie WinRM aktivieren und das Problem bei der Installation von .NET Framework beheben.

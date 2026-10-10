@@ -16,7 +16,7 @@ relatedSlugs:
   - 1737944563-how-to-re_activate-and-extend-your-180_day-windows-trial
 translationOf: 1737945157-how-do-i-log-into-windows
 locale: de
-publishAt: 2026-10-13
+publishAt: 2026-10-10
 primaryKeyword: remotedesktopverbindung einrichten
 ---
 Bevor Sie die Remotedesktopverbindung einrichten, benötigen Sie drei Angaben aus der E-Mail, die StealthRDP nach der Zahlung sendet: die Server-IP-Adresse, den Benutzernamen (`Administrator`) und das Passwort. Wählen Sie danach den Abschnitt für Ihr Gerät.

@@ -47,7 +47,7 @@ sources:
     accessedAt: 2026-10-09
 translationOf: 7-tips-for-securing-your-remote-desktop-connection
 locale: de
-publishAt: 2026-10-15
+publishAt: 2026-10-10
 primaryKeyword: rdp absichern
 ---
 **Angreifer nutzten RDP in 90 % der Cyberangriffe, die [Sophos](https://www.sophos.com/en-us/press/press-releases/2024/04/cybercriminals-abuse-remote-desktop-protocol-rdp-90-attacks-handled) im Jahr 2023 bearbeitet hat.** <a class="seo-article-citation" href="#source-7" aria-label="Source 7">[7]</a> Mit diesen 7 Tipps können Sie RDP absichern und Ihre Remote-Desktop-Verbindung vor Angriffen schützen:

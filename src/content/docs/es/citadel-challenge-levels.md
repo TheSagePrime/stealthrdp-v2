@@ -12,7 +12,7 @@ relatedSlugs:
   - citadel-branding
 translationOf: citadel-challenge-levels
 locale: es
-publishAt: 2026-10-15
+publishAt: 2026-10-10
 primaryKeyword: niveles de desafío citadel
 ---
 ## Por qué los niveles de desafío de Citadel detienen los ataques de capa 7

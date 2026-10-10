@@ -12,7 +12,7 @@ relatedSlugs:
   - citadel-allowlists
 translationOf: citadel-branding
 locale: es
-publishAt: 2026-10-22
+publishAt: 2026-10-24
 primaryKeyword: páginas de error personalizadas
 ---
 ## Páginas de error personalizadas

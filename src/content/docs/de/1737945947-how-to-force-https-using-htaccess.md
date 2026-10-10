@@ -15,7 +15,7 @@ summary: "Erzwingen Sie HTTPS per .htaccess auf Apache: alle Zugriffe, eine Doma
 relatedSlugs: []
 translationOf: 1737945947-how-to-force-https-using-htaccess
 locale: de
-publishAt: 2026-10-16
+publishAt: 2026-10-17
 primaryKeyword: htaccess https weiterleitung
 ---
 Nach der Installation eines SSL/TLS-Zertifikats antwortet Ihre Website sowohl auf `http://` als auch auf `https://`. Erzwingen Sie HTTPS, damit jeder Besucher und jede Suchmaschine die verschlüsselte Version nutzt. Unter Apache richten Sie die Weiterleitung von HTTP auf HTTPS mit Rewrite-Regeln in der Datei `.htaccess` ein. Warum das wichtig ist, erfahren Sie unter [warum Sie HTTP auf HTTPS umleiten sollten](/de/docs/why-you-should-redirect-all-http-traffic-to-https).

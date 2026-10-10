@@ -8,7 +8,7 @@ author: StealthRDP Team
 date: 2026-09-08
 translationOf: vps-hosting-minecraft
 locale: de
-publishAt: 2026-10-14
+publishAt: 2026-10-10
 primaryKeyword: minecraft server selber hosten
 ---
 Wenn Sie einen privaten Minecraft-Server selber hosten möchten, ist ein VPS eine praktische Zwischenlösung. Er hält die Welt online, ohne dass ein Heim-PC laufen muss. Außerdem haben Sie Kontrolle über Dateien, Serversoftware und Betriebssystem. Diese Kontrolle bedeutet aber auch, dass Sie Einrichtung, Updates, Zugriff und Backups selbst verantworten.<sup class="citation-marker"><a href="#source-1" aria-label="Source 1">[1]</a></sup><sup class="citation-marker"><a href="#source-3" aria-label="Source 3">[3]</a></sup>

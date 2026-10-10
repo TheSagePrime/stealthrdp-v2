@@ -15,7 +15,7 @@ summary: "cPanel installieren mit dem offiziellen Installer auf einem frischen L
 relatedSlugs: []
 translationOf: 1737946509-install-cpanel-and-whm-in-linux-you-need-a-license
 locale: de
-publishAt: 2026-10-19
+publishAt: 2026-10-24
 primaryKeyword: cpanel installieren
 ---
 In dieser Anleitung erfahren Sie, wie Sie cPanel installieren. cPanel und WHM installieren Sie auf einem Linux-Server, und wir haben die Schritte so einfach wie möglich gehalten. Die cPanel-Lizenz müssen Sie auf der Website von cPanel erwerben.

@@ -19,7 +19,7 @@ illustration:
   height: 320
 translationOf: citadel-getting-started
 locale: es
-publishAt: 2026-10-15
+publishAt: 2026-10-10
 primaryKeyword: configurar protección ddos web
 ---
 ## Cómo llega el tráfico a tu web

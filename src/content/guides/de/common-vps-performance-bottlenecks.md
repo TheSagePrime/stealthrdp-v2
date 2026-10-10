@@ -39,7 +39,7 @@ sources:
     accessedAt: 2026-10-09
 translationOf: common-vps-performance-bottlenecks
 locale: de
-publishAt: 2026-10-21
+publishAt: 2026-10-24
 primaryKeyword: vserver langsam
 ---
 **Wenn Ihr Vserver langsam läuft, kann das Ihre Website oder Anwendung lahmlegen: Antwortzeiten steigen, Dienste stürzen ab und Nutzer verlieren die Geduld.** Das sollten Sie wissen:

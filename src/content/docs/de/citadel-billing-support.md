@@ -11,7 +11,7 @@ relatedSlugs:
   - citadel-getting-started
 translationOf: citadel-billing-support
 locale: de
-publishAt: 2026-10-22
+publishAt: 2026-10-24
 primaryKeyword: citadel abrechnung
 ---
 ## Citadel-Abrechnung und Support: wohin Sie sich wenden

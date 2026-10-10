@@ -15,7 +15,7 @@ summary: "Outline-VPN-Server auf einem Linux-VPS einrichten: Docker installieren
 relatedSlugs: []
 translationOf: 1737946054-how-to-setup-your-vpn-on-linux-server-using-outline
 locale: de
-publishAt: 2026-10-19
+publishAt: 2026-10-24
 primaryKeyword: outline vpn server einrichten
 ---
 Outline ist ein Open-Source-VPN von Jigsaw, das als Docker-Container auf Ihrem eigenen Server läuft. Sie verwalten es mit der Desktop-App Outline Manager und teilen Zugangsschlüssel mit Ihren Nutzern, die sich mit dem Outline Client verbinden. Diese Anleitung zeigt Ihnen, wie Sie einen Outline-VPN-Server auf einem Linux-VPS einrichten.

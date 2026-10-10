@@ -15,7 +15,7 @@ summary: "WordPress schneller machen: Warum Geschwindigkeit wichtig ist, wie Sie
 relatedSlugs: []
 translationOf: 1737946010-10-ways-to-optimize-your-word_press-website-for-speed
 locale: de
-publishAt: 2026-10-16
+publishAt: 2026-10-17
 primaryKeyword: wordpress schneller machen
 ---
 ## Warum eine schnelle Website so wichtig ist

@@ -15,7 +15,7 @@ summary: "Por qué importa la velocidad, cómo medirla con GTmetrix y 10 formas 
 relatedSlugs: []
 translationOf: 1737946010-10-ways-to-optimize-your-word_press-website-for-speed
 locale: es
-publishAt: 2026-10-16
+publishAt: 2026-10-17
 primaryKeyword: acelerar wordpress
 ---
 ## Por qué es fundamental tener un sitio rápido

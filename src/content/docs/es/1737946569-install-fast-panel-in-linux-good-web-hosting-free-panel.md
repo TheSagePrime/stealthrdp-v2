@@ -15,7 +15,7 @@ summary: "Instala FASTPANEL, un panel de hosting web gratuito, en un VPS Linux n
 relatedSlugs: []
 translationOf: 1737946569-install-fast-panel-in-linux-good-web-hosting-free-panel
 locale: es
-publishAt: 2026-10-16
+publishAt: 2026-10-17
 primaryKeyword: instalar fastpanel
 ---
 FASTPANEL es un panel de control de hosting web gratuito. Te permite crear sitios, gestionar correo, bases de datos, copias de seguridad y tareas programadas, y ver estadísticas de tráfico desde el navegador. También puedes dar acceso a otros usuarios a sus propios sitios. Esta guía explica cómo instalar FASTPANEL en tu servidor. Sitio oficial: [fastpanel.direct](https://fastpanel.direct/).

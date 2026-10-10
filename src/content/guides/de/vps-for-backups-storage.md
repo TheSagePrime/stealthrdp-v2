@@ -18,7 +18,7 @@ sources:
     accessedAt: 2026-09-27
 translationOf: vps-for-backups-storage
 locale: de
-publishAt: 2026-10-14
+publishAt: 2026-10-10
 primaryKeyword: storage vps
 ---
 Ein Storage VPS kann als Ziel für Server-Backups nützlich sein, wenn Sie einen Remote-Rechner wollen, den Sie kontrollieren, über gängige Werkzeuge erreichen und mit Software wie restic, Borg, rsync, SFTP oder eigenen Skripten automatisieren können. Ein VPS ist jedoch nicht automatisch eine vollständige Backup-Strategie. Kapazität, Aufbewahrung, Verschlüsselung, die Trennung von Ausfalldomänen und Wiederherstellungstests sind wichtiger als das Wort „Backup“ auf dem Server-Label. <a class="seo-article-citation" href="#source-1" aria-label="Source 1">[1]</a> <a class="seo-article-citation" href="#source-2" aria-label="Source 2">[2]</a>

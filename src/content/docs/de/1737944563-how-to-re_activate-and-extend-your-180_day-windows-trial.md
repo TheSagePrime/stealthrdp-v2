@@ -15,7 +15,7 @@ summary: 'Verlängern Sie die Windows-Server-Testversion mit slmgr rearm, prüfe
 relatedSlugs: []
 translationOf: 1737944563-how-to-re_activate-and-extend-your-180_day-windows-trial
 locale: de
-publishAt: 2026-10-14
+publishAt: 2026-10-10
 primaryKeyword: slmgr rearm
 ---
 Windows-Server-Testversionen laufen 180 Tage. Mit dem Rearm-Befehl `slmgr -rearm` setzen Sie den Timer einer Testversion zurück, allerdings nur begrenzt oft. Diese Anleitung zeigt, wie Sie die verbleibende Anzahl an Rearms prüfen und was passiert, wenn die Testversion abläuft.

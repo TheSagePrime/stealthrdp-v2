@@ -12,7 +12,7 @@ relatedSlugs:
   - citadel-security
 translationOf: citadel-domain-overview
 locale: de
-publishAt: 2026-10-21
+publishAt: 2026-10-24
 primaryKeyword: citadel domain status
 ---
 ## Citadel-Domain-Status und Verbindung

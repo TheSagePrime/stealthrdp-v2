@@ -15,7 +15,7 @@ summary: "Sigue estos pasos para solucionar el error de OpenVPN «tun needs to b
 relatedSlugs: []
 translationOf: 1737946390-setup-tun-tap-for-open_vpn
 locale: es
-publishAt: 2026-10-19
+publishAt: 2026-10-24
 primaryKeyword: openvpn tun tap
 ---
 Sigue estos pasos para solucionar el error de OpenVPN «tun needs to be installed».

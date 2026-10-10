@@ -15,7 +15,7 @@ summary: "Usa slmgr /rearm para restablecer el temporizador de evaluación de Wi
 relatedSlugs: []
 translationOf: 1737944563-how-to-re_activate-and-extend-your-180_day-windows-trial
 locale: es
-publishAt: 2026-10-14
+publishAt: 2026-10-10
 primaryKeyword: slmgr rearm
 ---
 Las ediciones de evaluación de Windows Server duran 180 días. Puedes restablecer ese temporizador con el comando `slmgr -rearm` un número limitado de veces. Esta guía muestra los comandos, cómo comprobar cuántos rearmes quedan y qué ocurre cuando caduca la evaluación.

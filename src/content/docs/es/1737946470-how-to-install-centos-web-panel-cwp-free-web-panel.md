@@ -15,7 +15,7 @@ summary: 'Aprende a instalar CentOS Web Panel (CWP), también llamado Control We
 relatedSlugs: []
 translationOf: 1737946470-how-to-install-centos-web-panel-cwp-free-web-panel
 locale: es
-publishAt: 2026-10-19
+publishAt: 2026-10-24
 primaryKeyword: instalar centos web panel
 ---
 En este tutorial vamos a instalar CentOS Web Panel (CWP), también llamado Control Web Panel, en un servidor Linux con AlmaLinux, y lo haremos de la forma más sencilla posible. Usaremos la versión gratuita, que incluye:

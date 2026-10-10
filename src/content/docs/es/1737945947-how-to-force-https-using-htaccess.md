@@ -15,7 +15,7 @@ summary: "Redirige HTTP a HTTPS con .htaccess en Apache: redirección 301 para t
 relatedSlugs: []
 translationOf: 1737945947-how-to-force-https-using-htaccess
 locale: es
-publishAt: 2026-10-16
+publishAt: 2026-10-17
 primaryKeyword: redirigir http a https htaccess
 ---
 Después de instalar un certificado SSL/TLS, tu sitio responde tanto en `http://` como en `https://`. Forzar HTTPS hace que cada visitante y cada motor de búsqueda use la versión cifrada. En Apache, puedes redirigir HTTP a HTTPS con reglas de reescritura en el archivo `.htaccess`. Para entender por qué importa, consulta [por qué deberías redirigir todo el tráfico HTTP a HTTPS](/es/docs/why-you-should-redirect-all-http-traffic-to-https).

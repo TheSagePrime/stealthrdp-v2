@@ -11,7 +11,7 @@ relatedSlugs:
   - citadel-challenge-levels
 translationOf: citadel-allowlists
 locale: es
-publishAt: 2026-10-18
+publishAt: 2026-10-17
 primaryKeyword: lista de permitidos citadel
 illustration:
   src: /citadel-docs/allowlist-paths.svg

@@ -16,7 +16,7 @@ relatedSlugs:
   - 1737944563-how-to-re_activate-and-extend-your-180_day-windows-trial
 translationOf: 1737944952-server-stops-randomly
 locale: de
-publishAt: 2026-10-15
+publishAt: 2026-10-17
 primaryKeyword: windows server fährt herunter
 ---
 Wenn Windows Server Evaluation verwendet wird, kann eine abgelaufene Testphase dazu führen, dass der Server herunterfährt.
