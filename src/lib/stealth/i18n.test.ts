@@ -19,7 +19,7 @@ describe('language helpers', () => {
   });
 
   it('keeps English-only pages on their English URL in every language', () => {
-    const englishOnly = '/blog/vps-for-trading.html';
+    const englishOnly = '/rdp-vps';
 
     expect(routeLocales(englishOnly)).toEqual(['en']);
     expect(localeHref(englishOnly, 'de')).toBe(englishOnly);
@@ -28,8 +28,8 @@ describe('language helpers', () => {
 
   it('links every language, falling back to its home page where a page is English only', () => {
     expect(languageLinks('/plans').map(link => link.href)).toEqual(['/plans', '/de/plans', '/es/plans']);
-    expect(languageLinks('/blog/vps-for-trading.html')).toEqual([
-      { locale: 'en', name: 'English', href: '/blog/vps-for-trading.html', exists: true },
+    expect(languageLinks('/rdp-vps')).toEqual([
+      { locale: 'en', name: 'English', href: '/rdp-vps', exists: true },
       { locale: 'de', name: 'Deutsch', href: '/de', exists: false },
       { locale: 'es', name: 'Español', href: '/es', exists: false },
     ]);

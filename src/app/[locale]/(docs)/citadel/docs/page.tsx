@@ -2,20 +2,29 @@ import type { Metadata } from 'next';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { cardSectionsToc, collectionSections, DocsCardSections } from '@/components/site/docs/DocsCollections';
 import { DocsSupport } from '@/components/site/docs/DocsParts';
+import { TranslatedDocsIndex } from '@/components/site/docs/TranslatedPages';
 import { citadelDocsArticles } from '@/lib/stealth/articles';
 import { citadelArticleHref, citadelCollections } from '@/lib/stealth/help-center';
-import { requirePageLocale } from '@/lib/stealth/i18n-server';
-import { createPageMetadata } from '@/libs/seo/metadata';
+import { localizedPageMetadata, requirePageLocale } from '@/lib/stealth/i18n-server';
+import { translatedIndexMetadata } from '@/lib/stealth/translations';
 
-export const metadata: Metadata = createPageMetadata({
-  path: '/citadel/docs',
-  title: 'Citadel Docs — Layer 7 DDoS Protection',
-  description: 'Citadel documentation for setup, Cloudflare routing, domains, challenge levels, allowlists, cache, traffic analytics, bandwidth, alerts, billing, and support.',
-  ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
-});
+/* German and Spanish exist once a translated Citadel doc is published (src/config/i18n.ts). */
+export async function generateMetadata(): Promise<Metadata> {
+  return localizedPageMetadata('/citadel/docs', {
+    en: {
+      title: 'Citadel Docs — Layer 7 DDoS Protection',
+      description: 'Citadel documentation for setup, Cloudflare routing, domains, challenge levels, allowlists, cache, traffic analytics, bandwidth, alerts, billing, and support.',
+      ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
+    },
+    ...translatedIndexMetadata('citadel'),
+  });
+}
 
 export default async function CitadelDocsPage() {
-  await requirePageLocale('/citadel/docs');
+  const locale = await requirePageLocale('/citadel/docs');
+  if (locale !== 'en') {
+    return <TranslatedDocsIndex locale={locale} section="citadel" />;
+  }
   const sections = collectionSections(citadelCollections, citadelDocsArticles, citadelArticleHref);
   return (
     <DocsPage toc={cardSectionsToc(sections)}>

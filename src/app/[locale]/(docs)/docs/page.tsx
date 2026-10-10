@@ -2,20 +2,29 @@ import type { Metadata } from 'next';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { cardSectionsToc, collectionSections, DocsCardSections } from '@/components/site/docs/DocsCollections';
 import { DocsSupport } from '@/components/site/docs/DocsParts';
+import { TranslatedDocsIndex } from '@/components/site/docs/TranslatedPages';
 import { helpDocsArticles } from '@/lib/stealth/articles';
 import { helpArticleHref, helpCollections } from '@/lib/stealth/help-center';
-import { requirePageLocale } from '@/lib/stealth/i18n-server';
-import { createPageMetadata } from '@/libs/seo/metadata';
+import { localizedPageMetadata, requirePageLocale } from '@/lib/stealth/i18n-server';
+import { translatedIndexMetadata } from '@/lib/stealth/translations';
 
-export const metadata: Metadata = createPageMetadata({
-  path: '/docs',
-  title: 'Help Center — StealthRDP',
-  description: 'StealthRDP setup, troubleshooting, server management, networking, panels, policies, licensing, and support guidance.',
-  ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
-});
+/* German and Spanish exist once a translated article is published (src/config/i18n.ts). */
+export async function generateMetadata(): Promise<Metadata> {
+  return localizedPageMetadata('/docs', {
+    en: {
+      title: 'Help Center — StealthRDP',
+      description: 'StealthRDP setup, troubleshooting, server management, networking, panels, policies, licensing, and support guidance.',
+      ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
+    },
+    ...translatedIndexMetadata('help'),
+  });
+}
 
 export default async function DocsPageRoute() {
-  await requirePageLocale('/docs');
+  const locale = await requirePageLocale('/docs');
+  if (locale !== 'en') {
+    return <TranslatedDocsIndex locale={locale} section="help" />;
+  }
   const sections = collectionSections(helpCollections, helpDocsArticles, helpArticleHref);
   return (
     <DocsPage toc={cardSectionsToc(sections)}>

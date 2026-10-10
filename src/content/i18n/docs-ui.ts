@@ -31,6 +31,13 @@ const de: DocsUiCopy = {
   'Show Sidebar(sidebar)': 'Seitenleiste anzeigen',
   'Hide Sidebar(sidebar)': 'Seitenleiste ausblenden',
   'Toggle Menu(mobile menu)(aria-label)': 'Menü öffnen oder schließen',
+  'Copy Markdown(page actions)': 'Markdown kopieren',
+  'Copied Markdown(page actions)': 'Markdown kopiert',
+  'Open(page actions)': 'Öffnen',
+  'View as Markdown(page actions)': 'Als Markdown ansehen',
+  'Open in ChatGPT(page actions)': 'In ChatGPT öffnen',
+  'Open in Claude(page actions)': 'In Claude öffnen',
+  'Read {url}, I want to ask questions about it.(page actions)': 'Lies {url}, ich möchte Fragen dazu stellen.',
 };
 
 const es: DocsUiCopy = {
@@ -58,6 +65,13 @@ const es: DocsUiCopy = {
   'Show Sidebar(sidebar)': 'Mostrar la barra lateral',
   'Hide Sidebar(sidebar)': 'Ocultar la barra lateral',
   'Toggle Menu(mobile menu)(aria-label)': 'Abrir o cerrar el menú',
+  'Copy Markdown(page actions)': 'Copiar Markdown',
+  'Copied Markdown(page actions)': 'Markdown copiado',
+  'Open(page actions)': 'Abrir',
+  'View as Markdown(page actions)': 'Ver como Markdown',
+  'Open in ChatGPT(page actions)': 'Abrir en ChatGPT',
+  'Open in Claude(page actions)': 'Abrir en Claude',
+  'Read {url}, I want to ask questions about it.(page actions)': 'Lee {url}, quiero hacer preguntas sobre esta página.',
 };
 
 export const docsUiCopy: Partial<Record<SiteLocale, DocsUiCopy>> = { de, es };

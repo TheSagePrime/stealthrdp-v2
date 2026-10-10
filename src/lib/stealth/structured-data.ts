@@ -172,9 +172,13 @@ export function techArticleJsonLd(input: {
   description: string;
   date: string;
   section: { name: string; path: string };
+  /* German and Spanish translations: the page language and the breadcrumb's first step. */
+  language?: string;
+  home?: { name: string; path: string };
 }): Node[] {
   const url = `${input.siteUrl}${input.path}`;
   const modified = isoDate(input.date);
+  const home = input.home ?? { name: 'Home', path: '' };
   return [
     {
       '@context': 'https://schema.org',
@@ -183,7 +187,7 @@ export function techArticleJsonLd(input: {
       'description': input.description,
       'url': url,
       'mainEntityOfPage': url,
-      'inLanguage': 'en',
+      'inLanguage': input.language ?? 'en',
       ...(modified ? { dateModified: modified } : {}),
       'author': provider(input.siteUrl),
       'publisher': provider(input.siteUrl),
@@ -192,7 +196,7 @@ export function techArticleJsonLd(input: {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       'itemListElement': [
-        { '@type': 'ListItem', 'position': 1, 'name': 'Home', 'item': input.siteUrl },
+        { '@type': 'ListItem', 'position': 1, 'name': home.name, 'item': `${input.siteUrl}${home.path}` },
         { '@type': 'ListItem', 'position': 2, 'name': input.section.name, 'item': `${input.siteUrl}${input.section.path}` },
         { '@type': 'ListItem', 'position': 3, 'name': input.title, 'item': url },
       ],

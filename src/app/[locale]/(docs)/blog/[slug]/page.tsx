@@ -3,9 +3,11 @@ import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layo
 import { notFound } from 'next/navigation';
 import { ArticleJsonLd, ArticlePublicationMeta, ArticleSources } from '@/components/seo/Article';
 import { DocsMeta, DocsPageActions, DocsRelated } from '@/components/site/docs/DocsParts';
+import { TranslatedGuidePage } from '@/components/site/docs/TranslatedPages';
 import { headingToc, TrustedArticleBody } from '@/components/site/TrustedArticleBody';
 import { articlePath, blogArticles, findBlog } from '@/lib/stealth/articles';
-import { requirePageLocale } from '@/lib/stealth/i18n-server';
+import { pageLocale, requirePageLocale } from '@/lib/stealth/i18n-server';
+import { findTranslatedGuide, translatedGuideMetadata } from '@/lib/stealth/translations';
 import { createArticleMetadata } from '@/libs/seo/articles';
 import { getSeoConfig } from '@/libs/seo/config';
 
@@ -17,6 +19,11 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
+  const locale = await pageLocale();
+  if (locale !== 'en') {
+    const translation = findTranslatedGuide(locale, `/blog/${slug}`);
+    return translation ? translatedGuideMetadata(translation) : {};
+  }
   const articleSlug = slug.replace(/\.html$/, '');
   const config = getSeoConfig();
   const publication = config.articles.publications.find(item => item.slug === articleSlug);
@@ -25,7 +32,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function BlogArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  await requirePageLocale(`/blog/${slug}`);
+  const locale = await requirePageLocale(`/blog/${slug}`);
+  if (locale !== 'en') {
+    const translation = findTranslatedGuide(locale, `/blog/${slug}`);
+    if (!translation) {
+      notFound();
+    }
+    return <TranslatedGuidePage guide={translation} />;
+  }
   const articleSlug = slug.replace(/\.html$/, '');
   const article = findBlog(articleSlug);
   const config = getSeoConfig();

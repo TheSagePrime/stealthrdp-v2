@@ -5,11 +5,13 @@ import { notFound } from 'next/navigation';
 import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { DocMarkdown, docToc } from '@/components/site/docs/DocMarkdown';
 import { DocsArticleMeta, DocsPageActions, DocsRelated, DocsSupport } from '@/components/site/docs/DocsParts';
+import { TranslatedDocPage } from '@/components/site/docs/TranslatedPages';
 import { citadelDocsArticles, docPublicSlug, findCitadelDocByPublicSlug } from '@/lib/stealth/articles';
 import { citadelArticleHref, citadelCollectionForArticle } from '@/lib/stealth/help-center';
-import { requirePageLocale } from '@/lib/stealth/i18n-server';
+import { pageLocale, requirePageLocale } from '@/lib/stealth/i18n-server';
 import { formatUpdated, pageUpdated } from '@/lib/stealth/page-dates';
 import { techArticleJsonLd } from '@/lib/stealth/structured-data';
+import { findTranslatedDoc, translatedDocMetadata } from '@/lib/stealth/translations';
 import { getSeoConfig } from '@/libs/seo/config';
 import { createPageMetadata } from '@/libs/seo/metadata';
 
@@ -21,6 +23,11 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
+  const locale = await pageLocale();
+  if (locale !== 'en') {
+    const translation = findTranslatedDoc(locale, `/citadel/docs/${slug}`);
+    return translation ? translatedDocMetadata(translation) : {};
+  }
   const article = findCitadelDocByPublicSlug(slug);
   if (!article) {
     return {};
@@ -36,7 +43,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function CitadelDocPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  await requirePageLocale(`/citadel/docs/${slug}`);
+  const locale = await requirePageLocale(`/citadel/docs/${slug}`);
+  if (locale !== 'en') {
+    const translation = findTranslatedDoc(locale, `/citadel/docs/${slug}`);
+    if (!translation) {
+      notFound();
+    }
+    return <TranslatedDocPage doc={translation} />;
+  }
   const article = findCitadelDocByPublicSlug(slug);
   if (!article) {
     notFound();

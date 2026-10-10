@@ -3,20 +3,34 @@ import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layo
 import { notFound } from 'next/navigation';
 import { ArticleJsonLd, ArticlePublicationMeta, ArticleSources } from '@/components/seo/Article';
 import { DocsMeta, DocsPageActions, DocsRelated, DocsSupport } from '@/components/site/docs/DocsParts';
+import { TranslatedGuidePage } from '@/components/site/docs/TranslatedPages';
 import { headingToc, TrustedArticleBody } from '@/components/site/TrustedArticleBody';
 import { articlePath, blogArticles, findBlog } from '@/lib/stealth/articles';
-import { requirePageLocale } from '@/lib/stealth/i18n-server';
+import { pageLocale, requirePageLocale } from '@/lib/stealth/i18n-server';
+import { findTranslatedGuide, translatedGuideMetadata } from '@/lib/stealth/translations';
 import { createArticleMetadata } from '@/libs/seo/articles';
 import { getSeoConfig } from '@/libs/seo/config';
 
 export async function generateMetadata(): Promise<Metadata> {
+  const locale = await pageLocale();
+  if (locale !== 'en') {
+    const translation = findTranslatedGuide(locale, '/vps-hosting-minecraft');
+    return translation ? translatedGuideMetadata(translation) : {};
+  }
   const config = getSeoConfig();
   const publication = config.articles.publications.find(item => item.slug === 'vps-hosting-minecraft');
   return publication ? createArticleMetadata(publication, config) : {};
 }
 
 export default async function MinecraftPage() {
-  await requirePageLocale('/vps-hosting-minecraft');
+  const locale = await requirePageLocale('/vps-hosting-minecraft');
+  if (locale !== 'en') {
+    const translation = findTranslatedGuide(locale, '/vps-hosting-minecraft');
+    if (!translation) {
+      notFound();
+    }
+    return <TranslatedGuidePage guide={translation} plansLink />;
+  }
   const article = findBlog('vps-hosting-minecraft');
   const config = getSeoConfig();
   const publication = config.articles.publications.find(item => item.slug === 'vps-hosting-minecraft');

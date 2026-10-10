@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { resolveSeoSite } from '@/config/seo';
 import { citadelDocPublicPaths, indexableDocPublicPaths } from '@/lib/stealth/articles';
 import { pageUpdated } from '@/lib/stealth/page-dates';
+import { translationSitemapEntries } from '@/lib/stealth/translations';
 import { buildArticleSitemapEntries } from '@/libs/seo/articles';
 import { getSeoConfig } from '@/libs/seo/config';
 import { hreflangAlternates, localizedRoutePaths } from '@/libs/seo/locale';
@@ -34,6 +35,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       };
     });
   });
-  const entries = [...routeEntries, ...buildArticleSitemapEntries(config, site)];
+  /* Published German and Spanish articles and posts, dated by their publish day; they replace the
+     undated route entries of the same URL. */
+  const entries = [...routeEntries, ...buildArticleSitemapEntries(config, site), ...translationSitemapEntries(config, site)];
   return [...new Map(entries.map(entry => [entry.url, entry])).values()];
 }
