@@ -11,7 +11,7 @@ relatedSlugs:
   - citadel-security
 translationOf: citadel-health
 locale: es
-publishAt: 2026-10-12
+publishAt: 2026-10-13
 primaryKeyword: estado del origen citadel
 ---
 ## Ejecutar una comprobación de estado

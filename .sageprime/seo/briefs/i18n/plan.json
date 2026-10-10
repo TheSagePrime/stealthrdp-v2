@@ -27,762 +27,8 @@
           "escritorio remoto windows 11 (210)",
           "windows app"
         ]
-      }
-    },
-    {
-      "type": "help",
-      "en": "windows-licensing",
-      "priority": 1,
-      "de": {
-        "slug": "windows-licensing",
-        "primary": "windows vps lizenz",
-        "supporting": [
-          "windows server 2025 lizenz (720)",
-          "windows server lizenz (590)",
-          "windows server lizenz kaufen (70)"
-        ]
       },
-      "es": {
-        "slug": "windows-licensing",
-        "primary": "licencia windows vps",
-        "supporting": [
-          "licencia windows server (110)",
-          "licencia windows server 2025 (90)"
-        ]
-      },
-      "note": "\"windows server lizenz\" results are licence shops (buying intent); this page answers how licensing works on a VPS and that the licence is not included. Use the shop terms only as supporting terms."
-    },
-    {
-      "type": "help",
-      "en": "1740916941-how-to-rebuild-a-server",
-      "priority": 1,
-      "de": {
-        "slug": "1740916941-how-to-rebuild-a-server",
-        "primary": "vps neu installieren",
-        "supporting": [
-          "server neu aufsetzen",
-          "betriebssystem neu installieren"
-        ]
-      },
-      "es": {
-        "slug": "1740916941-how-to-rebuild-a-server",
-        "primary": "reinstalar vps",
-        "supporting": [
-          "reinstalar servidor",
-          "cambiar sistema operativo vps"
-        ]
-      }
-    },
-    {
-      "type": "help",
-      "en": "1740917234-how-to-reset-server-change-or-reset-client-area-password",
-      "priority": 1,
-      "de": {
-        "slug": "1740917234-how-to-reset-server-change-or-reset-client-area-password",
-        "primary": "vps passwort zurücksetzen",
-        "supporting": [
-          "root passwort vergessen",
-          "administrator passwort vergessen"
-        ]
-      },
-      "es": {
-        "slug": "1740917234-how-to-reset-server-change-or-reset-client-area-password",
-        "primary": "restablecer contraseña vps",
-        "supporting": [
-          "cambiar contraseña servidor (10)",
-          "olvidé contraseña root"
-        ]
-      }
-    },
-    {
-      "type": "help",
-      "en": "1737944563-how-to-re_activate-and-extend-your-180_day-windows-trial",
-      "priority": 1,
-      "de": {
-        "slug": "1737944563-how-to-re_activate-and-extend-your-180_day-windows-trial",
-        "primary": "slmgr rearm",
-        "supporting": [
-          "slmgr rearm (170)",
-          "windows server evaluation verlängern (50)",
-          "windows server testversion verlängern"
-        ]
-      },
-      "es": {
-        "slug": "1737944563-how-to-re_activate-and-extend-your-180_day-windows-trial",
-        "primary": "slmgr rearm",
-        "supporting": [
-          "slmgr rearm (70)",
-          "windows server 180 días"
-        ]
-      }
-    },
-    {
-      "type": "help",
-      "en": "1737944952-server-stops-randomly",
-      "priority": 2,
-      "de": {
-        "slug": "1737944952-server-stops-randomly",
-        "primary": "windows server fährt herunter",
-        "supporting": [
-          "windows server evaluation abgelaufen"
-        ]
-      },
-      "es": {
-        "slug": "1737944952-server-stops-randomly",
-        "primary": "windows server se apaga solo",
-        "supporting": [
-          "windows server evaluación expirada (10)"
-        ]
-      }
-    },
-    {
-      "type": "help",
-      "en": "1742181117-step_by_step-guide-to-fix-win_rm-and-install-net-framework",
-      "priority": 2,
-      "de": {
-        "slug": "1742181117-step_by_step-guide-to-fix-win_rm-and-install-net-framework",
-        "primary": "winrm aktivieren",
-        "supporting": [
-          "winrm aktivieren (50)",
-          ".net framework 3.5 installieren windows server"
-        ]
-      },
-      "es": {
-        "slug": "1742181117-step_by_step-guide-to-fix-win_rm-and-install-net-framework",
-        "primary": "habilitar winrm",
-        "supporting": [
-          "habilitar winrm (10)",
-          "instalar .net framework 3.5 windows server"
-        ]
-      }
-    },
-    {
-      "type": "help",
-      "en": "1737945947-how-to-force-https-using-htaccess",
-      "priority": 2,
-      "de": {
-        "slug": "1737945947-how-to-force-https-using-htaccess",
-        "primary": "htaccess https weiterleitung",
-        "supporting": [
-          "htaccess https erzwingen (10)",
-          "http auf https umleiten htaccess (10)"
-        ]
-      },
-      "es": {
-        "slug": "1737945947-how-to-force-https-using-htaccess",
-        "primary": "redirigir http a https htaccess",
-        "supporting": [
-          "forzar https htaccess (10)",
-          "redireccion https htaccess (10)"
-        ]
-      }
-    },
-    {
-      "type": "help",
-      "en": "1737945988-why-you-should-redirect-all-http-traffic-to-https",
-      "priority": 3,
-      "de": {
-        "slug": "1737945988-why-you-should-redirect-all-http-traffic-to-https",
-        "primary": "http auf https umleiten",
-        "supporting": [
-          "http auf https umleiten (20)",
-          "https weiterleitung (10)",
-          "warum https (10)"
-        ]
-      },
-      "es": {
-        "slug": "1737945988-why-you-should-redirect-all-http-traffic-to-https",
-        "primary": "redirigir http a https",
-        "supporting": [
-          "redirigir http a https (10)",
-          "por qué usar https"
-        ]
-      }
-    },
-    {
-      "type": "help",
-      "en": "1737946010-10-ways-to-optimize-your-word_press-website-for-speed",
-      "priority": 2,
-      "de": {
-        "slug": "1737946010-10-ways-to-optimize-your-word_press-website-for-speed",
-        "primary": "wordpress schneller machen",
-        "supporting": [
-          "wordpress schneller machen (90)",
-          "wordpress performance optimieren (50)",
-          "wordpress ladezeit verbessern (20)"
-        ]
-      },
-      "es": {
-        "slug": "1737946010-10-ways-to-optimize-your-word_press-website-for-speed",
-        "primary": "acelerar wordpress",
-        "supporting": [
-          "acelerar wordpress (10)",
-          "wordpress lento (10)",
-          "optimizar velocidad wordpress (10)"
-        ]
-      }
-    },
-    {
-      "type": "help",
-      "en": "1737946054-how-to-setup-your-vpn-on-linux-server-using-outline",
-      "priority": 3,
-      "de": {
-        "slug": "1737946054-how-to-setup-your-vpn-on-linux-server-using-outline",
-        "primary": "outline vpn server einrichten",
-        "supporting": [
-          "outline vpn",
-          "eigenen vpn server erstellen"
-        ]
-      },
-      "es": {
-        "slug": "1737946054-how-to-setup-your-vpn-on-linux-server-using-outline",
-        "primary": "instalar outline vpn",
-        "supporting": [
-          "outline vpn",
-          "crear servidor vpn propio"
-        ]
-      }
-    },
-    {
-      "type": "help",
-      "en": "1737946390-setup-tun-tap-for-open_vpn",
-      "priority": 3,
-      "de": {
-        "slug": "1737946390-setup-tun-tap-for-open_vpn",
-        "primary": "openvpn tun/tap",
-        "supporting": [
-          "openvpn tun/tap (20)",
-          "tun tap aktivieren vps"
-        ]
-      },
-      "es": {
-        "slug": "1737946390-setup-tun-tap-for-open_vpn",
-        "primary": "openvpn tun tap",
-        "supporting": [
-          "activar tun tap vps",
-          "error tun openvpn"
-        ]
-      }
-    },
-    {
-      "type": "help",
-      "en": "1737946470-how-to-install-centos-web-panel-cwp-free-web-panel",
-      "priority": 3,
-      "de": {
-        "slug": "1737946470-how-to-install-centos-web-panel-cwp-free-web-panel",
-        "primary": "control web panel installieren",
-        "supporting": [
-          "control web panel (20)",
-          "cwp installieren"
-        ]
-      },
-      "es": {
-        "slug": "1737946470-how-to-install-centos-web-panel-cwp-free-web-panel",
-        "primary": "instalar centos web panel",
-        "supporting": [
-          "centos web panel (20)",
-          "control web panel (20)"
-        ]
-      }
-    },
-    {
-      "type": "help",
-      "en": "1737946490-how-to-install-direct-admin-in-a-linux-server",
-      "priority": 2,
-      "de": {
-        "slug": "1737946490-how-to-install-direct-admin-in-a-linux-server",
-        "primary": "directadmin installieren",
-        "supporting": [
-          "directadmin (320)"
-        ]
-      },
-      "es": {
-        "slug": "1737946490-how-to-install-direct-admin-in-a-linux-server",
-        "primary": "instalar directadmin",
-        "supporting": [
-          "directadmin (170)"
-        ]
-      }
-    },
-    {
-      "type": "help",
-      "en": "1737946509-install-cpanel-and-whm-in-linux-you-need-a-license",
-      "priority": 3,
-      "de": {
-        "slug": "1737946509-install-cpanel-and-whm-in-linux-you-need-a-license",
-        "primary": "cpanel installieren",
-        "supporting": [
-          "cpanel installieren (10)",
-          "cpanel lizenz (10)"
-        ]
-      },
-      "es": {
-        "slug": "1737946509-install-cpanel-and-whm-in-linux-you-need-a-license",
-        "primary": "instalar cpanel",
-        "supporting": [
-          "instalar cpanel (10)",
-          "cpanel whm (10)",
-          "licencia cpanel (20)"
-        ]
-      }
-    },
-    {
-      "type": "help",
-      "en": "1737946534-install-cyber-panel-with-open_lite_speed-in-linux",
-      "priority": 2,
-      "de": {
-        "slug": "1737946534-install-cyber-panel-with-open_lite_speed-in-linux",
-        "primary": "cyberpanel installieren",
-        "supporting": [
-          "cyberpanel (480)",
-          "openlitespeed (90)"
-        ]
-      },
-      "es": {
-        "slug": "1737946534-install-cyber-panel-with-open_lite_speed-in-linux",
-        "primary": "instalar cyberpanel",
-        "supporting": [
-          "cyberpanel (320)",
-          "openlitespeed (50)"
-        ]
-      }
-    },
-    {
-      "type": "help",
-      "en": "1737946569-install-fast-panel-in-linux-good-web-hosting-free-panel",
-      "priority": 2,
-      "de": {
-        "slug": "1737946569-install-fast-panel-in-linux-good-web-hosting-free-panel",
-        "primary": "fastpanel installieren",
-        "supporting": [
-          "fastpanel (170)",
-          "kostenloses hosting panel"
-        ]
-      },
-      "es": {
-        "slug": "1737946569-install-fast-panel-in-linux-good-web-hosting-free-panel",
-        "primary": "instalar fastpanel",
-        "supporting": [
-          "fastpanel (70)",
-          "panel de hosting gratis"
-        ]
-      }
-    },
-    {
-      "type": "help",
-      "en": "1737943955-introduction",
-      "priority": 3,
-      "de": {
-        "slug": "1737943955-introduction",
-        "primary": "allgemeine geschäftsbedingungen",
-        "supporting": []
-      },
-      "es": {
-        "slug": "1737943955-introduction",
-        "primary": "términos y condiciones",
-        "supporting": []
-      }
-    },
-    {
-      "type": "help",
-      "en": "1737944013-use-of-service",
-      "priority": 3,
-      "de": {
-        "slug": "1737944013-use-of-service",
-        "primary": "nutzungsbedingungen",
-        "supporting": []
-      },
-      "es": {
-        "slug": "1737944013-use-of-service",
-        "primary": "condiciones de uso",
-        "supporting": []
-      }
-    },
-    {
-      "type": "help",
-      "en": "1737944110-termination-of-service",
-      "priority": 3,
-      "de": {
-        "slug": "1737944110-termination-of-service",
-        "primary": "vps kündigen",
-        "supporting": []
-      },
-      "es": {
-        "slug": "1737944110-termination-of-service",
-        "primary": "cancelar vps",
-        "supporting": []
-      }
-    },
-    {
-      "type": "help",
-      "en": "1737944184-payment-terms",
-      "priority": 3,
-      "de": {
-        "slug": "1737944184-payment-terms",
-        "primary": "zahlungsbedingungen",
-        "supporting": [
-          "vps mit krypto bezahlen"
-        ]
-      },
-      "es": {
-        "slug": "1737944184-payment-terms",
-        "primary": "condiciones de pago",
-        "supporting": [
-          "vps pagar con criptomonedas"
-        ]
-      }
-    },
-    {
-      "type": "help",
-      "en": "1737944204-user-responsibilities",
-      "priority": 3,
-      "de": {
-        "slug": "1737944204-user-responsibilities",
-        "primary": "pflichten des kunden",
-        "supporting": []
-      },
-      "es": {
-        "slug": "1737944204-user-responsibilities",
-        "primary": "responsabilidades del cliente",
-        "supporting": []
-      }
-    },
-    {
-      "type": "citadel",
-      "en": "citadel-getting-started",
-      "priority": 1,
-      "de": {
-        "slug": "citadel-getting-started",
-        "primary": "ddos schutz website einrichten",
-        "supporting": [
-          "layer 7 ddos schutz",
-          "ddos-schutz (170)"
-        ]
-      },
-      "es": {
-        "slug": "citadel-getting-started",
-        "primary": "configurar protección ddos web",
-        "supporting": [
-          "protección ddos capa 7",
-          "protección ddos (40)"
-        ]
-      }
-    },
-    {
-      "type": "citadel",
-      "en": "citadel-cloudflare-setup",
-      "priority": 1,
-      "de": {
-        "slug": "citadel-cloudflare-setup",
-        "primary": "cloudflare für citadel einrichten",
-        "supporting": [
-          "cloudflare dns einrichten (40)",
-          "cloudflare proxy einrichten"
-        ]
-      },
-      "es": {
-        "slug": "citadel-cloudflare-setup",
-        "primary": "configurar cloudflare para citadel",
-        "supporting": [
-          "configurar cloudflare (10)",
-          "cloudflare proxy (50)"
-        ]
-      },
-      "note": "General Cloudflare DNS terms only as supporting terms."
-    },
-    {
-      "type": "citadel",
-      "en": "citadel-challenge-levels",
-      "priority": 1,
-      "de": {
-        "slug": "citadel-challenge-levels",
-        "primary": "citadel challenge-stufen",
-        "supporting": [
-          "js challenge (50)",
-          "captcha bot schutz"
-        ]
-      },
-      "es": {
-        "slug": "citadel-challenge-levels",
-        "primary": "niveles de desafío citadel",
-        "supporting": [
-          "bloquear bots web"
-        ]
-      },
-      "note": "\"bot schutz website\" as a supporting term."
-    },
-    {
-      "type": "citadel",
-      "en": "citadel-health",
-      "priority": 1,
-      "de": {
-        "slug": "citadel-health",
-        "primary": "citadel origin health",
-        "supporting": [
-          "502 bad gateway (8100)",
-          "502 bad gateway beheben (10)"
-        ]
-      },
-      "es": {
-        "slug": "citadel-health",
-        "primary": "estado del origen citadel",
-        "supporting": [
-          "502 bad gateway solucion (70)"
-        ]
-      },
-      "note": "Generic \"502 bad gateway\" demand (DE 8,100) belongs to a standalone article (step 6), not this product doc. Mention 502 once, naturally."
-    },
-    {
-      "type": "citadel",
-      "en": "citadel-security",
-      "priority": 1,
-      "de": {
-        "slug": "citadel-security",
-        "primary": "citadel sicherheit konfigurieren",
-        "supporting": [
-          "rate limiting (720)",
-          "rate limit website"
-        ]
-      },
-      "es": {
-        "slug": "citadel-security",
-        "primary": "configurar seguridad citadel",
-        "supporting": [
-          "rate limiting (210)",
-          "limitar peticiones web"
-        ]
-      },
-      "note": "\"rate limiting\" is a definition query; use it as a supporting term where the doc explains rate limits."
-    },
-    {
-      "type": "citadel",
-      "en": "citadel-allowlists",
-      "priority": 2,
-      "de": {
-        "slug": "citadel-allowlists",
-        "primary": "citadel allowlist",
-        "supporting": [
-          "ip whitelisting (90)",
-          "ip whitelist website"
-        ]
-      },
-      "es": {
-        "slug": "citadel-allowlists",
-        "primary": "lista de permitidos citadel",
-        "supporting": [
-          "whitelist ip (20)",
-          "lista blanca ip"
-        ]
-      },
-      "note": "\"ip whitelisting\" only as a supporting term."
-    },
-    {
-      "type": "citadel",
-      "en": "citadel-cache",
-      "priority": 2,
-      "de": {
-        "slug": "citadel-cache",
-        "primary": "citadel cache leeren",
-        "supporting": [
-          "website cache leeren (70)",
-          "cdn cache (50)"
-        ]
-      },
-      "es": {
-        "slug": "citadel-cache",
-        "primary": "purgar caché citadel",
-        "supporting": [
-          "caché cdn",
-          "purgar caché"
-        ]
-      }
-    },
-    {
-      "type": "citadel",
-      "en": "citadel-logs",
-      "priority": 2,
-      "de": {
-        "slug": "citadel-logs",
-        "primary": "citadel logs durchsuchen",
-        "supporting": [
-          "access log (70)",
-          "zugriffslogs analysieren"
-        ]
-      },
-      "es": {
-        "slug": "citadel-logs",
-        "primary": "buscar logs citadel",
-        "supporting": [
-          "logs de acceso (10)",
-          "analizar logs servidor"
-        ]
-      },
-      "note": "\"access log\" only as a supporting term."
-    },
-    {
-      "type": "citadel",
-      "en": "citadel-dns",
-      "priority": 2,
-      "de": {
-        "slug": "citadel-dns",
-        "primary": "cloudflare dns",
-        "supporting": []
-      },
-      "es": {
-        "slug": "citadel-dns",
-        "primary": "dns cloudflare",
-        "supporting": []
-      }
-    },
-    {
-      "type": "citadel",
-      "en": "citadel-domains",
-      "priority": 2,
-      "de": {
-        "slug": "citadel-domains",
-        "primary": "domain ddos schutz hinzufügen",
-        "supporting": []
-      },
-      "es": {
-        "slug": "citadel-domains",
-        "primary": "añadir dominio protección ddos",
-        "supporting": []
-      }
-    },
-    {
-      "type": "citadel",
-      "en": "citadel-domain-overview",
-      "priority": 3,
-      "de": {
-        "slug": "citadel-domain-overview",
-        "primary": "citadel domain status",
-        "supporting": []
-      },
-      "es": {
-        "slug": "citadel-domain-overview",
-        "primary": "estado del dominio citadel",
-        "supporting": []
-      }
-    },
-    {
-      "type": "citadel",
-      "en": "citadel-origin",
-      "priority": 2,
-      "de": {
-        "slug": "citadel-origin",
-        "primary": "origin server konfigurieren",
-        "supporting": []
-      },
-      "es": {
-        "slug": "citadel-origin",
-        "primary": "configurar servidor de origen",
-        "supporting": []
-      }
-    },
-    {
-      "type": "citadel",
-      "en": "citadel-analytics",
-      "priority": 3,
-      "de": {
-        "slug": "citadel-analytics",
-        "primary": "traffic analyse website",
-        "supporting": []
-      },
-      "es": {
-        "slug": "citadel-analytics",
-        "primary": "análisis de tráfico web",
-        "supporting": []
-      }
-    },
-    {
-      "type": "citadel",
-      "en": "citadel-insights",
-      "priority": 3,
-      "de": {
-        "slug": "citadel-insights",
-        "primary": "ddos angriff analysieren",
-        "supporting": []
-      },
-      "es": {
-        "slug": "citadel-insights",
-        "primary": "analizar ataque ddos",
-        "supporting": []
-      }
-    },
-    {
-      "type": "citadel",
-      "en": "citadel-bandwidth",
-      "priority": 3,
-      "de": {
-        "slug": "citadel-bandwidth",
-        "primary": "bandbreite limit",
-        "supporting": []
-      },
-      "es": {
-        "slug": "citadel-bandwidth",
-        "primary": "ancho de banda",
-        "supporting": []
-      }
-    },
-    {
-      "type": "citadel",
-      "en": "citadel-branding",
-      "priority": 3,
-      "de": {
-        "slug": "citadel-branding",
-        "primary": "eigene fehlerseiten",
-        "supporting": []
-      },
-      "es": {
-        "slug": "citadel-branding",
-        "primary": "páginas de error personalizadas",
-        "supporting": []
-      }
-    },
-    {
-      "type": "citadel",
-      "en": "citadel-overview",
-      "priority": 3,
-      "de": {
-        "slug": "citadel-overview",
-        "primary": "citadel übersicht",
-        "supporting": []
-      },
-      "es": {
-        "slug": "citadel-overview",
-        "primary": "resumen citadel",
-        "supporting": []
-      }
-    },
-    {
-      "type": "citadel",
-      "en": "citadel-settings",
-      "priority": 3,
-      "de": {
-        "slug": "citadel-settings",
-        "primary": "citadel einstellungen",
-        "supporting": []
-      },
-      "es": {
-        "slug": "citadel-settings",
-        "primary": "ajustes citadel",
-        "supporting": []
-      }
-    },
-    {
-      "type": "citadel",
-      "en": "citadel-billing-support",
-      "priority": 3,
-      "de": {
-        "slug": "citadel-billing-support",
-        "primary": "citadel abrechnung",
-        "supporting": []
-      },
-      "es": {
-        "slug": "citadel-billing-support",
-        "primary": "facturación citadel",
-        "supporting": []
-      }
+      "publishAt": "2026-10-13"
     },
     {
       "type": "blog",
@@ -807,7 +53,121 @@
           "vps mt5 (30)",
           "vps para trading (30)"
         ]
-      }
+      },
+      "publishAt": "2026-10-13"
+    },
+    {
+      "type": "citadel",
+      "en": "citadel-health",
+      "priority": 1,
+      "de": {
+        "slug": "citadel-health",
+        "primary": "citadel origin health",
+        "supporting": [
+          "502 bad gateway (8100)",
+          "502 bad gateway beheben (10)"
+        ]
+      },
+      "es": {
+        "slug": "citadel-health",
+        "primary": "estado del origen citadel",
+        "supporting": [
+          "502 bad gateway solucion (70)"
+        ]
+      },
+      "note": "Generic \"502 bad gateway\" demand (DE 8,100) belongs to a standalone article (step 6), not this product doc. Mention 502 once, naturally.",
+      "publishAt": "2026-10-13"
+    },
+    {
+      "type": "help",
+      "en": "windows-licensing",
+      "priority": 1,
+      "de": {
+        "slug": "windows-licensing",
+        "primary": "windows vps lizenz",
+        "supporting": [
+          "windows server 2025 lizenz (720)",
+          "windows server lizenz (590)",
+          "windows server lizenz kaufen (70)"
+        ]
+      },
+      "es": {
+        "slug": "windows-licensing",
+        "primary": "licencia windows vps",
+        "supporting": [
+          "licencia windows server (110)",
+          "licencia windows server 2025 (90)"
+        ]
+      },
+      "note": "\"windows server lizenz\" results are licence shops (buying intent); this page answers how licensing works on a VPS and that the licence is not included. Use the shop terms only as supporting terms.",
+      "publishAt": "2026-10-13"
+    },
+    {
+      "type": "help",
+      "en": "1740916941-how-to-rebuild-a-server",
+      "priority": 1,
+      "de": {
+        "slug": "1740916941-how-to-rebuild-a-server",
+        "primary": "vps neu installieren",
+        "supporting": [
+          "server neu aufsetzen",
+          "betriebssystem neu installieren"
+        ]
+      },
+      "es": {
+        "slug": "1740916941-how-to-rebuild-a-server",
+        "primary": "reinstalar vps",
+        "supporting": [
+          "reinstalar servidor",
+          "cambiar sistema operativo vps"
+        ]
+      },
+      "publishAt": "2026-10-13"
+    },
+    {
+      "type": "help",
+      "en": "1740917234-how-to-reset-server-change-or-reset-client-area-password",
+      "priority": 1,
+      "de": {
+        "slug": "1740917234-how-to-reset-server-change-or-reset-client-area-password",
+        "primary": "vps passwort zurücksetzen",
+        "supporting": [
+          "root passwort vergessen",
+          "administrator passwort vergessen"
+        ]
+      },
+      "es": {
+        "slug": "1740917234-how-to-reset-server-change-or-reset-client-area-password",
+        "primary": "restablecer contraseña vps",
+        "supporting": [
+          "cambiar contraseña servidor (10)",
+          "olvidé contraseña root"
+        ]
+      },
+      "publishAt": "2026-10-13"
+    },
+    {
+      "type": "help",
+      "en": "1737944563-how-to-re_activate-and-extend-your-180_day-windows-trial",
+      "priority": 1,
+      "de": {
+        "slug": "1737944563-how-to-re_activate-and-extend-your-180_day-windows-trial",
+        "primary": "slmgr rearm",
+        "supporting": [
+          "slmgr rearm (170)",
+          "windows server evaluation verlängern (50)",
+          "windows server testversion verlängern"
+        ]
+      },
+      "es": {
+        "slug": "1737944563-how-to-re_activate-and-extend-your-180_day-windows-trial",
+        "primary": "slmgr rearm",
+        "supporting": [
+          "slmgr rearm (70)",
+          "windows server 180 días"
+        ]
+      },
+      "publishAt": "2026-10-14"
     },
     {
       "type": "blog",
@@ -828,7 +188,8 @@
           "hosting bot discord (20)"
         ]
       },
-      "note": "\"discord bot hosting\" is mentioned once in the English post; supporting term only."
+      "note": "\"discord bot hosting\" is mentioned once in the English post; supporting term only.",
+      "publishAt": "2026-10-14"
     },
     {
       "type": "blog",
@@ -851,7 +212,8 @@
           "hosting minecraft (590)",
           "minecraft vps (30)"
         ]
-      }
+      },
+      "publishAt": "2026-10-14"
     },
     {
       "type": "blog",
@@ -872,7 +234,8 @@
           "ataque ddos (1000)",
           "vps anti ddos (10)"
         ]
-      }
+      },
+      "publishAt": "2026-10-14"
     },
     {
       "type": "blog",
@@ -894,7 +257,8 @@
           "storage vps (30)",
           "servidor backup (10)"
         ]
-      }
+      },
+      "publishAt": "2026-10-14"
     },
     {
       "type": "blog",
@@ -918,7 +282,8 @@
           "panel de control hosting (10)"
         ]
       },
-      "note": "\"webmin\" (1,600) is navigational; use it as a supporting term in the Webmin section."
+      "note": "\"webmin\" (1,600) is navigational; use it as a supporting term in the Webmin section.",
+      "publishAt": "2026-10-14"
     },
     {
       "type": "blog",
@@ -940,7 +305,250 @@
           "cambiar puerto rdp (40)",
           "habilitar escritorio remoto windows 11 (110)"
         ]
-      }
+      },
+      "publishAt": "2026-10-15"
+    },
+    {
+      "type": "citadel",
+      "en": "citadel-getting-started",
+      "priority": 1,
+      "de": {
+        "slug": "citadel-getting-started",
+        "primary": "ddos schutz website einrichten",
+        "supporting": [
+          "layer 7 ddos schutz",
+          "ddos-schutz (170)"
+        ]
+      },
+      "es": {
+        "slug": "citadel-getting-started",
+        "primary": "configurar protección ddos web",
+        "supporting": [
+          "protección ddos capa 7",
+          "protección ddos (40)"
+        ]
+      },
+      "publishAt": "2026-10-15"
+    },
+    {
+      "type": "citadel",
+      "en": "citadel-cloudflare-setup",
+      "priority": 1,
+      "de": {
+        "slug": "citadel-cloudflare-setup",
+        "primary": "cloudflare für citadel einrichten",
+        "supporting": [
+          "cloudflare dns einrichten (40)",
+          "cloudflare proxy einrichten"
+        ]
+      },
+      "es": {
+        "slug": "citadel-cloudflare-setup",
+        "primary": "configurar cloudflare para citadel",
+        "supporting": [
+          "configurar cloudflare (10)",
+          "cloudflare proxy (50)"
+        ]
+      },
+      "note": "General Cloudflare DNS terms only as supporting terms.",
+      "publishAt": "2026-10-15"
+    },
+    {
+      "type": "citadel",
+      "en": "citadel-challenge-levels",
+      "priority": 1,
+      "de": {
+        "slug": "citadel-challenge-levels",
+        "primary": "citadel challenge-stufen",
+        "supporting": [
+          "js challenge (50)",
+          "captcha bot schutz"
+        ]
+      },
+      "es": {
+        "slug": "citadel-challenge-levels",
+        "primary": "niveles de desafío citadel",
+        "supporting": [
+          "bloquear bots web"
+        ]
+      },
+      "note": "\"bot schutz website\" as a supporting term.",
+      "publishAt": "2026-10-15"
+    },
+    {
+      "type": "citadel",
+      "en": "citadel-security",
+      "priority": 1,
+      "de": {
+        "slug": "citadel-security",
+        "primary": "citadel sicherheit konfigurieren",
+        "supporting": [
+          "rate limiting (720)",
+          "rate limit website"
+        ]
+      },
+      "es": {
+        "slug": "citadel-security",
+        "primary": "configurar seguridad citadel",
+        "supporting": [
+          "rate limiting (210)",
+          "limitar peticiones web"
+        ]
+      },
+      "note": "\"rate limiting\" is a definition query; use it as a supporting term where the doc explains rate limits.",
+      "publishAt": "2026-10-15"
+    },
+    {
+      "type": "help",
+      "en": "1737944952-server-stops-randomly",
+      "priority": 2,
+      "de": {
+        "slug": "1737944952-server-stops-randomly",
+        "primary": "windows server fährt herunter",
+        "supporting": [
+          "windows server evaluation abgelaufen"
+        ]
+      },
+      "es": {
+        "slug": "1737944952-server-stops-randomly",
+        "primary": "windows server se apaga solo",
+        "supporting": [
+          "windows server evaluación expirada (10)"
+        ]
+      },
+      "publishAt": "2026-10-15"
+    },
+    {
+      "type": "help",
+      "en": "1742181117-step_by_step-guide-to-fix-win_rm-and-install-net-framework",
+      "priority": 2,
+      "de": {
+        "slug": "1742181117-step_by_step-guide-to-fix-win_rm-and-install-net-framework",
+        "primary": "winrm aktivieren",
+        "supporting": [
+          "winrm aktivieren (50)",
+          ".net framework 3.5 installieren windows server"
+        ]
+      },
+      "es": {
+        "slug": "1742181117-step_by_step-guide-to-fix-win_rm-and-install-net-framework",
+        "primary": "habilitar winrm",
+        "supporting": [
+          "habilitar winrm (10)",
+          "instalar .net framework 3.5 windows server"
+        ]
+      },
+      "publishAt": "2026-10-16"
+    },
+    {
+      "type": "help",
+      "en": "1737945947-how-to-force-https-using-htaccess",
+      "priority": 2,
+      "de": {
+        "slug": "1737945947-how-to-force-https-using-htaccess",
+        "primary": "htaccess https weiterleitung",
+        "supporting": [
+          "htaccess https erzwingen (10)",
+          "http auf https umleiten htaccess (10)"
+        ]
+      },
+      "es": {
+        "slug": "1737945947-how-to-force-https-using-htaccess",
+        "primary": "redirigir http a https htaccess",
+        "supporting": [
+          "forzar https htaccess (10)",
+          "redireccion https htaccess (10)"
+        ]
+      },
+      "publishAt": "2026-10-16"
+    },
+    {
+      "type": "help",
+      "en": "1737946010-10-ways-to-optimize-your-word_press-website-for-speed",
+      "priority": 2,
+      "de": {
+        "slug": "1737946010-10-ways-to-optimize-your-word_press-website-for-speed",
+        "primary": "wordpress schneller machen",
+        "supporting": [
+          "wordpress schneller machen (90)",
+          "wordpress performance optimieren (50)",
+          "wordpress ladezeit verbessern (20)"
+        ]
+      },
+      "es": {
+        "slug": "1737946010-10-ways-to-optimize-your-word_press-website-for-speed",
+        "primary": "acelerar wordpress",
+        "supporting": [
+          "acelerar wordpress (10)",
+          "wordpress lento (10)",
+          "optimizar velocidad wordpress (10)"
+        ]
+      },
+      "publishAt": "2026-10-16"
+    },
+    {
+      "type": "help",
+      "en": "1737946490-how-to-install-direct-admin-in-a-linux-server",
+      "priority": 2,
+      "de": {
+        "slug": "1737946490-how-to-install-direct-admin-in-a-linux-server",
+        "primary": "directadmin installieren",
+        "supporting": [
+          "directadmin (320)"
+        ]
+      },
+      "es": {
+        "slug": "1737946490-how-to-install-direct-admin-in-a-linux-server",
+        "primary": "instalar directadmin",
+        "supporting": [
+          "directadmin (170)"
+        ]
+      },
+      "publishAt": "2026-10-16"
+    },
+    {
+      "type": "help",
+      "en": "1737946534-install-cyber-panel-with-open_lite_speed-in-linux",
+      "priority": 2,
+      "de": {
+        "slug": "1737946534-install-cyber-panel-with-open_lite_speed-in-linux",
+        "primary": "cyberpanel installieren",
+        "supporting": [
+          "cyberpanel (480)",
+          "openlitespeed (90)"
+        ]
+      },
+      "es": {
+        "slug": "1737946534-install-cyber-panel-with-open_lite_speed-in-linux",
+        "primary": "instalar cyberpanel",
+        "supporting": [
+          "cyberpanel (320)",
+          "openlitespeed (50)"
+        ]
+      },
+      "publishAt": "2026-10-16"
+    },
+    {
+      "type": "help",
+      "en": "1737946569-install-fast-panel-in-linux-good-web-hosting-free-panel",
+      "priority": 2,
+      "de": {
+        "slug": "1737946569-install-fast-panel-in-linux-good-web-hosting-free-panel",
+        "primary": "fastpanel installieren",
+        "supporting": [
+          "fastpanel (170)",
+          "kostenloses hosting panel"
+        ]
+      },
+      "es": {
+        "slug": "1737946569-install-fast-panel-in-linux-good-web-hosting-free-panel",
+        "primary": "instalar fastpanel",
+        "supporting": [
+          "fastpanel (70)",
+          "panel de hosting gratis"
+        ]
+      },
+      "publishAt": "2026-10-16"
     },
     {
       "type": "blog",
@@ -961,7 +569,8 @@
           "vps escritorio remoto (10)",
           "escritorio remoto en la nube (10)"
         ]
-      }
+      },
+      "publishAt": "2026-10-17"
     },
     {
       "type": "blog",
@@ -983,7 +592,8 @@
           "uptime monitoring (70)",
           "monitorizacion de servidores (10)"
         ]
-      }
+      },
+      "publishAt": "2026-10-17"
     },
     {
       "type": "blog",
@@ -1004,7 +614,8 @@
           "escritorio remoto lento (10)",
           "acelerar escritorio remoto (10)"
         ]
-      }
+      },
+      "publishAt": "2026-10-17"
     },
     {
       "type": "blog",
@@ -1025,7 +636,8 @@
           "vps o hosting compartido (10)",
           "vps que es (720)"
         ]
-      }
+      },
+      "publishAt": "2026-10-17"
     },
     {
       "type": "blog",
@@ -1046,7 +658,8 @@
           "vps linux o windows",
           "windows vs linux servidor"
         ]
-      }
+      },
+      "publishAt": "2026-10-17"
     },
     {
       "type": "blog",
@@ -1068,7 +681,320 @@
           "backup vps",
           "backup automatico servidor"
         ]
-      }
+      },
+      "publishAt": "2026-10-17"
+    },
+    {
+      "type": "citadel",
+      "en": "citadel-allowlists",
+      "priority": 2,
+      "de": {
+        "slug": "citadel-allowlists",
+        "primary": "citadel allowlist",
+        "supporting": [
+          "ip whitelisting (90)",
+          "ip whitelist website"
+        ]
+      },
+      "es": {
+        "slug": "citadel-allowlists",
+        "primary": "lista de permitidos citadel",
+        "supporting": [
+          "whitelist ip (20)",
+          "lista blanca ip"
+        ]
+      },
+      "note": "\"ip whitelisting\" only as a supporting term.",
+      "publishAt": "2026-10-18"
+    },
+    {
+      "type": "citadel",
+      "en": "citadel-cache",
+      "priority": 2,
+      "de": {
+        "slug": "citadel-cache",
+        "primary": "citadel cache leeren",
+        "supporting": [
+          "website cache leeren (70)",
+          "cdn cache (50)"
+        ]
+      },
+      "es": {
+        "slug": "citadel-cache",
+        "primary": "purgar caché citadel",
+        "supporting": [
+          "caché cdn",
+          "purgar caché"
+        ]
+      },
+      "publishAt": "2026-10-18"
+    },
+    {
+      "type": "citadel",
+      "en": "citadel-logs",
+      "priority": 2,
+      "de": {
+        "slug": "citadel-logs",
+        "primary": "citadel logs durchsuchen",
+        "supporting": [
+          "access log (70)",
+          "zugriffslogs analysieren"
+        ]
+      },
+      "es": {
+        "slug": "citadel-logs",
+        "primary": "buscar logs citadel",
+        "supporting": [
+          "logs de acceso (10)",
+          "analizar logs servidor"
+        ]
+      },
+      "note": "\"access log\" only as a supporting term.",
+      "publishAt": "2026-10-18"
+    },
+    {
+      "type": "citadel",
+      "en": "citadel-dns",
+      "priority": 2,
+      "de": {
+        "slug": "citadel-dns",
+        "primary": "cloudflare dns",
+        "supporting": []
+      },
+      "es": {
+        "slug": "citadel-dns",
+        "primary": "dns cloudflare",
+        "supporting": []
+      },
+      "publishAt": "2026-10-18"
+    },
+    {
+      "type": "citadel",
+      "en": "citadel-domains",
+      "priority": 2,
+      "de": {
+        "slug": "citadel-domains",
+        "primary": "domain ddos schutz hinzufügen",
+        "supporting": []
+      },
+      "es": {
+        "slug": "citadel-domains",
+        "primary": "añadir dominio protección ddos",
+        "supporting": []
+      },
+      "publishAt": "2026-10-18"
+    },
+    {
+      "type": "citadel",
+      "en": "citadel-origin",
+      "priority": 2,
+      "de": {
+        "slug": "citadel-origin",
+        "primary": "origin server konfigurieren",
+        "supporting": []
+      },
+      "es": {
+        "slug": "citadel-origin",
+        "primary": "configurar servidor de origen",
+        "supporting": []
+      },
+      "publishAt": "2026-10-18"
+    },
+    {
+      "type": "help",
+      "en": "1737945988-why-you-should-redirect-all-http-traffic-to-https",
+      "priority": 3,
+      "de": {
+        "slug": "1737945988-why-you-should-redirect-all-http-traffic-to-https",
+        "primary": "http auf https umleiten",
+        "supporting": [
+          "http auf https umleiten (20)",
+          "https weiterleitung (10)",
+          "warum https (10)"
+        ]
+      },
+      "es": {
+        "slug": "1737945988-why-you-should-redirect-all-http-traffic-to-https",
+        "primary": "redirigir http a https",
+        "supporting": [
+          "redirigir http a https (10)",
+          "por qué usar https"
+        ]
+      },
+      "publishAt": "2026-10-19"
+    },
+    {
+      "type": "help",
+      "en": "1737946054-how-to-setup-your-vpn-on-linux-server-using-outline",
+      "priority": 3,
+      "de": {
+        "slug": "1737946054-how-to-setup-your-vpn-on-linux-server-using-outline",
+        "primary": "outline vpn server einrichten",
+        "supporting": [
+          "outline vpn",
+          "eigenen vpn server erstellen"
+        ]
+      },
+      "es": {
+        "slug": "1737946054-how-to-setup-your-vpn-on-linux-server-using-outline",
+        "primary": "instalar outline vpn",
+        "supporting": [
+          "outline vpn",
+          "crear servidor vpn propio"
+        ]
+      },
+      "publishAt": "2026-10-19"
+    },
+    {
+      "type": "help",
+      "en": "1737946390-setup-tun-tap-for-open_vpn",
+      "priority": 3,
+      "de": {
+        "slug": "1737946390-setup-tun-tap-for-open_vpn",
+        "primary": "openvpn tun/tap",
+        "supporting": [
+          "openvpn tun/tap (20)",
+          "tun tap aktivieren vps"
+        ]
+      },
+      "es": {
+        "slug": "1737946390-setup-tun-tap-for-open_vpn",
+        "primary": "openvpn tun tap",
+        "supporting": [
+          "activar tun tap vps",
+          "error tun openvpn"
+        ]
+      },
+      "publishAt": "2026-10-19"
+    },
+    {
+      "type": "help",
+      "en": "1737946470-how-to-install-centos-web-panel-cwp-free-web-panel",
+      "priority": 3,
+      "de": {
+        "slug": "1737946470-how-to-install-centos-web-panel-cwp-free-web-panel",
+        "primary": "control web panel installieren",
+        "supporting": [
+          "control web panel (20)",
+          "cwp installieren"
+        ]
+      },
+      "es": {
+        "slug": "1737946470-how-to-install-centos-web-panel-cwp-free-web-panel",
+        "primary": "instalar centos web panel",
+        "supporting": [
+          "centos web panel (20)",
+          "control web panel (20)"
+        ]
+      },
+      "publishAt": "2026-10-19"
+    },
+    {
+      "type": "help",
+      "en": "1737946509-install-cpanel-and-whm-in-linux-you-need-a-license",
+      "priority": 3,
+      "de": {
+        "slug": "1737946509-install-cpanel-and-whm-in-linux-you-need-a-license",
+        "primary": "cpanel installieren",
+        "supporting": [
+          "cpanel installieren (10)",
+          "cpanel lizenz (10)"
+        ]
+      },
+      "es": {
+        "slug": "1737946509-install-cpanel-and-whm-in-linux-you-need-a-license",
+        "primary": "instalar cpanel",
+        "supporting": [
+          "instalar cpanel (10)",
+          "cpanel whm (10)",
+          "licencia cpanel (20)"
+        ]
+      },
+      "publishAt": "2026-10-19"
+    },
+    {
+      "type": "help",
+      "en": "1737943955-introduction",
+      "priority": 3,
+      "de": {
+        "slug": "1737943955-introduction",
+        "primary": "allgemeine geschäftsbedingungen",
+        "supporting": []
+      },
+      "es": {
+        "slug": "1737943955-introduction",
+        "primary": "términos y condiciones",
+        "supporting": []
+      },
+      "publishAt": "2026-10-19"
+    },
+    {
+      "type": "help",
+      "en": "1737944013-use-of-service",
+      "priority": 3,
+      "de": {
+        "slug": "1737944013-use-of-service",
+        "primary": "nutzungsbedingungen",
+        "supporting": []
+      },
+      "es": {
+        "slug": "1737944013-use-of-service",
+        "primary": "condiciones de uso",
+        "supporting": []
+      },
+      "publishAt": "2026-10-20"
+    },
+    {
+      "type": "help",
+      "en": "1737944110-termination-of-service",
+      "priority": 3,
+      "de": {
+        "slug": "1737944110-termination-of-service",
+        "primary": "vps kündigen",
+        "supporting": []
+      },
+      "es": {
+        "slug": "1737944110-termination-of-service",
+        "primary": "cancelar vps",
+        "supporting": []
+      },
+      "publishAt": "2026-10-20"
+    },
+    {
+      "type": "help",
+      "en": "1737944184-payment-terms",
+      "priority": 3,
+      "de": {
+        "slug": "1737944184-payment-terms",
+        "primary": "zahlungsbedingungen",
+        "supporting": [
+          "vps mit krypto bezahlen"
+        ]
+      },
+      "es": {
+        "slug": "1737944184-payment-terms",
+        "primary": "condiciones de pago",
+        "supporting": [
+          "vps pagar con criptomonedas"
+        ]
+      },
+      "publishAt": "2026-10-20"
+    },
+    {
+      "type": "help",
+      "en": "1737944204-user-responsibilities",
+      "priority": 3,
+      "de": {
+        "slug": "1737944204-user-responsibilities",
+        "primary": "pflichten des kunden",
+        "supporting": []
+      },
+      "es": {
+        "slug": "1737944204-user-responsibilities",
+        "primary": "responsabilidades del cliente",
+        "supporting": []
+      },
+      "publishAt": "2026-10-20"
     },
     {
       "type": "blog",
@@ -1089,7 +1015,8 @@
           "failover servidor",
           "vps alta disponibilidad"
         ]
-      }
+      },
+      "publishAt": "2026-10-20"
     },
     {
       "type": "blog",
@@ -1108,7 +1035,8 @@
         "supporting": [
           "errores comunes vps"
         ]
-      }
+      },
+      "publishAt": "2026-10-20"
     },
     {
       "type": "blog",
@@ -1129,7 +1057,8 @@
           "rendimiento vps",
           "mejorar rendimiento servidor"
         ]
-      }
+      },
+      "publishAt": "2026-10-21"
     },
     {
       "type": "blog",
@@ -1150,9 +1079,139 @@
           "cuando ampliar vps",
           "vps lento"
         ]
-      }
+      },
+      "publishAt": "2026-10-21"
+    },
+    {
+      "type": "citadel",
+      "en": "citadel-domain-overview",
+      "priority": 3,
+      "de": {
+        "slug": "citadel-domain-overview",
+        "primary": "citadel domain status",
+        "supporting": []
+      },
+      "es": {
+        "slug": "citadel-domain-overview",
+        "primary": "estado del dominio citadel",
+        "supporting": []
+      },
+      "publishAt": "2026-10-21"
+    },
+    {
+      "type": "citadel",
+      "en": "citadel-analytics",
+      "priority": 3,
+      "de": {
+        "slug": "citadel-analytics",
+        "primary": "traffic analyse website",
+        "supporting": []
+      },
+      "es": {
+        "slug": "citadel-analytics",
+        "primary": "análisis de tráfico web",
+        "supporting": []
+      },
+      "publishAt": "2026-10-21"
+    },
+    {
+      "type": "citadel",
+      "en": "citadel-insights",
+      "priority": 3,
+      "de": {
+        "slug": "citadel-insights",
+        "primary": "ddos angriff analysieren",
+        "supporting": []
+      },
+      "es": {
+        "slug": "citadel-insights",
+        "primary": "analizar ataque ddos",
+        "supporting": []
+      },
+      "publishAt": "2026-10-21"
+    },
+    {
+      "type": "citadel",
+      "en": "citadel-bandwidth",
+      "priority": 3,
+      "de": {
+        "slug": "citadel-bandwidth",
+        "primary": "bandbreite limit",
+        "supporting": []
+      },
+      "es": {
+        "slug": "citadel-bandwidth",
+        "primary": "ancho de banda",
+        "supporting": []
+      },
+      "publishAt": "2026-10-21"
+    },
+    {
+      "type": "citadel",
+      "en": "citadel-branding",
+      "priority": 3,
+      "de": {
+        "slug": "citadel-branding",
+        "primary": "eigene fehlerseiten",
+        "supporting": []
+      },
+      "es": {
+        "slug": "citadel-branding",
+        "primary": "páginas de error personalizadas",
+        "supporting": []
+      },
+      "publishAt": "2026-10-22"
+    },
+    {
+      "type": "citadel",
+      "en": "citadel-overview",
+      "priority": 3,
+      "de": {
+        "slug": "citadel-overview",
+        "primary": "citadel übersicht",
+        "supporting": []
+      },
+      "es": {
+        "slug": "citadel-overview",
+        "primary": "resumen citadel",
+        "supporting": []
+      },
+      "publishAt": "2026-10-22"
+    },
+    {
+      "type": "citadel",
+      "en": "citadel-settings",
+      "priority": 3,
+      "de": {
+        "slug": "citadel-settings",
+        "primary": "citadel einstellungen",
+        "supporting": []
+      },
+      "es": {
+        "slug": "citadel-settings",
+        "primary": "ajustes citadel",
+        "supporting": []
+      },
+      "publishAt": "2026-10-22"
+    },
+    {
+      "type": "citadel",
+      "en": "citadel-billing-support",
+      "priority": 3,
+      "de": {
+        "slug": "citadel-billing-support",
+        "primary": "citadel abrechnung",
+        "supporting": []
+      },
+      "es": {
+        "slug": "citadel-billing-support",
+        "primary": "facturación citadel",
+        "supporting": []
+      },
+      "publishAt": "2026-10-22"
     }
   ],
   "slug_rule": "German and Spanish pages keep the English slug under /de and /es (no hreflang-core change; slug wording carries negligible ranking weight).",
-  "rule_intent": "A keyword is primary only if the page fully answers that search. Generic or navigational terms whose searchers want something else are supporting terms at most."
+  "rule_intent": "A keyword is primary only if the page fully answers that search. Generic or navigational terms whose searchers want something else are supporting terms at most.",
+  "schedule_rule": "6 pages per day per language, both languages on the same day, priority 1 first; reference pages on day 1."
 }

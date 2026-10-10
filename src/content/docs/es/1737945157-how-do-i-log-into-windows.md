@@ -16,7 +16,7 @@ relatedSlugs:
   - 1737944563-how-to-re_activate-and-extend-your-180_day-windows-trial
 translationOf: 1737945157-how-do-i-log-into-windows
 locale: es
-publishAt: 2026-10-12
+publishAt: 2026-10-13
 primaryKeyword: conexión a escritorio remoto
 ---
 Para establecer la conexión a escritorio remoto necesitas tres datos del correo que te envía StealthRDP tras el pago: la dirección IP del servidor, el nombre de usuario (`Administrator`) y la contraseña. Después, elige el apartado de tu dispositivo.

@@ -11,7 +11,7 @@ relatedSlugs:
   - citadel-security
 translationOf: citadel-health
 locale: de
-publishAt: 2026-10-12
+publishAt: 2026-10-13
 primaryKeyword: citadel origin health
 ---
 ## Health-Prüfung ausführen
