@@ -1,8 +1,19 @@
 {
   "generatedAt": "2026-10-10",
   "routes": {
-    "de": [],
-    "es": []
+    "de": [
+      "/blog",
+      "/blog/502-bad-gateway.html",
+      "/resources"
+    ],
+    "es": [
+      "/blog",
+      "/blog/502-bad-gateway.html",
+      "/resources"
+    ]
   },
-  "sources": {}
+  "sources": {
+    "/de/blog/502-bad-gateway.html": "src/content/guides/de/502-bad-gateway.md",
+    "/es/blog/502-bad-gateway.html": "src/content/guides/es/502-bad-gateway.md"
+  }
 }
