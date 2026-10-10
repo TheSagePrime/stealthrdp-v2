@@ -117,7 +117,7 @@ export function docsTree(locale: SiteLocale = 'en'): PageTree.Root {
     children: [
       root(rootId('help'), t.tabs.help, 'StealthRDP servers', { name: 'Overview', url: '/docs' }, collections(rootId('help'), helpCollections, helpDocsArticles, helpArticleHref)),
       root(rootId('citadel'), t.tabs.citadel, 'Layer 7 DDoS protection', { name: 'Overview', url: '/citadel/docs' }, collections(rootId('citadel'), citadelCollections, citadelDocsArticles, citadelArticleHref)),
-      root(rootId('guides'), t.tabs.guides, 'VPS use cases and operations', { name: 'All guides', url: '/blog' }, groups(rootId('guides'), [
+      root(rootId('guides'), t.tabs.guides, 'VPS use cases and operations', { name: 'All articles', url: '/blog' }, groups(rootId('guides'), [
         { group: 'Remote Desktop', page: { name: rdpVpsGuide.h1, url: '/rdp-vps' } },
         ...blogArticles.map(article => ({ group: article.category, page: { name: sidebarName(article), url: articlePath(article) } })),
       ])),

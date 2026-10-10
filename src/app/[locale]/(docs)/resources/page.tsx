@@ -17,9 +17,9 @@ export const metadata: Metadata = createPageMetadata({
 
 const destinations = [
   {
-    title: 'Guides',
+    title: 'Blog',
     href: '/blog',
-    count: `${blogArticles.length} guides`,
+    count: `${blogArticles.length} articles`,
     description: 'VPS use cases, security, performance, backups, and infrastructure decisions.',
     icon: <FluentIcon name="book-open" size={20} />,
   },

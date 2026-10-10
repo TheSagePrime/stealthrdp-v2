@@ -52,7 +52,7 @@ const en = {
         title: 'Resources',
         links: [
           ['Resources home', '/resources'],
-          ['Guides', '/blog'],
+          ['Blog', '/blog'],
           ['Help Center', '/docs'],
           ['Citadel Docs', '/citadel/docs'],
           ['Common questions', '/faq'],

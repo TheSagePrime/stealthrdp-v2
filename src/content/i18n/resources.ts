@@ -6,7 +6,7 @@ import type { SiteLocale } from '../../config/i18n';
 const en = {
   tabs: {
     resources: 'Resources',
-    guides: 'Guides',
+    guides: 'Blog',
     help: 'Help Center',
     citadel: 'Citadel Docs',
     faq: 'Common Questions',
@@ -18,7 +18,7 @@ export type ResourcesCopy = typeof en;
 const de: ResourcesCopy = {
   tabs: {
     resources: 'Ressourcen',
-    guides: 'Anleitungen',
+    guides: 'Blog',
     help: 'Hilfe-Center',
     citadel: 'Citadel-Doku',
     faq: 'Häufige Fragen',
@@ -28,7 +28,7 @@ const de: ResourcesCopy = {
 const es: ResourcesCopy = {
   tabs: {
     resources: 'Recursos',
-    guides: 'Guías',
+    guides: 'Blog',
     help: 'Centro de ayuda',
     citadel: 'Docs de Citadel',
     faq: 'Preguntas frecuentes',
