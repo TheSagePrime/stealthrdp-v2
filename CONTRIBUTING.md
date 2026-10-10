@@ -366,3 +366,61 @@ version exists only when the page is in the publish list, so a half-done page ne
    desktop and mobile; German words are long, so check buttons, tags and chart labels.
 7. **Log it.** Add an entry to `.sageprime/seo/changelog.md`.
 
+
+## 13. Translate a Help Center article, Citadel doc or blog post
+
+German and Spanish versions of resources are separate Markdown files with the English file name and
+keep the English URL under `/de` or `/es`. They go live on their `publishAt` day, not when they are
+merged. The writer brief is `.sageprime/seo/briefs/i18n/WRITER-GUIDE.md`.
+
+1. **The file.** `src/content/docs/<de|es>/<English file name>.md` for Help Center and Citadel docs,
+   `src/content/guides/<de|es>/<English slug>.md` for blog posts (also the Minecraft guide at
+   `/vps-hosting-minecraft`). Front matter is the English front matter with `title`, `sidebarTitle`
+   and `summary` or `excerpt` translated, plus `translationOf` (the English file name), `locale`,
+   `publishAt: YYYY-MM-DD` and `primaryKeyword`. The body uses the same Markdown as the English
+   pages: callouts, steps, code tabs and titles, citations. Run
+   `node scripts/check-translation.mjs <file>` until it passes.
+2. **What fails the build.** `src/lib/stealth/translation-sources.ts` reads every translation at
+   build time and in the unit tests. A translation without its English original, a `locale` or
+   `translationOf` that does not match the path, a missing or impossible `publishAt`, broken YAML, a
+   missing title, summary/excerpt or `primaryKeyword`, or a file that is not `.md` fails. A blog post
+   is converted to HTML even before its publish day, so Markdown errors show in its pull request.
+3. **Links in the text.** Writers prefix every internal link with the language (`/de/docs/...`,
+   `/es/blog/....html`, `/de/plans`). When the page renders, a prefixed link whose page is not
+   published in that language goes to the English URL instead (`rewriteTranslatedLinks()` in
+   `src/lib/stealth/translation-links.ts`), so a translation never links to a 404. Unprefixed links
+   stay English on purpose (the "English version is binding" notice on policy pages).
+4. **What publishing turns on.** A published translation gets its page with `lang`, title,
+   description and canonical of its own, hreflang between every published language (the English page
+   gains it too), TechArticle or BlogPosting data with `inLanguage`, a sitemap entry dated
+   `publishAt`, a place in the German or Spanish sidebar and section index (`/de/docs`,
+   `/de/citadel/docs`, `/de/blog`, `/de/resources` exist once their section has one published
+   translation), a search entry and a Markdown copy at `/docs-md/<locale>/<slug>`
+   (`/docs-md/<locale>/guide-<slug>` for posts). `llms.txt`, `llms-full.txt` and the RSS feed stay
+   English. Before its day a translation exists nowhere: its URL returns 404.
+5. **Words of the page frame.** Section names, sidebar group names, the "Updated" line and the support
+   box come from `resourcePagesCopy` in `src/content/i18n/resources.ts`; the docs UI (search, table of
+   contents, "Copy Markdown") from `src/content/i18n/docs-ui.ts`. A new Help Center collection or blog
+   category needs a German and a Spanish name in `groups` there; until then it shows in English.
+
+### Publishing by date (daily refresh)
+
+`src/content/i18n/published-routes.json` is the publish list: every translation whose `publishAt` is
+on or before its `generatedAt` day (UTC), with the index pages of their sections. `src/config/i18n.ts`
+reads it, so the routes, hreflang, sitemap, sidebar and language switch all follow it. Only
+`scripts/i18n-publish.mjs` writes it; never edit it by hand (the build checks it against the files
+and fails on an entry that is missing or not yet due).
+
+```bash
+node scripts/i18n-publish.mjs                    # publish what is due today (UTC)
+node scripts/i18n-publish.mjs --check            # exit 1 when the list is not current for today
+node scripts/i18n-publish.mjs --date 2026-11-02  # preview a later day locally (do not commit that)
+```
+
+Each day a translation is due: run the script on an up-to-date `main` checkout, commit the changed
+file (`chore(i18n): publish translations due <date>`) and merge it; the production build from `main`
+then serves the new pages. On days with nothing due the script leaves the file unchanged. Nothing runs
+this automatically yet; a scheduled job that runs the script and opens the pull request can be added
+later. The unit test `src/lib/stealth/translation-manifest.test.ts` fails while the list does not
+match the files for its own date, for example after a translation dated in the past was merged
+without running the script.

@@ -68,3 +68,14 @@ node scripts/check-translation.mjs <path to your file>
 
 It compares your file with the English original: sections, steps, code blocks, links, images, callouts,
 citation markers and front matter.
+
+## What happens after you hand back
+
+- The page goes live on its `publishAt` day (UTC), not when it is merged: `node scripts/i18n-publish.mjs`
+  adds every due translation to `src/content/i18n/published-routes.json` and the next build serves it
+  (CONTRIBUTING.md, recipe 13). Before that day the URL returns 404.
+- The build fails on a broken file, so check the front matter: put a value that contains `: ` in quotes
+  (`summary: "Paso 1: ..."`), keep `publishAt` as `YYYY-MM-DD`, and keep the file name of the English
+  original.
+- Prefixed links (`/de/docs/...`) to pages that are not live in your language yet are sent to the
+  English page automatically; you do not need to change them later.
