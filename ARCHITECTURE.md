@@ -60,7 +60,8 @@ src/app/[locale]/(marketing)/   one folder per page (page.tsx), plus layout.tsx 
 src/app/[locale]/layout.tsx      <html>, global styles, TrackingConsent (production only)
 src/app/api/                     health, ready, uptime (UptimeRobot proxy)
 src/app/{sitemap,robots}.ts      sitemap and robots (protected)
-src/app/llms.txt, llms-full.txt  AI-agent summaries (production only)
+src/app/llms.txt, llms-full.txt  AI-agent summaries in Markdown (production only)
+src/app/docs-md/[slug]/         Markdown copies of articles, guides, FAQ and product pages (noindex)
 src/app/rss.xml, search-index.json
 src/components/site/             StealthRDP components (header, footer, pricing, status, citadel/, os/, home/ …)
 src/components/ui/               shadcn/Radix primitives — reuse, do not fork
@@ -83,7 +84,7 @@ All content is in files under `src/content/`, reviewed through pull requests:
 |---|---|---|
 | VPS plans (prices, specs, regions) | `plans.json` | `src/lib/stealth/content.ts` |
 | VPS stock | live from the WHMCS store pages, every 6 hours | `src/lib/stealth/live-plans.ts` |
-| Guides (blog) | `guides/<slug>.html` (front matter + HTML) | `src/lib/stealth/articles.ts` |
+| Guides (blog) | `guides/<slug>.md` (front matter + Markdown, rendered by `src/lib/stealth/guide-markdown.ts`) | `src/lib/stealth/articles.ts` |
 | Help Center and Citadel docs | `docs/<slug>.md`, `docs/citadel-<name>.md` | `src/lib/stealth/articles.ts` |
 | FAQ | `faqs.json` | `content.ts` |
 | Reviews | `testimonials.json`, `reviews.json` | `content.ts` |
@@ -130,7 +131,9 @@ from local keyword research (`.sageprime/seo/keyword-map-*.json`), not translate
   TechArticle, BreadcrumbList. Helpers: `src/lib/stealth/structured-data.ts`, `src/libs/seo/`.
 - AI search: `robots.txt` allows all crawlers, AI crawlers included, and has no `Content-Signal`
   line (no major crawler reads it, and Bing's tester reports it as an error); `/llms.txt` and
-  `/llms-full.txt` give plain-text summaries. `.github/workflows/indexnow.yml` sends pages whose
+  `/llms-full.txt` give Markdown summaries, and `/docs-md/<slug>` serves noindex Markdown copies
+  of every article, guide, the FAQ and the plans, Windows VPS, Linux VPS and Citadel pages
+  (generated from the same data as the pages). `.github/workflows/indexnow.yml` sends pages whose
   words changed to IndexNow after each production deploy.
 
 ## Analytics, ads and consent
