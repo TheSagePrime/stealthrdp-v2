@@ -1,0 +1,871 @@
+{
+  "artifact_type": "keyword_map",
+  "version": 1,
+  "identity": {
+    "project": "stealthrdp",
+    "canonical_domain": "www.stealthrdp.com",
+    "country": "US",
+    "locale": "en-US",
+    "open_seo": {
+      "project_id": "6ddaa19c-a5a6-410a-a845-3d6dfe4869dc",
+      "location_code": 2840,
+      "language_code": "en"
+    }
+  },
+  "researched_at": "2026-10-01",
+  "sources": [
+    "OpenSEO durable snapshots (7 seeds, reused at no cost)",
+    "OpenSEO research_keywords, 15 new seeds, 2026-10-01",
+    "Search Console query+page, 2026-08-30 to 2026-09-28"
+  ],
+  "rules": [
+    "One page owns each keyword. Never target the same keyword on two pages.",
+    "Primary keyword: title, H1 or its close variant, first paragraph, meta description.",
+    "Each secondary keyword: one H2 or FAQ question that genuinely answers it, used once or twice in natural copy.",
+    "No keyword lists, hidden text, repeated exact phrases or doorway sections.",
+    "Do not use 'cheap' or 'cheapest' in copy. Do not claim 'best'.",
+    "Product facts come only from PRODUCT_FACTS.md.",
+    "Pages without real search demand (most Citadel docs, legal and utility pages) get no keyword targets."
+  ],
+  "pages": [
+    {
+      "page": "/plans",
+      "primary": "vps hosting plans",
+      "keywords": [
+        {
+          "keyword": "vps hosting plans",
+          "volume": 390,
+          "kd": 56,
+          "source": "openseo"
+        },
+        {
+          "keyword": "usa vps",
+          "volume": 1000,
+          "kd": 11,
+          "source": "openseo"
+        },
+        {
+          "keyword": "vps server usa",
+          "volume": 1000,
+          "kd": 23,
+          "source": "openseo"
+        },
+        {
+          "keyword": "windows vps buy",
+          "volume": 170,
+          "kd": 27,
+          "source": "openseo"
+        },
+        {
+          "keyword": "buy linux vps",
+          "volume": 90,
+          "kd": 26,
+          "source": "openseo"
+        }
+      ]
+    },
+    {
+      "page": "/windows-vps",
+      "primary": "windows vps",
+      "keywords": [
+        {
+          "keyword": "windows vps",
+          "volume": 1900,
+          "kd": 33,
+          "source": "openseo"
+        },
+        {
+          "keyword": "windows vps server",
+          "volume": 1900,
+          "kd": 44,
+          "source": "openseo"
+        },
+        {
+          "keyword": "vps windows server",
+          "volume": 210,
+          "kd": 31,
+          "source": "openseo"
+        },
+        {
+          "keyword": "windows vps hosting usa",
+          "volume": 50,
+          "kd": 20,
+          "source": "openseo"
+        },
+        {
+          "keyword": "windows vps europe",
+          "volume": 30,
+          "kd": 13,
+          "source": "openseo"
+        },
+        {
+          "keyword": "windows vps with remote desktop",
+          "volume": 50,
+          "kd": 4,
+          "source": "openseo"
+        }
+      ]
+    },
+    {
+      "page": "/linux-vps",
+      "primary": "linux vps server",
+      "keywords": [
+        {
+          "keyword": "linux vps server",
+          "volume": 880,
+          "kd": 46,
+          "source": "openseo"
+        },
+        {
+          "keyword": "linux vps hosting",
+          "volume": 880,
+          "kd": 46,
+          "source": "openseo"
+        },
+        {
+          "keyword": "ubuntu vps",
+          "volume": 320,
+          "kd": 17,
+          "source": "openseo"
+        },
+        {
+          "keyword": "vps with ubuntu",
+          "volume": 320,
+          "kd": 3,
+          "source": "openseo"
+        },
+        {
+          "keyword": "ubuntu server hosting",
+          "volume": 90,
+          "kd": 20,
+          "source": "openseo"
+        },
+        {
+          "keyword": "debian server vs ubuntu server",
+          "volume": 590,
+          "kd": 0,
+          "source": "openseo"
+        }
+      ]
+    },
+    {
+      "page": "/rdp-vps",
+      "primary": "rdp vps",
+      "keywords": [
+        {
+          "keyword": "rdp vps",
+          "volume": 210,
+          "kd": 5,
+          "source": "openseo"
+        },
+        {
+          "keyword": "rdp hosting",
+          "volume": 210,
+          "kd": 5,
+          "source": "openseo"
+        },
+        {
+          "keyword": "vps remote desktop",
+          "volume": 210,
+          "kd": 0,
+          "source": "openseo"
+        },
+        {
+          "keyword": "rdp server",
+          "volume": 1000,
+          "kd": 27,
+          "source": "openseo"
+        },
+        {
+          "keyword": "windows rdp buy",
+          "volume": 50,
+          "kd": 21,
+          "source": "openseo"
+        }
+      ]
+    },
+    {
+      "page": "/vps-hosting-minecraft",
+      "primary": "vps hosting minecraft",
+      "keywords": [
+        {
+          "keyword": "vps hosting minecraft",
+          "volume": 260,
+          "kd": 29,
+          "source": "openseo"
+        },
+        {
+          "keyword": "minecraft vps hosting",
+          "volume": 260,
+          "kd": 29,
+          "source": "openseo"
+        },
+        {
+          "keyword": "vps minecraft server",
+          "volume": 140,
+          "kd": 21,
+          "source": "openseo"
+        },
+        {
+          "keyword": "ddos protection minecraft server",
+          "volume": 140,
+          "kd": 8,
+          "source": "openseo"
+        },
+        {
+          "keyword": "curseforge server hosting",
+          "volume": 480,
+          "kd": 0,
+          "source": "openseo"
+        },
+        {
+          "keyword": "cobblemon server hosting",
+          "volume": 390,
+          "kd": 0,
+          "source": "openseo"
+        },
+        {
+          "keyword": "atm10 server hosting",
+          "volume": 170,
+          "kd": 0,
+          "source": "openseo"
+        }
+      ]
+    },
+    {
+      "page": "/blog/5-ways-to-optimize-your-rdp-performance-for-remote-work.html",
+      "primary": "how to speed up remote desktop connection",
+      "keywords": [
+        {
+          "keyword": "how to speed up remote desktop connection",
+          "volume": null,
+          "kd": null,
+          "source": "search_console"
+        },
+        {
+          "keyword": "rdp latency",
+          "volume": null,
+          "kd": null,
+          "source": "search_console"
+        },
+        {
+          "keyword": "remote desktop bandwidth requirements",
+          "volume": null,
+          "kd": null,
+          "source": "search_console"
+        },
+        {
+          "keyword": "rdp performance",
+          "volume": null,
+          "kd": null,
+          "source": "search_console"
+        }
+      ]
+    },
+    {
+      "page": "/blog/7-tips-for-securing-your-remote-desktop-connection.html",
+      "primary": "secure remote desktop",
+      "keywords": [
+        {
+          "keyword": "secure remote desktop",
+          "volume": 320,
+          "kd": 27,
+          "source": "openseo"
+        },
+        {
+          "keyword": "allow remote desktop windows 11",
+          "volume": 210,
+          "kd": 4,
+          "source": "openseo"
+        },
+        {
+          "keyword": "group policy enable remote desktop",
+          "volume": 170,
+          "kd": 0,
+          "source": "openseo"
+        },
+        {
+          "keyword": "enable remote desktop powershell",
+          "volume": 170,
+          "kd": 0,
+          "source": "openseo"
+        }
+      ]
+    },
+    {
+      "page": "/docs/how-do-i-log-into-windows",
+      "primary": "microsoft remote desktop for mac",
+      "keywords": [
+        {
+          "keyword": "microsoft remote desktop for mac",
+          "volume": 8100,
+          "kd": 20,
+          "source": "openseo"
+        },
+        {
+          "keyword": "windows rdp for mac",
+          "volume": 2400,
+          "kd": 14,
+          "source": "openseo"
+        },
+        {
+          "keyword": "remote desktop connection windows 11",
+          "volume": 320,
+          "kd": 7,
+          "source": "openseo"
+        },
+        {
+          "keyword": "remote desktop connection windows 10",
+          "volume": 210,
+          "kd": 8,
+          "source": "openseo"
+        },
+        {
+          "keyword": "microsoft remote desktop android",
+          "volume": 590,
+          "kd": 21,
+          "source": "openseo"
+        },
+        {
+          "keyword": "best rdp client linux",
+          "volume": 170,
+          "kd": 7,
+          "source": "openseo",
+          "note": "Answer as a neutral selection guide. Do not claim to be the best."
+        }
+      ]
+    },
+    {
+      "page": "/docs/how-to-re-activate-and-extend-your-180-day-windows-trial",
+      "primary": "slmgr rearm",
+      "keywords": [
+        {
+          "keyword": "slmgr rearm",
+          "volume": 320,
+          "kd": 0,
+          "source": "openseo"
+        },
+        {
+          "keyword": "slmgr /dlv",
+          "volume": 170,
+          "kd": 0,
+          "source": "openseo"
+        },
+        {
+          "keyword": "windows server rearm",
+          "volume": 30,
+          "kd": 0,
+          "source": "openseo"
+        },
+        {
+          "keyword": "what happens when windows server evaluation expires",
+          "volume": 20,
+          "kd": 0,
+          "source": "openseo"
+        },
+        {
+          "keyword": "windows server rearm command",
+          "volume": null,
+          "kd": null,
+          "source": "search_console"
+        }
+      ]
+    },
+    {
+      "page": "/blog/ddos-protection-for-vps-essential-setup-checklist.html",
+      "primary": "vps with ddos protection",
+      "keywords": [
+        {
+          "keyword": "vps with ddos protection",
+          "volume": 480,
+          "kd": 11,
+          "source": "openseo"
+        },
+        {
+          "keyword": "ddos protection vps",
+          "volume": 480,
+          "kd": 11,
+          "source": "openseo"
+        },
+        {
+          "keyword": "vps ddos protection",
+          "volume": 480,
+          "kd": 0,
+          "source": "openseo"
+        },
+        {
+          "keyword": "ddos vps",
+          "volume": 110,
+          "kd": 0,
+          "source": "openseo"
+        }
+      ]
+    },
+    {
+      "page": "/blog/vps-for-trading.html",
+      "primary": "forex vps",
+      "keywords": [
+        {
+          "keyword": "forex vps",
+          "volume": 1600,
+          "kd": 37,
+          "source": "openseo"
+        },
+        {
+          "keyword": "mt4 vps",
+          "volume": 390,
+          "kd": 7,
+          "source": "openseo"
+        },
+        {
+          "keyword": "best vps for forex",
+          "volume": 260,
+          "kd": 19,
+          "source": "openseo",
+          "note": "Answer as a neutral selection guide. Do not claim to be the best."
+        },
+        {
+          "keyword": "how to use vps for forex trading",
+          "volume": 10,
+          "kd": null,
+          "source": "openseo"
+        }
+      ]
+    },
+    {
+      "page": "/blog/vps-for-web-hosting.html",
+      "primary": "vps vs shared hosting",
+      "keywords": [
+        {
+          "keyword": "vps vs shared hosting",
+          "volume": 210,
+          "kd": 16,
+          "source": "openseo"
+        },
+        {
+          "keyword": "wordpress vps",
+          "volume": 170,
+          "kd": 10,
+          "source": "openseo"
+        },
+        {
+          "keyword": "what is vps used for",
+          "volume": 140,
+          "kd": 26,
+          "source": "openseo"
+        },
+        {
+          "keyword": "cpanel vps hosting",
+          "volume": 390,
+          "kd": 21,
+          "source": "openseo"
+        }
+      ]
+    },
+    {
+      "page": "/blog/vps-for-backups-storage.html",
+      "primary": "vps storage",
+      "keywords": [
+        {
+          "keyword": "vps storage",
+          "volume": 320,
+          "kd": 23,
+          "source": "openseo"
+        },
+        {
+          "keyword": "storage vps",
+          "volume": 320,
+          "kd": 23,
+          "source": "openseo"
+        }
+      ]
+    },
+    {
+      "page": "/blog/how-to-set-up-automated-backups-for-vps-hosting.html",
+      "primary": "restic backup",
+      "keywords": [
+        {
+          "keyword": "restic backup",
+          "volume": 480,
+          "kd": 16,
+          "source": "openseo"
+        },
+        {
+          "keyword": "server backup software",
+          "volume": 260,
+          "kd": 10,
+          "source": "openseo"
+        },
+        {
+          "keyword": "borgbackup",
+          "volume": 720,
+          "kd": 30,
+          "source": "openseo"
+        }
+      ]
+    },
+    {
+      "page": "/blog/common-vps-performance-bottlenecks.html",
+      "primary": "vps benchmark",
+      "keywords": [
+        {
+          "keyword": "vps benchmark",
+          "volume": 90,
+          "kd": 9,
+          "source": "openseo"
+        },
+        {
+          "keyword": "vps cpu benchmark",
+          "volume": 90,
+          "kd": 0,
+          "source": "openseo"
+        },
+        {
+          "keyword": "test vps",
+          "volume": 70,
+          "kd": 3,
+          "source": "openseo"
+        },
+        {
+          "keyword": "unixbench",
+          "volume": 70,
+          "kd": 8,
+          "source": "openseo"
+        }
+      ]
+    },
+    {
+      "page": "/blog/8-signs-you-need-to-upgrade-your-vps-resources.html",
+      "primary": "vps vs dedicated server",
+      "keywords": [
+        {
+          "keyword": "vps vs dedicated server",
+          "volume": 320,
+          "kd": 5,
+          "source": "openseo"
+        },
+        {
+          "keyword": "vps warning sign",
+          "volume": null,
+          "kd": null,
+          "source": "search_console"
+        }
+      ]
+    },
+    {
+      "page": "/blog/common-vps-hosting-issues-and-their-solutions.html",
+      "primary": "how to troubleshoot high cpu usage on a vps",
+      "keywords": [
+        {
+          "keyword": "how to troubleshoot high cpu usage on a vps",
+          "volume": null,
+          "kd": null,
+          "source": "search_console"
+        },
+        {
+          "keyword": "how to monitor network traffic on a vps",
+          "volume": null,
+          "kd": null,
+          "source": "search_console"
+        }
+      ]
+    },
+    {
+      "page": "/blog/designing-automated-high-availability-vps.html",
+      "primary": "high availability vps",
+      "keywords": [
+        {
+          "keyword": "high availability vps",
+          "volume": 10,
+          "kd": 42,
+          "source": "openseo"
+        },
+        {
+          "keyword": "vps vs cloud",
+          "volume": 260,
+          "kd": 22,
+          "source": "openseo"
+        }
+      ]
+    },
+    {
+      "page": "/blog/top-6-vps-management-tools-for-small-businesses.html",
+      "primary": "vps control panel",
+      "keywords": [
+        {
+          "keyword": "vps control panel",
+          "volume": 110,
+          "kd": 11,
+          "source": "openseo"
+        },
+        {
+          "keyword": "best control panel for vps",
+          "volume": 30,
+          "kd": 0,
+          "source": "openseo",
+          "note": "Answer as a neutral selection guide. Do not claim to be the best."
+        },
+        {
+          "keyword": "vps management software",
+          "volume": null,
+          "kd": null,
+          "source": "search_console"
+        }
+      ]
+    },
+    {
+      "page": "/blog/7-best-tools-for-server-uptime-monitoring-2025.html",
+      "primary": "server uptime monitoring",
+      "keywords": [
+        {
+          "keyword": "server uptime monitoring",
+          "volume": 170,
+          "kd": 68,
+          "source": "openseo"
+        },
+        {
+          "keyword": "uptime robot alternative",
+          "volume": 70,
+          "kd": 0,
+          "source": "openseo"
+        },
+        {
+          "keyword": "self-hosted uptime monitor",
+          "volume": 30,
+          "kd": 37,
+          "source": "openseo"
+        }
+      ]
+    },
+    {
+      "page": "/blog/windows-vs-linux-vps-which-os-best-fits-your-business.html",
+      "primary": "windows vs linux vps",
+      "keywords": [
+        {
+          "keyword": "windows vs linux vps",
+          "volume": 10,
+          "kd": null,
+          "source": "openseo"
+        },
+        {
+          "keyword": "linux vps vs windows vps",
+          "volume": 10,
+          "kd": null,
+          "source": "openseo"
+        },
+        {
+          "keyword": "windows vps vs linux vps",
+          "volume": null,
+          "kd": null,
+          "source": "search_console"
+        }
+      ]
+    },
+    {
+      "page": "/blog/vps-for-automation-bots.html",
+      "primary": "vps for bots",
+      "keywords": [
+        {
+          "keyword": "vps for bots",
+          "volume": null,
+          "kd": null,
+          "source": "seed_no_volume"
+        },
+        {
+          "keyword": "openclaw vps",
+          "volume": 590,
+          "kd": 8,
+          "source": "openseo",
+          "note": "Confirm the article covers self-hosting this agent before using it."
+        },
+        {
+          "keyword": "best vps for openclaw",
+          "volume": 260,
+          "kd": 0,
+          "source": "openseo",
+          "note": "Answer as a neutral selection guide. Do not claim to be the best."
+        }
+      ]
+    },
+    {
+      "page": "/blog/vps-for-remote-desktop.html",
+      "primary": null,
+      "keywords": [],
+      "note": "Overlaps /rdp-vps. Decide merge or a distinct informational angle before adding keywords."
+    },
+    {
+      "page": "/docs/install-cyber-panel-with-open-lite-speed-in-linux",
+      "primary": "cyberpanel install",
+      "keywords": [
+        {
+          "keyword": "cyberpanel install",
+          "volume": 70,
+          "kd": 23,
+          "source": "openseo"
+        },
+        {
+          "keyword": "install cyberpanel",
+          "volume": 40,
+          "kd": 22,
+          "source": "openseo"
+        },
+        {
+          "keyword": "install cyberpanel ubuntu",
+          "volume": 10,
+          "kd": 0,
+          "source": "openseo"
+        }
+      ]
+    },
+    {
+      "page": "/docs/how-to-install-centos-web-panel-cwp-free-web-panel",
+      "primary": "centos web panel",
+      "keywords": [
+        {
+          "keyword": "centos web panel",
+          "volume": 70,
+          "kd": 20,
+          "source": "openseo"
+        },
+        {
+          "keyword": "control web panel",
+          "volume": 140,
+          "kd": 30,
+          "source": "openseo"
+        }
+      ]
+    },
+    {
+      "page": "/docs/how-to-install-direct-admin-in-a-linux-server",
+      "primary": "directadmin vs cpanel",
+      "keywords": [
+        {
+          "keyword": "directadmin vs cpanel",
+          "volume": 70,
+          "kd": 0,
+          "source": "openseo"
+        }
+      ]
+    },
+    {
+      "page": "/docs/how-to-force-https-using-htaccess",
+      "primary": "how to force https",
+      "keywords": [
+        {
+          "keyword": "how to force https",
+          "volume": null,
+          "kd": null,
+          "source": "search_console"
+        },
+        {
+          "keyword": "htaccess force https",
+          "volume": null,
+          "kd": null,
+          "source": "search_console"
+        }
+      ]
+    },
+    {
+      "page": "/docs/why-you-should-redirect-all-http-traffic-to-https",
+      "primary": "http redirect https",
+      "keywords": [
+        {
+          "keyword": "http redirect https",
+          "volume": null,
+          "kd": null,
+          "source": "search_console"
+        }
+      ]
+    },
+    {
+      "page": "/docs/install-fast-panel-in-linux-good-web-hosting-free-panel",
+      "primary": "fastpanel hosting",
+      "keywords": [
+        {
+          "keyword": "fastpanel hosting",
+          "volume": null,
+          "kd": null,
+          "source": "search_console"
+        }
+      ]
+    },
+    {
+      "page": "/docs/how-to-setup-your-vpn-on-linux-server-using-outline",
+      "primary": "outline vpn docker",
+      "keywords": [
+        {
+          "keyword": "outline vpn docker",
+          "volume": null,
+          "kd": null,
+          "source": "search_console"
+        }
+      ]
+    },
+    {
+      "page": "/citadel",
+      "primary": "layer 7 ddos protection",
+      "keywords": [
+        {
+          "keyword": "layer 7 ddos protection",
+          "volume": 70,
+          "kd": 6,
+          "source": "openseo"
+        },
+        {
+          "keyword": "layer 7 ddos attack",
+          "volume": 90,
+          "kd": 6,
+          "source": "openseo"
+        },
+        {
+          "keyword": "ddos protection website",
+          "volume": 210,
+          "kd": 48,
+          "source": "openseo"
+        },
+        {
+          "keyword": "ddos mitigation service providers",
+          "volume": 170,
+          "kd": 21,
+          "source": "openseo"
+        }
+      ]
+    },
+    {
+      "page": "/citadel/docs/challenge-levels",
+      "primary": "layer 7 ddos",
+      "keywords": [
+        {
+          "keyword": "layer 7 ddos",
+          "volume": 90,
+          "kd": 7,
+          "source": "openseo"
+        },
+        {
+          "keyword": "layer 7 attacks",
+          "volume": 50,
+          "kd": 4,
+          "source": "openseo"
+        },
+        {
+          "keyword": "how to prevent layer 7 ddos attacks",
+          "volume": 10,
+          "kd": null,
+          "source": "openseo"
+        }
+      ]
+    },
+    {
+      "page": "/citadel/docs/cloudflare-setup",
+      "primary": "cloudflare ddos protection",
+      "keywords": [
+        {
+          "keyword": "cloudflare ddos protection",
+          "volume": 4400,
+          "kd": 46,
+          "source": "openseo"
+        }
+      ]
+    }
+  ]
+}

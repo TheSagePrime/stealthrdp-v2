@@ -1,19 +1,12 @@
 'use client';
 
-import type { Icon } from '@phosphor-icons/react';
-import {
-  ChartLine,
-  Gauge,
-  GearSix,
-  Heartbeat,
-  Lightning,
-  ListMagnifyingGlass,
-  PaintBrush,
-  ShieldCheck,
-  SquaresFour,
-} from '@phosphor-icons/react';
+import type { CitadelCopy } from '@/content/i18n/en/citadel';
+import type { PortalSectionId } from '@/lib/stealth/citadel-portal';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRef, useState } from 'react';
+import iconStyles from '@/components/site/IconArtwork.module.css';
+import { portalSectionIds } from '@/lib/stealth/citadel-portal';
 import styles from './CitadelPortal.module.css';
 
 /*
@@ -21,120 +14,29 @@ import styles from './CitadelPortal.module.css';
  * Citadel doc says it does and links to that doc. No invented numbers.
  */
 
-type Section = { id: string; name: string; icon: Icon; title: string; points: string[]; doc: string };
+const icons: Record<PortalSectionId, string> = {
+  overview: 'board',
+  analytics: 'data-trending',
+  insights: 'book-open-lightbulb',
+  logs: 'notebook',
+  security: 'shield-checkmark',
+  branding: 'megaphone-loud',
+  cache: 'gauge',
+  health: 'heart',
+  settings: 'settings',
+};
 
-const sections: Section[] = [
-  {
-    id: 'overview',
-    name: 'Overview',
-    icon: SquaresFour,
-    title: 'Command center',
-    points: [
-      'Domains already synced and domains awaiting DNS',
-      'Your service plan and remaining billing-period bandwidth',
-      'Recent proxied and blocked requests, and live traffic',
-    ],
-    doc: '/citadel/docs/overview',
-  },
-  {
-    id: 'analytics',
-    name: 'Analytics',
-    icon: ChartLine,
-    title: 'Fleet traffic over time',
-    points: [
-      'Edge, Proxy and Blocked series for a time range you select',
-      'Spot which site dominates a spike, then open that domain',
-    ],
-    doc: '/citadel/docs/analytics',
-  },
-  {
-    id: 'insights',
-    name: 'Insights',
-    icon: Lightning,
-    title: 'Attack timeline per domain',
-    points: [
-      'Charts and an attack and event timeline',
-      'Attack started and ended events, with duration where available',
-      'Recent challenge and block reasons',
-    ],
-    doc: '/citadel/docs/insights',
-  },
-  {
-    id: 'logs',
-    name: 'Logs',
-    icon: ListMagnifyingGlass,
-    title: 'Access, security and error logs',
-    points: [
-      'Search 15 days by IP, path, host or request ID',
-      'Filter by type, method or status, with ASN and country details',
-      'Origin errors 502, 503 and 504 for error tracing',
-    ],
-    doc: '/citadel/docs/logs',
-  },
-  {
-    id: 'security',
-    name: 'Security',
-    icon: ShieldCheck,
-    title: 'Challenge level and allowlists',
-    points: [
-      'Off, Cookie, JS, Interaction, Auto or Lockdown per domain',
-      'Allowlist paths, IPs and User-Agents that must not be challenged',
-    ],
-    doc: '/citadel/docs/security',
-  },
-  {
-    id: 'branding',
-    name: 'Branding',
-    icon: PaintBrush,
-    title: 'Your own challenge and error pages',
-    points: [
-      'HTML shells for JS challenge, Interaction and Lockdown pages',
-      'Shells for 403, 429 and origin errors 502, 503 and 504',
-      'Restore the stock pages at any time',
-    ],
-    doc: '/citadel/docs/branding',
-  },
-  {
-    id: 'cache',
-    name: 'Cache',
-    icon: Gauge,
-    title: 'Serve static files before the origin',
-    points: [
-      'Eligible static responses come from cache',
-      'Paths such as /api/ and /admin/ bypass the cache',
-    ],
-    doc: '/citadel/docs/cache',
-  },
-  {
-    id: 'health',
-    name: 'Health',
-    icon: Heartbeat,
-    title: 'Origin health probes',
-    points: [
-      'Latency, status and error text of the latest probe',
-      'Run a new probe after you change origin settings',
-    ],
-    doc: '/citadel/docs/health',
-  },
-  {
-    id: 'settings',
-    name: 'Settings',
-    icon: GearSix,
-    title: 'Team and notifications',
-    points: [
-      'Plan entitlements, team invites and roles',
-      'Email alerts for attack start, attack end and awaiting DNS',
-      'Webhooks for attack and lockdown events, with a test delivery',
-    ],
-    doc: '/citadel/docs/settings',
-  },
-];
+const sections = portalSectionIds.map(id => ({ id, icon: icons[id] }));
 
-export function CitadelPortal() {
+/* `links` holds each section's doc URL and link label, worked out on the server for the page's
+   language (an English-only doc is marked as such). */
+export function CitadelPortal({ copy, links }: { copy: CitadelCopy['portal']; links: { href: string; label: string }[] }) {
   const [active, setActive] = useState(0);
   const tabsRef = useRef<Array<HTMLButtonElement | null>>([]);
   const section = sections[active]!;
-  const Glyph = section.icon;
+  const words = copy.sections[active]!;
+  const link = links[active]!;
+  const glyph = section.icon;
 
   const onKeyDown = (event: React.KeyboardEvent) => {
     const step = { ArrowDown: 1, ArrowRight: 1, ArrowUp: -1, ArrowLeft: -1 }[event.key];
@@ -153,13 +55,13 @@ export function CitadelPortal() {
         <i />
         <i />
         <i />
-        <span>{`citadel.stealthrdp.com / ${section.name.toLowerCase()}`}</span>
+        <span>{`citadel.stealthrdp.com / ${section.id}`}</span>
       </div>
 
       <div className={styles.body}>
-        <div className={styles.nav} role="tablist" aria-label="Citadel portal sections" aria-orientation="vertical" onKeyDown={onKeyDown}>
+        <div className={styles.nav} role="tablist" aria-label={copy.sectionsLabel} aria-orientation="vertical" onKeyDown={onKeyDown}>
           {sections.map((item, index) => {
-            const ItemIcon = item.icon;
+            const itemIcon = item.icon;
             return (
               <button
                 key={item.id}
@@ -174,8 +76,8 @@ export function CitadelPortal() {
                 tabIndex={index === active ? 0 : -1}
                 onClick={() => setActive(index)}
               >
-                <ItemIcon size={17} weight={index === active ? 'fill' : 'regular'} aria-hidden="true" />
-                {item.name}
+                <Image className={iconStyles.artwork} src={`/images/fluent-color/${itemIcon}.svg`} width={22} height={22} alt="" />
+                {copy.sections[index]?.name}
               </button>
             );
           })}
@@ -183,14 +85,14 @@ export function CitadelPortal() {
 
         <div className={styles.panel} role="tabpanel" id="portal-panel" aria-labelledby={`portal-tab-${section.id}`} key={section.id}>
           <span className={styles.panelIcon}>
-            <Glyph size={26} weight="duotone" aria-hidden="true" />
+            <Image className={iconStyles.artwork} src={`/images/fluent-color/${glyph}.svg`} width={40} height={40} alt="" />
           </span>
-          <h3>{section.title}</h3>
+          <h3>{words.title}</h3>
           <ul>
-            {section.points.map(point => <li key={point}>{point}</li>)}
+            {words.points.map(point => <li key={point}>{point}</li>)}
           </ul>
-          <Link href={section.doc} className={styles.doc}>
-            {`Read the ${section.name} guide`}
+          <Link href={link.href} className={styles.doc}>
+            {link.label}
           </Link>
         </div>
       </div>

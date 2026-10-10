@@ -1,114 +1,58 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
-import { SiAlpinelinux, SiFreebsd, SiRockylinux } from '@icons-pack/react-simple-icons';
 import {
   ArrowRight,
   ArrowUpRight,
-  Cpu,
-  GlobeHemisphereWest,
-  HardDrive,
   Headset,
   Lightning,
-  ShieldCheck,
 } from '@phosphor-icons/react/dist/ssr';
 import { setRequestLocale } from 'next-intl/server';
 import Image from 'next/image';
 import Link from 'next/link';
-
 import { Section } from '@/components/launchui/section';
+
 import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { HomeHero } from '@/components/site/HomeHero';
 import { HomePricing } from '@/components/site/HomePricing';
+import iconStyles from '@/components/site/IconArtwork.module.css';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { osLogos } from '@/config/os-logos';
+import { homeCopy } from '@/content/i18n/home';
 import { testimonials } from '@/lib/stealth/content';
+import { asSiteLocale, localeHref } from '@/lib/stealth/i18n';
+import { localizedPageMetadata, requirePageLocale } from '@/lib/stealth/i18n-server';
 import { getPlans } from '@/lib/stealth/live-plans';
 import { homeJsonLd } from '@/lib/stealth/structured-data';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
-import { createPageMetadata } from '@/libs/seo/metadata';
 import { buildPageJsonLd } from '@/libs/seo/schema';
 
 type Props = { params: Promise<{ locale: string }> };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params;
-  return createPageMetadata({
-    path: '/',
-    locale,
-    title: 'StealthRDP — Windows RDP & Linux VPS Hosting',
-    description:
-      'Deploy Windows or Linux VPS hosting with NVMe storage, full administrative access, USA and EU locations, and flexible billing.',
-    ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
+export async function generateMetadata(): Promise<Metadata> {
+  const ogImage = 'https://www.stealthrdp.com/assets/og-cover.png';
+  return localizedPageMetadata('/', {
+    en: { ...homeCopy.en.meta, ogImage },
+    de: { ...homeCopy.de.meta, ogImage },
+    es: { ...homeCopy.es.meta, ogImage },
   });
 }
 
 const operatingSystems = [
-  { name: 'Windows Server', logo: '/brand/windows.svg' },
-  { name: 'Ubuntu', logo: '/brand/ubuntu.svg' },
-  { name: 'Debian', logo: '/brand/debian.svg' },
-  { name: 'Rocky Linux', icon: SiRockylinux },
-  { name: 'AlmaLinux', logo: '/brand/almalinux.svg' },
-  { name: 'CentOS', logo: '/brand/centos.svg' },
-  { name: 'Fedora', logo: '/brand/fedora.svg' },
-  { name: 'Alpine Linux', icon: SiAlpinelinux },
-  { name: 'FreeBSD', icon: SiFreebsd },
+  { name: 'Windows Server', logo: osLogos.windows },
+  { name: 'Ubuntu', logo: osLogos.ubuntu },
+  { name: 'Debian', logo: osLogos.debian },
+  { name: 'Rocky Linux', logo: osLogos.rockylinux },
+  { name: 'AlmaLinux', logo: osLogos.almalinux },
+  { name: 'CentOS', logo: osLogos.centos },
+  { name: 'Fedora', logo: osLogos.fedora },
+  { name: 'Alpine Linux', logo: osLogos.alpinelinux },
+  { name: 'FreeBSD', logo: osLogos.freebsd },
 ] as const;
 
-const useCases = [
-  {
-    title: 'Remote desktop',
-    text: 'When a VPS works well as a remote workstation, what affects responsiveness, and how to size it.',
-    href: '/blog/vps-for-remote-desktop.html',
-  },
-  {
-    title: 'Web hosting',
-    text: 'When to move beyond shared hosting and how to size a VPS for the complete web stack.',
-    href: '/blog/vps-for-web-hosting.html',
-  },
-  {
-    title: 'Automation & bots',
-    text: 'How to choose resources for scripts, workers, webhook services, bots, and persistent automation.',
-    href: '/blog/vps-for-automation-bots.html',
-  },
-  {
-    title: 'Trading',
-    text: 'What a VPS can improve for trading software, what it cannot, and why endpoint location matters.',
-    href: '/blog/vps-for-trading.html',
-  },
-  {
-    title: 'Backups & storage',
-    text: 'How to evaluate a VPS as an offsite backup target, including retention, transfer, and restore planning.',
-    href: '/blog/vps-for-backups-storage.html',
-  },
-] as const;
-
-const infrastructure = [
-  {
-    title: 'NVMe SSD storage',
-    text: 'Fast disk I/O for applications, databases, automation, and active desktop workloads.',
-    label: 'Performance',
-    icon: HardDrive,
-  },
-  {
-    title: 'Isolated virtual machines',
-    text: 'Each server runs in its own VM with dedicated resources and full administrative access.',
-    label: 'Isolation',
-    icon: Cpu,
-  },
-  {
-    title: 'USA + Europe infrastructure',
-    text: 'Choose the location closest to the workload with dedicated IPv4 included.',
-    label: 'Reach',
-    icon: GlobeHemisphereWest,
-  },
-  {
-    title: '24/7 monitoring',
-    text: 'Production nodes are monitored continuously with public infrastructure status visibility.',
-    label: 'Visibility',
-    icon: ShieldCheck,
-  },
-];
+/* Icons of the four infrastructure cards; their words are in the copy files. */
+const infrastructureIcons = ['database', 'person-key', 'location-ripple', 'data-trending'];
 
 function reviewSource(item: (typeof testimonials)[number]) {
   if (item.sourceLabel?.includes('Discord') || item.sourceType === 'community review') {
@@ -120,18 +64,26 @@ function reviewSource(item: (typeof testimonials)[number]) {
   return item.sourceUrl.includes('trustpilot.com') ? 'Trustpilot' : 'Third-party review';
 }
 
-/* Stock is read live from WHMCS; see src/lib/stealth/live-plans.ts. Must be a literal: 6 hours. */
-export const revalidate = 21600;
+/* Stock is read live from WHMCS; see src/lib/stealth/live-plans.ts. Must be a literal: 15 minutes. */
+export const revalidate = 900;
 
 export default async function HomePage({ params }: Props) {
+  await requirePageLocale('/');
   const { locale } = await params;
-  setRequestLocale(locale);
+  setRequestLocale(asSiteLocale(locale));
+  const lang = asSiteLocale(locale);
+  const t = homeCopy[lang];
+  /* Reviews are quoted as written, in English. */
+  const quoteLang = lang === 'en' ? undefined : 'en';
   const plans = await getPlans();
+  const lowest = Math.min(...plans.map(plan => plan.pricing.monthly.amount));
+  /* Review badges keep the English source key for styling (data-source); the label is translated. */
+  const sourceLabel = (item: (typeof testimonials)[number]) => t.reviews.sources[reviewSource(item)] ?? reviewSource(item);
   const jsonLd = buildPageJsonLd(getSeoConfig());
 
   return (
     <>
-      <ProductionJsonLd data={homeJsonLd(getSeoConfig().siteUrl, plans)} />
+      <ProductionJsonLd data={homeJsonLd(getSeoConfig().siteUrl, plans, t.jsonLd, localeHref('/plans', lang))} />
       {jsonLd.map(block => (
         <script
           key={String(block['@type'])}
@@ -140,30 +92,21 @@ export default async function HomePage({ params }: Props) {
         />
       ))}
 
-      <HomeHero from={Math.min(...plans.map(plan => plan.pricing.monthly.amount))} />
+      <HomeHero from={lowest} locale={lang} />
 
-      <section className="srv-os-band border-y border-border bg-card/35" aria-label="Supported operating systems">
+      <section className="srv-os-band border-y border-border bg-card/35" aria-label={t.osBand.aria}>
         <div className="srv-home-wide srv-os-band-inner">
           <div className="srv-os-marquee">
             <span className="sr-visually-hidden">
-              Windows Server, Ubuntu, Debian, Rocky Linux, AlmaLinux, CentOS, Fedora, Alpine Linux, and FreeBSD
+              {t.osBand.list}
             </span>
             <div className="srv-os-marquee-track" aria-hidden="true">
               {[false, true].map(clone => (
                 <div className="srv-os-marquee-copy" data-clone={clone ? 'true' : 'false'} key={String(clone)}>
                   {operatingSystems.map((item) => {
-                    const Icon = 'icon' in item ? item.icon : null;
                     return (
                       <div className="srv-os-logo" key={`${clone ? 'clone-' : ''}${item.name}`}>
-                        {'logo' in item
-                          ? (
-                              <Image src={item.logo} alt="" width={26} height={26} />
-                            )
-                          : Icon
-                            ? (
-                                <Icon aria-hidden="true" />
-                              )
-                            : null}
+                        <img src={item.logo} alt="" width={26} height={26} loading="lazy" />
                         <span>{item.name}</span>
                       </div>
                     );
@@ -198,14 +141,14 @@ export default async function HomePage({ params }: Props) {
                 text-xs font-semibold tracking-widest text-primary uppercase
               "
               >
-                Choose your server
+                {t.plans.kicker}
               </p>
               <h2 className="
                 text-3xl/tight font-semibold tracking-tight
                 sm:text-5xl
               "
               >
-                Choose the resources your workload needs.
+                {t.plans.title}
               </h2>
             </div>
             <p className="
@@ -213,102 +156,93 @@ export default async function HomePage({ params }: Props) {
               lg:justify-self-end
             "
             >
-              Choose a region and billing cycle, then compare the current CPU, RAM, storage,
-              bandwidth, operating-system support, and availability.
+              {t.plans.text}
             </p>
           </div>
 
-          <HomePricing plans={plans} />
+          <HomePricing plans={plans} locale={lang} />
         </div>
       </Section>
 
       <Section className="
-        srv-home-usecases border-y border-border bg-card/20 py-10
-        sm:py-12
-        lg:py-14
+        srv-home-usecases border-y border-border bg-card/20 py-12
+        sm:py-14
+        lg:py-16
       "
       >
-        <div className="srv-home-wide srv-usecase-layout">
-          <div className="srv-usecase-intro">
-            <p className="
-              text-xs font-semibold tracking-widest text-primary uppercase
-            "
-            >
-              VPS use cases
-            </p>
-            <h2>What can you run on a VPS?</h2>
+        <div className="srv-home-wide srv-section-stack">
+          <div className="srv-section-head">
+            <div>
+              <p className="srv-kicker">{t.useCases.kicker}</p>
+              <h2>{t.useCases.title}</h2>
+            </div>
             <p>
-              Explore practical guides for remote desktop, web hosting, automation, trading,
-              backups, and more — with sizing and setup considerations for each workload.
+              {t.useCases.text}
+              {' '}
+              <Link href={localeHref('/blog', lang)} className="srv-inline-link">
+                {t.useCases.browse}
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
             </p>
-            <Link href="/blog" className="srv-inline-link">
-              Browse all VPS guides
-              <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
           </div>
 
-          <ol className="srv-usecase-rail">
-            {useCases.map((item, index) => (
+          <ul className="srv-guide-grid">
+            {t.useCases.items.map(item => (
               <li key={item.href}>
-                <Link href={item.href} className="srv-usecase-row">
-                  <span className="srv-usecase-number">{String(index + 1).padStart(2, '0')}</span>
-                  <span className="srv-usecase-copy">
-                    <strong>{item.title}</strong>
-                    <small>{item.text}</small>
-                  </span>
-                  <span className="srv-usecase-arrow" aria-hidden="true">
+                <Link href={item.href} className="srv-guide-card">
+                  <strong>{item.title}</strong>
+                  <small>{item.text}</small>
+                  <span aria-hidden="true">
+                    {t.useCases.read}
                     <ArrowRight />
                   </span>
                 </Link>
               </li>
             ))}
-          </ol>
+          </ul>
         </div>
       </Section>
 
       <Section className="
-        srv-home-infra border-y border-border bg-card/30 py-10
-        sm:py-12
-        lg:py-14
+        srv-home-infra border-y border-border bg-card/30 py-12
+        sm:py-14
+        lg:py-16
       "
       >
-        <div className="srv-home-wide srv-infra-layout">
-          <div className="srv-infra-intro">
-            <p className="
-              text-xs font-semibold tracking-widest text-primary uppercase
-            "
-            >
-              Core infrastructure
-            </p>
-            <h2>Infrastructure that doesn&apos;t flinch.</h2>
+        <div className="srv-home-wide srv-section-stack">
+          <div className="srv-section-head">
+            <div>
+              <p className="srv-kicker">{t.infra.kicker}</p>
+              <h2>{t.infra.title}</h2>
+            </div>
             <p>
-              Speed, isolation, network reach, and visibility without turning the page into a
-              wall of feature claims.
+              {t.infra.text}
+              {' '}
+              <Link
+                href={localeHref('/status', lang)}
+                className="srv-inline-link"
+              >
+                {t.infra.statusLink}
+                <ArrowRight className="size-4" aria-hidden="true" />
+              </Link>
             </p>
-            <Link href="/status" className="srv-inline-link">
-              View server status
-              <ArrowRight className="size-4" aria-hidden="true" />
-            </Link>
           </div>
 
-          <ol className="srv-infra-rail">
-            {infrastructure.map(({ title, text, label, icon: Icon }, index) => (
-              <li key={title} className="srv-infra-item">
-                <span className="srv-infra-number">{String(index + 1).padStart(2, '0')}</span>
-                <span className="srv-infra-icon">
-                  <Icon aria-hidden="true" weight="fill" />
-                </span>
-                <div className="srv-infra-copy">
-                  <div className="srv-infra-title-row">
-                    <h3>{title}</h3>
-                    <span>{label}</span>
-                  </div>
+          <ul className="srv-why-grid">
+            {t.infra.items.map(({ title, text, label }, index) => {
+              const icon = infrastructureIcons[index] ?? 'shield-checkmark';
+              return (
+                <li key={title} className="srv-why-card">
+                  <span className="srv-why-icon">
+                    <Image className={iconStyles.artwork} src={`/images/fluent-color/${icon}.svg`} width={40} height={40} alt="" />
+                  </span>
+                  <span className="srv-why-label">{label}</span>
+                  <h3>{title}</h3>
                   <p>{text}</p>
-                </div>
-                <span className="srv-infra-line" aria-hidden="true" />
-              </li>
-            ))}
-          </ol>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       </Section>
 
@@ -324,54 +258,52 @@ export default async function HomePage({ params }: Props) {
               text-xs font-semibold tracking-widest text-primary uppercase
             "
             >
-              StealthRDP products
+              {t.products.kicker}
             </p>
-            <h2>Choose the product your workload needs.</h2>
+            <h2>{t.products.title}</h2>
             <p>
-              Deploy a Windows or Linux VPS for compute, or route an existing HTTP/HTTPS
-              application through Citadel for Layer 7 protection. They are separate products
-              and can be used independently.
+              {t.products.text}
             </p>
             <div className="srv-products-actions">
               <Button asChild>
-                <Link href="/plans">Compare VPS plans</Link>
+                <Link href={localeHref('/plans', lang)}>{t.products.compare}</Link>
               </Button>
               <Button asChild variant="ghost">
-                <Link href="/citadel">
-                  Explore DDoS protection
+                <Link href={localeHref('/citadel', lang)}>
+                  {t.products.explore}
                   <ArrowRight className="size-4" aria-hidden="true" />
                 </Link>
               </Button>
             </div>
           </div>
 
-          <div className="srv-product-flow" aria-label="StealthRDP products">
-            <Link href="/plans" className="srv-product-node" data-tone="hosting">
+          <div className="srv-product-flow" aria-label={t.products.flowAria}>
+            <Link href={localeHref('/plans', lang)} className="srv-product-node" data-tone="hosting">
               <span className="srv-product-node-icon">
-                <HardDrive aria-hidden="true" weight="fill" />
+                <Image className={iconStyles.artwork} src="/images/fluent-color/cloud.svg" width={40} height={40} alt="" />
               </span>
-              <span className="srv-product-node-kicker">Hosting</span>
-              <strong>Windows &amp; Linux VPS</strong>
-              <small>USA + EU · NVMe · Dedicated IPv4 · Admin access</small>
+              <span className="srv-product-node-kicker">{t.products.hosting.kicker}</span>
+              <strong>{t.products.hosting.title}</strong>
+              <small>{t.products.hosting.small}</small>
               <span className="srv-product-node-link">
-                View hosting
+                {t.products.hosting.link}
                 <ArrowRight aria-hidden="true" />
               </span>
             </Link>
 
             <Link
-              href="/citadel"
+              href={localeHref('/citadel', lang)}
               className="srv-product-node srv-product-node-protection"
               data-tone="protection"
             >
               <span className="srv-product-node-icon">
-                <ShieldCheck aria-hidden="true" weight="fill" />
+                <Image className={iconStyles.artwork} src="/images/fluent-color/shield-checkmark.svg" width={40} height={40} alt="" />
               </span>
-              <span className="srv-product-node-kicker">Layer 7 DDoS protection</span>
-              <strong>Citadel by StealthRDP</strong>
-              <small>HTTP/HTTPS challenges · Rate limits · Lockdown · Origin health</small>
+              <span className="srv-product-node-kicker">{t.products.protection.kicker}</span>
+              <strong>{t.products.protection.title}</strong>
+              <small>{t.products.protection.small}</small>
               <span className="srv-product-node-link">
-                View protection
+                {t.products.protection.link}
                 <ArrowRight aria-hidden="true" />
               </span>
             </Link>
@@ -393,14 +325,14 @@ export default async function HomePage({ params }: Props) {
                   text-xs font-semibold tracking-widest text-primary uppercase
                 "
                 >
-                  Customer proof
+                  {t.reviews.kicker}
                 </p>
-                <h2>What customers say.</h2>
+                <h2>{t.reviews.title}</h2>
               </div>
-              <Badge variant="outline">Featured review</Badge>
+              <Badge variant="outline">{t.reviews.featured}</Badge>
             </div>
 
-            <blockquote>
+            <blockquote lang={quoteLang}>
               “
               {testimonials[0]?.quote}
               ”
@@ -409,7 +341,7 @@ export default async function HomePage({ params }: Props) {
             <div className="srv-review-featured-author">
               <div>
                 <strong>{testimonials[0]?.authorName}</strong>
-                <span>{testimonials[0]?.authorCompany || 'StealthRDP customer'}</span>
+                <span>{testimonials[0]?.authorCompany || t.reviews.customer}</span>
               </div>
               {testimonials[0]?.sourceUrl
                 ? (
@@ -420,7 +352,7 @@ export default async function HomePage({ params }: Props) {
                       rel="noreferrer"
                       data-source={reviewSource(testimonials[0]).toLowerCase().replaceAll(' ', '-')}
                     >
-                      {`View on ${reviewSource(testimonials[0])}`}
+                      {t.reviews.viewOn(sourceLabel(testimonials[0]))}
                     </a>
                   )
                 : (
@@ -428,7 +360,7 @@ export default async function HomePage({ params }: Props) {
                       className="srv-review-source"
                       data-source={reviewSource(testimonials[0]!).toLowerCase().replaceAll(' ', '-')}
                     >
-                      {reviewSource(testimonials[0]!)}
+                      {sourceLabel(testimonials[0]!)}
                     </span>
                   )}
             </div>
@@ -436,12 +368,12 @@ export default async function HomePage({ params }: Props) {
 
           <div className="srv-review-stream-wrap">
             <div className="srv-review-stream-heading">
-              <p>Independent and first-party feedback</p>
-              <span className="srv-review-desktop-hint">Hover to pause</span>
-              <span className="srv-review-mobile-hint">Swipe to browse →</span>
+              <p>{t.reviews.streamTitle}</p>
+              <span className="srv-review-desktop-hint">{t.reviews.hover}</span>
+              <span className="srv-review-mobile-hint">{t.reviews.swipe}</span>
             </div>
 
-            <div className="srv-review-marquee" aria-label="More customer testimonials">
+            <div className="srv-review-marquee" aria-label={t.reviews.marqueeAria}>
               <div className="srv-review-track">
                 {[false, true].map(clone => (
                   <div
@@ -461,7 +393,7 @@ export default async function HomePage({ params }: Props) {
                             className="srv-review-source-badge"
                             data-source={reviewSource(item).toLowerCase().replaceAll(' ', '-')}
                           >
-                            {reviewSource(item)}
+                            {sourceLabel(item)}
                           </Badge>
                           {item.sourceUrl
                             ? (
@@ -470,17 +402,17 @@ export default async function HomePage({ params }: Props) {
                                   target="_blank"
                                   rel="noreferrer"
                                   tabIndex={clone ? -1 : undefined}
-                                  aria-label={clone ? undefined : `View source for review by ${item.authorName}`}
+                                  aria-label={clone ? undefined : t.reviews.sourceAria(item.authorName)}
                                 >
                                   <ArrowUpRight aria-hidden="true" />
                                 </a>
                               )
                             : null}
                         </div>
-                        <blockquote>{item.quote}</blockquote>
+                        <blockquote lang={quoteLang}>{item.quote}</blockquote>
                         <div className="srv-review-chip-author">
                           <strong>{item.authorName}</strong>
-                          <span>{item.publishedOn || item.authorCompany || 'StealthRDP customer'}</span>
+                          <span>{item.publishedOn || item.authorCompany || t.reviews.customer}</span>
                         </div>
                       </article>
                     ))}
@@ -502,39 +434,39 @@ export default async function HomePage({ params }: Props) {
           <div className="srv-final-copy">
             <span className="srv-final-eyebrow">
               <Lightning weight="fill" aria-hidden="true" />
-              12,000+ VPS deployed
+              {t.final.eyebrow}
             </span>
-            <h2>Ready to deploy your next VPS?</h2>
+            <h2>{t.final.title}</h2>
             <p>
-              Choose your region, resources, and operating system, then get your server online in about 60 seconds.
+              {t.final.text}
             </p>
           </div>
 
           <div className="srv-final-trust">
             <span>
-              <strong>€4.59</strong>
-              <small>starting price</small>
+              <strong>{t.final.start(lowest)}</strong>
+              <small>{t.final.startLabel}</small>
             </span>
             <span>
-              <strong>7 days</strong>
-              <small>refund as credit</small>
+              <strong>{t.final.setup[0]}</strong>
+              <small>{t.final.setup[1]}</small>
             </span>
             <span>
-              <strong>24/7</strong>
-              <small>support</small>
+              <strong>{t.final.support[0]}</strong>
+              <small>{t.final.support[1]}</small>
             </span>
           </div>
 
           <div className="srv-final-actions">
             <Button asChild size="lg">
               <a href="#plans">
-                Choose your server
+                {t.final.choose}
                 <ArrowRight className="size-4" aria-hidden="true" />
               </a>
             </Button>
             <a className="srv-final-sales" href="https://dash.stealthrdp.com/submitticket.php">
               <Headset className="size-4" weight="fill" aria-hidden="true" />
-              Ask a pre-sales question
+              {t.final.presales}
             </a>
           </div>
         </div>

@@ -1,10 +1,11 @@
 import type { MetadataRoute } from 'next';
-import { AllLocales } from '@/config/i18n';
 import { resolveSeoSite } from '@/config/seo';
 import { citadelDocPublicPaths, indexableDocPublicPaths } from '@/lib/stealth/articles';
+import { pageUpdated } from '@/lib/stealth/page-dates';
+import { translationSitemapEntries } from '@/lib/stealth/translations';
 import { buildArticleSitemapEntries } from '@/libs/seo/articles';
 import { getSeoConfig } from '@/libs/seo/config';
-import { localizedPath } from '@/libs/seo/locale';
+import { hreflangAlternates, localizedRoutePaths } from '@/libs/seo/locale';
 import { canonicalUrlForPath } from '@/libs/seo/normalize';
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -18,11 +19,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...indexableDocPublicPaths,
     ...citadelDocPublicPaths,
   ];
-  const routeEntries = routes.flatMap(route =>
-    AllLocales.map(locale => ({
-      url: canonicalUrlForPath(localizedPath(route, locale, config), site, config),
-    })),
-  );
-  const entries = [...routeEntries, ...buildArticleSitemapEntries(config, site)];
+  /* lastmod comes from scripts/page-dates.mjs and moves only when a page's words change. */
+  const routeEntries = routes.flatMap((route) => {
+    /* One entry per language the page is published in; each lists all versions as hreflang
+       alternates. English-only pages get one entry and no alternates. */
+    const languages = Object.fromEntries(
+      Object.entries(hreflangAlternates(route, config)).map(([lang, path]) => [lang, canonicalUrlForPath(path, site, config)]),
+    );
+    return localizedRoutePaths(route, config).map((path) => {
+      const lastModified = pageUpdated(path);
+      return {
+        url: canonicalUrlForPath(path, site, config),
+        ...(lastModified ? { lastModified } : {}),
+        ...(Object.keys(languages).length > 0 ? { alternates: { languages } } : {}),
+      };
+    });
+  });
+  /* Published German and Spanish articles and posts, dated by their publish day; they replace the
+     undated route entries of the same URL. */
+  const entries = [...routeEntries, ...buildArticleSitemapEntries(config, site), ...translationSitemapEntries(config, site)];
   return [...new Map(entries.map(entry => [entry.url, entry])).values()];
 }

@@ -1,6 +1,7 @@
 ---
 order: 6
 title: Setup Tun/Tap For OpenVPN
+sidebarTitle: Set up TUN/TAP
 category: VPN and networking
 date: Jan 27, 2025
 sourceTitle: Setup Tun/Tap For OpenVPN
@@ -13,31 +14,22 @@ migration:
 summary: "Please follow the steps below to fix the error: tun needs to be installed"
 relatedSlugs: []
 ---
-Setup Tun/Tap For OpenVPN
+Follow the steps below to fix the error: tun needs to be installed.
 
-Setup Tun/Tap For OpenVPN
-=========================
+### 1. SSH into your VPS
 
-Last updated on Jan 27, 2025
+### 2. Update the system
 
-Please follow the steps below to fix the error: tun needs to be installed
--------------------------------------------------------------------------
-
-1.  SSH into your vps!
-    
-2.  Update the system:
-
-```bash
+```bash title="Update the system"
 sudo apt-get update && sudo apt-get upgrade -y
 ```
-    
 
-**3\. Run The Following Commands**
+### 3. Run the following commands
 
-```bash
+```bash title="Create the TUN device"
 mkdir /dev/net
 mknod /dev/net/tun c 10 200
 chmod 666 /dev/net/tun
 ```
 
-**After Running those commands install your OpenVPN as normal**
+After running those commands, install your OpenVPN as normal.

@@ -1,149 +1,135 @@
-/* eslint-disable @next/next/no-img-element */
-import { SiDiscord, SiInstagram, SiTelegram, SiX } from '@icons-pack/react-simple-icons';
-import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr';
+/* eslint-disable better-tailwindcss/no-unknown-classes -- Existing site container. */
+/* eslint-disable next/no-img-element */
+import type { SiteLocale } from '@/config/i18n';
+import type { SiteCopy } from '@/content/i18n/site';
+import { SiDiscord, SiInstagram, SiTelegram, SiWhatsapp, SiX } from '@icons-pack/react-simple-icons';
+import Image from 'next/image';
 import Link from 'next/link';
+import { PageHeader, PageHeaderHeading, PageHeaderRow } from '@/components/dashboardblocks/footer-header';
+import { FooterNavigation } from '@/components/dashboardblocks/footer-navigation';
+import iconStyles from '@/components/site/IconArtwork.module.css';
 import { Button } from '@/components/ui/button';
+import { isRouteLocalized } from '@/config/i18n';
+import { siteCopy } from '@/content/i18n/site';
+import { localeHref } from '@/lib/stealth/i18n';
+import { CookieSettingsButton } from './TrackingConsent';
 
-const columns = [
-  {
-    title: 'Products',
-    links: [
-      ['VPS plans', '/plans'],
-      ['DDoS protection', '/citadel'],
-      ['Build your own VPS', 'https://dash.stealthrdp.com/index.php?rp=/store/build-your-own-rdp-vps'],
-    ],
-  },
-  {
-    title: 'Resources',
-    links: [
-      ['Resources home', '/resources'],
-      ['Guides', '/blog'],
-      ['Help Center', '/docs'],
-      ['Citadel Docs', '/citadel/docs'],
-      ['Common questions', '/faq'],
-      ['Server status', '/status'],
-    ],
-  },
-  {
-    title: 'Company',
-    links: [
-      ['About', '/about'],
-      ['Support', 'https://dash.stealthrdp.com/submitticket.php'],
-      ['WhatsApp support', 'https://wa.me/447441426993'],
-      ['Privacy', '/privacy'],
-      ['Use of service', '/docs/use-of-service'],
-      ['Windows licensing', '/docs/windows-licensing'],
-    ],
-  },
-] as const;
-
-/* Same four profiles the brand schema declares in src/config/seo.ts. Official marks from Simple Icons. */
+/* The four profiles the brand schema declares in src/config/seo.ts, plus WhatsApp support beside Instagram.
+   Official marks from Simple Icons. */
 const socials = [
   ['Discord', 'https://discord.gg/9JJFs4DDyF', SiDiscord],
   ['Telegram', 'https://t.me/StealthRDP', SiTelegram],
   ['X', 'https://x.com/stealthrdp', SiX],
   ['Instagram', 'https://www.instagram.com/stealth_rdp', SiInstagram],
+  ['WhatsApp', 'https://wa.me/447441426993', SiWhatsapp],
 ] as const;
 
-export function SiteFooter() {
+export function SiteFooter({ locale = 'en', copy = siteCopy.en }: { locale?: SiteLocale; copy?: SiteCopy }) {
+  const t = copy.footer;
+  /* Internal links point to this language's version when it exists; otherwise to the English
+     page, labelled as English for German and Spanish readers. */
+  const localLink = ([label, href]: [string, string]): [string, string] => {
+    if (!href.startsWith('/')) {
+      return [label, href];
+    }
+    const path = href.split('#')[0] ?? href;
+    return locale === 'en' || isRouteLocalized(path, locale)
+      ? [label, localeHref(href, locale)]
+      : [`${label}${t.englishOnly}`, href];
+  };
+  const legal = t.legal.map(localLink);
+  const legalUrls = new Set(t.legal.map(([, href]) => href));
+  const columns = t.columns.map(column => ({ title: column.title, links: column.links.filter(([, href]) => !legalUrls.has(href) && !href.includes('submitticket.php') && !href.includes('wa.me/')).map(([label, href]) => localLink([href === '/contact' ? ({ en: 'Contact us', de: 'Kontakt', es: 'Contáctanos' }[locale]) : label, href])) }));
+
+  const icons = [<Image key="products" className={iconStyles.artwork} src="/images/fluent-color/cloud.svg" width={24} height={24} alt="" />, <Image key="resources" className={iconStyles.artwork} src="/images/fluent-color/book-open.svg" width={24} height={24} alt="" />, <Image key="company" className={iconStyles.artwork} src="/images/fluent-color/building.svg" width={24} height={24} alt="" />];
   return (
-    <footer className="srv3-footer">
-      <div className="sr-container srv3-footer-shell">
-        <div className="srv3-footer-main">
-          <div className="srv3-footer-brand">
-            <Link className="srv3-logo srv3-footer-logo" href="/" aria-label="StealthRDP home">
-              <img
-                src="https://cdn.stealthrdp.com/images/new/6.png"
-                alt="StealthRDP"
-                width="700"
-                height="170"
-                loading="lazy"
+    <footer className="
+      border-t border-border bg-muted/20 py-6
+      sm:py-8
+    "
+    >
+      <div className="sr-container">
+        <div>
+          <PageHeader className="mb-6 border-b border-border pb-5">
+            <PageHeaderRow className="items-center">
+              <PageHeaderHeading
+                wrap
+                className="max-w-xl"
+                title={(
+                  <Link
+                    href={localeHref('/', locale)}
+                    aria-label={copy.homeLabel}
+                    className="inline-flex min-h-11 items-center"
+                  >
+                    <img
+                      src="https://cdn.stealthrdp.com/images/new/6.png"
+                      alt="StealthRDP"
+                      width="700"
+                      height="170"
+                      loading="lazy"
+                      className="
+                        h-auto w-40 brightness-0
+                        dark:invert
+                      "
+                    />
+                  </Link>
+                )}
               />
-            </Link>
 
-            <p className="srv3-footer-description">
-              Windows and Linux VPS infrastructure with USA and EU regions,
-              NVMe storage and full administrative access.
-            </p>
+              <ul className="flex flex-wrap gap-2" aria-label={t.socialLabel}>
+                {socials.map(([label, href, Mark]) => (
+                  <li key={label}>
+                    <Button
+                      asChild
+                      variant="ghost"
+                      size="icon"
+                      className="
+                        rounded-full bg-muted/60 text-muted-foreground
+                        hover:bg-primary/10 hover:text-primary
+                      "
+                    >
+                      <a href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}><Mark size={22} color="default" aria-hidden="true" /></a>
+                    </Button>
+                  </li>
+                ))}
+              </ul>
+            </PageHeaderRow>
+          </PageHeader>
+          <div>
+            <FooterNavigation label={t.navLabel} options={columns.map((column, index) => ({ ...column, icon: icons[index] }))} />
+            <div className="
+              mt-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-2
+              border-t border-border py-3
+            "
+            >
+              <p className="text-xs text-muted-foreground">{t.copyright}</p>
 
-            <div className="srv3-footer-proof" aria-label="StealthRDP service highlights">
-              <span><strong>USA + EU</strong> regions</span>
-              <span><strong>24/7</strong> support</span>
-            </div>
-
-            <ul className="srv3-socials" aria-label="StealthRDP social links">
-              {socials.map(([label, href, Mark]) => (
-                <li key={label}>
-                  <Button asChild variant="outline" size="icon-sm">
-                    <a href={href} target="_blank" rel="noreferrer" aria-label={label} title={label}>
-                      <Mark size={16} aria-hidden="true" />
-                    </a>
-                  </Button>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <nav className="srv3-footer-links" aria-label="Footer navigation">
-            {columns.map(column => (
-              <div className="srv3-footer-column" key={column.title}>
-                <h2>{column.title}</h2>
-                <ul>
-                  {column.links.map(([label, href]) => (
-                    <li key={href}>
-                      {href.startsWith('http') ? (
-                        <a href={href}>
-                          <span>{label}</span>
-                          <ArrowUpRight size={14} aria-hidden="true" />
-                        </a>
-                      ) : (
-                        <Link href={href}>{label}</Link>
-                      )}
-                    </li>
-                  ))}
-                </ul>
+              <div className="
+                flex flex-wrap items-center gap-x-5 gap-y-1 text-xs
+                text-muted-foreground
+              "
+              >
+                {legal.map(([label, href]) => (
+                  <Link
+                    key={href}
+                    href={href}
+                    className="
+                      inline-flex min-h-11 items-center
+                      hover:text-primary
+                    "
+                  >
+                    {label}
+                  </Link>
+                ))}
+                <CookieSettingsButton
+                  className="
+                    min-h-11
+                    hover:text-primary
+                  "
+                  label={copy.consent.settings}
+                />
               </div>
-            ))}
-          </nav>
-
-          <nav className="srv3-footer-mobile-links" aria-label="Footer navigation">
-            {columns.map(column => (
-              <details key={column.title}>
-                <summary>
-                  <span>{column.title}</span>
-                  <span className="srv3-footer-mobile-toggle" aria-hidden="true">+</span>
-                </summary>
-                <ul>
-                  {column.links.map(([label, href]) => (
-                    <li key={href}>
-                      {href.startsWith('http') ? (
-                        <a href={href}>
-                          <span>{label}</span>
-                          <ArrowUpRight size={13} aria-hidden="true" />
-                        </a>
-                      ) : (
-                        <Link href={href}>{label}</Link>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </details>
-            ))}
-          </nav>
-        </div>
-
-        <div className="srv3-footer-bottom">
-          <div className="srv3-footer-bottom-main">
-            <span className="srv3-footer-copyright">© 2026 StealthRDP. All rights reserved.</span>
-            <div className="srv3-footer-legal">
-              <Link href="/privacy">Privacy</Link>
-              <Link href="/docs/use-of-service">Use of service</Link>
-              <Link href="/docs/windows-licensing">Windows licensing</Link>
             </div>
-          </div>
-          <div className="srv3-footer-bottom-note">
-            <span>Billing and account management are handled in the StealthRDP client area.</span>
-            <span className="srv3-footer-credit">Tux artwork by Larry Ewing, CC BY-SA 3.0.</span>
           </div>
         </div>
       </div>

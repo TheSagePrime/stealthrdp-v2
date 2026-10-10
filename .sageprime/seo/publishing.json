@@ -1,0 +1,29 @@
+{
+  "record_type": "seo_publishing_profile",
+  "version": 1,
+  "project_id": "stealthrdp",
+  "repository": "TheSagePrime/stealthrdp-v2",
+  "base_branch": "main",
+  "content": {
+    "directory": "src/content/guides",
+    "format": "markdown-front-matter",
+    "url_template": "/blog/{slug}.html",
+    "dates_file": "src/content/page-dates.json",
+    "registry": {
+      "mode": "derived"
+    }
+  },
+  "required_checks": [
+    "Build with 24.x",
+    "Run static checks (24.x)",
+    "Run unit tests (24.x)"
+  ],
+  "merge": {
+    "mode": "human"
+  },
+  "deploy": {
+    "provider": "vercel",
+    "project": "stealthrdp-v2",
+    "production_origin": "https://www.stealthrdp.com"
+  }
+}

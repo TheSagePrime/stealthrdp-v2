@@ -1,21 +1,117 @@
-/* Fumadocs supplies the docs navigation and article layout. These few tokens
-   align its responsive shell with the StealthRDP light visual system. */
-#nd-docs-layout {
-  --fd-layout-width: 90rem;
-  --fd-nav-height: 78px;
-  --fd-sidebar-width: 17rem;
-  background: transparent;
+/* The Help Center and Citadel docs run on the default Fumadocs docs layout (src/app/[locale]/(docs)).
+   Colours come from the shadcn tokens through fumadocs-ui/css/shadcn.css; this file sets the
+   Fumadocs colour tokens and the brand mark in the docs sidebar. Do not restyle Fumadocs internals. */
+
+/* The site's --accent is the brand blue (a fill for buttons). Fumadocs uses its accent as a soft
+   hover and selection tint (search results, cards, menus), so it takes the muted surface instead.
+   The site has no --sidebar-* tokens, which fumadocs-ui/css/shadcn.css reads inside the sidebar,
+   so the sidebar gets the same values. */
+:root,
+#nd-sidebar {
+  --color-fd-accent: var(--muted);
+  --color-fd-accent-foreground: var(--foreground);
+  --color-fd-ring: var(--ring);
+  --color-fd-primary-foreground: var(--primary-foreground);
 }
 
-@media (min-width: 768px) and (max-width: 1023px) {
-  #nd-docs-layout {
-    --fd-sidebar-width: 14rem;
+/* Inside the docs: Fumadocs' own look, as on fumadocs.dev.
+   - Colours: the site tokens with their blue tint removed (same lightness, no chroma), so the
+     docs read neutral like Fumadocs' default theme. The brand blue stays for links and the
+     active page. Browsers without relative colours keep the site tokens.
+   - Radii: Fumadocs is drawn with Tailwind's default radius scale; the site scale (18px for
+     rounded-lg) made every control look inflated.
+   - Frame: the sidebar sits on the darker surface and the page and table of contents share one
+     rounded, bordered panel. */
+.sr-docs-root {
+  --color-fd-background: var(--surface-2);
+  --color-fd-card: var(--muted);
+  --color-fd-popover: var(--surface-1);
+  --color-fd-muted: var(--muted);
+  --color-fd-secondary: var(--secondary);
+  --color-fd-border: var(--border);
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+
+  /* Callouts (:::info, :::warn, :::tip). Brand blue for information and tips, the amber status
+     colour for warnings and the red destructive colour for errors. */
+  --color-fd-info: var(--primary);
+  --color-fd-idea: var(--primary);
+  --color-fd-warning: var(--status-warn);
+  --color-fd-error: var(--destructive);
+
+  min-height: 100vh;
+  background: var(--color-fd-card);
+}
+
+@supports (color: oklch(from red l 0 h)) {
+  .sr-docs-root {
+    --color-fd-background: oklch(from var(--surface-2) l 0 h);
+    --color-fd-foreground: oklch(from var(--foreground) l 0 h);
+    --color-fd-card: oklch(from var(--muted) calc(l - 0.01) 0 h);
+    --color-fd-card-foreground: oklch(from var(--foreground) l 0 h);
+    --color-fd-popover: oklch(from var(--surface-1) l 0 h);
+    --color-fd-popover-foreground: oklch(from var(--foreground) l 0 h);
+    --color-fd-muted: oklch(from var(--muted) l 0 h);
+    --color-fd-muted-foreground: oklch(from var(--text-dim) l 0 h);
+    --color-fd-secondary: oklch(from var(--secondary) l 0 h);
+    --color-fd-secondary-foreground: oklch(from var(--foreground) l 0 h);
+    --color-fd-border: oklch(from var(--border) l 0 h / 0.7);
+    --color-fd-accent: oklch(from var(--surface-3) l 0 h / 0.7);
+    --color-fd-accent-foreground: oklch(from var(--foreground) l 0 h);
   }
 }
 
-@media (max-width: 767px) {
-  #nd-docs-layout {
-    --fd-nav-height: 64px;
-    --fd-sidebar-width: 0px;
+@media (min-width: 768px) {
+  .sr-docs-root #nd-docs-layout {
+    position: relative;
+    isolation: isolate;
   }
+
+  .sr-docs-root #nd-docs-layout::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    inset: 8px 8px 8px calc(max(0px, (100% - var(--fd-layout-width, 97rem)) / 2) + var(--fd-sidebar-col, 0px));
+    border: 1px solid var(--color-fd-border);
+    border-radius: 1rem;
+    background: var(--color-fd-background);
+  }
+
+  .sr-docs-root #nd-sidebar {
+    border-inline-end-color: transparent;
+    background: transparent;
+  }
+}
+
+.sr-docs-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sr-docs-brand img {
+  width: 132px;
+  height: auto;
+  filter: brightness(0);
+}
+
+/* Guide bodies are authored HTML inside Fumadocs typography (.prose). */
+.sr-guide-body > :first-child {
+  margin-top: 0;
+}
+
+/* The protected publication line of guides sits inline with the reading time. */
+.sr-docs-meta .seo-article-publication-meta {
+  display: contents;
+  font-size: inherit;
+}
+
+/* Guide quotes end with their attribution ("… - OVHcloud [2]"), so the curly quote marks that
+   Fumadocs typography adds around a blockquote would close after the attribution. The border
+   already marks the quote. */
+.sr-guide-body blockquote p::before,
+.sr-guide-body blockquote p::after {
+  content: none;
 }

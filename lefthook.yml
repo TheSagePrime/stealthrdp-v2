@@ -7,6 +7,10 @@ commit-msg:
 # Validate architecture and content before committing
 pre-commit:
   jobs:
+    # Records the date of real wording changes for the sitemap lastmod and "Updated" lines
+    - name: page-dates
+      run: pnpm run page-dates && git add src/content/page-dates.json
+      glob: '*'
     - name: architecture-contract
       run: pnpm run check:architecture
       glob: '*'

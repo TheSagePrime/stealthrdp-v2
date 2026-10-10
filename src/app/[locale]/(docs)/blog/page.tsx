@@ -1,0 +1,55 @@
+import type { Metadata } from 'next';
+import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
+import { cardSectionsToc, DocsCardSections } from '@/components/site/docs/DocsCollections';
+import { TranslatedBlogIndex } from '@/components/site/docs/TranslatedPages';
+import { articlePath, blogArticles } from '@/lib/stealth/articles';
+import { helpCollectionId } from '@/lib/stealth/help-center';
+import { localizedPageMetadata, requirePageLocale } from '@/lib/stealth/i18n-server';
+import { translatedIndexMetadata } from '@/lib/stealth/translations';
+import { buildArticleIndexJsonLd } from '@/libs/seo/articles';
+import { getSeoConfig } from '@/libs/seo/config';
+import { serializeJsonLd } from '@/libs/seo/json-ld';
+
+/* German and Spanish exist once a translated post is published (src/config/i18n.ts). */
+export async function generateMetadata(): Promise<Metadata> {
+  return localizedPageMetadata('/blog', {
+    en: {
+      title: 'VPS Guides — StealthRDP',
+      description: 'Practical VPS use cases, remote desktop, server management, security, backup, and infrastructure guides from StealthRDP.',
+      ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
+    },
+    ...translatedIndexMetadata('blog'),
+  });
+}
+
+export default async function BlogPage() {
+  const locale = await requirePageLocale('/blog');
+  if (locale !== 'en') {
+    return <TranslatedBlogIndex locale={locale} />;
+  }
+  const config = getSeoConfig();
+  const articleIndexJsonLd = buildArticleIndexJsonLd(config);
+  const sections = Array.from(new Set(blogArticles.map(article => article.category))).map(category => ({
+    id: helpCollectionId(category),
+    title: category,
+    items: blogArticles
+      .filter(article => article.category === category)
+      .map(article => ({ href: articlePath(article), title: article.title, description: article.excerpt })),
+  }));
+
+  return (
+    <DocsPage toc={cardSectionsToc(sections)}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: serializeJsonLd(articleIndexJsonLd) }}
+      />
+      <DocsTitle>VPS Guides</DocsTitle>
+      <DocsDescription>
+        VPS use cases, security, performance, backups, infrastructure decisions, and practical operations.
+      </DocsDescription>
+      <DocsBody className="[&>section:first-child>h2]:mt-4">
+        <DocsCardSections sections={sections} />
+      </DocsBody>
+    </DocsPage>
+  );
+}

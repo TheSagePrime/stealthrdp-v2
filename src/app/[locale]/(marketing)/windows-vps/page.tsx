@@ -1,67 +1,75 @@
-/* eslint-disable better-tailwindcss/no-unknown-classes, next/no-html-link-for-pages */
+/* eslint-disable better-tailwindcss/no-unknown-classes */
 import type { Metadata } from 'next';
 import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
 import Link from 'next/link';
+import { ProductionJsonLd } from '@/components/seo/ProductionJsonLd';
 import { OsFaq, OsJourney, OsRegions, OsResources, OsSupport, WindowsVersions } from '@/components/site/os/OsSections';
 import { OsSession } from '@/components/site/os/OsSession';
 import { PricingExplorer } from '@/components/site/PricingExplorer';
 import { Button } from '@/components/ui/button';
+import { homeCrumb } from '@/content/i18n/home-crumb';
+import { windowsVpsCopy } from '@/content/i18n/windows-vps';
+import { localeHref } from '@/lib/stealth/i18n';
+import { localizedPageMetadata, requirePageLocale } from '@/lib/stealth/i18n-server';
 import { getPlans } from '@/lib/stealth/live-plans';
-import { createPageMetadata } from '@/libs/seo/metadata';
+import { windowsVersions } from '@/lib/stealth/os-catalog';
+import { osPageJsonLd } from '@/lib/stealth/structured-data';
+import { getSeoConfig } from '@/libs/seo/config';
 
-export const metadata: Metadata = createPageMetadata({
-  path: '/windows-vps',
-  title: 'Windows VPS Hosting | Compare USA and EU Plans | StealthRDP',
-  description: 'Compare Windows VPS hosting plans with full Administrator access, multiple OS versions, and flexible resources. Choose USA or EU regions and deploy fast.',
-  ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
-});
+/* The words of this page are in src/content/i18n/<language>/windows-vps.tsx. */
 
-const windowsVersions = ['2019', '2022', '2025'];
+export async function generateMetadata(): Promise<Metadata> {
+  return localizedPageMetadata('/windows-vps', {
+    en: { ...windowsVpsCopy.en.meta, ogImage: 'https://www.stealthrdp.com/assets/og-cover.png' },
+    de: { ...windowsVpsCopy.de.meta, ogImage: 'https://www.stealthrdp.com/assets/og-cover.png' },
+    es: { ...windowsVpsCopy.es.meta, ogImage: 'https://www.stealthrdp.com/assets/og-cover.png' },
+  });
+}
 
-const questions = [
-  ['Can I use familiar Windows software?', 'A Windows VPS provides a Windows environment for compatible software. Check each application’s system requirements before ordering.'],
-  ['Do Windows VPS plans include Administrator access?', 'Yes. The FAQ states that VPS plans include full Administrator access.'],
-  ['Which Windows versions are listed?', 'Windows Server 2019, 2022, and 2025.'],
-  ['Is a Microsoft Windows licence included?', 'No. Any Microsoft licensing required for the intended use remains the customer’s responsibility. Windows Server Evaluation may be provided for evaluation/testing purposes and is Evaluation software, not a permanently licensed Windows installation. Customers may use their own eligible Microsoft licences where permitted by Microsoft’s applicable licensing terms. Customers are responsible for determining whether their licence is valid for their intended hosted deployment.'],
-  ['When will my Windows VPS be activated?', 'Most servers are live within 60 seconds of payment confirmation. At busy times it can take a few minutes.'],
-  ['How will I receive my credentials?', 'StealthRDP sends service credentials by email after payment confirmation.'],
-  ['How do I choose CPU, RAM, and storage?', 'Use your software requirements, user count, processing needs, and data size. Then use the plan comparison to compare the available configurations.'],
-  ['Where can I get support?', 'Use WhatsApp support, the client-area ticketing system, or support email. The FAQ provides the current support details.'],
-  ['Can I run any workload?', 'No. Use must remain lawful and must follow the Use of Service terms.'],
-] as const;
-
-/* Stock is read live from WHMCS; see src/lib/stealth/live-plans.ts. Must be a literal: 6 hours. */
-export const revalidate = 21600;
+/* Stock is read live from WHMCS; see src/lib/stealth/live-plans.ts. Must be a literal: 15 minutes. */
+export const revalidate = 900;
 
 export default async function WindowsVpsPage() {
+  const locale = await requirePageLocale('/windows-vps');
+  const t = windowsVpsCopy[locale];
   const plans = await getPlans();
 
   return (
     <div className="srv-page srv-page-os srv-page-windows">
+      <ProductionJsonLd
+        data={osPageJsonLd({
+          siteUrl: getSeoConfig().siteUrl,
+          path: localeHref('/windows-vps', locale),
+          name: t.jsonLd.name,
+          description: t.jsonLd.description,
+          plans,
+          questions: t.questions,
+          home: homeCrumb(locale),
+        })}
+      />
       <section className="sr-page-hero sr-os-page-hero">
         <div className="sr-container sr-os-hero-grid">
           <div>
-            <p className="sr-kicker">Windows VPS hosting</p>
+            <p className="sr-kicker">{t.kicker}</p>
             <h1 className="sr-title">
-              Windows VPS hosting for work that
+              {t.title[0]}
               {' '}
-              <span>belongs on Windows.</span>
+              <span>{t.title[1]}</span>
             </h1>
             <p className="sr-lede">
-              Use remote Windows access for familiar software, administration, and business workflows,
-              in a USA or EU region. Compare the resources below, then choose the Windows Server version at checkout.
+              {t.lede}
             </p>
             <div className="sr-actions">
               <Button asChild size="lg">
                 <Link href="#windows-plans">
-                  Compare Windows VPS plans
+                  {t.compareButton}
                   <ArrowRight size={16} />
                 </Link>
               </Button>
-              <Button asChild size="lg" variant="outline"><Link href="#windows-versions">Windows versions</Link></Button>
+              <Button asChild size="lg" variant="outline"><Link href="#windows-versions">{t.versionsButton}</Link></Button>
             </div>
           </div>
-          <OsSession kind="windows" />
+          <OsSession kind="windows" locale={locale} />
         </div>
       </section>
 
@@ -69,50 +77,32 @@ export default async function WindowsVpsPage() {
         <div className="sr-container">
           <div className="sr-section-head">
             <div>
-              <p className="sr-kicker">Current VPS catalog</p>
-              <h2 className="sr-section-title">Choose your resource level</h2>
+              <p className="sr-kicker">{t.pricing.kicker}</p>
+              <h2 className="sr-section-title">{t.pricing.title}</h2>
             </div>
           </div>
-          <PricingExplorer plans={plans} />
+          <PricingExplorer plans={plans} locale={locale} />
         </div>
       </section>
 
-      <OsJourney kind="windows" />
+      <OsJourney kind="windows" locale={locale} />
 
-      <WindowsVersions versions={windowsVersions} />
+      <WindowsVersions versions={windowsVersions} locale={locale} />
 
-      <OsResources plans={plans} kind="windows">
-        <p>
-          A Windows VPS gives you a remote Windows environment for software, testing, administration, and business
-          workflows. It can also suit users who need access to a Windows desktop or server without keeping the machine on site.
-        </p>
-        <p>Start with the software and users. A plan that fits one application may not fit several concurrent sessions or a larger installation.</p>
-        <div className="sr-inline-links">
-          <Link href="/plans#windows-vps">
-            Windows VPS catalog
-            <ArrowRight size={16} />
-          </Link>
-          <Link href="/plans#comparison">
-            Plan comparison
-            <ArrowRight size={16} />
-          </Link>
-        </div>
+      <OsResources plans={plans} kind="windows" locale={locale}>
+        {t.resources}
       </OsResources>
 
-      <OsRegions plans={plans} kind="windows" />
+      <OsRegions plans={plans} kind="windows" locale={locale} />
 
-      <OsSupport kind="windows" />
+      <OsSupport kind="windows" locale={locale} />
 
       <OsFaq
         kind="windows"
-        title="Windows VPS questions"
-        questions={questions}
-        other={{
-          title: 'Need Linux instead?',
-          text: 'For websites, applications, databases, or development stacks, see Linux VPS hosting.',
-          href: '/linux-vps',
-          label: 'Linux VPS hosting',
-        }}
+        title={t.faqTitle}
+        questions={t.questions}
+        other={t.other}
+        locale={locale}
       />
 
       <section className="sr-section">
@@ -121,17 +111,17 @@ export default async function WindowsVpsPage() {
         "
         >
           <div>
-            <p className="sr-kicker">Windows VPS plans</p>
-            <h2>Compare Windows VPS plans</h2>
+            <p className="sr-kicker">{t.cta.kicker}</p>
+            <h2>{t.cta.title}</h2>
           </div>
           <div className="sr-actions">
             <Button asChild size="lg">
-              <Link href="/plans#windows-vps">
-                Compare plans
+              <Link href={t.cta.compareHref}>
+                {t.cta.compare}
                 <ArrowRight size={16} />
               </Link>
             </Button>
-            <Button asChild size="lg" variant="outline"><a href="/plans">Continue to checkout</a></Button>
+            <Button asChild size="lg" variant="outline"><a href={t.cta.checkoutHref}>{t.cta.checkout}</a></Button>
           </div>
         </div>
       </section>

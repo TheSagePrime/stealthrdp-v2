@@ -1,6 +1,7 @@
 ---
 order: 3
-title: Install Fast Panel in Linux (Good Web Hosting Free Panel)
+title: How to Install FASTPANEL on Linux
+sidebarTitle: Install FASTPANEL
 category: Web panels
 date: Jan 27, 2025
 sourceTitle: Install Fast Panel in Linux (Good Web Hosting Free Panel)
@@ -10,53 +11,54 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: "Install FASTPANEL on a fresh Debian, Ubuntu or CentOS 7 server over SSH, then open the control panel on port 8888 to manage sites, mail and databases."
+summary: "Install FASTPANEL, a free web hosting control panel, on a fresh Linux VPS over SSH, then log in on port 8888 to manage sites, mail, databases and backups."
 relatedSlugs: []
 ---
-Install Fast Panel in Linux (Good Web Hosting Free Panel)
+FASTPANEL is a free web hosting control panel. It lets you create sites, manage mail, databases, backups and scheduled tasks, and see traffic statistics from a browser. You can also give other users access to their own sites. Official site: [fastpanel.direct](https://fastpanel.direct/).
 
-Install Fast Panel in Linux (Good Web Hosting Free Panel)
-=========================================================
+## Before you start
 
-Last updated on Jan 27, 2025
+- **A fresh server.** Install FASTPANEL only on a newly installed operating system. Installing it on a server that already runs a web stack can break existing sites. On StealthRDP, you can [rebuild the server](/docs/how-to-rebuild-a-server) to start clean.
+- **A supported OS (64-bit).** FASTPANEL lists Debian 9 to 12, Ubuntu 18.04, 20.04, 22.04 and 24.04, CentOS 7, AlmaLinux 8 and Rocky Linux 8. Check the official site for the current list.
+- **Root access over SSH.**
 
-Introduction
-------------
+### 1. Connect over SSH
 
-FASTPANEL is a simple and powerful server management panel that allows you to create sites in a few clicks, manage mail, databases, backups, plan tasks, and analyze traffic. Set and configure access rights as you like - each site can be assigned to a single user. To improve the security of your account, connect two-factor authentication.
-
-**More information can be found on an official web page: You will have to buy the free license from their website and enter your server IP address and it will be activated. https://fastpanel.direct/** **Demo version can be tried here: https://fastpanel.direct/demo** **Installation Requirements:**
-
-Please note that the panel can only be installed on a freshly installed operating system (only Debian 8, Debian 9, Debian 10, Ubuntu 18.04, Ubuntu 20.04 and CentOS 7 are supported). Installation on the configured server is impossible!
-
-**Step 1**
-
-. Connect to your server via SSH using your root-password
-
-**Step 2. If wget utility is not installed on your server, execute the following commands in order to get it: Debian/Ubuntu:**
-
-```bash
-apt-get update; apt-get install wget
+```bash title="Connect to the server"
+ssh root@your_server_ip
 ```
 
-**CentOS:**
+### 2. Install wget if it is missing
 
-```bash
-yum makecache; yum install wget
+```bash tab="Debian or Ubuntu" title="Install wget on Debian or Ubuntu"
+apt-get update && apt-get install -y wget
 ```
 
-**Step 3.**
+```bash tab="CentOS, AlmaLinux or Rocky Linux" title="Install wget on CentOS, AlmaLinux or Rocky Linux"
+yum makecache && yum install -y wget
+```
 
-Initiate FASTPANEL® installation by running the following command:
+### 3. Run the FASTPANEL installer
 
-```bash
+```bash title="Run the FASTPANEL installer"
 wget http://repo.fastpanel.direct/install_fastpanel.sh -O - | bash -
 ```
 
-**Step 4.**
+The installer sets up the web server, PHP, database and mail services. It prints the access details when it finishes.
 
-After successful installation of FASTPANEL® you will get a message with the access data
+### 4. Log in to the panel
 
-**Installation Done**
+FASTPANEL uses port **8888**. Open this address in your browser: `https://your_server_ip:8888`
 
-Congratulations! FASTPANEL® successfully installed and available now for you at FASTPANEL uses 8888 port, so to connect to the control panel on your internet browser enter: https://ip\_of\_your\_server:8888 On your first login, the Panel will ask you for a license. In order to get one, simply enter your email address. The license data will be sent to your email address. Log in details for the first attempt to log in are: Username: fastuser The password for the "fastuser" user matches the "root" user password of the server
+- **Username:** `fastuser`
+- **Password:** the password printed at the end of the installation.
+
+On first login, the panel asks for a licence. Enter your email address and the free licence is sent to you. Change the `fastuser` password after you log in.
+
+## Next steps
+
+- Point your domain's DNS A record at the server IP, then add the site in FASTPANEL.
+- Issue a free Let's Encrypt certificate for the site and [force HTTPS](/docs/how-to-force-https-using-htaccess).
+- If port 8888 does not open, allow it in your firewall, for example `ufw allow 8888/tcp`.
+
+Comparing panels? See [CyberPanel](/docs/install-cyber-panel-with-open-lite-speed-in-linux), [CentOS Web Panel](/docs/how-to-install-centos-web-panel-cwp-free-web-panel) and [DirectAdmin](/docs/how-to-install-direct-admin-in-a-linux-server).

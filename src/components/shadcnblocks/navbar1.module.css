@@ -1,0 +1,140 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  border-bottom: 1px solid var(--border);
+  background: var(--card);
+}
+.container {
+  max-width: 1440px;
+  margin-inline: auto;
+  padding: 14px 32px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+}
+.actions,
+.desktopAuth,
+.desktopNav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.logo {
+  justify-self: start;
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+.logo img {
+  filter: brightness(0);
+  width: 156px;
+  height: auto;
+}
+.desktopNav {
+  gap: 4px;
+}
+.desktopNav a {
+  padding: 12px 10px;
+  border-radius: var(--radius-sm);
+  color: var(--muted-foreground);
+  transition:
+    color 150ms ease,
+    background 150ms ease;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.desktopNav a:hover {
+  color: var(--foreground);
+}
+.mobileNav a:hover {
+  background: var(--muted);
+}
+.actions {
+  justify-self: end;
+  gap: 16px;
+}
+.desktopAuth {
+  gap: 20px;
+}
+.menuButton {
+  display: none;
+}
+.sheet {
+  margin: 0 0 0 auto;
+  width: min(384px, 100%);
+  max-width: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  border: 0;
+  border-left: 1px solid var(--border);
+  padding: 24px;
+  background: var(--card);
+  color: var(--foreground);
+}
+.sheet::backdrop {
+  background: color-mix(in srgb, var(--foreground) 35%, transparent);
+}
+.sheetHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.mobileNav {
+  display: grid;
+  gap: 4px;
+  margin-block: 24px;
+}
+.mobileNav a {
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+}
+.sheetFooter {
+  display: grid;
+  gap: 12px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+.header a:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+@media (max-width: 1200px) {
+  .container {
+    grid-template-columns: 1fr auto;
+    padding-inline: 20px;
+  }
+  .desktopNav,
+  .desktopAuth {
+    display: none;
+  }
+  .menuButton {
+    display: inline-flex;
+  }
+}
+@media (max-width: 640px) {
+  .container {
+    padding-inline: 16px;
+    gap: 12px;
+  }
+  .logo img {
+    filter: brightness(0);
+    width: 140px;
+  }
+}
+
+.contact {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+.contact:hover {
+  color: var(--foreground);
+}

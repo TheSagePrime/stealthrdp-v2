@@ -6,7 +6,7 @@
    public brand, shared geometry, marketing components and legacy route cleanup.
    ========================================================================== */
 
-/* Shared dark colour roles are defined in global.css. */
+/* Colour roles are defined in global.css (light palette on :root). See DESIGN_TOKENS.md. */
 
 html {
   background: var(--background);
@@ -212,7 +212,7 @@ body {
   padding: 8px;
 }
 
-.srv3-mobile-nav nav a {
+.srv3-mobile-nav nav > a {
   border-radius: var(--radius-md);
   padding: 12px;
   color: var(--text-muted);
@@ -220,9 +220,20 @@ body {
   font-weight: 600;
 }
 
-.srv3-mobile-nav nav a:hover {
+.srv3-mobile-nav nav > a:hover {
   background: var(--surface-2);
   color: var(--text);
+}
+
+.srv3-mobile-nav-divider {
+  margin: 6px 12px;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+
+.srv3-mobile-nav-cta {
+  display: grid;
+  padding: 8px 4px 4px;
 }
 
 /* Hero ------------------------------------------------------------------- */
@@ -504,30 +515,12 @@ body {
 }
 
 .srv3-footer-bottom-main,
-.srv3-footer-bottom-note {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 28px;
-  align-items: center;
-}
-
 .srv3-footer-bottom-main {
   min-height: 62px;
 }
 
-.srv3-footer-bottom-note {
-  min-height: 46px;
-  border-top: 1px solid color-mix(in srgb, var(--border-divider) 68%, transparent);
-  font-size: 0.625rem;
-}
-
 .srv3-footer-copyright {
   justify-self: start;
-}
-
-.srv3-footer-credit {
-  justify-self: end;
-  text-align: right;
 }
 
 .srv3-footer-legal {
@@ -542,8 +535,19 @@ body {
   transition: color 160ms ease;
 }
 
-.srv3-footer-legal a:hover {
+.srv3-footer-legal a:hover,
+.srv3-footer-cookie:hover {
   color: var(--text);
+}
+
+.srv3-footer-cookie {
+  border: 0;
+  background: none;
+  padding: 0;
+  color: var(--text-dim);
+  font: inherit;
+  cursor: pointer;
+  transition: color 160ms ease;
 }
 
 /* Responsive ------------------------------------------------------------- */
@@ -813,15 +817,6 @@ body {
 
 .sr-skip-link:focus-visible {
   top: 12px;
-}
-
-.sr-faq-groups {
-  display: grid;
-  gap: 64px;
-}
-
-.sr-faq-group {
-  scroll-margin-top: 128px;
 }
 
 .sr-collection-head {
@@ -2979,74 +2974,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 }
 
 /* About */
-.srv-page-about .srv-about-reasons {
-  display: grid;
-  max-width: 980px;
-  margin-left: auto;
-  counter-reset: about-reason;
-}
-.srv-page-about .srv-about-reason {
-  counter-increment: about-reason;
-  position: relative;
-  min-height: 0 !important;
-  border: 0 !important;
-  border-top: 1px solid var(--border-divider) !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  padding: 0 !important;
-  box-shadow: none !important;
-  transition:
-    background-color 180ms ease,
-    transform 180ms ease;
-}
-.srv-page-about .srv-about-reason:last-child {
-  border-bottom: 1px solid var(--border-divider) !important;
-}
-.srv-page-about .srv-about-reason [data-slot='card-header'] {
-  position: relative;
-  display: grid;
-  min-height: 112px;
-  grid-template-columns: 54px minmax(0, 0.55fr) minmax(0, 1fr);
-  gap: 18px;
-  align-items: center;
-  padding: 18px 12px;
-}
-.srv-page-about .srv-about-reason [data-slot='card-header']::before {
-  content: counter(about-reason, decimal-leading-zero);
-  display: grid;
-  width: 34px;
-  height: 34px;
-  place-items: center;
-  border: 1px solid var(--border-divider);
-  border-radius: 999px;
-  color: var(--primary);
-  font-family: var(--font-mono);
-  font-size: 0.625rem;
-  font-weight: 700;
-}
-.srv-page-about .srv-about-reason [data-slot='card-title'],
-.srv-page-about .srv-about-reason [data-slot='card-description'] {
-  margin: 0;
-}
-.srv-page-about .srv-about-reason [data-slot='card-description'] {
-  line-height: 1.65;
-}
-.srv-page-about .srv-about-reason:hover {
-  transform: translateX(5px);
-  background: linear-gradient(90deg, color-mix(in srgb, var(--primary) 5%, transparent), transparent 68%) !important;
-}
-.srv-page-about .srv-about-reason:nth-child(2) [data-slot='card-header']::before {
-  color: var(--sr-raw-8b5cf6);
-}
-.srv-page-about .srv-about-reason:nth-child(3) [data-slot='card-header']::before {
-  color: var(--sr-raw-22c55e);
-}
-.srv-page-about .srv-about-reason:nth-child(4) [data-slot='card-header']::before {
-  color: var(--sr-raw-f59e0b);
-}
-.srv-page-about .srv-about-reason:nth-child(5) [data-slot='card-header']::before {
-  color: var(--sr-raw-06b6d4);
-}
 .srv-page-about .srv-about-stats-strip {
   border: 0 !important;
   border-block: 1px solid var(--border-divider) !important;
@@ -3308,12 +3235,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   .srv-page .sr-title {
     font-size: clamp(2.7rem, 13vw, 4.4rem);
   }
-  .srv-page-about .srv-about-reason [data-slot='card-header'] {
-    grid-template-columns: 44px 1fr;
-  }
-  .srv-page-about .srv-about-reason [data-slot='card-description'] {
-    grid-column: 2;
-  }
   .srv-page-plans .srv-plan-os-option + .srv-plan-os-option {
     border-left: 0 !important;
     border-top: 1px solid var(--border-divider) !important;
@@ -3325,9 +3246,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 @media (prefers-reduced-motion: reduce) {
   .srv-page .sr-page-hero::before {
     animation: none;
-  }
-  .srv-page-about .srv-about-reason {
-    transition: none;
   }
 }
 
@@ -3354,7 +3272,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   width: 100%;
   min-height: 100%;
   padding: 22px;
-  border-radius: 16px;
+  border-radius: var(--radius-plan-card);
 }
 
 .srv-page-plans .sr-pick-card-head {
@@ -3490,7 +3408,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 
 .srv-page-os .sr-os-hero-grid,
 .srv-page-plans .sr-os-hero-grid,
-.srv-page-status .sr-os-hero-grid,
 .srv-page-about .sr-os-hero-grid {
   grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
   gap: clamp(32px, 4vw, 56px);
@@ -3499,7 +3416,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 @media (max-width: 1040px) {
   .srv-page-os .sr-os-hero-grid,
   .srv-page-plans .sr-os-hero-grid,
-  .srv-page-status .sr-os-hero-grid,
   .srv-page-about .sr-os-hero-grid {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -3528,7 +3444,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   width: 100%;
   min-height: 100%;
   padding: 22px;
-  border-radius: 16px;
+  border-radius: var(--radius-plan-card);
 }
 
 .srv-page-os .sr-pick-card-head {
@@ -3776,20 +3692,9 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   }
 
   .srv3-footer-bottom-main,
-  .srv3-footer-bottom-note {
-    grid-template-columns: 1fr;
-    gap: 8px;
-    align-items: start;
-  }
-
   .srv3-footer-bottom-main {
     min-height: 0;
     padding: 14px 0;
-  }
-
-  .srv3-footer-bottom-note {
-    min-height: 0;
-    padding: 10px 0 14px;
   }
 
   .srv3-footer-legal {
@@ -3797,11 +3702,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
     justify-content: flex-start;
     gap: 6px 14px;
     white-space: normal;
-  }
-
-  .srv3-footer-credit {
-    justify-self: start;
-    text-align: left;
   }
 }
 
@@ -3881,14 +3781,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 
   .srv3-footer-bottom-main {
     padding: 12px 0;
-  }
-
-  .srv3-footer-bottom-note {
-    padding: 8px 0 12px;
-  }
-
-  .srv3-footer-bottom-note > span:first-child {
-    display: none;
   }
 }
 
@@ -4548,111 +4440,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   }
 }
 
-/* Status v2 ------------------------------------------------------------- */
-
-.srv-status-v2 {
-  background:
-    radial-gradient(circle at 82% 8%, color-mix(in srgb, var(--primary) 6%, transparent), transparent 26rem),
-    var(--background);
-}
-
-.srv-status-v2-hero {
-  border-bottom: 1px solid var(--border-divider);
-  padding: 64px 0 42px;
-}
-
-.srv-status-v2-copy {
-  max-width: 720px;
-}
-.srv-status-v2-badge {
-  gap: 7px;
-  margin-bottom: 18px;
-}
-
-.srv-status-v2-copy h1 {
-  max-width: 720px;
-  margin: 0;
-  font-size: clamp(2.5rem, 4.5vw, 4.5rem) !important;
-  line-height: 0.98 !important;
-  letter-spacing: -0.05em !important;
-}
-
-.srv-status-v2-copy > p {
-  max-width: 620px;
-  margin: 20px 0 0;
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  line-height: 1.7;
-}
-
-.srv-status-v2-body {
-  padding: 36px 0 clamp(48px, 7vw, 88px);
-}
-.srv-status-v2-console {
-  display: grid;
-  gap: 18px;
-}
-
-.srv-status-v2-help {
-  gap: 0;
-  padding-block: 0;
-}
-
-.srv-status-v2-help [data-slot='card-content'] {
-  display: flex;
-  min-height: 72px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  padding-block: 14px;
-}
-
-.srv-status-v2-help [data-slot='card-content'] > div:first-child {
-  display: grid;
-  gap: 4px;
-}
-.srv-status-v2-help strong {
-  font-size: 0.8125rem;
-}
-.srv-status-v2-help span {
-  color: var(--text-dim);
-  font-size: 0.6875rem;
-}
-.srv-status-v2-help [data-slot='card-content'] > div:last-child {
-  display: flex;
-  gap: 10px;
-}
-
-.srv-status-v2-help a {
-  min-height: 38px;
-  display: inline-flex;
-  align-items: center;
-  border: 1px solid var(--border-divider);
-  border-radius: var(--radius-sm);
-  padding: 0 12px;
-  color: var(--text);
-  font-size: 0.75rem;
-  font-weight: 700;
-}
-
-.srv-status-v2-help a:first-child {
-  border-color: color-mix(in srgb, var(--sr-raw-22c55e) 35%, var(--border-divider));
-  color: var(--sr-raw-15803d);
-}
-
-@media (max-width: 560px) {
-  .srv-status-v2-hero {
-    padding-top: 46px;
-  }
-  .srv-status-v2-help [data-slot='card-content'] {
-    align-items: stretch;
-    flex-direction: column;
-  }
-  .srv-status-v2-help [data-slot='card-content'] > div:last-child {
-    flex-wrap: wrap;
-  }
-}
-
 /* Citadel v2 ------------------------------------------------------------ */
 
 .srv-citadel-v2 {
@@ -4774,7 +4561,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 .srv-citadel-v2-plan {
   gap: 0;
   overflow: hidden;
-  border-radius: 14px;
+  border-radius: var(--radius-plan-card-compact);
   padding-block: 0;
 }
 
@@ -5071,8 +4858,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   .srv-page-plans .sr-pick-cards,
   .srv-page-os .sr-pick-cards,
   .srv-page-plans .srv-plan-os-flow,
-  .srv-citadel-v2-plans,
-  .srv-page-about .srv-about-reasons {
+  .srv-citadel-v2-plans {
     display: grid !important;
     width: 100% !important;
     grid-template-columns: minmax(0, 1fr) !important;
@@ -5085,8 +4871,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   .srv-page-plans .sr-pick-card,
   .srv-page-os .sr-pick-card,
   .srv-page-plans .srv-plan-os-option,
-  .srv-citadel-v2-plan,
-  .srv-page-about .srv-about-reason {
+  .srv-citadel-v2-plan {
     width: 100% !important;
     max-width: none !important;
     min-width: 0 !important;
@@ -5152,13 +4937,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   }
 
   .srv3-footer-bottom-main,
-  .srv3-footer-bottom-note {
-    grid-template-columns: 1fr !important;
-    gap: 8px;
-    padding-block: 14px;
-  }
-
-  .srv3-footer-credit,
   .srv3-footer-legal {
     justify-self: start;
     text-align: left;
@@ -5216,12 +4994,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 @media (max-width: 760px) {
   /* The animated heading reserves the widest word. Allow the prefix and word
      to wrap independently so a 390px viewport never inherits a desktop width. */
-
-  /* Marketing pages expose WhatsApp in the sticky header on phones, so the
-     floating control no longer obscures proof, pricing or footer content. */
-  .sr-site:not(:has(.srv-docs-product)) .srv-whatsapp-float {
-    display: none !important;
-  }
 
   .srv3-footer-links a {
     min-height: 40px !important;
@@ -5495,7 +5267,7 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   /* Purpose-built phone plan card: price + 3 key specs + expandable detail. */
   .srv-mobile-plan-card {
     border: 1px solid var(--border);
-    border-radius: 16px;
+    border-radius: var(--radius-plan-card);
     background: var(--card);
     padding: 18px;
     box-shadow: 0 8px 24px color-mix(in srgb, var(--foreground) 5%, transparent);
@@ -5894,22 +5666,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   }
 
   /* Keep required artwork attribution, remove redundant billing copy. */
-  .srv3-footer-bottom-note {
-    display: block !important;
-    min-height: 0 !important;
-    padding: 7px 0 10px !important;
-    border-top: 1px solid color-mix(in srgb, var(--border-divider) 68%, transparent);
-  }
-
-  .srv3-footer-bottom-note > span:first-child {
-    display: none !important;
-  }
-
-  .srv3-footer-credit {
-    justify-self: start !important;
-    text-align: left !important;
-    font-size: 0.5625rem;
-  }
 }
 
 @media (max-width: 420px) {
@@ -6089,132 +5845,6 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
   }
 }
 
-/* Status hero: state line under the lede; the fleet map sits on the right. */
-.srv-page-status .sr-os-hero-grid {
-  align-items: center;
-}
-.srv-status-v2-state {
-  display: flex;
-  gap: 12px;
-  align-items: flex-start;
-  margin-top: 28px;
-  padding-top: 20px;
-  border-top: 1px solid var(--border-divider);
-  color: var(--status-ok);
-}
-.srv-status-v2-state[data-state='attention'] {
-  color: var(--status-warn);
-}
-.srv-status-v2-state > div {
-  display: grid;
-  gap: 4px;
-}
-.srv-status-v2-state strong {
-  color: var(--foreground);
-  font-size: 1rem;
-}
-.srv-status-v2-state span {
-  color: var(--text-muted);
-  font-size: 0.8125rem;
-}
-
-/* Status service table: one row per monitor, grouped like the hero map. */
-.srv-status-v2-table-card {
-  padding: 0;
-  overflow-x: auto;
-}
-.srv-status-v2-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.875rem;
-}
-.srv-status-v2-table caption {
-  padding: 18px 20px 6px;
-  color: var(--foreground);
-  font-size: 1rem;
-  font-weight: 700;
-  text-align: left;
-}
-.srv-status-v2-table thead th {
-  padding: 10px 20px;
-  border-bottom: 1px solid var(--border-divider);
-  color: var(--text-dim);
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-align: left;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-.srv-status-v2-table tbody th,
-.srv-status-v2-table tbody td {
-  padding: 12px 20px;
-  border-bottom: 1px solid var(--border-divider);
-  text-align: left;
-  vertical-align: middle;
-}
-.srv-status-v2-table tbody:last-child tr:last-child > * {
-  border-bottom: 0;
-}
-.srv-status-v2-table tbody th[scope='row'] {
-  font-weight: 400;
-}
-.srv-status-v2-table tbody th[scope='row'] strong {
-  display: block;
-  font-weight: 650;
-}
-.srv-status-v2-table tbody th[scope='row'] span {
-  display: block;
-  margin-top: 2px;
-}
-.srv-status-v2-table tbody th span {
-  color: var(--text-dim);
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-.srv-status-v2-table-group th {
-  background: color-mix(in srgb, var(--surface-2) 60%, transparent);
-  color: var(--foreground);
-  font-size: 0.8125rem;
-  font-weight: 700;
-}
-.srv-status-v2-table-group th span {
-  margin-left: 8px;
-}
-.srv-status-v2-num {
-  font-family: var(--font-mono);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-
-@media (max-width: 640px) {
-  .srv-status-v2-table thead th,
-  .srv-status-v2-table tbody th,
-  .srv-status-v2-table tbody td {
-    padding-inline: 8px;
-  }
-  .srv-status-v2-table thead th:first-child,
-  .srv-status-v2-table tbody > * > :first-child {
-    padding-left: 14px;
-  }
-  .srv-status-v2-table tbody th[scope='row'] {
-    min-width: 7rem;
-  }
-  .srv-status-v2-table tbody th[scope='row'] span {
-    display: none;
-  }
-  .srv-status-v2-num {
-    font-size: 0.75rem;
-  }
-  .srv-status-v2-table td:last-child {
-    padding-right: 12px;
-  }
-  .srv-status-v2-table th:nth-child(3),
-  .srv-status-v2-table td:nth-child(3) {
-    display: none;
-  }
-}
-
 /* WhatsApp mark: the real glyph in a green disc ---------------------------- */
 .sr-wa-mark {
   display: inline-grid;
@@ -6278,5 +5908,827 @@ main:has(.srv-home-final-section) + .srv3-footer .srv3-footer-bottom {
 
   .srv-whatsapp-float .sr-wa-mark {
     display: inline-grid;
+  }
+}
+
+/* ==========================================================================
+   Region and billing switches on phones.
+   Region: two equal halves. Billing: all five cycles in one row with short
+   labels (the full label stays for screen readers). One 44px height for both.
+   Last in the file so it wins over the earlier mobile overrides.
+   ========================================================================== */
+
+.srv-billing-short {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .srv-pricing-region,
+  .srv-pricing-billing {
+    overflow: visible !important;
+  }
+
+  .srv-pricing-controls .srv-selector,
+  .srv-pricing-controls .srv-billing-rail {
+    display: grid !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    gap: 4px;
+  }
+
+  .srv-pricing-controls .srv-selector {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .srv-pricing-controls .srv-billing-rail {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .srv-pricing-controls .srv-selector-option,
+  .srv-pricing-controls .srv-billing-option {
+    justify-content: center;
+    min-width: 0;
+    min-height: 44px;
+    padding-inline: 4px;
+    font-size: 0.8125rem;
+    white-space: nowrap;
+  }
+
+  .srv-billing-full {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .srv-billing-short {
+    display: inline;
+  }
+}
+
+/* ==========================================================================
+   Compact plan cards on phones (owner-approved, Oct 2026).
+   Plans, Windows and Linux pages: name and price on one row, the billing note
+   under it, the four specs as a 2 x 2 grid, Order Now, then OS and stock on
+   one line. Homepage phone card: tighter spacing, three specs in one row.
+   Last in the file so it wins over the earlier mobile overrides.
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  .srv-page-plans .sr-pick-cards,
+  .srv-page-os .sr-pick-cards {
+    gap: 10px !important;
+  }
+
+  .srv-page-plans .sr-pick-card,
+  .srv-page-os .sr-pick-card {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    grid-template-areas:
+      'head amount'
+      'period period'
+      'specs specs'
+      'action action'
+      'os stock' !important;
+    align-items: center;
+    gap: 10px 12px !important;
+    min-height: 0 !important;
+    padding: 14px 16px !important;
+  }
+
+  .srv-page-plans .sr-pick-card-head,
+  .srv-page-os .sr-pick-card-head {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 0;
+    row-gap: 4px;
+  }
+
+  .srv-page-plans .sr-pick-card-name,
+  .srv-page-os .sr-pick-card-name {
+    white-space: nowrap;
+  }
+
+  .srv-page-plans .sr-pick-card-was,
+  .srv-page-os .sr-pick-card-was {
+    display: block;
+    text-align: right;
+  }
+
+  .srv-page-plans .sr-pick-card-price,
+  .srv-page-os .sr-pick-card-price {
+    display: contents;
+  }
+
+  .srv-page-plans .sr-pick-card-amount,
+  .srv-page-os .sr-pick-card-amount {
+    grid-area: amount;
+    font-size: 1.375rem;
+    text-align: right;
+  }
+
+  .srv-page-plans .sr-pick-card-period,
+  .srv-page-os .sr-pick-card-period {
+    grid-area: period;
+    margin-top: -6px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-divider);
+  }
+
+  .srv-page-plans .sr-pick-specs,
+  .srv-page-os .sr-pick-specs {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 8px 12px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+  }
+
+  .srv-page-plans .sr-pick-spec,
+  .srv-page-os .sr-pick-spec {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 1px;
+    min-height: 0;
+    border-bottom: 0;
+    font-size: 0.875rem;
+  }
+
+  .srv-page-plans .sr-pick-spec dt,
+  .srv-page-os .sr-pick-spec dt {
+    font-size: 0.6875rem;
+  }
+
+  .srv-page-plans .sr-pick-spec dd,
+  .srv-page-os .sr-pick-spec dd {
+    text-align: left;
+  }
+
+  .srv-page-plans .sr-pick-card-action,
+  .srv-page-os .sr-pick-card-action {
+    margin: 0;
+  }
+
+  .srv-page-plans .sr-pick-card-os,
+  .srv-page-os .sr-pick-card-os {
+    margin: 0;
+  }
+
+  .srv-page-plans .sr-pick-stock,
+  .srv-page-os .sr-pick-stock {
+    margin: 0;
+    text-align: right;
+  }
+
+  .srv-mobile-plan-card {
+    padding: 14px 16px;
+  }
+
+  .srv-mobile-plan-price {
+    margin-top: 10px;
+  }
+
+  .srv-mobile-plan-price strong {
+    font-size: 1.625rem;
+  }
+
+  .srv-mobile-plan-specs {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 12px;
+  }
+
+  .srv-mobile-plan-specs > div {
+    padding: 8px;
+  }
+
+  .srv-mobile-plan-specs > div:last-child {
+    grid-column: auto;
+  }
+
+  .srv-mobile-plan-more {
+    margin-top: 10px;
+    padding-top: 8px;
+  }
+
+  .srv-mobile-plan-cta {
+    margin-top: 12px;
+  }
+}
+
+/* ==========================================================================
+   Homepage refresh (Oct 2026)
+   One section header pattern and card grids for the infrastructure and VPS
+   use-case sections. Theme tokens only.
+   ========================================================================== */
+
+.srv-section-stack {
+  display: grid;
+  gap: clamp(28px, 4vw, 44px);
+}
+
+.srv-section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: end;
+  gap: 16px 48px;
+}
+
+.srv-section-head h2 {
+  margin: 8px 0 0;
+  color: var(--foreground);
+  font-size: clamp(1.875rem, 3.2vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.srv-section-head > p {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.srv-section-head > p .srv-inline-link {
+  margin-top: 10px;
+}
+
+.srv-kicker {
+  margin: 0;
+  color: var(--primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Infrastructure: four icon cards. */
+.srv-why-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.srv-why-card {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  padding: 24px 22px;
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.srv-why-card:hover {
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--border-divider));
+  transform: translateY(-2px);
+}
+
+.srv-why-icon {
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary);
+}
+
+.srv-why-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.srv-why-label {
+  margin-top: 6px;
+  color: var(--text-muted);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.srv-why-card h3 {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 1.0625rem;
+  font-weight: 700;
+}
+
+.srv-why-card p {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
+/* Guides: link cards instead of a second numbered list. */
+.srv-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.srv-guide-card {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  padding: 22px;
+  color: var(--foreground);
+  text-decoration: none;
+  transition:
+    border-color 160ms ease,
+    transform 160ms ease;
+}
+
+.srv-guide-card strong {
+  font-size: 1rem;
+}
+
+.srv-guide-card small {
+  flex: 1;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
+.srv-guide-card span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  color: var(--primary);
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.srv-guide-card span svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 160ms ease;
+}
+
+.srv-guide-card:hover {
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--border-divider));
+  transform: translateY(-2px);
+}
+
+.srv-guide-card:hover span svg {
+  transform: translateX(3px);
+}
+
+.srv-guide-card:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+@media (max-width: 1040px) {
+  .srv-why-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .srv-section-head {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .srv-why-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  /* Icon beside the text so four cards fit in far less height. */
+  .srv-why-card {
+    grid-template-columns: 40px minmax(0, 1fr);
+    column-gap: 14px;
+    row-gap: 4px;
+    padding: 18px;
+  }
+
+  .srv-why-icon {
+    width: 40px;
+    height: 40px;
+    grid-row: 1 / span 3;
+  }
+
+  .srv-why-label {
+    margin-top: 0;
+  }
+
+  .srv-guide-grid {
+    gap: 10px;
+  }
+
+  .srv-guide-card {
+    padding: 16px 18px;
+  }
+
+  .srv-guide-card span {
+    margin-top: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv-why-card,
+  .srv-guide-card,
+  .srv-guide-card span svg {
+    transition: none;
+  }
+
+  .srv-why-card:hover,
+  .srv-guide-card:hover,
+  .srv-guide-card:hover span svg {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   About page refresh (Oct 2026)
+   Reuses the homepage section header and card grids; adds the numbers band,
+   two- and three-column card grids and the review cards. Theme tokens only.
+   ========================================================================== */
+
+.srv-why-grid[data-columns='3'] {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.srv-why-grid[data-columns='2'] {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.srv-page-about .srv-about-proof {
+  padding-block: 0 clamp(40px, 5vw, 64px);
+}
+
+.srv-page-about .srv-about-stats-strip dl {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px 28px;
+  margin: 0;
+}
+
+.srv-page-about .srv-about-stats-strip dt {
+  color: var(--foreground);
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.srv-page-about .srv-about-stats-strip dd {
+  margin: 6px 0 0;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.srv-about-products .srv-guide-card {
+  padding: 28px;
+}
+
+.srv-about-products .srv-guide-card strong {
+  font-size: 1.25rem;
+}
+
+.srv-about-products .srv-guide-card small {
+  font-size: 0.9375rem;
+}
+
+.srv-why-card .srv-about-price {
+  margin-top: 4px;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+.srv-about-reviews {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.srv-about-reviews figure {
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  gap: 18px;
+  margin: 0;
+  border: 1px solid var(--border-divider);
+  border-radius: var(--radius-lg);
+  background: var(--card);
+  padding: 24px 22px;
+}
+
+.srv-about-reviews blockquote {
+  flex: 1;
+  margin: 0;
+  color: var(--foreground);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.srv-about-reviews figcaption {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 12px;
+  border-top: 1px solid var(--border-divider);
+  padding-top: 14px;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+}
+
+.srv-about-reviews figcaption a {
+  color: var(--primary);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.srv-about-reviews figcaption a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 1040px) {
+  .srv-why-grid[data-columns='3'],
+  .srv-about-reviews {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .srv-page-about .srv-about-stats-strip dl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .srv-page-about .srv-about-stats-strip dl > div:nth-child(2) {
+    border-right: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  .srv-about-reviews {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .srv-why-grid[data-columns='3'],
+  .srv-why-grid[data-columns='2'] {
+    grid-template-columns: 1fr;
+  }
+
+  .srv-about-products .srv-guide-card {
+    padding: 20px;
+  }
+
+  .srv-page-about .srv-about-stats-strip dl > div {
+    padding-right: 12px;
+  }
+
+  .srv-why-card .srv-about-price {
+    grid-column: 2;
+  }
+}
+
+/* ==========================================================================
+   Top bar, header actions and WhatsApp, Oct 2026 (owner review).
+   - A thin strip above the header (SiteTopBar): WhatsApp on the left, the language switch on the
+     right. It scrolls away; the header below it stays sticky.
+   - The header keeps the navigation, Log In and the VPS Plans button.
+   - The floating WhatsApp button is one round green button. On phones the sticky header shows the
+     WhatsApp icon instead, so nothing covers pricing or order buttons.
+   Last in the file so it wins over the earlier WhatsApp rules.
+   ========================================================================== */
+
+.srv3-topbar {
+  border-bottom: 1px solid var(--border-divider);
+  background: var(--surface-2);
+}
+
+.srv3-topbar-row {
+  display: flex;
+  min-height: 38px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.srv3-topbar-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: var(--radius-md);
+  margin-left: -8px;
+  padding: 4px 8px;
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition:
+    color 160ms ease,
+    background-color 160ms ease;
+}
+
+.srv3-topbar-whatsapp:hover {
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+  color: var(--foreground);
+}
+
+.srv3-topbar-whatsapp .sr-wa-mark {
+  background: transparent;
+  color: var(--sr-raw-16a34a);
+  box-shadow: none;
+}
+
+.srv3-wa-short {
+  display: none;
+}
+
+@media (max-width: 520px) {
+  .srv3-wa-long {
+    display: none;
+  }
+
+  .srv3-wa-short {
+    display: inline;
+  }
+}
+
+.srv3-nav a,
+.srv3-header-actions a {
+  white-space: nowrap;
+}
+
+.srv-whatsapp-float,
+.srv-whatsapp-float:hover {
+  min-height: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.srv-whatsapp-float .sr-wa-mark {
+  background: var(--sr-raw-ffffff);
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--sr-raw-000000) 22%, transparent);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.srv-whatsapp-float:hover .sr-wa-mark {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px color-mix(in srgb, var(--sr-raw-000000) 26%, transparent);
+}
+
+/* Phones: WhatsApp sits in the sticky header next to Menu, so the floating button would only
+   cover pricing and order buttons. Docs pages keep it. */
+@media (max-width: 760px) {
+  .sr-site:not(:has(.srv-docs-product)) .srv-whatsapp-float {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv-whatsapp-float .sr-wa-mark {
+    transition: none;
+    transform: none !important;
+  }
+}
+
+/* Service notice in the top bar (SiteNotice): a ticker between WhatsApp and the languages that
+   scrolls like the OS band, right to left so it reads in order. Phones give it its own row. */
+.srv3-topbar-row:has(.srv3-notice) {
+  gap: 20px;
+}
+
+.srv3-notice {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--sr-raw-f59e0b) 12%, var(--surface-1));
+  padding: 4px 4px 4px 6px;
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sr-raw-f59e0b) 34%, transparent);
+}
+
+.srv3-notice:hover {
+  background: color-mix(in srgb, var(--sr-raw-f59e0b) 18%, var(--surface-1));
+}
+
+.srv3-notice-icon {
+  display: inline-grid;
+  width: 22px;
+  height: 22px;
+  flex: none;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--sr-raw-f59e0b);
+  color: var(--sr-raw-ffffff);
+}
+
+.srv3-notice-marquee {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent 0, black 4%, black 96%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, black 4%, black 96%, transparent 100%);
+}
+
+.srv3-notice-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: srv3-notice-scroll 48s linear infinite;
+}
+
+.srv3-notice:hover .srv3-notice-track,
+.srv3-notice:focus-visible .srv3-notice-track {
+  animation-play-state: paused;
+}
+
+.srv3-notice-copy {
+  display: flex;
+  min-width: max-content;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.srv3-notice-copy > span {
+  color: var(--text-muted);
+}
+
+.srv3-notice-copy > span[data-lead] {
+  color: var(--foreground);
+  font-weight: 650;
+}
+
+.srv3-notice-copy > span::after {
+  content: '•';
+  margin-inline: 14px;
+  color: color-mix(in srgb, var(--sr-raw-f59e0b) 70%, var(--text-muted));
+}
+
+@keyframes srv3-notice-scroll {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@media (max-width: 760px) {
+  .srv3-topbar-row:has(.srv3-notice) {
+    flex-wrap: wrap;
+    row-gap: 0;
+    padding-bottom: 8px;
+  }
+
+  .srv3-topbar-row .srv3-notice {
+    order: 3;
+    flex-basis: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srv3-notice-track {
+    animation: none;
+    transform: none;
+  }
+
+  .srv3-notice-copy[aria-hidden],
+  .srv3-notice-copy + .srv3-notice-copy {
+    display: none;
+  }
+
+  .srv3-notice-marquee {
+    mask-image: linear-gradient(90deg, black 0, black 94%, transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, black 0, black 94%, transparent 100%);
   }
 }
