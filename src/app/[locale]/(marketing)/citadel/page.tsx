@@ -22,6 +22,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { citadelCopy } from '@/content/i18n/citadel';
+import { citadelPlans, citadelStoreUrl } from '@/lib/stealth/citadel-plans';
 import { portalDocHref, portalSectionIds } from '@/lib/stealth/citadel-portal';
 import { fill, localeHref } from '@/lib/stealth/i18n';
 import { localizedPageMetadata, requirePageLocale } from '@/lib/stealth/i18n-server';
@@ -41,18 +42,11 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
-/* Plan names, prices (EUR per month) and WHMCS store links. The words are in the page copy. */
-const plans = [
-  { name: 'Starter', price: 0, checkout: 'https://dash.stealthrdp.com/store/layer-7-ddos-protection/citadel-starter', featured: false },
-  { name: 'Growth', price: 49, checkout: 'https://dash.stealthrdp.com/store/layer-7-ddos-protection/citadel-business', featured: true },
-  { name: 'Scale', price: 149, checkout: 'https://dash.stealthrdp.com/store/layer-7-ddos-protection/citadel-enterprise', featured: false },
-] as const;
-
 export default async function CitadelPage() {
   const locale = await requirePageLocale('/citadel');
   const t = citadelCopy[locale];
   const jsonLd = buildPageJsonLd(getSeoConfig());
-  const planCards = plans.map((plan, index) => ({ ...plan, ...t.plans[index]! }));
+  const planCards = citadelPlans.map((plan, index) => ({ ...plan, ...t.plans[index]! }));
   const guide = '/citadel/docs/getting-started';
   const portalLinks = portalSectionIds.map((id, index) => ({
     href: localeHref(portalDocHref(id), locale),
@@ -263,7 +257,7 @@ export default async function CitadelPage() {
             </div>
             <div>
               <Button asChild size="lg">
-                <a href="https://dash.stealthrdp.com/store/layer-7-ddos-protection">
+                <a href={citadelStoreUrl}>
                   {t.final.plans}
                   {' '}
                   <ArrowRight size={16} aria-hidden="true" />

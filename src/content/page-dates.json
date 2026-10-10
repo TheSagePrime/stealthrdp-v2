@@ -73,7 +73,7 @@
   },
   "/citadel": {
     "updated": "2026-10-09",
-    "fingerprint": "bb42f293eef0f781"
+    "fingerprint": "e64d3a31d1096973"
   },
   "/citadel/docs/allowlists": {
     "updated": "2026-10-09",
@@ -161,7 +161,7 @@
   },
   "/de/citadel": {
     "updated": "2026-10-09",
-    "fingerprint": "2ae2ffea29a66ff0"
+    "fingerprint": "65f7d3f272ff57cb"
   },
   "/de/faq": {
     "updated": "2026-10-09",
@@ -169,7 +169,7 @@
   },
   "/de/linux-vps": {
     "updated": "2026-10-09",
-    "fingerprint": "4d2680ee1abdb4ff"
+    "fingerprint": "cc0a0bc750bd93dc"
   },
   "/de/plans": {
     "updated": "2026-10-09",
@@ -181,7 +181,7 @@
   },
   "/de/windows-vps": {
     "updated": "2026-10-09",
-    "fingerprint": "ab96e6a2fee9e83f"
+    "fingerprint": "0cd62c279a8cc301"
   },
   "/docs/10-ways-to-optimize-your-word-press-website-for-speed": {
     "updated": "2026-10-09",
@@ -281,7 +281,7 @@
   },
   "/es/citadel": {
     "updated": "2026-10-09",
-    "fingerprint": "99da0898ebdfcc04"
+    "fingerprint": "e871e018956128a6"
   },
   "/es/faq": {
     "updated": "2026-10-09",
@@ -289,7 +289,7 @@
   },
   "/es/linux-vps": {
     "updated": "2026-10-09",
-    "fingerprint": "b5c4f7c953790490"
+    "fingerprint": "6b59209aa5854322"
   },
   "/es/plans": {
     "updated": "2026-10-09",
@@ -301,7 +301,7 @@
   },
   "/es/windows-vps": {
     "updated": "2026-10-09",
-    "fingerprint": "7f07906a1123ad8c"
+    "fingerprint": "7f83341989c70034"
   },
   "/faq": {
     "updated": "2026-10-09",
@@ -309,7 +309,7 @@
   },
   "/linux-vps": {
     "updated": "2026-10-09",
-    "fingerprint": "308422c306806fa5"
+    "fingerprint": "f802d9ae2b122775"
   },
   "/plans": {
     "updated": "2026-10-09",
@@ -329,6 +329,6 @@
   },
   "/windows-vps": {
     "updated": "2026-10-09",
-    "fingerprint": "400948c5c862730d"
+    "fingerprint": "d75c2991e0111263"
   }
 }

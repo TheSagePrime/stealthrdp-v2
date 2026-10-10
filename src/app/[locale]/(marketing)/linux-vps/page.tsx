@@ -13,6 +13,7 @@ import { pricingCopy } from '@/content/i18n/pricing';
 import { localeHref } from '@/lib/stealth/i18n';
 import { localizedPageMetadata, requirePageLocale } from '@/lib/stealth/i18n-server';
 import { getPlans } from '@/lib/stealth/live-plans';
+import { linuxDistros } from '@/lib/stealth/os-catalog';
 import { osPageJsonLd } from '@/lib/stealth/structured-data';
 import { getSeoConfig } from '@/libs/seo/config';
 
@@ -27,21 +28,6 @@ export async function generateMetadata(): Promise<Metadata> {
     es: { ...linuxVpsCopy.es.meta, ogImage },
   });
 }
-
-const distros = [
-  { name: 'Ubuntu', versions: '18.04 LTS, 20.04 LTS, 22.04 LTS, 24.04 LTS, 26.04 LTS', text: 'Fits many websites, panels, and development stacks.' },
-  { name: 'Debian', versions: '10, 11, 12, 13', text: 'Use when the stack asks for Debian.' },
-  { name: 'CentOS', versions: '7, Stream 8, Stream 9', text: 'Use when the stack asks for CentOS.' },
-  { name: 'AlmaLinux', versions: '8, 9, 10', text: 'Use when the stack asks for AlmaLinux.' },
-  { name: 'Rocky Linux', versions: '8, 9, 10', text: 'Use when the stack asks for Rocky Linux.' },
-  { name: 'Fedora', versions: '37, 38, 39, 40, 41, 42, 43, 44', text: 'Use when the stack asks for Fedora.' },
-  { name: 'Alpine Linux', versions: '3.15, 3.19, 3.23', text: 'Use when the stack asks for Alpine Linux.' },
-  { name: 'FreeBSD', versions: '13.2, 13.3, 14.0, 14.1, 14.2, 14.3, 15.0', text: 'Use when the stack asks for FreeBSD.' },
-  { name: 'openSUSE', versions: 'Leap 15', text: 'Use when the stack asks for openSUSE Leap 15.' },
-  { name: 'CloudLinux', versions: '9', text: 'Use when the stack asks for CloudLinux 9.' },
-  { name: 'Arch Linux', versions: 'Latest', text: 'Use when the stack asks for Arch Linux.' },
-  { name: 'Oracle Linux', versions: '8, 9', text: 'Use when the stack asks for Oracle Linux.' },
-];
 
 /* Stock is read live from WHMCS; see src/lib/stealth/live-plans.ts. Must be a literal: 15 minutes. */
 export const revalidate = 900;
@@ -58,7 +44,7 @@ export default async function LinuxVpsPage() {
     cheapest: { name: cheapestPlan?.name ?? 'Bronze', price: money(cheapestPlan?.pricing.monthly.amount ?? 9.5) },
   };
   const liveQuestions = t.questions(facts);
-  const localDistros = distros.map(distro => ({ ...distro, versions: distro.versions.replace('Latest', t.latest) }));
+  const localDistros = linuxDistros.map(distro => ({ ...distro, versions: distro.versions.replace('Latest', t.latest) }));
 
   return (
     <div className="srv-page srv-page-os srv-page-linux">
