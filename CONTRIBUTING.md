@@ -403,7 +403,7 @@ merged. The writer brief is `.sageprime/seo/briefs/i18n/WRITER-GUIDE.md`.
    contents, "Copy Markdown") from `src/content/i18n/docs-ui.ts`. A new Help Center collection or blog
    category needs a German and a Spanish name in `groups` there; until then it shows in English.
 
-### Publishing by date (daily refresh)
+### Publishing by date (weekly batches)
 
 `src/content/i18n/published-routes.json` is the publish list: every translation whose `publishAt` is
 on or before its `generatedAt` day (UTC), with the index pages of their sections. `src/config/i18n.ts`
@@ -417,9 +417,12 @@ node scripts/i18n-publish.mjs --check            # exit 1 when the list is not c
 node scripts/i18n-publish.mjs --date 2026-11-02  # preview a later day locally (do not commit that)
 ```
 
-Each day a translation is due: run the script on an up-to-date `main` checkout, commit the changed
-file (`chore(i18n): publish translations due <date>`) and merge it; the production build from `main`
-then serves the new pages. On days with nothing due the script leaves the file unchanged. Nothing runs
+Translations are released in batches, German and Spanish on the same day, about a week apart
+(`schedule_rule` in `.sageprime/seo/briefs/i18n/plan.json`), so Search Console can be checked for
+indexing and hreflang problems before the next batch. On a batch day: run the script on an
+up-to-date `main` checkout, commit the changed file (`chore(i18n): publish translations due <date>`)
+and merge it; the production build from `main` then serves the new pages. On days with nothing due
+the script leaves the file unchanged. Nothing runs
 this automatically yet; a scheduled job that runs the script and opens the pull request can be added
 later. The unit test `src/lib/stealth/translation-manifest.test.ts` fails while the list does not
 match the files for its own date, for example after a translation dated in the past was merged
