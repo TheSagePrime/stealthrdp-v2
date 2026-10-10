@@ -7,6 +7,7 @@
    Usage: node scripts/check-translation.mjs <file.md> [<file.md> …] */
 import fs from 'node:fs';
 import path from 'node:path';
+import { parse } from 'yaml';
 
 const KEEP = ['order', 'category', 'date', 'relatedSlugs', 'sources', 'author', 'readingTime', 'sourceUrl', 'sourceTitle', 'migration', 'illustration'];
 const TRANSLATE = ['title', 'summary', 'excerpt', 'sidebarTitle'];
@@ -130,6 +131,24 @@ function check(file) {
   }
   if (!tf.primaryKeyword) {
     errors.push('front matter "primaryKeyword" is missing');
+  }
+  /* The page title and meta description as the site renders them; the SEO audit warns above 60 and
+     outside 50–160 characters, and a build must pass with 0 warnings. The suffixes are the ones in
+     src/lib/stealth/translations.ts (translatedDocMetadata) and src/content/i18n/resources.ts. */
+  let meta = {};
+  try {
+    meta = parse(tr.front) ?? {};
+  } catch (error) {
+    errors.push(`front matter is not valid YAML: ${String(error.message).split('\n')[0]}`);
+  }
+  const suffix = kind === 'guides' ? '' : stem.startsWith('citadel-') ? ` — ${{ de: 'Citadel-Doku', es: 'Docs de Citadel' }[locale]}` : ' — StealthRDP';
+  const pageTitle = `${meta.title ?? ''}${suffix}`;
+  if (pageTitle.length > 60) {
+    errors.push(`page title "${pageTitle}" is ${pageTitle.length} characters; keep it at 60 or fewer (shorten "title")`);
+  }
+  const description = String(meta[kind === 'guides' ? 'excerpt' : 'summary'] ?? '');
+  if (description.length < 50 || description.length > 160) {
+    errors.push(`${kind === 'guides' ? 'excerpt' : 'summary'} is ${description.length} characters; keep it between 50 and 160`);
   }
 
   const a = profile(en.body);

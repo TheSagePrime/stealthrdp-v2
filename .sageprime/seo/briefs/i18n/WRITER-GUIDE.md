@@ -68,6 +68,9 @@ node scripts/check-translation.mjs <path to your file>
 
 It compares your file with the English original: sections, steps, code blocks, links, images, callouts,
 citation markers and front matter.
+It also checks the lengths the SEO audit checks: the page title (`title` plus " — StealthRDP" on Help
+Center articles, " — Citadel-Doku" / " — Docs de Citadel" on Citadel docs, nothing on blog posts) at
+most 60 characters, and `summary` or `excerpt` between 50 and 160 characters.
 
 ## What happens after you hand back
 
