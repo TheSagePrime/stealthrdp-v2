@@ -32,6 +32,9 @@ Copy the English front matter, then:
   German: formal "Sie". Spanish (Spain): informal "tú", as on the rest of the site.
 - **Keywords:** put the primary keyword in the title, in the summary/excerpt, in the first paragraph and in
   one heading, naturally. Use supporting keywords where they fit. Never stuff.
+  The title must still describe what the page really is: never rename a product doc after a broader search
+  term, and never repeat a keyword in a heading just to place it. If a keyword reads forced, leave it out
+  and say so in your report.
 - **Keep everything that carries meaning, exactly:**
   - every heading level and section, in the same order;
   - every step, list item, table row and callout (`:::info`, `:::tip`, `:::warn` blocks stay, with the

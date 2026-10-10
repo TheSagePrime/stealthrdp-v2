@@ -35,7 +35,7 @@
       "priority": 1,
       "de": {
         "slug": "windows-licensing",
-        "primary": "windows server lizenz",
+        "primary": "windows vps lizenz",
         "supporting": [
           "windows server 2025 lizenz (720)",
           "windows server lizenz (590)",
@@ -44,12 +44,13 @@
       },
       "es": {
         "slug": "windows-licensing",
-        "primary": "licencia windows server",
+        "primary": "licencia windows vps",
         "supporting": [
           "licencia windows server (110)",
           "licencia windows server 2025 (90)"
         ]
-      }
+      },
+      "note": "\"windows server lizenz\" results are licence shops (buying intent); this page answers how licensing works on a VPS and that the licence is not included. Use the shop terms only as supporting terms."
     },
     {
       "type": "help",
@@ -473,7 +474,7 @@
       "priority": 1,
       "de": {
         "slug": "citadel-cloudflare-setup",
-        "primary": "cloudflare dns einrichten",
+        "primary": "cloudflare für citadel einrichten",
         "supporting": [
           "cloudflare dns einrichten (40)",
           "cloudflare proxy einrichten"
@@ -481,12 +482,13 @@
       },
       "es": {
         "slug": "citadel-cloudflare-setup",
-        "primary": "configurar cloudflare",
+        "primary": "configurar cloudflare para citadel",
         "supporting": [
           "configurar cloudflare (10)",
           "cloudflare proxy (50)"
         ]
-      }
+      },
+      "note": "General Cloudflare DNS terms only as supporting terms."
     },
     {
       "type": "citadel",
@@ -494,7 +496,7 @@
       "priority": 1,
       "de": {
         "slug": "citadel-challenge-levels",
-        "primary": "bot schutz website",
+        "primary": "citadel challenge-stufen",
         "supporting": [
           "js challenge (50)",
           "captcha bot schutz"
@@ -502,11 +504,12 @@
       },
       "es": {
         "slug": "citadel-challenge-levels",
-        "primary": "protección contra bots",
+        "primary": "niveles de desafío citadel",
         "supporting": [
           "bloquear bots web"
         ]
-      }
+      },
+      "note": "\"bot schutz website\" as a supporting term."
     },
     {
       "type": "citadel",
@@ -514,7 +517,7 @@
       "priority": 1,
       "de": {
         "slug": "citadel-health",
-        "primary": "502 bad gateway beheben",
+        "primary": "citadel origin health",
         "supporting": [
           "502 bad gateway (8100)",
           "502 bad gateway beheben (10)"
@@ -522,11 +525,12 @@
       },
       "es": {
         "slug": "citadel-health",
-        "primary": "error 502 bad gateway solucion",
+        "primary": "estado del origen citadel",
         "supporting": [
           "502 bad gateway solucion (70)"
         ]
-      }
+      },
+      "note": "Generic \"502 bad gateway\" demand (DE 8,100) belongs to a standalone article (step 6), not this product doc. Mention 502 once, naturally."
     },
     {
       "type": "citadel",
@@ -534,7 +538,7 @@
       "priority": 1,
       "de": {
         "slug": "citadel-security",
-        "primary": "rate limiting",
+        "primary": "citadel sicherheit konfigurieren",
         "supporting": [
           "rate limiting (720)",
           "rate limit website"
@@ -542,12 +546,13 @@
       },
       "es": {
         "slug": "citadel-security",
-        "primary": "rate limiting",
+        "primary": "configurar seguridad citadel",
         "supporting": [
           "rate limiting (210)",
           "limitar peticiones web"
         ]
-      }
+      },
+      "note": "\"rate limiting\" is a definition query; use it as a supporting term where the doc explains rate limits."
     },
     {
       "type": "citadel",
@@ -555,7 +560,7 @@
       "priority": 2,
       "de": {
         "slug": "citadel-allowlists",
-        "primary": "ip whitelisting",
+        "primary": "citadel allowlist",
         "supporting": [
           "ip whitelisting (90)",
           "ip whitelist website"
@@ -563,12 +568,13 @@
       },
       "es": {
         "slug": "citadel-allowlists",
-        "primary": "whitelist ip",
+        "primary": "lista de permitidos citadel",
         "supporting": [
           "whitelist ip (20)",
           "lista blanca ip"
         ]
-      }
+      },
+      "note": "\"ip whitelisting\" only as a supporting term."
     },
     {
       "type": "citadel",
@@ -576,7 +582,7 @@
       "priority": 2,
       "de": {
         "slug": "citadel-cache",
-        "primary": "cdn cache leeren",
+        "primary": "citadel cache leeren",
         "supporting": [
           "website cache leeren (70)",
           "cdn cache (50)"
@@ -584,7 +590,7 @@
       },
       "es": {
         "slug": "citadel-cache",
-        "primary": "purgar caché cdn",
+        "primary": "purgar caché citadel",
         "supporting": [
           "caché cdn",
           "purgar caché"
@@ -597,7 +603,7 @@
       "priority": 2,
       "de": {
         "slug": "citadel-logs",
-        "primary": "access log analysieren",
+        "primary": "citadel logs durchsuchen",
         "supporting": [
           "access log (70)",
           "zugriffslogs analysieren"
@@ -605,12 +611,13 @@
       },
       "es": {
         "slug": "citadel-logs",
-        "primary": "logs de acceso",
+        "primary": "buscar logs citadel",
         "supporting": [
           "logs de acceso (10)",
           "analizar logs servidor"
         ]
-      }
+      },
+      "note": "\"access log\" only as a supporting term."
     },
     {
       "type": "citadel",
@@ -808,7 +815,7 @@
       "priority": 1,
       "de": {
         "slug": "vps-for-automation-bots",
-        "primary": "discord bot hosting",
+        "primary": "vps für bots",
         "supporting": [
           "discord bot hosting (590)",
           "bot hosting (320)"
@@ -820,7 +827,8 @@
         "supporting": [
           "hosting bot discord (20)"
         ]
-      }
+      },
+      "note": "\"discord bot hosting\" is mentioned once in the English post; supporting term only."
     },
     {
       "type": "blog",
@@ -894,7 +902,7 @@
       "priority": 1,
       "de": {
         "slug": "top-6-vps-management-tools-for-small-businesses",
-        "primary": "webmin",
+        "primary": "vps control panel vergleich",
         "supporting": [
           "webmin (1600)",
           "plesk vs cpanel (40)",
@@ -903,13 +911,14 @@
       },
       "es": {
         "slug": "top-6-vps-management-tools-for-small-businesses",
-        "primary": "webmin",
+        "primary": "panel de control vps",
         "supporting": [
           "webmin (1600)",
           "plesk vs cpanel (30)",
           "panel de control hosting (10)"
         ]
-      }
+      },
+      "note": "\"webmin\" (1,600) is navigational; use it as a supporting term in the Webmin section."
     },
     {
       "type": "blog",
@@ -1144,5 +1153,6 @@
       }
     }
   ],
-  "slug_rule": "German and Spanish pages keep the English slug under /de and /es (no hreflang-core change; slug wording carries negligible ranking weight)."
+  "slug_rule": "German and Spanish pages keep the English slug under /de and /es (no hreflang-core change; slug wording carries negligible ranking weight).",
+  "rule_intent": "A keyword is primary only if the page fully answers that search. Generic or navigational terms whose searchers want something else are supporting terms at most."
 }
