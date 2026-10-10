@@ -6,7 +6,7 @@
   "base_branch": "main",
   "content": {
     "directory": "src/content/guides",
-    "format": "html-front-matter",
+    "format": "markdown-front-matter",
     "url_template": "/blog/{slug}.html",
     "dates_file": "src/content/page-dates.json",
     "registry": {

@@ -2,6 +2,7 @@
 import type { ReactNode } from 'react';
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import { FluentIcon } from '@/components/site/docs/DocsIcon';
+import { LanguageLinks } from '@/components/site/LanguageLinks';
 import { siteCopy } from '@/content/i18n/site';
 import { docsTree } from '@/lib/stealth/docs-tree';
 import { asSiteLocale, localeHref } from '@/lib/stealth/i18n';
@@ -22,10 +23,11 @@ export default async function DocsRouteLayout({
   const copy = siteCopy[locale];
   const tree = docsTree(locale);
   const statusLabel = copy.header.links.find(([, url]) => url === '/status')?.[0] ?? 'Server Status';
+  /* Tabs link to a section in this language once it has published translations. */
   const tabIcons: Record<string, ReactNode> = {
-    '/docs': <FluentIcon name="chat" size={20} />,
-    '/citadel/docs': <FluentIcon name="shield-checkmark" size={20} />,
-    '/blog': <FluentIcon name="book-open" size={20} />,
+    [localeHref('/docs', locale)]: <FluentIcon name="chat" size={20} />,
+    [localeHref('/citadel/docs', locale)]: <FluentIcon name="shield-checkmark" size={20} />,
+    [localeHref('/blog', locale)]: <FluentIcon name="book-open" size={20} />,
     [localeHref('/faq', locale)]: <FluentIcon name="chat-bubbles-question" size={20} />,
   };
 
@@ -53,6 +55,8 @@ export default async function DocsRouteLayout({
             icon: <FluentIcon name="person-key" />,
             external: true,
           },
+          /* This page in the other languages it is published in; their home pages otherwise. */
+          { type: 'custom', on: 'menu', children: <LanguageLinks label={copy.languageLabel} variant="codes" /> },
         ]}
         themeSwitch={{ enabled: false }}
         sidebar={{ defaultOpenLevel: 0 }}

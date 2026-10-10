@@ -1,23 +1,32 @@
 import type { Metadata } from 'next';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { cardSectionsToc, DocsCardSections } from '@/components/site/docs/DocsCollections';
+import { TranslatedBlogIndex } from '@/components/site/docs/TranslatedPages';
 import { articlePath, blogArticles } from '@/lib/stealth/articles';
 import { helpCollectionId } from '@/lib/stealth/help-center';
-import { requirePageLocale } from '@/lib/stealth/i18n-server';
+import { localizedPageMetadata, requirePageLocale } from '@/lib/stealth/i18n-server';
+import { translatedIndexMetadata } from '@/lib/stealth/translations';
 import { buildArticleIndexJsonLd } from '@/libs/seo/articles';
 import { getSeoConfig } from '@/libs/seo/config';
 import { serializeJsonLd } from '@/libs/seo/json-ld';
-import { createPageMetadata } from '@/libs/seo/metadata';
 
-export const metadata: Metadata = createPageMetadata({
-  path: '/blog',
-  title: 'VPS Guides — StealthRDP',
-  description: 'Practical VPS use cases, remote desktop, server management, security, backup, and infrastructure guides from StealthRDP.',
-  ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
-});
+/* German and Spanish exist once a translated post is published (src/config/i18n.ts). */
+export async function generateMetadata(): Promise<Metadata> {
+  return localizedPageMetadata('/blog', {
+    en: {
+      title: 'VPS Guides — StealthRDP',
+      description: 'Practical VPS use cases, remote desktop, server management, security, backup, and infrastructure guides from StealthRDP.',
+      ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
+    },
+    ...translatedIndexMetadata('blog'),
+  });
+}
 
 export default async function BlogPage() {
-  await requirePageLocale('/blog');
+  const locale = await requirePageLocale('/blog');
+  if (locale !== 'en') {
+    return <TranslatedBlogIndex locale={locale} />;
+  }
   const config = getSeoConfig();
   const articleIndexJsonLd = buildArticleIndexJsonLd(config);
   const sections = Array.from(new Set(blogArticles.map(article => article.category))).map(category => ({

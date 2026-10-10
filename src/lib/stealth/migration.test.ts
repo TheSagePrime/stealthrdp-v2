@@ -67,7 +67,7 @@ describe('StealthRDP public-site migration contract', () => {
     expect(faqs).toHaveLength(22);
     expect(testimonials).toHaveLength(12);
     expect(reviews).toHaveLength(48);
-    expect(blogArticles).toHaveLength(17);
+    expect(blogArticles).toHaveLength(18);
     expect(helpDocsArticles).toHaveLength(22);
     expect(citadelDocsArticles).toHaveLength(19);
     expect(uptime.monitors).toHaveLength(10);

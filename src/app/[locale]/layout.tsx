@@ -58,7 +58,7 @@ export default async function RootLayout(props: {
                 links: [
                   ['Help Center', '/docs'],
                   ['Citadel Docs', '/citadel/docs'],
-                  ['Guides', '/blog'],
+                  ['Blog', '/blog'],
                   ['Common questions', '/faq'],
                 ],
               },

@@ -62,6 +62,7 @@ src/app/api/                     health, ready, uptime (UptimeRobot proxy)
 src/app/{sitemap,robots}.ts      sitemap and robots (protected)
 src/app/llms.txt, llms-full.txt  AI-agent summaries in Markdown (production only)
 src/app/docs-md/[slug]/         Markdown copies of articles, guides, FAQ and product pages (noindex)
+                                 ([slug]/[page]: /docs-md/<locale>/<slug> for translations)
 src/app/rss.xml, search-index.json
 src/components/site/             StealthRDP components (header, footer, pricing, status, citadel/, os/, home/ …)
 src/components/ui/               shadcn/Radix primitives — reuse, do not fork
@@ -102,8 +103,13 @@ from local keyword research (`.sageprime/seo/keyword-map-*.json`), not translate
 
 - **Publish list.** `localizedRoutes` in `src/config/i18n.ts` lists the pages that exist in each
   language. A page outside the list returns 404 under `/de` or `/es` (`requirePageLocale()` in
-  `src/lib/stealth/i18n-server.ts`), has no hreflang tag and is not in the sitemap. Guides and docs
-  are added to the list in batches.
+  `src/lib/stealth/i18n-server.ts`), has no hreflang tag and is not in the sitemap. Help Center
+  articles, Citadel docs and blog posts are translated as separate Markdown files
+  (`src/content/{docs,guides}/{de,es}/<English file name>.md`, read by
+  `src/lib/stealth/translation-sources.ts` and `translations.ts`) and go live on their `publishAt`
+  day: `scripts/i18n-publish.mjs` writes the published ones, with their section index pages, to
+  `src/content/i18n/published-routes.json`, which the list includes. The daily refresh is that script
+  plus a rebuild (CONTRIBUTING.md, recipe 13).
 - **Words.** `src/content/i18n/en/<page>.ts(x)` holds the English words of a page and its type;
   `de/` and `es/` hold the same shape. Pages and components read `copy[locale]`; the shared frame
   (header, footer, cookie banner) reads `src/content/i18n/site.ts`.
@@ -133,7 +139,8 @@ from local keyword research (`.sageprime/seo/keyword-map-*.json`), not translate
   line (no major crawler reads it, and Bing's tester reports it as an error); `/llms.txt` and
   `/llms-full.txt` give Markdown summaries, and `/docs-md/<slug>` serves noindex Markdown copies
   of every article, guide, the FAQ and the plans, Windows VPS, Linux VPS and Citadel pages
-  (generated from the same data as the pages). `.github/workflows/indexnow.yml` sends pages whose
+  (generated from the same data as the pages); published German and Spanish translations have theirs
+  at `/docs-md/<locale>/<slug>`. `.github/workflows/indexnow.yml` sends pages whose
   words changed to IndexNow after each production deploy.
 
 ## Analytics, ads and consent

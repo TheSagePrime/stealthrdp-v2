@@ -3,23 +3,29 @@ import { Card, Cards } from 'fumadocs-ui/components/card';
 import { DocsBody, DocsDescription, DocsPage, DocsTitle } from 'fumadocs-ui/layouts/docs/page';
 import { FluentIcon } from '@/components/site/docs/DocsIcon';
 import { DocsSupport } from '@/components/site/docs/DocsParts';
+import { TranslatedResourcesIndex } from '@/components/site/docs/TranslatedPages';
 import { blogArticles, citadelDocsArticles, helpDocsArticles } from '@/lib/stealth/articles';
 import { faqs } from '@/lib/stealth/content';
-import { requirePageLocale } from '@/lib/stealth/i18n-server';
-import { createPageMetadata } from '@/libs/seo/metadata';
+import { localizedPageMetadata, requirePageLocale } from '@/lib/stealth/i18n-server';
+import { translatedIndexMetadata } from '@/lib/stealth/translations';
 
-export const metadata: Metadata = createPageMetadata({
-  path: '/resources',
-  title: 'Resources — StealthRDP',
-  description: 'Search StealthRDP guides, help articles, common questions, and service information from one resource center.',
-  ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
-});
+/* German and Spanish exist once any translated resource is published (src/config/i18n.ts). */
+export async function generateMetadata(): Promise<Metadata> {
+  return localizedPageMetadata('/resources', {
+    en: {
+      title: 'Resources — StealthRDP',
+      description: 'Search StealthRDP guides, help articles, common questions, and service information from one resource center.',
+      ogImage: 'https://www.stealthrdp.com/assets/og-cover.png',
+    },
+    ...translatedIndexMetadata('resources'),
+  });
+}
 
 const destinations = [
   {
-    title: 'Guides',
+    title: 'Blog',
     href: '/blog',
-    count: `${blogArticles.length} guides`,
+    count: `${blogArticles.length} articles`,
     description: 'VPS use cases, security, performance, backups, and infrastructure decisions.',
     icon: <FluentIcon name="book-open" size={20} />,
   },
@@ -56,7 +62,10 @@ const popular = [
 ];
 
 export default async function ResourcesPage() {
-  await requirePageLocale('/resources');
+  const locale = await requirePageLocale('/resources');
+  if (locale !== 'en') {
+    return <TranslatedResourcesIndex locale={locale} />;
+  }
   return (
     <DocsPage toc={[{ title: 'Popular right now', url: '#resources-popular', depth: 2 }]}>
       <DocsTitle>Guides, help, and answers</DocsTitle>
