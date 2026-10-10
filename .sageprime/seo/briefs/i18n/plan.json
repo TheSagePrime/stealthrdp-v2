@@ -7,7 +7,7 @@
       "en": "1737945157-how-do-i-log-into-windows",
       "priority": 1,
       "de": {
-        "slug": "remotedesktopverbindung-einrichten",
+        "slug": "1737945157-how-do-i-log-into-windows",
         "primary": "remotedesktopverbindung einrichten",
         "supporting": [
           "remotedesktopverbindung (2400)",
@@ -19,7 +19,7 @@
         ]
       },
       "es": {
-        "slug": "conexion-escritorio-remoto",
+        "slug": "1737945157-how-do-i-log-into-windows",
         "primary": "conexión a escritorio remoto",
         "supporting": [
           "escritorio remoto windows (480)",
@@ -34,7 +34,7 @@
       "en": "windows-licensing",
       "priority": 1,
       "de": {
-        "slug": "windows-server-lizenz-vps",
+        "slug": "windows-licensing",
         "primary": "windows server lizenz",
         "supporting": [
           "windows server 2025 lizenz (720)",
@@ -43,7 +43,7 @@
         ]
       },
       "es": {
-        "slug": "licencia-windows-server-vps",
+        "slug": "windows-licensing",
         "primary": "licencia windows server",
         "supporting": [
           "licencia windows server (110)",
@@ -56,7 +56,7 @@
       "en": "1740916941-how-to-rebuild-a-server",
       "priority": 1,
       "de": {
-        "slug": "vps-neu-installieren",
+        "slug": "1740916941-how-to-rebuild-a-server",
         "primary": "vps neu installieren",
         "supporting": [
           "server neu aufsetzen",
@@ -64,7 +64,7 @@
         ]
       },
       "es": {
-        "slug": "reinstalar-vps",
+        "slug": "1740916941-how-to-rebuild-a-server",
         "primary": "reinstalar vps",
         "supporting": [
           "reinstalar servidor",
@@ -77,7 +77,7 @@
       "en": "1740917234-how-to-reset-server-change-or-reset-client-area-password",
       "priority": 1,
       "de": {
-        "slug": "vps-passwort-zuruecksetzen",
+        "slug": "1740917234-how-to-reset-server-change-or-reset-client-area-password",
         "primary": "vps passwort zurücksetzen",
         "supporting": [
           "root passwort vergessen",
@@ -85,7 +85,7 @@
         ]
       },
       "es": {
-        "slug": "restablecer-contrasena-vps",
+        "slug": "1740917234-how-to-reset-server-change-or-reset-client-area-password",
         "primary": "restablecer contraseña vps",
         "supporting": [
           "cambiar contraseña servidor (10)",
@@ -98,7 +98,7 @@
       "en": "1737944563-how-to-re_activate-and-extend-your-180_day-windows-trial",
       "priority": 1,
       "de": {
-        "slug": "windows-server-testversion-verlaengern-slmgr-rearm",
+        "slug": "1737944563-how-to-re_activate-and-extend-your-180_day-windows-trial",
         "primary": "slmgr rearm",
         "supporting": [
           "slmgr rearm (170)",
@@ -107,7 +107,7 @@
         ]
       },
       "es": {
-        "slug": "ampliar-evaluacion-windows-server-slmgr-rearm",
+        "slug": "1737944563-how-to-re_activate-and-extend-your-180_day-windows-trial",
         "primary": "slmgr rearm",
         "supporting": [
           "slmgr rearm (70)",
@@ -120,14 +120,14 @@
       "en": "1737944952-server-stops-randomly",
       "priority": 2,
       "de": {
-        "slug": "windows-server-faehrt-herunter",
+        "slug": "1737944952-server-stops-randomly",
         "primary": "windows server fährt herunter",
         "supporting": [
           "windows server evaluation abgelaufen"
         ]
       },
       "es": {
-        "slug": "windows-server-se-apaga-solo",
+        "slug": "1737944952-server-stops-randomly",
         "primary": "windows server se apaga solo",
         "supporting": [
           "windows server evaluación expirada (10)"
@@ -139,7 +139,7 @@
       "en": "1742181117-step_by_step-guide-to-fix-win_rm-and-install-net-framework",
       "priority": 2,
       "de": {
-        "slug": "winrm-aktivieren-net-framework",
+        "slug": "1742181117-step_by_step-guide-to-fix-win_rm-and-install-net-framework",
         "primary": "winrm aktivieren",
         "supporting": [
           "winrm aktivieren (50)",
@@ -147,7 +147,7 @@
         ]
       },
       "es": {
-        "slug": "habilitar-winrm-net-framework",
+        "slug": "1742181117-step_by_step-guide-to-fix-win_rm-and-install-net-framework",
         "primary": "habilitar winrm",
         "supporting": [
           "habilitar winrm (10)",
@@ -160,7 +160,7 @@
       "en": "1737945947-how-to-force-https-using-htaccess",
       "priority": 2,
       "de": {
-        "slug": "htaccess-https-weiterleitung",
+        "slug": "1737945947-how-to-force-https-using-htaccess",
         "primary": "htaccess https weiterleitung",
         "supporting": [
           "htaccess https erzwingen (10)",
@@ -168,7 +168,7 @@
         ]
       },
       "es": {
-        "slug": "htaccess-redirigir-http-a-https",
+        "slug": "1737945947-how-to-force-https-using-htaccess",
         "primary": "redirigir http a https htaccess",
         "supporting": [
           "forzar https htaccess (10)",
@@ -181,7 +181,7 @@
       "en": "1737945988-why-you-should-redirect-all-http-traffic-to-https",
       "priority": 3,
       "de": {
-        "slug": "http-auf-https-umleiten",
+        "slug": "1737945988-why-you-should-redirect-all-http-traffic-to-https",
         "primary": "http auf https umleiten",
         "supporting": [
           "http auf https umleiten (20)",
@@ -190,7 +190,7 @@
         ]
       },
       "es": {
-        "slug": "redirigir-http-a-https",
+        "slug": "1737945988-why-you-should-redirect-all-http-traffic-to-https",
         "primary": "redirigir http a https",
         "supporting": [
           "redirigir http a https (10)",
@@ -203,7 +203,7 @@
       "en": "1737946010-10-ways-to-optimize-your-word_press-website-for-speed",
       "priority": 2,
       "de": {
-        "slug": "wordpress-schneller-machen",
+        "slug": "1737946010-10-ways-to-optimize-your-word_press-website-for-speed",
         "primary": "wordpress schneller machen",
         "supporting": [
           "wordpress schneller machen (90)",
@@ -212,7 +212,7 @@
         ]
       },
       "es": {
-        "slug": "acelerar-wordpress",
+        "slug": "1737946010-10-ways-to-optimize-your-word_press-website-for-speed",
         "primary": "acelerar wordpress",
         "supporting": [
           "acelerar wordpress (10)",
@@ -226,7 +226,7 @@
       "en": "1737946054-how-to-setup-your-vpn-on-linux-server-using-outline",
       "priority": 3,
       "de": {
-        "slug": "outline-vpn-server-einrichten",
+        "slug": "1737946054-how-to-setup-your-vpn-on-linux-server-using-outline",
         "primary": "outline vpn server einrichten",
         "supporting": [
           "outline vpn",
@@ -234,7 +234,7 @@
         ]
       },
       "es": {
-        "slug": "instalar-outline-vpn",
+        "slug": "1737946054-how-to-setup-your-vpn-on-linux-server-using-outline",
         "primary": "instalar outline vpn",
         "supporting": [
           "outline vpn",
@@ -247,7 +247,7 @@
       "en": "1737946390-setup-tun-tap-for-open_vpn",
       "priority": 3,
       "de": {
-        "slug": "openvpn-tun-tap-aktivieren",
+        "slug": "1737946390-setup-tun-tap-for-open_vpn",
         "primary": "openvpn tun/tap",
         "supporting": [
           "openvpn tun/tap (20)",
@@ -255,7 +255,7 @@
         ]
       },
       "es": {
-        "slug": "openvpn-tun-tap",
+        "slug": "1737946390-setup-tun-tap-for-open_vpn",
         "primary": "openvpn tun tap",
         "supporting": [
           "activar tun tap vps",
@@ -268,7 +268,7 @@
       "en": "1737946470-how-to-install-centos-web-panel-cwp-free-web-panel",
       "priority": 3,
       "de": {
-        "slug": "control-web-panel-cwp-installieren",
+        "slug": "1737946470-how-to-install-centos-web-panel-cwp-free-web-panel",
         "primary": "control web panel installieren",
         "supporting": [
           "control web panel (20)",
@@ -276,7 +276,7 @@
         ]
       },
       "es": {
-        "slug": "instalar-control-web-panel-cwp",
+        "slug": "1737946470-how-to-install-centos-web-panel-cwp-free-web-panel",
         "primary": "instalar centos web panel",
         "supporting": [
           "centos web panel (20)",
@@ -289,14 +289,14 @@
       "en": "1737946490-how-to-install-direct-admin-in-a-linux-server",
       "priority": 2,
       "de": {
-        "slug": "directadmin-installieren",
+        "slug": "1737946490-how-to-install-direct-admin-in-a-linux-server",
         "primary": "directadmin installieren",
         "supporting": [
           "directadmin (320)"
         ]
       },
       "es": {
-        "slug": "instalar-directadmin",
+        "slug": "1737946490-how-to-install-direct-admin-in-a-linux-server",
         "primary": "instalar directadmin",
         "supporting": [
           "directadmin (170)"
@@ -308,7 +308,7 @@
       "en": "1737946509-install-cpanel-and-whm-in-linux-you-need-a-license",
       "priority": 3,
       "de": {
-        "slug": "cpanel-whm-installieren",
+        "slug": "1737946509-install-cpanel-and-whm-in-linux-you-need-a-license",
         "primary": "cpanel installieren",
         "supporting": [
           "cpanel installieren (10)",
@@ -316,7 +316,7 @@
         ]
       },
       "es": {
-        "slug": "instalar-cpanel-whm",
+        "slug": "1737946509-install-cpanel-and-whm-in-linux-you-need-a-license",
         "primary": "instalar cpanel",
         "supporting": [
           "instalar cpanel (10)",
@@ -330,7 +330,7 @@
       "en": "1737946534-install-cyber-panel-with-open_lite_speed-in-linux",
       "priority": 2,
       "de": {
-        "slug": "cyberpanel-installieren",
+        "slug": "1737946534-install-cyber-panel-with-open_lite_speed-in-linux",
         "primary": "cyberpanel installieren",
         "supporting": [
           "cyberpanel (480)",
@@ -338,7 +338,7 @@
         ]
       },
       "es": {
-        "slug": "instalar-cyberpanel",
+        "slug": "1737946534-install-cyber-panel-with-open_lite_speed-in-linux",
         "primary": "instalar cyberpanel",
         "supporting": [
           "cyberpanel (320)",
@@ -351,7 +351,7 @@
       "en": "1737946569-install-fast-panel-in-linux-good-web-hosting-free-panel",
       "priority": 2,
       "de": {
-        "slug": "fastpanel-installieren",
+        "slug": "1737946569-install-fast-panel-in-linux-good-web-hosting-free-panel",
         "primary": "fastpanel installieren",
         "supporting": [
           "fastpanel (170)",
@@ -359,7 +359,7 @@
         ]
       },
       "es": {
-        "slug": "instalar-fastpanel",
+        "slug": "1737946569-install-fast-panel-in-linux-good-web-hosting-free-panel",
         "primary": "instalar fastpanel",
         "supporting": [
           "fastpanel (70)",
@@ -372,12 +372,12 @@
       "en": "1737943955-introduction",
       "priority": 3,
       "de": {
-        "slug": "agb-einleitung",
+        "slug": "1737943955-introduction",
         "primary": "allgemeine geschäftsbedingungen",
         "supporting": []
       },
       "es": {
-        "slug": "terminos-introduccion",
+        "slug": "1737943955-introduction",
         "primary": "términos y condiciones",
         "supporting": []
       }
@@ -387,12 +387,12 @@
       "en": "1737944013-use-of-service",
       "priority": 3,
       "de": {
-        "slug": "nutzungsbedingungen",
+        "slug": "1737944013-use-of-service",
         "primary": "nutzungsbedingungen",
         "supporting": []
       },
       "es": {
-        "slug": "condiciones-de-uso",
+        "slug": "1737944013-use-of-service",
         "primary": "condiciones de uso",
         "supporting": []
       }
@@ -402,12 +402,12 @@
       "en": "1737944110-termination-of-service",
       "priority": 3,
       "de": {
-        "slug": "kuendigung-des-dienstes",
+        "slug": "1737944110-termination-of-service",
         "primary": "vps kündigen",
         "supporting": []
       },
       "es": {
-        "slug": "cancelacion-del-servicio",
+        "slug": "1737944110-termination-of-service",
         "primary": "cancelar vps",
         "supporting": []
       }
@@ -417,14 +417,14 @@
       "en": "1737944184-payment-terms",
       "priority": 3,
       "de": {
-        "slug": "zahlungsbedingungen",
+        "slug": "1737944184-payment-terms",
         "primary": "zahlungsbedingungen",
         "supporting": [
           "vps mit krypto bezahlen"
         ]
       },
       "es": {
-        "slug": "condiciones-de-pago",
+        "slug": "1737944184-payment-terms",
         "primary": "condiciones de pago",
         "supporting": [
           "vps pagar con criptomonedas"
@@ -436,12 +436,12 @@
       "en": "1737944204-user-responsibilities",
       "priority": 3,
       "de": {
-        "slug": "pflichten-des-kunden",
+        "slug": "1737944204-user-responsibilities",
         "primary": "pflichten des kunden",
         "supporting": []
       },
       "es": {
-        "slug": "responsabilidades-del-cliente",
+        "slug": "1737944204-user-responsibilities",
         "primary": "responsabilidades del cliente",
         "supporting": []
       }
@@ -451,7 +451,7 @@
       "en": "citadel-getting-started",
       "priority": 1,
       "de": {
-        "slug": "erste-schritte",
+        "slug": "citadel-getting-started",
         "primary": "ddos schutz website einrichten",
         "supporting": [
           "layer 7 ddos schutz",
@@ -459,7 +459,7 @@
         ]
       },
       "es": {
-        "slug": "primeros-pasos",
+        "slug": "citadel-getting-started",
         "primary": "configurar protección ddos web",
         "supporting": [
           "protección ddos capa 7",
@@ -472,7 +472,7 @@
       "en": "citadel-cloudflare-setup",
       "priority": 1,
       "de": {
-        "slug": "cloudflare-einrichten",
+        "slug": "citadel-cloudflare-setup",
         "primary": "cloudflare dns einrichten",
         "supporting": [
           "cloudflare dns einrichten (40)",
@@ -480,7 +480,7 @@
         ]
       },
       "es": {
-        "slug": "configurar-cloudflare",
+        "slug": "citadel-cloudflare-setup",
         "primary": "configurar cloudflare",
         "supporting": [
           "configurar cloudflare (10)",
@@ -493,7 +493,7 @@
       "en": "citadel-challenge-levels",
       "priority": 1,
       "de": {
-        "slug": "challenge-stufen",
+        "slug": "citadel-challenge-levels",
         "primary": "bot schutz website",
         "supporting": [
           "js challenge (50)",
@@ -501,7 +501,7 @@
         ]
       },
       "es": {
-        "slug": "niveles-de-desafio",
+        "slug": "citadel-challenge-levels",
         "primary": "protección contra bots",
         "supporting": [
           "bloquear bots web"
@@ -513,7 +513,7 @@
       "en": "citadel-health",
       "priority": 1,
       "de": {
-        "slug": "origin-health-502-bad-gateway",
+        "slug": "citadel-health",
         "primary": "502 bad gateway beheben",
         "supporting": [
           "502 bad gateway (8100)",
@@ -521,7 +521,7 @@
         ]
       },
       "es": {
-        "slug": "salud-del-origen-error-502",
+        "slug": "citadel-health",
         "primary": "error 502 bad gateway solucion",
         "supporting": [
           "502 bad gateway solucion (70)"
@@ -533,7 +533,7 @@
       "en": "citadel-security",
       "priority": 1,
       "de": {
-        "slug": "sicherheit-rate-limiting",
+        "slug": "citadel-security",
         "primary": "rate limiting",
         "supporting": [
           "rate limiting (720)",
@@ -541,7 +541,7 @@
         ]
       },
       "es": {
-        "slug": "seguridad-rate-limiting",
+        "slug": "citadel-security",
         "primary": "rate limiting",
         "supporting": [
           "rate limiting (210)",
@@ -554,7 +554,7 @@
       "en": "citadel-allowlists",
       "priority": 2,
       "de": {
-        "slug": "ip-whitelist",
+        "slug": "citadel-allowlists",
         "primary": "ip whitelisting",
         "supporting": [
           "ip whitelisting (90)",
@@ -562,7 +562,7 @@
         ]
       },
       "es": {
-        "slug": "lista-blanca-ip",
+        "slug": "citadel-allowlists",
         "primary": "whitelist ip",
         "supporting": [
           "whitelist ip (20)",
@@ -575,7 +575,7 @@
       "en": "citadel-cache",
       "priority": 2,
       "de": {
-        "slug": "cache-und-purge",
+        "slug": "citadel-cache",
         "primary": "cdn cache leeren",
         "supporting": [
           "website cache leeren (70)",
@@ -583,7 +583,7 @@
         ]
       },
       "es": {
-        "slug": "cache-y-purgado",
+        "slug": "citadel-cache",
         "primary": "purgar caché cdn",
         "supporting": [
           "caché cdn",
@@ -596,7 +596,7 @@
       "en": "citadel-logs",
       "priority": 2,
       "de": {
-        "slug": "logs-durchsuchen",
+        "slug": "citadel-logs",
         "primary": "access log analysieren",
         "supporting": [
           "access log (70)",
@@ -604,7 +604,7 @@
         ]
       },
       "es": {
-        "slug": "buscar-logs",
+        "slug": "citadel-logs",
         "primary": "logs de acceso",
         "supporting": [
           "logs de acceso (10)",
@@ -617,12 +617,12 @@
       "en": "citadel-dns",
       "priority": 2,
       "de": {
-        "slug": "dns-bleibt-bei-cloudflare",
+        "slug": "citadel-dns",
         "primary": "cloudflare dns",
         "supporting": []
       },
       "es": {
-        "slug": "dns-en-cloudflare",
+        "slug": "citadel-dns",
         "primary": "dns cloudflare",
         "supporting": []
       }
@@ -632,12 +632,12 @@
       "en": "citadel-domains",
       "priority": 2,
       "de": {
-        "slug": "domains-verwalten",
+        "slug": "citadel-domains",
         "primary": "domain ddos schutz hinzufügen",
         "supporting": []
       },
       "es": {
-        "slug": "gestionar-dominios",
+        "slug": "citadel-domains",
         "primary": "añadir dominio protección ddos",
         "supporting": []
       }
@@ -647,12 +647,12 @@
       "en": "citadel-domain-overview",
       "priority": 3,
       "de": {
-        "slug": "domain-status",
+        "slug": "citadel-domain-overview",
         "primary": "citadel domain status",
         "supporting": []
       },
       "es": {
-        "slug": "estado-del-dominio",
+        "slug": "citadel-domain-overview",
         "primary": "estado del dominio citadel",
         "supporting": []
       }
@@ -662,12 +662,12 @@
       "en": "citadel-origin",
       "priority": 2,
       "de": {
-        "slug": "origin-konfigurieren",
+        "slug": "citadel-origin",
         "primary": "origin server konfigurieren",
         "supporting": []
       },
       "es": {
-        "slug": "configurar-origen",
+        "slug": "citadel-origin",
         "primary": "configurar servidor de origen",
         "supporting": []
       }
@@ -677,12 +677,12 @@
       "en": "citadel-analytics",
       "priority": 3,
       "de": {
-        "slug": "analysen",
+        "slug": "citadel-analytics",
         "primary": "traffic analyse website",
         "supporting": []
       },
       "es": {
-        "slug": "analiticas",
+        "slug": "citadel-analytics",
         "primary": "análisis de tráfico web",
         "supporting": []
       }
@@ -692,12 +692,12 @@
       "en": "citadel-insights",
       "priority": 3,
       "de": {
-        "slug": "insights-angriffs-timeline",
+        "slug": "citadel-insights",
         "primary": "ddos angriff analysieren",
         "supporting": []
       },
       "es": {
-        "slug": "insights-cronologia-ataques",
+        "slug": "citadel-insights",
         "primary": "analizar ataque ddos",
         "supporting": []
       }
@@ -707,12 +707,12 @@
       "en": "citadel-bandwidth",
       "priority": 3,
       "de": {
-        "slug": "bandbreite",
+        "slug": "citadel-bandwidth",
         "primary": "bandbreite limit",
         "supporting": []
       },
       "es": {
-        "slug": "ancho-de-banda",
+        "slug": "citadel-bandwidth",
         "primary": "ancho de banda",
         "supporting": []
       }
@@ -722,12 +722,12 @@
       "en": "citadel-branding",
       "priority": 3,
       "de": {
-        "slug": "branding-fehlerseiten",
+        "slug": "citadel-branding",
         "primary": "eigene fehlerseiten",
         "supporting": []
       },
       "es": {
-        "slug": "personalizar-paginas",
+        "slug": "citadel-branding",
         "primary": "páginas de error personalizadas",
         "supporting": []
       }
@@ -737,12 +737,12 @@
       "en": "citadel-overview",
       "priority": 3,
       "de": {
-        "slug": "uebersicht",
+        "slug": "citadel-overview",
         "primary": "citadel übersicht",
         "supporting": []
       },
       "es": {
-        "slug": "resumen",
+        "slug": "citadel-overview",
         "primary": "resumen citadel",
         "supporting": []
       }
@@ -752,12 +752,12 @@
       "en": "citadel-settings",
       "priority": 3,
       "de": {
-        "slug": "einstellungen-team-alerts",
+        "slug": "citadel-settings",
         "primary": "citadel einstellungen",
         "supporting": []
       },
       "es": {
-        "slug": "ajustes-equipo-alertas",
+        "slug": "citadel-settings",
         "primary": "ajustes citadel",
         "supporting": []
       }
@@ -767,12 +767,12 @@
       "en": "citadel-billing-support",
       "priority": 3,
       "de": {
-        "slug": "abrechnung-support",
+        "slug": "citadel-billing-support",
         "primary": "citadel abrechnung",
         "supporting": []
       },
       "es": {
-        "slug": "facturacion-soporte",
+        "slug": "citadel-billing-support",
         "primary": "facturación citadel",
         "supporting": []
       }
@@ -782,7 +782,7 @@
       "en": "vps-for-trading",
       "priority": 1,
       "de": {
-        "slug": "forex-vps",
+        "slug": "vps-for-trading",
         "primary": "forex vps",
         "supporting": [
           "forex vps (590)",
@@ -792,7 +792,7 @@
         ]
       },
       "es": {
-        "slug": "forex-vps",
+        "slug": "vps-for-trading",
         "primary": "forex vps",
         "supporting": [
           "forex vps (320)",
@@ -807,7 +807,7 @@
       "en": "vps-for-automation-bots",
       "priority": 1,
       "de": {
-        "slug": "vps-fuer-bots",
+        "slug": "vps-for-automation-bots",
         "primary": "discord bot hosting",
         "supporting": [
           "discord bot hosting (590)",
@@ -815,7 +815,7 @@
         ]
       },
       "es": {
-        "slug": "vps-para-bots",
+        "slug": "vps-for-automation-bots",
         "primary": "vps para bots",
         "supporting": [
           "hosting bot discord (20)"
@@ -827,7 +827,7 @@
       "en": "vps-hosting-minecraft",
       "priority": 1,
       "de": {
-        "slug": "minecraft-server-selber-hosten",
+        "slug": "vps-hosting-minecraft",
         "primary": "minecraft server selber hosten",
         "supporting": [
           "minecraft server selber hosten (320)",
@@ -836,7 +836,7 @@
         ]
       },
       "es": {
-        "slug": "crear-servidor-minecraft-vps",
+        "slug": "vps-hosting-minecraft",
         "primary": "crear servidor minecraft",
         "supporting": [
           "crear servidor minecraft (590)",
@@ -850,7 +850,7 @@
       "en": "ddos-protection-for-vps-essential-setup-checklist",
       "priority": 1,
       "de": {
-        "slug": "vps-ddos-schutz",
+        "slug": "ddos-protection-for-vps-essential-setup-checklist",
         "primary": "ddos schutz vps",
         "supporting": [
           "ddos-angriff (2900)",
@@ -858,7 +858,7 @@
         ]
       },
       "es": {
-        "slug": "vps-proteccion-ddos",
+        "slug": "ddos-protection-for-vps-essential-setup-checklist",
         "primary": "vps protección ddos",
         "supporting": [
           "ataque ddos (1000)",
@@ -871,7 +871,7 @@
       "en": "vps-for-backups-storage",
       "priority": 1,
       "de": {
-        "slug": "storage-vps-backup",
+        "slug": "vps-for-backups-storage",
         "primary": "storage vps",
         "supporting": [
           "storage vps (320)",
@@ -880,7 +880,7 @@
         ]
       },
       "es": {
-        "slug": "storage-vps-copias-de-seguridad",
+        "slug": "vps-for-backups-storage",
         "primary": "storage vps",
         "supporting": [
           "storage vps (30)",
@@ -893,7 +893,7 @@
       "en": "top-6-vps-management-tools-for-small-businesses",
       "priority": 1,
       "de": {
-        "slug": "vps-control-panels-vergleich",
+        "slug": "top-6-vps-management-tools-for-small-businesses",
         "primary": "webmin",
         "supporting": [
           "webmin (1600)",
@@ -902,7 +902,7 @@
         ]
       },
       "es": {
-        "slug": "paneles-de-control-vps",
+        "slug": "top-6-vps-management-tools-for-small-businesses",
         "primary": "webmin",
         "supporting": [
           "webmin (1600)",
@@ -916,7 +916,7 @@
       "en": "7-tips-for-securing-your-remote-desktop-connection",
       "priority": 1,
       "de": {
-        "slug": "remotedesktop-absichern",
+        "slug": "7-tips-for-securing-your-remote-desktop-connection",
         "primary": "rdp absichern",
         "supporting": [
           "rdp port ändern (70)",
@@ -925,7 +925,7 @@
         ]
       },
       "es": {
-        "slug": "asegurar-escritorio-remoto",
+        "slug": "7-tips-for-securing-your-remote-desktop-connection",
         "primary": "seguridad escritorio remoto",
         "supporting": [
           "cambiar puerto rdp (40)",
@@ -938,7 +938,7 @@
       "en": "vps-for-remote-desktop",
       "priority": 2,
       "de": {
-        "slug": "vps-remote-desktop",
+        "slug": "vps-for-remote-desktop",
         "primary": "vps remote desktop",
         "supporting": [
           "vps remote desktop (30)",
@@ -946,7 +946,7 @@
         ]
       },
       "es": {
-        "slug": "vps-escritorio-remoto",
+        "slug": "vps-for-remote-desktop",
         "primary": "vps escritorio remoto",
         "supporting": [
           "vps escritorio remoto (10)",
@@ -959,7 +959,7 @@
       "en": "7-best-tools-for-server-uptime-monitoring-2025",
       "priority": 2,
       "de": {
-        "slug": "server-monitoring-tools",
+        "slug": "7-best-tools-for-server-uptime-monitoring-2025",
         "primary": "server monitoring tools",
         "supporting": [
           "server monitoring tools (90)",
@@ -968,7 +968,7 @@
         ]
       },
       "es": {
-        "slug": "herramientas-monitorizacion-servidores",
+        "slug": "7-best-tools-for-server-uptime-monitoring-2025",
         "primary": "monitorizacion de servidores",
         "supporting": [
           "uptime monitoring (70)",
@@ -981,7 +981,7 @@
       "en": "5-ways-to-optimize-your-rdp-performance-for-remote-work",
       "priority": 2,
       "de": {
-        "slug": "remotedesktop-langsam",
+        "slug": "5-ways-to-optimize-your-rdp-performance-for-remote-work",
         "primary": "remotedesktop langsam",
         "supporting": [
           "rdp langsam (10)",
@@ -989,7 +989,7 @@
         ]
       },
       "es": {
-        "slug": "escritorio-remoto-lento",
+        "slug": "5-ways-to-optimize-your-rdp-performance-for-remote-work",
         "primary": "escritorio remoto lento",
         "supporting": [
           "escritorio remoto lento (10)",
@@ -1002,7 +1002,7 @@
       "en": "vps-for-web-hosting",
       "priority": 2,
       "de": {
-        "slug": "vps-fuer-webseite",
+        "slug": "vps-for-web-hosting",
         "primary": "vps oder webhosting",
         "supporting": [
           "vserver webhosting (10)",
@@ -1010,7 +1010,7 @@
         ]
       },
       "es": {
-        "slug": "vps-para-web",
+        "slug": "vps-for-web-hosting",
         "primary": "vps o hosting compartido",
         "supporting": [
           "vps o hosting compartido (10)",
@@ -1023,7 +1023,7 @@
       "en": "windows-vs-linux-vps-which-os-best-fits-your-business",
       "priority": 2,
       "de": {
-        "slug": "windows-oder-linux-vps",
+        "slug": "windows-vs-linux-vps-which-os-best-fits-your-business",
         "primary": "windows oder linux server",
         "supporting": [
           "windows oder linux server (10)",
@@ -1031,7 +1031,7 @@
         ]
       },
       "es": {
-        "slug": "windows-o-linux-vps",
+        "slug": "windows-vs-linux-vps-which-os-best-fits-your-business",
         "primary": "windows o linux vps",
         "supporting": [
           "vps linux o windows",
@@ -1044,7 +1044,7 @@
       "en": "how-to-set-up-automated-backups-for-vps-hosting",
       "priority": 2,
       "de": {
-        "slug": "vps-backup-automatisieren",
+        "slug": "how-to-set-up-automated-backups-for-vps-hosting",
         "primary": "server backup automatisch",
         "supporting": [
           "server backup (480)",
@@ -1053,7 +1053,7 @@
         ]
       },
       "es": {
-        "slug": "backup-automatico-vps",
+        "slug": "how-to-set-up-automated-backups-for-vps-hosting",
         "primary": "copia de seguridad vps",
         "supporting": [
           "backup vps",
@@ -1066,7 +1066,7 @@
       "en": "designing-automated-high-availability-vps",
       "priority": 3,
       "de": {
-        "slug": "hochverfuegbarkeit-vps",
+        "slug": "designing-automated-high-availability-vps",
         "primary": "hochverfügbarkeit server",
         "supporting": [
           "failover server (20)",
@@ -1074,7 +1074,7 @@
         ]
       },
       "es": {
-        "slug": "alta-disponibilidad-vps",
+        "slug": "designing-automated-high-availability-vps",
         "primary": "alta disponibilidad servidor",
         "supporting": [
           "failover servidor",
@@ -1087,14 +1087,14 @@
       "en": "common-vps-hosting-issues-and-their-solutions",
       "priority": 3,
       "de": {
-        "slug": "vps-probleme-loesen",
+        "slug": "common-vps-hosting-issues-and-their-solutions",
         "primary": "vps probleme",
         "supporting": [
           "vserver probleme lösen"
         ]
       },
       "es": {
-        "slug": "problemas-comunes-vps",
+        "slug": "common-vps-hosting-issues-and-their-solutions",
         "primary": "problemas vps",
         "supporting": [
           "errores comunes vps"
@@ -1106,7 +1106,7 @@
       "en": "common-vps-performance-bottlenecks",
       "priority": 3,
       "de": {
-        "slug": "vps-performance-engpaesse",
+        "slug": "common-vps-performance-bottlenecks",
         "primary": "vserver langsam",
         "supporting": [
           "vps performance (10)",
@@ -1114,7 +1114,7 @@
         ]
       },
       "es": {
-        "slug": "rendimiento-vps",
+        "slug": "common-vps-performance-bottlenecks",
         "primary": "vps lento",
         "supporting": [
           "rendimiento vps",
@@ -1127,7 +1127,7 @@
       "en": "8-signs-you-need-to-upgrade-your-vps-resources",
       "priority": 3,
       "de": {
-        "slug": "vps-upgrade-anzeichen",
+        "slug": "8-signs-you-need-to-upgrade-your-vps-resources",
         "primary": "vps upgrade",
         "supporting": [
           "vps zu langsam",
@@ -1135,7 +1135,7 @@
         ]
       },
       "es": {
-        "slug": "cuando-ampliar-vps",
+        "slug": "8-signs-you-need-to-upgrade-your-vps-resources",
         "primary": "actualizar vps",
         "supporting": [
           "cuando ampliar vps",
@@ -1143,5 +1143,6 @@
         ]
       }
     }
-  ]
+  ],
+  "slug_rule": "German and Spanish pages keep the English slug under /de and /es (no hreflang-core change; slug wording carries negligible ranking weight)."
 }

@@ -33,6 +33,6 @@ Per-page plan (local slug, primary and supporting keywords, priority): `../brief
 
 ## Decisions
 
-- Local slugs for every German and Spanish page; each page records the English page it translates.
+- German and Spanish pages keep the English slug (`/de/docs/<same slug>`). Local slugs would need changes to the protected hreflang core and SEO audits for a negligible ranking gain.
 - Policy pages are translated with a notice that the English version is legally binding.
 - Publish order follows the priority in `plan.json`: 17 priority-1 pages first, priority 3 last.
