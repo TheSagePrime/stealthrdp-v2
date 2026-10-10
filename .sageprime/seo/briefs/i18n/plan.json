@@ -1209,6 +1209,34 @@
         "supporting": []
       },
       "publishAt": "2026-10-22"
+    },
+    {
+      "type": "blog",
+      "en": "502-bad-gateway",
+      "priority": 1,
+      "publishAt": "2026-10-10",
+      "note": "New post (step 6), written in all three languages; brief .sageprime/seo/briefs/502-bad-gateway.md",
+      "de": {
+        "slug": "502-bad-gateway",
+        "primary": "502 bad gateway",
+        "supporting": [
+          "http 502 (2900)",
+          "504 gateway timeout (2900)",
+          "502 bad gateway nginx (720)",
+          "502 bad gateway bedeutung (590)",
+          "fehler 502 (480)"
+        ]
+      },
+      "es": {
+        "slug": "502-bad-gateway",
+        "primary": "502 bad gateway",
+        "supporting": [
+          "504 gateway timeout (720)",
+          "502 bad gateway que significa (390)",
+          "502 bad gateway nginx (140)",
+          "error 502"
+        ]
+      }
     }
   ],
   "slug_rule": "German and Spanish pages keep the English slug under /de and /es (no hreflang-core change; slug wording carries negligible ranking weight).",

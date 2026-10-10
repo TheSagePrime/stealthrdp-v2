@@ -46,7 +46,7 @@ Copy the English front matter, then:
   the English one in parentheses the first time, e.g. „Remotedesktopverbindung" (Remote Desktop
   Connection). StealthRDP client area and Citadel panel labels stay in English, in quotes.
 - **Links:** links to `/plans`, `/windows-vps`, `/linux-vps`, `/faq`, `/about`, `/status`, `/privacy`,
-  `/citadel`, `/` get the language prefix (`/de/plans`). Links to `/docs/...`, `/citadel/docs/...` and
+  `/citadel`, `/` get the language prefix (`/de/plans`; the home page `/` becomes `/de`, never `/de/`). Links to `/docs/...`, `/citadel/docs/...` and
   `/blog/...` also get the prefix; the site sends readers to English automatically while a translation is
   not live yet. External links stay as they are.
 - **Facts:** only what `PRODUCT_FACTS.md` and the English original say. Never mention a German or Spanish
@@ -55,8 +55,9 @@ Copy the English front matter, then:
   Desktop).
 - **Policy pages** (introduction, use of service, termination, payment terms, user responsibilities)
   start with this callout, then the translated text:
-  - de: `:::info` / „Diese Übersetzung dient nur der Information. Rechtlich verbindlich ist die [englische Fassung](/docs/<slug>)." / `:::`
-  - es: `:::info` / «Esta traducción es solo informativa. La versión legalmente vinculante es la [versión en inglés](/docs/<slug>).» / `:::`
+  - de: `:::info` / „Diese Übersetzung dient nur der Information. Rechtlich verbindlich ist die [englische Fassung](/docs/<public slug>)." / `:::`
+  - es: `:::info` / «Esta traducción es solo informativa. La versión legalmente vinculante es la [versión en inglés](/docs/<public slug>).» / `:::`
+  - `<public slug>` is the file name without its number: `1737944013-use-of-service` → `/docs/use-of-service`.
 
 ## Before you hand back
 

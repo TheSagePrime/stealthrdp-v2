@@ -1,6 +1,6 @@
 ---
 order: 2
-title: "Forex VPS para trading: qué puede y qué no puede mejorar un servidor"
+title: "Forex VPS para trading: qué mejora y qué no"
 sidebarTitle: Forex VPS
 excerpt: Un forex VPS mantiene MT4, MT5 o un bot de trading en línea y puede estar más cerca del bróker. No puede mejorar una estrategia. Qué revisar antes de elegir.
 category: VPS Use Cases

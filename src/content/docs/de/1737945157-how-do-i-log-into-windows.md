@@ -1,6 +1,6 @@
 ---
 order: 12
-title: 'Remotedesktopverbindung einrichten: Windows-RDP vom PC, Mac oder Handy'
+title: 'Remotedesktopverbindung einrichten: Windows-VPS'
 sidebarTitle: Mit RDP verbinden
 category: Windows
 date: Jan 27, 2025
@@ -11,7 +11,7 @@ migration:
   date: 2026-08-13
   redactions:
     - example endpoint placeholder redacted
-summary: 'Remotedesktopverbindung einrichten: Verbinden Sie sich mit Ihrem Windows-VPS über Windows 10 oder 11, Mac, iPhone, iPad, Android oder Linux, mit IP-Adresse und Passwort aus Ihrer E-Mail.'
+summary: 'Remotedesktopverbindung einrichten: So verbinden Sie sich von Windows, Mac, iPhone, iPad, Android oder Linux mit Ihrem Windows-VPS.'
 relatedSlugs:
   - 1737944563-how-to-re_activate-and-extend-your-180_day-windows-trial
 translationOf: 1737945157-how-do-i-log-into-windows

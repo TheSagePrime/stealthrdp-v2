@@ -1,6 +1,6 @@
 ---
 order: 12
-title: 'Conexión a escritorio remoto (RDP) de Windows desde PC, Mac o móvil'
+title: 'Conexión a escritorio remoto a tu VPS Windows'
 sidebarTitle: Conectar con RDP
 category: Windows
 date: Jan 27, 2025

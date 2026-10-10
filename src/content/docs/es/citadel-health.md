@@ -5,7 +5,7 @@ sidebarTitle: Estado del origen
 category: "Citadel: Domains"
 date: Sep 27, 2026
 sourceUrl: https://citadel.stealthrdp.com/docs/health
-summary: "Comprueba con las sondas de Citadel la latencia, el estado y los errores de tu servidor de origen, encuentra la causa de los errores 502 y corrige el host, el puerto, TLS o el firewall."
+summary: "Comprueba en Citadel la latencia, el estado y los errores de tu origen, encuentra la causa de los errores 502 y corrige el host, el puerto, TLS o el firewall."
 relatedSlugs:
   - citadel-origin
   - citadel-security

@@ -5,7 +5,7 @@ sidebarTitle: Origin-Health prüfen
 category: "Citadel: Domains"
 date: Sep 27, 2026
 sourceUrl: https://citadel.stealthrdp.com/docs/health
-summary: "Prüfen Sie mit Citadel-Health-Checks Latenz, Status und Fehler Ihres Origin-Servers, finden Sie die Ursache von 502-Fehlern und korrigieren Sie Host, Port, TLS oder Firewall-Regeln."
+summary: "Prüfen Sie Latenz, Status und Fehler Ihres Origin-Servers in Citadel, finden Sie die Ursache von 502-Fehlern und korrigieren Sie Host, Port, TLS oder Firewall."
 relatedSlugs:
   - citadel-origin
   - citadel-security

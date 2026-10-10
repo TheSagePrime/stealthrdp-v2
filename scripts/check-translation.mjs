@@ -165,9 +165,11 @@ function check(file) {
   same('code blocks (comments excluded)', a.fences, b.fences);
   same('images', a.images, b.images);
   same('citation markers', a.citations, b.citations);
-  const extraLinks = policy ? b.links.filter(l => l !== `/docs/${stem}`) : b.links;
+  // The notice links to the binding English page at its public URL (the file name without its number).
+  const binding = `/docs/${stem.replace(/^\d+-/, '')}`;
+  const extraLinks = policy ? b.links.filter(l => l !== binding) : b.links;
   const extraCallouts = policy ? b.callouts.slice(1) : b.callouts;
-  same('link targets (language prefix ignored)', a.links, policy ? extraLinks.concat(b.links.filter(l => l === `/docs/${stem}`).slice(1)).sort() : extraLinks);
+  same('link targets (language prefix ignored)', a.links, policy ? extraLinks.concat(b.links.filter(l => l === binding).slice(1)).sort() : extraLinks);
   same('callouts', a.callouts, extraCallouts);
   if (policy && b.callouts[0] !== 'info') {
     errors.push('policy pages start with the :::info "English version is binding" notice');
