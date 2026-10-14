@@ -62,7 +62,7 @@ const privacy: PrivacyCopy = {
             <li>Ein Yandex-Webmaster-Skript von jsDelivr, um zu bestätigen, dass uns die Website gehört</li>
           </ul>
           <p>Diese Dienste können Cookies oder ähnliche Kennungen setzen und erhalten Ihre IP-Adresse, Browserdaten und die von Ihnen besuchten Seiten.</p>
-          <p>In der EU, im EWR, im Vereinigten Königreich und in der Schweiz werden sie erst geladen, nachdem Sie „Akzeptieren“ gewählt haben. In anderen Ländern werden sie standardmäßig geladen. Ihre Wahl können Sie jederzeit über „Cookie-Einstellungen“ unten auf jeder Seite ändern.</p>
+          <p>Wir fassen sie in zwei Kategorien zusammen, die Sie ein- oder ausschalten können: Analyse (Google Analytics und DataFast) und Marketing (Google Ads und das Meta-Pixel). Unbedingt erforderliche Angaben sind immer aktiv. In der EU, im EWR, im Vereinigten Königreich und in der Schweiz sind beide Kategorien aus, bis Sie wählen; in anderen Ländern sind beide standardmäßig aktiv. In allen Ländern akzeptiert die Cookie-Leiste alle Kategorien, wenn Sie innerhalb von 10 Sekunden keine Wahl treffen. Sie können sie jederzeit ablehnen oder unter „Anpassen“ ausschalten. In allen Ländern starten die Tags, sobald Sie zum ersten Mal scrollen, tippen oder eine Taste drücken. Ihre Wahl können Sie jederzeit über „Cookie-Einstellungen“ unten auf jeder Seite ändern.</p>
           <p>Außerdem speichern wir zwei technisch notwendige Angaben: Ihre Einwilligungsentscheidung in Ihrem Browser und ein Regions-Cookie (sr_region), das der Website mitteilt, welche Einwilligungsregel gilt.</p>
         </>
       ),

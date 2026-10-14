@@ -80,12 +80,20 @@ const en = {
     ] as [string, string][],
   },
   consent: {
-    title: 'Cookies for analytics and ads',
-    text: 'With your consent we use Google Analytics, Google Ads, the Meta pixel and DataFast to measure visits and ads. The site works the same if you reject them.',
-    details: 'Read the details',
+    title: 'We use cookies',
+    text: 'to run the site and, if you allow, to measure visits and ads.',
+    details: 'Read our terms',
     reject: 'Reject',
     accept: 'Accept',
+    customize: 'Customize',
+    save: 'Save choices',
     settings: 'Cookie settings',
+    alwaysOn: 'Always on',
+    categories: {
+      necessary: ['Strictly necessary', 'Your cookie choice, the region cookie, and the login, cart and checkout sessions. The site cannot work without them.'],
+      analytics: ['Analytics', 'Google Analytics and DataFast count visits and show which pages help.'],
+      marketing: ['Marketing', 'Google Ads and the Meta pixel measure our ads and build audiences for them.'],
+    } as Record<'necessary' | 'analytics' | 'marketing', [string, string]>,
   },
 };
 
@@ -166,12 +174,20 @@ const de: SiteCopy = {
     ],
   },
   consent: {
-    title: 'Cookies für Analyse und Werbung',
-    text: 'Mit Ihrer Einwilligung nutzen wir Google Analytics, Google Ads, das Meta-Pixel und DataFast, um Besuche und Anzeigen zu messen. Die Website funktioniert genauso, wenn Sie ablehnen.',
-    details: 'Details lesen',
+    title: 'Wir nutzen Cookies',
+    text: 'für den Betrieb der Website und, wenn Sie zustimmen, zur Messung von Besuchen und Anzeigen.',
+    details: 'Unsere Bedingungen lesen',
     reject: 'Ablehnen',
     accept: 'Akzeptieren',
+    customize: 'Anpassen',
+    save: 'Auswahl speichern',
     settings: 'Cookie-Einstellungen',
+    alwaysOn: 'Immer aktiv',
+    categories: {
+      necessary: ['Unbedingt erforderlich', 'Ihre Cookie-Wahl, das Regions-Cookie sowie Login-, Warenkorb- und Checkout-Sitzungen. Ohne sie funktioniert die Website nicht.'],
+      analytics: ['Analyse', 'Google Analytics und DataFast zählen Besuche und zeigen, welche Seiten helfen.'],
+      marketing: ['Marketing', 'Google Ads und das Meta-Pixel messen unsere Anzeigen und bilden Zielgruppen dafür.'],
+    },
   },
 };
 
@@ -250,12 +266,20 @@ const es: SiteCopy = {
     ],
   },
   consent: {
-    title: 'Cookies de analítica y publicidad',
-    text: 'Con tu consentimiento usamos Google Analytics, Google Ads, el píxel de Meta y DataFast para medir visitas y anuncios. La web funciona igual si los rechazas.',
-    details: 'Leer los detalles',
+    title: 'Usamos cookies',
+    text: 'para que la web funcione y, si lo permites, para medir visitas y anuncios.',
+    details: 'Leer nuestras condiciones',
     reject: 'Rechazar',
     accept: 'Aceptar',
+    customize: 'Personalizar',
+    save: 'Guardar elección',
     settings: 'Configuración de cookies',
+    alwaysOn: 'Siempre activas',
+    categories: {
+      necessary: ['Estrictamente necesarias', 'Tu elección de cookies, la cookie de región y las sesiones de acceso, carrito y pago. La web no funciona sin ellas.'],
+      analytics: ['Analítica', 'Google Analytics y DataFast cuentan visitas y muestran qué páginas ayudan.'],
+      marketing: ['Marketing', 'Google Ads y el píxel de Meta miden nuestros anuncios y crean audiencias para ellos.'],
+    },
   },
 };
 

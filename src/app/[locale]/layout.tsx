@@ -48,6 +48,11 @@ export default async function RootLayout(props: {
   const docsUi = docsUiCopy[asSiteLocale(locale)];
   return (
     <html lang={locale}>
+      <head>
+        {/* Fetch the Latin text face with the HTML, so text paints in its final font instead of
+            swapping and shifting the layout. */}
+        <link rel="preload" href="/fonts/ibm-plex-sans-var-normal-latin.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+      </head>
       <body>
         <NextIntlClientProvider>
           <DocsRootProvider

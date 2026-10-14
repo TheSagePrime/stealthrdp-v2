@@ -18,6 +18,7 @@ export function LanguageLinks({ label, variant = 'codes', className }: { label: 
   const flags = { en: '/images/flags/gb.svg', de: '/images/flags/de.svg', es: '/images/flags/es.svg' };
 
   if (variant === 'dropdown') {
+    const current = links.find(link => link.locale === locale)?.name;
     return (
       <details
         className={styles.dropdown}
@@ -33,9 +34,9 @@ export function LanguageLinks({ label, variant = 'codes', className }: { label: 
           }
         }}
       >
-        <summary aria-label={label}>
+        <summary aria-label={`${current}, ${label}`}>
           <Image className={styles.flag} src={flags[locale]} width={24} height={18} alt="" />
-          <span>{links.find(link => link.locale === locale)?.name}</span>
+          <span>{current}</span>
           <CaretDown size={14} aria-hidden="true" />
         </summary>
         <nav className={styles.dropdownPanel} aria-label={label}>
