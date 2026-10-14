@@ -143,7 +143,8 @@ export function TrackingConsent({ copy = siteCopy.en.consent, privacyHref = '/pr
     return () => window.clearTimeout(timer);
   }, [secondsLeft, customizing]);
 
-  const tags = interacted && (allowed.analytics || allowed.marketing);
+  // While Customize is open the visitor is still choosing, so nothing starts until they save.
+  const tags = interacted && !customizing && (allowed.analytics || allowed.marketing);
 
   return (
     <>
