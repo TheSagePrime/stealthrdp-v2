@@ -66,12 +66,24 @@ export function TrackingConsent({ copy = siteCopy.en.consent, privacyHref = '/pr
   useEffect(() => {
     const choice = readChoice();
     const optIn = needsOptIn();
-    setLoad(choice === 'granted' || (choice === null && !optIn));
-    setOpen(choice === null && optIn);
 
     const reopen = () => setOpen(true);
     window.addEventListener(OPEN_EVENT, reopen);
-    return () => window.removeEventListener(OPEN_EVENT, reopen);
+
+    /* The tags cost seconds of main-thread time on a phone, so they and the banner wait for the
+       visitor's first interaction instead of competing with the page load. A visitor who never
+       scrolls, taps or types is not measured and is not asked. */
+    const interactions = ['pointerdown', 'keydown', 'scroll', 'touchstart', 'mousemove'] as const;
+    const start = () => {
+      interactions.forEach(name => window.removeEventListener(name, start));
+      setLoad(choice === 'granted' || (choice === null && !optIn));
+      setOpen(choice === null && optIn);
+    };
+    interactions.forEach(name => window.addEventListener(name, start, { once: true, passive: true }));
+    return () => {
+      window.removeEventListener(OPEN_EVENT, reopen);
+      interactions.forEach(name => window.removeEventListener(name, start));
+    };
   }, []);
 
   const decide = (choice: Choice) => {
