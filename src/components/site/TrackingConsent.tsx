@@ -125,8 +125,8 @@ export function TrackingConsent({ copy = siteCopy.en.consent, privacyHref = '/pr
     updateConsent(choice);
   };
 
-  /* Outside the opt-in regions an unanswered bar accepts all after the countdown. Opening
-     Customize stops it: the visitor is choosing. */
+  /* Outside the opt-in regions an unanswered bar quietly accepts all after 10 seconds, as the
+     privacy page says. Opening Customize stops it: the visitor is choosing. */
   useEffect(() => {
     if (secondsLeft === null || customizing) {
       return;
@@ -171,22 +171,14 @@ export function TrackingConsent({ copy = siteCopy.en.consent, privacyHref = '/pr
       {open
         ? (
             <section className={styles.banner} aria-labelledby="sr-consent-title" data-customizing={customizing || undefined}>
-              <div className={styles.copy}>
-                <p id="sr-consent-title" className={styles.title}>{copy.title}</p>
-                <p className={styles.text}>
-                  {copy.text}
-                  {' '}
-                  <Link href={privacyHref}>{copy.details}</Link>
-                  {secondsLeft !== null && !customizing
-                    ? (
-                        <span className={styles.countdown} aria-live="off">
-                          {' '}
-                          {copy.autoAccept.replace('{seconds}', String(secondsLeft))}
-                        </span>
-                      )
-                    : null}
-                </p>
-              </div>
+              <p className={styles.text}>
+                <strong id="sr-consent-title">{copy.title}</strong>
+                {' '}
+                {copy.text}
+                {' '}
+                <Link href={privacyHref}>{copy.details}</Link>
+                .
+              </p>
               {customizing
                 ? (
                     <ul className={styles.categories}>
@@ -221,10 +213,10 @@ export function TrackingConsent({ copy = siteCopy.en.consent, privacyHref = '/pr
                 : null}
               <div className={styles.actions}>
                 {customizing
-                  ? <Button size="sm" variant="outline" onClick={() => decide(draft)}>{copy.save}</Button>
-                  : <Button size="sm" variant="outline" onClick={() => setCustomizing(true)}>{copy.customize}</Button>}
-                <Button size="sm" variant="outline" onClick={() => decide(NONE)}>{copy.reject}</Button>
-                <Button size="sm" onClick={() => decide(ALL)}>{copy.accept}</Button>
+                  ? <Button size="sm" variant="ghost" className={styles.pill} onClick={() => decide(draft)}>{copy.save}</Button>
+                  : <Button size="sm" variant="ghost" className={styles.pill} onClick={() => setCustomizing(true)}>{copy.customize}</Button>}
+                <Button size="sm" variant="secondary" className={styles.pill} onClick={() => decide(NONE)}>{copy.reject}</Button>
+                <Button size="sm" className={styles.pill} onClick={() => decide(ALL)}>{copy.accept}</Button>
               </div>
             </section>
           )
