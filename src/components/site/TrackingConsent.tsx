@@ -12,8 +12,9 @@ import styles from './TrackingConsent.module.css';
  * Cookie bar and the tags it controls, in two categories: analytics (GA4 and DataFast) and
  * marketing (Google Ads and the Meta pixel, through the sGTM container and Consent Mode).
  * The bar stays at the bottom of the page until the visitor accepts all, rejects all or saves a
- * custom choice. In the EEA, the UK and Switzerland both categories start off and only a click
- * turns them on. Elsewhere both start on, and an unanswered bar accepts all after 10 seconds.
+ * custom choice. In the EEA, the UK and Switzerland both categories start off; elsewhere both
+ * start on. Everywhere an unanswered bar accepts all after 10 seconds (AUTO_ACCEPT_IN_OPT_IN_REGIONS
+ * turns that off for the opt-in regions).
  * src/proxy.ts sets the region cookie from the Vercel country header; without it the visitor is
  * treated as EEA. The footer "Cookie settings" button reopens the choice.
  */
@@ -21,6 +22,9 @@ import styles from './TrackingConsent.module.css';
 const STORAGE_KEY = 'sr-consent';
 const OPEN_EVENT = 'sr-consent-open';
 const AUTO_ACCEPT_SECONDS = 10;
+/* The owner's choice: the silent auto-accept also runs in the EEA, the UK and Switzerland. Set to
+   false to require a click there; then also update the cookies section of the privacy page. */
+const AUTO_ACCEPT_IN_OPT_IN_REGIONS = true;
 
 type Choice = { analytics: boolean; marketing: boolean };
 const ALL: Choice = { analytics: true, marketing: true };
@@ -92,7 +96,7 @@ export function TrackingConsent({ copy = siteCopy.en.consent, privacyHref = '/pr
     setAllowed(initial);
     setDraft(initial);
     setOpen(choice === null);
-    setSecondsLeft(choice === null && !optIn ? AUTO_ACCEPT_SECONDS : null);
+    setSecondsLeft(choice === null && (!optIn || AUTO_ACCEPT_IN_OPT_IN_REGIONS) ? AUTO_ACCEPT_SECONDS : null);
 
     const reopen = () => {
       setDraft(readChoice() ?? initial);
@@ -125,8 +129,8 @@ export function TrackingConsent({ copy = siteCopy.en.consent, privacyHref = '/pr
     updateConsent(choice);
   };
 
-  /* Outside the opt-in regions an unanswered bar quietly accepts all after 10 seconds, as the
-     privacy page says. Opening Customize stops it: the visitor is choosing. */
+  /* An unanswered bar quietly accepts all after 10 seconds, as the privacy page says. Opening
+     Customize stops it: the visitor is choosing. */
   useEffect(() => {
     if (secondsLeft === null || customizing) {
       return;

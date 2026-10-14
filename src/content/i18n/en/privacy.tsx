@@ -64,7 +64,7 @@ const privacy = {
             <li>A Yandex Webmaster script from jsDelivr, to confirm that we own the site</li>
           </ul>
           <p>These tools can set cookies or similar identifiers and receive your IP address, browser details and the pages you visit.</p>
-          <p>We group them in two categories you can turn on or off: Analytics (Google Analytics and DataFast) and Marketing (Google Ads and the Meta pixel). Strictly necessary items are always on. In the EU, the EEA, the UK and Switzerland both categories stay off until you select Accept all or turn them on under Customize. In other countries both are on by default, and if you make no choice the cookie bar accepts all after 10 seconds. In every country the tags start when you first scroll, tap or type. You can change your choice at any time with Cookie settings at the bottom of every page.</p>
+          <p>We group them in two categories you can turn on or off: Analytics (Google Analytics and DataFast) and Marketing (Google Ads and the Meta pixel). Strictly necessary items are always on. In the EU, the EEA, the UK and Switzerland both categories are off until you choose; in other countries both are on by default. In every country, if you make no choice within 10 seconds, the cookie bar accepts all categories. You can reject them or turn them off under Customize at any time. In every country the tags start when you first scroll, tap or type. You can change your choice at any time with Cookie settings at the bottom of every page.</p>
           <p>We also store two strictly necessary items: your consent choice in your browser and a region cookie (sr_region) that tells the site which consent rule applies.</p>
         </>
       ),
