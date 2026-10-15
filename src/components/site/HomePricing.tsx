@@ -135,16 +135,14 @@ export function HomePricing({ plans, locale = 'en' }: { plans: Plan[]; locale?: 
                   t.bandwidth(p.spec(plan.specs.bandwidth)),
                   t.ipv4,
                 ]}
-                footer={(
+                footer={plan.source.stock !== undefined || !available ? (
                   <span className={available
                     ? 'font-medium text-status-ok'
-                    : `font-medium text-muted-foreground`}
+                    : 'font-medium text-muted-foreground'}
                   >
-                    {plan.source.stock !== undefined
-                      ? t.available(plan.source.stock)
-                      : available ? t.inStock : t.outOfStock}
+                    {plan.source.stock !== undefined ? t.available(plan.source.stock) : t.outOfStock}
                   </span>
-                )}
+                ) : undefined}
               />
 
               <article className="srv-mobile-plan-card" data-featured={featured || undefined}>
@@ -156,14 +154,11 @@ export function HomePricing({ plans, locale = 'en' }: { plans: Plan[]; locale?: 
                     </div>
                     <p>{osLabel}</p>
                   </div>
-                  <span className={available
-                    ? 'srv-mobile-stock is-available'
-                    : `srv-mobile-stock`}
-                  >
-                    {plan.source.stock !== undefined
-                      ? t.left(plan.source.stock)
-                      : available ? t.inStock : t.outOfStock}
-                  </span>
+                  {plan.source.stock !== undefined || !available ? (
+                    <span className={available ? 'srv-mobile-stock is-available' : 'srv-mobile-stock'}>
+                      {plan.source.stock !== undefined ? t.left(plan.source.stock) : t.outOfStock}
+                    </span>
+                  ) : null}
                 </header>
 
                 <div className="srv-mobile-plan-price">
