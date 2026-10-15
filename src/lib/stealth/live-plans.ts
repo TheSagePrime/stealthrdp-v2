@@ -43,7 +43,7 @@ async function fetchStoreStock(url: string): Promise<Record<string, number>> {
   return parseStoreStock(await response.text());
 }
 
-/** The plan catalogue with current stock applied. A plan the store does not report keeps its catalogue stock. */
+/** The plan catalogue with current stock applied. A plan without a reported stock count is available without a displayed quantity. */
 export async function getPlans(): Promise<Plan[]> {
   let stock: Record<string, number>;
 
@@ -64,7 +64,8 @@ export async function getPlans(): Promise<Plan[]> {
   return catalogPlans.map((plan) => {
     const available = stock[plan.name];
     if (available === undefined) {
-      return plan;
+      const { stock: _catalogStock, ...source } = plan.source;
+      return { ...plan, source: { ...source, availability: 'in-stock' } };
     }
     return {
       ...plan,
