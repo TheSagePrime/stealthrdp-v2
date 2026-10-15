@@ -285,9 +285,11 @@ function PlanCard({
               </div>
             )}
       </div>
-      <p className="sr-pick-stock" data-state={available ? 'in-stock' : 'out-of-stock'}>
-        {stock !== undefined ? t.available(stock) : (available ? t.inStock : t.outOfStock)}
-      </p>
+      {stock !== undefined || !available ? (
+        <p className="sr-pick-stock" data-state={available ? 'in-stock' : 'out-of-stock'}>
+          {stock !== undefined ? t.available(stock) : t.outOfStock}
+        </p>
+      ) : null}
     </article>
   );
 }
