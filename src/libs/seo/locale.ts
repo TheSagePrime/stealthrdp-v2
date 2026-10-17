@@ -1,5 +1,5 @@
 import type { SeoConfig } from '../../config/seo';
-import { AllLocales, I18nConfig } from '../../config/i18n';
+import { AllLocales, I18nConfig, routeLocales } from '../../config/i18n';
 import { normalizePathname } from './normalize';
 
 export function localePrefixFor(locale: string): string {
@@ -49,9 +49,26 @@ export function stripLocalePrefix(pathname: string, config: Pick<SeoConfig, 'url
   };
 }
 
+/* The localized URLs of a logical path, one per language the page is published in
+   (`localizedRoutes` in src/config/i18n.ts). English-only pages return their one URL. */
 export function localizedRoutePaths(pathname: string, config: Pick<SeoConfig, 'url'>): string[] {
   if (AllLocales.length <= 1 || I18nConfig.localePrefix === 'never') {
     return [normalizePathname(pathname, config.url.trailingSlash)];
   }
-  return AllLocales.map(locale => localizedPath(pathname, locale, config));
+  const logical = normalizePathname(pathname, config.url.trailingSlash);
+  return routeLocales(logical).map(locale => localizedPath(logical, locale, config));
+}
+
+/* hreflang targets for a logical path: one per published language plus `x-default` (English).
+   Empty for a page that exists in English only, which then declares no alternates at all. */
+export function hreflangAlternates(pathname: string, config: Pick<SeoConfig, 'url'>): Record<string, string> {
+  const logical = normalizePathname(pathname, config.url.trailingSlash);
+  const locales = routeLocales(logical);
+  if (locales.length <= 1) {
+    return {};
+  }
+  return {
+    ...Object.fromEntries(locales.map(locale => [locale, localizedPath(logical, locale, config)])),
+    'x-default': localizedPath(logical, I18nConfig.defaultLocale, config),
+  };
 }

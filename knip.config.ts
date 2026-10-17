@@ -5,6 +5,10 @@ const config: KnipConfig = {
   entry: [
     'scripts/seo-post-build-v2.mjs',
     'scripts/seo-post-build.mjs',
+    // Run by hand and by writers: .sageprime/seo/briefs/i18n/WRITER-GUIDE.md
+    'scripts/check-translation.mjs',
+    // Run by hand (daily) to publish translations by date: CONTRIBUTING.md, recipe 13
+    'scripts/i18n-publish.mjs',
     'src/components/ActiveLink.tsx',
     'src/components/LocaleSwitcher.tsx',
     'src/components/seo/Article.tsx',

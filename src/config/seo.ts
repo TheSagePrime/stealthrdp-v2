@@ -2,18 +2,20 @@ import type { ArticleRegistryConfig } from '../libs/seo/articles';
 import type { DeployEnv } from '../libs/seo/env';
 import type { LegacyRedirect } from '../libs/seo/internal-links';
 import type { ResolvedSiteUrl } from '../libs/seo/site-url';
-import { blogArticles } from '../lib/stealth/articles';
+import { articlePath, blogArticles } from '../lib/stealth/articles';
+import { pageUpdated } from '../lib/stealth/page-dates';
 import { noindexDocPaths } from '../lib/stealth/routes';
 import { parseSiteUrl, resolveSiteUrl } from '../libs/seo/site-url';
 
 const publications: ArticleRegistryConfig['publications'] = blogArticles.map(article => ({
   slug: article.slug,
   status: 'published',
-  path: article.slug === 'vps-hosting-minecraft' ? '/vps-hosting-minecraft' : `/blog/${article.slug}.html`,
+  path: articlePath(article),
   title: article.title,
   h1: article.title,
   description: article.excerpt,
   datePublished: article.date,
+  dateModified: pageUpdated(articlePath(article)),
   author: { name: 'StealthRDP Team', type: 'Organization' },
   locale: 'en',
   country: 'US',

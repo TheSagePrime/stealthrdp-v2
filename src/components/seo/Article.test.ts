@@ -108,11 +108,23 @@ describe('article components', () => {
 
   it('uses the publication record for visible date output', () => {
     const meta = asElement(ArticlePublicationMeta({ article: newer }));
-    const time = elementChildren(meta)[1]!;
+    const [published, updated] = elementChildren(meta);
+    const time = elementChildren(published!).at(-1)!;
 
     expect(time.type).toBe('time');
     expect(time.props.dateTime).toBe('2026-01-01');
     expect(time.props.children).toBe('January 1, 2026');
+    expect(updated).toBeUndefined();
+  });
+
+  it('shows the updated date only when the article changed after publication', () => {
+    const sameDay = asElement(ArticlePublicationMeta({ article: { ...newer, dateModified: '2026-01-01' } }));
+    const changed = asElement(ArticlePublicationMeta({ article: { ...newer, dateModified: '2026-03-05' } }));
+    const updatedTime = elementChildren(elementChildren(changed)[1]!).at(-1)!;
+
+    expect(elementChildren(sameDay)).toHaveLength(1);
+    expect(updatedTime.props.dateTime).toBe('2026-03-05');
+    expect(updatedTime.props.children).toBe('March 5, 2026');
   });
 
   it('sorts ArticleIndex cards newest first', () => {

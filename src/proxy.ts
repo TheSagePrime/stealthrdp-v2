@@ -164,10 +164,62 @@ function acceptsMarkdown(accept: string | null): boolean {
   });
 }
 
+/* EU, EEA, UK and Switzerland: analytics and ad tags wait for consent there (TrackingConsent). */
+const optInCountries = new Set([
+  'AT',
+  'BE',
+  'BG',
+  'HR',
+  'CY',
+  'CZ',
+  'DK',
+  'EE',
+  'FI',
+  'FR',
+  'DE',
+  'GR',
+  'HU',
+  'IE',
+  'IT',
+  'LV',
+  'LT',
+  'LU',
+  'MT',
+  'NL',
+  'PL',
+  'PT',
+  'RO',
+  'SK',
+  'SI',
+  'ES',
+  'SE',
+  'IS',
+  'LI',
+  'NO',
+  'GB',
+  'CH',
+]);
+
+/** Tell the page whether the visitor's country needs opt-in consent. No country header means opt-in. */
+function withConsentRegion(request: NextRequest, response: NextResponse): NextResponse {
+  const country = request.headers.get('x-vercel-ip-country')?.toUpperCase();
+  const region = country && !optInCountries.has(country) ? 'other' : 'eea';
+  if (request.cookies.get('sr_region')?.value !== region) {
+    response.cookies.set('sr_region', region, { path: '/', maxAge: 60 * 60 * 24, sameSite: 'lax', secure: true });
+  }
+  return response;
+}
+
 export default async function proxy(request: NextRequest) {
   const seoRedirect = seoNormalizeRedirect(request);
   if (seoRedirect) {
     return seoRedirect;
+  }
+
+  /* Markdown copies of the articles (src/app/docs-md) sit outside the [locale] segment, so they
+     are served without a language prefix. */
+  if (request.nextUrl.pathname.startsWith('/docs-md/')) {
+    return NextResponse.next();
   }
 
   /* Production only, as on the v1 site: an agent that asks for Markdown on the homepage gets
@@ -192,7 +244,7 @@ export default async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  return handleI18nRouting(request);
+  return withConsentRegion(request, handleI18nRouting(request));
 }
 
 export const config = {

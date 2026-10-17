@@ -37,7 +37,7 @@ describe('PricingExplorer purchase decisions', () => {
   it('offers every published billing cycle, semi-annual included', async () => {
     await render(<PricingExplorer plans={plans} />);
 
-    const terms = [...document.querySelectorAll('.sr-term-option')].map(
+    const terms = [...document.querySelectorAll('.srv-billing-option')].map(
       element => element.textContent?.replace(/\s+/g, ' ').trim() ?? '',
     );
 
@@ -103,7 +103,7 @@ describe('PricingExplorer purchase decisions', () => {
     for (const column of ['CPU', 'RAM', 'Storage', 'Bandwidth']) {
       expect(page.getByRole('columnheader', { name: column })).toBeInTheDocument();
     }
-    const specCells = [...document.querySelectorAll('.sr-ledger-spec')];
+    const specCells = [...document.querySelectorAll('.sr-ledger-spec, .sr-ledger-traffic')];
 
     expect(specCells.length, 'the ledger publishes one spec cell per plan and column').toBe(28);
     expect(specCells.every(cell => (cell.textContent ?? '').trim().length > 0), 'every spec cell carries a value').toBe(true);
@@ -115,19 +115,19 @@ describe('PricingExplorer purchase decisions', () => {
     expect(document.querySelectorAll('tbody a[href*="dash.stealthrdp.com"]:not(.sr-ledger-alt)').length).toBe(2);
   });
 
-  it('marks the featured in-stock plan and invents no best-fit guess', async () => {
+  it('marks the most popular in-stock plan and invents no best-fit guess', async () => {
     /* The marker lives on the comparison table, so render it (collapsed). */
     await render(<PricingExplorer plans={plans} showComparison />);
     await userEvent.click(page.getByRole('button', { name: /^Monthly/ }));
 
-    expect(badgeFor('Bronze USA')).toBe('Featured');
+    expect(badgeFor('Bronze USA')).toBe('Most popular');
     expect(document.body.textContent).not.toContain('Best fit');
   });
 
-  it('describes OS selection at checkout rather than offering an ineffective filter', async () => {
+  it('shows each plan\'s operating systems rather than offering an ineffective filter', async () => {
     await render(<PricingExplorer plans={plans} />);
 
-    expect(page.getByText(/Windows or Linux is selected during checkout/)).toBeInTheDocument();
+    expect(page.getByText(/^Linux \+ Windows$|^Linux only$/).first()).toBeInTheDocument();
     expect(page.getByRole('button', { name: 'Windows' })).not.toBeInTheDocument();
     expect(page.getByRole('button', { name: 'Linux' })).not.toBeInTheDocument();
   });

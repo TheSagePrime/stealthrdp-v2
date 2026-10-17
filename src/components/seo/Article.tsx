@@ -37,11 +37,23 @@ export function ArticlePublicationMeta({
   article: ArticlePublication;
   label?: string;
 }) {
+  const updated = article.dateModified && article.dateModified > article.datePublished ? article.dateModified : undefined;
   return (
     <p className="seo-article-publication-meta">
-      <span>{label}</span>
-      {' '}
-      <time dateTime={article.datePublished}>{formatPublicationDate(article.datePublished, article.locale)}</time>
+      <span>
+        {label}
+        {' '}
+        <time dateTime={article.datePublished}>{formatPublicationDate(article.datePublished, article.locale)}</time>
+      </span>
+      {updated
+        ? (
+            <span>
+              Updated
+              {' '}
+              <time dateTime={updated}>{formatPublicationDate(updated, article.locale)}</time>
+            </span>
+          )
+        : null}
     </p>
   );
 }
@@ -59,9 +71,12 @@ export function ArticleCitation({ source }: { source: number }) {
 export function ArticleSources({
   sources,
   summary = 'Sources & references',
+  accessed = 'accessed',
 }: {
   sources: readonly ArticleSource[];
   summary?: string;
+  /* The word before the access date, for German and Spanish posts. */
+  accessed?: string;
 }) {
   if (sources.length === 0) {
     return null;
@@ -77,7 +92,7 @@ export function ArticleSources({
               {source.title}
             </a>
             {source.publisher ? ` — ${source.publisher}` : ''}
-            {source.accessedAt ? ` (accessed ${source.accessedAt})` : ''}
+            {source.accessedAt ? ` (${accessed} ${source.accessedAt})` : ''}
           </li>
         ))}
       </ol>

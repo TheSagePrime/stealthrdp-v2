@@ -13,23 +13,23 @@
   {
     "_id": "681b69d1e75118f3793b13ca",
     "question": "Where are your data centers located?",
-    "answer": "We currently operate data centers in the United States (for USA plans) and the Netherlands (for EU plans). All our data centers feature state-of-the-art infrastructure with redundant power supplies, cooling systems, and network connections to ensure maximum reliability and uptime.",
+    "answer": "Our data centers are in Phoenix, Arizona (for USA plans) and Amsterdam, Netherlands (for EU plans). Choose the location closest to you or to the people and services the server works with for the lowest latency.",
     "category": "Services & Plans",
     "displayOrder": 2,
     "isPublished": true,
     "createdAt": "2025-05-07T14:10:25.920Z",
-    "updatedAt": "2025-05-14T13:57:52.932Z",
+    "updatedAt": "2026-10-02T00:00:00.000Z",
     "__v": 0
   },
   {
     "_id": "681b72067bfe24c6e835c48f",
     "question": "What is the difference between USA and EU plans?",
-    "answer": "USA and EU plans offer similar specifications but are hosted in different geographic locations. USA plans are hosted in our US-based data centers, while EU plans are hosted in the Netherlands. The main difference is latency - choose the region closest to your location or target audience for optimal performance. Resource allocations and pricing may vary slightly between equivalent tiers in different regions.",
+    "answer": "USA and EU plans offer similar specifications but are hosted in different geographic locations. USA plans are hosted in Phoenix, Arizona, and EU plans in Amsterdam, Netherlands. The main difference is latency - choose the region closest to your location or target audience for optimal performance. Resource allocations and pricing may vary slightly between equivalent tiers in different regions.",
     "category": "Services & Plans",
     "displayOrder": 3,
     "isPublished": true,
     "createdAt": "2025-05-07T14:45:26.804Z",
-    "updatedAt": "2025-05-14T13:58:21.342Z",
+    "updatedAt": "2026-10-02T00:00:00.000Z",
     "__v": 0
   },
   {
@@ -57,7 +57,7 @@
   {
     "_id": "6824a1ca105d77ad34fbf09b",
     "question": "What features are included with StealthRDP plans?",
-    "answer": "All our plans include: dedicated IPv4 addresses, high-speed network connections (250 Mbps standard, with an optional 1 Gbps upgrade), unlimited bandwidth (fair usage policy applies), full Administrator/Root access, NVMe storage, 24/7 uptime monitoring, and quick technical support.",
+    "answer": "All our plans include: dedicated IPv4 addresses, high-speed network connections (250 Mbps on every plan except Starter USA, which has 100 Mbps; the 250 Mbps plans can be upgraded to 1 Gbps), unlimited bandwidth (fair usage policy applies), full Administrator/Root access, NVMe storage, 24/7 uptime monitoring, and quick technical support.",
     "category": "Services & Plans",
     "displayOrder": 6,
     "isPublished": true,
@@ -68,7 +68,7 @@
   {
     "_id": "6824a1e3105d77ad34fbf0a3",
     "question": "What billing cycles do you offer?",
-    "answer": "We offer flexible billing cycles to suit different needs: Monthly (5% discount compared to standard rates), Quarterly (10% discount), Annual (20% discount), and BiAnnual/2-year (30% discount). The longer the billing cycle you choose, the greater your savings.",
+    "answer": "We offer five billing cycles: monthly, quarterly, semi-annual, annual and biannual (2 years). The longer the cycle, the more you save compared with paying monthly: on most plans 4-7% quarterly, 10-13% semi-annual, 15-18% annual and 25-32% biannual. Savings differ by plan, and the Starter plans save less. Each plan shows its exact saving for the cycle you select on the plans page.",
     "category": "Pricing & Billing",
     "displayOrder": 7,
     "isPublished": true,
@@ -79,7 +79,7 @@
   {
     "_id": "6824a1f8105d77ad34fbf0a8",
     "question": "How do the discounts work?",
-    "answer": "Discounts are automatically applied based on your selected billing cycle. For example, if a plan costs $100/month at standard rates, you would pay $95/month on the monthly cycle (5% off), $90/month on the quarterly cycle (10% off), $80/month on the annual cycle (20% off), or $70/month on the biannual cycle (30% off). The total amount charged will be for the entire period (e.g., 3 months for quarterly billing).",
+    "answer": "The saving is built into the price of each billing cycle, so you see the final amount before you order. You pay for the whole period up front. For example, if a plan costs €100 per month, a 16% annual saving means €1,008 for the year instead of €1,200, or €84 per month. The monthly price is the base price; there is no extra discount on monthly billing.",
     "category": "Pricing & Billing",
     "displayOrder": 8,
     "isPublished": true,
@@ -228,6 +228,17 @@
     "isPublished": true,
     "createdAt": "2026-09-16T21:00:00.000Z",
     "updatedAt": "2026-09-16T21:00:00.000Z",
+    "__v": 0
+  },
+  {
+    "_id": "bd1ec784d5cc89de37f5febc",
+    "question": "Can I change my server's IP address?",
+    "answer": "Yes. Every server comes with a dedicated IPv4 address. If you need a different one, we can change it for a fee of €5 per IP change. Request it on WhatsApp, through a ticket in your client area, or by email at support@stealthrdp.com.",
+    "category": "Pricing & Billing",
+    "displayOrder": 22,
+    "isPublished": true,
+    "createdAt": "2026-10-02T00:00:00.000Z",
+    "updatedAt": "2026-10-02T00:00:00.000Z",
     "__v": 0
   }
 ]

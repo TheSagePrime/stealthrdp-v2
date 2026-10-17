@@ -121,6 +121,9 @@ jobs:
       - name: Enforce architecture, design, SEO, and security contracts
         run: pnpm run check:architecture
 
+      - name: Check page dates match content changes
+        run: pnpm run check:page-dates
+
       - name: Prove architecture/design contract rejection behavior
         run: pnpm run test:contracts
 
@@ -241,6 +244,7 @@ jobs:
             .vitest-attachments/**
             vitest-test-results/**
           if-no-files-found: ignore
+          include-hidden-files: true
           retention-days: 1
 
   keyless-e2e:

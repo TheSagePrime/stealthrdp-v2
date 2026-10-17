@@ -53,6 +53,12 @@
     ]
   },
   "allowedIconPackages": [
+    "@phosphor-icons/react",
+    "@hugeicons/react",
+    "@hugeicons/core-free-icons",
+    "@icons-pack/react-simple-icons"
+  ],
+  "legacyIconPackages": [
     "lucide-react"
   ],
   "forbiddenUiPackages": [

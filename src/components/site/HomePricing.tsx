@@ -1,6 +1,7 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 'use client';
 
+import type { SiteLocale } from '@/config/i18n';
 import type { BillingCycle, Plan } from '@/lib/stealth/content';
 import Link from 'next/link';
 /* Homepage pricing configurator: interaction/state here, visual language in stealth-v3.css. */
@@ -8,11 +9,10 @@ import { useMemo, useState } from 'react';
 import { PricingColumn } from '@/components/launchui/pricing-column';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-
-  checkoutUrl,
-
-} from '@/lib/stealth/checkout';
+import { homeCopy } from '@/content/i18n/home';
+import { pricingCopy } from '@/content/i18n/pricing';
+import { checkoutUrl } from '@/lib/stealth/checkout';
+import { localeHref } from '@/lib/stealth/i18n';
 
 const cycles: BillingCycle[] = ['monthly', 'quarterly', 'semiannual', 'annual', 'biannual'];
 
@@ -24,17 +24,20 @@ const months: Record<BillingCycle, number> = {
   biannual: 24,
 };
 
-const cycleLabel: Record<BillingCycle, string> = {
-  monthly: 'Monthly',
-  quarterly: 'Quarterly',
-  semiannual: '6-month',
-  annual: 'Annual',
-  biannual: '2-year',
-};
-
 const format = (value: number) => Number.isInteger(value) ? String(value) : value.toFixed(2);
 
-export function HomePricing({ plans }: { plans: Plan[] }) {
+export function HomePricing({ plans, locale = 'en' }: { plans: Plan[]; locale?: SiteLocale }) {
+  const p = pricingCopy[locale];
+  const t = homeCopy[locale].pricing;
+  /* English keeps its split "€" and amount; other languages write 9,50 €. */
+  const amount = (value: number) => locale === 'en'
+    ? (
+        <>
+          €
+          {format(value)}
+        </>
+      )
+    : p.money(value);
   const [region, setRegion] = useState<'USA' | 'EU'>('USA');
   const [cycle, setCycle] = useState<BillingCycle>('monthly');
   const visible = useMemo(() => (
@@ -48,7 +51,7 @@ export function HomePricing({ plans }: { plans: Plan[] }) {
     <div className="flex w-full flex-col gap-5">
       <div className="srv-pricing-controls">
         <div className="srv-pricing-control-card srv-pricing-region">
-          <div className="srv-selector" role="group" aria-label="Deployment region">
+          <div className="srv-selector" role="group" aria-label={p.regionGroup}>
             {(['USA', 'EU'] as const).map(item => (
               <button
                 key={item}
@@ -59,14 +62,14 @@ export function HomePricing({ plans }: { plans: Plan[] }) {
                 onClick={() => setRegion(item)}
               >
                 <span className="srv-selector-dot" aria-hidden="true" />
-                {item}
+                {p.regionNames[item]}
               </button>
             ))}
           </div>
         </div>
 
         <div className="srv-pricing-control-card srv-pricing-billing">
-          <div className="srv-billing-rail" role="group" aria-label="Billing cycle">
+          <div className="srv-billing-rail" role="group" aria-label={p.billingGroup}>
             {cycles.map(item => (
               <button
                 key={item}
@@ -76,7 +79,8 @@ export function HomePricing({ plans }: { plans: Plan[] }) {
                 aria-pressed={cycle === item}
                 onClick={() => setCycle(item)}
               >
-                {cycleLabel[item]}
+                <span className="srv-billing-full">{p.cycleLabels[item].full}</span>
+                <span className="srv-billing-short" aria-hidden="true">{p.cycleLabels[item].short}</span>
               </button>
             ))}
           </div>
@@ -93,7 +97,7 @@ export function HomePricing({ plans }: { plans: Plan[] }) {
           /* The data can flag several plans; the badge goes to the first in view. */
           const price = plan.pricing[cycle];
           const monthEquivalent = price.amount / months[cycle];
-          const osLabel = plan.source.os === 'linux-only' ? 'Linux only' : 'Windows + Linux';
+          const osLabel = plan.source.os === 'linux-only' ? t.linuxOnly : t.both;
           const featured = plan.name === visible.find(item => item.popular)?.name;
           const available = plan.source.availability !== 'out-of-stock';
 
@@ -104,33 +108,32 @@ export function HomePricing({ plans }: { plans: Plan[] }) {
                 name={plan.name}
                 description={osLabel}
                 featured={featured}
-                badge={featured ? <Badge variant="outline">Most popular</Badge> : null}
+                badge={featured ? <Badge variant="outline">{t.mostPopular}</Badge> : null}
                 price={(
                   <span>
-                    €
-                    {format(price.amount)}
+                    {amount(price.amount)}
                     <span className="
                       ml-1 text-base font-medium text-muted-foreground
                     "
                     >
-                      {price.suffix}
+                      {p.suffix(cycle, price.suffix)}
                     </span>
                   </span>
                 )}
                 priceNote={cycle === 'monthly'
-                  ? 'Billed monthly'
-                  : `€${monthEquivalent.toFixed(2)}/mo effective · due today`}
+                  ? t.billedMonthly
+                  : t.effective(monthEquivalent)}
                 cta={{
-                  label: available ? 'Order Now' : 'Out of stock',
-                  href: available ? checkoutUrl(plan, cycle) : undefined,
+                  label: available ? t.orderNow : t.outOfStock,
+                  href: available ? checkoutUrl(plan, cycle, locale) : undefined,
                   disabled: !available,
                 }}
                 features={[
-                  plan.specs.cpu,
+                  p.spec(plan.specs.cpu),
                   plan.specs.ram,
                   plan.specs.storage,
-                  `${plan.specs.bandwidth} bandwidth`,
-                  'Dedicated IPv4',
+                  t.bandwidth(p.spec(plan.specs.bandwidth)),
+                  t.ipv4,
                 ]}
                 footer={(
                   <span className={available
@@ -138,8 +141,8 @@ export function HomePricing({ plans }: { plans: Plan[] }) {
                     : `font-medium text-muted-foreground`}
                   >
                     {plan.source.stock !== undefined
-                      ? `${plan.source.stock} available`
-                      : available ? 'In stock' : 'Out of stock'}
+                      ? t.available(plan.source.stock)
+                      : available ? t.inStock : t.outOfStock}
                   </span>
                 )}
               />
@@ -149,7 +152,7 @@ export function HomePricing({ plans }: { plans: Plan[] }) {
                   <div>
                     <div className="srv-mobile-plan-title-row">
                       <h3>{plan.name}</h3>
-                      {featured ? <Badge variant="outline">Popular</Badge> : null}
+                      {featured ? <Badge variant="outline">{t.popular}</Badge> : null}
                     </div>
                     <p>{osLabel}</p>
                   </div>
@@ -158,64 +161,59 @@ export function HomePricing({ plans }: { plans: Plan[] }) {
                     : `srv-mobile-stock`}
                   >
                     {plan.source.stock !== undefined
-                      ? `${plan.source.stock} left`
-                      : available ? 'In stock' : 'Out of stock'}
+                      ? t.left(plan.source.stock)
+                      : available ? t.inStock : t.outOfStock}
                   </span>
                 </header>
 
                 <div className="srv-mobile-plan-price">
                   <strong>
-                    €
-                    {format(price.amount)}
+                    {amount(price.amount)}
                   </strong>
-                  <span>{price.suffix}</span>
+                  <span>{p.suffix(cycle, price.suffix)}</span>
                 </div>
                 <p className="srv-mobile-plan-note">
                   {cycle === 'monthly'
-                    ? 'Billed monthly'
-                    : `€${monthEquivalent.toFixed(2)}/mo effective · due today`}
+                    ? t.billedMonthly
+                    : t.effective(monthEquivalent)}
                 </p>
 
                 <dl className="srv-mobile-plan-specs">
                   <div>
-                    <dt>CPU</dt>
-                    <dd>{plan.specs.cpu}</dd>
+                    <dt>{p.specs.cpu}</dt>
+                    <dd>{p.spec(plan.specs.cpu)}</dd>
                   </div>
                   <div>
-                    <dt>RAM</dt>
+                    <dt>{p.specs.ram}</dt>
                     <dd>{plan.specs.ram}</dd>
                   </div>
                   <div>
-                    <dt>Storage</dt>
+                    <dt>{p.specs.storage}</dt>
                     <dd>{plan.specs.storage}</dd>
                   </div>
                 </dl>
 
                 <details className="srv-mobile-plan-more">
-                  <summary>View full specs</summary>
+                  <summary>{t.viewSpecs}</summary>
                   <ul>
-                    <li>{plan.specs.cpu}</li>
+                    <li>{p.spec(plan.specs.cpu)}</li>
                     <li>{plan.specs.ram}</li>
                     <li>{plan.specs.storage}</li>
-                    <li>
-                      {plan.specs.bandwidth}
-                      {' '}
-                      bandwidth
-                    </li>
-                    <li>Dedicated IPv4</li>
+                    <li>{t.bandwidth(p.spec(plan.specs.bandwidth))}</li>
+                    <li>{t.ipv4}</li>
                   </ul>
                 </details>
 
                 {available
                   ? (
                       <Button asChild size="lg" className="srv-mobile-plan-cta">
-                        <a href={checkoutUrl(plan, cycle)} aria-label={`Order Now: ${plan.name}`}>
-                          Order Now
+                        <a href={checkoutUrl(plan, cycle, locale)} aria-label={t.orderAria(plan.name)}>
+                          {t.orderNow}
                         </a>
                       </Button>
                     )
                   : (
-                      <Button size="lg" className="srv-mobile-plan-cta" disabled>Out of stock</Button>
+                      <Button size="lg" className="srv-mobile-plan-cta" disabled>{t.outOfStock}</Button>
                     )}
               </article>
             </div>
@@ -225,7 +223,7 @@ export function HomePricing({ plans }: { plans: Plan[] }) {
 
       <div className="flex flex-wrap justify-center gap-3">
         <Button asChild variant="outline">
-          <Link href="/plans">View all plans</Link>
+          <Link href={localeHref('/plans', locale)}>{t.viewAll}</Link>
         </Button>
       </div>
     </div>

@@ -1,11 +1,15 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
-import type { Icon } from '@phosphor-icons/react';
 import type { ReactNode } from 'react';
+import type { SiteLocale } from '@/config/i18n';
 import type { Plan } from '@/lib/stealth/content';
-import { SiAlpinelinux, SiArchlinux, SiFreebsd, SiOpensuse, SiRockylinux } from '@icons-pack/react-simple-icons';
-import { ArrowRight, BookOpenText, ChatCircleText, Cpu, EnvelopeSimple, HardDrive, Lifebuoy, Memory, Scales, ShieldCheck, WhatsappLogo } from '@phosphor-icons/react/dist/ssr';
+import { ArrowRight, WhatsappLogo } from '@phosphor-icons/react/dist/ssr';
+import Image from 'next/image';
 import Link from 'next/link';
+import iconStyles from '@/components/site/IconArtwork.module.css';
 import { Accordion, AccordionItem } from '@/components/ui/accordion';
+import { osLogos } from '@/config/os-logos';
+import { osCopy } from '@/content/i18n/os';
+import { formatEuro, localeHref } from '@/lib/stealth/i18n';
 import styles from './OsSections.module.css';
 
 /* Shared sections for the Windows and Linux VPS pages. Numbers come from the
@@ -27,31 +31,23 @@ function Head({ kicker, title, children, id }: { kicker: string; title: string; 
 
 /* From order to sign-in --------------------------------------------------- */
 
-export function OsJourney({ kind }: { kind: Kind }) {
+export function OsJourney({ kind, locale = 'en' }: { kind: Kind; locale?: SiteLocale }) {
   const windows = kind === 'windows';
-  const steps = [
-    {
-      title: 'Pick a plan and region',
-      text: 'Compare CPU, RAM, storage, bandwidth and price above, in a USA or EU region.',
-    },
+  const t = osCopy[locale].journey;
+  const steps: { title: string; text: string; time?: string; link?: { href: string; label: string } }[] = [
+    t.pick,
+    windows ? t.windowsOs : t.linuxOs,
+    t.credentials,
     windows
-      ? { title: 'Choose Windows Server at checkout', text: 'Checkout offers the operating-system selector: Windows Server 2019, 2022 or 2025.' }
-      : { title: 'Choose a distribution at checkout', text: 'Checkout offers the operating-system selector with the listed Linux images.' },
-    {
-      title: 'Receive your credentials',
-      text: 'StealthRDP sends them by email after payment confirmation.',
-      time: 'Typically within 60 seconds',
-    },
-    windows
-      ? { title: 'Connect with Remote Desktop', text: 'Enter the server IP from the email and sign in as Administrator.', link: { href: '/docs/how-do-i-log-into-windows', label: 'How do I log into Windows?' } }
-      : { title: 'Sign in as root', text: 'Connect to the server IP from the email with the root credentials.' },
+      ? { title: t.windowsConnect.title, text: t.windowsConnect.text, link: { href: '/docs/how-do-i-log-into-windows', label: t.windowsConnect.linkLabel } }
+      : t.linuxConnect,
   ];
 
   return (
     <section className="sr-section sr-section-border" aria-labelledby={`${kind}-journey`}>
       <div className="sr-container">
-        <Head kicker="From order to sign-in" title={windows ? 'Four steps from checkout to your Windows desktop' : 'Four steps from checkout to a root shell'} id={`${kind}-journey`}>
-          Most servers are live within 60 seconds of payment confirmation. At busy times it can take a few minutes.
+        <Head kicker={t.kicker} title={windows ? t.title.windows : t.title.linux} id={`${kind}-journey`}>
+          {t.intro}
         </Head>
         <ol className={styles.journey}>
           {steps.map((step, index) => (
@@ -59,8 +55,8 @@ export function OsJourney({ kind }: { kind: Kind }) {
               <span className={styles.step}>{index + 1}</span>
               <h3>{step.title}</h3>
               <p>{step.text}</p>
-              {'time' in step && <span className={styles.time}>{step.time}</span>}
-              {'link' in step && step.link && (
+              {step.time && <span className={styles.time}>{step.time}</span>}
+              {step.link && (
                 <Link href={step.link.href} className={styles.link}>
                   {step.link.label}
                   <ArrowRight size={15} aria-hidden="true" />
@@ -76,33 +72,28 @@ export function OsJourney({ kind }: { kind: Kind }) {
 
 /* Windows versions -------------------------------------------------------- */
 
-export function WindowsVersions({ versions }: { versions: string[] }) {
+export function WindowsVersions({ versions, locale = 'en' }: { versions: string[]; locale?: SiteLocale }) {
+  const t = osCopy[locale].versions;
   return (
     <section className="sr-section sr-section-border" id="windows-versions" aria-labelledby="windows-versions-title">
       <div className="sr-container">
-        <Head kicker="Environment" title="Choose the Windows version your software needs" id="windows-versions-title">
-          The Services & Plans FAQ lists these Windows options. Pick one in checkout when your software asks for it.
+        <Head kicker={t.kicker} title={t.title} id="windows-versions-title">
+          {t.intro}
         </Head>
         <ul className={styles.versions}>
           {versions.map(version => (
             <li key={version}>
-              <img src="/brand/windows.svg" alt="" width={28} height={28} />
-              <span>Windows Server</span>
+              <img src={osLogos.windows} alt="" width={28} height={28} />
+              <span>{t.product}</span>
               <strong>{version}</strong>
-              <small>Selected at checkout</small>
+              <small>{t.selected}</small>
             </li>
           ))}
         </ul>
         <div className={styles.notice}>
-          <Scales size={20} aria-hidden="true" />
+          <Image className={iconStyles.artwork} src="/images/fluent-color/certificate.svg" width={24} height={24} alt="" />
           <p>
-            <strong>Windows licensing.</strong>
-            {' '}
-            StealthRDP provides the infrastructure only. Microsoft Windows licensing is not included and is not supplied by
-            StealthRDP. Customers are responsible for their own licensing compliance.
-            {' '}
-            <Link href="/docs/windows-licensing">Read the Windows licensing page</Link>
-            .
+            {t.licensing}
           </p>
         </div>
       </div>
@@ -112,38 +103,38 @@ export function WindowsVersions({ versions }: { versions: string[] }) {
 
 /* Linux distributions ------------------------------------------------------ */
 
-const distroMarks: Record<string, string | typeof SiRockylinux> = {
-  'Ubuntu': '/brand/ubuntu.svg',
-  'Debian': '/brand/debian.svg',
-  'CentOS': '/brand/centos.svg',
-  'AlmaLinux': '/brand/almalinux.svg',
-  'Fedora': '/brand/fedora.svg',
-  'Rocky Linux': SiRockylinux,
-  'Alpine Linux': SiAlpinelinux,
-  'FreeBSD': SiFreebsd,
-  'openSUSE': SiOpensuse,
-  'Arch Linux': SiArchlinux,
+const distroMarks: Record<string, string> = {
+  'Ubuntu': osLogos.ubuntu,
+  'Debian': osLogos.debian,
+  'CentOS': osLogos.centos,
+  'AlmaLinux': osLogos.almalinux,
+  'Fedora': osLogos.fedora,
+  'Rocky Linux': osLogos.rockylinux,
+  'Alpine Linux': osLogos.alpinelinux,
+  'FreeBSD': osLogos.freebsd,
+  'openSUSE': osLogos.opensuse,
+  'Arch Linux': osLogos.archlinux,
+  'CloudLinux': osLogos.cloudlinux,
+  'Oracle Linux': osLogos.oraclelinux,
 };
 
-export function LinuxDistros({ distros }: { distros: ReadonlyArray<{ name: string; versions: string }> }) {
+export function LinuxDistros({ distros, locale = 'en' }: { distros: ReadonlyArray<{ name: string; versions: string }>; locale?: SiteLocale }) {
+  const t = osCopy[locale].distros;
   return (
     <section className="sr-section sr-section-border" id="linux-distros" aria-labelledby="linux-distros-title">
       <div className="sr-container">
-        <Head kicker="Environment" title="Linux distributions you can run" id="linux-distros-title">
-          Choose the operating-system family your stack needs, then confirm the exact image and version during checkout.
+        <Head kicker={t.kicker} title={t.title} id="linux-distros-title">
+          {t.intro}
         </Head>
         <ul className={styles.distros}>
           {distros.map((distro) => {
             const mark = distroMarks[distro.name];
-            const Mark = typeof mark === 'string' ? null : mark;
             return (
               <li key={distro.name}>
                 <span className={styles.distroMark}>
-                  {typeof mark === 'string'
+                  {mark
                     ? <img src={mark} alt="" width={26} height={26} />
-                    : Mark
-                      ? <Mark size={24} color="default" aria-hidden="true" />
-                      : <b>{distro.name.split(' ').map(word => word[0]).join('')}</b>}
+                    : <b>{distro.name.split(' ').map(word => word[0]).join('')}</b>}
                 </span>
                 <strong>{distro.name}</strong>
                 <span className={styles.distroVersions}>
@@ -154,7 +145,7 @@ export function LinuxDistros({ distros }: { distros: ReadonlyArray<{ name: strin
           })}
         </ul>
         <Link href="/docs/how-to-install-direct-admin-in-a-linux-server" className={styles.link}>
-          How to install DirectAdmin in a Linux server
+          {t.directAdmin}
           <ArrowRight size={15} aria-hidden="true" />
         </Link>
       </div>
@@ -166,73 +157,43 @@ export function LinuxDistros({ distros }: { distros: ReadonlyArray<{ name: strin
 
 const number = (value: string) => Number.parseFloat(value);
 
-type Resource = { key: 'cpu' | 'ram' | 'storage'; icon: Icon; label: string; unit: string; carries: string; text: Record<Kind, string> };
+const resources = [
+  { key: 'cpu', icon: 'gauge' },
+  { key: 'ram', icon: 'data-bar-vertical-ascending' },
+  { key: 'storage', icon: 'database' },
+] as const satisfies ReadonlyArray<{ key: 'cpu' | 'ram' | 'storage'; icon: string }>;
 
-const resources: Resource[] = [
-  {
-    key: 'cpu',
-    icon: Cpu,
-    label: 'CPU',
-    unit: 'vCPU',
-    carries: 'Concurrent work',
-    text: {
-      windows: 'Match active processing and concurrent tasks.',
-      linux: 'Compare CPU against the application, services, workers and expected load.',
-    },
-  },
-  {
-    key: 'ram',
-    icon: Memory,
-    label: 'RAM',
-    unit: 'GB',
-    carries: 'Active services',
-    text: {
-      windows: 'Allow for Windows, applications and users running at the same time.',
-      linux: 'Size memory for the OS plus web server, app processes, databases, panels and jobs.',
-    },
-  },
-  {
-    key: 'storage',
-    icon: HardDrive,
-    label: 'Storage',
-    unit: 'GB',
-    carries: 'Files and data',
-    text: {
-      windows: 'Include the operating system, installed software, files and future additions.',
-      linux: 'Include the operating system, packages, databases, files and future additions.',
-    },
-  },
-];
-
-export function OsResources({ plans, kind, children }: { plans: Plan[]; kind: Kind; children: ReactNode }) {
+export function OsResources({ plans, kind, children, locale = 'en' }: { plans: Plan[]; kind: Kind; children: ReactNode; locale?: SiteLocale }) {
+  const t = osCopy[locale].resources;
   const eligible = kind === 'windows' ? plans.filter(plan => plan.source.os !== 'linux-only') : plans;
 
   return (
     <section className="sr-section sr-section-border" aria-labelledby={`${kind}-resources`}>
       <div className="sr-container">
-        <Head kicker="Resource fit" title="Size the machine to the stack" id={`${kind}-resources`}>
-          Count what runs at the same time. Each dot below is a plan in the current catalogue.
+        <Head kicker={t.kicker} title={t.title} id={`${kind}-resources`}>
+          {t.intro}
         </Head>
         <div className={styles.resources}>
           <div className={styles.guide}>{children}</div>
           <ul className={styles.scales}>
-            {resources.map((resource) => {
+            {resources.map(({ key, icon }) => {
+              const resource = { key, icon, ...t.items[key] };
               const values = [...new Set(eligible.map(plan => number(plan.specs[resource.key])))].sort((a, b) => a - b);
               const min = values[0] ?? 0;
               const max = values.at(-1) ?? 1;
               const at = (value: number) => `${((value - min) / (max - min || 1)) * 100}%`;
-              const Glyph = resource.icon;
+              const glyph = resource.icon;
               return (
                 <li key={resource.key}>
                   <div className={styles.scaleHead}>
-                    <span className={styles.scaleIcon}><Glyph size={18} weight="duotone" aria-hidden="true" /></span>
+                    <span className={styles.scaleIcon}><Image className={iconStyles.artwork} src={`/images/fluent-color/${glyph}.svg`} width={28} height={28} alt="" /></span>
                     <div>
                       <strong>{resource.carries}</strong>
                       {' '}
                       <span>{resource.text[kind]}</span>
                     </div>
                   </div>
-                  <div className={styles.scale} aria-label={`${resource.label} from ${min} to ${max} ${resource.unit} across ${eligible.length} plans`} role="img">
+                  <div className={styles.scale} aria-label={t.scaleLabel(resource.label, min, max, resource.unit, eligible.length)} role="img">
                     <i className={styles.rail} />
                     {values.map(value => (
                       <i key={value} className={styles.dot} style={{ left: at(value) }} />
@@ -255,7 +216,8 @@ export function OsResources({ plans, kind, children }: { plans: Plan[]; kind: Ki
 
 /* Regions with live numbers ------------------------------------------------ */
 
-export function OsRegions({ plans, kind }: { plans: Plan[]; kind: Kind }) {
+export function OsRegions({ plans, kind, locale = 'en' }: { plans: Plan[]; kind: Kind; locale?: SiteLocale }) {
+  const t = osCopy[locale].regions;
   const eligible = kind === 'windows' ? plans.filter(plan => plan.source.os !== 'linux-only') : plans;
   const regions = (['USA', 'EU'] as const).map((region) => {
     const list = eligible.filter(plan => plan.location === region);
@@ -267,32 +229,32 @@ export function OsRegions({ plans, kind }: { plans: Plan[]; kind: Kind }) {
   return (
     <section className="sr-section sr-section-border" aria-labelledby={`${kind}-regions`}>
       <div className="sr-container">
-        <Head kicker="Regions" title="USA or EU" id={`${kind}-regions`}>
-          Choose the region that fits your users, latency and operating requirements. Figures come from the live catalogue.
+        <Head kicker={t.kicker} title={t.title} id={`${kind}-regions`}>
+          {t.intro}
         </Head>
         <ul className={styles.regions}>
           {regions.map(item => (
             <li key={item.region}>
-              <span className={styles.regionCode}>{item.region}</span>
+              <span className={styles.regionCode}>{t.names[item.region]}</span>
               <dl>
                 <div>
-                  <dt>Plans</dt>
+                  <dt>{t.plans}</dt>
                   <dd>{item.count}</dd>
                 </div>
                 <div>
-                  <dt>From</dt>
+                  <dt>{t.from}</dt>
                   <dd>
-                    {`€${item.from.toFixed(2)}`}
-                    <small>/mo</small>
+                    {formatEuro(item.from, locale)}
+                    <small>{t.perMonth}</small>
                   </dd>
                 </div>
                 <div>
-                  <dt>Servers in stock</dt>
+                  <dt>{t.stock}</dt>
                   <dd>{item.stock}</dd>
                 </div>
               </dl>
-              <Link href="/plans" className={styles.link}>
-                {`View ${item.region} plans`}
+              <Link href={localeHref('/plans', locale)} className={styles.link}>
+                {t.view(t.names[item.region])}
                 <ArrowRight size={15} aria-hidden="true" />
               </Link>
             </li>
@@ -305,75 +267,62 @@ export function OsRegions({ plans, kind }: { plans: Plan[]; kind: Kind }) {
 
 /* Support and limits ------------------------------------------------------ */
 
-const windowsGuides = [
-  { href: '/docs/how-do-i-log-into-windows', label: 'How do I log into Windows?' },
-  { href: '/docs/how-to-re-activate-and-extend-your-180-day-windows-trial', label: 'Extend the 180-day Windows trial' },
-  { href: '/docs/step-by-step-guide-to-fix-win-rm-and-install-net-framework', label: 'Fix WinRM and install .NET Framework' },
-  { href: '/docs/how-to-rebuild-a-server', label: 'How to rebuild a server' },
-];
-
-const linuxGuides = [
-  { href: '/docs/how-to-install-direct-admin-in-a-linux-server', label: 'Install DirectAdmin' },
-  { href: '/docs/install-cyber-panel-with-open-lite-speed-in-linux', label: 'Install CyberPanel with OpenLiteSpeed' },
-  { href: '/docs/how-to-setup-your-vpn-on-linux-server-using-outline', label: 'Set up an Outline VPN server' },
-  { href: '/docs/how-to-rebuild-a-server', label: 'How to rebuild a server' },
-];
-
-export function OsSupport({ kind }: { kind: Kind }) {
+export function OsSupport({ kind, locale = 'en' }: { kind: Kind; locale?: SiteLocale }) {
   const windows = kind === 'windows';
+  const t = osCopy[locale].support;
   return (
     <section className="sr-section sr-section-border" aria-labelledby={`${kind}-support`}>
       <div className="sr-container">
-        <Head kicker="Support and limits" title="Help when you need it, and the rules that apply" id={`${kind}-support`} />
+        <Head kicker={t.kicker} title={t.title} id={`${kind}-support`} />
         <div className={styles.support}>
           <article>
-            <span className={styles.supportIcon}><Lifebuoy size={20} weight="duotone" aria-hidden="true" /></span>
-            <h3>Support</h3>
+            <span className={styles.supportIcon}><Image className={iconStyles.artwork} src="/images/fluent-color/headset.svg" width={32} height={32} alt="" /></span>
+            <h3>{t.heading}</h3>
             <ul className={styles.channels}>
               <li>
-                <WhatsappLogo size={18} aria-hidden="true" />
-                <a href="https://wa.me/447441426993">WhatsApp support</a>
+                <WhatsappLogo size={22} weight="fill" aria-hidden="true" />
+                <a href="https://wa.me/447441426993">{t.whatsapp}</a>
               </li>
               <li>
-                <ChatCircleText size={18} aria-hidden="true" />
-                Client-area ticket system
+                <Image className={iconStyles.artwork} src="/images/fluent-color/chat.svg" width={24} height={24} alt="" />
+                {t.tickets}
               </li>
               <li>
-                <EnvelopeSimple size={18} aria-hidden="true" />
-                Support email
+                <Image className={iconStyles.artwork} src="/images/fluent-color/mail.svg" width={24} height={24} alt="" />
+                {t.email}
               </li>
             </ul>
-            <Link href="/faq" className={styles.link}>
-              Support details in the FAQ
+            <Link href={localeHref('/faq', locale)} className={styles.link}>
+              {t.faqLink}
               <ArrowRight size={15} aria-hidden="true" />
             </Link>
           </article>
           <article>
-            <span className={styles.supportIcon}><ShieldCheck size={20} weight="duotone" aria-hidden="true" /></span>
-            <h3>Your responsibilities</h3>
+            <span className={styles.supportIcon}><Image className={iconStyles.artwork} src="/images/fluent-color/person-key.svg" width={32} height={32} alt="" /></span>
+            <h3>{t.responsibilities}</h3>
             <p>
-              {windows ? 'Full Windows Administrator access' : 'Full root access'}
+              {windows ? t.access.windows : t.access.linux}
               {' '}
-              gives you control of the server and the software you install. You are responsible for regular backups of important data.
+              {t.accessRest}
             </p>
-            <p>Use must be lawful. The terms prohibit abuse, scanning, hacking, spam, botnets and similar misuse.</p>
+            <p>{t.lawful}</p>
             <Link href="/docs/use-of-service" className={styles.link}>
-              Use of Service terms
+              {t.terms}
               <ArrowRight size={15} aria-hidden="true" />
             </Link>
           </article>
           <article>
-            <span className={styles.supportIcon}><BookOpenText size={20} weight="duotone" aria-hidden="true" /></span>
-            <h3>Guides</h3>
+            <span className={styles.supportIcon}><Image className={iconStyles.artwork} src="/images/fluent-color/book-open.svg" width={32} height={32} alt="" /></span>
+            <h3>{t.guides}</h3>
             <ul className={styles.guides}>
-              {(windows ? windowsGuides : linuxGuides).map(guide => (
+              {(windows ? t.windowsGuides : t.linuxGuides).map(guide => (
                 <li key={guide.href}>
                   <Link href={guide.href}>{guide.label}</Link>
                 </li>
               ))}
             </ul>
             <Link href="/docs" className={styles.link}>
-              All help articles
+              {t.allHelp}
               <ArrowRight size={15} aria-hidden="true" />
             </Link>
           </article>
@@ -385,12 +334,14 @@ export function OsSupport({ kind }: { kind: Kind }) {
 
 /* Questions --------------------------------------------------------------- */
 
-export function OsFaq({ kind, title, questions, other }: {
-  kind: Kind;
+export function OsFaq({ kind, title, questions, other, locale = 'en' }: {
+  kind: Kind | 'plans';
+  locale?: SiteLocale;
   title: string;
   questions: ReadonlyArray<readonly [string, string]>;
   other: { title: string; text: string; href: string; label: string };
 }) {
+  const t = osCopy[locale].faq;
   return (
     <section className="sr-section sr-section-border" aria-labelledby={`${kind}-faq`}>
       <div className={`
@@ -399,11 +350,11 @@ export function OsFaq({ kind, title, questions, other }: {
       `}
       >
         <div className={styles.faqSide}>
-          <p className="sr-kicker">Common questions</p>
+          <p className="sr-kicker">{t.kicker}</p>
           <h2 className="sr-section-title" id={`${kind}-faq`}>{title}</h2>
-          <p>Quick answers for software, access, activation and support.</p>
+          <p>{t.intro}</p>
           <div className={styles.other}>
-            <span>Choose another environment</span>
+            <span>{t.other}</span>
             {' '}
             <strong>{other.title}</strong>
             {' '}

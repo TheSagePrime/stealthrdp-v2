@@ -1,7 +1,6 @@
 'use client';
 
-import type { Icon } from '@phosphor-icons/react';
-import { Browser, Lightning, MagnifyingGlass, Robot } from '@phosphor-icons/react';
+import type { CitadelCopy } from '@/content/i18n/en/citadel';
 import { useEffect, useId, useRef, useState } from 'react';
 import styles from './CitadelGate.module.css';
 
@@ -20,10 +19,14 @@ import styles from './CitadelGate.module.css';
 
 type Outcome = 'pass' | 'challenge' | 'limit';
 
+type GateWords = CitadelCopy['gate'];
+
+/* `name` is the English label and the React key; the page copy gives the shown label by index. */
 type Lane = {
   name: string;
   request: string;
-  icon: Icon;
+  /* Fluent Color artwork, same set as the rest of the site. */
+  icon: string;
   outcome: Outcome;
   comets: number;
   dur: number;
@@ -31,10 +34,10 @@ type Lane = {
 };
 
 const lanes: Lane[] = [
-  { name: 'Visitor', request: 'GET /pricing', icon: Browser, outcome: 'pass', comets: 3, dur: 3.9, offset: 0 },
-  { name: 'Search bot', request: 'GET /sitemap.xml', icon: MagnifyingGlass, outcome: 'pass', comets: 1, dur: 4.4, offset: 1.6 },
-  { name: 'Headless bot', request: 'POST /login', icon: Robot, outcome: 'challenge', comets: 2, dur: 3.4, offset: 0.7 },
-  { name: 'HTTP flood', request: 'GET /search?q=…', icon: Lightning, outcome: 'limit', comets: 4, dur: 2.2, offset: 0.25 },
+  { name: 'Visitor', request: 'GET /pricing', icon: '/images/fluent-color/globe.svg', outcome: 'pass', comets: 3, dur: 3.9, offset: 0 },
+  { name: 'Search bot', request: 'GET /sitemap.xml', icon: '/images/fluent-color/search-visual.svg', outcome: 'pass', comets: 1, dur: 4.4, offset: 1.6 },
+  { name: 'Headless bot', request: 'POST /login', icon: '/images/fluent-color/bot.svg', outcome: 'challenge', comets: 2, dur: 3.4, offset: 0.7 },
+  { name: 'HTTP flood', request: 'GET /search?q=…', icon: '/images/fluent-color/gauge.svg', outcome: 'limit', comets: 4, dur: 2.2, offset: 0.25 },
 ];
 
 /* Share of a pass comet's cycle spent travelling; the rest it is hidden. */
@@ -127,8 +130,10 @@ function palette(element: Element) {
   return {
     primary,
     glow: token('--citadel-glow'),
-    bad: token('--status-bad'),
-    warn: token('--status-warn'),
+    /* Same red as the status page's down bars. */
+    bad: token('--uptime-down'),
+    /* Same orange as the status page's degraded bars. */
+    warn: token('--uptime-degraded'),
     surface: token('--citadel-surface'),
     neutral: mix(token('--citadel-muted'), primary, 0.72),
   };
@@ -206,6 +211,11 @@ function useBeamCanvas(
     block.addColorStop(at(core[axis] - radius - 90), rgba(colors.neutral));
     block.addColorStop(at(core[axis] - radius), rgba(colors.bad));
     block.addColorStop(1, rgba(colors.bad));
+    const challenge = gradient();
+    challenge.addColorStop(0, rgba(colors.neutral));
+    challenge.addColorStop(at(core[axis] - radius - 90), rgba(colors.neutral));
+    challenge.addColorStop(at(core[axis] - radius), rgba(colors.warn));
+    challenge.addColorStop(1, rgba(colors.warn));
     const out = gradient();
     out.addColorStop(at(core[axis]), rgba(colors.primary));
     out.addColorStop(1, rgba(colors.glow));
@@ -247,7 +257,7 @@ function useBeamCanvas(
     const comet = (path: ReturnType<typeof sampler>, share: number, style: CanvasGradient, alpha: number) => {
       context.setLineDash([]);
       context.strokeStyle = style;
-      for (const [dash, width, layer] of [[38, 15, 0.14], [26, 8, 0.3], [18, 4.5, 0.75], [8, 2.4, 1]] as const) {
+      for (const [dash, width, layer] of [[34, 3, 1]] as const) {
         context.globalAlpha = alpha * layer;
         context.lineWidth = width;
         path.trace(context, share - dash / path.length, share);
@@ -277,10 +287,10 @@ function useBeamCanvas(
       context.clip('evenodd');
 
       shapes.forEach((shape, index) => {
-        const style = lanes[index]!.outcome === 'pass' ? pass : block;
-        stroke(shape.lanePath, style, 2, 0.4, [0.01, 7], -((time * (28 + index * 3)) % 7));
+        const style = lanes[index]!.outcome === 'pass' ? pass : lanes[index]!.outcome === 'challenge' ? challenge : block;
+        stroke(shape.lanePath, style, 1.25, 0.35, [], 0);
       });
-      stroke(laser, out, 2, 0.9, [0.01, 9], -((time * 40) % 9));
+      stroke(laser, out, 2, 0.9, [], 0);
 
       shapes.forEach((shape, index) => {
         const lane = lanes[index]!;
@@ -300,7 +310,7 @@ function useBeamCanvas(
             const share = Math.min(1, phase / BLOCK_HIT);
             const alpha = envelope(phase, 0.03, BLOCK_HIT + hold, BLOCK_HIT + hold + 0.06);
             if (alpha > 0) {
-              comet(shape.laneSampler, share, block, alpha);
+              comet(shape.laneSampler, share, lane.outcome === 'challenge' ? challenge : block, alpha);
             }
           }
         }
@@ -371,29 +381,6 @@ function useBeamCanvas(
           }
         }
       });
-
-      /* Core: a breathing aura around the disc and a sweep inside it. */
-      const breath = 0.35 + 0.45 * (0.5 - 0.5 * Math.cos((time / 2.8) * Math.PI * 2));
-      const aura = context.createRadialGradient(core[0], core[1], radius - 2, core[0], core[1], radius + 18);
-      aura.addColorStop(0, rgba(colors.glow, 0.5 * breath));
-      aura.addColorStop(1, rgba(colors.glow, 0));
-      context.globalAlpha = 1;
-      context.fillStyle = aura;
-      context.beginPath();
-      context.arc(core[0], core[1], radius + 18, 0, Math.PI * 2);
-      context.arc(core[0], core[1], radius, 0, Math.PI * 2, true);
-      context.fill();
-
-      if ('createConicGradient' in context) {
-        const sweep = context.createConicGradient(((time / 3.6) % 1) * Math.PI * 2, core[0], core[1]);
-        sweep.addColorStop(0, rgba(colors.glow, 0.34));
-        sweep.addColorStop(0.17, rgba(colors.glow, 0));
-        sweep.addColorStop(1, rgba(colors.glow, 0));
-        context.fillStyle = sweep;
-        context.beginPath();
-        context.arc(core[0], core[1], radius - 8, 0, Math.PI * 2);
-        context.fill();
-      }
     };
 
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -458,7 +445,7 @@ function useBeamCanvas(
   }, [name, canvas, flashes]);
 }
 
-function Scene({ name, prefix }: { name: LayoutName; prefix: string }) {
+function Scene({ name, prefix, t }: { name: LayoutName; prefix: string; t: GateWords }) {
   const layout = layouts[name];
   const wide = name === 'wide';
   const { core, radius, origin } = layout;
@@ -472,14 +459,16 @@ function Scene({ name, prefix }: { name: LayoutName; prefix: string }) {
     ? { x1: core[0], y1: 0, x2: origin[0], y2: 0 }
     : { x1: 0, y1: core[1], x2: 0, y2: origin[1] };
 
+  const [blocked, limited] = t.wideTags;
+  const [blockedShort, limitedShort] = t.tallTags;
   const tags = wide
     ? [
-        { text: '403 · Challenge failed', x: core[0] - 76, y: core[1] + radius + 38, width: 152 },
-        { text: '429 · Rate limited', x: core[0] - 64, y: core[1] + radius + 66, width: 128 },
+        { text: blocked?.text ?? '', x: core[0] - (blocked?.width ?? 0) / 2, y: core[1] + radius + 38, width: blocked?.width ?? 0 },
+        { text: limited?.text ?? '', x: core[0] - (limited?.width ?? 0) / 2, y: core[1] + radius + 66, width: limited?.width ?? 0 },
       ]
     : [
-        { text: '403 Blocked', x: core[0] - 132, y: core[1] + radius + 28, width: 96 },
-        { text: '429 Limited', x: core[0] + 36, y: core[1] + radius + 28, width: 96 },
+        { text: blockedShort ?? '', x: core[0] - 132, y: core[1] + radius + 28, width: 96 },
+        { text: limitedShort ?? '', x: core[0] + 36, y: core[1] + radius + 28, width: 96 },
       ];
 
   return (
@@ -487,21 +476,14 @@ function Scene({ name, prefix }: { name: LayoutName; prefix: string }) {
       {/* Back layer: light, tracks and the core body */}
       <svg viewBox={viewBox} className={styles.back} aria-hidden="true">
         <defs>
-          <radialGradient id={id('halo')}>
-            <stop offset="0%" className={styles.haloInner} />
-            <stop offset="55%" className={styles.haloMid} />
-            <stop offset="100%" className={styles.haloOuter} />
-          </radialGradient>
           <linearGradient id={id('out')} gradientUnits="userSpaceOnUse" {...outAxis}>
             <stop offset="0%" className={styles.stopPrimary} />
             <stop offset="100%" className={styles.stopGlow} />
           </linearGradient>
         </defs>
-        <circle cx={core[0]} cy={core[1]} r={radius + 120} fill={`url(#${id('halo')})`} />
         {lanes.map((lane, index) => (
           <path key={lane.name} d={beam(name, index).lane} className={styles.track} />
         ))}
-        <path d={`M${fmt(core)} L${fmt(origin)}`} className={styles.laserGlow} stroke={`url(#${id('out')})`} />
         <path d={`M${fmt(core)} L${fmt(origin)}`} className={styles.outTrack} stroke={`url(#${id('out')})`} />
         <circle cx={core[0]} cy={core[1]} r={radius} className={styles.coreDisc} />
         <circle cx={core[0]} cy={core[1]} r={radius - 8} className={styles.coreInner} />
@@ -550,23 +532,22 @@ function Scene({ name, prefix }: { name: LayoutName; prefix: string }) {
 
         {lanes.map((lane, index) => {
           const [sx, sy] = layout.source(index);
-          const LaneIcon = lane.icon;
           return wide
             ? (
                 <g key={lane.name}>
                   <rect x="0" y={sy - 23} width="160" height="46" rx="23" className={styles.pill} />
-                  <circle cx="23" cy={sy} r="15" className={styles.pillIcon} />
-                  <LaneIcon x={14} y={sy - 9} size={18} weight="duotone" className={styles.icon} />
-                  <text x="46" y={sy - 3} className={styles.name}>{lane.name}</text>
+                  <circle cx="23" cy={sy} r="18" className={styles.pillIcon} />
+                  <image href={lane.icon} x="11" y={sy - 12} width="24" height="24" />
+                  <text x="46" y={sy - 3} className={styles.name}>{t.lanes[index] ?? lane.name}</text>
                   <text x="46" y={sy + 12} className={styles.request}>{lane.request}</text>
                 </g>
               )
             : (
                 <g key={lane.name}>
                   <circle cx={sx} cy="34" r="22" className={styles.pill} />
-                  <circle cx={sx} cy="34" r="15" className={styles.pillIcon} />
-                  <LaneIcon x={sx - 9} y={25} size={18} weight="duotone" className={styles.icon} />
-                  <text x={sx} y="78" textAnchor="middle" className={styles.name}>{lane.name}</text>
+                  <circle cx={sx} cy="34" r="18" className={styles.pillIcon} />
+                  <image href={lane.icon} x={sx - 12} y="22" width="24" height="24" />
+                  <text x={sx} y="78" textAnchor="middle" className={styles.name}>{t.lanes[index] ?? lane.name}</text>
                   <text x={sx} y="93" textAnchor="middle" className={styles.request}>{lane.request.split(' ')[1]}</text>
                 </g>
               );
@@ -577,21 +558,21 @@ function Scene({ name, prefix }: { name: LayoutName; prefix: string }) {
           ? (
               <g transform={`translate(${origin[0]} ${origin[1]})`}>
                 <rect x="0" y="-23" width="150" height="46" rx="23" className={styles.origin} />
-                <circle cx="23" cy="0" r="15" className={styles.originTile} />
-                <Browser x={14} y={-9} size={18} weight="duotone" className={styles.originIcon} />
-                <text x="46" y="-3" className={styles.name}>Your origin</text>
+                <circle cx="23" cy="0" r="18" className={styles.originTile} />
+                <image href="/images/fluent-color/database.svg" x="11" y="-12" width="24" height="24" />
+                <text x="46" y="-3" className={styles.name}>{t.origin}</text>
                 <circle cx="50" cy="10" r="3" className={styles.okDot} />
-                <text x="58" y="14" className={styles.note}>Clean traffic</text>
+                <text x="58" y="14" className={styles.note}>{t.clean}</text>
               </g>
             )
           : (
               <g transform={`translate(${origin[0]} ${origin[1] + 22})`}>
                 <circle r="22" className={styles.origin} />
-                <circle r="15" className={styles.originTile} />
-                <Browser x={-9} y={-9} size={18} weight="duotone" className={styles.originIcon} />
-                <text y="44" textAnchor="middle" className={styles.name}>Your origin</text>
+                <circle r="18" className={styles.originTile} />
+                <image href="/images/fluent-color/database.svg" x="-12" y="-12" width="24" height="24" />
+                <text y="44" textAnchor="middle" className={styles.name}>{t.origin}</text>
                 <circle cx="-38" cy="56" r="3" className={styles.okDot} />
-                <text x="-30" y="60" className={styles.note}>Clean traffic</text>
+                <text x="-30" y="60" className={styles.note}>{t.clean}</text>
               </g>
             )}
       </svg>
@@ -599,22 +580,22 @@ function Scene({ name, prefix }: { name: LayoutName; prefix: string }) {
   );
 }
 
-type Decision = { verdict: 'Pass' | 'Challenge' | 'Block' | 'Limit'; request: string; reason: string };
+type Decision = { verdict: 'Pass' | 'Challenge' | 'Block' | 'Limit'; request: string; reason: keyof GateWords['reasons'] };
 
 const decisions: Decision[] = [
-  { verdict: 'Pass', request: 'GET /pricing', reason: 'Browser session verified' },
-  { verdict: 'Limit', request: 'GET /search?q=…', reason: '429 · over the rate-limit preset' },
-  { verdict: 'Challenge', request: 'POST /login', reason: 'JS challenge issued' },
-  { verdict: 'Pass', request: 'GET /sitemap.xml', reason: 'Search crawler' },
-  { verdict: 'Block', request: 'POST /login', reason: '403 · challenge failed, strike added' },
-  { verdict: 'Limit', request: 'GET /search?q=…', reason: '429 · over the rate-limit preset' },
-  { verdict: 'Pass', request: 'GET /assets/app.css', reason: 'Served from cache' },
-  { verdict: 'Pass', request: 'POST /api/webhook', reason: 'Path allowlisted' },
+  { verdict: 'Pass', request: 'GET /pricing', reason: 'verified' },
+  { verdict: 'Limit', request: 'GET /search?q=…', reason: 'rateLimited' },
+  { verdict: 'Challenge', request: 'POST /login', reason: 'challenged' },
+  { verdict: 'Pass', request: 'GET /sitemap.xml', reason: 'crawler' },
+  { verdict: 'Block', request: 'POST /login', reason: 'blocked' },
+  { verdict: 'Limit', request: 'GET /search?q=…', reason: 'rateLimited' },
+  { verdict: 'Pass', request: 'GET /assets/app.css', reason: 'cached' },
+  { verdict: 'Pass', request: 'POST /api/webhook', reason: 'allowlisted' },
 ];
 
 const verdictTone = { Pass: 'pass', Challenge: 'challenge', Block: 'block', Limit: 'block' } as const;
 
-export function CitadelGate() {
+export function CitadelGate({ copy: t }: { copy: GateWords }) {
   const prefix = useId().replace(/[^a-z0-9]/gi, '');
   const root = useRef<HTMLElement>(null);
   const [tick, setTick] = useState(0);
@@ -659,26 +640,25 @@ export function CitadelGate() {
   return (
     <figure ref={root} className={styles.figure} aria-labelledby={`${prefix}-caption`}>
       <div className={styles.stage}>
-        <Scene name="wide" prefix={prefix} />
-        <Scene name="tall" prefix={prefix} />
+        <Scene name="wide" prefix={prefix} t={t} />
+        <Scene name="tall" prefix={prefix} t={t} />
       </div>
 
       <div className={styles.log}>
-        <p className={styles.logHead}>Decision log</p>
+        <p className={styles.logHead}>{t.logHead}</p>
         <ol aria-hidden="true">
           {rows.map(row => (
             <li key={row.key} data-tone={verdictTone[row.verdict]}>
-              <b>{row.verdict}</b>
+              <b>{t.verdicts[row.verdict]}</b>
               <code>{row.request}</code>
-              <span>{row.reason}</span>
+              <span>{t.reasons[row.reason]}</span>
             </li>
           ))}
         </ol>
       </div>
 
       <figcaption id={`${prefix}-caption`} className={styles.caption}>
-        How Citadel handles requests: visitors and search crawlers pass through Citadel to the
-        origin, a headless bot fails a JS challenge and is blocked with 403, and an HTTP flood is rate-limited with 429.
+        {t.caption}
       </figcaption>
     </figure>
   );

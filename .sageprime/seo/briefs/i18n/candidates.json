@@ -1,0 +1,587 @@
+{
+  "introduction": [
+    [
+      "agb vps hosting",
+      "allgemeine geschäftsbedingungen hosting"
+    ],
+    [
+      "términos y condiciones hosting",
+      "condiciones de servicio vps"
+    ]
+  ],
+  "use-of-service": [
+    [
+      "acceptable use policy deutsch",
+      "nutzungsbedingungen vps"
+    ],
+    [
+      "política de uso aceptable",
+      "condiciones de uso servidor"
+    ]
+  ],
+  "termination-of-service": [
+    [
+      "vps kündigen",
+      "server kündigung"
+    ],
+    [
+      "cancelar vps",
+      "baja servicio hosting"
+    ]
+  ],
+  "payment-terms": [
+    [
+      "vps mit paypal bezahlen",
+      "vps mit krypto bezahlen",
+      "vps bitcoin"
+    ],
+    [
+      "vps pagar con bitcoin",
+      "vps con criptomonedas",
+      "vps pagar con paypal"
+    ]
+  ],
+  "user-responsibilities": [
+    [
+      "pflichten des kunden hosting"
+    ],
+    [
+      "responsabilidades del cliente hosting"
+    ]
+  ],
+  "windows-rearm": [
+    [
+      "slmgr rearm",
+      "windows server testversion verlängern",
+      "windows server 180 tage verlängern",
+      "windows server evaluation verlängern"
+    ],
+    [
+      "slmgr rearm",
+      "ampliar evaluación windows server",
+      "windows server 180 días"
+    ]
+  ],
+  "server-stops-randomly": [
+    [
+      "windows server fährt automatisch herunter",
+      "windows server evaluation abgelaufen",
+      "server schaltet sich jede stunde ab"
+    ],
+    [
+      "windows server se apaga solo",
+      "windows server evaluación expirada",
+      "servidor se apaga cada hora"
+    ]
+  ],
+  "rdp-login": [
+    [
+      "remotedesktopverbindung",
+      "remote desktop verbindung",
+      "remotedesktopverbindung einrichten",
+      "rdp mac",
+      "remotedesktop iphone",
+      "remote desktop verbindung herstellen"
+    ],
+    [
+      "escritorio remoto windows",
+      "conexión a escritorio remoto",
+      "escritorio remoto mac",
+      "escritorio remoto windows 11",
+      "como conectarse a un vps"
+    ]
+  ],
+  "htaccess-https": [
+    [
+      "htaccess https weiterleitung",
+      "http auf https umleiten htaccess",
+      "htaccess https erzwingen"
+    ],
+    [
+      "htaccess redirigir http a https",
+      "forzar https htaccess",
+      "redireccion https htaccess"
+    ]
+  ],
+  "why-https": [
+    [
+      "http auf https umleiten",
+      "warum https",
+      "https weiterleitung"
+    ],
+    [
+      "redirigir http a https",
+      "por qué usar https",
+      "redireccion 301 https"
+    ]
+  ],
+  "wordpress-speed": [
+    [
+      "wordpress schneller machen",
+      "wordpress ladezeit verbessern",
+      "wordpress performance optimieren"
+    ],
+    [
+      "acelerar wordpress",
+      "optimizar velocidad wordpress",
+      "wordpress lento"
+    ]
+  ],
+  "outline-vpn": [
+    [
+      "outline vpn server einrichten",
+      "eigenen vpn server erstellen",
+      "outline vpn"
+    ],
+    [
+      "outline vpn",
+      "crear servidor vpn propio",
+      "instalar outline vpn"
+    ]
+  ],
+  "openvpn-tun": [
+    [
+      "openvpn tun/tap",
+      "tun tap aktivieren vps",
+      "openvpn tun device"
+    ],
+    [
+      "openvpn tun tap",
+      "activar tun tap vps",
+      "error tun openvpn"
+    ]
+  ],
+  "cwp": [
+    [
+      "centos web panel installieren",
+      "control web panel",
+      "cwp installieren"
+    ],
+    [
+      "centos web panel",
+      "instalar cwp",
+      "control web panel"
+    ]
+  ],
+  "directadmin": [
+    [
+      "directadmin installieren",
+      "directadmin"
+    ],
+    [
+      "instalar directadmin",
+      "directadmin"
+    ]
+  ],
+  "cpanel": [
+    [
+      "cpanel installieren",
+      "cpanel whm installieren",
+      "cpanel lizenz"
+    ],
+    [
+      "instalar cpanel",
+      "cpanel whm",
+      "licencia cpanel"
+    ]
+  ],
+  "cyberpanel": [
+    [
+      "cyberpanel installieren",
+      "cyberpanel",
+      "openlitespeed"
+    ],
+    [
+      "instalar cyberpanel",
+      "cyberpanel",
+      "openlitespeed"
+    ]
+  ],
+  "fastpanel": [
+    [
+      "fastpanel",
+      "fastpanel installieren",
+      "kostenloses hosting panel"
+    ],
+    [
+      "fastpanel",
+      "instalar fastpanel",
+      "panel de hosting gratis"
+    ]
+  ],
+  "rebuild": [
+    [
+      "vps neu installieren",
+      "server neu aufsetzen",
+      "betriebssystem neu installieren vps"
+    ],
+    [
+      "reinstalar vps",
+      "reinstalar servidor",
+      "cambiar sistema operativo vps"
+    ]
+  ],
+  "reset-password": [
+    [
+      "vps passwort zurücksetzen",
+      "root passwort vergessen",
+      "administrator passwort vergessen server"
+    ],
+    [
+      "restablecer contraseña vps",
+      "olvidé contraseña root",
+      "cambiar contraseña servidor"
+    ]
+  ],
+  "winrm-dotnet": [
+    [
+      "winrm aktivieren",
+      ".net framework 3.5 installieren windows server",
+      "winrm konfigurieren"
+    ],
+    [
+      "habilitar winrm",
+      "instalar .net framework 3.5 windows server",
+      "configurar winrm"
+    ]
+  ],
+  "windows-licensing": [
+    [
+      "windows server lizenz",
+      "windows server 2025 lizenz",
+      "windows server lizenz kaufen",
+      "windows vps lizenz"
+    ],
+    [
+      "licencia windows server",
+      "licencia windows server 2025",
+      "comprar licencia windows server"
+    ]
+  ],
+  "citadel-getting-started": [
+    [
+      "ddos schutz website",
+      "layer 7 ddos schutz",
+      "ddos schutz einrichten"
+    ],
+    [
+      "protección ddos web",
+      "protección ddos capa 7",
+      "anti ddos web"
+    ]
+  ],
+  "citadel-cloudflare": [
+    [
+      "cloudflare proxy einrichten",
+      "cloudflare dns einrichten"
+    ],
+    [
+      "configurar cloudflare",
+      "cloudflare proxy"
+    ]
+  ],
+  "citadel-challenge": [
+    [
+      "bot schutz website",
+      "captcha bot schutz",
+      "js challenge"
+    ],
+    [
+      "protección contra bots",
+      "bloquear bots web"
+    ]
+  ],
+  "citadel-cache": [
+    [
+      "website cache leeren",
+      "cdn cache"
+    ],
+    [
+      "purgar caché",
+      "caché cdn"
+    ]
+  ],
+  "citadel-allowlist": [
+    [
+      "ip whitelist website",
+      "ip whitelisting"
+    ],
+    [
+      "lista blanca ip",
+      "whitelist ip"
+    ]
+  ],
+  "citadel-ratelimit": [
+    [
+      "rate limiting",
+      "rate limit website"
+    ],
+    [
+      "rate limiting",
+      "limitar peticiones web"
+    ]
+  ],
+  "citadel-logs": [
+    [
+      "zugriffslogs analysieren",
+      "access log"
+    ],
+    [
+      "logs de acceso",
+      "analizar logs servidor"
+    ]
+  ],
+  "citadel-502": [
+    [
+      "502 bad gateway",
+      "502 bad gateway beheben"
+    ],
+    [
+      "error 502 bad gateway",
+      "502 bad gateway solucion"
+    ]
+  ],
+  "rdp-speed": [
+    [
+      "remotedesktop langsam",
+      "rdp langsam",
+      "remote desktop verbindung langsam"
+    ],
+    [
+      "escritorio remoto lento",
+      "rdp lento",
+      "acelerar escritorio remoto"
+    ]
+  ],
+  "uptime-monitoring": [
+    [
+      "server monitoring tools",
+      "uptime monitoring",
+      "server überwachung"
+    ],
+    [
+      "monitorizacion de servidores",
+      "uptime monitoring",
+      "herramientas monitoreo servidores"
+    ]
+  ],
+  "rdp-security": [
+    [
+      "remotedesktop sicherheit",
+      "rdp absichern",
+      "rdp port ändern"
+    ],
+    [
+      "seguridad escritorio remoto",
+      "asegurar rdp",
+      "cambiar puerto rdp"
+    ]
+  ],
+  "vps-upgrade": [
+    [
+      "vps upgrade",
+      "wann vps upgraden",
+      "vps zu langsam"
+    ],
+    [
+      "actualizar vps",
+      "vps lento",
+      "cuando ampliar vps"
+    ]
+  ],
+  "vps-issues": [
+    [
+      "vps probleme",
+      "vserver probleme lösen"
+    ],
+    [
+      "problemas vps",
+      "errores comunes vps"
+    ]
+  ],
+  "vps-bottlenecks": [
+    [
+      "vps performance",
+      "vserver langsam",
+      "server performance verbessern"
+    ],
+    [
+      "rendimiento vps",
+      "vps lento",
+      "mejorar rendimiento servidor"
+    ]
+  ],
+  "vps-ddos": [
+    [
+      "vps ddos schutz",
+      "vserver ddos schutz",
+      "ddos angriff",
+      "ddos schutz"
+    ],
+    [
+      "vps protección ddos",
+      "vps anti ddos",
+      "ataque ddos",
+      "protección ddos"
+    ]
+  ],
+  "ha-vps": [
+    [
+      "hochverfügbarkeit server",
+      "high availability vps",
+      "failover server"
+    ],
+    [
+      "alta disponibilidad servidor",
+      "vps alta disponibilidad",
+      "failover servidor"
+    ]
+  ],
+  "vps-backup": [
+    [
+      "vps backup",
+      "vserver backup",
+      "server backup automatisch"
+    ],
+    [
+      "backup vps",
+      "copia de seguridad vps",
+      "backup automatico servidor"
+    ]
+  ],
+  "control-panels": [
+    [
+      "vserver verwaltung",
+      "hosting control panel",
+      "plesk vs cpanel",
+      "webmin"
+    ],
+    [
+      "panel de control vps",
+      "plesk vs cpanel",
+      "webmin",
+      "panel de control hosting"
+    ]
+  ],
+  "vps-bots": [
+    [
+      "vps für bots",
+      "bot hosting",
+      "discord bot hosting",
+      "vps für automatisierung"
+    ],
+    [
+      "vps para bots",
+      "hosting bot discord",
+      "vps automatizacion"
+    ]
+  ],
+  "vps-storage": [
+    [
+      "storage vps",
+      "backup server mieten",
+      "speicher vps"
+    ],
+    [
+      "vps almacenamiento",
+      "servidor backup",
+      "storage vps"
+    ]
+  ],
+  "vps-rdp": [
+    [
+      "vps remote desktop",
+      "windows vps rdp",
+      "remote desktop server mieten"
+    ],
+    [
+      "vps escritorio remoto",
+      "vps windows rdp",
+      "escritorio remoto en la nube"
+    ]
+  ],
+  "vps-trading": [
+    [
+      "forex vps",
+      "vps server trading",
+      "mt4 vps",
+      "mt5 vps"
+    ],
+    [
+      "forex vps",
+      "vps para trading",
+      "vps mt4",
+      "vps mt5"
+    ]
+  ],
+  "vps-web": [
+    [
+      "vps für webseite",
+      "vserver webhosting",
+      "vps oder webhosting"
+    ],
+    [
+      "vps para web",
+      "vps o hosting compartido",
+      "hosting vps web"
+    ]
+  ],
+  "minecraft": [
+    [
+      "minecraft server selber hosten",
+      "minecraft server mieten",
+      "minecraft vps",
+      "minecraft server erstellen"
+    ],
+    [
+      "crear servidor minecraft",
+      "servidor minecraft",
+      "hosting minecraft",
+      "minecraft vps"
+    ]
+  ],
+  "win-vs-linux": [
+    [
+      "windows oder linux server",
+      "windows vs linux vps",
+      "linux vserver oder windows"
+    ],
+    [
+      "windows o linux vps",
+      "windows vs linux servidor",
+      "vps linux o windows"
+    ]
+  ],
+  "rdp-vps": [
+    [
+      "rdp server",
+      "rdp vps",
+      "windows rdp kaufen"
+    ],
+    [
+      "servidor rdp",
+      "rdp vps",
+      "comprar rdp"
+    ]
+  ],
+  "hub-help": [
+    [
+      "vps hilfe",
+      "vserver anleitung"
+    ],
+    [
+      "ayuda vps",
+      "tutorial vps"
+    ]
+  ],
+  "hub-blog": [
+    [
+      "vps blog",
+      "vserver ratgeber"
+    ],
+    [
+      "blog vps",
+      "guia vps"
+    ]
+  ]
+}

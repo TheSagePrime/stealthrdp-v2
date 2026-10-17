@@ -12,13 +12,17 @@ export default defineConfig({
   expect: { timeout: 15 * 1000 },
   webServer: {
     command: process.env.CI
-      ? "pglite-server -m 100 --run 'run-s db:migrate start'"
-      : "pglite-server -m 100 --run 'run-s db:migrate dev:next'",
+      ? 'pglite-server -m 100 --run \'run-s db:migrate start\''
+      : 'pglite-server -m 100 --run \'run-s db:migrate dev:next\'',
     url: baseURL,
     timeout: 60 * 1000,
     reuseExistingServer: !process.env.CI,
     gracefulShutdown: { signal: 'SIGTERM', timeout: 2 * 1000 },
     env: {
+      /* Serve the build under test as a preview. Without it the server counts as production and
+         redirects every request to https://www.stealthrdp.com, so the tests would check the live
+         site instead of this build (and every new page would 404 until it is deployed). */
+      APP_ENV: 'preview',
       BROWSER_TO_TERMINAL_ENABLED: 'false',
       NEXT_PUBLIC_SENTRY_ENABLED: 'false',
       NEXT_PUBLIC_APP_URL: baseURL,

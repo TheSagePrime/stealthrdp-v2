@@ -1,8 +1,12 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes, react-refresh/only-export-components */
-import { withCopyableCode } from '@/components/site/code/code-block-markup';
+import type { TOCItemType } from 'fumadocs-core/toc';
 import { CodeCopyListener } from '@/components/site/code/CodeCopyListener';
+import { CodeTabsListener } from '@/components/site/code/CodeTabsListener';
+import { renderGuideCode } from '@/components/site/code/highlight-guide-code';
+import { withClickToPlayVideos } from '@/components/site/video/video-embed-markup';
+import { VideoPlayListener } from '@/components/site/video/VideoPlayListener';
 
-export type ResourceHeading = {
+type ResourceHeading = {
   id: string;
   text: string;
   level?: 2 | 3;
@@ -27,7 +31,7 @@ function slugify(value: string): string {
     .replace(/^-+|-+$/g, '');
 }
 
-export function articleHeadings(html: string): ResourceHeading[] {
+function articleHeadings(html: string): ResourceHeading[] {
   const seen = new Map<string, number>();
   const headings: ResourceHeading[] = [];
 
@@ -51,6 +55,11 @@ export function articleHeadings(html: string): ResourceHeading[] {
   return headings;
 }
 
+/* The headings as Fumadocs table-of-contents items. */
+export function headingToc(html: string): TOCItemType[] {
+  return articleHeadings(html).map(heading => ({ title: heading.text, url: `#${heading.id}`, depth: heading.level ?? 2 }));
+}
+
 function withHeadingIds(html: string): string {
   const headings = articleHeadings(html);
   let index = 0;
@@ -66,7 +75,7 @@ function withHeadingIds(html: string): string {
 }
 
 // Article HTML is authored content. Add the small accessibility attribute it often
-// lacks: a title on embedded frames. Code blocks get focus in withCopyableCode.
+// lacks: a title on embedded frames.
 function withAccessibleEmbeds(html: string): string {
   return html
     .replace(/<iframe\b([^>]*)>/gi, (tag, attrs: string) =>
@@ -74,14 +83,25 @@ function withAccessibleEmbeds(html: string): string {
   ;
 }
 
-export function TrustedArticleBody({ html }: { html: string }) {
+// Article images load when they near the viewport, so off-screen images from
+// other hosts do not delay the page load.
+function withLazyImages(html: string): string {
+  return html.replace(/<img\b([^>]*)>/gi, (tag, attrs: string) =>
+    /\bloading\s*=/i.test(attrs) ? tag : `<img loading="lazy" decoding="async"${attrs}>`);
+}
+
+export async function TrustedArticleBody({ html }: { html: string }) {
+  // Code blocks are highlighted and framed on the server, as Help Center code blocks are.
+  const body = await renderGuideCode(withClickToPlayVideos(withHeadingIds(html)));
   return (
     <>
       <div
-        className="sr-richtext"
-        dangerouslySetInnerHTML={{ __html: withCopyableCode(withAccessibleEmbeds(withHeadingIds(html))) }}
+        className="sr-guide-body"
+        dangerouslySetInnerHTML={{ __html: withAccessibleEmbeds(withLazyImages(body)) }}
       />
       <CodeCopyListener />
+      <CodeTabsListener />
+      <VideoPlayListener />
     </>
   );
 }

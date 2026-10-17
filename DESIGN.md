@@ -1,6 +1,7 @@
 # StealthRDP Visual Direction
 
-Status: canonical visual source of truth
+Status: canonical visual source of truth. Exact colours, type, spacing, radii, shadows and
+component patterns: `DESIGN_TOKENS.md`.
 Applies to: public StealthRDP website
 
 References:
@@ -19,7 +20,9 @@ Do not design the public website like an admin dashboard, monitoring console, fa
 
 ## Visual personality
 
-- Dark, polished, high-contrast foundation.
+- Light, polished, high-contrast foundation (cool grey page `--background`, white surfaces, deep blue
+  `--primary`). The site runs in light mode only (`colorScheme: 'light'`); the `.dark` palette in
+  `global.css` is kept for primitives but no page uses it.
 - One clear StealthRDP brand accent plus a restrained secondary accent.
 - Large, confident sans-serif typography.
 - Generous spacing and strong visual hierarchy.
@@ -43,22 +46,22 @@ Ownership:
 - Component owns its internal padding.
 - Elements do not invent page-level spacing.
 
-Homepage order:
-1. Hero with one primary visual idea and two actions maximum.
-2. Compact trust/proof strip.
-3. Featured VPS plans.
-4. Infrastructure/performance explanation.
-5. USA + Europe location section.
-6. Verified customer proof.
-7. Resources/support.
+Homepage order (current, `src/app/[locale]/(marketing)/page.tsx`):
+1. Hero with one primary visual idea (the launch path) and two actions maximum.
+2. Supported operating systems band (real OS logos).
+3. Featured VPS plans (`#plans`).
+4. Use cases ("What can you run on a VPS?").
+5. Infrastructure explanation.
+6. Product choice: VPS hosting or Citadel.
+7. Verified customer reviews.
 8. Final conversion CTA.
 
 ## Layout contract
 
 - Content max width: 1240px.
 - Desktop gutter: 32px minimum.
-- Mobile gutter: 20px.
-- Marketing section rhythm: 72–112px depending on viewport.
+- Tablet gutter: 20px. Mobile gutter: 16px. (`.sr-container` in `stealth-v3.css`.)
+- Marketing section rhythm: about 48–104px depending on viewport (exact values in `DESIGN_TOKENS.md`).
 - Reading width: approximately 680–760px.
 - Hero text must dominate its visual.
 - Use asymmetry selectively to create hierarchy.
@@ -67,7 +70,9 @@ Homepage order:
 ## Components
 
 Use shadcn/ui + Radix as the canonical interactive foundation.
-Use Lucide for interface icons.
+Use Phosphor for interface and feature icons, Simple Icons or the vendor SVG for brand marks.
+Lucide is legacy: do not use it for new work (`stack.contract.json`, `design.contract.json`). The
+shadcn primitives in `src/components/ui` keep their Lucide icons.
 Build custom StealthRDP marketing components for hero, plans, infrastructure, locations, trust and conversion surfaces.
 
 Do not add another general-purpose UI kit.
@@ -142,6 +147,15 @@ Plans page:
 - visually align price and core specifications.
 - keep checkout actions obvious.
 
+Plan cards are frozen. Do not change the style of plan cards (`.sr-pick-card`, the homepage pricing
+cards) anywhere on the site without the owner's approval.
+On phones (640px and narrower) the owner approved a compact layout in October 2026: name and price on
+one row, specs as a 2 x 2 grid, Order Now, then OS and stock on one line (last blocks of
+`stealth-v3.css`). Their 16px/14px radii are a known exception
+to the radius scale (`marketing-palette.test.ts` reports them and waits on the owner).
+
+Checkout buttons say **Order Now** and link to WHMCS through `checkoutUrl()`.
+
 ## Motion
 
 Motion is optional and subordinate to clarity.
@@ -149,6 +163,42 @@ Use short transitions for hover, state changes and small visual emphasis.
 Respect reduced motion.
 Do not introduce heavy WebGL or scroll choreography.
 
+## Shared site elements
+
+- Header: adapted Shadcnblocks Navbar 1 with the StealthRDP logo and shared navigation on
+  the left, centered product/navigation links including VPS Plans, and language flags, Contact
+  and a primary-colored Log In pill on the right. WhatsApp remains available through the desktop floating button. The retired top bar and completed service
+  notice have been removed. The header stays sticky.
+- Below 1200px the same navigation and actions appear in a native modal side sheet, with
+  keyboard focus trapping, Escape and an explicit close button. Language links remain in
+  the header and link to the corresponding page or the language home page.
+- The existing desktop floating WhatsApp support button remains hidden on phones to keep
+  pricing and order buttons clear.
+- Consent banner bottom-left (`TrackingConsent`), shown only where consent is needed. Reject and
+  Accept stay the same size.
+- Footer: product, resource and company links, Privacy, Cookie settings, legal links.
+
 ## Quality bar
 
 A redesign is complete only when desktop and mobile renders look intentionally designed, hierarchy is obvious, spacing stays consistent, pages do not all use the same composition, product information remains easy to compare, and accessibility/SEO/security/performance gates pass.
+
+### Contact directory
+
+The localized Contact page adapts the free Shadcnblocks Contact 7 grid with existing
+shadcn Card and Button primitives. Support methods and community links are separate
+sections. Contact is available in desktop/mobile navigation and the footer; WhatsApp
+is a contact method rather than an extra header action. No form or response-time
+promise is introduced.
+
+### Shared footer
+
+The footer composes adapted Dashboardblocks Page Header and ChoiceCards primitives
+with existing shadcn Button components. An open logo-and-social row sits
+above unboxed link groups; Products includes Windows and Linux VPS. A compact
+legal row follows, without nested cards or tinted panels. Header actions, the brand description
+and the language picker are not repeated in the footer.
+Contact us is the support destination. No live status or form controls are added.
+
+## Color icon artwork
+
+Use locally hosted Microsoft Fluent Color SVGs for feature, resource, support and product illustrations across marketing pages, Citadel, Windows/Linux pages and the shared footer. Social marks retain their official Simple Icons brand colors. Small controls and semantic status indicators retain their existing readable icons. Artwork may lift subtly on hover; reduced-motion disables transforms. Do not recolor multicolor assets or add continuous decorative animation.

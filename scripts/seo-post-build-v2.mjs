@@ -14,7 +14,7 @@ const { resolveDeployEnv, isProductionDeployEnv } = await import(src('src/libs/s
 const { resolveSiteUrl } = await import(src('src/libs/seo/site-url.ts'));
 const { canonicalUrlForPath, normalizePathname } = await import(src('src/libs/seo/normalize.ts'));
 const { classifyPath } = await import(src('src/libs/seo/classify.ts'));
-const { localizedRoutePaths, stripLocalePrefix } = await import(src('src/libs/seo/locale.ts'));
+const { hreflangAlternates, localizedRoutePaths, stripLocalePrefix } = await import(src('src/libs/seo/locale.ts'));
 const { articlePathFor, findArticleForPath, isIndexableArticle, validateArticleHtml, validateArticleIndexHtml, validateArticleSitemapXml } = await import(
   src('src/libs/seo/articles.ts'),
 );
@@ -169,17 +169,24 @@ function validateRobotsMeta(route, routeClass, robots) {
   }
 }
 
+/* A page published in several languages lists every version plus x-default, exactly as
+   hreflangAlternates() resolves them; an English-only page lists none. */
 function validateAlternates(route, parsed) {
   if (AllLocales.length <= 1 || classifyPath(route, config) !== 'publicMarketing') {
     return;
   }
   const logical = stripLocalePrefix(route, config).path;
-  for (const locale of AllLocales) {
-    const expectedPath = localizedRoutePaths(logical, config).find(candidate => routeLocale(candidate) === locale)
-      ?? localizedRoutePaths(logical, config)[0];
-    const expected = canonicalUrlForPath(expectedPath, site, config);
-    if (parsed.alternates[locale] !== expected) {
-      reporter.fail(route, 'hreflang', `Missing or incorrect hreflang ${locale}`, expected, parsed.alternates[locale] || '');
+  const expected = Object.fromEntries(
+    Object.entries(hreflangAlternates(logical, config)).map(([lang, path]) => [lang, canonicalUrlForPath(path, site, config)]),
+  );
+  for (const [lang, url] of Object.entries(expected)) {
+    if (parsed.alternates[lang] !== url) {
+      reporter.fail(route, 'hreflang', `Missing or incorrect hreflang ${lang}`, url, parsed.alternates[lang] || '');
+    }
+  }
+  for (const [lang, url] of Object.entries(parsed.alternates)) {
+    if (!(lang in expected)) {
+      reporter.fail(route, 'hreflang', `Unexpected hreflang ${lang}: the page is not published in that language`, '', url);
     }
   }
 }
@@ -482,6 +489,23 @@ async function crawlSsr() {
       }
       for (const issue of validateArticleIndexHtml(indexResult.text, config, site)) {
         reporter.fail(articleIndexRoute, `article-${issue.code}`, issue.message);
+      }
+    }
+  }
+
+  /* A page that is not published in a language must not answer under that language's prefix:
+     /de/<page> returns 404 until the German version exists (localizedRoutes in src/config/i18n.ts). */
+  const logicalMarketing = [...config.routes.publicMarketing, ...(config.routes.dynamicPublic ?? [])];
+  for (const logical of logicalMarketing) {
+    const published = localizedRoutePaths(logical, config);
+    for (const locale of AllLocales.filter(item => item !== 'en')) {
+      const path = normalizedPath(`/${locale}${logical === '/' ? '' : logical}`);
+      if (published.includes(path)) {
+        continue;
+      }
+      const result = await fetchRaw(`${crawlOrigin}${path}`, 'manual');
+      if (result.status !== 404) {
+        reporter.fail(path, 'unpublished-locale', `Unpublished language version must return 404, got ${result.status}`, '404', String(result.status));
       }
     }
   }

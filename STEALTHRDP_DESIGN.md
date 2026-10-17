@@ -13,20 +13,24 @@ The public website should make those transitions clear instead of recreating tho
 
 ## Truth
 
-Use verified product data for pricing, availability, specifications, regions, licensing, refunds, uptime and provisioning claims.
+Use verified product data for pricing, availability, specifications, regions, licensing, refunds, uptime and provisioning claims. The approved wording is in `PRODUCT_FACTS.md`.
 
 Do not fabricate reviews, scarcity, live telemetry, deadlines or guarantees.
 
 ## Required product surfaces
 
-- Home: persuade and route to plans/checkout.
-- Plans: compare products.
-- Windows VPS: explain Windows-specific value and options.
-- Linux VPS: explain Linux-specific value and options.
-- Docs: help users complete tasks.
-- Status: show current service state.
-- Blog: publish useful technical content.
-- FAQ/about/legal: answer trust and policy questions.
+| Page | Job |
+|---|---|
+| `/` Home | Persuade and route to plans/checkout. |
+| `/plans` | Compare all VPS plans by region and billing cycle. |
+| `/windows-vps`, `/linux-vps` | Explain OS-specific value and options. |
+| `/citadel` | Sell Citadel, the separate Layer 7 protection product. |
+| `/rdp-vps`, `/vps-hosting-minecraft` | Buyer guides that target search intent. |
+| `/resources` | Search and browse guides, Help Center and FAQ in one place. |
+| `/docs`, `/citadel/docs` | Help users complete tasks. |
+| `/blog` | Publish useful technical guides. |
+| `/status` | Show current service state and 90-day uptime. |
+| `/faq`, `/about`, `/privacy` | Answer trust and policy questions. |
 
 ## References
 

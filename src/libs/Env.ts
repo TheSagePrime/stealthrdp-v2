@@ -7,6 +7,7 @@ export const Env = createEnv({
     BETTER_STACK_INGESTING_URL: z.string().url().optional(),
     BETTER_STACK_SOURCE_TOKEN: z.string().min(1).optional(),
     LOGGING_LEVEL: z.enum(['error', 'info', 'debug', 'warning', 'trace', 'fatal']).default('info'),
+    UPTIMEROBOT_API_KEY: z.string().min(1).optional(),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().optional(),
@@ -21,6 +22,7 @@ export const Env = createEnv({
     BETTER_STACK_INGESTING_URL: process.env.BETTER_STACK_INGESTING_URL,
     BETTER_STACK_SOURCE_TOKEN: process.env.BETTER_STACK_SOURCE_TOKEN,
     LOGGING_LEVEL: process.env.LOGGING_LEVEL,
+    UPTIMEROBOT_API_KEY: process.env.UPTIMEROBOT_API_KEY,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     NEXT_PUBLIC_SENTRY_ENABLED: process.env.NEXT_PUBLIC_SENTRY_ENABLED,
     NEXT_PUBLIC_SENTRY_REPLAY_ENABLED: process.env.NEXT_PUBLIC_SENTRY_REPLAY_ENABLED,

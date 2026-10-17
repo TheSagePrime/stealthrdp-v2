@@ -284,7 +284,7 @@ export function buildArticleJsonLd(
       ? {
           publisher: {
             '@type': 'Organization',
-            '@id': `${resolvedSite.origin}#organization`,
+            '@id': `${resolvedSite.origin}/#organization`,
             'name': config.brand.companyName,
             ...(config.brand.logoUrl ? { logo: absoluteAlternateUrl(config.brand.logoUrl, resolvedSite, config) } : {}),
           },

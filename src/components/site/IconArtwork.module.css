@@ -1,0 +1,24 @@
+.artwork.artwork {
+  display: block;
+  margin: 0;
+  flex-shrink: 0;
+  object-fit: contain;
+  transition: transform 180ms ease;
+}
+:global(a):hover .artwork,
+:global(button):hover .artwork,
+:global(article):hover .artwork,
+:global(li):hover > :global(span) > .artwork {
+  transform: translateY(-2px) scale(1.06);
+}
+@media (prefers-reduced-motion: reduce) {
+  .artwork {
+    transition: none;
+  }
+  :global(a):hover .artwork,
+  :global(button):hover .artwork,
+  :global(article):hover .artwork,
+  :global(li):hover > :global(span) > .artwork {
+    transform: none;
+  }
+}

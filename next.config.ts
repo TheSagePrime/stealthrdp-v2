@@ -6,18 +6,29 @@ import { whmcsLegacyRedirects } from './src/config/legacy-redirects-whmcs';
 import { isProductionDeployEnv, resolveDeployEnv } from './src/libs/seo/env';
 import './src/libs/Env';
 
+/* Hosts that the tags in the server-side GTM container (sgtm.stealthrdp.com) use, measured
+   in a browser on the live site: Google Ads remarketing, GA4, the Meta pixel (with its
+   Conversions API parameter builder and its form fallback to /tr) and the Yandex
+   verification template. Images need no entry because img-src allows https:. */
+const tagHosts = {
+  script: 'https://googleads.g.doubleclick.net https://connect.facebook.net https://capi-automation.s3.us-east-2.amazonaws.com/public/client_js/ https://cdn.jsdelivr.net/gh/yandex/',
+  connect: 'https://analytics.google.com https://ad.doubleclick.net https://www.google.com',
+  frame: 'https://sgtm.stealthrdp.com https://www.facebook.com',
+  form: 'https://www.facebook.com',
+};
+
 const csp = [
   'default-src \'self\'',
   'base-uri \'self\'',
   'object-src \'none\'',
   'frame-ancestors \'none\'',
-  'form-action \'self\'',
+  `form-action 'self' ${tagHosts.form}`,
   'img-src \'self\' data: blob: https:',
   'font-src \'self\' data: https:',
   'style-src \'self\' \'unsafe-inline\'',
-  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? ' \'unsafe-eval\'' : ''} https://sgtm.stealthrdp.com https://datafa.st https://www.googletagmanager.com https://*.googletagmanager.com`,
-  'connect-src \'self\' https://*.sentry.io https://sgtm.stealthrdp.com https://datafa.st https://*.google-analytics.com https://*.analytics.google.com',
-  'frame-src \'self\' https://www.youtube.com https://www.youtube-nocookie.com',
+  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === 'development' ? ' \'unsafe-eval\'' : ''} https://sgtm.stealthrdp.com https://datafa.st https://www.googletagmanager.com https://*.googletagmanager.com ${tagHosts.script}`,
+  `connect-src 'self' https://*.sentry.io https://sgtm.stealthrdp.com https://datafa.st https://*.google-analytics.com https://*.analytics.google.com ${tagHosts.connect}`,
+  `frame-src 'self' https://www.youtube.com https://www.youtube-nocookie.com ${tagHosts.frame}`,
   'worker-src \'self\' blob:',
   ...(process.env.NODE_ENV === 'production' ? ['upgrade-insecure-requests'] : []),
 ].join('; ');

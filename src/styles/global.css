@@ -71,6 +71,9 @@
   --radius-lg: 18px;
   --radius-xl: 18px;
   --radius-full: 999px;
+  /* Frozen plan cards keep their 16px corners (DESIGN.md). */
+  --radius-plan-card: 16px;
+  --radius-plan-card-compact: 14px;
 
   /* type families — DESIGN.md section 4. One sans family + one technical mono. */
   --font-display: 'IBM Plex Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -172,8 +175,8 @@
 }
 
 /* ==========================================================================
-   :root — light counterpart. The public site renders dark (.dark on <html>);
-   this block keeps the shadcn visual contract honest in light mode.
+   :root — the live palette. The public site renders light only (colorScheme 'light');
+   the .dark block below is kept for primitives. Reference: DESIGN_TOKENS.md.
    ========================================================================== */
 
 :root {
@@ -228,6 +231,11 @@
   --status-warn: #8a5a06;
   --status-bad: #b3261e;
   --status-unknown: #5c6a84;
+  /* /status day bars: the colours UptimeRobot uses on its own status pages. Bars only, never text. */
+  --uptime-up: #3bd671;
+  --uptime-degraded: #f29030;
+  --uptime-down: #df484a;
+  --uptime-none: #687790;
 }
 
 /* Shared dark palette. Marketing and shadcn primitives use the same tokens. */

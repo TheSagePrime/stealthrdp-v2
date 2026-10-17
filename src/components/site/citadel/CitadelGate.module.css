@@ -4,32 +4,21 @@
   color: var(--citadel-ink);
 }
 
-/* No frame: the scene sits on the hero itself. A soft brand light and a dot
-   grid gather around the core and fade out before the edges. */
+/* No frame: the scene sits on the hero. It carries the homepage grid, with the same lines and opacity. */
 .stage {
   position: relative;
   isolation: isolate;
-  background:
-    radial-gradient(
-      ellipse 55% 60% at 54% 47%,
-      color-mix(in srgb, var(--citadel-glow) 13%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(ellipse 40% 50% at 82% 47%, color-mix(in srgb, var(--primary) 7%, transparent), transparent 70%);
 }
 
 .stage::before {
   position: absolute;
   z-index: -1;
-  inset: -8% -4%;
-  background-image: radial-gradient(
-    circle at 1px 1px,
-    color-mix(in srgb, var(--citadel-muted) 28%, transparent) 1px,
-    transparent 0
-  );
-  background-size: 16px 16px;
+  inset: -20% -10%;
   content: '';
-  mask-image: radial-gradient(ellipse 58% 62% at 54% 48%, black 25%, transparent 78%);
+  background-image:
+    linear-gradient(to right, rgb(32 56 200 / 4%) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(32 56 200 / 4%) 1px, transparent 1px);
+  background-size: 64px 64px;
 }
 
 .scene {
@@ -71,21 +60,6 @@
   stop-color: var(--citadel-glow);
 }
 
-.haloInner {
-  stop-color: var(--citadel-glow);
-  stop-opacity: 0.28;
-}
-
-.haloMid {
-  stop-color: var(--primary);
-  stop-opacity: 0.08;
-}
-
-.haloOuter {
-  stop-color: var(--primary);
-  stop-opacity: 0;
-}
-
 /* Beams ------------------------------------------------------------------- */
 
 .track {
@@ -99,14 +73,6 @@
   fill: none;
   stroke-linecap: round;
   stroke-width: 3;
-}
-
-.laserGlow {
-  fill: none;
-  stroke-linecap: round;
-  stroke-width: 12;
-  filter: blur(5px);
-  opacity: 0.45;
 }
 
 /* Core -------------------------------------------------------------------- */
@@ -137,17 +103,17 @@
 }
 
 .tag rect {
-  fill: color-mix(in srgb, var(--status-bad) 7%, var(--citadel-surface));
-  stroke: color-mix(in srgb, var(--status-bad) 24%, transparent);
+  fill: color-mix(in srgb, var(--uptime-down) 7%, var(--citadel-surface));
+  stroke: color-mix(in srgb, var(--uptime-down) 24%, transparent);
 }
 
 .tag .tagFlash {
-  fill: color-mix(in srgb, var(--status-bad) 18%, var(--citadel-surface));
-  stroke: var(--status-bad);
+  fill: color-mix(in srgb, var(--uptime-down) 18%, var(--citadel-surface));
+  stroke: var(--uptime-down);
 }
 
 .tag text {
-  fill: var(--status-bad);
+  fill: var(--uptime-down);
   font-family: var(--font-body);
   font-size: 11px;
   font-weight: 700;
@@ -274,8 +240,8 @@
 }
 
 .log li[data-tone='block'] b {
-  background: color-mix(in srgb, var(--status-bad) 10%, transparent);
-  color: var(--status-bad);
+  background: color-mix(in srgb, var(--uptime-down) 10%, transparent);
+  color: var(--uptime-down);
 }
 
 .log code {

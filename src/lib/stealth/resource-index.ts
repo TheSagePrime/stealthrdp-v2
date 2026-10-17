@@ -1,7 +1,10 @@
+import { resourcePagesCopy, resourcesCopy } from '@/content/i18n/resources';
 import { rdpVpsGuide } from '@/content/rdp-vps';
 import { articlePath, blogArticles, citadelDocsArticles, docPublicSlug, helpDocsArticles } from '@/lib/stealth/articles';
 import { faqs } from '@/lib/stealth/content';
 import { isNoindexDocPath } from '@/lib/stealth/routes';
+import { translationLocales } from '@/lib/stealth/translation-sources';
+import { translatedDocs, translatedGuides } from '@/lib/stealth/translations';
 
 /* One text index of every resource page. It feeds the resource search (/search-index.json)
    and the llms.txt files, so both always match the published content. */
@@ -39,6 +42,10 @@ function htmlToText(html: string): string {
 
 function markdownToText(markdown: string): string {
   return clean(markdown
+    // Fence lines carry the language and title ("```bash title=..."), and callouts carry ":::info";
+    // neither is reader text. The code and the callout text stay.
+    .replace(/^```.*$/gm, '')
+    .replace(/^:::.*$/gm, '')
     .replace(/^[=-]{3,}\s*$/gm, '')
     .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
     .replace(/[*_`]/g, ''));
@@ -86,4 +93,29 @@ export function resourceEntries(): ResourceEntry[] {
       indexable: true,
     })),
   ];
+}
+
+/* The published German and Spanish articles for the resource search, beside the English entries.
+   Not in resourceEntries(): llms.txt and llms-full.txt stay English. */
+export function translatedSearchEntries(): { title: string; href: string; description: string; text: string; breadcrumb: string }[] {
+  return translationLocales.flatMap((locale) => {
+    const tabs = resourcesCopy[locale].tabs;
+    const language = resourcePagesCopy[locale].languageName;
+    return [
+      ...translatedGuides(locale).map(guide => ({
+        title: guide.title,
+        href: guide.path,
+        description: guide.excerpt,
+        text: htmlToText(guide.html),
+        breadcrumb: `${tabs.guides} (${language})`,
+      })),
+      ...(['help', 'citadel'] as const).flatMap(section => translatedDocs(locale, section).map(doc => ({
+        title: doc.title,
+        href: doc.path,
+        description: doc.summary,
+        text: markdownToText(doc.content),
+        breadcrumb: `${tabs[section]} (${language})`,
+      }))),
+    ];
+  });
 }

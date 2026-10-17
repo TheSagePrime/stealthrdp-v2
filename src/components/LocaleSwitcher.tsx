@@ -1,9 +1,10 @@
 'use client';
 
-import { useLocale, useTranslations } from 'next-intl';
 import { Globe } from '@phosphor-icons/react';
+import { useLocale, useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { isSiteLocale } from '@/config/i18n';
 import { usePathname, useRouter } from '@/libs/I18nNavigation';
 import { AppConfig } from '@/utils/AppConfig';
 
@@ -14,7 +15,7 @@ export const LocaleSwitcher = () => {
   const locale = useLocale();
 
   const handleChange = (newLocale: string) => {
-    if (newLocale === locale) {
+    if (newLocale === locale || !isSiteLocale(newLocale)) {
       return;
     }
 

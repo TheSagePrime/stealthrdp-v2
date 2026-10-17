@@ -20,6 +20,7 @@ function buildOrganizationJsonLd(config: SeoConfig): Record<string, unknown> | n
   const jsonLd: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
+    '@id': `${site.origin}/#organization`,
     'name': brand.companyName,
     'url': site.origin,
   };

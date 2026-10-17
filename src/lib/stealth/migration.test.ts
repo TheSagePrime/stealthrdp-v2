@@ -64,10 +64,10 @@ const expectedPlans = [
 describe('StealthRDP public-site migration contract', () => {
   it('preserves the production content corpus', () => {
     expect(plans.map(plan => plan.name)).toEqual(expectedPlans);
-    expect(faqs).toHaveLength(21);
+    expect(faqs).toHaveLength(22);
     expect(testimonials).toHaveLength(12);
     expect(reviews).toHaveLength(48);
-    expect(blogArticles).toHaveLength(17);
+    expect(blogArticles).toHaveLength(18);
     expect(helpDocsArticles).toHaveLength(22);
     expect(citadelDocsArticles).toHaveLength(19);
     expect(uptime.monitors).toHaveLength(10);

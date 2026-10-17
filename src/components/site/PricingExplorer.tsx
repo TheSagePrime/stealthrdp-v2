@@ -1,6 +1,8 @@
 /* eslint-disable better-tailwindcss/no-unknown-classes */
 'use client';
 
+import type { SiteLocale } from '@/config/i18n';
+import type { PricingCopy } from '@/content/i18n/en/pricing';
 import type { BillingCycle, Plan } from '@/lib/stealth/content';
 import { ArrowSquareOut, CaretDown } from '@phosphor-icons/react';
 import { useEffect, useMemo, useState } from 'react';
@@ -16,33 +18,10 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import {
-
-  billingCycles,
-  checkoutUrl,
-
-} from '@/lib/stealth/checkout';
+import { pricingCopy } from '@/content/i18n/pricing';
+import { checkoutUrl } from '@/lib/stealth/checkout';
 
 const cycleOrder: BillingCycle[] = ['monthly', 'quarterly', 'semiannual', 'annual', 'biannual'];
-
-/** Human price-column header per billing cycle: the cells show term totals, never monthly rates. */
-const priceHeader: Record<BillingCycle, string> = {
-  monthly: 'Price per month',
-  quarterly: 'Price per quarter',
-  semiannual: 'Price per 6 months',
-  annual: 'Price per year',
-  biannual: 'Price per 2 years',
-};
-
-const cycleLabel: Record<BillingCycle, string> = {
-  monthly: 'Monthly',
-  quarterly: 'Quarterly',
-  semiannual: '6-month',
-  annual: 'Annual',
-  biannual: '2-year',
-};
-
-const formatPrice = (amount: number) => Number.isInteger(amount) ? `${amount}` : amount.toFixed(2);
 
 /** Read a comparable number out of a published spec string. */
 const specNumber = (value: string) => Number.parseInt(value.replace(/\D/g, ''), 10) || 0;
@@ -92,12 +71,16 @@ function PlanRow({
   showPopular,
   maxima,
   alternative,
+  t,
+  locale,
 }: {
   plan: Plan;
   cycle: BillingCycle;
   showPopular: boolean;
   maxima: { cpu: number; ram: number; storage: number };
   alternative?: Plan | null;
+  t: PricingCopy;
+  locale: SiteLocale;
 }) {
   const price = plan.pricing[cycle];
   const available = plan.source.availability !== 'out-of-stock';
@@ -107,43 +90,43 @@ function PlanRow({
       <th scope="row">
         <span className="sr-plan-row">
           {plan.name}
-          {showPopular ? <Badge variant="outline">Most popular</Badge> : null}
-          <span className="sr-ledger-meta">{plan.description}</span>
+          {showPopular ? <Badge variant="outline">{t.mostPopular}</Badge> : null}
+          <span className="sr-ledger-meta">{t.description(plan.description)}</span>
         </span>
         <span className="sr-ledger-meta">
-          Region:
+          {t.region}
           {' '}
-          {plan.location}
+          {t.regionNames[plan.location]}
         </span>
       </th>
       <SpecCell
-        value={plan.specs.cpu}
+        value={t.spec(plan.specs.cpu)}
         numeric={specNumber(plan.specs.cpu)}
         max={maxima.cpu}
-        label={`CPU: ${plan.specs.cpu} of ${maxima.cpu} cores in this region`}
+        label={t.cpuLabel(t.spec(plan.specs.cpu), maxima.cpu)}
       />
       <SpecCell
         value={plan.specs.ram}
         numeric={specNumber(plan.specs.ram)}
         max={maxima.ram}
-        label={`Memory: ${plan.specs.ram} of ${maxima.ram} GB in this region`}
+        label={t.ramLabel(plan.specs.ram, maxima.ram)}
       />
       <SpecCell
         value={plan.specs.storage}
         numeric={specNumber(plan.specs.storage)}
         max={maxima.storage}
-        label={`Storage: ${plan.specs.storage} of ${maxima.storage} GB in this region`}
+        label={t.storageLabel(plan.specs.storage, maxima.storage)}
       />
       <TableCell className="sr-ledger-traffic">
-        <span className="sr-ledger-value">{plan.specs.bandwidth}</span>
-        <span className="sr-ledger-meta">traffic</span>
+        <span className="sr-ledger-value">{t.spec(plan.specs.bandwidth)}</span>
+        <span className="sr-ledger-meta">{t.traffic}</span>
       </TableCell>
       <TableCell className="sr-ledger-price">
-        {`€${formatPrice(price.amount)}${price.suffix}`}
-        <span className="sr-ledger-meta">{`due today · ${price.periodLabel}`}</span>
+        {`${t.money(price.amount)}${t.suffix(cycle, price.suffix)}`}
+        <span className="sr-ledger-meta">{`${t.dueToday} · ${t.period(cycle, price.periodLabel)}`}</span>
         {price.referenceAmount
           ? (
-              <span className="sr-ledger-was">{`standard €${formatPrice(price.referenceAmount)}`}</span>
+              <span className="sr-ledger-was">{`${t.standard} ${t.money(price.referenceAmount)}`}</span>
             )
           : null}
       </TableCell>
@@ -152,10 +135,10 @@ function PlanRow({
           ? (
               <Button asChild size="sm">
                 <a
-                  href={checkoutUrl(plan, cycle)}
-                  aria-label={`Order Now: ${plan.name} — opens the StealthRDP checkout at dash.stealthrdp.com`}
+                  href={checkoutUrl(plan, cycle, locale)}
+                  aria-label={t.orderAria(plan.name)}
                 >
-                  Order Now
+                  {t.orderNow}
                   {' '}
                   <ArrowSquareOut size={14} aria-hidden="true" />
                 </a>
@@ -164,16 +147,16 @@ function PlanRow({
           : (
               <div className="sr-ledger-stack">
                 <Pill state="warn" icon={<span aria-hidden="true">!</span>}>
-                  Out of stock
+                  {t.outOfStockRow}
                 </Pill>
                 {alternative
                   ? (
                       <a
                         className="sr-ledger-alt"
-                        href={checkoutUrl(alternative, cycle)}
-                        aria-label={`${plan.name} is out of stock — buy ${alternative.name} instead at dash.stealthrdp.com`}
+                        href={checkoutUrl(alternative, cycle, locale)}
+                        aria-label={t.altRowAria(plan.name, alternative.name)}
                       >
-                        See
+                        {t.see}
                         {' '}
                         {alternative.name}
                       </a>
@@ -205,16 +188,20 @@ function PlanCard({
   cycle,
   showPopular,
   alternative,
+  t,
+  locale,
 }: {
   plan: Plan;
   cycle: BillingCycle;
   showPopular: boolean;
   alternative?: Plan | null;
+  t: PricingCopy;
+  locale: SiteLocale;
 }) {
   const price = plan.pricing[cycle];
   const available = plan.source.availability !== 'out-of-stock';
   const stock = plan.source.stock;
-  const osLabel = plan.source.os === 'linux-only' ? 'Linux only' : 'Linux + Windows';
+  const osLabel = plan.source.os === 'linux-only' ? t.linuxOnly : t.linuxWindows;
   const months = cycleMonths[cycle] ?? 1;
 
   return (
@@ -227,40 +214,40 @@ function PlanCard({
       <div className="sr-pick-card-head">
         <h3 className="sr-pick-card-name">{plan.name}</h3>
         <div className="sr-pick-card-badges">
-          {showPopular ? <Badge variant="outline">Featured</Badge> : null}
+          {showPopular ? <Badge variant="outline">{t.featured}</Badge> : null}
         </div>
       </div>
       <p className="sr-pick-card-price">
         <span className="sr-pick-card-amount">
-          {`€${formatPrice(price.amount)}${price.suffix}`}
+          {`${t.money(price.amount)}${t.suffix(cycle, price.suffix)}`}
           {price.referenceAmount
             ? (
-                <span className="sr-pick-card-was">{` €${formatPrice(price.referenceAmount)}`}</span>
+                <span className="sr-pick-card-was">{` ${t.money(price.referenceAmount)}`}</span>
               )
             : null}
         </span>
         <span className="sr-pick-card-period">
-          {`due today · ${price.periodLabel}`}
-          {months > 1 ? ` · €${(price.amount / months).toFixed(2)}/mo effective` : null}
+          {`${t.dueToday} · ${t.period(cycle, price.periodLabel)}`}
+          {months > 1 ? t.effective(price.amount / months) : null}
         </span>
       </p>
       <p className="sr-pick-card-os">{osLabel}</p>
       <dl className="sr-pick-specs">
         <div className="sr-pick-spec">
-          <dt>CPU</dt>
-          <dd>{plan.specs.cpu}</dd>
+          <dt>{t.specs.cpu}</dt>
+          <dd>{t.spec(plan.specs.cpu)}</dd>
         </div>
         <div className="sr-pick-spec">
-          <dt>RAM</dt>
+          <dt>{t.specs.ram}</dt>
           <dd>{plan.specs.ram}</dd>
         </div>
         <div className="sr-pick-spec">
-          <dt>Storage</dt>
+          <dt>{t.specs.storage}</dt>
           <dd>{plan.specs.storage}</dd>
         </div>
         <div className="sr-pick-spec">
-          <dt>Bandwidth</dt>
-          <dd>{plan.specs.bandwidth}</dd>
+          <dt>{t.specs.bandwidth}</dt>
+          <dd>{t.spec(plan.specs.bandwidth)}</dd>
         </div>
       </dl>
       <div className="sr-pick-card-action">
@@ -268,10 +255,10 @@ function PlanCard({
           ? (
               <Button asChild className="sr-pick-card-buy">
                 <a
-                  href={checkoutUrl(plan, cycle)}
-                  aria-label={`Order Now: ${plan.name} — opens the StealthRDP checkout at dash.stealthrdp.com`}
+                  href={checkoutUrl(plan, cycle, locale)}
+                  aria-label={t.orderAria(plan.name)}
                 >
-                  Order Now
+                  {t.orderNow}
                   {' '}
                   <ArrowSquareOut size={14} aria-hidden="true" />
                 </a>
@@ -280,16 +267,16 @@ function PlanCard({
           : (
               <div className="sr-ledger-stack">
                 <Pill state="warn" icon={<span aria-hidden="true">!</span>}>
-                  Out of Stock
+                  {t.outOfStockCard}
                 </Pill>
                 {alternative
                   ? (
                       <a
                         className="sr-ledger-alt"
                         href={`#plan-${planSlug(alternative.name)}`}
-                        aria-label={`${plan.name} is out of stock — see ${alternative.name} instead`}
+                        aria-label={t.altCardAria(plan.name, alternative.name)}
                       >
-                        See
+                        {t.see}
                         {' '}
                         {alternative.name}
                       </a>
@@ -299,7 +286,7 @@ function PlanCard({
             )}
       </div>
       <p className="sr-pick-stock" data-state={available ? 'in-stock' : 'out-of-stock'}>
-        {stock !== undefined ? `${stock} Available` : (available ? 'In stock' : 'Out of stock')}
+        {stock !== undefined ? t.available(stock) : (available ? t.inStock : t.outOfStock)}
       </p>
     </article>
   );
@@ -309,11 +296,14 @@ export function PricingExplorer({
   compact = false,
   plans,
   showComparison = false,
+  locale = 'en',
 }: {
   compact?: boolean;
   plans: Plan[];
   showComparison?: boolean;
+  locale?: SiteLocale;
 }) {
+  const t = pricingCopy[locale];
   const [region, setRegion] = useState<'USA' | 'EU'>(() => {
     if (typeof window === 'undefined') {
       return 'USA';
@@ -373,7 +363,7 @@ export function PricingExplorer({
     <div className="sr-pricing-explorer" data-compact={compact ? 'true' : 'false'}>
       <div className="srv-pricing-controls">
         <div className="srv-pricing-control-card srv-pricing-region">
-          <div className="srv-selector" role="group" aria-label="Deployment region">
+          <div className="srv-selector" role="group" aria-label={t.regionGroup}>
             {(['USA', 'EU'] as const).map(item => (
               <button
                 key={item}
@@ -384,14 +374,14 @@ export function PricingExplorer({
                 onClick={() => setRegion(item)}
               >
                 <span className="srv-selector-dot" aria-hidden="true" />
-                {item}
+                {t.regionNames[item]}
               </button>
             ))}
           </div>
         </div>
 
         <div className="srv-pricing-control-card srv-pricing-billing">
-          <div className="srv-billing-rail" role="group" aria-label="Billing cycle">
+          <div className="srv-billing-rail" role="group" aria-label={t.billingGroup}>
             {cycleOrder.map((item) => {
               const termPrice = ladderPlan?.pricing[item];
 
@@ -406,9 +396,10 @@ export function PricingExplorer({
                   aria-disabled={!termPrice}
                   onClick={() => setCycle(item)}
                 >
-                  {cycleLabel[item]}
+                  <span className="srv-billing-full">{t.cycleLabels[item].full}</span>
+                  <span className="srv-billing-short" aria-hidden="true">{t.cycleLabels[item].short}</span>
                   <span className="sr-visually-hidden">
-                    {termPrice ? `from €${formatPrice(termPrice.amount)} ${termPrice.periodLabel}, due today` : 'price at checkout'}
+                    {termPrice ? t.termAria(t.money(termPrice.amount), t.period(item, termPrice.periodLabel)) : t.noPrice}
                   </span>
                 </button>
               );
@@ -418,8 +409,8 @@ export function PricingExplorer({
 
         <p className="sr-visually-hidden" aria-live="polite">
           {highlighted && highlightedPrice
-            ? `${highlighted.name}, ${billingCycles[cycle]?.label}: €${formatPrice(highlightedPrice.amount)} ${highlightedPrice.periodLabel}, due today`
-            : 'No plan selected'}
+            ? t.liveAria(highlighted.name, t.cycleNames[cycle], t.money(highlightedPrice.amount), t.period(cycle, highlightedPrice.periodLabel))
+            : t.noPlan}
         </p>
       </div>
 
@@ -431,6 +422,8 @@ export function PricingExplorer({
             cycle={cycle}
             showPopular={plan.name === popularName}
             alternative={alternativeFor(plan, plans)}
+            t={t}
+            locale={locale}
           />
         ))}
       </div>
@@ -439,34 +432,34 @@ export function PricingExplorer({
         ? (
             <>
               <h2 className="sr-ledger-title">
-                See the difference in one view.
+                {t.compare.title}
                 {' '}
-                <span className="sr-visually-hidden">VPS Features Comparison</span>
+                <span className="sr-visually-hidden">{t.compare.hidden}</span>
               </h2>
               <details className="sr-compare-details">
                 <summary className="sr-compare-summary">
-                  <span className="sr-kicker">02 / Compare precisely</span>
+                  <span className="sr-kicker">{t.compare.kicker}</span>
                   <span className="sr-compare-label">
-                    Compare all specs
+                    {t.compare.label}
                     <CaretDown size={14} aria-hidden="true" />
                   </span>
                 </summary>
                 <p className="sr-ledger-note">
-                  Use this table for a quick resource check. Checkout confirms the current price and availability.
+                  {t.compare.note}
                 </p>
-                <span className="sr-ledger-hint">Swipe the table to compare every column.</span>
+                <span className="sr-ledger-hint">{t.compare.hint}</span>
 
                 <div className="sr-ledger-scroll">
                   <Table>
                     <TableHeader>
                       <TableRow>
-                        <TableHead>Plan</TableHead>
-                        <TableHead>CPU</TableHead>
-                        <TableHead>RAM</TableHead>
-                        <TableHead>Storage</TableHead>
-                        <TableHead>Bandwidth</TableHead>
-                        <TableHead>{priceHeader[cycle]}</TableHead>
-                        <TableHead><span className="sr-visually-hidden">Action</span></TableHead>
+                        <TableHead>{t.compare.plan}</TableHead>
+                        <TableHead>{t.specs.cpu}</TableHead>
+                        <TableHead>{t.specs.ram}</TableHead>
+                        <TableHead>{t.specs.storage}</TableHead>
+                        <TableHead>{t.specs.bandwidth}</TableHead>
+                        <TableHead>{t.priceHeader[cycle]}</TableHead>
+                        <TableHead><span className="sr-visually-hidden">{t.compare.action}</span></TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -478,6 +471,8 @@ export function PricingExplorer({
                           showPopular={plan.name === popularName}
                           maxima={maxima}
                           alternative={alternativeFor(plan, plans)}
+                          t={t}
+                          locale={locale}
                         />
                       ))}
                     </TableBody>

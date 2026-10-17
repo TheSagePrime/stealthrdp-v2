@@ -11,13 +11,14 @@ describe('Helpers', () => {
       expect(getI18nPath(url, locale)).toBe(url);
     });
 
-    /* The public site publishes one locale with localePrefix 'never', so a
-       non-default locale must not gain a /fr segment: indexed URLs stay stable. */
-    it('keeps the published path unprefixed for every locale', () => {
+    /* English keeps its indexed URLs (localePrefix 'as-needed'); German and Spanish pages live
+       under their language prefix. */
+    it('prefixes German and Spanish paths and keeps English unprefixed', () => {
       const url = '/random-url';
-      const locale = 'fr';
 
-      expect(getI18nPath(url, locale)).toBe(url);
+      expect(getI18nPath(url, 'en')).toBe(url);
+      expect(getI18nPath(url, 'de')).toBe('/de/random-url');
+      expect(getI18nPath('/', 'es')).toBe('/es');
     });
   });
 });

@@ -1,13 +1,6 @@
-import type { Icon } from '@phosphor-icons/react';
+import type { AboutCopy } from '@/content/i18n/en/about';
 import type { Plan } from '@/lib/stealth/content';
-import {
-  GlobeHemisphereEast,
-  GlobeHemisphereWest,
-  LinuxLogo,
-  ShieldCheck,
-  UserCircle,
-  WindowsLogo,
-} from '@phosphor-icons/react/dist/ssr';
+import { osLogos } from '@/config/os-logos';
 import styles from './AboutMap.module.css';
 
 /*
@@ -16,20 +9,22 @@ import styles from './AboutMap.module.css';
  * catalogue. Static SVG with SMIL comets, so it needs no client JavaScript.
  */
 
-type Part = { name: string; note: string; icon: Icon };
+/* Each part's artwork: the country flags, the panel's Windows mark, our Linux and Citadel marks, and a Fluent icon. */
+type Part = { name: string; note: string; icon: string };
+type MapWords = AboutCopy['map'];
 
-function parts(plans: Plan[]): Part[] {
+function parts(plans: Plan[], t: MapWords): Part[] {
   const from = (region: Plan['location']) => {
     const prices = plans.filter(plan => plan.location === region).map(plan => plan.pricing.monthly.amount);
-    return prices.length ? `From €${Math.min(...prices).toFixed(2)}/mo` : 'Plans listed per region';
+    return prices.length ? t.from(Math.min(...prices)) : t.noPlans;
   };
   return [
-    { name: 'USA region', note: from('USA'), icon: GlobeHemisphereWest },
-    { name: 'Windows Server', note: '2019 · 2022 · 2025', icon: WindowsLogo },
-    { name: 'Citadel', note: 'Layer 7 DDoS shield', icon: ShieldCheck },
-    { name: 'EU region', note: from('EU'), icon: GlobeHemisphereEast },
-    { name: 'Linux', note: 'Ubuntu, Debian +3', icon: LinuxLogo },
-    { name: 'Client area', note: 'Billing and tickets', icon: UserCircle },
+    { name: t.usa, note: from('USA'), icon: '/images/flags/us-circle.svg' },
+    { name: 'Windows Server', note: '2019 · 2022 · 2025', icon: osLogos.windows },
+    { name: 'Citadel', note: t.citadelNote, icon: '/brand/citadel-shield.svg' },
+    { name: t.eu, note: from('EU'), icon: '/images/flags/nl-circle.svg' },
+    { name: 'Linux', note: t.linuxNote, icon: '/brand/linux.svg' },
+    { name: t.clientArea, note: t.clientAreaNote, icon: '/images/fluent-color/receipt.svg' },
   ];
 }
 
@@ -37,19 +32,18 @@ const WIDTH = 186;
 const HEIGHT = 52;
 
 function Satellite({ part, x, y, width }: { part: Part; x: number; y: number; width: number }) {
-  const Glyph = part.icon;
   return (
     <g>
       <rect x={x} y={y - HEIGHT / 2} width={width} height={HEIGHT} rx={HEIGHT / 2} className={styles.pill} />
       <circle cx={x + 26} cy={y} r="17" className={styles.pillIcon} />
-      <Glyph x={x + 15} y={y - 11} size={22} weight="duotone" className={styles.icon} />
+      <image href={part.icon} x={x + 14} y={y - 12} width={24} height={24} preserveAspectRatio="xMidYMid meet" />
       <text x={x + 52} y={y - 3} className={styles.name}>{part.name}</text>
       <text x={x + 52} y={y + 14} className={styles.note}>{part.note}</text>
     </g>
   );
 }
 
-function Core({ x, y, r, count, id }: { x: number; y: number; r: number; count: number; id: string }) {
+function Core({ x, y, r, note, id }: { x: number; y: number; r: number; note: string; id: string }) {
   return (
     <g>
       <defs>
@@ -64,7 +58,7 @@ function Core({ x, y, r, count, id }: { x: number; y: number; r: number; count: 
       <circle cx={x} cy={y} r={r - 8} className={styles.inner} />
       <circle cx={x} cy={y} r={r} className={styles.pulse} />
       <text x={x} y={y + 2} textAnchor="middle" className={styles.coreName}>StealthRDP</text>
-      <text x={x} y={y + 19} textAnchor="middle" className={styles.coreNote}>{`${count} live plans`}</text>
+      <text x={x} y={y + 19} textAnchor="middle" className={styles.coreNote}>{note}</text>
     </g>
   );
 }
@@ -77,8 +71,8 @@ function Comet({ d, index }: { d: string; index: number }) {
   );
 }
 
-export function AboutMap({ plans }: { plans: Plan[] }) {
-  const list = parts(plans);
+export function AboutMap({ plans, words }: { plans: Plan[]; words: MapWords }) {
+  const list = parts(plans, words);
 
   /* Wide: three parts on each side of the core. */
   const core = { x: 300, y: 200, r: 56 };
@@ -89,7 +83,11 @@ export function AboutMap({ plans }: { plans: Plan[] }) {
     const edge = left ? WIDTH : 600 - WIDTH;
     const start = left ? core.x - core.r : core.x + core.r;
     const mid = (start + edge) / 2;
-    return { part, x, y, d: `M${start} ${core.y} C${mid} ${core.y} ${mid} ${y} ${edge} ${y}` };
+    /* Left parts send their comets in towards the core; right parts send them out, like the other session maps. */
+    const d = left
+      ? `M${edge} ${y} C${mid} ${y} ${mid} ${core.y} ${start} ${core.y}`
+      : `M${start} ${core.y} C${mid} ${core.y} ${mid} ${y} ${edge} ${y}`;
+    return { part, x, y, d };
   });
 
   /* Tall: core on top, a spine down the middle, parts in two columns. */
@@ -100,7 +98,10 @@ export function AboutMap({ plans }: { plans: Plan[] }) {
     const x = column ? 360 - tallWidth : 0;
     const y = 200 + Math.floor(index / 2) * 76;
     const edge = column ? 360 - tallWidth : tallWidth;
-    return { part, x, y, d: `M${top.x} ${top.y + top.r} L${top.x} ${y} L${edge} ${y}` };
+    const d = column
+      ? `M${top.x} ${top.y + top.r} L${top.x} ${y} L${edge} ${y}`
+      : `M${edge} ${y} L${top.x} ${y} L${top.x} ${top.y + top.r}`;
+    return { part, x, y, d };
   });
 
   return (
@@ -112,7 +113,7 @@ export function AboutMap({ plans }: { plans: Plan[] }) {
             <Comet d={item.d} index={index} />
           </g>
         ))}
-        <Core {...core} count={plans.length} id="about-halo-wide" />
+        <Core {...core} note={words.livePlans(plans.length)} id="about-halo-wide" />
         {wide.map(item => <Satellite key={item.part.name} part={item.part} x={item.x} y={item.y} width={WIDTH} />)}
       </svg>
 
@@ -123,7 +124,7 @@ export function AboutMap({ plans }: { plans: Plan[] }) {
             <Comet d={item.d} index={index} />
           </g>
         ))}
-        <Core {...top} count={plans.length} id="about-halo-tall" />
+        <Core {...top} note={words.livePlans(plans.length)} id="about-halo-tall" />
         {tall.map(item => <Satellite key={item.part.name} part={item.part} x={item.x} y={item.y} width={tallWidth} />)}
       </svg>
     </div>
